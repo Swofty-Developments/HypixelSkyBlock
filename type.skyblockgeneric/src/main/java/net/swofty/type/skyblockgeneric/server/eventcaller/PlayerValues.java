@@ -66,7 +66,6 @@ public class PlayerValues {
                 throw new RuntimeException(e);
             }
         });
-        ;
 
         private final Class<?> type;
         private final Function<SkyBlockPlayer, ?> function;

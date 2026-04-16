@@ -4,7 +4,6 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.auction.GUIAuctionHouse;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -46,7 +45,7 @@ public class NPCAuctionMaster extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("quest-hello", "npcs_hub.auction_master.dialogue.quest_hello")
+                DialogueSet.ofTranslation("quest-hello", "npcs_hub.auction_master.dialogue.quest_hello", player)
         };
     }
 

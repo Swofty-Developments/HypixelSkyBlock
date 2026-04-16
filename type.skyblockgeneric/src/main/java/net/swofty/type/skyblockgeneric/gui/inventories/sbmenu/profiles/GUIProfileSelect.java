@@ -10,6 +10,7 @@ import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -30,7 +31,7 @@ public class GUIProfileSelect extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.profiles.select.title"), InventoryType.CHEST_4_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.profiles.select.title", InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -50,8 +51,8 @@ public class GUIProfileSelect extends StatelessView {
                 switchingTo = "Unknown";
             }
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.select.switch"), Material.GRASS_BLOCK, 1,
-                    I18n.lore("gui_sbmenu.profiles.select.switch.lore", Map.of("current", currentProfile, "switching_to", switchingTo)));
+            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profiles.select.switch", Material.GRASS_BLOCK, 1,
+                    "gui_sbmenu.profiles.select.switch.lore", Map.of("current", currentProfile, "switching_to", switchingTo));
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             SkyBlockPlayerProfiles profiles = player.getProfiles();
@@ -68,13 +69,14 @@ public class GUIProfileSelect extends StatelessView {
         });
 
         // Delete Profile
-        layout.slot(15, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.profiles.select.delete"), Material.RED_STAINED_GLASS, 1,
-                        I18n.lore("gui_sbmenu.profiles.select.delete.lore")),
+        layout.slot(15, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.profiles.select.delete", Material.RED_STAINED_GLASS, 1,
+                        "gui_sbmenu.profiles.select.delete.lore"),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                    java.util.Locale l = player.getLocale();
                     if (CoopDatabase.getFromMemberProfile(profileUuid) != null) {
-                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.cannot_delete_coop"));
-                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.coop_leave"));
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.cannot_delete_coop", l));
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.coop_leave", l));
                         return;
                     }
 
@@ -83,10 +85,10 @@ public class GUIProfileSelect extends StatelessView {
 
                     try {
                         SkyBlockDataHandler handler = SkyBlockDataHandler.createFromProfileOnly(new ProfilesDatabase(profileUuid.toString()).getDocument());
-                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.deleted", Map.of("profile_name",
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.deleted", l, Map.of("profile_name",
                                 handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue())));
                     } catch (Exception e) {
-                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.deleted_generic"));
+                        player.sendMessage(I18n.string("gui_sbmenu.profiles.select.msg.deleted_generic", l));
                     }
 
                     ProfilesDatabase.collection.deleteOne(Filters.eq("_id", profileUuid.toString()));

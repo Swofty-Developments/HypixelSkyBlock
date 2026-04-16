@@ -19,7 +19,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
-
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -64,20 +64,21 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.price_selection.spread_10pct"),
+                    Locale l = p.getLocale();
+                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.price_selection.spread_10pct", l),
                             Material.GOLDEN_HORSE_ARMOR, 1,
-                            isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell") : I18n.string("gui_bazaar.price_selection.offer_setup_buy"),
+                            isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l),
                             " ",
-                            I18n.string("gui_bazaar.price_selection.lowest_price", Map.of("price", String.valueOf(lowestPrice))),
-                            I18n.string("gui_bazaar.price_selection.highest_price", Map.of("price", String.valueOf(highestPrice))),
-                            I18n.string("gui_bazaar.price_selection.spread", Map.of("high", String.valueOf(highestPrice), "low", String.valueOf(lowestPrice), "spread", String.valueOf(spread))),
+                            I18n.string("gui_bazaar.price_selection.lowest_price", l, Map.of("price", String.valueOf(lowestPrice))),
+                            I18n.string("gui_bazaar.price_selection.highest_price", l, Map.of("price", String.valueOf(highestPrice))),
+                            I18n.string("gui_bazaar.price_selection.spread", l, Map.of("high", String.valueOf(highestPrice), "low", String.valueOf(lowestPrice), "spread", String.valueOf(spread))),
                             " ",
-                            isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", Map.of("amount", String.valueOf(amount))) : I18n.string("gui_bazaar.price_selection.buying_amount", Map.of("amount", String.valueOf(amount))),
-                            I18n.string("gui_bazaar.price_selection.unit_price", Map.of("price", String.valueOf(spreadPrice))),
+                            isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", l, Map.of("amount", String.valueOf(amount))) : I18n.string("gui_bazaar.price_selection.buying_amount", l, Map.of("amount", String.valueOf(amount))),
+                            I18n.string("gui_bazaar.price_selection.unit_price", l, Map.of("price", String.valueOf(spreadPrice))),
                             " ",
-                            I18n.string("gui_bazaar.price_selection.total", Map.of("amount", String.valueOf(spreadPrice * amount))),
+                            I18n.string("gui_bazaar.price_selection.total", l, Map.of("amount", String.valueOf(spreadPrice * amount))),
                             " ",
-                            I18n.string("gui_bazaar.price_selection.click_to_use"));
+                            I18n.string("gui_bazaar.price_selection.click_to_use", l));
                 }
             });
 
@@ -93,18 +94,19 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    Locale l = p.getLocale();
                     List<String> lore = new java.util.ArrayList<>();
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell") : I18n.string("gui_bazaar.price_selection.offer_setup_buy"));
+                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l));
                     lore.add(" ");
-                    lore.addAll(I18n.lore("gui_bazaar.price_selection.best_offer_beat"));
+                    lore.addAll(I18n.lore("gui_bazaar.price_selection.best_offer_beat", l));
                     lore.add(" ");
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", Map.of("amount", String.valueOf(amount))) : I18n.string("gui_bazaar.price_selection.buying_amount", Map.of("amount", String.valueOf(amount))));
-                    lore.add(I18n.string("gui_bazaar.price_selection.unit_price", Map.of("price", String.valueOf(incrementedOffer))));
+                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", l, Map.of("amount", String.valueOf(amount))) : I18n.string("gui_bazaar.price_selection.buying_amount", l, Map.of("amount", String.valueOf(amount))));
+                    lore.add(I18n.string("gui_bazaar.price_selection.unit_price", l, Map.of("price", String.valueOf(incrementedOffer))));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.total", Map.of("amount", String.valueOf(incrementedOffer * amount))));
+                    lore.add(I18n.string("gui_bazaar.price_selection.total", l, Map.of("amount", String.valueOf(incrementedOffer * amount))));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.click_to_use"));
-                    return ItemStackCreator.getStack(isSellOrder ? I18n.string("gui_bazaar.price_selection.best_offer_minus") : I18n.string("gui_bazaar.price_selection.best_offer_plus"),
+                    lore.add(I18n.string("gui_bazaar.price_selection.click_to_use", l));
+                    return ItemStackCreator.getStack(isSellOrder ? I18n.string("gui_bazaar.price_selection.best_offer_minus", l) : I18n.string("gui_bazaar.price_selection.best_offer_plus", l),
                             Material.GOLD_NUGGET, 1, lore);
                 }
             });
@@ -120,18 +122,19 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    Locale l = p.getLocale();
                     List<String> lore = new java.util.ArrayList<>();
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell") : I18n.string("gui_bazaar.price_selection.offer_setup_buy"));
+                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l));
                     lore.add(" ");
-                    lore.addAll(I18n.lore("gui_bazaar.price_selection.same_as_best.lore"));
+                    lore.addAll(I18n.lore("gui_bazaar.price_selection.same_as_best.lore", l));
                     lore.add(" ");
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", Map.of("amount", String.valueOf(amount))) : I18n.string("gui_bazaar.price_selection.buying_amount", Map.of("amount", String.valueOf(amount))));
-                    lore.add(I18n.string("gui_bazaar.price_selection.unit_price", Map.of("price", String.valueOf(bestOffer))));
+                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.selling_amount", l, Map.of("amount", String.valueOf(amount))) : I18n.string("gui_bazaar.price_selection.buying_amount", l, Map.of("amount", String.valueOf(amount))));
+                    lore.add(I18n.string("gui_bazaar.price_selection.unit_price", l, Map.of("price", String.valueOf(bestOffer))));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.total", Map.of("amount", String.valueOf(bestOffer * amount))));
+                    lore.add(I18n.string("gui_bazaar.price_selection.total", l, Map.of("amount", String.valueOf(bestOffer * amount))));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.click_to_use"));
-                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.price_selection.same_as_best"),
+                    lore.add(I18n.string("gui_bazaar.price_selection.click_to_use", l));
+                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.price_selection.same_as_best", l),
                             itemTypeLinker.material, 1, lore);
                 }
             });
@@ -146,7 +149,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                         future.complete(price);
                         return null;
                     } catch (NumberFormatException e) {
-                        player.sendMessage(I18n.string("gui_bazaar.price_selection.invalid_price"));
+                        player.sendMessage(I18n.string("gui_bazaar.price_selection.invalid_price", player.getLocale()));
                         return null;
                     }
                 }
@@ -154,15 +157,16 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    Locale l = p.getLocale();
                     List<String> lore = new java.util.ArrayList<>();
-                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell") : I18n.string("gui_bazaar.price_selection.offer_setup_buy"));
+                    lore.add(isSellOrder ? I18n.string("gui_bazaar.price_selection.offer_setup_sell", l) : I18n.string("gui_bazaar.price_selection.offer_setup_buy", l));
                     lore.add(" ");
-                    lore.addAll(I18n.lore("gui_bazaar.price_selection.custom_price.lore"));
+                    lore.addAll(I18n.lore("gui_bazaar.price_selection.custom_price.lore", l));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.ordering_amount", Map.of("amount", String.valueOf(amount))));
+                    lore.add(I18n.string("gui_bazaar.price_selection.ordering_amount", l, Map.of("amount", String.valueOf(amount))));
                     lore.add(" ");
-                    lore.add(I18n.string("gui_bazaar.price_selection.custom_click"));
-                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.price_selection.custom_price"),
+                    lore.add(I18n.string("gui_bazaar.price_selection.custom_click", l));
+                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.price_selection.custom_price", l),
                             Material.OAK_SIGN, 1, lore);
                 }
             });
@@ -197,7 +201,7 @@ public class GUIBazaarPriceSelection extends HypixelInventoryGUI implements Refr
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.BAZAAR).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_bazaar.price_selection.offline_message"));
+            player.sendMessage(I18n.string("gui_bazaar.price_selection.offline_message", player.getLocale()));
             player.closeInventory();
         }
     }

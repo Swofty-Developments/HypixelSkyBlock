@@ -1,10 +1,5 @@
 package net.swofty.type.dwarvenmines.commission;
 
-import net.minestom.server.entity.Entity;
-import net.minestom.server.item.Material;
-
-import java.util.List;
-
 public class Objective {
 	public final ObjectiveType type;
 	public final BlockTarget target;
@@ -34,6 +29,6 @@ public class Objective {
 		GOLDEN_GOBLIN,
 		STAR_SENTRY,
 		MITHRIL,
-		TITANIUM;
+		TITANIUM
 	}
 }

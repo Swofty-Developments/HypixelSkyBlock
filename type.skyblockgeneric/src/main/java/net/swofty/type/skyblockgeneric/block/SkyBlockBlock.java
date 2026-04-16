@@ -2,22 +2,30 @@ package net.swofty.type.skyblockgeneric.block;
 
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
-import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttributeHandler;
 import net.swofty.type.skyblockgeneric.block.attribute.attributes.BlockAttributeType;
 import net.swofty.type.skyblockgeneric.block.impl.CustomSkyBlockBlock;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.Facing;
+import org.tinylog.Logger;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SkyBlockBlock {
-    public List<BlockAttribute> attributes = new ArrayList<>();
-    public Class<? extends CustomSkyBlockBlock> clazz;
+    public List<BlockAttribute<?>> attributes = new ArrayList<>();
+    public final Class<? extends CustomSkyBlockBlock> clazz;
     public CustomSkyBlockBlock instance = null;
+    private final Facing facing;
 
-    public SkyBlockBlock(BlockType type) {
-        clazz = type.clazz;
+    public SkyBlockBlock(BlockType blockType) {
+        this(blockType, Facing.NORTH);
+    }
+
+    public SkyBlockBlock(BlockType type, Facing facing) {
+        this.facing = facing;
+        this.clazz = type.clazz;
 
         for (BlockAttribute attribute : BlockAttribute.getPossibleAttributes()) {
             attribute.setValue(attribute.getDefaultValue(clazz));
@@ -25,8 +33,9 @@ public class SkyBlockBlock {
         }
 
         try {
-            instance = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            instance = clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             Logger.error(e, "Failed to instantiate CustomSkyBlockBlock of type: {}", clazz.getSimpleName());
         }
 
@@ -35,7 +44,12 @@ public class SkyBlockBlock {
     }
 
     public SkyBlockBlock(Block block) {
-        clazz = BlockType.valueOf(block.getTag(Tag.String("block_type"))).clazz;
+        this(block, Facing.NORTH);
+    }
+
+    public SkyBlockBlock(Block block, Facing facing) {
+        this.facing = facing;
+        this.clazz = BlockType.valueOf(block.getTag(Tag.String("block_type"))).clazz;
 
         for (BlockAttribute attribute : BlockAttribute.getPossibleAttributes()) {
             attribute.setValue(attribute.loadFromString(block.getTag(Tag.String(attribute.getKey()))));
@@ -43,8 +57,9 @@ public class SkyBlockBlock {
         }
 
         try {
-            instance = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            instance = clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             Logger.error(e, "Failed to instantiate CustomSkyBlockBlock from block: {}", clazz.getSimpleName());
         }
     }
@@ -56,9 +71,11 @@ public class SkyBlockBlock {
     public Block toBlock() {
         Block block = instance.getDisplayMaterial();
 
-        for (BlockAttribute attribute : attributes) {
+        for (BlockAttribute<?> attribute : attributes) {
             block = block.withTag(Tag.String(attribute.getKey()), attribute.saveIntoString());
         }
+
+        block = block.withProperty("facing", facing.getValue());
 
         return block;
     }
@@ -68,9 +85,10 @@ public class SkyBlockBlock {
             return instance;
 
         try {
-            instance = clazz.newInstance();
+            instance = clazz.getDeclaredConstructor().newInstance();
             return instance;
-        } catch (Exception e) {}
+        } catch (Exception _) {
+        }
         return null;
     }
 

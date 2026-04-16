@@ -11,6 +11,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -24,7 +25,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
         super(I18n.string("gui_auction.house.title"), InventoryType.CHEST_4_ROW);
 
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join())
-            fill(Material.BLACK_STAINED_GLASS_PANE, I18n.string("gui_auction.house.offline_fill"));
+            fill(Material.BLACK_STAINED_GLASS_PANE, "");
     }
 
     @Override
@@ -41,8 +42,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_auction.house.stats_button"), Material.PAPER, 1,
-                        I18n.lore("gui_auction.house.stats_button.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_auction.house.stats_button", Material.PAPER, 1,
+                        "gui_auction.house.stats_button.lore");
             }
         });
 
@@ -56,8 +57,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_auction.house.browser_button"), Material.GOLD_BLOCK, 1,
-                        I18n.lore("gui_auction.house.browser_button.lore"));
+                return TranslatableItemStackCreator.getStack(p, "gui_auction.house.browser_button", Material.GOLD_BLOCK, 1,
+                        "gui_auction.house.browser_button.lore");
             }
         });
 
@@ -72,8 +73,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.house.create_button"), Material.GOLDEN_HORSE_ARMOR, 1,
-                            I18n.lore("gui_auction.house.create_button.lore"));
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.house.create_button", Material.GOLDEN_HORSE_ARMOR, 1,
+                            "gui_auction.house.create_button.lore");
                 }
             });
         } else {
@@ -87,10 +88,10 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.house.manage_button"), Material.GOLDEN_HORSE_ARMOR, 1,
-                            I18n.lore("gui_auction.house.manage_button.lore", Map.of(
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.house.manage_button", Material.GOLDEN_HORSE_ARMOR, 1,
+                            "gui_auction.house.manage_button.lore", Map.of(
                                     "count", String.valueOf(player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().size())
-                            )));
+                            ));
                 }
             });
         }
@@ -106,8 +107,8 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.house.bids_button"), Material.GOLDEN_CARROT, 1,
-                            I18n.lore("gui_auction.house.bids_button.lore"));
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.house.bids_button", Material.GOLDEN_CARROT, 1,
+                            "gui_auction.house.bids_button.lore");
                 }
             });
         }
@@ -136,7 +137,7 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.house.offline_message"));
+            player.sendMessage(I18n.string("gui_auction.house.offline_message", player.getLocale()));
             player.closeInventory();
         }
     }

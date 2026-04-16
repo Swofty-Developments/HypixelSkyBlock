@@ -18,6 +18,7 @@ import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -31,6 +32,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -51,15 +53,16 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
         DatapointAuctionEscrow.AuctionEscrow escrow = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
         if (escrow.isBin())
-            e.inventory().setTitle(Component.text(I18n.string("gui_auction.create.title_bin")));
+            e.inventory().setTitle(Component.text(I18n.string("gui_auction.create.title_bin", getPlayer().getLocale())));
 
         set(new GUIClickableItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 if (escrow.getItem() == null)
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.create.select_item"), Material.STONE_BUTTON, 1,
-                            I18n.lore("gui_auction.create.select_item.lore"));
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.create.select_item", Material.STONE_BUTTON, 1,
+                            "gui_auction.create.select_item.lore");
 
                 SkyBlockItem item = escrow.getItem();
                 ItemStack itemStack = new NonPlayerItemUpdater(item).getUpdatedItem().build();
@@ -71,9 +74,9 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                     lore.add(StringUtility.getTextFromComponent(loreEntry));
                 });
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.create.auction_for_item_pickup"));
+                lore.add(I18n.string("gui_auction.create.auction_for_item_pickup", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_auction.create.auction_for_item"), itemStack.material(), itemStack.amount(), lore);
+                return ItemStackCreator.getStack(I18n.string("gui_auction.create.auction_for_item", l), itemStack.material(), itemStack.amount(), lore);
             }
 
             @Override
@@ -97,18 +100,19 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
                 if (escrow.isBin()) {
-                    lore.addAll(I18n.lore("gui_auction.create.duration_bin.lore"));
+                    lore.addAll(I18n.lore("gui_auction.create.duration_bin.lore", l));
                 } else {
-                    lore.addAll(I18n.lore("gui_auction.create.duration_normal.lore"));
+                    lore.addAll(I18n.lore("gui_auction.create.duration_normal.lore", l));
                 }
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.create.duration_extra_fee", Map.of("fee", String.valueOf(escrow.getDuration() / 180000))));
+                lore.add(I18n.string("gui_auction.create.duration_extra_fee", l, Map.of("fee", String.valueOf(escrow.getDuration() / 180000))));
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.create.duration_click"));
+                lore.add(I18n.string("gui_auction.create.duration_click", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_auction.create.duration_label", Map.of("duration", StringUtility.getAuctionSetupFormattedTime(escrow.getDuration()))),
+                return ItemStackCreator.getStack(I18n.string("gui_auction.create.duration_label", l, Map.of("duration", StringUtility.getAuctionSetupFormattedTime(escrow.getDuration()))),
                         Material.CLOCK, 1, lore);
             }
         });
@@ -124,11 +128,11 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (escrow.isBin()) {
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.create.switch_to_auction"), Material.POWERED_RAIL, 1,
-                            I18n.lore("gui_auction.create.switch_to_auction.lore"));
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.create.switch_to_auction", Material.POWERED_RAIL, 1,
+                            "gui_auction.create.switch_to_auction.lore");
                 } else {
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.create.switch_to_bin"), Material.GOLD_INGOT, 1,
-                            I18n.lore("gui_auction.create.switch_to_bin.lore"));
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.create.switch_to_bin", Material.GOLD_INGOT, 1,
+                            "gui_auction.create.switch_to_bin.lore");
                 }
             }
         });
@@ -138,6 +142,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ProxyService auctionService = new ProxyService(ServiceType.AUCTION_HOUSE);
 
+                Locale l = player.getLocale();
                 auctionService.isOnline().thenAccept((response) -> {
                     if (escrow.getItem() == null || !response)
                         return;
@@ -145,14 +150,14 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                     long fee = (long) ((escrow.getPrice() * 0.05) + ((double) escrow.getDuration() / 180000));
                     DatapointDouble coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class);
                     if (coins.getValue() < fee) {
-                        player.sendMessage(I18n.string("gui_auction.create.not_enough_coins"));
+                        player.sendMessage(I18n.string("gui_auction.create.not_enough_coins", l));
                         return;
                     }
                     coins.setValue(coins.getValue() - fee);
 
                     player.closeInventory();
 
-                    player.sendMessage(I18n.string("gui_auction.create.escrow_message"));
+                    player.sendMessage(I18n.string("gui_auction.create.escrow_message", l));
 
                     ItemStack builtItem = new NonPlayerItemUpdater(escrow.getItem()).getUpdatedItem().build();
                     AuctionItem item = new AuctionItem(escrow.getItem().toUnderstandable(), player.getUuid(), escrow.getDuration() + System.currentTimeMillis(),
@@ -166,7 +171,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                     player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).clearEscrow();
                     player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue().add(item.getUuid());
 
-                    player.sendMessage(I18n.string("gui_auction.create.setup_message"));
+                    player.sendMessage(I18n.string("gui_auction.create.setup_message", l));
 
                     AuctionAddItemProtocolObject.AuctionAddItemMessage message =
                             new AuctionAddItemProtocolObject.AuctionAddItemMessage(item, category);
@@ -174,27 +179,28 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
                             auctionService.handleRequest(message);
                     UUID auctionUUID = future.join().uuid();
 
-                    player.sendMessage(I18n.string("gui_auction.create.started_message", Map.of("item_name", itemName)));
-                    player.sendMessage(I18n.string("gui_auction.create.started_id", Map.of("uuid", auctionUUID.toString())));
+                    player.sendMessage(I18n.string("gui_auction.create.started_message", l, Map.of("item_name", itemName)));
+                    player.sendMessage(I18n.string("gui_auction.create.started_id", l, Map.of("uuid", auctionUUID.toString())));
                 });
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 if (escrow.getItem() == null) {
-                    return ItemStackCreator.getStack(I18n.string("gui_auction.create.submit_no_item"), Material.RED_TERRACOTTA, 1,
-                            I18n.lore("gui_auction.create.submit_no_item.lore"));
+                    return TranslatableItemStackCreator.getStack(p, "gui_auction.create.submit_no_item", Material.RED_TERRACOTTA, 1,
+                            "gui_auction.create.submit_no_item.lore");
                 } else {
                     ItemStack builtItem = new NonPlayerItemUpdater(escrow.getItem()).getUpdatedItem().build();
 
                     return ItemStackCreator.getStack(
-                            I18n.string("gui_auction.create.submit_ready", Map.of("type", escrow.isBin() ? "Bin " : "")),
+                            I18n.string("gui_auction.create.submit_ready", l, Map.of("type", escrow.isBin() ? "Bin " : "")),
                             Material.GREEN_TERRACOTTA, 1,
-                            I18n.lore("gui_auction.create.submit_ready.lore", Map.of(
+                            I18n.lore("gui_auction.create.submit_ready.lore", l, Map.of(
                                     "item_name", StringUtility.getTextFromComponent(builtItem.get(DataComponents.CUSTOM_NAME)),
                                     "duration", StringUtility.getAuctionSetupFormattedTime(escrow.getDuration()),
-                                    "price_label", escrow.isBin() ? I18n.string("gui_auction.create.price_bin_label") : I18n.string("gui_auction.create.price_normal_label"),
+                                    "price_label", escrow.isBin() ? I18n.string("gui_auction.create.price_bin_label", l) : I18n.string("gui_auction.create.price_normal_label", l),
                                     "price", StringUtility.commaify(escrow.getPrice()),
                                     "fee", String.valueOf((escrow.getPrice() * 0.05) + (escrow.getDuration() / 180000))
                             )));
@@ -205,18 +211,18 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
             @Override
             public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer player) {
-                long l;
+                long val;
                 try {
-                    l = Long.parseLong(query);
+                    val = Long.parseLong(query);
                 } catch (NumberFormatException ex) {
-                    player.sendMessage(I18n.string("gui_auction.create.number_parse_error"));
+                    player.sendMessage(I18n.string("gui_auction.create.number_parse_error", player.getLocale()));
                     return GUIAuctionCreateItem.this;
                 }
-                if (l <= 50) {
-                    player.sendMessage(I18n.string("gui_auction.create.price_too_low"));
+                if (val <= 50) {
+                    player.sendMessage(I18n.string("gui_auction.create.price_too_low", player.getLocale()));
                     return GUIAuctionCreateItem.this;
                 }
-                escrow.setPrice(l);
+                escrow.setPrice(val);
 
                 return GUIAuctionCreateItem.this;
             }
@@ -224,23 +230,24 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 Material material;
                 List<String> lore = new ArrayList<>();
                 if (escrow.isBin()) {
                     material = Material.GOLD_INGOT;
-                    lore.addAll(I18n.lore("gui_auction.create.price_bin.lore"));
+                    lore.addAll(I18n.lore("gui_auction.create.price_bin.lore", l));
                 } else {
                     material = Material.POWERED_RAIL;
-                    lore.addAll(I18n.lore("gui_auction.create.price_normal.lore"));
+                    lore.addAll(I18n.lore("gui_auction.create.price_normal.lore", l));
                 }
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.create.price_extra_fee", Map.of("fee", String.valueOf(escrow.getPrice() * 0.05))));
+                lore.add(I18n.string("gui_auction.create.price_extra_fee", l, Map.of("fee", String.valueOf(escrow.getPrice() * 0.05))));
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.create.price_click"));
+                lore.add(I18n.string("gui_auction.create.price_click", l));
 
                 String priceKey = escrow.isBin() ? "gui_auction.create.price_label_bin" : "gui_auction.create.price_label_normal";
                 return ItemStackCreator.getStack(
-                        I18n.string(priceKey, Map.of("price", StringUtility.commaify(escrow.getPrice()))),
+                        I18n.string(priceKey, l, Map.of("price", StringUtility.commaify(escrow.getPrice()))),
                         material, 1, lore);
             }
         });
@@ -274,7 +281,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
         DatapointAuctionEscrow.AuctionEscrow escrow = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue();
 
         if (escrow.getItem() != null) {
-            e.getPlayer().sendMessage(I18n.string("gui_auction.create.already_have_item"));
+            e.getPlayer().sendMessage(I18n.string("gui_auction.create.already_have_item", getPlayer().getLocale()));
             return;
         }
 
@@ -287,7 +294,7 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.create.offline_message"));
+            player.sendMessage(I18n.string("gui_auction.create.offline_message", player.getLocale()));
             player.closeInventory();
         }
     }

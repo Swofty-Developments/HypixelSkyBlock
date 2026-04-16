@@ -1,6 +1,5 @@
 package net.swofty.type.prototypelobby;
 
-import io.sentry.Sentry;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
@@ -18,7 +17,11 @@ import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.*;
+import net.swofty.type.lobby.events.LobbyBlockBreak;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyParkourEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.LobbyPlayerMove;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -39,7 +42,7 @@ import java.util.Map;
 public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
     private static final LobbyItemHandler itemHandler = new LobbyItemHandler();
     public static LobbyParkourManager parkourManager;
-    private final Pos spawnPoint = new Pos(11.5, 76, 0.5, 90, 0);
+    private final Pos SPAWN_POS = new Pos(11.5, 75, 0.5, 90, 0);
 
     @Override
     public ServerType getType() {
@@ -118,7 +121,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> spawnPoint,
+            (type) -> SPAWN_POS,
                 false
         );
     }
@@ -134,7 +137,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyPlayerJoinEvents());
         events.add(new LobbyParkourEvents());
         events.add(new LobbyBlockBreak());
-        events.add(new LobbyPlayerMove(spawnPoint));
+        events.add(new LobbyPlayerMove(SPAWN_POS));
         return events;
     }
 

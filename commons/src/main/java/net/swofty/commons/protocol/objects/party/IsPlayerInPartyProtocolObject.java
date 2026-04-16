@@ -1,6 +1,5 @@
 package net.swofty.commons.protocol.objects.party;
 
-import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -14,7 +13,7 @@ public class IsPlayerInPartyProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<IsPlayerInPartyMessage> getSerializer() {
-        return new Serializer<IsPlayerInPartyMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(IsPlayerInPartyMessage value) {
                 JSONObject json = new JSONObject();
@@ -38,7 +37,7 @@ public class IsPlayerInPartyProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<IsPlayerInPartyResponse> getReturnSerializer() {
-        return new Serializer<IsPlayerInPartyResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(IsPlayerInPartyResponse value) {
                 return value.isInParty ? "true" : "false";

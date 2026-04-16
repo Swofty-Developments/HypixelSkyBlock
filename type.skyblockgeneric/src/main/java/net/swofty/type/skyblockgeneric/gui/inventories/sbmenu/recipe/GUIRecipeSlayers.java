@@ -1,10 +1,13 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
@@ -14,6 +17,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUIRecipeSlayers extends StatelessView {
@@ -30,7 +34,7 @@ public class GUIRecipeSlayers extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.recipe.slayers.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.recipe.slayers.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -46,6 +50,7 @@ public class GUIRecipeSlayers extends StatelessView {
         // Title item
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
 
             SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 
@@ -81,9 +86,9 @@ public class GUIRecipeSlayers extends StatelessView {
             ));
             String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", Map.of("category_name", categoryName)),
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Map.of("category_name", categoryName)),
                     type.getMaterial(), 1,
-                    I18n.lore("gui_sbmenu.recipe.book.category.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                    I18n.lore("gui_sbmenu.recipe.book.category.lore", l, Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
         });
 
         // Category items
@@ -93,6 +98,7 @@ public class GUIRecipeSlayers extends StatelessView {
 
             layout.slot(slot, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                Locale l = player.getLocale();
 
                 ArrayList<SkyBlockRecipe> typeRecipes = new ArrayList<>();
                 ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
@@ -126,9 +132,9 @@ public class GUIRecipeSlayers extends StatelessView {
                 ));
                 String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", Map.of("category_name", categoryName)),
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Map.of("category_name", categoryName)),
                         type.getMaterial(), 1,
-                        I18n.lore("gui_sbmenu.recipe.book.category.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                        I18n.lore("gui_sbmenu.recipe.book.category.lore", l, Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
             }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
     }

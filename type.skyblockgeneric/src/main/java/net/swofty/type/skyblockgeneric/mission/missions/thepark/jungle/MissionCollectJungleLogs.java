@@ -7,7 +7,6 @@ import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionGiveRyanDarkOakLogs;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 

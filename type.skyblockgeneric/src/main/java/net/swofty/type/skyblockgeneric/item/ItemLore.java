@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,7 @@ public class ItemLore {
 
 	@SneakyThrows
 	public void updateLore(@Nullable SkyBlockPlayer player) {
+		Locale l = player != null ? player.getLocale() : Locale.US;
 		SkyBlockItem item = new SkyBlockItem(stack);
 		@Nullable ItemType type = item.getAttributeHandler().getPotentialType();
 		ItemAttributeHandler handler = item.getAttributeHandler();
@@ -74,18 +76,18 @@ public class ItemLore {
 				if (effectForName != null) {
 					String effectDisplay = effectForName.getLevelDisplay(potionDataForName.getLevel());
 					if (potionDataForName.isSplash()) {
-						displayName = effectDisplay + " " + I18n.string("items.lore.splash_potion_suffix");
+						displayName = effectDisplay + " " + I18n.string("items.lore.splash_potion_suffix", l);
 					} else {
-						displayName = effectDisplay + " " + I18n.string("items.lore.potion_suffix");
+						displayName = effectDisplay + " " + I18n.string("items.lore.potion_suffix", l);
 					}
 				} else if (handler.getPotentialType() != null) {
-					displayName = I18n.string("items." + handler.getPotentialType().name());
+					displayName = I18n.string("items." + handler.getPotentialType().name(), l);
 				} else {
 					Material material = stack.material();
 					displayName = StringUtility.toNormalCase(material.key().value());
 				}
 			} else if (handler.getPotentialType() != null) {
-				displayName = I18n.string("items." + handler.getPotentialType().name());
+				displayName = I18n.string("items." + handler.getPotentialType().name(), l);
 			} else {
 				Material material = stack.material();
 				displayName = StringUtility.toNormalCase(material.key().value());
@@ -124,20 +126,20 @@ public class ItemLore {
 			underNameDisplay.getDisplays().forEach(line -> addLoreLine("§8" + line));
 
 			if (type != null && CollectionCategories.getCategory(type) != null) {
-				addLoreLine(I18n.string("items.lore.collection_item"));
+				addLoreLine(I18n.string("items.lore.collection_item", l));
 			}
 
 			addLoreLine(null);
 		} else {
 			if (type != null && CollectionCategories.getCategory(type) != null) {
-				addLoreLine(I18n.string("items.lore.collection_item"));
+				addLoreLine(I18n.string("items.lore.collection_item", l));
 				addLoreLine(null);
 			}
 		}
 
 		// Handle Item Statistics
 		if (handler.isMiningTool()) {
-			addLoreLine(I18n.string("items.lore.breaking_power", Map.of("value", String.valueOf(handler.getBreakingPower()))));
+			addLoreLine(I18n.string("items.lore.breaking_power", l, Map.of("value", String.valueOf(handler.getBreakingPower()))));
 			addLoreLine(null);
 		}
 
@@ -158,7 +160,7 @@ public class ItemLore {
 
 		if (item.hasComponent(ShortBowComponent.class)) {
 			ShortBowComponent shortBowComponent = item.getComponent(ShortBowComponent.class);
-			addLoreLine(I18n.string("items.lore.shot_cooldown", Map.of("cooldown", String.valueOf(shortBowComponent.getCooldown()))));
+			addLoreLine(I18n.string("items.lore.shot_cooldown", l, Map.of("cooldown", String.valueOf(shortBowComponent.getCooldown()))));
 			addNextLine = true;
 		}
 
@@ -292,7 +294,7 @@ public class ItemLore {
 			AbilityComponent abilityComponent = item.getComponent(AbilityComponent.class);
 
 			abilityComponent.getAbilities().forEach(ability -> {
-				addLoreLine(I18n.string("items.lore.ability_label", Map.of("name", ability.getName(), "activation", ability.getActivation().getDisplay())));
+				addLoreLine(I18n.string("items.lore.ability_label", l, Map.of("name", ability.getName(), "activation", ability.getActivation().getDisplay())));
 				for (String line : StringUtility.splitByWordAndLength(ability.getDescription().apply(player, item), 40))
 					addLoreLine("§7" + line);
 
@@ -300,7 +302,7 @@ public class ItemLore {
 				if (costDisplay != null) addLoreLine(costDisplay);
 
 				if (ability.getCooldownTicks() > 20) {
-					addLoreLine(I18n.string("items.lore.ability_cooldown", Map.of("cooldown", StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1))));
+					addLoreLine(I18n.string("items.lore.ability_cooldown", l, Map.of("cooldown", StringUtility.decimalify((double) ability.getCooldownTicks() / 20, 1))));
 				}
 
 				addLoreLine(null);
@@ -333,13 +335,13 @@ public class ItemLore {
 				}
 			}
 			int totalPieces = ArmorSetRegistry.getPieceCount(ArmorSetRegistry.getArmorSet(armorSet.getClass()));
-			addLoreLine(I18n.string("items.lore.full_set_bonus", Map.of("name", armorSet.getName(), "wearing", String.valueOf(wearingAmount), "total", String.valueOf(totalPieces))));
+			addLoreLine(I18n.string("items.lore.full_set_bonus", l, Map.of("name", armorSet.getName(), "wearing", String.valueOf(wearingAmount), "total", String.valueOf(totalPieces))));
 			armorSet.getDescription().forEach(line -> addLoreLine("§7" + line));
 			addLoreLine(null);
 		}
 
 		if (item.hasComponent(RightClickRecipeComponent.class)) {
-			addLoreLine(I18n.string("items.lore.right_click_recipes"));
+			addLoreLine(I18n.string("items.lore.right_click_recipes", l));
 			addLoreLine(null);
 		}
 
@@ -349,20 +351,20 @@ public class ItemLore {
 		}
 
 		if (item.hasComponent(ReforgableComponent.class)) {
-			addLoreLine(I18n.string("items.lore.reforgeable"));
+			addLoreLine(I18n.string("items.lore.reforgeable", l));
 			if (handler.getReforge() != null) displayName = handler.getReforge().getPrefix() + " " + displayName;
 		}
 
 		ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
 		if (bound != null)
-			addLoreLine(I18n.string("items.lore.soulbound", Map.of("prefix", bound.isCoopAllowed() ? I18n.string("items.lore.soulbound_coop_prefix") : "")));
+			addLoreLine(I18n.string("items.lore.soulbound", l, Map.of("prefix", bound.isCoopAllowed() ? I18n.string("items.lore.soulbound_coop_prefix", l) : "")));
 
 		if (item.hasComponent(ArrowComponent.class)) {
-			addLoreLine(I18n.string("items.lore.stats_when_shot"));
+			addLoreLine(I18n.string("items.lore.stats_when_shot", l));
 		}
 
 		if (item.hasComponent(NotFinishedYetComponent.class)) {
-			addLoreLine(I18n.string("items.lore.not_finished"));
+			addLoreLine(I18n.string("items.lore.not_finished", l));
 			addLoreLine(null);
 		}
 

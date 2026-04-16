@@ -13,7 +13,7 @@ public class GetServerForMapProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetServerForMapMessage> getSerializer() {
-        return new Serializer<GetServerForMapMessage>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetServerForMapMessage value) {
                 JSONObject json = new JSONObject();
@@ -28,10 +28,10 @@ public class GetServerForMapProtocolObject extends ProtocolObject
             public GetServerForMapMessage deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GetServerForMapMessage(
-                        ServerType.valueOf(obj.getString("type")),
-                        obj.has("map") ? obj.getString("map") : null,
-                        obj.has("mode") ? obj.getString("mode") : null,
-                        obj.getInt("neededSlots")
+                    ServerType.valueOf(obj.getString("type")),
+                    obj.has("map") ? obj.getString("map") : null,
+                    obj.has("mode") ? obj.getString("mode") : null,
+                    obj.getInt("neededSlots")
                 );
             }
 
@@ -44,7 +44,7 @@ public class GetServerForMapProtocolObject extends ProtocolObject
 
     @Override
     public Serializer<GetServerForMapResponse> getReturnSerializer() {
-        return new Serializer<GetServerForMapResponse>() {
+        return new Serializer<>() {
             @Override
             public String serialize(GetServerForMapResponse value) {
                 JSONObject json = new JSONObject();

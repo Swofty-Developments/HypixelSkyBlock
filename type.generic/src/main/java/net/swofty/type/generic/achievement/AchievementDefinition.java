@@ -23,7 +23,7 @@ public class AchievementDefinition {
 
     public int getTotalPoints() {
         if (type == AchievementType.TIERED && tiers != null) {
-            return tiers.stream().mapToInt(AchievementTier::getPoints).sum();
+            return tiers.stream().mapToInt(AchievementTier::points).sum();
         }
         return points;
     }
@@ -31,24 +31,24 @@ public class AchievementDefinition {
     public int getGoalForTier(int tier) {
         if (type != AchievementType.TIERED || tiers == null) return goal;
         return tiers.stream()
-                .filter(t -> t.getTier() == tier)
+                .filter(t -> t.tier() == tier)
                 .findFirst()
-                .map(AchievementTier::getGoal)
+                .map(AchievementTier::goal)
                 .orElse(0);
     }
 
     public int getPointsForTier(int tier) {
         if (type != AchievementType.TIERED || tiers == null) return points;
         return tiers.stream()
-                .filter(t -> t.getTier() == tier)
+                .filter(t -> t.tier() == tier)
                 .findFirst()
-                .map(AchievementTier::getPoints)
+                .map(AchievementTier::points)
                 .orElse(0);
     }
 
     public int getMaxTier() {
         if (type != AchievementType.TIERED || tiers == null) return 1;
-        return tiers.stream().mapToInt(AchievementTier::getTier).max().orElse(1);
+        return tiers.stream().mapToInt(AchievementTier::tier).max().orElse(1);
     }
 
     public int getPointsUpToTier(int tier) {
@@ -56,8 +56,8 @@ public class AchievementDefinition {
             return tier >= 1 ? points : 0;
         }
         return tiers.stream()
-                .filter(t -> t.getTier() <= tier)
-                .mapToInt(AchievementTier::getPoints)
+                .filter(t -> t.tier() <= tier)
+                .mapToInt(AchievementTier::points)
                 .sum();
     }
 

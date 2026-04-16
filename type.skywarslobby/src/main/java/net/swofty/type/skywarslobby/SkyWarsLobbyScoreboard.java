@@ -4,10 +4,9 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.skywars.SkyWarsLevelColor;
 import net.swofty.commons.skywars.SkywarsLeaderboardMode;
 import net.swofty.commons.skywars.SkywarsLeaderboardPeriod;
-import net.swofty.commons.skywars.SkywarsLevelColor;
-import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -17,13 +16,15 @@ import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class SkywarsLobbyScoreboard {
+public class SkyWarsLobbyScoreboard {
 	private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
 	private static Integer animationFrame = 0;
 
@@ -37,6 +38,7 @@ public class SkywarsLobbyScoreboard {
 			}
 
 			for (HypixelPlayer player : HypixelGenericLoader.getLoadedPlayers()) {
+				Locale l = player.getLocale();
 				SkywarsDataHandler swDataHandler = SkywarsDataHandler.getUser(player);
 
 				if (swDataHandler == null) {
@@ -61,27 +63,27 @@ public class SkywarsLobbyScoreboard {
 				int level = SkywarsLevelRegistry.calculateLevel(experience);
 
 				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label") + " " + SkywarsLevelColor.getLevelDisplay(level));
+				lines.add(I18n.string("scoreboard.skywars_lobby.your_level_label", l) + " " + SkyWarsLevelColor.getLevelDisplay(level));
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.solo_kills_label") + soloKills);
-				lines.add(I18n.string("scoreboard.skywars_lobby.solo_wins_label") + soloWins);
-				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_kills_label") + doublesKills);
-				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_wins_label") + doublesWins);
+				lines.add(I18n.string("scoreboard.skywars_lobby.solo_kills_label", l) + soloKills);
+				lines.add(I18n.string("scoreboard.skywars_lobby.solo_wins_label", l) + soloWins);
+				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_kills_label", l) + doublesKills);
+				lines.add(I18n.string("scoreboard.skywars_lobby.doubles_wins_label", l) + doublesWins);
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.skywars_lobby.coins_label") + coins);
-				lines.add(I18n.string("scoreboard.skywars_lobby.souls_label") + souls);
-				lines.add(I18n.string("scoreboard.skywars_lobby.tokens_label") + tokens);
+				lines.add(I18n.string("scoreboard.skywars_lobby.coins_label", l) + coins);
+				lines.add(I18n.string("scoreboard.skywars_lobby.souls_label", l) + souls);
+				lines.add(I18n.string("scoreboard.skywars_lobby.tokens_label", l) + tokens);
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer"));
+				lines.add(I18n.string("scoreboard.common.footer", l));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, getSidebarName(animationFrame));
+					scoreboard.createScoreboard(player, getSidebarName(animationFrame, l));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, getSidebarName(animationFrame));
+				scoreboard.updateTitle(player, getSidebarName(animationFrame, l));
 			}
 			return TaskSchedule.tick(4);
 		});
@@ -91,8 +93,8 @@ public class SkywarsLobbyScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.skywars_lobby.title_base");
+	private static String getSidebarName(int counter, Locale locale) {
+		String baseText = I18n.string("scoreboard.skywars_lobby.title_base", locale);
 		String[] colors = {"§f§l", "§e§l", "§6§l"};
 
 		if (counter > 0 && counter <= 7) {

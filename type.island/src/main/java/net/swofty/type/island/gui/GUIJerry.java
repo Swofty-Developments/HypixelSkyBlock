@@ -7,8 +7,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -33,10 +33,10 @@ public class GUIJerry extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return ItemStackCreator.getStack("§aPatch Notes", Material.BOOK, 1,
-                        "§7View the latest features and",
-                        "§7changes to the game.",
-                        "",
-                        "§eClick to open!"
+                    "§7View the latest features and",
+                    "§7changes to the game.",
+                    "",
+                    "§eClick to open!"
                 );
             }
         });
@@ -51,11 +51,11 @@ public class GUIJerry extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 return ItemStackCreator.getStack("§aDeliveries", Material.ENDER_CHEST, 1,
-                        "§7Any items that may be delivered to",
-                        "§7yourself or your island will appear",
-                        "§7here for collection!",
-                        "",
-                        "§eClick to open!"
+                    "§7Any items that may be delivered to",
+                    "§7yourself or your island will appear",
+                    "§7here for collection!",
+                    "",
+                    "§eClick to open!"
                 );
             }
         });
@@ -71,10 +71,10 @@ public class GUIJerry extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aVisits and Guesting", Material.EMERALD, 1,
-                        "§7Learn all about how to §a/visit",
-                        "§7players across the SkyBlock universe!",
-                        " ",
-                        "§eClick to learn!"
+                    "§7Learn all about how to §a/visit",
+                    "§7players across the SkyBlock universe!",
+                    " ",
+                    "§eClick to learn!"
                 );
             }
         });

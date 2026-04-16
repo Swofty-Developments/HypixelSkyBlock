@@ -12,7 +12,7 @@ import java.util.UUID;
 
 /**
  * Main API entry point for interacting with the Swofty Anticheat.
- *
+ * <p>
  * This API allows you to:
  * - Register custom movement modifiers
  * - Store and retrieve custom player data

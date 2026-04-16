@@ -1,6 +1,5 @@
 package net.swofty.type.bedwarslobby.util;
 
-import net.swofty.commons.StringUtility;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.data.HypixelDataHandler;

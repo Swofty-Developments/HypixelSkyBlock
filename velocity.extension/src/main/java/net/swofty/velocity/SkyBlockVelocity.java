@@ -392,7 +392,7 @@ public class SkyBlockVelocity {
         event.setPing(new ServerPing(
                 event.getPing().getVersion(),
                 null,
-                Component.text("                §aHypixel Recreation §c[1.8-1.21]"),
+                Component.text("               §aHypixel Recreation §c[1.8-1.21]"),
                 event.getPing().getFavicon().orElse(null)
         ));
     }
@@ -401,16 +401,14 @@ public class SkyBlockVelocity {
 	public void onPlayerConnect(ServerPostConnectEvent event) {
 		Player player = event.getPlayer();
 		if (!(player.getProtocolVersion().getProtocol() >= ProtocolVersion.MAXIMUM_VERSION.getProtocol())) {
-			StringBuilder message = new StringBuilder();
+            String message = "\n" +
+                "§6§l----------- §cServer Notice §6§l-----------\n" +
+                "§cAlthough we do support versions prior to §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c, the experience may be degraded.\n" +
+                "§cIf you experience any issues, please test if it also occurs on §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c before reporting it.\n" +
+                "§6§l---------------------------------\n" +
+                "\n";
 
-			message.append("\n");
-			message.append("§6§l----------- §cServer Notice §6§l-----------\n");
-			message.append("§cAlthough we do support versions prior to §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c, the experience may be degraded.\n");
-			message.append("§cIf you experience any issues, please test if it also occurs on §6" + ProtocolVersion.MAXIMUM_VERSION.getVersionIntroducedIn() + "§c before reporting it.\n");
-			message.append("§6§l---------------------------------\n");
-			message.append("\n");
-
-			player.sendMessage(Component.text(message.toString()));
+			player.sendMessage(Component.text(message));
 		}
 
 		player.getCurrentServer().ifPresent(connection -> {

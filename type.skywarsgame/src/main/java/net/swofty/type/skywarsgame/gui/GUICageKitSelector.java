@@ -11,7 +11,6 @@ import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarslobby.gui.GUIKitBreakdown;
@@ -270,9 +269,7 @@ public class GUICageKitSelector extends HypixelInventoryGUI {
                 boolean owned = unlocks.hasKit(kit.getId());
                 boolean selected = unlocks.getSelectedKitForMode(mode).equals(kit.getId());
 
-                List<String> lore = new ArrayList<>();
-                lore.addAll(kit.getItemsLore(mode));
-
+                List<String> lore = new ArrayList<>(kit.getItemsLore(mode));
                 if (selected) {
                     lore.add("§aSELECTED");
                 } else if (owned) {

@@ -15,23 +15,23 @@ java {
 }
 
 dependencies {
-    implementation("org.yaml:snakeyaml:2.5")
+    implementation(libs.snakeyaml)
     implementation(project(":packer"))
-    implementation("org.mongodb:bson:4.11.2")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
+    implementation(libs.mongodb.bson)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 
-    compileOnly("net.minestom:minestom:2025.12.20c-1.21.11") {
+    compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
 
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
-    implementation("redis.clients:jedis:7.2.0")
+    implementation(libs.jedis)
 
-    implementation("de.exlll:configlib-yaml:4.8.1")
+    implementation(libs.configlib.yaml)
 
-    implementation("org.spongepowered:configurate-yaml:4.2.0")
-    implementation("com.squareup:javapoet:1.13.0")
+    implementation(libs.configurate.yaml)
+    implementation(libs.javapoet)
 }
 
 sourceSets {

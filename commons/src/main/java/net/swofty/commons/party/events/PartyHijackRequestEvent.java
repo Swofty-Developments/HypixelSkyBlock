@@ -27,7 +27,7 @@ public class PartyHijackRequestEvent extends PartyEvent {
 
     @Override
     public Serializer<PartyHijackRequestEvent> getSerializer() {
-        return new Serializer<PartyHijackRequestEvent>() {
+        return new Serializer<>() {
             @Override
             public String serialize(PartyHijackRequestEvent value) {
                 JSONObject json = new JSONObject();

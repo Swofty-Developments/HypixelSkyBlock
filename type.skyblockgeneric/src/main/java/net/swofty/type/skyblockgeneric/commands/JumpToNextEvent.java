@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 
-@CommandParameters(aliases = "jumptonextevent",
+@CommandParameters(aliases = "jumptonextevent skiptoevent",
         description = "Jumps to the next SkyBlock calendar event",
         usage = "/jumptonextevent <eventName>",
         permission = Rank.STAFF,

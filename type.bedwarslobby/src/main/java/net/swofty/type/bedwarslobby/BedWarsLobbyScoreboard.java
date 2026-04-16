@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static net.swofty.commons.bedwars.BedwarsLevelUtil.suffix;
 
@@ -36,6 +37,7 @@ public class BedWarsLobbyScoreboard {
 			}
 
 			for (HypixelPlayer player : HypixelGenericLoader.getLoadedPlayers()) {
+				Locale l = player.getLocale();
 				HypixelDataHandler dataHandler = player.getDataHandler();
 				BedWarsDataHandler bwDataHandler = BedWarsDataHandler.getUser(player);
 
@@ -49,41 +51,41 @@ public class BedWarsLobbyScoreboard {
 
 				double percentage = Math.min(1.0, (double) progress / maxExperience);
 				int filledSquares = (int) Math.round(percentage * 10);
-				StringBuilder progressBar = new StringBuilder(" " + I18n.string("scoreboard.bedwars_lobby.progress_bar_open"));
+				StringBuilder progressBar = new StringBuilder(" " + I18n.string("scoreboard.bedwars_lobby.progress_bar_open", l));
 				for (int i = 0; i < 10; i++) {
 					if (i < filledSquares) {
-						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_filled"));
+						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_filled", l));
 					} else {
-						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_empty"));
+						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_empty", l));
 					}
 				}
-				progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_close"));
+				progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_close", l));
 
 				long tokens = bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue();
 				long tickets = bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue();
 
 				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()) + " §8" + HypixelConst.getServerName());
+				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.level_label") + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.level_label", l) + BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)));
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.progress_label") + suffix(progress) + I18n.string("scoreboard.bedwars_lobby.progress_separator") + suffix(maxExperience));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.progress_label", l) + suffix(progress) + I18n.string("scoreboard.bedwars_lobby.progress_separator", l) + suffix(maxExperience));
 				lines.add(progressBar.toString());
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.tokens_label") + tokens);
-				lines.add(I18n.string("scoreboard.bedwars_lobby.tickets_label") + tickets + I18n.string("scoreboard.bedwars_lobby.tickets_max"));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.tokens_label", l) + tokens);
+				lines.add(I18n.string("scoreboard.bedwars_lobby.tickets_label", l) + tickets + I18n.string("scoreboard.bedwars_lobby.tickets_max", l));
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.bedwars_lobby.total_kills_label"));
-				lines.add(I18n.string("scoreboard.bedwars_lobby.total_wins_label"));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.total_kills_label", l));
+				lines.add(I18n.string("scoreboard.bedwars_lobby.total_wins_label", l));
 				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer"));
+				lines.add(I18n.string("scoreboard.common.footer", l));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, getSidebarName(prototypeName));
+					scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, getSidebarName(prototypeName));
+				scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
 			}
 			return TaskSchedule.tick(4);
 		});
@@ -93,8 +95,8 @@ public class BedWarsLobbyScoreboard {
 		scoreboard.removeScoreboard(player);
 	}
 
-	private static String getSidebarName(int counter) {
-		String baseText = I18n.string("scoreboard.bedwars_lobby.title_base");
+	private static String getSidebarName(int counter, Locale locale) {
+		String baseText = I18n.string("scoreboard.bedwars_lobby.title_base", locale);
 		String[] colors = {"§f§l", "§6§l", "§e§l"};
 		String endColor = "§a§l";
 

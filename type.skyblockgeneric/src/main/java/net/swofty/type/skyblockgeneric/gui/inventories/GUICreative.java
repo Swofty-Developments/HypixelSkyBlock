@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.Layouts;
 import net.swofty.type.generic.gui.v2.PaginatedView;
@@ -26,6 +27,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.CreativeState> {
@@ -35,7 +37,8 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
         return ViewConfiguration.withString(
                 (state, ctx) -> {
                     int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / DEFAULT_SLOTS.length));
-                    return I18n.string("gui_misc.creative.title", Map.of(
+                    Locale l = ctx.player().getLocale();
+                    return I18n.string("gui_misc.creative.title", l, Map.of(
                             "page", String.valueOf(state.page() + 1),
                             "total_pages", String.valueOf(totalPages)
                     ));
@@ -79,11 +82,11 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
     @Override
     protected void layoutCustom(ViewLayout<CreativeState> layout, CreativeState state, ViewContext ctx) {
-        layout.slot(49, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_misc.creative.close_button"), Material.BARRIER, 1),
+        layout.slot(49, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_misc.creative.close_button", Material.BARRIER, 1),
                 (_, c) -> c.player().closeInventory());
 
-        layout.slot(50, (_, _) -> ItemStackCreator.getStack(I18n.string("gui_misc.creative.search_button"), Material.OAK_SIGN, 1,
-                I18n.lore("gui_misc.creative.search_button.lore")), (_, c) -> {
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_misc.creative.search_button", Material.OAK_SIGN, 1,
+                "gui_misc.creative.search_button.lore"), (_, c) -> {
             new HypixelSignGUI(c.player()).open(new String[]{"Enter query", ""}).thenAccept(line -> {
                 if (line == null) {
                     return;
@@ -106,10 +109,11 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
         boolean stackable = !(displayItem.hasComponent(TrackedUniqueComponent.class));
 
+        Locale l = player.getLocale();
         ArrayList<String> lore = new ArrayList<>(displayItem.getLore());
         lore.add(" ");
-        lore.add(I18n.string("gui_misc.creative.click_to_retrieve"));
-        if (stackable) lore.add(I18n.string("gui_misc.creative.right_click_stack"));
+        lore.add(I18n.string("gui_misc.creative.click_to_retrieve", l));
+        if (stackable) lore.add(I18n.string("gui_misc.creative.right_click_stack", l));
 
         return ItemStackCreator.updateLore(itemStack, lore);
     }
@@ -126,16 +130,17 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
         player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
+        Locale l = player.getLocale();
         if (click.click() instanceof Click.Right && stackable) {
             toGive.setAmount(64);
             player.addAndUpdateItem(toGive);
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-            player.sendMessage(I18n.string("gui_misc.creative.given_stack", Map.of("item_name", toGive.getDisplayName())));
+            player.sendMessage(I18n.string("gui_misc.creative.given_stack", l, Map.of("item_name", toGive.getDisplayName())));
         } else {
             toGive.setAmount(1);
             player.addAndUpdateItem(toGive);
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-            player.sendMessage(I18n.string("gui_misc.creative.given_single", Map.of("item_name", toGive.getDisplayName())));
+            player.sendMessage(I18n.t("gui_misc.creative.given_single", l, Map.of("item_name", toGive.getDisplayName())));
         }
     }
 
