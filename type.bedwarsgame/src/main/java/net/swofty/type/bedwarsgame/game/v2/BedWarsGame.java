@@ -241,6 +241,11 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 DatapointBedWarsHotbar.HotbarItemType.PICKAXE);
         }
 
+        if (gameType != BedWarsGameType.SOLO) {
+            BedWarsInventoryManipulator.addItemWithHotbarPriority(player, TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack(),
+                DatapointBedWarsHotbar.HotbarItemType.COMPASS);
+        }
+
         // equip the player with team armor
         equipTeamArmor(player, teamKey);
 

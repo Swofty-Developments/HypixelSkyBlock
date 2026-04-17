@@ -5,7 +5,6 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.VersionConst;
-import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGameEventManager;
@@ -55,7 +54,7 @@ public class BedWarsGameScoreboard {
                 Locale l = player.getLocale();
 
                 String tag = "";
-                if (game.getGameType() == BedWarsGameType.DREAM_DOUBLES || game.getGameType() == BedWarsGameType.DREAM_FOURS) {
+                if (game.getGameType().isDream()) {
                     tag = "§8[D]";
                 }
 

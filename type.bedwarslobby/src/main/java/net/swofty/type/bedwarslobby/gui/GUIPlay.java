@@ -29,10 +29,17 @@ public class GUIPlay extends HypixelInventoryGUI {
 		set(new GUIClickableItem(playSlot) {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
+				StringBuilder builder = new StringBuilder();
+
+				for (String line : type.getDescription()) {
+					builder.append(line).append("\n");
+				}
+				builder.deleteCharAt(builder.length() - 1);
+
 				return ItemStackCreator.getSingleLoreStackLineSplit(
 						"§aBed Wars " + type.getDisplayName(), "§7",
 						Material.RED_BED, 1,
-						"§7Play a game of Bed Wars " + type.getDisplayName() + "\n\n" + lore() + "\n\n§eClick to play!"
+					"§7Play a game of Bed Wars " + type.getDisplayName() + "\n\n" + builder + "\n\n§eClick to play!"
 				);
 			}
 
@@ -93,23 +100,5 @@ public class GUIPlay extends HypixelInventoryGUI {
 	@Override
 	public void onBottomClick(InventoryPreClickEvent e) {
 
-	}
-
-	private String lore() {
-		return switch (type) {
-			case SOLO ->
-					"Fight against 7 other players!\nDestroy enemy beds to stop them\nfrom respawning!\nProtect your bed from destruction!";
-			case DOUBLES ->
-					"Team up with 1 other player to\ndefeat 7 enemy teams!\nDestroy enemy beds to stop them\nfrom respawning!\nProtect your bed from destruction!";
-			case THREE_THREE_THREE_THREE ->
-					"Team up with 2 other players to\ndefeat 3 other groups of players!\nDestroy enemy beds to stop them\nfrom respawning!\nProtect your bed from destruction!";
-			case FOUR_FOUR_FOUR_FOUR ->
-					"Team up with 3 other players to\ndefeat 3 other groups of players!\nDestroy enemy beds to stop them\nfrom respawning!\nProtect your bed from destruction!";
-			case FOUR_FOUR -> "4v4 is the classic Bed Wars\neveryone knows and lovees, but with\nonly 1 enemy team!";
-			case ULTIMATE_DOUBLES -> "Ultimate Doubles";
-			case ULTIMATE_FOURS -> "Ultimate 4v4v4v4";
-			case DREAM_DOUBLES -> "Dream";
-			case DREAM_FOURS -> "Dream";
-		};
 	}
 }

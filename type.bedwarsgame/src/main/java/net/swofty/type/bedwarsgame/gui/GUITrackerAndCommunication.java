@@ -26,7 +26,7 @@ public class GUITrackerAndCommunication extends StatelessView {
             "§7your teammates!",
             "",
             "§eClick to open!"
-        ));
+        ), (_, context) -> context.push(new GUIQuickCommunications()));
         layout.slot(15, ItemStackCreator.getStack(
             "§aTracker Shop",
             Material.COMPASS,
@@ -36,6 +36,6 @@ public class GUITrackerAndCommunication extends StatelessView {
             "§7on a specific team until you die.",
             "",
             "§eClick to open!"
-        ));
+        ), (_, context) -> context.push(new GUIPurchaseEnemyTracker()));
     }
 }
