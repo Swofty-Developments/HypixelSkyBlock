@@ -29,7 +29,8 @@ public class PlaybackControlItem extends ReplayItem {
         AtomicBoolean isPlaying = new AtomicBoolean(true);
         TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
             session -> isPlaying.set(session.isPlaying()),
-            () -> player.sendMessage("§cNo active replay session.")
+            () -> {
+            }
         );
         if (isPlaying.get()) {
             return appendData(ItemStackCreator.createNamedItemStack(Material.MAGENTA_DYE, "§aClick to Pause")).build();
