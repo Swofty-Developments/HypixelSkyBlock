@@ -88,9 +88,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
         event.setSpawningInstance(instance);
         event.getPlayer().setRespawnPoint(new Pos(0, 100, 0));
 
-        CompletableFuture.runAsync(() -> {
-            ScheduleUtility.delay(() -> loadReplay(player, replayId, instance), 20);
-        });
+        CompletableFuture.runAsync(() -> ScheduleUtility.delay(() -> loadReplay(player, replayId, instance), 20));
     }
 
     private void loadReplay(Player player, UUID replayId, InstanceContainer instance) {

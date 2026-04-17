@@ -19,6 +19,7 @@ import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.game.replay.entity.EntityStateTracker;
 import net.swofty.type.game.replay.recordable.Recordable;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntityManager;
@@ -105,7 +106,9 @@ public class ReplaySession {
 
         TypeReplayViewerLoader.populateInventory((HypixelPlayer) viewer);
         TypeReplayViewerLoader.registerSession(viewer.getUuid(), this);
-        autoFollowForViewer(viewer);
+
+        ScheduleUtility.delay(() -> autoFollowForViewer(viewer), 20);
+
 
         Logger.info("Added viewer {} to replay session {}", viewer.getUsername(), replayId);
     }
@@ -153,24 +156,17 @@ public class ReplaySession {
     public void autoFollowForViewer(Player viewer) {
         UUID viewerUuid = viewer.getUuid();
 
-        // Check if the viewer was a player in this game
         if (!metadata.getPlayers().containsKey(viewerUuid)) {
             return;
         }
 
-        // Find the entity with matching UUID
         for (int entityId : entityManager.getEntityIds()) {
             Entity entity = entityManager.getEntity(entityId);
             if (entity instanceof ReplayPlayerEntity playerEntity) {
                 if (viewerUuid.equals(playerEntity.getActualUuid())) {
-                    followEntity(viewer, entityId);
-                    viewer.sendMessage(Component.text("Auto-following your recorded player", NamedTextColor.GREEN));
-                    return;
-                }
-            } else if (entity instanceof ReplayEntity replayEntity) {
-                if (viewerUuid.equals(replayEntity.getRecordedUuid())) {
-                    followEntity(viewer, entityId);
-                    viewer.sendMessage(Component.text("Auto-following your recorded player", NamedTextColor.GREEN));
+                    viewer.teleport(playerEntity.getPosition());
+                    viewer.sendMessage("§aTeleporting you to " + playerEntity.getActualUuid());
+                    applyTeamGlow(viewer, entity, entityId);
                     return;
                 }
             }
@@ -455,12 +451,11 @@ public class ReplaySession {
         viewer.stopSpectating();
     }
 
+    // todo: sloppy method
     private void applyTeamGlow(Player viewer, Entity entity, int entityId) {
         UUID entityUuid = null;
         if (entity instanceof ReplayPlayerEntity playerEntity) {
             entityUuid = playerEntity.getActualUuid();
-        } else if (entity instanceof ReplayEntity replayEntity) {
-            entityUuid = replayEntity.getRecordedUuid();
         }
 
         if (entityUuid == null) return;
@@ -484,9 +479,8 @@ public class ReplaySession {
         entity.setGlowing(true);
 
         String teamName = "REPLAY_GLOW_" + entityId;
-        String entityName = entity instanceof ReplayPlayerEntity playerEntity
-            ? playerEntity.getPlayerName()
-            : entity.getUuid().toString();
+        ReplayPlayerEntity playerEntity = (ReplayPlayerEntity) entity;
+        String entityName = playerEntity.getPlayerName();
 
         viewer.sendPacket(new TeamsPacket(
             teamName,

@@ -27,10 +27,8 @@ public class PlaybackControlItem extends ReplayItem {
     public ItemStack getItemStack(HypixelPlayer... p) {
         HypixelPlayer player = p[0];
         AtomicBoolean isPlaying = new AtomicBoolean(true);
-        TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
-            session -> isPlaying.set(session.isPlaying()),
-            () -> {
-            }
+        TypeReplayViewerLoader.getSession(player).ifPresent(
+            session -> isPlaying.set(session.isPlaying())
         );
         if (isPlaying.get()) {
             return appendData(ItemStackCreator.createNamedItemStack(Material.MAGENTA_DYE, "§aClick to Pause")).build();
