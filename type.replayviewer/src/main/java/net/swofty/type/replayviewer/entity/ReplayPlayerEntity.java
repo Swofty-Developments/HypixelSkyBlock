@@ -8,6 +8,7 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Metadata;
@@ -16,7 +17,9 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.RelativeFlags;
 import net.minestom.server.entity.damage.DamageType;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.DamageEventPacket;
+import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
 import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
@@ -28,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -92,6 +96,8 @@ public class ReplayPlayerEntity extends LivingEntity {
                 Metadata.Byte((byte) 127) // 127 is all parts
             ))
         );
+
+        sendEquipmentToViewer(player);
     }
 
     @Override
@@ -142,6 +148,20 @@ public class ReplayPlayerEntity extends LivingEntity {
 
     public String getScoreboardEntryName() {
         return playerName;
+    }
+
+    private void sendEquipmentToViewer(Player viewer) {
+        Map<EquipmentSlot, ItemStack> equipments = new EnumMap<>(EquipmentSlot.class);
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack stack = getEquipment(slot);
+            if (stack != null && !stack.isAir()) {
+                equipments.put(slot, stack);
+            }
+        }
+
+        if (!equipments.isEmpty()) {
+            viewer.sendPacket(new EntityEquipmentPacket(getEntityId(), equipments));
+        }
     }
 
 }

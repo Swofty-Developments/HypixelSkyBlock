@@ -18,6 +18,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 import net.swofty.type.bedwarsconfigurator.TypeBedWarsConfiguratorLoader;
 import net.swofty.type.bedwarsconfigurator.autosetup.AutoSetupSession;
 import net.swofty.type.bedwarsconfigurator.autosetup.DebugMarkerManager;
@@ -336,10 +337,10 @@ public class AutoSetupCommand extends HypixelCommand {
                 player.sendMessage(Component.text("§aSet team spawn to " + formatPos(pos)));
             }
             case "bed" -> {
-                Optional<Tuple<HypixelPosition, HypixelPosition>> positions = calculateBedHead(player);
+                Optional<Tuple<Vec3i, Vec3i>> positions = calculateBedHead(player);
                 positions.ifPresentOrElse(position -> {
-                    HypixelPosition head = position.getKey();
-                    HypixelPosition feet = position.getValue();
+                    Vec3i head = position.getKey();
+                    Vec3i feet = position.getValue();
 
                     teamConfig.setBedFeet(feet);
                     teamConfig.setBedHead(head);
@@ -368,7 +369,7 @@ public class AutoSetupCommand extends HypixelCommand {
         }
     }
 
-    private Optional<Tuple<HypixelPosition, HypixelPosition>> calculateBedHead(Player player) {
+    private Optional<Tuple<Vec3i, Vec3i>> calculateBedHead(Player player) {
         Pos start = player.getPosition();
 
         Ray ray = new Ray(start, start.direction().mul(5));
@@ -392,7 +393,7 @@ public class AutoSetupCommand extends HypixelCommand {
         Block bedBlock = hit.object();
         Point hitPoint = hit.point();
 
-        HypixelPosition hitPos = new HypixelPosition(hitPoint.blockX(), hitPoint.blockY(), hitPoint.blockZ());
+        Vec3i hitPos = new Vec3i(hitPoint.blockX(), hitPoint.blockY(), hitPoint.blockZ());
 
         String part = bedBlock.getProperty("part");
         String facing = bedBlock.getProperty("facing");
@@ -402,16 +403,16 @@ public class AutoSetupCommand extends HypixelCommand {
             return Optional.empty();
         }
 
-        HypixelPosition offset = switch (facing) {
-            case "north" -> new HypixelPosition(0, 0, -1);
-            case "south" -> new HypixelPosition(0, 0, 1);
-            case "west" -> new HypixelPosition(-1, 0, 0);
-            case "east" -> new HypixelPosition(1, 0, 0);
-            default -> HypixelPosition.ZERO;
+        Vec3i offset = switch (facing) {
+            case "north" -> new Vec3i(0, 0, -1);
+            case "south" -> new Vec3i(0, 0, 1);
+            case "west" -> new Vec3i(-1, 0, 0);
+            case "east" -> new Vec3i(1, 0, 0);
+            default -> Vec3i.ZERO;
         };
 
-        HypixelPosition headPos;
-        HypixelPosition footPos;
+        Vec3i headPos;
+        Vec3i footPos;
 
         if ("head".equals(part)) {
             headPos = hitPos;
@@ -837,8 +838,8 @@ public class AutoSetupCommand extends HypixelCommand {
         return String.format("%.2f, %.2f, %.2f", pos.x(), pos.y(), pos.z());
     }
 
-    private String formatPosition(HypixelPosition pos) {
-        return String.format("%.2f, %.2f, %.2f", pos.x(), pos.y(), pos.z());
+    private String formatPosition(Vec3i pos) {
+        return String.format("%d, %d, %d", pos.x(), pos.y(), pos.z());
     }
 }
 

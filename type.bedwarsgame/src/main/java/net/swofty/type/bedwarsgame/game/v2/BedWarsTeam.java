@@ -16,10 +16,10 @@ public class BedWarsTeam extends SimpleGameTeam {
     @Setter
     private boolean bedAlive = false;
 
-    // upgrade name -> level
+    // TODO: enum?
     private final Map<String, Integer> upgrades = new HashMap<>();
 
-    // team traps (trap keys)
+    // TODO: enum?
     private final List<String> traps = new ArrayList<>();
 
     public BedWarsTeam(TeamKey teamKey) {

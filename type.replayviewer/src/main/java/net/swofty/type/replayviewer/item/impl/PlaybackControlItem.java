@@ -40,7 +40,10 @@ public class PlaybackControlItem extends ReplayItem {
 
     @Override
     public void onItemInteract(PlayerInstanceEvent event) {
-        ((CancellableEvent) event).setCancelled(true);
+        if (event instanceof CancellableEvent cancellable) {
+            cancellable.setCancelled(true);
+        }
+
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
             session -> {

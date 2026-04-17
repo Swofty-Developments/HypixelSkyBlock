@@ -50,7 +50,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 return;
             }
 
-            game.onBedDestroyed(teamKey, null);
+            game.onBedDestroyed(teamKey, player);
         }, ArgumentType.Literal("breakbed"), ArgumentType.String("team"));
 
         // /bwadmin respawnbed <team>

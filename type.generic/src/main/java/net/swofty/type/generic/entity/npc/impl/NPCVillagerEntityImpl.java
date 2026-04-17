@@ -46,7 +46,7 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
         setNoGravity(true);
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-            .pos(pos.add(0, getEyeHeight() + 0.5f + (overflowing ? -0.2f : 0f), 0))
+            .pos(pos.add(0, getEyeHeight() + 0.6f + (overflowing ? -0.2f : 0f), 0))
             .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
             .player(viewer)
             .instance(config.instance())

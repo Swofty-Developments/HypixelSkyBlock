@@ -35,10 +35,10 @@ public class DebugMarkerManager {
 
             // Bed markers
             if (config.getBedFeet() != null) {
-                markers.add(createMarker(instance, config.getBedFeet(), teamColor + team.getName() + " Bed (Feet)", Material.RED_BED));
+                markers.add(createMarker(instance, config.getBedFeet().asHypixelPosition(), teamColor + team.getName() + " Bed (Feet)", Material.RED_BED));
             }
             if (config.getBedHead() != null) {
-                markers.add(createMarker(instance, config.getBedHead(), teamColor + team.getName() + " Bed (Head)", Material.RED_BED));
+                markers.add(createMarker(instance, config.getBedHead().asHypixelPosition(), teamColor + team.getName() + " Bed (Head)", Material.RED_BED));
             }
 
             // Spawn marker

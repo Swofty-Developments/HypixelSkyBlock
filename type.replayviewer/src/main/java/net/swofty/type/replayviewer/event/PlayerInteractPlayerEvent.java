@@ -19,7 +19,7 @@ public class PlayerInteractPlayerEvent implements HypixelEventClass {
 
         if (!(target instanceof ReplayPlayerEntity targetPlayer)) return;
 
-        player.openView(new GUIViewPlayer(), new GUIViewPlayer.State(targetPlayer.getInternalId()));
+        player.openView(new GUIViewPlayer(), new GUIViewPlayer.State(targetPlayer));
     }
 
 }

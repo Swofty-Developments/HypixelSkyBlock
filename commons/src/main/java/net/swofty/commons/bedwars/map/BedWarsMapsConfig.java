@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 
 import java.util.List;
 import java.util.Map;
@@ -46,19 +47,18 @@ public class BedWarsMapsConfig {
                 private MinMax z;
             }
 
-
             @Getter
             @Setter
             public static class GlobalGenerator {
                 private int amount;
                 private int max;
-                private List<HypixelPosition> locations;
+                private List<HypixelPosition> locations; // maybe Vec3i
             }
 
         }
     }
 
-    public record TwoBlockPosition(HypixelPosition feet, HypixelPosition head) {
+    public record TwoBlockPosition(Vec3i feet, Vec3i head) {
     }
 
     public record MinMax(double min, double max) {

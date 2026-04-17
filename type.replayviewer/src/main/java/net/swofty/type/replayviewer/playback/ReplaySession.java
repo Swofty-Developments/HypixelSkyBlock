@@ -7,9 +7,13 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.network.packet.server.play.UpdateScorePacket;
 import net.minestom.server.scoreboard.BelowNameTag;
@@ -33,6 +37,7 @@ import org.tinylog.Logger;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +65,7 @@ public class ReplaySession {
 
     private volatile int currentTick = 0;
     private volatile boolean playing = false;
+    private volatile boolean rebuildingState = false;
     private volatile float playbackSpeed = 1.0f;
     private volatile int skipSeconds = 30;
 
@@ -85,6 +91,8 @@ public class ReplaySession {
         this.dynamicTextManager = new DynamicTextManager(this);
         this.npcManager = new NpcReplayManager(this);
 
+        ReplaySeeker.rebuildStateAtTick(this, 0);
+
         addViewer(initialViewer);
     }
 
@@ -106,6 +114,9 @@ public class ReplaySession {
 
         TypeReplayViewerLoader.populateInventory((HypixelPlayer) viewer);
         TypeReplayViewerLoader.registerSession(viewer.getUuid(), this);
+        sendEquipmentSync(viewer);
+        ScheduleUtility.delay(() -> sendEquipmentSync(viewer), 1);
+        updateActionBar();
 
         ScheduleUtility.delay(() -> autoFollowForViewer(viewer), 20);
 
@@ -248,16 +259,24 @@ public class ReplaySession {
 
         targetTick = Math.clamp(targetTick, 0, getTotalTicks());
 
+        if (targetTick <= currentTick) {
+            playerNameTags.clear();
+        }
+
         if (targetTick > currentTick) {
             seekForward(targetTick);
         } else if (targetTick < currentTick) {
             seekBackward(targetTick);
+        } else {
+            ReplaySeeker.rebuildStateAtTick(this, targetTick);
         }
 
         currentTick = targetTick;
 
         droppedItemManager.seekTo(targetTick);
         dynamicTextManager.seekTo(targetTick);
+        replayBelowNameScores();
+        reapplyViewerSpectating();
 
         // Update all viewer scoreboards
         for (var entry : viewerScoreboards.entrySet()) {
@@ -268,6 +287,7 @@ public class ReplaySession {
             play();
         }
 
+        updateActionBar();
         showSeekTitle(targetTick);
     }
 
@@ -347,6 +367,26 @@ public class ReplaySession {
     private void seekBackward(int targetTick) {
         // Reset and replay from beginning or last checkpoint
         ReplaySeeker.seekBackward(this, currentTick, targetTick);
+    }
+
+    void beginStateRebuild() {
+        rebuildingState = true;
+    }
+
+    void endStateRebuild() {
+        for (int entityId : entityManager.getEntityIds()) {
+            Entity entity = entityManager.getEntity(entityId);
+            if (entity != null) {
+                entity.setAutoViewable(true);
+            }
+        }
+
+        for (Player viewer : viewers) {
+            sendEquipmentSync(viewer);
+        }
+        ScheduleUtility.delay(() -> viewers.forEach(this::sendEquipmentSync), 1);
+
+        rebuildingState = false;
     }
 
     private void showSeekTitle(int tick) {
@@ -449,6 +489,53 @@ public class ReplaySession {
 
         viewerSpectating.remove(viewer.getUuid());
         viewer.stopSpectating();
+    }
+
+    private void reapplyViewerSpectating() {
+        for (Player viewer : viewers) {
+            Integer targetEntityId = viewerSpectating.get(viewer.getUuid());
+            if (targetEntityId == null) {
+                continue;
+            }
+
+            Entity entity = entityManager.getEntity(targetEntityId);
+            if (entity == null) {
+                viewerSpectating.remove(viewer.getUuid());
+                viewer.stopSpectating();
+                viewer.setGameMode(GameMode.ADVENTURE);
+                viewer.setFlying(true);
+                viewer.setAllowFlying(true);
+                continue;
+            }
+
+            viewer.setGameMode(GameMode.SPECTATOR);
+            viewer.spectate(entity);
+        }
+    }
+
+    private void sendEquipmentSync(Player viewer) {
+        if (viewer == null || !viewer.isOnline()) {
+            return;
+        }
+
+        for (int entityId : entityManager.getEntityIds()) {
+            Entity entity = entityManager.getEntity(entityId);
+            if (!(entity instanceof LivingEntity livingEntity)) {
+                continue;
+            }
+
+            Map<EquipmentSlot, ItemStack> equipmentBySlot = new EnumMap<>(EquipmentSlot.class);
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                ItemStack stack = livingEntity.getEquipment(slot);
+                if (stack != null && !stack.isAir()) {
+                    equipmentBySlot.put(slot, stack);
+                }
+            }
+
+            if (!equipmentBySlot.isEmpty()) {
+                viewer.sendPacket(new EntityEquipmentPacket(entity.getEntityId(), equipmentBySlot));
+            }
+        }
     }
 
     // todo: sloppy method

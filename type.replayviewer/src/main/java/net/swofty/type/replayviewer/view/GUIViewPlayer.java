@@ -1,6 +1,5 @@
 package net.swofty.type.replayviewer.view;
 
-import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
@@ -19,18 +18,19 @@ import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
 
-    public record State(int entityId) {
+    public record State(ReplayPlayerEntity entity) {
     }
 
     @Override
     public State initialState() {
-        return new State(-1);
+        return new State(null);
     }
 
     @Override
@@ -41,8 +41,7 @@ public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
                 return "Player";
             }
 
-            ReplayPlayerEntity replayPlayer = getReplayPlayer(sessionOpt.get(), state.entityId());
-            return replayPlayer != null ? getDisplayName(replayPlayer) : "Player";
+            return state.entity != null ? getDisplayName(state.entity) : "Player";
         }, InventoryType.CHEST_2_ROW);
     }
 
@@ -62,7 +61,8 @@ public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
         }
 
         ReplaySession replaySession = sessionOpt.get();
-        ReplayPlayerEntity replayPlayer = getReplayPlayer(replaySession, state.entityId());
+        ReplayPlayerEntity replayPlayer = state.entity;
+
         if (replayPlayer == null) {
             layout.slot(4, ItemStackCreator.getStack(
                 "§cPlayer Not Found",
@@ -96,7 +96,7 @@ public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
 
         layout.slot(0, head, (click, c) -> {
             if (click.click() instanceof Click.Right) {
-                replaySession.followEntity(c.player(), state.entityId());
+                replaySession.followEntity(c.player(), state.entity.getInternalId());
                 c.player().closeInventory();
                 return;
             }
@@ -105,11 +105,11 @@ public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
         });
 
         layout.slot(1, createEffectsItem(replayPlayer));
-        layout.slot(3, createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.MAIN_HAND), "§cEmpty main hand slot."));
-        layout.slot(5, createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.HELMET), "§cEmpty helmet slot."));
-        layout.slot(6, createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.CHESTPLATE), "§cEmpty chestplate slot."));
-        layout.slot(7, createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.LEGGINGS), "§cEmpty leggings slot."));
-        layout.slot(8, createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.BOOTS), "§cEmpty boots slot."));
+        layout.autoUpdating(3, (_, _) -> createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.MAIN_HAND), "§cEmpty main hand slot."), Duration.ofSeconds(1));
+        layout.autoUpdating(5, (_, _) -> createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.HELMET), "§cEmpty helmet slot."), Duration.ofSeconds(1));
+        layout.autoUpdating(6, (_, _) -> createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.CHESTPLATE), "§cEmpty chestplate slot."), Duration.ofSeconds(1));
+        layout.autoUpdating(7, (_, _) -> createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.LEGGINGS), "§cEmpty leggings slot."), Duration.ofSeconds(1));
+        layout.autoUpdating(8, (_, _) -> createEquipmentItem(replayPlayer.getEquipment(EquipmentSlot.BOOTS), "§cEmpty boots slot."), Duration.ofSeconds(1));
 
         layout.slot(9, ItemStackCreator.getStack(
             "§aReport Player",
@@ -121,14 +121,6 @@ public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
             "",
             "§eClick to report!"
         ), (_, c) -> c.player().notImplemented());
-    }
-
-    private static ReplayPlayerEntity getReplayPlayer(ReplaySession session, int entityId) {
-        Entity entity = session.getEntityManager().getEntity(entityId);
-        if (entity instanceof ReplayPlayerEntity replayPlayer) {
-            return replayPlayer;
-        }
-        return null;
     }
 
     private static String getDisplayName(ReplayPlayerEntity replayPlayer) {
@@ -173,7 +165,7 @@ public class GUIViewPlayer implements StatefulView<GUIViewPlayer.State> {
                 1
             );
         }
-        return ItemStackCreator.getFromStack(itemStack);
+        return itemStack.builder();
     }
 
     private static String formatEffectName(String raw) {

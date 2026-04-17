@@ -12,6 +12,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MinMax;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TwoBlockPosition;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -290,8 +291,8 @@ public class AutoSetupSession {
     @Setter
     public static class TeamConfig {
         private HypixelPosition spawn;
-        private HypixelPosition bedFeet;
-        private HypixelPosition bedHead;
+        private Vec3i bedFeet;
+        private Vec3i bedHead;
         private HypixelPosition generator;
         private HypixelPosition itemShop;
         private HypixelPosition teamShop;

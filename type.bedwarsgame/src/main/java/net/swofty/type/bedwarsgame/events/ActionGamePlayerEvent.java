@@ -37,17 +37,19 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
         if (!(event.getInventory() instanceof PlayerInventory)) {
             return;
         }
+
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
         if (event.getClickedItem().material().isArmor()) {
             event.setCancelled(true);
             return;
         }
+
         BedWarsGame game = player.getGame();
         if (game == null) {
             event.setCancelled(true);
             return;
         }
-        ;
+
         if (game.getState() == GameState.WAITING) {
             event.setCancelled(true);
         }
@@ -106,7 +108,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
         double closestDistance = Double.MAX_VALUE;
         TeamKey chestTeamKey = null;
 
-        for (java.util.Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
+        for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
             TeamKey teamKey = entry.getKey();
             MapTeam team = entry.getValue();
             HypixelPosition teamSpawn = team.getSpawn();

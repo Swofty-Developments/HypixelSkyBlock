@@ -22,8 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +42,7 @@ public abstract class HypixelNPC {
     @Getter
     private final NPCConfiguration parameters;
     private final DialogueController dialogueController;
+
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
         this.dialogueController = new DialogueController(this);
@@ -117,16 +116,12 @@ public abstract class HypixelNPC {
                             holograms,
                             humanConfig,
                             overflowing);
-                        case VillagerConfiguration villagerConfig -> {
-                            entity = new NPCVillagerEntityImpl(player,
-                                position, username, villagerConfig.profession(), villagerConfig, holograms, overflowing);
-                        }
-                        case AnimalConfiguration animalConfig -> {
-                            entity = new NPCAnimalEntityImpl(player,
-                                position,
-                                username,
-                                animalConfig.entityType(), animalConfig, holograms, overflowing);
-                        }
+                        case VillagerConfiguration villagerConfig -> entity = new NPCVillagerEntityImpl(player,
+                            position, username, villagerConfig.profession(), villagerConfig, holograms, overflowing);
+                        case AnimalConfiguration animalConfig -> entity = new NPCAnimalEntityImpl(player,
+                            position,
+                            username,
+                            animalConfig.entityType(), animalConfig, holograms, overflowing);
                         default ->
                             throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
                     }

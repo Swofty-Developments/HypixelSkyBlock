@@ -126,9 +126,15 @@ public class RecordablePlayer {
                     rec.getEntityUuid(),
                     rec.getEntityId()
                 );
+            if (session.isRebuildingState()) {
+                playerEntity.setAutoViewable(false);
+            }
             session.getEntityManager().spawnEntity(rec.getEntityId(), playerEntity, pos);
         } else {
             ReplayEntity entity = new ReplayEntity(type, rec.getEntityId(), rec.getEntityUuid());
+            if (session.isRebuildingState()) {
+                entity.setAutoViewable(false);
+            }
             session.getEntityManager().spawnEntity(rec.getEntityId(), entity, pos);
         }
     }
@@ -440,6 +446,9 @@ public class RecordablePlayer {
             rec.getItemNbt(),
             rec.getDespawnTick()
         );
+        if (session.isRebuildingState()) {
+            itemEntity.setAutoViewable(false);
+        }
 
         itemEntity.setItemVelocity(rec.getVelocityX(), rec.getVelocityY(), rec.getVelocityZ());
         session.getEntityManager().spawnEntity(rec.getEntityId(), itemEntity, pos);

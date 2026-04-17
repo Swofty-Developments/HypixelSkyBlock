@@ -11,6 +11,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 import net.swofty.type.bedwarsgame.gui.GUIItemShop;
 import net.swofty.type.bedwarsgame.gui.GUITeamShop;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -76,8 +77,8 @@ public class BedWarsWorldManager {
         }
 
         InstanceContainer instance = game.getInstance();
-        HypixelPosition feetPos = bedPos.feet();
-        HypixelPosition headPos = bedPos.head();
+        Vec3i feetPos = bedPos.feet();
+        Vec3i headPos = bedPos.head();
 
         try {
             Material bedMaterial = getBedMaterial(teamKey);
@@ -114,7 +115,7 @@ public class BedWarsWorldManager {
         };
     }
 
-    private String calculateBedFacing(HypixelPosition feet, HypixelPosition head) {
+    private String calculateBedFacing(Vec3i feet, Vec3i head) {
         double dx = head.x() - feet.x();
         double dz = head.z() - feet.z();
 

@@ -8,6 +8,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -136,8 +137,8 @@ public class WorldScanner {
                         if (!processedHeads.contains(headPos)) {
                             processedHeads.add(headPos);
                             beds.add(new BedLocation(
-                                    new HypixelPosition(x, y, z),
-                                    new HypixelPosition(headPos.x(), headPos.y(), headPos.z()),
+                                new Vec3i(x, y, z),
+                                new Vec3i((int) headPos.x(), (int) headPos.y(), (int) headPos.z()),
                                     facing
                             ));
                         }
@@ -328,7 +329,7 @@ public class WorldScanner {
         return stairCount >= 4; // At least 4 stairs (corners or sides)
     }
 
-    public record BedLocation(HypixelPosition feet, HypixelPosition head, String facing) {
+    public record BedLocation(Vec3i feet, Vec3i head, String facing) {
     }
 
     @Getter

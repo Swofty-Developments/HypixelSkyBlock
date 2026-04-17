@@ -1,11 +1,11 @@
 package net.swofty.type.lobby.gui;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -131,6 +131,7 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
                 return builder;
             }
 
+            // TODO: this sends straight into games, not lobbies
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 List<GameType> implemented = Arrays.stream(GameType.values())
