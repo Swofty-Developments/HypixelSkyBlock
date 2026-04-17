@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
@@ -20,16 +21,17 @@ import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
 import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewNavigator;
 import net.swofty.type.generic.gui.v2.ViewSession;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
@@ -47,6 +49,9 @@ public class HypixelPlayer extends Player {
 	@Getter
 	private PlayerHookManager hookManager;
 	protected BelowNameTag belowNameTag;
+
+	@Getter
+	private boolean spectating = false;
 
 	public HypixelPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
@@ -144,7 +149,7 @@ public class HypixelPlayer extends Player {
 	 * @param belowNameTag The new below name tag
 	 */
 	@Override
-	public void setBelowNameTag(@NonNull BelowNameTag belowNameTag) {
+	public void setBelowNameTag(@Nullable BelowNameTag belowNameTag) {
 		if (this.belowNameTag == belowNameTag) return;
 
 		if (this.belowNameTag != null) {
@@ -152,7 +157,9 @@ public class HypixelPlayer extends Player {
 		}
 
 		this.belowNameTag = belowNameTag;
-		getViewers().forEach(this.belowNameTag::addViewer); // this is missing from the super method (bug most likely)
+
+		if (belowNameTag != null)
+			getViewers().forEach(this.belowNameTag::addViewer); // this is missing from the super method (bug most likely)
 	}
 
 	public String getFullDisplayName() {
@@ -216,6 +223,18 @@ public class HypixelPlayer extends Player {
         ));*/
 
 		player.transferTo(type);
+	}
+
+	@Override
+	public void spectate(@NonNull Entity entity) {
+		super.spectate(entity);
+		spectating = true;
+	}
+
+	@Override
+	public void stopSpectating() {
+		super.stopSpectating();
+		spectating = false;
 	}
 
 }

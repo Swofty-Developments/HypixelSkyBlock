@@ -12,17 +12,13 @@ class ReplayTablistModule extends TablistModule {
     public List<TablistEntry> getEntries(HypixelPlayer player) {
         List<TablistEntry> entries = new ArrayList<>();
 
-        entries.add(new TablistEntry("§b§lREPLAY", TablistSkinRegistry.ORANGE));
-
         TypeReplayViewerLoader.getSession(player).ifPresentOrElse(
             session -> {
-                entries.add(new TablistEntry("§7Time: §e" + session.getFormattedTime() + "/" + session.getFormattedTotalTime(), TablistSkinRegistry.ORANGE));
-                entries.add(new TablistEntry("§7Speed: §e" + session.getPlaybackSpeed() + "x", TablistSkinRegistry.ORANGE));
-                entries.add(new TablistEntry(session.isPlaying() ? "§aPlaying" : "§ePaused", TablistSkinRegistry.ORANGE));
+                // TODO: display all player names with only their color
             },
             () -> entries.add(new TablistEntry("§7Loading...", TablistSkinRegistry.ORANGE))
         );
 
-        return TablistModule.fillRestWithGray(entries);
+        return entries;
     }
 }

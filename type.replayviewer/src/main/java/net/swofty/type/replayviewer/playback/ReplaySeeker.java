@@ -123,7 +123,7 @@ public class ReplaySeeker {
         for (Recordable rec : recordables) {
             if (rec.isEntityState() && rec.getEntityId() >= 0) {
                 latestStates.computeIfAbsent(rec.getEntityId(), _ -> new EnumMap<>(RecordableType.class))
-                        .put(rec.getType(), rec);
+                    .put(rec.getType(), rec);
             }
         }
 
@@ -146,7 +146,7 @@ public class ReplaySeeker {
         for (Recordable rec : allRecordables) {
             if (rec.isEntityState() && rec.getEntityId() >= 0) {
                 states.computeIfAbsent(rec.getEntityId(), _ -> new EnumMap<>(RecordableType.class))
-                        .put(rec.getType(), rec);
+                    .put(rec.getType(), rec);
             }
         }
 

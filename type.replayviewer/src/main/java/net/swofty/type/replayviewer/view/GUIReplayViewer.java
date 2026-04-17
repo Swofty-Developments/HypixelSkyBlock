@@ -2,14 +2,16 @@ package net.swofty.type.replayviewer.view;
 
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.replayviewer.TypeReplayViewerLoader;
+import net.swofty.type.replayviewer.util.ReplayShareUtil;
 
-// TODO: implement
 public class GUIReplayViewer extends StatelessView {
 
     @Override
@@ -38,8 +40,8 @@ public class GUIReplayViewer extends StatelessView {
             "§7View bookmarks for this recording.",
             "",
             "§eClick to view!"
-        ));
-        // TODO: do same thing as in ShareCommand.java, use shared code so move it somewhere
+        ), (_, c) -> c.push(new GUIBookmarks()));
+
         layout.slot(13, ItemStackCreator.getStack(
             "§aShare",
             Material.PAPER,
@@ -48,6 +50,9 @@ public class GUIReplayViewer extends StatelessView {
             "§7current timestamp and location.",
             "",
             "§eClick to share!"
+        ), (_, c) -> TypeReplayViewerLoader.getSession(c.player()).ifPresentOrElse(
+            session -> ReplayShareUtil.sendShareCommandMessage(c.player(), session),
+            () -> c.player().sendMessage("§cError: no active replay session.")
         ));
 
         // for now, this can't be implemented
@@ -71,12 +76,15 @@ public class GUIReplayViewer extends StatelessView {
             "§eClick to submit!"
         ), (_, viewContext) -> viewContext.player().notImplemented());
 
-        // TODO: send to lobby
         layout.slot(17, ItemStackCreator.getStack(
             "§aLeave Replay",
             Material.DARK_OAK_DOOR,
             1,
             "§eClick to leave!"
-        ));
+        ), (_, c) -> {
+            TypeReplayViewerLoader.getSession(c.player())
+                .ifPresent(session -> session.removeViewer(c.player()));
+            c.player().sendTo(ServerType.PROTOTYPE_LOBBY);
+        });
     }
 }

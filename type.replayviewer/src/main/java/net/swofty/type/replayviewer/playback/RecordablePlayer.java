@@ -13,6 +13,7 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.NetworkBuffer;
+import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
@@ -21,9 +22,11 @@ import net.swofty.type.game.replay.recordable.*;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.replayviewer.entity.ReplayDroppedItemEntity;
 import net.swofty.type.replayviewer.entity.ReplayEntity;
 import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
+import net.swofty.type.replayviewer.util.ReplaySettingsUtil;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -120,7 +123,8 @@ public class RecordablePlayer {
                     displayName,
                     skinData != null ? skinData.textureValue() : null,
                     skinData != null ? skinData.textureSignature() : null,
-                    rec.getEntityUuid()
+                    rec.getEntityUuid(),
+                    rec.getEntityId()
                 );
             session.getEntityManager().spawnEntity(rec.getEntityId(), playerEntity, pos);
         } else {
@@ -156,11 +160,12 @@ public class RecordablePlayer {
     }
 
     private static void playBlockBreakAnimation(RecordableBlockBreakAnimation rec, ReplaySession session) {
-        net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket packet = new net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket(
+        BlockBreakAnimationPacket packet = new BlockBreakAnimationPacket(
             rec.getEntityId(),
             new Pos(rec.getX(), rec.getY(), rec.getZ()),
             rec.getStage()
         );
+
         for (var viewer : session.getViewers()) {
             viewer.sendPacket(packet);
         }
@@ -271,6 +276,10 @@ public class RecordablePlayer {
         ParticlePacket packet = ParticlePacket.SERIALIZER.read(NetworkBuffer.wrap(packetByteArray, 0, packetByteArray.length));
 
         for (var viewer : session.getViewers()) {
+            if (viewer instanceof HypixelPlayer hypixelPlayer
+                && !ReplaySettingsUtil.getSettings(hypixelPlayer).isShowParticles()) {
+                continue;
+            }
             viewer.sendPacket(packet);
         }
     }
@@ -294,7 +303,6 @@ public class RecordablePlayer {
             session.getInstance().setBlock(pos[0], pos[1], pos[2], Block.AIR);
         }
     }
-
 
     private static void playPlayerSkin(RecordablePlayerSkin rec, ReplaySession session) {
         session.getStateTracker().trackSkin(rec.getEntityId(), rec.getTextureValue(), rec.getTextureSignature());
@@ -325,6 +333,10 @@ public class RecordablePlayer {
             : "§7" + playerName + "§7: §f" + rec.getMessage();
 
         for (var viewer : session.getViewers()) {
+            if (viewer instanceof HypixelPlayer hypixelPlayer
+                && !ReplaySettingsUtil.getSettings(hypixelPlayer).isChatMessages()) {
+                continue;
+            }
             viewer.sendMessage(Component.text(message));
         }
     }
@@ -348,6 +360,10 @@ public class RecordablePlayer {
         String colouredPlayerName = destroyerColor + session.getEntityDisplayName(rec.getDestroyerEntityId());
 
         for (var viewer : session.getViewers()) {
+            if (viewer instanceof HypixelPlayer hypixelPlayer
+                && !ReplaySettingsUtil.getSettings(hypixelPlayer).isChatMessages()) {
+                continue;
+            }
             viewer.sendMessage(Component.text(""));
             viewer.sendMessage(Component.text(
                 "§f§lBED DESTRUCTION > " + teamColor + teamName + " Bed §7has been destroyed by " + colouredPlayerName + "§7!"
@@ -391,6 +407,10 @@ public class RecordablePlayer {
 
         String message = rec.getFinalKill() != 0 ? deathMessage + " §b§lFINAL KILL!" : deathMessage;
         for (var viewer : session.getViewers()) {
+            if (viewer instanceof HypixelPlayer hypixelPlayer
+                && !ReplaySettingsUtil.getSettings(hypixelPlayer).isChatMessages()) {
+                continue;
+            }
             viewer.sendMessage(Component.text(message));
         }
     }
@@ -399,6 +419,10 @@ public class RecordablePlayer {
         String teamName = getTeamName(rec.getTeamId());
         String teamColor = getTeamColor(rec.getTeamId());
         for (var viewer : session.getViewers()) {
+            if (viewer instanceof HypixelPlayer hypixelPlayer
+                && !ReplaySettingsUtil.getSettings(hypixelPlayer).isChatMessages()) {
+                continue;
+            }
             viewer.sendMessage(Component.text(""));
             viewer.sendMessage(Component.text(
                 "§f§lTEAM ELIMINATED > §c" + teamColor + teamName + " §7has been eliminated!"

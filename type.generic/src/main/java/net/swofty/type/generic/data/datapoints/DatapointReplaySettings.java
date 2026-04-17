@@ -13,6 +13,14 @@ public class DatapointReplaySettings extends Datapoint<DatapointReplaySettings.R
 		@Override
 		public String serialize(ReplaySettings value) {
 			JSONObject json = new JSONObject();
+			json.put("chatMessages", value.chatMessages);
+			json.put("chatTimeline", value.chatTimeline);
+			json.put("showSpectators", value.showSpectators);
+			json.put("nightVision", value.nightVision);
+			json.put("showParticles", value.showParticles);
+			json.put("advanceTime", value.advanceTime);
+			json.put("flySpeed", value.flySpeed);
+			json.put("skipIntervals", value.skipIntervals);
 			return json.toString();
 		}
 
@@ -27,7 +35,7 @@ public class DatapointReplaySettings extends Datapoint<DatapointReplaySettings.R
 				ReplaySettings data = new ReplaySettings();
 				data.chatMessages = obj.optBoolean("chatMessages", true);
 				data.chatTimeline = obj.optBoolean("chatTimeline", false);
-				data.showSpectators = obj.optBoolean("showSpectators", false);
+				data.showSpectators = obj.optBoolean("showSpectators", true);
 				data.nightVision = obj.optBoolean("nightVision", true);
 				data.showParticles = obj.optBoolean("showParticles", true);
 				data.advanceTime = obj.optBoolean("advanceTime", true);
@@ -80,7 +88,7 @@ public class DatapointReplaySettings extends Datapoint<DatapointReplaySettings.R
 			ReplaySettings data = new ReplaySettings();
 			data.chatMessages = true;
 			data.chatTimeline = false;
-			data.showSpectators = false;
+			data.showSpectators = true;
 			data.nightVision = true;
 			data.showParticles = true;
 			data.advanceTime = true;

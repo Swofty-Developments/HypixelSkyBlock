@@ -89,7 +89,7 @@ public class ReplayShareCodec {
     }
 
     private static int quantizePitch(float pitch) {
-        float clamped = Math.max(-90f, Math.min(90f, pitch));
+        float clamped = Math.clamp(pitch, -90f, 90f);
         return (int) ((clamped + 90f) / 180f * 8f) & 0x7;
     }
 

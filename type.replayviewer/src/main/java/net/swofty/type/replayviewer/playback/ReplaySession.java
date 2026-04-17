@@ -7,7 +7,6 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
@@ -28,6 +27,7 @@ import net.swofty.type.replayviewer.playback.display.DynamicTextManager;
 import net.swofty.type.replayviewer.playback.npc.NpcReplayManager;
 import net.swofty.type.replayviewer.playback.scoreboard.GenericReplayScoreboard;
 import net.swofty.type.replayviewer.playback.scoreboard.ReplayScoreboard;
+import net.swofty.type.replayviewer.util.ReplaySettingsUtil;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -93,6 +93,7 @@ public class ReplaySession {
         viewer.setGameMode(GameMode.ADVENTURE);
         viewer.setFlying(true);
         viewer.setAllowFlying(true);
+        ReplaySettingsUtil.applyVisualSettings((HypixelPlayer) viewer);
 
         ReplayScoreboard scoreboard = new GenericReplayScoreboard(this);
         scoreboard.create(viewer);
@@ -176,23 +177,6 @@ public class ReplaySession {
         }
     }
 
-    /**
-     * @deprecated Use {@link #getViewers()} instead
-     */
-    @Deprecated
-    public Player getViewer() {
-        return viewers.isEmpty() ? null : viewers.iterator().next();
-    }
-
-    /**
-     * @deprecated Use viewer-specific methods instead
-     */
-    @Deprecated
-    public UUID getViewerId() {
-        Player viewer = getViewer();
-        return viewer != null ? viewer.getUuid() : null;
-    }
-
     public void play() {
         if (playing) return;
         playing = true;
@@ -209,7 +193,7 @@ public class ReplaySession {
             int ticksToPlay = (int) Math.max(1, playbackSpeed);
             for (int i = 0; i < ticksToPlay && currentTick <= getTotalTicks(); i++) {
                 playTick(currentTick);
-                currentTick++;
+                currentTick++; // check if this is fine
             }
 
             // Check if finished
@@ -247,13 +231,9 @@ public class ReplaySession {
         npcManager.cleanup();
 
         for (var entry : viewerScoreboards.entrySet()) {
-            Player viewer = viewers.stream()
+            viewers.stream()
                 .filter(v -> v.getUuid().equals(entry.getKey()))
-                .findFirst()
-                .orElse(null);
-            if (viewer != null) {
-                entry.getValue().remove(viewer);
-            }
+                .findFirst().ifPresent(viewer -> entry.getValue().remove(viewer));
         }
         viewerScoreboards.clear();
 
@@ -270,7 +250,7 @@ public class ReplaySession {
         boolean wasPlaying = playing;
         pause();
 
-        targetTick = Math.max(0, Math.min(targetTick, getTotalTicks()));
+        targetTick = Math.clamp(targetTick, 0, getTotalTicks());
 
         if (targetTick > currentTick) {
             seekForward(targetTick);
@@ -304,7 +284,7 @@ public class ReplaySession {
     }
 
     public void setPlaybackSpeed(float speed) {
-        this.playbackSpeed = Math.max(0.25f, Math.min(4.0f, speed));
+        this.playbackSpeed = Math.clamp(speed, 0.25f, 4.0f);
         if (playing) {
             pause();
             play();
@@ -333,8 +313,8 @@ public class ReplaySession {
     }
 
     private void playTick(int tick) {
-        List<Recordable> recordables = replayData.getRecordablesAt(tick);
-        for (Recordable recordable : recordables) {
+        List<Recordable> tickData = replayData.getRecordablesAt(tick);
+        for (Recordable recordable : tickData) {
             try {
                 RecordablePlayer.play(recordable, this);
             } catch (Exception e) {
@@ -345,11 +325,12 @@ public class ReplaySession {
         droppedItemManager.tick(tick);
         dynamicTextManager.tick(tick);
         npcManager.tick();
+
+        // TODO: move this to update even when it's not playing, because now we can't ever see paused state
         updateActionBar();
     }
 
     private void updateActionBar() {
-        // looks like §cPaused    §e00:00 / 01:00    §61.0x
         Component actionBar = Component.text()
             .append(Component.text(playing ? "§aPlaying" : "§cPaused"))
             .append(Component.text("    "))
@@ -443,6 +424,7 @@ public class ReplaySession {
         }
     }
 
+    // TODO: parity
     private void onReplayEnd() {
         pause();
         Title title = Title.title(
@@ -459,39 +441,18 @@ public class ReplaySession {
         viewerSpectating.put(viewer.getUuid(), entityId);
         Entity entity = entityManager.getEntity(entityId);
         if (entity != null) {
+            viewer.setGameMode(GameMode.SPECTATOR);
             viewer.spectate(entity);
-            applyTeamGlow(viewer, entity, entityId);
-
-            String name = getEntityDisplayName(entityId);
-            viewer.sendMessage(Component.text("Now following: ", NamedTextColor.GRAY)
-                .append(Component.text(name, NamedTextColor.YELLOW)));
         }
     }
 
     public void stopFollowing(Player viewer) {
+        viewer.setGameMode(GameMode.ADVENTURE);
+        viewer.setFlying(true);
+        viewer.setAllowFlying(true);
+
         viewerSpectating.remove(viewer.getUuid());
         viewer.stopSpectating();
-        viewer.sendMessage(Component.text("Free camera mode", NamedTextColor.GRAY));
-    }
-
-    public void followNextPlayer(Player viewer) {
-        List<Integer> playerEntityIds = getPlayerEntityIds();
-        if (playerEntityIds.isEmpty()) return;
-
-        Integer currentId = viewerSpectating.get(viewer.getUuid());
-        int currentIndex = currentId != null ? playerEntityIds.indexOf(currentId) : -1;
-        int nextIndex = (currentIndex + 1) % playerEntityIds.size();
-        followEntity(viewer, playerEntityIds.get(nextIndex));
-    }
-
-    public void followPreviousPlayer(Player viewer) {
-        List<Integer> playerEntityIds = getPlayerEntityIds();
-        if (playerEntityIds.isEmpty()) return;
-
-        Integer currentId = viewerSpectating.get(viewer.getUuid());
-        int currentIndex = currentId != null ? playerEntityIds.indexOf(currentId) : 0;
-        int prevIndex = (currentIndex - 1 + playerEntityIds.size()) % playerEntityIds.size();
-        followEntity(viewer, playerEntityIds.get(prevIndex));
     }
 
     private void applyTeamGlow(Player viewer, Entity entity, int entityId) {
@@ -542,50 +503,18 @@ public class ReplaySession {
         ));
     }
 
-    /**
-     * @deprecated Use {@link #followNextPlayer(Player)} instead
-     */
-    @Deprecated
-    public void followNextPlayer() {
-        Player viewer = getViewer();
-        if (viewer != null) {
-            followNextPlayer(viewer);
-        }
-    }
-
-    /**
-     * @deprecated Use {@link #followPreviousPlayer(Player)} instead
-     */
-    @Deprecated
-    public void followPreviousPlayer() {
-        Player viewer = getViewer();
-        if (viewer != null) {
-            followPreviousPlayer(viewer);
-        }
-    }
-
-    private List<Integer> getPlayerEntityIds() {
-        List<Integer> ids = new java.util.ArrayList<>();
-        for (int entityId : entityManager.getEntityIds()) {
-            Entity entity = entityManager.getEntity(entityId);
-            // Check if it's a player entity type
-            if (entity != null && entity.getEntityType() == EntityType.PLAYER) {
-                ids.add(entityId);
-            }
-        }
-        return ids;
-    }
-
     public String getEntityDisplayName(int entityId) {
         Entity entity = entityManager.getEntity(entityId);
         if (entity instanceof ReplayPlayerEntity playerEntity) {
             return playerEntity.getPlayerName();
         }
+
         if (entity instanceof ReplayEntity replayEntity) {
             UUID uuid = replayEntity.getRecordedUuid();
             String name = metadata.getPlayers().get(uuid);
             if (name != null) return name;
         }
+
         // TODO: throw error
         return String.valueOf(entityId);
     }

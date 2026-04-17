@@ -40,12 +40,14 @@ public class ReplayPlayerEntity extends LivingEntity {
     private final UUID actualUuid;
     @Setter
     private int belowScore = 0;
+    private final int internalId;
 
     public ReplayPlayerEntity(String playerName,
-                              String textureValue, String textureSignature, UUID actualUuid) {
+                              String textureValue, String textureSignature, UUID actualUuid, int internalId) {
         super(EntityType.PLAYER, UUID.randomUUID());
         this.playerName = playerName;
         this.actualUuid = actualUuid;
+        this.internalId = internalId;
 
         if (textureValue != null && !textureValue.isEmpty()) {
             this.skin = new PlayerSkin(textureValue, textureSignature);

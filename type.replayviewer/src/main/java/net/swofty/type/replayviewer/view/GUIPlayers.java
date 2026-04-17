@@ -1,94 +1,167 @@
 package net.swofty.type.replayviewer.view;
 
+import net.minestom.server.entity.Entity;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.replayviewer.TypeReplayViewerLoader;
+import net.swofty.type.replayviewer.entity.ReplayPlayerEntity;
+import net.swofty.type.replayviewer.playback.ReplaySession;
 
-// TODO: implement
-public class GUIPlayers extends StatelessView {
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+// TODO: use PaginatedView?
+public class GUIPlayers implements StatefulView<GUIPlayers.State> {
+
+    private static final int[] PLAYER_SLOTS = {
+        10, 11, 12, 13, 14, 15, 16,
+        19, 20, 21, 22, 23, 24, 25,
+        28, 29, 30, 31, 32, 33, 34,
+        37, 38, 39, 40, 41, 42, 43
+    };
+
+    public record State(int page) {
+    }
+
+    private record PlayerEntry(int entityId, ReplayPlayerEntity entity) {
+    }
 
     @Override
-    public ViewConfiguration<DefaultState> configuration() {
+    public State initialState() {
+        return new State(0);
+    }
+
+    @Override
+    public ViewConfiguration<State> configuration() {
         return new ViewConfiguration<>("Players", InventoryType.CHEST_6_ROW);
     }
 
     @Override
-    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        layout.slot(10, ItemStackCreator.getStackHead(
-            "§b[MVP§9+§b] ArikSquad",
-            "859269972cf257cd23db45a61bbd1f7d647b7966d14bd6ba07ef1d2630b23be2",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(11, ItemStackCreator.getStackHead(
-            "§7aspera6552",
-            "1d53376cbd3b3689e3a7b08fd458afbac6453c670334c5db21ef7efc95438c9d",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(12, ItemStackCreator.getStackHead(
-            "§7Barbapapa2011",
-            "731e97aa0570184fdf61a8e520d22094d1057e90e47efd45c8f3b09a1fdb7783",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(13, ItemStackCreator.getStackHead(
-            "§a[VIP] Clayterzz",
-            "e5cdc3243b2153ab28a159861be643a4fc1e3c17d291cdd3e57a7f370ad676f3",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(14, ItemStackCreator.getStackHead(
-            "§a[VIP] Netanel_Yair",
-            "7ee7ee4724242643b70ef39e50349a497b8f0dc594bd2d0158df7aac36d5bee7",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(15, ItemStackCreator.getStackHead(
-            "§7RenzeHo",
-            "588a477aa4772223e6b57b835b15bdd2d745beeb8265f76a695b7fb27a813f7d",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(16, ItemStackCreator.getStackHead(
-            "§a[VIP] robin_631",
-            "fcdafd8af31454376e9f695b5f0f26f7f59733a8724b62ae6dd9ca1d91b20b71",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
-        layout.slot(19, ItemStackCreator.getStackHead(
-            "§7sereklo",
-            "bfcc96260f0f1849e04cea0c4b3714bb7e4b0f7cdf19de28a0d40a19580e26eb",
-            1,
-            "§7Food Level: §f20",
-            "",
-            "§eLeft Click to teleport!",
-            "§eRight Click for first person!"
-        ));
+    public void layout(ViewLayout<State> layout, State state, ViewContext ctx) {
+        var sessionOpt = TypeReplayViewerLoader.getSession(ctx.player());
+        if (sessionOpt.isEmpty()) {
+            layout.slot(22, ItemStackCreator.getStack(
+                "§cNo Replay Session",
+                Material.BARRIER,
+                1,
+                "§7You are not currently watching",
+                "§7a replay."
+            ));
+            Components.back(layout, 49, ctx);
+            return;
+        }
+
+        ReplaySession replaySession = sessionOpt.get();
+        List<PlayerEntry> players = collectPlayers(replaySession);
+
+        int pageSize = PLAYER_SLOTS.length;
+        int totalPages = Math.max(1, (players.size() + pageSize - 1) / pageSize);
+        int currentPage = Math.min(state.page(), totalPages - 1);
+        int startIndex = currentPage * pageSize;
+
+        for (int i = 0; i < PLAYER_SLOTS.length; i++) {
+            int slot = PLAYER_SLOTS[i];
+            int index = startIndex + i;
+
+            if (index >= players.size()) {
+                layout.slot(slot, ItemStack.AIR.builder());
+                continue;
+            }
+
+            PlayerEntry entry = players.get(index);
+            ReplayPlayerEntity replayPlayer = entry.entity();
+            String displayName = getDisplayName(replayPlayer);
+
+            ItemStack.Builder head = replayPlayer.getSkin() != null
+                ? ItemStackCreator.getStackHead(
+                displayName,
+                replayPlayer.getSkin(),
+                1,
+                "§7Health: §f" + Math.max(0, Math.round(replayPlayer.getHealth())),
+                "",
+                "§eLeft Click to teleport!",
+                "§eRight Click for first person!"
+            )
+                : ItemStackCreator.getStack(
+                displayName,
+                Material.PLAYER_HEAD,
+                1,
+                "§7Health: §f" + Math.max(0, Math.round(replayPlayer.getHealth())),
+                "",
+                "§eLeft Click to teleport!",
+                "§eRight Click for first person!"
+            );
+
+            layout.slot(slot, head, (click, c) -> {
+                if (click.click() instanceof Click.Right) {
+                    replaySession.followEntity(c.player(), entry.entityId());
+                    c.player().closeInventory();
+                    return;
+                }
+
+                c.player().teleport(replayPlayer.getPosition());
+            });
+        }
+
+        if (currentPage > 0) {
+            layout.slot(45, ItemStackCreator.getStack(
+                "§aPrevious Page",
+                Material.ARROW,
+                1,
+                "§7Page §e" + currentPage
+            ), (_, c) -> c.session(State.class).setState(new State(currentPage - 1)));
+        }
+
+        if (currentPage < totalPages - 1) {
+            layout.slot(53, ItemStackCreator.getStack(
+                "§aNext Page",
+                Material.ARROW,
+                1,
+                "§7Page §e" + (currentPage + 2)
+            ), (_, c) -> c.session(State.class).setState(new State(currentPage + 1)));
+        }
+
+        Components.back(layout, 49, ctx);
+
+        if (players.isEmpty()) {
+            layout.slot(22, ItemStackCreator.getStack(
+                "§cNo Players Found",
+                Material.BARRIER,
+                1,
+                "§7No replay players are currently",
+                "§7spawned for this timestamp."
+            ));
+        }
+    }
+
+    private static List<PlayerEntry> collectPlayers(ReplaySession session) {
+        List<PlayerEntry> entries = new ArrayList<>();
+        for (int entityId : session.getEntityManager().getEntityIds()) {
+            Entity entity = session.getEntityManager().getEntity(entityId);
+            if (entity instanceof ReplayPlayerEntity replayPlayerEntity) {
+                entries.add(new PlayerEntry(entityId, replayPlayerEntity));
+            }
+        }
+
+        entries.sort(Comparator.comparing(entry -> entry.entity().getPlayerName(), String.CASE_INSENSITIVE_ORDER));
+        return entries;
+    }
+
+    private static String getDisplayName(ReplayPlayerEntity replayPlayer) {
+        try {
+            return HypixelPlayer.getDisplayName(replayPlayer.getActualUuid());
+        } catch (Exception ignored) {
+            return "§7" + replayPlayer.getPlayerName();
+        }
     }
 }
