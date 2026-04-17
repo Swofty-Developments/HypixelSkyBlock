@@ -11,10 +11,10 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGameEventManager;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.game.game.GameState;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class BedWarsGameScoreboard {
     private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -50,6 +51,8 @@ public class BedWarsGameScoreboard {
                 if (dataHandler == null || bwDataHandler == null) {
                     continue;
                 }
+
+                Locale l = player.getLocale();
 
                 String tag = "";
                 if (game.getGameType() == BedWarsGameType.DREAM_DOUBLES || game.getGameType() == BedWarsGameType.DREAM_FOURS) {
@@ -117,11 +120,11 @@ public class BedWarsGameScoreboard {
                 lines.add("§ewww.hypixel.net");
 
                 if (!scoreboard.hasScoreboard(player)) {
-                    scoreboard.createScoreboard(player, getSidebarName(prototypeName));
+                    scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
                 }
 
                 scoreboard.updateLines(player, lines);
-                scoreboard.updateTitle(player, getSidebarName(prototypeName));
+                scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
             }
             return TaskSchedule.tick(4);
         });
