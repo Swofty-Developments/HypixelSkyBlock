@@ -338,6 +338,9 @@ public final class ViewSession<S> {
 
         Task task = MinecraftServer.getSchedulerManager().submitTask(() -> {
             if (closed) return TaskSchedule.stop();
+            if (component.update() != null) {
+                component.update().accept(context);
+            }
             renderSlot(slot, component);
             return TaskSchedule.duration(component.updateInterval());
         });

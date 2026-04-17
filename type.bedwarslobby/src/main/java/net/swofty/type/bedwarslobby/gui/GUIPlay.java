@@ -75,7 +75,7 @@ public class GUIPlay extends HypixelInventoryGUI {
 
 				@Override
 				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-					new GUIMapSelection(type).open(player);
+					player.openView(new GUIMapSelection(type));
 				}
 			});
 		}
