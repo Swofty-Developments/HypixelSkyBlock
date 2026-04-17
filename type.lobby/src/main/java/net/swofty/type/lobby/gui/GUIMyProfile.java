@@ -5,6 +5,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.command.commands.replay.ReplaysCommand;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -14,7 +15,7 @@ import net.swofty.type.generic.quest.QuestData;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIMyProfile extends HypixelInventoryGUI {
-    private static int[] COLOURED_PANE_SLOTS = {
+    private static final int[] COLOURED_PANE_SLOTS = {
             9, 10, 11, 12, 13, 14, 15, 16, 17
     };
 
@@ -309,11 +310,17 @@ public class GUIMyProfile extends HypixelInventoryGUI {
                 );
             }
         });
-        set(new GUIItem(39) {
+
+        set(new GUIClickableItem(39) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                ReplaysCommand.displaySendReplay(player);
+            }
+
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack(
-                        "§aRecent Games",
+                    "§aRecent Games", // TODO: I18n.t("general.recent_games").color(NamedTextColor.GREEN) // if this is available, just replace this.
                         Material.BOOK,
                         1,
                         "§7View your recently played games.",

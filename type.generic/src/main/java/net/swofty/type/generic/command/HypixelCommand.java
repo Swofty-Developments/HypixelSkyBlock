@@ -24,7 +24,7 @@ public abstract class HypixelCommand {
 
     protected HypixelCommand() {
         this.params = this.getClass().getAnnotation(CommandParameters.class);
-        this.name = this.getClass().getSimpleName().replace(COMMAND_SUFFIX, "").toLowerCase();
+        this.name = this.getClass().getSimpleName().replace(COMMAND_SUFFIX, "").toLowerCase(); // why? - ARI
 
         List<String> aliases = new ArrayList<>();
         if (params.aliases() != null && !params.aliases().trim().isEmpty()) {

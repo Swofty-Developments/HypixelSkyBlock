@@ -15,7 +15,7 @@ import net.swofty.type.replayviewer.playback.ReplaySession;
         allowsConsole = false,
         aliases = "viewer"
 )
-public class ReplayCommand extends HypixelCommand {
+public class ViewerCommand extends HypixelCommand {
 
     @Override
     public void registerUsage(MinestomCommand command) {

@@ -12,6 +12,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayMapLoadProtocolObject;
 import net.swofty.proxyapi.ProxyService;
+import net.swofty.type.game.replay.ReplayError;
 import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
@@ -146,7 +147,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 );
 
                 if (integrityReport.hasIssues()) {
-                    player.sendMessage("§eReplay data appears incomplete in places; some moments may be missing.");
+                    player.sendMessage("§cSome moments may be missing. " + ReplayError.REPLAY_INCOMPLETE.format());
                 }
             }
 

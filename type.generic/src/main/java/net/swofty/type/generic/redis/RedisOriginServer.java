@@ -20,7 +20,7 @@ public class RedisOriginServer implements ProxyToClient {
     @Override
     public JSONObject onMessage(JSONObject message) {
         UUID uuid = UUID.fromString(message.getString("uuid"));
-        ServerType originType = ServerType.valueOf(message.getString("start-type"));
+        ServerType originType = ServerType.valueOf(message.getString("origin-type"));
 
         origin.put(uuid, originType);
         return new JSONObject();

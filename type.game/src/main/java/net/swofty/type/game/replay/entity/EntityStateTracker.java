@@ -15,7 +15,6 @@ import java.util.TreeMap;
 
 // this is slightly dumb but whatever - ARI
 public class EntityStateTracker {
-    // Maps: entityId -> stateType -> list of (tick, recordable) pairs
     private final Map<Integer, Map<StateType, TreeMap<Integer, Recordable>>> states = new HashMap<>();
     private final Map<StateType, Recordable> defaultStates = new EnumMap<>(StateType.class);
 

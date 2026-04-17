@@ -29,22 +29,25 @@ public class ReplaysCommand extends HypixelCommand {
 	@Override
 	public void registerUsage(MinestomCommand command) {
 		command.setDefaultExecutor((sender, _) -> {
-			HypixelPlayer player = (HypixelPlayer) sender;
+			final HypixelPlayer player = (HypixelPlayer) sender;
 
 			player.sendMessage(Component.text("Loading replays...", NamedTextColor.GRAY));
-
-			fetchReplays(player).thenAccept(replays -> {
-				player.openView(new ReplaysListView(replay -> {
-					sendToReplayViewer(player, replay);
-				}), new ReplaysListView.State(replays, 0));
-			}).exceptionally(e -> {
-				player.sendMessage(Component.text("Failed to load replays.", NamedTextColor.RED));
-				return null;
-			});
+			displaySendReplay(player);
 		});
 	}
 
-	private CompletableFuture<List<ReplayEntry>> fetchReplays(HypixelPlayer player) {
+	public static void displaySendReplay(final HypixelPlayer player) {
+		fetchReplays(player).thenAccept(replays -> {
+			player.openView(new ReplaysListView(replay -> {
+				sendToReplayViewer(player, replay);
+			}), new ReplaysListView.State(replays, 0));
+		}).exceptionally(e -> {
+			player.sendMessage(Component.text("Failed to load replays.", NamedTextColor.RED));
+			return null;
+		});
+	}
+
+	private static CompletableFuture<List<ReplayEntry>> fetchReplays(HypixelPlayer player) {
 		var request = new ReplayListProtocolObject.ListRequest(player.getUuid(), 50, null);
 		ProxyService replayService = new ProxyService(ServiceType.REPLAY);
 
@@ -74,7 +77,7 @@ public class ReplaysCommand extends HypixelCommand {
 			});
 	}
 
-	private void sendToReplayViewer(HypixelPlayer player, ReplayEntry replay) {
+	private static void sendToReplayViewer(HypixelPlayer player, ReplayEntry replay) {
 		player.sendMessage(Component.text("Loading replay...", NamedTextColor.GREEN));
 
 		ProxyService replayService = new ProxyService(ServiceType.REPLAY);

@@ -34,7 +34,7 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return ViewConfiguration.withString((_, _) -> "Recent Games", InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("general.recent_games", InventoryType.CHEST_6_ROW);
     }
 
     @Override
