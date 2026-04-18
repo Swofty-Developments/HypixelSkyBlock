@@ -7,6 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.player.ResolvableProfile;
+import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -24,10 +25,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
 
     private static final int[] GAME_SLOTS = {
-            10, 11, 12, 13, 14, 15, 16,
-                    21,     23,
-            28, 29, 30, 31, 32, 33, 33,
-            37, 38, 39, 40, 41, 42, 43
+        10, 11, 12, /*13,*/ 14, 15, 16, // 14 is reserved for SMP
+        //21,     23, // reserved for events
+        28, 29, 30, 31, 32, 33, 33,
+        37, 38, 39, 40, 41, 42, 43
     };
 
     private int cycleIndex = 0;
@@ -43,15 +44,29 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(4) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-
+                player.notImplemented();
+                player.sendTo(ServerType.PROTOTYPE_LOBBY); // for now
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 return ItemStackCreator.getStack("§aMain Lobby",
-                        Material.BOOKSHELF, 1,
-                        "",
-                        "§7Return to the Main Lobby.");
+                    Material.BOOKSHELF, 1,
+                    "",
+                    "§7Return to the Main Lobby.");
+            }
+        });
+
+        set(new GUIClickableItem(13) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer player) {
+                player.notImplemented();
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer player) {
+                return ItemStackCreator.getStack("§aHypixel SMP", Material.GRASS_BLOCK, 1, "§8Persistent Game", "", "§7Create your own SMP server on", "§7Hypixel and play with your friends.", "",
+                    cycleIndex % 2 == 0 ? "§a  Click to Connect" : "§a► Click to Connect");
             }
         });
 
@@ -83,15 +98,22 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
                 lore.add("");
                 if (game.isImplemented()) {
                     if (cycleIndex % 2 == 0) {
-                        lore.add("§a  Click to Connect!");
+                        lore.add("§a  Click to Connect");
                     } else {
-                        lore.add("§a► Click to Connect!");
+                        lore.add("§a► Click to Connect");
                     }
                     lore.add("§7" + playerCount + " currently playing!");
+                } else {
+                    if (cycleIndex % 2 == 0) {
+                        lore.add("§c  Coming soon");
+                    } else {
+                        lore.add("§c► Coming soon");
+                    }
+                    lore.add("§70 currently playing!");
                 }
 
                 return ItemStackCreator.appendLore(itemBuilder, lore).customName(
-                        Component.text("§a" + game.getDisplayName())
+                    Component.text("§a" + game.getDisplayName())
                 );
             }
 
@@ -114,13 +136,13 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 ItemStack base = displayGame.getItem().build();
                 ItemStack.Builder builder = ItemStack.builder(base.material())
-                        .amount(1)
-                        .customName(Component.text("§aRandom Game"))
-                        .lore(
-                                Component.text("§7Join a random game."),
-                                Component.empty(),
-                                Component.text("§eClick to Play")
-                        );
+                    .amount(1)
+                    .customName(Component.text("§aRandom Game"))
+                    .lore(
+                        Component.text("§7Join a random game."),
+                        Component.empty(),
+                        Component.text("§eClick to Play")
+                    );
 
                 // Copy head texture if present
                 ResolvableProfile profile = base.get(DataComponents.PROFILE);
@@ -135,14 +157,14 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 List<GameType> implemented = Arrays.stream(GameType.values())
-                        .filter(GameType::isImplemented)
-                        .toList();
+                    .filter(GameType::isImplemented)
+                    .toList();
                 if (implemented.isEmpty()) {
                     player.sendMessage("§cNo games available!");
                     return;
                 }
                 GameType random = implemented.get(
-                        ThreadLocalRandom.current().nextInt(implemented.size())
+                    ThreadLocalRandom.current().nextInt(implemented.size())
                 );
                 player.closeInventory();
                 player.sendTo(random.getLobbyType());
