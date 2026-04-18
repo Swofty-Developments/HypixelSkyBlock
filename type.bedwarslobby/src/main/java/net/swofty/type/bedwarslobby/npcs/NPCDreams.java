@@ -32,15 +32,16 @@ public class NPCDreams extends HypixelNPC {
 
 				int amountOnline = cacheServers.stream().map((server) -> {
 					if (!(server.type() == ServerType.BEDWARS_GAME))
-						return 0; // todo: actually check for bedwars players
+						return 0; // todo: actually check for bedwars players in dreams modes (there can be multiple)
 					return server.players().size();
 				}).reduce(0, Integer::sum);
 
 				String commmaified = StringUtility.commaify(amountOnline);
 				return new String[]{
+					"§7Changes in ? days!", // days or hours or minutes
 						"§e§lCLICK TO PLAY",
-						"§bDreams §7[v" + VersionConst.BED_WARS_VERSION + "]",
-						"§e" + commmaified + " Players",
+					"§bOne Block §7[v" + VersionConst.BED_WARS_VERSION + "]",
+					"§e§l" + commmaified + " Players",
 				};
 			}
 
@@ -59,10 +60,6 @@ public class NPCDreams extends HypixelNPC {
 				return new Pos(-3.5, 68, 13.5, 90, 0);
 			}
 
-			@Override
-			public boolean looking(HypixelPlayer player) {
-				return false;
-			}
 		});
 	}
 

@@ -66,6 +66,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -135,8 +136,6 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     private static BedWarsMapsConfig mapsConfig;
     private static InstanceManager instanceManager;
     private static RegistryKey<@NotNull DimensionType> fullbrightDimension;
-    private static int nextMapIndex = 0;
-    private static List<BedWarsMapsConfig.MapEntry> filteredMaps = new ArrayList<>();
     private Gson gson;
 
     @Nullable
@@ -156,23 +155,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     }
 
     @SneakyThrows
-    public static List<BedWarsGame> createGame(@NotNull BedWarsMapsConfig.MapEntry entry) {
-        if (games.size() >= MAX_GAMES) {
-            return null;
-        }
-
-        List<String> supportedTypes = entry.getConfiguration() != null ? entry.getConfiguration().getTypes().stream().map(BedWarsGameType::name).toList() : List.of();
-        List<BedWarsGame> gameInternalList = new ArrayList<>(List.of());
-        for (String type : supportedTypes) {
-            BedWarsGameType bedwarsGameType = BedWarsGameType.from(type);
-            gameInternalList.add(createGame(entry, bedwarsGameType));
-        }
-        games.addAll(gameInternalList);
-        return gameInternalList;
-    }
-
-    @SneakyThrows
-    public static BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry, BedWarsGameType type) {
+    public static synchronized BedWarsGame createGame(@NotNull BedWarsMapsConfig.MapEntry entry, @NotNull BedWarsGameType type) {
         if (games.size() >= MAX_GAMES) {
             return null;
         }
@@ -185,10 +168,14 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         return game;
     }
 
-    private static synchronized BedWarsMapsConfig.MapEntry nextMapEntry() {
-        if (filteredMaps == null || filteredMaps.isEmpty()) return null;
-        if (nextMapIndex >= filteredMaps.size()) nextMapIndex = 0;
-        return filteredMaps.get(nextMapIndex++);
+    private static List<BedWarsGameType> getSupportedTypes(BedWarsMapsConfig.MapEntry mapEntry) {
+        BedWarsMapsConfig.MapEntry.MapConfiguration config = mapEntry.getConfiguration();
+        if (config == null || config.getTypes() == null) {
+            return List.of();
+        }
+        return config.getTypes().stream()
+            .filter(Objects::nonNull)
+            .toList();
     }
 
     private static Component header() {
@@ -225,20 +212,8 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             byte[] bytes = in.readAllBytes();
             String json = new String(bytes, StandardCharsets.UTF_8);
             mapsConfig = gson.fromJson(json, BedWarsMapsConfig.class);
-            filteredMaps = new ArrayList<>();
-            if (mapsConfig != null && mapsConfig.getMaps() != null) {
-                for (BedWarsMapsConfig.MapEntry e : mapsConfig.getMaps()) {
-                    BedWarsMapsConfig.MapEntry.MapConfiguration cfg = e.getConfiguration();
-                    List<BedWarsGameType> types = (cfg != null) ? cfg.getTypes() : null;
-                    boolean allowed;
-                    if (types == null || types.isEmpty()) {
-                        allowed = true;
-                    } else {
-                        allowed = types.contains(BedWarsGameType.SOLO);
-                    }
-                    if (allowed) filteredMaps.add(e);
-                    createGame(e);
-                }
+            if (mapsConfig == null || mapsConfig.getMaps() == null) {
+                Logger.warn("maps.json was loaded but contained no BedWars maps");
             }
         } catch (Exception e) {
             Logger.error("Failed to load maps.json");
@@ -304,13 +279,39 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
                 commonsGames.add(commonsGame);
             }
 
+            List<GameHeartbeatProtocolObject.MapAdvertisement> mapAdvertisements = new ArrayList<>();
+            if (mapsConfig != null && mapsConfig.getMaps() != null) {
+                for (BedWarsMapsConfig.MapEntry entry : mapsConfig.getMaps()) {
+                    String mapId = entry.getId();
+                    String mapName = entry.getName();
+                    if (mapId == null && mapName == null) {
+                        continue;
+                    }
+                    if (mapId == null) {
+                        mapId = mapName;
+                    }
+                    if (mapName == null) {
+                        mapName = mapId;
+                    }
+
+                    List<String> supportedModes = getSupportedTypes(entry).stream()
+                        .map(BedWarsGameType::name)
+                        .toList();
+                    mapAdvertisements.add(new GameHeartbeatProtocolObject.MapAdvertisement(mapId, mapName, supportedModes));
+                }
+            }
+
+            int remainingGameSlots = Math.max(0, MAX_GAMES - TypeBedWarsGameLoader.getGames().size());
+
             var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
                 uuid,
                 shortName,
                 getType(),
                 maxPlayers,
                 onlinePlayers,
-                commonsGames
+                commonsGames,
+                mapAdvertisements,
+                remainingGameSlots
             );
             new ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
         }).delay(TaskSchedule.seconds(5)).repeat(TaskSchedule.seconds(1)).schedule();

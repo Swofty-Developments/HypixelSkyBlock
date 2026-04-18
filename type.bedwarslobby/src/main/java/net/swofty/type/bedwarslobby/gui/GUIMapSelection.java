@@ -231,9 +231,7 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 			ctx.player().sendMessage("§cNo maps are currently available.");
 			return;
 		}
-
-		String mapName = state.items().get(ThreadLocalRandom.current().nextInt(state.items().size()));
-		queueMap(ctx.player(), mapName);
+        queueMap(ctx.player(), null);
 	}
 
 	private void playRandomFavorite(State state, ViewContext ctx) {
@@ -265,6 +263,7 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 	private void queueMap(HypixelPlayer player, String mapName) {
 		player.closeInventory();
 
+        // TODO: if this is a SOLO game, it should not let players join with a party. This should be a high-level feature instead of manually doing these everywhere
 		if (!GameQueueValidator.canPlayerQueue(player)) {
 			return;
 		}

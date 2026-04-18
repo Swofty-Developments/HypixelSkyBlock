@@ -242,7 +242,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         }
 
         if (gameType != BedWarsGameType.SOLO) {
-            BedWarsInventoryManipulator.addItemWithHotbarPriority(player, TypeBedWarsGameLoader.getItemHandler().getItem("leave_game").getItemStack(),
+            BedWarsInventoryManipulator.addItemWithHotbarPriority(player, TypeBedWarsGameLoader.getItemHandler().getItem("compass").getItemStack(),
                 DatapointBedWarsHotbar.HotbarItemType.COMPASS);
         }
 
@@ -444,6 +444,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         }).delay(TaskSchedule.minutes(1)).repeat(TaskSchedule.minutes(1)).schedule();
     }
 
+    // this is per game type, dreams modes have different looks
     public void sendGameStartMessage() {
         String line = "■".repeat(50);
         Component[] messages = {

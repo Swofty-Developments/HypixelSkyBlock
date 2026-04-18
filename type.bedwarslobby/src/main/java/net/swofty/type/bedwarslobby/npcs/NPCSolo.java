@@ -26,7 +26,7 @@ public class NPCSolo extends HypixelNPC {
                 return new String[]{
                     "§e§lCLICK TO PLAY",
                     "§bSolo §7[v" + VersionConst.BED_WARS_VERSION + "]",
-                    "§e" + commmaified + " Players",
+                    "§e§l" + commmaified + " Players",
                 };
             }
 

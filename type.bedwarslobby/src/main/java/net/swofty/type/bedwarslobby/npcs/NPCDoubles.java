@@ -26,7 +26,7 @@ public class NPCDoubles extends HypixelNPC {
 				return new String[]{
 						"§e§lCLICK TO PLAY",
 						"§bDoubles §7[v" + VersionConst.BED_WARS_VERSION + "]",
-						"§e" + commaified + " Players",
+					"§e§l" + commaified + " Players",
 				};
 			}
 

@@ -47,6 +47,7 @@ public class GUIPlay extends HypixelInventoryGUI {
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
 				player.closeInventory();
 
+				// TODO: GameQueueValidator#canPlayerQueue
 				if (LobbyOrchestratorConnector.isSearching(player.getUuid())) {
 					player.sendMessage("§cYou are already searching for a game!");
 					return;

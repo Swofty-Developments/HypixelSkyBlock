@@ -26,7 +26,7 @@ public class NPCTrios extends HypixelNPC {
                 return new String[]{
                     "§e§lCLICK TO PLAY",
                     "§b3v3v3v3 §7[v" + VersionConst.BED_WARS_VERSION + "]",
-                    "§e" + commmaified + " Players",
+                    "§e§l" + commmaified + " Players",
                 };
             }
 

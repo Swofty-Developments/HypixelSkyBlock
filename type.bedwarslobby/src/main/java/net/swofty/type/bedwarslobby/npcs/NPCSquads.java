@@ -26,7 +26,7 @@ public class NPCSquads extends HypixelNPC {
                 return new String[]{
                     "§e§lCLICK TO PLAY",
                     "§b4v4v4v4 §7[v" + VersionConst.BED_WARS_VERSION + "]",
-                    "§e" + commmaified + " Players",
+                    "§e§l" + commmaified + " Players",
                 };
             }
 
