@@ -11,10 +11,10 @@ import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.lobby.LobbyServerOrder;
 import net.swofty.type.lobby.ServerInfoCache;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,9 +64,7 @@ public class GUILobbySelector extends HypixelInventoryGUI {
 
     private void loadLobbies(HypixelPlayer player) {
         ServerInfoCache.getServersByType(lobbyType).thenAccept(servers -> {
-            lobbies = servers.stream()
-                    .sorted(Comparator.comparing(s -> extractLobbyNumber(s.shortName())))
-                    .toList();
+            lobbies = LobbyServerOrder.sortBySelectorOrder(servers);
             loaded = true;
             populateLobbies(player);
             updateItemStacks(getInventory(), player);
@@ -138,15 +136,6 @@ public class GUILobbySelector extends HypixelInventoryGUI {
                     p.asProxyPlayer().transferToWithIndication(lobby.uuid());
                 }
             });
-        }
-    }
-
-    private int extractLobbyNumber(String shortName) {
-        try {
-            String digits = shortName.replaceAll("[^0-9]", "");
-            return digits.isEmpty() ? 1 : Integer.parseInt(digits);
-        } catch (NumberFormatException e) {
-            return 1;
         }
     }
 

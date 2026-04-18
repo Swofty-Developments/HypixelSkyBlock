@@ -54,6 +54,6 @@ public class NPCDoubles extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent e) {
-		new GUIPlay(BedWarsGameType.DOUBLES).open(e.player());
+		e.player().openView(new GUIPlay(BedWarsGameType.DOUBLES));
 	}
 }

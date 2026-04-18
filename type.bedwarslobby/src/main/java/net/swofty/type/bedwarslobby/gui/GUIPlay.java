@@ -1,105 +1,92 @@
 package net.swofty.type.bedwarslobby.gui;
 
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.bedwars.BedWarsGameType;
-import net.swofty.commons.party.FullParty;
-import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
-import net.swofty.type.generic.party.PartyManager;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.lobby.GameQueueValidator;
 import net.swofty.type.lobby.LobbyOrchestratorConnector;
 
-public class GUIPlay extends HypixelInventoryGUI {
+public class GUIPlay extends StatelessView {
 
 	private final BedWarsGameType type;
 
 	public GUIPlay(BedWarsGameType type) {
-		super("Play Bed Wars", InventoryType.CHEST_4_ROW);
+		if (type.isDream()) {
+			throw new IllegalArgumentException("Dream types should not be used in this GUI!");
+		}
 		this.type = type;
 	}
 
 	@Override
-	public void onOpen(InventoryGUIOpenEvent e) {
+	public ViewConfiguration<DefaultState> configuration() {
+		return new ViewConfiguration<>("Play Bed Wars", InventoryType.CHEST_4_ROW);
+	}
+
+	@Override
+	public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+		layout.allowHotkey(false);
+
 		int playSlot = type == BedWarsGameType.FOUR_FOUR ? 13 : 12;
-		set(new GUIClickableItem(playSlot) {
-			@Override
-			public ItemStack.Builder getItem(HypixelPlayer player) {
-				StringBuilder builder = new StringBuilder();
+		layout.slot(playSlot, (s, viewCtx) -> {
+			String description = String.join("\n", type.getDescription());
+			return ItemStackCreator.getSingleLoreStackLineSplit(
+				"§aBed Wars " + type.getDisplayName(),
+				"§7",
+				Material.RED_BED,
+				1,
+				"§7Play a game of Bed Wars " + type.getDisplayName() + "\n\n" + description + "\n\n§eClick to play!"
+			);
+		}, (_, viewCtx) -> {
+			var player = viewCtx.player();
+			player.closeInventory();
 
-				for (String line : type.getDescription()) {
-					builder.append(line).append("\n");
-				}
-				builder.deleteCharAt(builder.length() - 1);
-
-				return ItemStackCreator.getSingleLoreStackLineSplit(
-						"§aBed Wars " + type.getDisplayName(), "§7",
-						Material.RED_BED, 1,
-					"§7Play a game of Bed Wars " + type.getDisplayName() + "\n\n" + builder + "\n\n§eClick to play!"
-				);
+			if (!GameQueueValidator.canPlayerQueue(player, new GameQueueValidator.QueueRequirements(
+				"Bed Wars",
+				type.getQueueModeDisplayName(),
+				type.getTeamSize()
+			))) {
+				return;
 			}
 
-			@Override
-			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-				player.closeInventory();
-
-				// TODO: GameQueueValidator#canPlayerQueue
-				if (LobbyOrchestratorConnector.isSearching(player.getUuid())) {
-					player.sendMessage("§cYou are already searching for a game!");
-					return;
-				}
-
-				// Party check - non-leaders cannot queue
-				if (PartyManager.isInParty(player)) {
-					FullParty party = PartyManager.getPartyFromPlayer(player);
-					if (party != null && !party.getLeader().getUuid().equals(player.getUuid())) {
-						player.sendMessage("§cYou are in a party! Ask your leader to start the game, or /p leave");
-						return;
-					}
-				}
-
-				LobbyOrchestratorConnector connector = new LobbyOrchestratorConnector(player);
-				connector.sendToGame(ServerType.BEDWARS_GAME, type.toString());
-			}
+			LobbyOrchestratorConnector connector = new LobbyOrchestratorConnector(player);
+			connector.sendToGame(ServerType.BEDWARS_GAME, type.toString());
 		});
 
 
 		if (type != BedWarsGameType.FOUR_FOUR) {
-			set(new GUIClickableItem(14) {
-
-				@Override
-				public ItemStack.Builder getItem(HypixelPlayer player) {
-					return ItemStackCreator.getStack("§aMap Selector " + type.getDisplayName(),
+			layout.slot(14,
+				(s, viewCtx) -> ItemStackCreator.getStack("§aMap Selector " + type.getDisplayName(),
 							Material.OAK_SIGN, 1,
 							"§7Pick which map you want to play from",
 							"§7a list of available maps.",
 							"",
-							"§eClick to browse!");
-				}
-
-				@Override
-				public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-					player.openView(new GUIMapSelection(type));
-				}
-			});
+					"§eClick to browse!"),
+				(_, viewCtx) -> viewCtx.push(new GUIMapSelection(type))
+			);
 		}
 
-		set(GUIClickableItem.getCloseItem(31));
-		updateItemStacks(getInventory(), getPlayer());
-	}
+		layout.slot(35,
+			(s, viewCtx) -> ItemStackCreator.getStack(
+				"§cClick here to rejoin!",
+				Material.ENDER_PEARL,
+				1,
+				"§7Click here to join your Bed Wars",
+				"§7game if you have been disconnected",
+				"§7from it."
+			),
+			(_, viewCtx) -> {
+				// TODO: rejoin functionality
+			}
+		);
 
-
-	@Override
-	public boolean allowHotkeying() {
-		return false;
-	}
-
-	@Override
-	public void onBottomClick(InventoryPreClickEvent e) {
-
+		Components.backOrClose(layout, 31, ctx);
 	}
 }

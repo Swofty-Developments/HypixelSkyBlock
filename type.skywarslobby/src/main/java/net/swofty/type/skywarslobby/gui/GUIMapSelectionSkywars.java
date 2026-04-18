@@ -146,7 +146,11 @@ public class GUIMapSelectionSkywars extends HypixelInventoryGUI {
                 public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                     player.closeInventory();
 
-                    if (!GameQueueValidator.canPlayerQueue(player)) {
+                    if (!GameQueueValidator.canPlayerQueue(player, new GameQueueValidator.QueueRequirements(
+                        "SkyWars",
+                        gameType.getDisplayName(),
+                        gameType.getTeamSize()
+                    ))) {
                         return;
                     }
 

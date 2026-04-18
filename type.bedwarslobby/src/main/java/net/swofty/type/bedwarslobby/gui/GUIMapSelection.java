@@ -136,8 +136,7 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 				(_, __) -> ItemStackCreator.getStack("§aGo Back", Material.ARROW, 1,
 					"§7Go back to Play Bed Wars"),
 				(_, viewCtx) -> {
-					viewCtx.player().closeInventory();
-					new GUIPlay(gameType).open(viewCtx.player());
+					viewCtx.player().openView(new GUIPlay(gameType));
 				}
 			);
 		}
@@ -263,8 +262,11 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 	private void queueMap(HypixelPlayer player, String mapName) {
 		player.closeInventory();
 
-        // TODO: if this is a SOLO game, it should not let players join with a party. This should be a high-level feature instead of manually doing these everywhere
-		if (!GameQueueValidator.canPlayerQueue(player)) {
+		if (!GameQueueValidator.canPlayerQueue(player, new GameQueueValidator.QueueRequirements(
+			"Bed Wars",
+			gameType.getQueueModeDisplayName(),
+			gameType.getTeamSize()
+		))) {
 			return;
 		}
 

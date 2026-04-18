@@ -116,6 +116,17 @@ public enum BedWarsGameType {
         return this == SOLO || this == DOUBLES || this == ULTIMATE_DOUBLES;
     }
 
+    public String getQueueModeDisplayName() {
+        return switch (this) {
+            case SOLO -> "Eight One";
+            case DOUBLES -> "Eight Two";
+            case THREE_THREE_THREE_THREE -> "Four Three";
+            case FOUR_FOUR -> "Four Four";
+            case ONE_BLOCK -> "Eight One Oneblock";
+            default -> displayName;
+        };
+    }
+
     public static List<BedWarsGameType> getDreamTypes() {
         return Arrays.stream(BedWarsGameType.values())
             .filter(type -> type.dream)

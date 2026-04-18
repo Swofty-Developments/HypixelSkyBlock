@@ -54,6 +54,6 @@ public class NPCTrios extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        new GUIPlay(BedWarsGameType.THREE_THREE_THREE_THREE).open(e.player());
+        e.player().openView(new GUIPlay(BedWarsGameType.THREE_THREE_THREE_THREE));
     }
 }

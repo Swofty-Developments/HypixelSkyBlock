@@ -6,6 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.bedwarsgame.gui.GUITrackerAndCommunication;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.util.ComponentManipulator;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -17,7 +18,7 @@ public class CompassItem extends SimpleInteractableItem {
 
     @Override
     public ItemStack getBlandItem() {
-        return ItemStack.builder(Material.COMPASS).set(DataComponents.CUSTOM_NAME, I18n.t("bedwars.item.compass")).build();
+        return ItemStack.builder(Material.COMPASS).set(DataComponents.CUSTOM_NAME, ComponentManipulator.noItalic(I18n.t("bedwars.item.compass"))).build();
     }
 
     @Override

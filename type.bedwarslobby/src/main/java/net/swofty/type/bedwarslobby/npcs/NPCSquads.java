@@ -54,6 +54,6 @@ public class NPCSquads extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        new GUIPlay(BedWarsGameType.FOUR_FOUR_FOUR_FOUR).open(e.player());
+        e.player().openView(new GUIPlay(BedWarsGameType.FOUR_FOUR_FOUR_FOUR));
     }
 }

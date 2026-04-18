@@ -54,6 +54,6 @@ public class NPCSolo extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        new GUIPlay(BedWarsGameType.SOLO).open(e.player());
+        e.player().openView(new GUIPlay(BedWarsGameType.SOLO));
     }
 }
