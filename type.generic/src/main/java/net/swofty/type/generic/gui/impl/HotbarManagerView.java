@@ -1,11 +1,10 @@
-package net.swofty.type.bedwarsgame.gui;
+package net.swofty.type.generic.gui.impl;
 
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
-import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -16,6 +15,7 @@ import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,10 +37,14 @@ public class HotbarManagerView extends StatelessView {
             50,
             (s, c) -> ItemStackCreator.getStack("§cReset to Default", Material.BARRIER, 1, "§7Reset your hotbar to the default."),
             (clickContext, c) -> {
-                BedWarsPlayer player = (BedWarsPlayer) clickContext.player();
-                BedWarsDataHandler dataHandler = player.getBedWarsDataHandler();
+                BedWarsDataHandler dataHandler = BedWarsDataHandler.getUser(c.player());
+                if (dataHandler == null) {
+                    c.backOrClose();
+                    c.player().sendMessage("§cAn error occurred while trying to reset your hotbar layout. Please try again later.");
+                    return;
+                }
                 dataHandler.get(BedWarsDataHandler.Data.HOTBAR_LAYOUT, DatapointBedWarsHotbar.class).setValue(DatapointBedWarsHotbar.defaultHotbar);
-                player.getInventory().setCursorItem(ItemStack.AIR);
+                c.player().getInventory().setCursorItem(ItemStack.AIR);
                 c.session(DefaultState.class).refresh();
             }
         );
@@ -63,7 +67,7 @@ public class HotbarManagerView extends StatelessView {
                     "§7item in this category or on spawn.",
                     "",
                     "§eClick to drag!"), (clickContext, context) -> {
-                    BedWarsPlayer player = (BedWarsPlayer) clickContext.player();
+                    final HypixelPlayer player = context.player();
                     ItemStack cursorItem = player.getInventory().getCursorItem();
                     if (!cursorItem.isAir() && getItemTypeFromCursor(cursorItem) == null) {
                         return;
@@ -77,7 +81,7 @@ public class HotbarManagerView extends StatelessView {
             final byte hotbarSlot = (byte) (slot - 27);
             layout.slot(slot,
                 (_, c) -> {
-                    BedWarsPlayer player = (BedWarsPlayer) c.player();
+                    final HypixelPlayer player = c.player();
                     Map<Byte, DatapointBedWarsHotbar.HotbarItemType> currentLayout = getHotbarLayout(player);
                     DatapointBedWarsHotbar.HotbarItemType type = currentLayout.get(hotbarSlot);
 
@@ -93,7 +97,7 @@ public class HotbarManagerView extends StatelessView {
                         "§eClick to remove!");
                 },
                 (clickContext, c) -> {
-                    BedWarsPlayer player = (BedWarsPlayer) clickContext.player();
+                    final HypixelPlayer player = c.player();
                     Map<Byte, DatapointBedWarsHotbar.HotbarItemType> currentLayout = getHotbarLayout(player);
                     DatapointBedWarsHotbar.HotbarItemType cursorType = getItemTypeFromCursor(player.getInventory().getCursorItem());
 
@@ -118,16 +122,16 @@ public class HotbarManagerView extends StatelessView {
         }
     }
 
-    private Map<Byte, DatapointBedWarsHotbar.HotbarItemType> getHotbarLayout(BedWarsPlayer player) {
+    private Map<Byte, DatapointBedWarsHotbar.HotbarItemType> getHotbarLayout(HypixelPlayer player) {
         return new HashMap<>(
-            player.getBedWarsDataHandler()
+            BedWarsDataHandler.getUser(player)
                 .get(BedWarsDataHandler.Data.HOTBAR_LAYOUT, DatapointBedWarsHotbar.class)
                 .getValue()
         );
     }
 
-    private void setHotbarLayout(BedWarsPlayer player, Map<Byte, DatapointBedWarsHotbar.HotbarItemType> layout) {
-        player.getBedWarsDataHandler()
+    private void setHotbarLayout(HypixelPlayer player, Map<Byte, DatapointBedWarsHotbar.HotbarItemType> layout) {
+        BedWarsDataHandler.getUser(player)
             .get(BedWarsDataHandler.Data.HOTBAR_LAYOUT, DatapointBedWarsHotbar.class)
             .setValue(new HashMap<>(layout));
     }

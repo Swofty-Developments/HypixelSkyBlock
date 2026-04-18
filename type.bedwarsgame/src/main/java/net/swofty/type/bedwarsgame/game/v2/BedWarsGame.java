@@ -25,6 +25,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.party.FullParty;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
@@ -39,19 +40,14 @@ import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.game.game.AbstractTeamGame;
 import net.swofty.type.game.game.CountdownConfig;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.party.PartyManager;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
@@ -467,6 +463,104 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     public List<UUID> getDisconnectedPlayerUuids() {
         return new ArrayList<>(disconnectedPlayers.keySet());
+    }
+
+    @Override
+    public void autoAssignTeams() {
+        List<BedWarsPlayer> unassignedPlayers = getPlayers().stream()
+            .filter(player -> !playerTeams.containsKey(player.getUuid()))
+            .toList();
+
+        if (unassignedPlayers.isEmpty() || getTeams().isEmpty()) {
+            return;
+        }
+
+        Map<UUID, BedWarsPlayer> playersByUuid = new HashMap<>();
+        for (BedWarsPlayer player : unassignedPlayers) {
+            playersByUuid.put(player.getUuid(), player);
+        }
+
+        List<List<BedWarsPlayer>> groups = new ArrayList<>();
+        Set<UUID> processed = new HashSet<>();
+
+        for (BedWarsPlayer player : unassignedPlayers) {
+            if (!processed.add(player.getUuid())) {
+                continue;
+            }
+
+            List<BedWarsPlayer> group = new ArrayList<>();
+            FullParty party = PartyManager.getPartyFromPlayer(player);
+            if (party != null) {
+                for (UUID partyMemberUuid : party.getParticipants()) {
+                    BedWarsPlayer member = playersByUuid.get(partyMemberUuid);
+                    if (member != null) {
+                        group.add(member);
+                    }
+                }
+            }
+
+            if (group.isEmpty()) {
+                group.add(player);
+            }
+
+            for (BedWarsPlayer member : group) {
+                processed.add(member.getUuid());
+            }
+            groups.add(group);
+        }
+
+        Collections.shuffle(groups);
+        groups.sort(Comparator.comparingInt((List<BedWarsPlayer> group) -> group.size()).reversed());
+
+        List<BedWarsTeam> shuffledTeams = new ArrayList<>(getTeams());
+        Collections.shuffle(shuffledTeams);
+
+        Map<String, Integer> teamPriority = new HashMap<>();
+        for (int i = 0; i < shuffledTeams.size(); i++) {
+            teamPriority.put(shuffledTeams.get(i).getId(), i);
+        }
+
+        for (List<BedWarsPlayer> group : groups) {
+            BedWarsTeam targetTeam = selectTargetTeam(group.size(), teamPriority);
+            if (targetTeam != null) {
+                assignGroupToTeam(group, targetTeam);
+                continue;
+            }
+
+            for (BedWarsPlayer member : group) {
+                BedWarsTeam fallbackTeam = selectTargetTeam(1, teamPriority);
+                if (fallbackTeam == null) {
+                    break;
+                }
+                assignPlayerToTeam(member, fallbackTeam);
+            }
+        }
+    }
+
+    private BedWarsTeam selectTargetTeam(int requiredSlots, Map<String, Integer> teamPriority) {
+        return getTeams().stream()
+            .filter(team -> team.getPlayerCount() + requiredSlots <= getTeamSize())
+            .min(Comparator
+                .comparingInt(BedWarsTeam::getPlayerCount)
+                .thenComparingInt(team -> teamPriority.getOrDefault(team.getId(), Integer.MAX_VALUE)))
+            .orElse(null);
+    }
+
+    private void assignGroupToTeam(List<BedWarsPlayer> players, BedWarsTeam team) {
+        for (BedWarsPlayer player : players) {
+            assignPlayerToTeam(player, team);
+        }
+    }
+
+    private void assignPlayerToTeam(BedWarsPlayer player, BedWarsTeam team) {
+        removeFromTeam(player);
+        team.addPlayer(player.getUuid());
+        playerTeams.put(player.getUuid(), team.getId());
+        eventDispatcher.accept(new PlayerAssignedTeamEvent<>(
+            gameId,
+            player.getServerPlayer(),
+            team
+        ));
     }
 
     // widens access modifier

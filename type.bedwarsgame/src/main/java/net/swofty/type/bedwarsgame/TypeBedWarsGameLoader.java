@@ -42,6 +42,7 @@ import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameObject;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -265,6 +266,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
                 commonsGame.setType(ServerType.BEDWARS_GAME);
                 commonsGame.setMap(game.getMapEntry().getName());
                 commonsGame.setGameTypeName(game.getGameType().name());
+                commonsGame.setAcceptingJoins(game.getState() == GameState.WAITING || game.getState() == GameState.COUNTDOWN);
 
                 // Get involved players from the game
                 List<UUID> playerUuids = new ArrayList<>();

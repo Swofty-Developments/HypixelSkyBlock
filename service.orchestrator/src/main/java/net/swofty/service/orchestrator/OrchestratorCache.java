@@ -15,12 +15,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class OrchestratorCache {
     private static final Map<String, GameServerState> serversByShortName = new ConcurrentHashMap<>();
     private static final Map<UUID, GameWithServer> gamesByGameId = new ConcurrentHashMap<>();
+    private static final Map<UUID, List<SlotReservation>> reservationsByGameId = new ConcurrentHashMap<>();
     private static final long HEARTBEAT_TTL_MS = 10000; // 10s
+    private static final long RESERVATION_TTL_MS = 8000; // 8s
 
     public static void handleHeartbeat(UUID uuid,
                                        String shortName,
@@ -103,19 +106,21 @@ public class OrchestratorCache {
      * Finds an existing joinable game with at least neededSlots available slots.
      * If requirePlayers is true, only considers games that already have players.
      */
-    public static GameWithServer findExisting(ServerType serverType,
-                                              int maxPlayers,
-                                              String map,
-                                              int neededSlots,
-                                              String gameTypeName,
-                                              boolean requirePlayers) {
+    public static synchronized GameWithServer findExisting(ServerType serverType,
+                                                           int maxPlayers,
+                                                           String map,
+                                                           int neededSlots,
+                                                           String gameTypeName,
+                                                           boolean requirePlayers) {
         cleanup();
 
         List<GameWithServer> candidates = new ArrayList<>();
         for (GameWithServer gameWithServer : gamesByGameId.values()) {
             GameObject game = gameWithServer.game();
-            int availableSlots = maxPlayers - game.getInvolvedPlayers().size();
+            int reservedSlots = getReservedSlots(game.getGameId());
+            int availableSlots = maxPlayers - game.getInvolvedPlayers().size() - reservedSlots;
             if (game.getType() == serverType &&
+                game.isAcceptingJoins() &&
                 availableSlots >= neededSlots &&
                 (map == null || game.getMap().equals(map)) &&
                 (gameTypeName == null || gameTypeName.equals(game.getGameTypeName())) &&
@@ -130,7 +135,11 @@ public class OrchestratorCache {
 
         // Prefer games with more players (closer to starting)
         candidates.sort(Comparator.comparingInt((GameWithServer g) -> g.game().getInvolvedPlayers().size()).reversed());
-        return candidates.getFirst();
+        GameWithServer selected = candidates.getFirst();
+        if (neededSlots > 0) {
+            reserveSlots(selected.game().getGameId(), neededSlots);
+        }
+        return selected;
     }
 
     /**
@@ -282,6 +291,7 @@ public class OrchestratorCache {
 
     public static void cleanup() {
         long now = Instant.now().toEpochMilli();
+        cleanupReservations(now);
 
         // Remove stale servers
         serversByShortName.values().removeIf(server ->
@@ -295,6 +305,46 @@ public class OrchestratorCache {
 
         gamesByGameId.values().removeIf(gameWithServer ->
             !availableServerUuids.contains(gameWithServer.serverUuid()));
+
+        reservationsByGameId.entrySet().removeIf(entry -> !gamesByGameId.containsKey(entry.getKey()));
+    }
+
+    private static void reserveSlots(UUID gameId, int slots) {
+        if (slots <= 0) {
+            return;
+        }
+
+        long expiresAt = Instant.now().toEpochMilli() + RESERVATION_TTL_MS;
+        reservationsByGameId
+            .computeIfAbsent(gameId, ignored -> new CopyOnWriteArrayList<>())
+            .add(new SlotReservation(slots, expiresAt));
+    }
+
+    private static int getReservedSlots(UUID gameId) {
+        List<SlotReservation> reservations = reservationsByGameId.get(gameId);
+        if (reservations == null || reservations.isEmpty()) {
+            return 0;
+        }
+
+        long now = Instant.now().toEpochMilli();
+        int total = 0;
+        for (SlotReservation reservation : reservations) {
+            if (reservation.expiresAtMs() > now) {
+                total += reservation.slots();
+            }
+        }
+        return total;
+    }
+
+    private static void cleanupReservations(long now) {
+        reservationsByGameId.entrySet().removeIf(entry -> {
+            List<SlotReservation> reservations = entry.getValue();
+            reservations.removeIf(reservation -> reservation.expiresAtMs() <= now);
+            return reservations.isEmpty();
+        });
+    }
+
+    private record SlotReservation(int slots, long expiresAtMs) {
     }
 
     public record GameServerState(UUID uuid,

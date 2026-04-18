@@ -169,7 +169,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
                 context.push(new TrackerShopView());
             });
             layout.slot(53, (_, _) -> ItemStackCreator.getStack("§aHotbar Manager", Material.BLAZE_POWDER, 1, "§7Edit preferred slots for your items", "§7per category.", "", "§eClick to edit!"), (_, context) -> {
-                context.push(new HotbarManagerView());
+                context.push(new net.swofty.type.generic.gui.impl.HotbarManagerView());
             });
         }
 

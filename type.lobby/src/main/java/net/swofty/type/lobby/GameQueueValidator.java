@@ -47,7 +47,11 @@ public final class GameQueueValidator {
         @Nullable FullParty party = null;
         if (PartyManager.isInParty(player)) {
             party = PartyManager.getPartyFromPlayer(player);
-            if (party != null && !party.getLeader().getUuid().equals(player.getUuid())) {
+            if (party == null) {
+                player.sendMessage("§cFailed to read your party state. Please try again.");
+                return false;
+            }
+            if (!party.getLeader().getUuid().equals(player.getUuid())) {
                 player.sendMessage("§cYou are in a party! Ask your leader to start the game, or /p leave");
                 return false;
             }

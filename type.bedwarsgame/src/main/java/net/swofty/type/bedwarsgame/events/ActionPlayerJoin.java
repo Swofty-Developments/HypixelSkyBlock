@@ -7,6 +7,8 @@ import net.swofty.commons.ServerType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.Game.JoinResult;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -58,8 +60,19 @@ public class ActionPlayerJoin implements HypixelEventClass {
 					player.sendMessage("§cFailed to rejoin your previous game! Returning to lobby...");
 					player.sendTo(ServerType.BEDWARS_LOBBY);
 				}
-			} else {
-				preferred.join(player);
+				return;
+			}
+
+			if (preferred.getState() != GameState.WAITING && preferred.getState() != GameState.COUNTDOWN) {
+				player.sendMessage("§cThe assigned game is no longer joinable! Returning to lobby...");
+				player.sendTo(ServerType.BEDWARS_LOBBY);
+				return;
+			}
+
+			JoinResult joinResult = preferred.join(player);
+			if (joinResult instanceof JoinResult.Denied denied) {
+				player.sendMessage("§cFailed to join assigned game (" + denied.reason() + ")! Returning to lobby...");
+				player.sendTo(ServerType.BEDWARS_LOBBY);
 			}
 		}, 15);
 	}

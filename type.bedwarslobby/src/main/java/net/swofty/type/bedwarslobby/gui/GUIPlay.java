@@ -3,7 +3,11 @@ package net.swofty.type.bedwarslobby.gui;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.ServiceType;
 import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocolObject;
+import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
@@ -15,6 +19,7 @@ import net.swofty.type.lobby.GameQueueValidator;
 import net.swofty.type.lobby.LobbyOrchestratorConnector;
 
 public class GUIPlay extends StatelessView {
+    private static final ProxyService ORCHESTRATOR = new ProxyService(ServiceType.ORCHESTRATOR);
 
     private final BedWarsGameType type;
 
@@ -83,7 +88,39 @@ public class GUIPlay extends StatelessView {
                 "§7from it."
             ),
             (_, viewCtx) -> {
-                // TODO: rejoin functionality
+                var player = viewCtx.player();
+                player.closeInventory();
+
+                RejoinGameProtocolObject.RejoinGameRequest request =
+                    new RejoinGameProtocolObject.RejoinGameRequest(player.getUuid());
+
+                ORCHESTRATOR.handleRequest(request).thenAccept(response -> {
+                    if (!(response instanceof RejoinGameProtocolObject.RejoinGameResponse resp)) {
+                        player.sendMessage("§cFailed to check for active games. Please try again.");
+                        return;
+                    }
+
+                    if (!resp.hasActiveGame() || resp.server() == null) {
+                        player.sendMessage("§cYou don't have an active game to rejoin!");
+                        return;
+                    }
+
+                    player.sendMessage("§aRejoining your game...");
+
+                    ChooseGameProtocolObject.ChooseGameMessage chooseMsg =
+                        new ChooseGameProtocolObject.ChooseGameMessage(
+                            player.getUuid(),
+                            resp.server(),
+                            resp.gameId()
+                        );
+                    ORCHESTRATOR.handleRequest(chooseMsg);
+
+                    player.asProxyPlayer().transferToWithIndication(resp.server().uuid());
+                    player.getAchievementHandler().completeAchievement("bedwars.rejoining_the_dream");
+                }).exceptionally(throwable -> {
+                    player.sendMessage("§cFailed to rejoin: " + throwable.getMessage());
+                    return null;
+                });
             }
         );
 

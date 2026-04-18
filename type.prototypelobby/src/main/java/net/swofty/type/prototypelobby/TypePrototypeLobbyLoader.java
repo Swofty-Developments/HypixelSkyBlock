@@ -24,6 +24,7 @@ import net.swofty.type.lobby.events.LobbyPlayerMove;
 import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
+import net.swofty.type.lobby.item.impl.Collectibles;
 import net.swofty.type.lobby.item.impl.HidePlayers;
 import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
@@ -93,6 +94,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         return Map.of(
                 0, new PlayCompass(),
                 1, new ProfileItem(),
+            4, new Collectibles(),
                 7, new HidePlayers(),
                 8, new LobbySelector()
         );

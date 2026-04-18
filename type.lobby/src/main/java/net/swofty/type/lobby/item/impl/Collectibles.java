@@ -1,4 +1,4 @@
-package net.swofty.type.bedwarslobby.item.impl;
+package net.swofty.type.lobby.item.impl;
 
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.trait.CancellableEvent;

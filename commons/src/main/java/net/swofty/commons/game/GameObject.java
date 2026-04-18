@@ -21,6 +21,7 @@ public class GameObject {
 	private ServerType type;
 	private String map;
 	private String gameTypeName; // e.g., "CLASSIC", "SOLO", "DOUBLE_UP"
+    private boolean acceptingJoins = true;
 
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
@@ -28,6 +29,7 @@ public class GameObject {
 		json.put("type", type.name());
 		json.put("map", map);
 		json.put("gameTypeName", gameTypeName != null ? gameTypeName : "");
+        json.put("acceptingJoins", acceptingJoins);
 		List<String> players = involvedPlayers.stream().map(UUID::toString).toList();
 		json.put("players", players);
 		List<String> disconnected = disconnectedPlayers != null
@@ -43,6 +45,7 @@ public class GameObject {
 		game.type = ServerType.valueOf(json.getString("type"));
 		game.map = json.getString("map");
 		game.gameTypeName = json.optString("gameTypeName", null);
+        game.acceptingJoins = json.optBoolean("acceptingJoins", true);
 		game.involvedPlayers = json.getJSONArray("players").toList().stream().map(obj -> UUID.fromString(obj.toString())).toList();
 		game.disconnectedPlayers = json.has("disconnectedPlayers")
 			? json.getJSONArray("disconnectedPlayers").toList().stream().map(obj -> UUID.fromString(obj.toString())).toList()
