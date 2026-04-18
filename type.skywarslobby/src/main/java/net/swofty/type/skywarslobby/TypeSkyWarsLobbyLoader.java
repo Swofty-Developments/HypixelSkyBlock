@@ -20,11 +20,11 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.LobbyBlockBreak;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
 import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
 import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -175,7 +175,7 @@ public class TypeSkyWarsLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyItemEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
-        events.add(new LobbyBlockBreak());
+        events.add(new LobbyWorldEvent());
         events.add(new LobbyPlayerMove(spawnPont));
         return events;
     }

@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
+// TODO: order by favorite
 public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelection.State> {
 
 	private final BedWarsGameType gameType;
@@ -171,7 +172,7 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 
 		if (state.items().isEmpty()) {
 			layout.slot(22,
-				(_, __) -> ItemStackCreator.getStack("§cNo maps available",
+				(_, _) -> ItemStackCreator.getStack("§cNo maps available",
 					Material.BARRIER, 1,
 					"§7No maps are currently available",
 					"§7for " + gameType.getDisplayName(),
@@ -205,7 +206,7 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 			Material.FIREWORK_STAR, 1,
 			"§7" + gameType.getDisplayName(),
 			"",
-			"§7Available Games: §aUnknown",
+			"§7Available Games: §a" + 0,
 			"§7Times Joined: §a" + joins,
 			"§7Map Selections: §aUnlimited", // TODO: limited unless MVP+
 			"",

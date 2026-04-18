@@ -21,7 +21,6 @@ import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
 import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.View;
@@ -109,11 +108,6 @@ public class HypixelPlayer extends Player {
             }
             case StatelessView _ -> {
                 return ViewNavigator.get(this).push(view, null);
-            }
-            case StatefulPaginatedView<?, ?> state -> {
-                @SuppressWarnings("unchecked")
-                S initialState = (S) state.initialState();
-                return ViewNavigator.get(this).push(view, initialState);
             }
             default -> throw new IllegalArgumentException("View must be either StatefulView or StatelessView");
         }
