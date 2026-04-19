@@ -7,7 +7,7 @@ import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
 import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleStateService;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.generic.gui.v2.collectibles.CollectibleSelectionView;
+import net.swofty.type.generic.gui.impl.collectibles.CollectibleSelectionView;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 

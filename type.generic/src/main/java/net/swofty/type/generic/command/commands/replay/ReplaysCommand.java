@@ -9,8 +9,8 @@ import net.swofty.commons.protocol.objects.replay.ReplayListProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.generic.gui.v2.views.replay.ReplayEntry;
-import net.swofty.type.generic.gui.v2.views.replay.ReplaysListView;
+import net.swofty.type.generic.gui.impl.replay.ReplayEntry;
+import net.swofty.type.generic.gui.impl.replay.ReplaysListView;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 

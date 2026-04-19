@@ -10,10 +10,10 @@ import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
 import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleStateService;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import net.swofty.type.generic.gui.impl.collectibles.CollectibleSelectionView;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.ViewSession;
-import net.swofty.type.generic.gui.v2.collectibles.CollectibleSelectionView;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -67,7 +67,8 @@ public class GUIShopkeeperSkins extends CollectibleSelectionView {
             }
 
             String reason = purchaseCheck.reason() != null ? purchaseCheck.reason() : "This collectible cannot be purchased.";
-            return SelectionOutcome.failure("§c" + reason);
+            String message = reason.indexOf('§') == -1 ? "§c" + reason : reason;
+            return SelectionOutcome.failure(message);
         }
 
         BedWarsCollectibleStateService.SelectionResult result = BedWarsCollectibleStateService.select(player, definition);

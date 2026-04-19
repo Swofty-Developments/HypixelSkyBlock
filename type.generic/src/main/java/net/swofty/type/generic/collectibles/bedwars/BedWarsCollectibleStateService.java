@@ -260,7 +260,7 @@ public final class BedWarsCollectibleStateService {
         }
 
         String reason = selectableCheck.reason() == null ? "This collectible is currently unavailable." : selectableCheck.reason();
-        if (!reason.contains("Costs §6")) {
+        if (!isCostReason(reason)) {
             return new PurchaseCheck(false, cost, currency, reason);
         }
 
@@ -279,6 +279,10 @@ public final class BedWarsCollectibleStateService {
         DatapointCollectibles.CollectiblesState state = datapoint(player).getValue();
         state.ensureCategoryKeys(BedWarsCollectibleCatalog.knownCategories());
         return state;
+    }
+
+    private static boolean isCostReason(String reason) {
+        return reason != null && reason.contains("Cost:");
     }
 
     private static DatapointCollectibles datapoint(HypixelPlayer player) {

@@ -56,10 +56,11 @@ public class GUIBedWarsCollectiblePurchaseConfirm implements View<GUIBedWarsColl
                 "§aConfirm Purchase",
                 Material.LIME_TERRACOTTA,
                 1,
-                "§7Unlock: §f" + definition.name(),
+                "§7Unlocks the §f" + definition.name() + " §7 using §2Tokens§7!",
+                "",
                 "§7Cost: §2" + StringUtility.commaify(state.cost()) + " Tokens",
                 "",
-                "§eClick to purchase and equip!"
+                "§eClick to purchase with Tokens!"
             ),
             (click, context) -> {
                 if (!(click.click() instanceof Click.Left || click.click() instanceof Click.Right)) {
@@ -68,7 +69,8 @@ public class GUIBedWarsCollectiblePurchaseConfirm implements View<GUIBedWarsColl
 
                 BedWarsCollectibleStateService.SelectionResult result =
                     BedWarsCollectibleStateService.purchaseAndSelect(context.player(), definition);
-                context.player().sendMessage(result.message());
+                String message = result.success() ? result.message() : bottomLineFailureMessage(result.message());
+                context.player().sendMessage(message);
 
                 if (result.success()) {
                     context.pop();
@@ -105,6 +107,28 @@ public class GUIBedWarsCollectiblePurchaseConfirm implements View<GUIBedWarsColl
 
     private static Component legacy(String text) {
         return LEGACY.deserialize(text);
+    }
+
+    private static String bottomLineFailureMessage(String message) {
+        if (message == null || message.isBlank()) {
+            return "§cAction failed.";
+        }
+
+        String normalized = message.replace("\r\n", "\n").replace('\r', '\n');
+        String[] lines = normalized.split("\n", -1);
+        for (int i = lines.length - 1; i >= 0; i--) {
+            String line = lines[i].trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+
+            if (line.indexOf('§') == -1) {
+                return "§c" + line;
+            }
+            return line;
+        }
+
+        return "§cAction failed.";
     }
 
     public record State(String collectibleId, long cost) {

@@ -1,4 +1,4 @@
-package net.swofty.type.generic.gui.v2.collectibles;
+package net.swofty.type.generic.gui.impl.collectibles;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -10,8 +10,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.collectibles.CollectibleCategory;
 import net.swofty.type.generic.collectibles.CollectibleDefinition;
 import net.swofty.type.generic.collectibles.CollectibleDescriptionService;
+import net.swofty.type.generic.collectibles.CollectibleEvent;
 import net.swofty.type.generic.collectibles.CollectibleRarity;
 import net.swofty.type.generic.collectibles.CollectibleSelectionCheck;
+import net.swofty.type.generic.collectibles.CollectibleUnlockMethod;
+import net.swofty.type.generic.collectibles.CollectibleUnlockRequirement;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
@@ -85,7 +88,21 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         boolean favoriteable = isCategoryFavoriteable(item.category());
         boolean favorite = favoriteable && isFavorite(player, item);
         boolean selectable = check.selectable();
-        boolean hasMoney = false;
+        CollectibleUnlockRequirement requirement = item.unlockRequirement();
+        CollectibleEvent event = requirement.event();
+
+        Long configuredCost = requirement.cost();
+        long cost = configuredCost != null ? configuredCost : 0L;
+        boolean currencyUnlock = requirement.method() == CollectibleUnlockMethod.CURRENCY && cost > 0L;
+        boolean eventAvailable = event == null || event.isAvailableNow();
+        boolean hasMoney = !currencyUnlock || tokenBalance(player) >= cost;
+        boolean showInsufficientTokens = !selectable
+            && currencyUnlock
+            && eventAvailable
+            && isCostReason(check.reason())
+            && !hasMoney;
+        boolean showRarity = item.rarity().getWeight() > 2;
+        boolean hasDetailSection = event != null || showRarity;
 
         List<Component> lore = new ArrayList<>();
         lore.add(legacy("§8" + item.category().getDisplayName()));
@@ -101,9 +118,20 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
             lore.add(legacy("§eRight-Click to preview!"));
         }
 
-        if (item.rarity().getWeight() > 2) {
+        if (hasDetailSection) {
             lore.add(Component.empty());
-            lore.add(legacy("§7Rarity: " + item.rarity().formattedName()));
+
+            if (event != null) {
+                lore.add(legacy("§7Event: §b" + event.displayName()));
+                if (showRarity) {
+                    lore.add(Component.empty());
+                }
+            }
+
+            if (showRarity) {
+                lore.add(legacy("§7Rarity: " + item.rarity().formattedName()));
+            }
+
             lore.add(Component.empty());
         }
 
@@ -114,14 +142,14 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
                 lore.add(legacy("§eShift-click to toggle favorite!"));
             }
         } else {
-            if (item.rarity().getWeight() <= 2) {
+            if (!hasDetailSection) {
                 lore.add(Component.empty());
             }
 
             String reason = check.reason() != null ? check.reason() : "§cLocked.";
             lore.add(legacy(reason));
 
-            if (!hasMoney) {
+            if (showInsufficientTokens) {
                 lore.add(Component.empty());
                 lore.addAll(
                     StringUtility.splitByWordAndLengthKeepLegacyColor("§cYou don't have enough tokens to buy that!", 38)
@@ -148,9 +176,16 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
 
     @Override
     protected void onItemClick(ClickContext<State> click, ViewContext ctx, CollectibleDefinition item, int index) {
-        // TODO: must also be selectable / bought.
         if (isCategoryFavoriteable(item.category())
             && (click.click() instanceof Click.LeftShift || click.click() instanceof Click.RightShift)) {
+            CollectibleSelectionCheck check = selectionCheck(click.player(), item);
+            if (!check.selectable()) {
+                String reason = check.reason() != null ? check.reason() : "Locked.";
+                click.player().sendMessage(bottomLineFailureMessage(reason));
+                ctx.session(State.class).refresh();
+                return;
+            }
+
             boolean favorite = toggleFavorite(click.player(), item);
             click.player().sendMessage(favorite ? "§aAdded to favorites." : "§cRemoved from favorites.");
             ctx.session(State.class).refresh();
@@ -164,7 +199,8 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
 
         SelectionOutcome outcome = selectItem(click.player(), ctx, item);
         if (outcome.message() != null && !outcome.message().isBlank()) {
-            click.player().sendMessage(outcome.message());
+            String message = outcome.success() ? outcome.message() : bottomLineFailureMessage(outcome.message());
+            click.player().sendMessage(message);
         }
         ctx.session(State.class).refresh();
     }
@@ -303,6 +339,32 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
 
     private Component legacy(String text) {
         return LEGACY.deserialize(text);
+    }
+
+    private boolean isCostReason(String reason) {
+        return reason != null && reason.contains("Cost:");
+    }
+
+    private String bottomLineFailureMessage(String message) {
+        if (message == null || message.isBlank()) {
+            return "§cAction failed.";
+        }
+
+        String normalized = message.replace("\r\n", "\n").replace('\r', '\n');
+        String[] lines = normalized.split("\n", -1);
+        for (int i = lines.length - 1; i >= 0; i--) {
+            String line = lines[i].trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+
+            if (line.indexOf('§') == -1) {
+                return "§c" + line;
+            }
+            return line;
+        }
+
+        return "§cAction failed.";
     }
 
     public record SelectionOutcome(boolean success, String message) {

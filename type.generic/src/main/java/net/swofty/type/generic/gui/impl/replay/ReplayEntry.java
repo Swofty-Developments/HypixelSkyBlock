@@ -1,4 +1,4 @@
-package net.swofty.type.generic.gui.v2.views.replay;
+package net.swofty.type.generic.gui.impl.replay;
 
 import lombok.Builder;
 import lombok.With;

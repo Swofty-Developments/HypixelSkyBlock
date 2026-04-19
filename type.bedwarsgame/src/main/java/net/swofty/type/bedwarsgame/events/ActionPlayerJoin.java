@@ -70,8 +70,8 @@ public class ActionPlayerJoin implements HypixelEventClass {
 			}
 
 			JoinResult joinResult = preferred.join(player);
-			if (joinResult instanceof JoinResult.Denied denied) {
-				player.sendMessage("§cFailed to join assigned game (" + denied.reason() + ")! Returning to lobby...");
+			if (joinResult instanceof JoinResult.Denied(String reason)) {
+				player.sendMessage("§cFailed to join assigned game (" + reason + ")! Returning to lobby...");
 				player.sendTo(ServerType.BEDWARS_LOBBY);
 			}
 		}, 15);
