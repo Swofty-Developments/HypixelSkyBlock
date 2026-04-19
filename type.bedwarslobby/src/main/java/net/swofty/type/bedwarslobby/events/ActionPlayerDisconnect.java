@@ -13,7 +13,7 @@ public class ActionPlayerDisconnect implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerDisconnectEvent event) {
 		HypixelPlayer player = (HypixelPlayer) event.getPlayer();
-		ShopkeeperPreviewController.stopPreview(player);
+		ShopkeeperPreviewController.stopPreview(player, null, null);
 		BedWarsLobbyScoreboard.removeCache(player);
 	}
 }

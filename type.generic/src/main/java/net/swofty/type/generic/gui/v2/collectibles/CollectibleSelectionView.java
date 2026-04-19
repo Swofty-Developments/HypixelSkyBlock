@@ -1,5 +1,7 @@
 package net.swofty.type.generic.gui.v2.collectibles;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -7,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.collectibles.CollectibleCategory;
 import net.swofty.type.generic.collectibles.CollectibleDefinition;
+import net.swofty.type.generic.collectibles.CollectibleDescriptionService;
 import net.swofty.type.generic.collectibles.CollectibleRarity;
 import net.swofty.type.generic.collectibles.CollectibleSelectionCheck;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -25,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class CollectibleSelectionView extends StatefulPaginatedView<CollectibleDefinition, CollectibleSelectionView.State> {
+
+    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
 
     private final String title;
 
@@ -82,42 +87,48 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         boolean selectable = check.selectable();
         boolean hasMoney = false;
 
-        List<String> lore = new ArrayList<>();
-        lore.add("§8" + item.category().getDisplayName());
+        List<Component> lore = new ArrayList<>();
+        lore.add(legacy("§8" + item.category().getDisplayName()));
 
-        if (!item.description().isEmpty()) {
-            lore.add("");
-            lore.addAll(
-                item.description().stream()
-                    .map(s -> "§7" + s)
-                    .toList()
-            );
+        List<Component> descriptionLore = CollectibleDescriptionService.resolveLore(item);
+        if (!descriptionLore.isEmpty()) {
+            lore.add(Component.empty());
+            lore.addAll(descriptionLore);
         }
 
         if (isPreviewSupported(player, item)) {
-            lore.add("");
-            lore.add("§eRight-Click to preview!");
+            lore.add(Component.empty());
+            lore.add(legacy("§eRight-Click to preview!"));
         }
 
         if (item.rarity().getWeight() > 2) {
-            lore.add("");
-            lore.add("§7Rarity: " + item.rarity().formattedName());
-            lore.add("");
+            lore.add(Component.empty());
+            lore.add(legacy("§7Rarity: " + item.rarity().formattedName()));
+            lore.add(Component.empty());
         }
 
         if (selectable) {
-            lore.add(selected ? "§aSelected!" : "§eClick to select!");
+            lore.add(legacy(selected ? "§aSelected!" : "§eClick to select!"));
 
             if (favoriteable) {
-                lore.add("§eShift-click to toggle favorite!");
+                lore.add(legacy("§eShift-click to toggle favorite!"));
             }
         } else {
-            lore.add("");
-            lore.add(check.reason());
+            if (item.rarity().getWeight() <= 2) {
+                lore.add(Component.empty());
+            }
+
+            String reason = check.reason() != null ? check.reason() : "§cLocked.";
+            lore.add(legacy(reason));
 
             if (!hasMoney) {
-                lore.add("");
-                lore.addAll(StringUtility.splitByWordAndLengthKeepLegacyColor("§cYou don't have enough tokens to buy that!", 38));
+                lore.add(Component.empty());
+                lore.addAll(
+                    StringUtility.splitByWordAndLengthKeepLegacyColor("§cYou don't have enough tokens to buy that!", 38)
+                        .stream()
+                        .map(this::legacy)
+                        .toList()
+                );
             }
         }
 
@@ -125,17 +136,19 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         if (favorite) {
             itemName = "§6✯ " + itemName;
         }
+        Component itemNameComponent = legacy(itemName);
 
         if (item.iconTexture() != null && !item.iconTexture().isBlank()) {
-            return ItemStackCreator.getStackHead(itemName, item.iconTexture(), 1, lore);
+            return ItemStackCreator.getStackHead(itemNameComponent, item.iconTexture(), 1, lore);
         }
 
         Material iconMaterial = item.iconMaterial() != null ? item.iconMaterial() : Material.BARRIER;
-        return ItemStackCreator.getStack(itemName, iconMaterial, 1, lore);
+        return ItemStackCreator.getStack(itemNameComponent, iconMaterial, 1, lore);
     }
 
     @Override
     protected void onItemClick(ClickContext<State> click, ViewContext ctx, CollectibleDefinition item, int index) {
+        // TODO: must also be selectable / bought.
         if (isCategoryFavoriteable(item.category())
             && (click.click() instanceof Click.LeftShift || click.click() instanceof Click.RightShift)) {
             boolean favorite = toggleFavorite(click.player(), item);
@@ -145,7 +158,7 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         }
 
         if (click.click() instanceof Click.Right && isPreviewSupported(click.player(), item)) {
-            preview(click.player(), item);
+            preview(click.player(), item, click.state());
             return;
         }
 
@@ -231,7 +244,7 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         return false;
     }
 
-    protected void preview(HypixelPlayer player, CollectibleDefinition definition) {
+    protected void preview(HypixelPlayer player, CollectibleDefinition definition, State state) {
         player.notImplemented();
     }
 
@@ -286,6 +299,10 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
 
     private int rarityWeight(CollectibleRarity rarity) {
         return rarity != null ? rarity.getWeight() : CollectibleRarity.COMMON.getWeight();
+    }
+
+    private Component legacy(String text) {
+        return LEGACY.deserialize(text);
     }
 
     public record SelectionOutcome(boolean success, String message) {

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -84,6 +85,11 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
         return INSTANCE.categorySettings.getOrDefault(category, CategorySettings.DEFAULT).defaultSelectionId();
     }
 
+    public static String categoryDescriptionKey(CollectibleCategory category) {
+        initialize();
+        return INSTANCE.categorySettings.getOrDefault(category, CategorySettings.DEFAULT).descriptionKey();
+    }
+
     private void loadInternal() {
         clear();
         categorySettings.clear();
@@ -146,7 +152,7 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
                 if (!(itemRaw instanceof Map<?, ?> itemDataRaw)) {
                     continue;
                 }
-                CollectibleDefinition definition = parseDefinition(category, (Map<?, ?>) itemDataRaw, autoSortIndex++);
+                CollectibleDefinition definition = parseDefinition(category, itemDataRaw, autoSortIndex++);
                 if (definition == null) {
                     continue;
                 }
@@ -174,6 +180,8 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
         String iconTexture = stringValue(rawData.get("iconTexture"));
 
         List<String> description = stringList(rawData.get("description"));
+        String categoryDescriptionKey = categorySettings.getOrDefault(category, CategorySettings.DEFAULT).descriptionKey();
+        Map<String, String> customData = stringMap(rawData.get("custom"));
         CollectibleRarity rarity = CollectibleRarity.fromString(stringValue(rawData.get("rarity")), CollectibleRarity.COMMON);
         int sortIndex = intValue(rawData.get("sortIndex"), autoSortIndex);
         String selectionValue = stringValue(rawData.get("selectionValue"));
@@ -188,6 +196,8 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
             iconMaterial,
             iconTexture,
             description,
+            categoryDescriptionKey,
+            customData,
             rarity,
             sortIndex,
             selectionValue,
@@ -199,6 +209,7 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
         boolean favoriteable = booleanValue(categoryData.get("favoriteable"), false);
         boolean random = booleanValue(categoryData.get("random"), false);
         String defaultSelectionId = stringValue(categoryData.get("defaultSelectionId"));
+        String descriptionKey = stringValue(categoryData.get("descriptionKey"));
 
         if (defaultSelectionId == null) {
             if (category == CollectibleCategory.WOOD_SKINS) {
@@ -208,7 +219,7 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
             }
         }
 
-        return new CategorySettings(favoriteable, random, defaultSelectionId);
+        return new CategorySettings(favoriteable, random, defaultSelectionId, descriptionKey);
     }
 
     private CollectibleUnlockRequirement parseUnlockRequirement(Object raw) {
@@ -297,6 +308,28 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
         return values;
     }
 
+    private Map<String, String> stringMap(Object value) {
+        if (!(value instanceof Map<?, ?> map) || map.isEmpty()) {
+            return Map.of();
+        }
+
+        Map<String, String> values = new HashMap<>();
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            if (entry.getKey() == null) {
+                continue;
+            }
+
+            String key = String.valueOf(entry.getKey());
+            if (key.isBlank()) {
+                continue;
+            }
+
+            Object rawValue = entry.getValue();
+            values.put(key, rawValue == null ? "" : String.valueOf(rawValue));
+        }
+        return values;
+    }
+
     private int intValue(Object value, int fallback) {
         if (!(value instanceof Number number)) {
             return fallback;
@@ -318,7 +351,8 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
         return fallback;
     }
 
-    private record CategorySettings(boolean favoriteable, boolean random, String defaultSelectionId) {
-        private static final CategorySettings DEFAULT = new CategorySettings(false, false, null);
+    private record CategorySettings(boolean favoriteable, boolean random, String defaultSelectionId,
+                                    String descriptionKey) {
+        private static final CategorySettings DEFAULT = new CategorySettings(false, false, null, null);
     }
 }

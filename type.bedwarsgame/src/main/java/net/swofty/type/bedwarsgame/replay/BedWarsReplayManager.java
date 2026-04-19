@@ -472,17 +472,36 @@ public class BedWarsReplayManager {
         ));
     }
 
-    public void recordShopNpc(int entityId, Pos position, String[] holograms, String npcType) {
+    public void recordShopNpc(
+        int entityId,
+        Pos position,
+        String[] holograms,
+        String npcType,
+        int replayEntityTypeId,
+        String replayTextureValue,
+        String replayTextureSignature
+    ) {
         if (!recording) return;
 
         // Record NPC spawn
         recorder.record(new RecordableEntitySpawn(
             entityId,
-            java.util.UUID.randomUUID(),
-            EntityType.VILLAGER.id(),
+            UUID.randomUUID(),
+            replayEntityTypeId,
             position.x(), position.y(), position.z(),
             position.yaw(), position.pitch()
         ));
+
+        if (replayEntityTypeId == EntityType.PLAYER.id()
+            && replayTextureValue != null
+            && !replayTextureValue.isBlank()) {
+            recorder.record(new RecordablePlayerSkin(
+                entityId,
+                UUID.randomUUID(),
+                replayTextureValue,
+                replayTextureSignature == null ? "" : replayTextureSignature
+            ));
+        }
 
         // Record NPC display name (last line of holograms is typically the name)
         String displayName = holograms.length > 0 ? holograms[holograms.length - 1] : npcType;

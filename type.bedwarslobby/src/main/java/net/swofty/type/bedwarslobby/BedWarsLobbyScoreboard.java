@@ -1,24 +1,30 @@
 package net.swofty.type.bedwarslobby;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.BedWarsModeStats;
+import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
+import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,37 +58,39 @@ public class BedWarsLobbyScoreboard {
 
 				double percentage = Math.min(1.0, (double) progress / maxExperience);
 				int filledSquares = (int) Math.round(percentage * 10);
-				String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
 				StringBuilder progressBar = new StringBuilder();
 				for (int i = 0; i < 10; i++) {
 					if (i < filledSquares) {
-						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_filled", l));
+						progressBar.append("§b■");
 					} else {
-						progressBar.append(I18n.string("scoreboard.bedwars_lobby.progress_bar_empty", l));
+						progressBar.append("§7■");
 					}
 				}
 
 				long tokens = bwDataHandler.get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class).getValue();
 				long tickets = bwDataHandler.get(BedWarsDataHandler.Data.SLUMBER_TICKETS, DatapointLeaderboardLong.class).getValue();
+				BedWarsModeStats modeStats = bwDataHandler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
+				long totalWins = modeStats.getWins(BedwarsLeaderboardMode.ALL, BedwarsLeaderboardPeriod.LIFETIME);
+				long totalKills = modeStats.getKills(BedwarsLeaderboardMode.ALL, BedwarsLeaderboardPeriod.LIFETIME);
 
 				List<Component> lines = new ArrayList<>();
-				lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
-				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.level_line",
 					Component.text(BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)))));
-				lines.add(Component.text("§7 "));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.progress_line",
 					Component.text(suffix(progress)),
 					Component.text(suffix(maxExperience))));
 				lines.add(Component.space().append(I18n.t("scoreboard.bedwars_lobby.progress_bar",
 					Component.text(progressBar.toString()))));
-				lines.add(Component.text("§7 "));
-				lines.add(I18n.t("scoreboard.bedwars_lobby.tokens_line", Component.text(String.valueOf(tokens))));
-				lines.add(I18n.t("scoreboard.bedwars_lobby.tickets_line", Component.text(String.valueOf(tickets))));
-				lines.add(Component.text("§7 "));
-				lines.add(I18n.t("scoreboard.bedwars_lobby.total_kills_label"));
-				lines.add(I18n.t("scoreboard.bedwars_lobby.total_wins_label"));
-				lines.add(Component.text("§7 "));
+				lines.add(Component.space());
+				lines.add(I18n.t("scoreboard.bedwars_lobby.tokens_line", Argument.tagResolver(Formatter.number("tokens", tokens))));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets))));
+				lines.add(Component.space());
+				lines.add(I18n.t("scoreboard.bedwars_lobby.total_kills_label", Argument.tagResolver(Formatter.number("total_kills", totalKills))));
+				lines.add(I18n.t("scoreboard.bedwars_lobby.total_wins_label", Argument.tagResolver(Formatter.number("total_wins", totalWins))));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {

@@ -1,6 +1,8 @@
 package net.swofty.type.skyblockgeneric.user;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -28,6 +30,8 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,8 +64,8 @@ public class SkyBlockScoreboard {
                 String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
 
                 List<Component> lines = new ArrayList<>();
-                lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
-                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
+                lines.add(Component.space());
                 lines.add(I18n.t("scoreboard.skyblock.calendar_date_line",
                     Component.text(SkyBlockCalendar.getMonthName()),
                     Component.text(StringUtility.ntify(SkyBlockCalendar.getDay()))));
@@ -78,7 +82,7 @@ public class SkyBlockScoreboard {
                 } catch (NullPointerException ignored) {
                     lines.add(Component.space().append(I18n.t("scoreboard.skyblock.region_unknown")));
                 }
-                lines.add(Component.text("§7 "));
+                lines.add(Component.space());
 
                 // TODO: make classes / a manager for regions to display scoreboard information.
                 if (region != null && region.getType() == RegionType.ELECTION_ROOM) {
@@ -131,7 +135,7 @@ public class SkyBlockScoreboard {
                     } else {
                         if (region != null &&
                             !missionData.getActiveMissions(region.getType()).isEmpty()) {
-                            lines.add(Component.text("§7 "));
+                            lines.add(Component.space());
                             MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
                             SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
@@ -156,7 +160,7 @@ public class SkyBlockScoreboard {
                     }
                 }
 
-                lines.add(Component.text("§7 "));
+                lines.add(Component.space());
                 lines.add(I18n.t("scoreboard.common.footer"));
 
                 Component title = Component.text("  ")

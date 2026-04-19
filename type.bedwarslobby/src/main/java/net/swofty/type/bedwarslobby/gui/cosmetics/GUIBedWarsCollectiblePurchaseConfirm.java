@@ -1,10 +1,13 @@
 package net.swofty.type.bedwarslobby.gui.cosmetics;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.collectibles.CollectibleDefinition;
+import net.swofty.type.generic.collectibles.CollectibleDescriptionService;
 import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
 import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleStateService;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -19,6 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class GUIBedWarsCollectiblePurchaseConfirm implements View<GUIBedWarsCollectiblePurchaseConfirm.State> {
+
+    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
 
     @Override
     public ViewConfiguration<State> configuration() {
@@ -83,22 +88,23 @@ public class GUIBedWarsCollectiblePurchaseConfirm implements View<GUIBedWarsColl
     }
 
     private static net.minestom.server.item.ItemStack.Builder buildDisplayStack(CollectibleDefinition definition, long cost) {
-        List<String> lore = new ArrayList<>();
-        if (definition.description() != null) {
-            for (String line : definition.description()) {
-                lore.add("§7" + line);
-            }
-        }
+        List<Component> lore = new ArrayList<>(CollectibleDescriptionService.resolveLore(definition));
         if (!lore.isEmpty()) {
-            lore.add("");
+            lore.add(Component.empty());
         }
-        lore.add("§7Cost: §2" + StringUtility.commaify(cost) + " Tokens");
+        lore.add(legacy("§7Cost: §2" + StringUtility.commaify(cost) + " Tokens"));
+
+        Component title = legacy("§a" + definition.name() + " ");
 
         if (definition.iconTexture() != null && !definition.iconTexture().isBlank()) {
-            return ItemStackCreator.getStackHead("§a" + definition.name() + " ", definition.iconTexture(), 1, lore.toArray(String[]::new));
+            return ItemStackCreator.getStackHead(title, definition.iconTexture(), 1, lore);
         }
         Material material = definition.iconMaterial() != null ? definition.iconMaterial() : Material.BARRIER;
-        return ItemStackCreator.getStack("§a" + definition.name() + " ", material, 1, lore.toArray(String[]::new));
+        return ItemStackCreator.getStack(title, material, 1, lore);
+    }
+
+    private static Component legacy(String text) {
+        return LEGACY.deserialize(text);
     }
 
     public record State(String collectibleId, long cost) {

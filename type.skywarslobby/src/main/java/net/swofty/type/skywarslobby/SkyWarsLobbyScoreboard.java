@@ -1,6 +1,8 @@
 package net.swofty.type.skywarslobby;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -19,9 +21,9 @@ import net.swofty.type.generic.scoreboard.HypixelScoreboard;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -62,23 +64,22 @@ public class SkyWarsLobbyScoreboard {
 				long doublesWins = modeStats.getWins(SkywarsLeaderboardMode.DOUBLES, SkywarsLeaderboardPeriod.LIFETIME);
 
 				int level = SkywarsLevelRegistry.calculateLevel(experience);
-				String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
 
 				List<Component> lines = new ArrayList<>();
-				lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
-				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.skywars_lobby.your_level_line",
 					Component.text(SkyWarsLevelColor.getLevelDisplay(level))));
-				lines.add(Component.text("§7 "));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.skywars_lobby.solo_kills_line", Component.text(String.valueOf(soloKills))));
 				lines.add(I18n.t("scoreboard.skywars_lobby.solo_wins_line", Component.text(String.valueOf(soloWins))));
 				lines.add(I18n.t("scoreboard.skywars_lobby.doubles_kills_line", Component.text(String.valueOf(doublesKills))));
 				lines.add(I18n.t("scoreboard.skywars_lobby.doubles_wins_line", Component.text(String.valueOf(doublesWins))));
-				lines.add(Component.text("§7 "));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.skywars_lobby.coins_line", Component.text(String.valueOf(coins))));
 				lines.add(I18n.t("scoreboard.skywars_lobby.souls_line", Component.text(String.valueOf(souls))));
 				lines.add(I18n.t("scoreboard.skywars_lobby.tokens_line", Component.text(String.valueOf(tokens))));
-				lines.add(Component.text("§7 "));
+				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {

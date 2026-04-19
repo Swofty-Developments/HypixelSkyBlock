@@ -106,8 +106,8 @@ public class GUIShopkeeperSkins extends CollectibleSelectionView {
     }
 
     @Override
-    protected void preview(HypixelPlayer player, CollectibleDefinition definition) {
-        ShopkeeperPreviewController.startPreview(player, definition);
+    protected void preview(HypixelPlayer player, CollectibleDefinition definition, State state) {
+        ShopkeeperPreviewController.startPreview(player, definition, this, state);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class GUIShopkeeperSkins extends CollectibleSelectionView {
 
         layout.slot(12,
             randomOptionStack("§aRandom Favorite Shopkeeper Skin", Material.ENDER_CHEST, randomFavoriteSelected,
-                "§7Use a Random §6 Favorite §7Shopkeeper Skin!"),
+                "§7Use a Random §6✯ Favorite §7Shopkeeper Skin!"),
             (click, context) -> {
                 BedWarsCollectibleStateService.SelectionResult result = BedWarsCollectibleStateService.selectSpecial(
                     context.player(),
