@@ -9,6 +9,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -50,6 +51,10 @@ public interface HypixelTypeLoader {
      * These handlers will be automatically loaded/saved on player join/quit.
      * @return List of GameDataHandler classes to load
      */
+    default List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return List.of();
+    }
+
     default List<Class<? extends GameDataHandler>> getAdditionalDataHandlers() {
         return List.of();
     }
