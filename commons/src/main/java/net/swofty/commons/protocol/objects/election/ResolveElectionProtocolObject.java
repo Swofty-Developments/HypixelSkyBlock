@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.election;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class ResolveElectionProtocolObject
         extends ProtocolObject<ResolveElectionProtocolObject.ResolveElectionMessage,
@@ -20,5 +21,5 @@ public class ResolveElectionProtocolObject
 
     public record ResolveElectionMessage(int year) {}
 
-    public record ResolveElectionResponse(boolean resolved, String serializedData) {}
+    public record ResolveElectionResponse(boolean resolved, String serializedData, boolean success, @Nullable String error) {}
 }

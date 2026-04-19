@@ -53,7 +53,9 @@ public class EndpointProcessPendingTransactions implements ServiceEndpoint<
                 successfulIds.size(),
                 failedIds.size(),
                 successfulIds,
-                failedIds
+                failedIds,
+                true,
+                null
         );
     }
 }

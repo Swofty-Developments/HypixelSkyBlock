@@ -9,6 +9,7 @@ import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class AuctionFetchItemsProtocolObject extends ProtocolObject<
         AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage,
@@ -31,6 +32,8 @@ public class AuctionFetchItemsProtocolObject extends ProtocolObject<
     ) {}
 
     public record AuctionFetchItemsResponse(
-            List<AuctionItem> items
+            List<AuctionItem> items,
+            boolean success,
+            @Nullable String error
     ) {}
 }

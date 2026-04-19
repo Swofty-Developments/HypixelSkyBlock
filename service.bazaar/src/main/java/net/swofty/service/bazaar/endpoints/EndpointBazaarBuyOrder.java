@@ -31,10 +31,10 @@ public class EndpointBazaarBuyOrder implements ServiceEndpoint<
             BazaarMarket.get().submitBuy(itemName, playerUUID, profileUUID, price, amount);
             System.out.println("Buy order submitted for " + itemName + " by " + playerUUID
                     + " (profile: " + profileUUID + ") - Price: " + price + ", Amount: " + amount);
-            return new BazaarBuyProtocolObject.BazaarBuyResponse(true);
+            return new BazaarBuyProtocolObject.BazaarBuyResponse(true, null);
         } catch (Exception e) {
             System.err.println("Failed to submit buy order: " + e.getMessage());
-            return new BazaarBuyProtocolObject.BazaarBuyResponse(false);
+            return new BazaarBuyProtocolObject.BazaarBuyResponse(false, "Buy order failed");
         }
     }
 }

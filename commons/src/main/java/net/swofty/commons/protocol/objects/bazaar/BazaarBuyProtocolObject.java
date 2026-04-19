@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.bazaar;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -21,5 +22,5 @@ public class BazaarBuyProtocolObject extends ProtocolObject
 
     public record BazaarBuyMessage(String itemName, int amount, double price, UUID playerUUID, UUID profileUUID) {}
 
-    public record BazaarBuyResponse(boolean successful) {}
+    public record BazaarBuyResponse(boolean success, @Nullable String error) {}
 }

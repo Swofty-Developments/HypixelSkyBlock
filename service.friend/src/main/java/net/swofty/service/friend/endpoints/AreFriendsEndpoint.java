@@ -20,6 +20,6 @@ public class AreFriendsEndpoint implements ServiceEndpoint<
             AreFriendsProtocolObject.AreFriendsMessage messageObject) {
 
         boolean areFriends = FriendCache.areFriends(messageObject.player1(), messageObject.player2());
-        return new AreFriendsProtocolObject.AreFriendsResponse(areFriends);
+        return new AreFriendsProtocolObject.AreFriendsResponse(areFriends, true, null);
     }
 }

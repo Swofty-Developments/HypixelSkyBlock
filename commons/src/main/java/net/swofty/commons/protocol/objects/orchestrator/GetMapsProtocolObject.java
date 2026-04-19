@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class GetMapsProtocolObject extends ProtocolObject
         <GetMapsProtocolObject.GetMapsMessage,
@@ -23,5 +24,5 @@ public class GetMapsProtocolObject extends ProtocolObject
 
     public record GetMapsMessage(ServerType type, String mode) { }
 
-    public record GetMapsResponse(List<String> maps) { }
+    public record GetMapsResponse(List<String> maps, boolean success, @Nullable String error) { }
 }

@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class GetCandidatesProtocolObject
         extends ProtocolObject<GetCandidatesProtocolObject.GetCandidatesMessage,
@@ -24,7 +25,9 @@ public class GetCandidatesProtocolObject
 
     public record GetCandidatesResponse(
             boolean electionOpen,
-            List<CandidateInfo> candidates
+            List<CandidateInfo> candidates,
+            boolean success,
+            @Nullable String error
     ) {}
 
     public record CandidateInfo(

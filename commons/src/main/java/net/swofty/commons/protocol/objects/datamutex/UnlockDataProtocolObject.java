@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class UnlockDataProtocolObject extends ProtocolObject<
         UnlockDataProtocolObject.UnlockDataRequest,
@@ -29,6 +30,6 @@ public class UnlockDataProtocolObject extends ProtocolObject<
 
     public record UnlockDataResponse(
             boolean success,
-            String message
+            @Nullable String error
     ) {}
 }

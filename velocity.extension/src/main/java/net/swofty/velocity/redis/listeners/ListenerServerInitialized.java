@@ -34,6 +34,8 @@ public class ListenerServerInitialized extends RedisListener<
         GameManager.GameServer server = GameManager.addServer(type, serverUUID, host, port, maxPlayers);
         return new RegisterServerProtocol.Response(
                 server.registeredServer().getServerInfo().getAddress().getHostString(),
-                server.registeredServer().getServerInfo().getAddress().getPort());
+                server.registeredServer().getServerInfo().getAddress().getPort(),
+                true,
+                null);
     }
 }

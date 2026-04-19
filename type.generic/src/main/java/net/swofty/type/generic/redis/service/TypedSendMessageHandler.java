@@ -27,12 +27,12 @@ public class TypedSendMessageHandler implements TypedServiceHandler<Request, Res
 
             if (player != null) {
                 player.sendMessage(message.message());
-                return new Response(true);
+                return new Response(true, null);
             }
 
-            return new Response(false);
+            return new Response(false, "Player not found or error");
         } catch (Exception e) {
-            return new Response(false);
+            return new Response(false, "Player not found or error");
         }
     }
 }

@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class BazaarProcessPendingTransactionsProtocolObject extends ProtocolObject<
         BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage,
@@ -23,5 +24,5 @@ public class BazaarProcessPendingTransactionsProtocolObject extends ProtocolObje
 
     public record BazaarProcessPendingTransactionsMessage(UUID playerUUID, UUID profileUUID, List<String> transactionIds) {}
 
-    public record BazaarProcessPendingTransactionsResponse(int processedCount, int failedCount, List<String> successfulTransactionIds, List<String> failedTransactionIds) {}
+    public record BazaarProcessPendingTransactionsResponse(int processedCount, int failedCount, List<String> successfulTransactionIds, List<String> failedTransactionIds, boolean success, @Nullable String error) {}
 }

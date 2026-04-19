@@ -16,6 +16,6 @@ public class RedisHasIslandLoaded implements TypedProxyHandler<DoesServerHaveIsl
     @Override
     public DoesServerHaveIslandProtocol.Response onMessage(DoesServerHaveIslandProtocol.Request message) {
         UUID islandUUID = UUID.fromString(message.islandUuid());
-        return new DoesServerHaveIslandProtocol.Response(SkyBlockIsland.hasIsland(islandUUID));
+        return new DoesServerHaveIslandProtocol.Response(SkyBlockIsland.hasIsland(islandUUID), true, null);
     }
 }

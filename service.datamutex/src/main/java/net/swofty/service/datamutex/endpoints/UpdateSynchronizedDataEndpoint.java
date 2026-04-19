@@ -86,7 +86,7 @@ public class UpdateSynchronizedDataEndpoint implements ServiceEndpoint<
 
             System.out.println("All updates successful!");
             return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
-                    true, "Data successfully synchronized across all servers");
+                    true, null);
 
         } catch (Exception e) {
             System.out.println("Exception in update endpoint: " + e.getMessage());

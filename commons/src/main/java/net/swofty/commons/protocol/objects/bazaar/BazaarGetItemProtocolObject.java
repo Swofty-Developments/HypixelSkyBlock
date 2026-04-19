@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class BazaarGetItemProtocolObject extends ProtocolObject<
         BazaarGetItemProtocolObject.BazaarGetItemMessage,
@@ -26,7 +27,9 @@ public class BazaarGetItemProtocolObject extends ProtocolObject<
     public record BazaarGetItemResponse(
             String itemName,
             List<OrderRecord> buyOrders,
-            List<OrderRecord> sellOrders
+            List<OrderRecord> sellOrders,
+            boolean success,
+            @Nullable String error
     ) {}
 
     public record OrderRecord(

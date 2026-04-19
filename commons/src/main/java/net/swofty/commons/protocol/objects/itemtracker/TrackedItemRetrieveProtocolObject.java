@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class TrackedItemRetrieveProtocolObject extends ProtocolObject
         <TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage,
@@ -27,5 +28,5 @@ public class TrackedItemRetrieveProtocolObject extends ProtocolObject
         }
     }
 
-    public record TrackedItemResponse(TrackedItem trackedItem) { }
+    public record TrackedItemResponse(TrackedItem trackedItem, boolean success, @Nullable String error) { }
 }

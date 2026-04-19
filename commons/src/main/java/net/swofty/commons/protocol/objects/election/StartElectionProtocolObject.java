@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.election;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class StartElectionProtocolObject
         extends ProtocolObject<StartElectionProtocolObject.StartElectionMessage,
@@ -20,5 +21,5 @@ public class StartElectionProtocolObject
 
     public record StartElectionMessage(int year, String candidatesJson) {}
 
-    public record StartElectionResponse(boolean started, String serializedData) {}
+    public record StartElectionResponse(boolean started, String serializedData, boolean success, @Nullable String error) {}
 }

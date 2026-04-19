@@ -4,6 +4,7 @@ import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class UpdatePresenceProtocolObject extends ProtocolObject<
         UpdatePresenceProtocolObject.UpdatePresenceMessage,
@@ -21,5 +22,5 @@ public class UpdatePresenceProtocolObject extends ProtocolObject<
 
     public record UpdatePresenceMessage(PresenceInfo presence) {}
 
-    public record UpdatePresenceResponse(boolean success) {}
+    public record UpdatePresenceResponse(boolean success, @Nullable String error) {}
 }

@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class ChooseGameProtocolObject extends ProtocolObject
         <ChooseGameProtocolObject.ChooseGameMessage,
@@ -24,6 +25,6 @@ public class ChooseGameProtocolObject extends ProtocolObject
     public record ChooseGameMessage(UUID player, UnderstandableProxyServer server, String gameId) {
     }
 
-    public record ChooseGameResponse(boolean error) {
+    public record ChooseGameResponse(boolean success, @Nullable String error) {
     }
 }

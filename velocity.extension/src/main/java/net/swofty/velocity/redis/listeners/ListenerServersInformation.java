@@ -32,29 +32,29 @@ public class ListenerServersInformation extends RedisListener<
             case "ALL" -> {
                 List<GameManager.GameServer> servers = new ArrayList<>(GameManager.getServers().values().stream().flatMap(List::stream).toList());
                 filterByTestFlow(servers, isInTestFlow);
-                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString());
+                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString(), true, null);
             }
             case "TYPE" -> {
                 List<GameManager.GameServer> servers = GameManager.getFromType(ServerType.valueOf(message.type()));
                 if (servers == null) servers = new ArrayList<>();
                 filterByTestFlow(servers, isInTestFlow);
-                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString());
+                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString(), true, null);
             }
             case "UUID" -> {
                 List<GameManager.GameServer> servers = new ArrayList<>(List.of(GameManager.getFromUUID(UUID.fromString(message.uuid()))));
                 filterByTestFlow(servers, isInTestFlow);
-                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString());
+                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString(), true, null);
             }
             case "PLAYER_UUID" -> {
                 UUID uuidObject = UUID.fromString(message.uuid());
                 Optional<Player> potentialPlayer = SkyBlockVelocity.getServer().getPlayer(uuidObject);
                 if (potentialPlayer.isEmpty()) {
-                    return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(List.of()).toString());
+                    return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(List.of()).toString(), true, null);
                 }
                 Player player = potentialPlayer.get();
                 List<GameManager.GameServer> servers = new ArrayList<>(Collections.singletonList(GameManager.getFromRegisteredServer(player.getCurrentServer().get().getServer())));
                 filterByTestFlow(servers, isInTestFlow);
-                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString());
+                return new RequestServersProtocol.Response(UnderstandableProxyServer.toJSON(toUnderstandable(servers)).toString(), true, null);
             }
         }
 

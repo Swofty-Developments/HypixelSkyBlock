@@ -28,7 +28,7 @@ public class ListenerPlayerCount extends RedisListener<
                         .flatMap(List::stream)
                         .mapToInt(server -> server.registeredServer().getPlayersConnected().size())
                         .sum();
-                return new PlayerCountProtocol.Response(count);
+                return new PlayerCountProtocol.Response(count, true, null);
             }
             case TYPE -> {
                 ServerType serverType = ServerType.valueOf(message.lookupValue());
@@ -37,12 +37,12 @@ public class ListenerPlayerCount extends RedisListener<
                         .flatMap(entry -> entry.getValue().stream())
                         .mapToInt(server -> server.registeredServer().getPlayersConnected().size())
                         .sum();
-                return new PlayerCountProtocol.Response(count);
+                return new PlayerCountProtocol.Response(count, true, null);
             }
             case UUID -> {
                 UUID uuid = UUID.fromString(message.lookupValue());
                 int count = GameManager.getFromUUID(uuid).registeredServer().getPlayersConnected().size();
-                return new PlayerCountProtocol.Response(count);
+                return new PlayerCountProtocol.Response(count, true, null);
             }
         }
         throw new RuntimeException("Unknown lookup type: " + message.lookupType());

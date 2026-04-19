@@ -30,7 +30,7 @@ public class GetElectionDataEndpoint implements ServiceEndpoint
             GetElectionDataProtocolObject.GetElectionDataMessage messageObject) {
         String data = ElectionDatabase.loadElectionData();
         if (data == null) {
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null);
+            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null, true, null);
         }
 
         try {
@@ -45,10 +45,10 @@ public class GetElectionDataEndpoint implements ServiceEndpoint
                 parsed.put("voteTallies", tallies);
             }
 
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(true, GSON.toJson(parsed));
+            return new GetElectionDataProtocolObject.GetElectionDataResponse(true, GSON.toJson(parsed), true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to parse election data");
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null);
+            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null, true, null);
         }
     }
 }

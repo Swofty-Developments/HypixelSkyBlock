@@ -30,7 +30,7 @@ public class ListenerPlayerHandler extends RedisListener<
         PlayerHandlerProtocol.Request,
         PlayerHandlerProtocol.Response> {
 
-    private static final PlayerHandlerProtocol.Response EMPTY = new PlayerHandlerProtocol.Response(Map.of());
+    private static final PlayerHandlerProtocol.Response EMPTY = new PlayerHandlerProtocol.Response(Map.of(), true, null);
 
     @Override
     public ProtocolObject<PlayerHandlerProtocol.Request, PlayerHandlerProtocol.Response> getProtocol() {
@@ -46,14 +46,14 @@ public class ListenerPlayerHandler extends RedisListener<
         Optional<Player> potentialPlayer = SkyBlockVelocity.getServer().getPlayer(uuid);
         if (potentialPlayer.isEmpty()) {
             if (action == PlayerHandlerProtocol.Action.IS_ONLINE) {
-                return new PlayerHandlerProtocol.Response(Map.of("isOnline", false));
+                return new PlayerHandlerProtocol.Response(Map.of("isOnline", false), true, null);
             }
             return EMPTY;
         }
         if (action == PlayerHandlerProtocol.Action.IS_ONLINE) {
             Player player = potentialPlayer.get();
             publishPresence(player, true);
-            return new PlayerHandlerProtocol.Response(Map.of("isOnline", true));
+            return new PlayerHandlerProtocol.Response(Map.of("isOnline", true), true, null);
         }
         Player player = potentialPlayer.get();
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
@@ -76,7 +76,7 @@ public class ListenerPlayerHandler extends RedisListener<
                     serverInfo.maxPlayers(),
                     serverInfo.shortDisplayName()
                 );
-                return new PlayerHandlerProtocol.Response(Map.of("server", ups.toJSON().toMap()));
+                return new PlayerHandlerProtocol.Response(Map.of("server", ups.toJSON().toMap()), true, null);
             }
             case TRANSFER_WITH_UUID -> {
                 UUID server = UUID.fromString((String) data.get("server_uuid"));

@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.proxy.to;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class ProxyIsOnlineProtocol extends ProtocolObject<
         ProxyIsOnlineProtocol.Request,
@@ -19,5 +20,5 @@ public class ProxyIsOnlineProtocol extends ProtocolObject<
     }
 
     public record Request() {}
-    public record Response(boolean online) {}
+    public record Response(boolean online, boolean success, @Nullable String error) {}
 }

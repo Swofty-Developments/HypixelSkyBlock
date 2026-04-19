@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class UpdateSynchronizedDataProtocolObject extends ProtocolObject<
         UpdateSynchronizedDataProtocolObject.UpdateDataRequest,
@@ -30,6 +31,6 @@ public class UpdateSynchronizedDataProtocolObject extends ProtocolObject<
 
     public record UpdateDataResponse(
             boolean success,
-            String message
+            @Nullable String error
     ) {}
 }

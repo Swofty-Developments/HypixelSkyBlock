@@ -7,6 +7,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class GetPendingFriendRequestsProtocolObject extends ProtocolObject
         <GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage,
@@ -25,6 +26,6 @@ public class GetPendingFriendRequestsProtocolObject extends ProtocolObject
     public record GetPendingRequestsMessage(UUID playerUuid) {
     }
 
-    public record GetPendingRequestsResponse(List<PendingFriendRequest> requests) {
+    public record GetPendingRequestsResponse(List<PendingFriendRequest> requests, boolean success, @Nullable String error) {
     }
 }

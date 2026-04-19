@@ -56,7 +56,7 @@ public class BazaarConnector {
 
         return bazaarService.<BazaarCancelProtocolObject.CancelMessage,
                         BazaarCancelProtocolObject.CancelResponse>handleRequest(message)
-                .thenApply(response -> response.successful());
+                .thenApply(response -> response.success());
     }
 
     public CompletableFuture<BazaarItemData> getItemData(ItemType itemType) {
@@ -115,8 +115,8 @@ public class BazaarConnector {
         return bazaarService.<BazaarBuyProtocolObject.BazaarBuyMessage,
                         BazaarBuyProtocolObject.BazaarBuyResponse>handleRequest(message)
                 .thenApply(response -> new BazaarResult(
-                        response.successful(),
-                        response.successful() ? "Buy order created!" : "Failed to create buy order"
+                        response.success(),
+                        response.success() ? "Buy order created!" : "Failed to create buy order"
                 ));
     }
 
@@ -132,8 +132,8 @@ public class BazaarConnector {
         return bazaarService.<BazaarSellProtocolObject.BazaarSellMessage,
                         BazaarSellProtocolObject.BazaarSellResponse>handleRequest(message)
                 .thenApply(response -> new BazaarResult(
-                        response.successful(),
-                        response.successful() ? "Sell order created!" : "Failed to create sell order"
+                        response.success(),
+                        response.success() ? "Sell order created!" : "Failed to create sell order"
                 ));
     }
 

@@ -267,7 +267,7 @@ public class GUIDarkAuction extends HypixelInventoryGUI implements RefreshingGUI
 
                     darkAuctionService.handleRequest(bidMessage)
                             .thenAccept(response -> {
-                                if (response instanceof PlaceBidProtocol.PlaceBidResponse(boolean success, String message)) {
+                                if (response instanceof PlaceBidProtocol.PlaceBidResponse(boolean success, String message, String error)) {
                                     if (!success) {
                                         sp.sendMessage("§c" + message);
                                     }

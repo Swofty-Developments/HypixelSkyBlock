@@ -23,7 +23,7 @@ public class EndpointAuthenticateCode implements ServiceEndpoint<
         @Nullable APIAdminDatabaseObject document = APIAdminDatabase.getFromCode(messageObject.authCode());
 
         if (document == null) {
-            return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(false);
+            return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(false, "Authentication failed");
         }
 
         document.setAuthenticatorName(messageObject.playerName());
@@ -31,6 +31,6 @@ public class EndpointAuthenticateCode implements ServiceEndpoint<
 
         APIAdminDatabase.replaceOrInsert(document);
 
-        return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(true);
+        return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(true, null);
     }
 }

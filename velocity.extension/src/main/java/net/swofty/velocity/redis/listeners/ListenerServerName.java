@@ -21,6 +21,6 @@ public class ListenerServerName extends RedisListener<
     @Override
     public RequestServerNameProtocol.Response receivedMessage(RequestServerNameProtocol.Request message, UUID serverUUID) {
         GameManager.GameServer server = GameManager.getFromUUID(serverUUID);
-        return new RequestServerNameProtocol.Response(server.displayName(), server.shortDisplayName());
+        return new RequestServerNameProtocol.Response(server.displayName(), server.shortDisplayName(), true, null);
     }
 }

@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.proxy.to;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class PlayerCountProtocol extends ProtocolObject<
         PlayerCountProtocol.Request,
@@ -21,5 +22,5 @@ public class PlayerCountProtocol extends ProtocolObject<
     public enum LookupType { ALL, TYPE, UUID }
 
     public record Request(LookupType lookupType, String lookupValue) {}
-    public record Response(int playerCount) {}
+    public record Response(int playerCount, boolean success, @Nullable String error) {}
 }

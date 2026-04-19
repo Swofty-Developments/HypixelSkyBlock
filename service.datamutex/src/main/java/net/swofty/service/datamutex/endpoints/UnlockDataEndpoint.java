@@ -49,7 +49,7 @@ public class UnlockDataEndpoint implements ServiceEndpoint<
                     });
 
             return new UnlockDataProtocolObject.UnlockDataResponse(
-                    true, "Data unlocked successfully");
+                    true, null);
 
         } catch (Exception e) {
             return new UnlockDataProtocolObject.UnlockDataResponse(

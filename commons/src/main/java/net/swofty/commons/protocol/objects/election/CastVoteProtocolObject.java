@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.Map;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class CastVoteProtocolObject
         extends ProtocolObject<CastVoteProtocolObject.CastVoteMessage,
@@ -23,5 +24,5 @@ public class CastVoteProtocolObject
 
     public record CastVoteMessage(UUID accountId, String candidateName) {}
 
-    public record CastVoteResponse(boolean success, Map<String, Long> tallies) {}
+    public record CastVoteResponse(boolean success, Map<String, Long> tallies, @Nullable String error) {}
 }

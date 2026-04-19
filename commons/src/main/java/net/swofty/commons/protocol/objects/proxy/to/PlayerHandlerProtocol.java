@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
 public class PlayerHandlerProtocol extends ProtocolObject<
         PlayerHandlerProtocol.Request,
@@ -35,5 +36,5 @@ public class PlayerHandlerProtocol extends ProtocolObject<
     }
 
     public record Request(String uuid, Action action, Map<String, Object> data) {}
-    public record Response(Map<String, Object> data) {}
+    public record Response(Map<String, Object> data, boolean success, @Nullable String error) {}
 }

@@ -30,6 +30,6 @@ public class EndpointCancelBazaarOrder implements ServiceEndpoint<
         System.out.println("Deleted order " + msg.orderId() + " for player " + msg.playerUuid() + " and profile " + msg.profileUuid());
 
         boolean success = result.getDeletedCount() > 0;
-        return new CancelResponse(success);
+        return new CancelResponse(success, success ? null : "Cancel failed");
     }
 }

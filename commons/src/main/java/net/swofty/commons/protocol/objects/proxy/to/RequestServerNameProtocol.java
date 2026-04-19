@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.proxy.to;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class RequestServerNameProtocol extends ProtocolObject<
         RequestServerNameProtocol.Request,
@@ -19,5 +20,5 @@ public class RequestServerNameProtocol extends ProtocolObject<
     }
 
     public record Request() {}
-    public record Response(String serverName, String shortenedServerName) {}
+    public record Response(String serverName, String shortenedServerName, boolean success, @Nullable String error) {}
 }

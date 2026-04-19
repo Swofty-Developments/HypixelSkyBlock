@@ -31,13 +31,13 @@ public class EndpointPlayerLeftAuction implements ServiceEndpoint<
         // If no active auction, nothing to clean up
         if (auction == null) {
             Logger.debug("Player {} left but no active auction", msg.playerName());
-            return new PlayerLeftAuctionProtocol.PlayerLeftResponse(true, 0);
+            return new PlayerLeftAuctionProtocol.PlayerLeftResponse(true, 0, null);
         }
 
         // If auction ID was provided and doesn't match, ignore
         if (msg.auctionId() != null && !auction.getAuctionId().equals(msg.auctionId())) {
             Logger.debug("Player {} left but auction ID mismatch", msg.playerName());
-            return new PlayerLeftAuctionProtocol.PlayerLeftResponse(true, 0);
+            return new PlayerLeftAuctionProtocol.PlayerLeftResponse(true, 0, null);
         }
 
         synchronized (auction) {
@@ -105,7 +105,7 @@ public class EndpointPlayerLeftAuction implements ServiceEndpoint<
 
             Logger.info("Player {} left Dark Auction, refund amount: {}", msg.playerName(), refundAmount);
 
-            return new PlayerLeftAuctionProtocol.PlayerLeftResponse(true, refundAmount);
+            return new PlayerLeftAuctionProtocol.PlayerLeftResponse(true, refundAmount, null);
         }
     }
 }

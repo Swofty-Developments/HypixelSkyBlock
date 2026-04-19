@@ -8,6 +8,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class GameHeartbeatProtocolObject extends ProtocolObject
         <GameHeartbeatProtocolObject.HeartbeatMessage,
@@ -25,5 +26,5 @@ public class GameHeartbeatProtocolObject extends ProtocolObject
 
     public record HeartbeatMessage(UUID uuid, String shortName, ServerType type, int maxPlayers, int onlinePlayers, List<Game> games) { }
 
-    public record HeartbeatResponse(boolean ok) { }
+    public record HeartbeatResponse(boolean success, @Nullable String error) { }
 }

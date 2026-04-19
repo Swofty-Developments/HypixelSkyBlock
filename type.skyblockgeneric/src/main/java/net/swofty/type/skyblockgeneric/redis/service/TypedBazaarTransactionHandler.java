@@ -97,7 +97,7 @@ public class TypedBazaarTransactionHandler implements TypedServiceHandler<Reques
             Logger.info("Seller " + transaction.seller() + " is offline or on different profile");
         }
 
-        return new Response(true, buyerHandled, sellerHandled, transaction.timestamp().toString());
+        return new Response(true, buyerHandled, sellerHandled, transaction.timestamp().toString(), null);
     }
 
     private Response handleExpiredTransaction(OrderExpiredBazaarTransaction transaction) {
@@ -114,6 +114,6 @@ public class TypedBazaarTransactionHandler implements TypedServiceHandler<Reques
             Logger.info("Owner " + transaction.owner() + " is offline or on different profile");
         }
 
-        return new Response(true, ownerHandled, false, transaction.orderId().toString());
+        return new Response(true, ownerHandled, false, transaction.orderId().toString(), null);
     }
 }

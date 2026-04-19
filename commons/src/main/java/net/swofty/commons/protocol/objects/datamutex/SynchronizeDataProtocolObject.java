@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class SynchronizeDataProtocolObject extends ProtocolObject<
         SynchronizeDataProtocolObject.SynchronizeDataRequest,
@@ -29,7 +30,7 @@ public class SynchronizeDataProtocolObject extends ProtocolObject<
 
     public record SynchronizeDataResponse(
             boolean success,
-            String message,
-            String synchronizedData
+            String synchronizedData,
+            @Nullable String error
     ) {}
 }

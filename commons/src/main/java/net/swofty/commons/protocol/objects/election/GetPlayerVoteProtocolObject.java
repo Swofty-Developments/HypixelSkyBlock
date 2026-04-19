@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class GetPlayerVoteProtocolObject
         extends ProtocolObject<GetPlayerVoteProtocolObject.GetPlayerVoteMessage,
@@ -22,5 +23,5 @@ public class GetPlayerVoteProtocolObject
 
     public record GetPlayerVoteMessage(UUID accountId) {}
 
-    public record GetPlayerVoteResponse(String candidateName) {}
+    public record GetPlayerVoteResponse(String candidateName, boolean success, @Nullable String error) {}
 }

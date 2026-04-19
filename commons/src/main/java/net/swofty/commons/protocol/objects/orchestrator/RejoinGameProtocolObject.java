@@ -31,7 +31,9 @@ public class RejoinGameProtocolObject extends ProtocolObject<
             @Nullable String gameId,
             @Nullable String mapName,
             @Nullable String teamName,
-            boolean willBeSpectator
+            boolean willBeSpectator,
+            boolean success,
+            @Nullable String error
     ) {
     }
 }

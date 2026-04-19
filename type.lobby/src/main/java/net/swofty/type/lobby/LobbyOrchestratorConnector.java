@@ -49,7 +49,7 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
                     PLAYERS_SEARCHING.remove(player.getUuid());
 
                     if (response instanceof GetServerForMapProtocolObject.GetServerForMapResponse(
-                            UnderstandableProxyServer server, String gameId
+                            UnderstandableProxyServer server, String gameId, boolean success, String error
                     )) {
                         return new Pair<>(server, gameId);
                     }

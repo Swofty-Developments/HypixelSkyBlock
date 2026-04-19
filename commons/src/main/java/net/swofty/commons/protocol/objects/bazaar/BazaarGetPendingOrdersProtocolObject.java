@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class BazaarGetPendingOrdersProtocolObject
         extends ProtocolObject<
@@ -33,5 +34,5 @@ public class BazaarGetPendingOrdersProtocolObject
             UUID profileUUID
     ) {}
 
-    public record BazaarGetPendingOrdersResponse(List<PendingOrder> orders) {}
+    public record BazaarGetPendingOrdersResponse(List<PendingOrder> orders, boolean success, @Nullable String error) {}
 }

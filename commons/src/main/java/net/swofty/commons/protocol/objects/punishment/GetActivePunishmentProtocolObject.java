@@ -36,6 +36,8 @@ public class GetActivePunishmentProtocolObject
             @Nullable String banId,
             @Nullable PunishmentReason reason,
             long expiresAt,
-            @NotNull List<PunishmentTag> tags
+            @NotNull List<PunishmentTag> tags,
+            boolean success,
+            @Nullable String error
     ) {}
 }

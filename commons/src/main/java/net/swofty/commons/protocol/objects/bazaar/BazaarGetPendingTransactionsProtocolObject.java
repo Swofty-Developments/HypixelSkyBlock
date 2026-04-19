@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class BazaarGetPendingTransactionsProtocolObject extends ProtocolObject<
         BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsMessage,
@@ -25,7 +26,7 @@ public class BazaarGetPendingTransactionsProtocolObject extends ProtocolObject<
 
     public record BazaarGetPendingTransactionsMessage(UUID playerUUID, UUID profileUUID) {}
 
-    public record BazaarGetPendingTransactionsResponse(List<PendingTransactionInfo> transactions) {}
+    public record BazaarGetPendingTransactionsResponse(List<PendingTransactionInfo> transactions, boolean success, @Nullable String error) {}
 
     public record PendingTransactionInfo(
             String id,

@@ -48,6 +48,6 @@ public class EndpointGetPendingOrders implements ServiceEndpoint<
             ));
         }
 
-        return new BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse(out);
+        return new BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse(out, true, null);
     }
 }

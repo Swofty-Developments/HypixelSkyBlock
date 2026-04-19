@@ -23,7 +23,7 @@ public class GetPresenceEndpoint implements ServiceEndpoint<
             GetPresenceBulkProtocolObject.GetPresenceBulkMessage messageObject) {
 
         List<PresenceInfo> presence = PresenceStorage.getBulk(messageObject.uuids());
-        return new GetPresenceBulkProtocolObject.GetPresenceBulkResponse(presence);
+        return new GetPresenceBulkProtocolObject.GetPresenceBulkResponse(presence, true, null);
     }
 }
 

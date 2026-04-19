@@ -41,6 +41,6 @@ public class EndpointGetPendingTransactions implements ServiceEndpoint<
                 " pending transactions for player " + msg.playerUUID() +
                 " on profile " + msg.profileUUID());
 
-        return new BazaarGetPendingTransactionsResponse(transactionInfos);
+        return new BazaarGetPendingTransactionsResponse(transactionInfos, true, null);
     }
 }

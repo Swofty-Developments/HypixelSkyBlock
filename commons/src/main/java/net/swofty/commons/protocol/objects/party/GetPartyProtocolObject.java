@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class GetPartyProtocolObject extends ProtocolObject
         <GetPartyProtocolObject.GetPartyMessage,
@@ -23,5 +24,5 @@ public class GetPartyProtocolObject extends ProtocolObject
 
     public record GetPartyMessage(UUID memberUuid) { }
 
-    public record GetPartyResponse(Party party) { }
+    public record GetPartyResponse(Party party, boolean success, @Nullable String error) { }
 }

@@ -44,11 +44,11 @@ public class PartyEventToServiceEndpoint implements ServiceEndpoint<
                 default -> Logger.warn("Unknown party event type: " + event.getClass().getSimpleName());
             }
 
-            return new SendPartyEventToServiceProtocolObject.SendPartyEventToServiceResponse(true);
+            return new SendPartyEventToServiceProtocolObject.SendPartyEventToServiceResponse(true, null);
         } catch (Exception e) {
             System.out.println("Failed to process party event: " + e.getMessage());
             Logger.error(e, "Failed to process party event in service endpoint");
-            return new SendPartyEventToServiceProtocolObject.SendPartyEventToServiceResponse(false);
+            return new SendPartyEventToServiceProtocolObject.SendPartyEventToServiceResponse(false, "Event processing failed");
         }
     }
 }

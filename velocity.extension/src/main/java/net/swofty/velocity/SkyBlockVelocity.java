@@ -264,7 +264,7 @@ public class SkyBlockVelocity {
             Object banResult = banFuture.join();
             if (banResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
                 boolean found1, String type1, String id, PunishmentReason reason1,
-                long at, List<PunishmentTag> tags1
+                long at, List<PunishmentTag> tags1, boolean success1, String error1
             ) && found1) {
                 ActivePunishment punishment = new ActivePunishment(
                     type1, id, reason1, at, tags1);
@@ -275,7 +275,7 @@ public class SkyBlockVelocity {
             Object muteResult = muteFuture.join();
             if (muteResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
                 boolean found, String type, String banId, PunishmentReason reason,
-                long expiresAt, List<PunishmentTag> tags
+                long expiresAt, List<PunishmentTag> tags, boolean success, String error
             ) && found) {
                 ActivePunishment punishment = new ActivePunishment(
                     type, banId, reason, expiresAt, tags);

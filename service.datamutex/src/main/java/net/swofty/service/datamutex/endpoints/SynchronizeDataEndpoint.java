@@ -49,7 +49,7 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
             if (!DataLockManager.acquireLock(lockKey, requesterId)) {
                 System.out.println("Failed to acquire service lock - already locked");
                 return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
-                        false, "Data is currently locked by another operation", null);
+                        false, null, "Data is currently locked by another operation");
             }
             System.out.println("Service lock acquired successfully");
 
@@ -73,7 +73,7 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
                 ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
 
                 return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
-                        false, "Failed to acquire locks on all servers", null);
+                        false, null, "Failed to acquire locks on all servers");
             }
 
             // Step 3: Get data from all servers
@@ -112,14 +112,14 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
                 ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
 
                 return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
-                        false, "No valid data found on any server", null);
+                        false, null, "No valid data found on any server");
             }
 
             System.out.println("Using latest data with timestamp: " + latestTimestamp);
             System.out.println("Latest data content: " + latestData.data());
 
             return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
-                    true, "Data synchronized successfully", latestData.data());
+                    true, latestData.data(), null);
 
         } catch (Exception e) {
             System.out.println("Exception in sync endpoint: " + e.getMessage());
@@ -130,7 +130,7 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
             ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
 
             return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
-                    false, "Error during synchronization: " + e.getMessage(), null);
+                    false, null, "Error during synchronization: " + e.getMessage());
         }
     }
 }

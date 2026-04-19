@@ -21,8 +21,8 @@ public class ListenerProxyOnline extends RedisListener<
     @Override
     public ProxyIsOnlineProtocol.Response receivedMessage(ProxyIsOnlineProtocol.Request message, UUID serverUUID) {
         if (GameManager.getFromUUID(serverUUID) == null) {
-            return new ProxyIsOnlineProtocol.Response(false);
+            return new ProxyIsOnlineProtocol.Response(false, true, null);
         }
-        return new ProxyIsOnlineProtocol.Response(true);
+        return new ProxyIsOnlineProtocol.Response(true, true, null);
     }
 }

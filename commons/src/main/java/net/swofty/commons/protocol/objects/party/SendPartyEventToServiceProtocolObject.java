@@ -4,6 +4,7 @@ import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class SendPartyEventToServiceProtocolObject extends ProtocolObject
         <SendPartyEventToServiceProtocolObject.SendPartyEventToServiceMessage,
@@ -22,6 +23,6 @@ public class SendPartyEventToServiceProtocolObject extends ProtocolObject
     public record SendPartyEventToServiceMessage(PartyEvent event) {
     }
 
-    public record SendPartyEventToServiceResponse(boolean success) {
+    public record SendPartyEventToServiceResponse(boolean success, @Nullable String error) {
     }
 }

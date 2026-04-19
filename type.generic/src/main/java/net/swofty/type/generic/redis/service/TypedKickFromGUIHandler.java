@@ -40,6 +40,6 @@ public class TypedKickFromGUIHandler implements TypedServiceHandler<Request, Res
             }
         }
 
-        return new Response(true, kickedPlayers, kickedPlayers.size());
+        return new Response(true, kickedPlayers, kickedPlayers.size(), null);
     }
 }

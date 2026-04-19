@@ -4,6 +4,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class GetGameCountsProtocolObject extends ProtocolObject
         <GetGameCountsProtocolObject.GetGameCountsMessage,
@@ -21,5 +22,5 @@ public class GetGameCountsProtocolObject extends ProtocolObject
 
     public record GetGameCountsMessage(ServerType type, String gameTypeName, String mapName) { }
 
-    public record GetGameCountsResponse(int playerCount, int gameCount) { }
+    public record GetGameCountsResponse(int playerCount, int gameCount, boolean success, @Nullable String error) { }
 }

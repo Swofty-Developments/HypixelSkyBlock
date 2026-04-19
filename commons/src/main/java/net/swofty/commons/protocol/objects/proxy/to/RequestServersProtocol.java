@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.proxy.to;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class RequestServersProtocol extends ProtocolObject<
         RequestServersProtocol.Request,
@@ -19,5 +20,5 @@ public class RequestServersProtocol extends ProtocolObject<
     }
 
     public record Request(String requestType, String type, String uuid) {}
-    public record Response(String serversList) {}
+    public record Response(String serversList, boolean success, @Nullable String error) {}
 }

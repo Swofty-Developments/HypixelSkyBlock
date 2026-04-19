@@ -24,6 +24,6 @@ public class GetServerForMapProtocolObject extends ProtocolObject
     public record GetServerForMapMessage(ServerType type, @Nullable String map, String mode, int neededSlots) {
     }
 
-    public record GetServerForMapResponse(UnderstandableProxyServer server, String gameId) {
+    public record GetServerForMapResponse(UnderstandableProxyServer server, String gameId, boolean success, @Nullable String error) {
     }
 }

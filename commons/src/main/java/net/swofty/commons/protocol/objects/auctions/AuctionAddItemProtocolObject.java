@@ -7,6 +7,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class AuctionAddItemProtocolObject extends ProtocolObject
         <AuctionAddItemProtocolObject.AuctionAddItemMessage,
@@ -24,5 +25,5 @@ public class AuctionAddItemProtocolObject extends ProtocolObject
 
     public record AuctionAddItemMessage(AuctionItem item, AuctionCategories category) {}
 
-    public record AuctionAddItemResponse(UUID uuid) {}
+    public record AuctionAddItemResponse(UUID uuid, boolean success, @Nullable String error) {}
 }

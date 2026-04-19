@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.api;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -21,5 +22,5 @@ public class APIAuthenticateCodeProtocolObject extends ProtocolObject
 
     public record AuthenticateCodeMessage(String authCode, String playerName, UUID playerUUID) {}
 
-    public record AuthenticateCodeResponse(boolean successful) {}
+    public record AuthenticateCodeResponse(boolean success, @Nullable String error) {}
 }

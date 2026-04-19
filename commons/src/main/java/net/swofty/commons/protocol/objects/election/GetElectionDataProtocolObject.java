@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.election;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 public class GetElectionDataProtocolObject
         extends ProtocolObject<GetElectionDataProtocolObject.GetElectionDataMessage,
@@ -22,6 +23,8 @@ public class GetElectionDataProtocolObject
 
     public record GetElectionDataResponse(
             boolean found,
-            String serializedData
+            String serializedData,
+            boolean success,
+            @Nullable String error
     ) {}
 }

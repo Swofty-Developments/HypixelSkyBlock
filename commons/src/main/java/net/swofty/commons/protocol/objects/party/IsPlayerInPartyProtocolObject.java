@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class IsPlayerInPartyProtocolObject extends ProtocolObject
         <IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage,
@@ -23,6 +24,6 @@ public class IsPlayerInPartyProtocolObject extends ProtocolObject
     public record IsPlayerInPartyMessage(UUID playerUUID) {
     }
 
-    public record IsPlayerInPartyResponse(boolean isInParty) {
+    public record IsPlayerInPartyResponse(boolean isInParty, boolean success, @Nullable String error) {
     }
 }

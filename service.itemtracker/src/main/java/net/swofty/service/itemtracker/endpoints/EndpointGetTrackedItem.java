@@ -26,6 +26,6 @@ public class EndpointGetTrackedItem implements ServiceEndpoint<
         }
 
         TrackedItem item = new TrackedItemsDatabase(itemUUID).get();
-        return new TrackedItemRetrieveProtocolObject.TrackedItemResponse(item);
+        return new TrackedItemRetrieveProtocolObject.TrackedItemResponse(item, true, null);
     }
 }

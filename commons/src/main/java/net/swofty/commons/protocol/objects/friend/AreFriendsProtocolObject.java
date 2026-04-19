@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class AreFriendsProtocolObject extends ProtocolObject
         <AreFriendsProtocolObject.AreFriendsMessage,
@@ -23,6 +24,6 @@ public class AreFriendsProtocolObject extends ProtocolObject
     public record AreFriendsMessage(UUID player1, UUID player2) {
     }
 
-    public record AreFriendsResponse(boolean areFriends) {
+    public record AreFriendsResponse(boolean areFriends, boolean success, @Nullable String error) {
     }
 }

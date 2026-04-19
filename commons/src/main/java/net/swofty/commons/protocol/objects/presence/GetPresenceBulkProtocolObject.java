@@ -7,6 +7,7 @@ import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class GetPresenceBulkProtocolObject extends ProtocolObject<
         GetPresenceBulkProtocolObject.GetPresenceBulkMessage,
@@ -24,5 +25,5 @@ public class GetPresenceBulkProtocolObject extends ProtocolObject<
 
     public record GetPresenceBulkMessage(List<UUID> uuids) {}
 
-    public record GetPresenceBulkResponse(List<PresenceInfo> presence) {}
+    public record GetPresenceBulkResponse(List<PresenceInfo> presence, boolean success, @Nullable String error) {}
 }
