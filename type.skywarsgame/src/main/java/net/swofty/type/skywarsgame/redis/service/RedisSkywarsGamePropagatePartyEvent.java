@@ -15,7 +15,7 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
-import net.swofty.type.generic.redis.service.RedisGameMessage;
+import net.swofty.type.generic.redis.service.TypedGameInformationHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
@@ -108,7 +108,7 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
         warper.sendMessage(Component.text("Warping party...", NamedTextColor.GRAY));
 
         for (UUID uuid : accepted) {
-            RedisGameMessage.game.put(uuid, warperGame.getGameId());
+            TypedGameInformationHandler.game.put(uuid, warperGame.getGameId());
             ProxyPlayer memberProxy = new ProxyPlayer(uuid);
             if (memberProxy.isOnline().join()) {
                 UnderstandableProxyServer memberServer = memberProxy.getServer().join();

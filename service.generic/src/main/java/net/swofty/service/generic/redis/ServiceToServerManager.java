@@ -2,6 +2,10 @@ package net.swofty.service.generic.redis;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -236,49 +240,54 @@ public class ServiceToServerManager {
         return typedFuture;
     }
 
-    /**
-     * Get player data from a specific server
-     */
-    public static CompletableFuture<JSONObject> getPlayerData(UUID serverUUID, UUID playerUUID, String dataKey) {
-        JSONObject message = new JSONObject()
-                .put("playerUUID", playerUUID.toString())
-                .put("dataKey", dataKey);
+    public static <T, R> CompletableFuture<Map<UUID, R>> sendToServers(
+            List<UUID> serverUUIDs,
+            ServicePushProtocol<T, R> protocol,
+            T message
+    ) {
+        Map<UUID, CompletableFuture<R>> futures = new ConcurrentHashMap<>();
 
-        return sendToServer(serverUUID, FromServiceChannels.GET_SKYBLOCK_DATA, message);
+        for (UUID serverUUID : serverUUIDs) {
+            futures.put(serverUUID, sendToServer(serverUUID, protocol, message));
+        }
+
+        return CompletableFuture.allOf(futures.values().toArray(new CompletableFuture[0]))
+                .thenApply(v -> {
+                    Map<UUID, R> results = new ConcurrentHashMap<>();
+                    futures.forEach((uuid, future) -> {
+                        try {
+                            results.put(uuid, future.get());
+                        } catch (Exception e) {
+                            // skip failed entries
+                        }
+                    });
+                    return results;
+                });
     }
 
-    /**
-     * Update player data on a specific server
-     */
-    public static CompletableFuture<JSONObject> updatePlayerData(UUID serverUUID, UUID playerUUID, String dataKey, JSONObject newData) {
-        JSONObject message = new JSONObject()
-                .put("playerUUID", playerUUID.toString())
-                .put("dataKey", dataKey)
-                .put("newData", newData);
+    private static final GetPlayerDataPushProtocol GET_PLAYER_DATA_PROTOCOL = new GetPlayerDataPushProtocol();
+    private static final UpdatePlayerDataPushProtocol UPDATE_PLAYER_DATA_PROTOCOL = new UpdatePlayerDataPushProtocol();
+    private static final LockPlayerDataPushProtocol LOCK_PLAYER_DATA_PROTOCOL = new LockPlayerDataPushProtocol();
+    private static final UnlockPlayerDataPushProtocol UNLOCK_PLAYER_DATA_PROTOCOL = new UnlockPlayerDataPushProtocol();
 
-        return sendToServer(serverUUID, FromServiceChannels.UPDATE_PLAYER_DATA, message);
+    public static CompletableFuture<GetPlayerDataPushProtocol.Response> getPlayerData(UUID serverUUID, UUID playerUUID, String dataKey) {
+        return sendToServer(serverUUID, GET_PLAYER_DATA_PROTOCOL,
+                new GetPlayerDataPushProtocol.Request(playerUUID, dataKey));
     }
 
-    /**
-     * Lock player data across multiple servers (for mutex operations)
-     */
-    public static CompletableFuture<Map<UUID, JSONObject>> lockPlayerData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
-        JSONObject message = new JSONObject()
-                .put("playerUUID", playerUUID.toString())
-                .put("dataKey", dataKey);
-
-        return sendToServers(serverUUIDs, FromServiceChannels.LOCK_PLAYER_DATA, message);
+    public static CompletableFuture<UpdatePlayerDataPushProtocol.Response> updatePlayerData(UUID serverUUID, UUID playerUUID, String dataKey, String newData) {
+        return sendToServer(serverUUID, UPDATE_PLAYER_DATA_PROTOCOL,
+                new UpdatePlayerDataPushProtocol.Request(playerUUID, dataKey, newData));
     }
 
-    /**
-     * Unlock player data across multiple servers
-     */
-    public static CompletableFuture<Map<UUID, JSONObject>> unlockPlayerData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
-        JSONObject message = new JSONObject()
-                .put("playerUUID", playerUUID.toString())
-                .put("dataKey", dataKey);
+    public static CompletableFuture<Map<UUID, LockPlayerDataPushProtocol.Response>> lockPlayerData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
+        return sendToServers(serverUUIDs, LOCK_PLAYER_DATA_PROTOCOL,
+                new LockPlayerDataPushProtocol.Request(playerUUID, dataKey));
+    }
 
-        return sendToServers(serverUUIDs, FromServiceChannels.UNLOCK_PLAYER_DATA, message);
+    public static CompletableFuture<Map<UUID, UnlockPlayerDataPushProtocol.Response>> unlockPlayerData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
+        return sendToServers(serverUUIDs, UNLOCK_PLAYER_DATA_PROTOCOL,
+                new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
     }
 
     /**

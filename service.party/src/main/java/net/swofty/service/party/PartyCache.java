@@ -5,9 +5,9 @@ import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.party.events.*;
 import net.swofty.commons.party.events.response.*;
+import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -505,11 +505,11 @@ public class PartyCache {
     }
 
     private static void sendMessageToPlayer(UUID playerUUID, String message) {
-        JSONObject messageData = new JSONObject();
-        messageData.put("playerUUID", playerUUID.toString());
-        messageData.put("message", message);
-
-        ServiceToServerManager.sendToAllServers(FromServiceChannels.SEND_MESSAGE, messageData);
+        ServiceToServerManager.sendToAllServers(
+                new SendMessagePushProtocol(),
+                new SendMessagePushProtocol.Request(playerUUID, message),
+                300
+        );
     }
 
     private static FullParty getPlayerParty(UUID playerUUID) {

@@ -4,12 +4,11 @@ package net.swofty.service.datamutex.endpoints;
 import org.tinylog.Logger;
 
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocolObject;
-import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.datamutex.DataLockManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -57,33 +56,25 @@ public class UpdateSynchronizedDataEndpoint implements ServiceEndpoint<
             }
             System.out.println("Service lock verified successfully");
 
-            // Step 1: Update data on all servers
             System.out.println("Updating data on servers: " + serverUUIDs);
-            Map<UUID, CompletableFuture<JSONObject>> updateFutures = new java.util.HashMap<>();
+            Map<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> updateFutures = new java.util.HashMap<>();
             for (UUID serverUUID : serverUUIDs) {
-                JSONObject updateMessage = new JSONObject()
-                        .put("playerUUID", playerUUID.toString())
-                        .put("dataKey", dataKey)
-                        .put("newData", newData);
-
-                System.out.println("Sending update to server " + serverUUID + ": " + updateMessage);
+                System.out.println("Sending update to server " + serverUUID);
 
                 updateFutures.put(serverUUID,
-                        ServiceToServerManager.sendToServer(serverUUID, FromServiceChannels.UPDATE_PLAYER_DATA, updateMessage));
+                        ServiceToServerManager.updatePlayerData(serverUUID, playerUUID, dataKey, newData));
             }
 
-            // Wait for all updates
             System.out.println("Waiting for update responses...");
-            Map<UUID, JSONObject> updateResults = new java.util.HashMap<>();
-            for (Map.Entry<UUID, CompletableFuture<JSONObject>> entry : updateFutures.entrySet()) {
-                JSONObject result = entry.getValue().get();
+            Map<UUID, UpdatePlayerDataPushProtocol.Response> updateResults = new java.util.HashMap<>();
+            for (Map.Entry<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> entry : updateFutures.entrySet()) {
+                UpdatePlayerDataPushProtocol.Response result = entry.getValue().get();
                 updateResults.put(entry.getKey(), result);
                 System.out.println("Update result from " + entry.getKey() + ": " + result);
             }
 
-            // Check if all updates were successful
             boolean allUpdated = updateResults.values().stream()
-                    .allMatch(result -> result.optBoolean("success", false));
+                    .allMatch(UpdatePlayerDataPushProtocol.Response::success);
 
             System.out.println("All servers updated successfully: " + allUpdated);
 
