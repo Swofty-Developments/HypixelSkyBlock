@@ -43,7 +43,7 @@ public class HypixelPlayer extends Player {
 	public long joined;
 	@Setter
 	@Getter
-	private ServerType originServer = ServerType.SKYBLOCK_HUB;
+	private ServerType originServer;
 	@Getter
 	private boolean readyForEvents = false;
 	@Getter
@@ -57,7 +57,15 @@ public class HypixelPlayer extends Player {
 		super(playerConnection, gameProfile);
 
 		joined = System.currentTimeMillis();
+		originServer = resolveInitialOriginServer();
 		hookManager = new PlayerHookManager(this, new HashMap<>());
+	}
+
+	private static ServerType resolveInitialOriginServer() {
+		if (HypixelConst.getTypeLoader() == null || HypixelConst.getTypeLoader().getType() == null) {
+			return ServerType.PROTOTYPE_LOBBY;
+		}
+		return HypixelConst.getTypeLoader().getType();
 	}
 
 	public void notImplemented() {
