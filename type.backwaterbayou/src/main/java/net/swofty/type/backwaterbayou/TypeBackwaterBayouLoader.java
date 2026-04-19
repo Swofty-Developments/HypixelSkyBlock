@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.type.backwaterbayou.tab.BackwaterBayouServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -85,7 +85,7 @@ public class TypeBackwaterBayouLoader implements SkyBlockTypeLoader {
 
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
         return List.of();
     }
 

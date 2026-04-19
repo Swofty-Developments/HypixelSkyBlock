@@ -7,7 +7,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -181,7 +181,7 @@ public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
     }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
         return List.of();
     }
 

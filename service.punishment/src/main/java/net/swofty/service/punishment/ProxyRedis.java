@@ -4,9 +4,8 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.redis.RedisEnvelope;
-import org.json.JSONObject;
 
 import java.net.URI;
 import java.time.Duration;
@@ -64,10 +63,11 @@ public class ProxyRedis {
         });
     }
 
-    public static void publishToProxy(ToProxyChannels channel, JSONObject message) {
+    public static <T> void publishToProxy(ProtocolObject<T, ?> protocol, T message) {
         UUID uuid = UUID.randomUUID();
-        publishMessage("proxy", channel.getChannelName(),
-                new RedisEnvelope(uuid.toString(), uuid.toString(), message.toString()).serialize());
+        String serialized = protocol.translateToString(message);
+        publishMessage("proxy", protocol.channel(),
+                new RedisEnvelope(uuid.toString(), uuid.toString(), serialized).serialize());
     }
 
     public static boolean isInitialized() {

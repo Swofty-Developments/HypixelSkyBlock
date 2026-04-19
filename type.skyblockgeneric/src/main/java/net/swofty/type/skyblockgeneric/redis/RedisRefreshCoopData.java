@@ -1,30 +1,30 @@
 package net.swofty.type.skyblockgeneric.redis;
 
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
-public class RedisRefreshCoopData implements ProxyToClient {
+public class RedisRefreshCoopData implements TypedProxyHandler<RefreshCoopDataProtocol.Request, RefreshCoopDataProtocol.Response> {
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.REFRESH_COOP_DATA_ON_SERVER;
+    public ProtocolObject<RefreshCoopDataProtocol.Request, RefreshCoopDataProtocol.Response> getProtocol() {
+        return new RefreshCoopDataProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        UUID uuid = UUID.fromString(message.getString("uuid"));
-        String datapoint = message.getString("datapoint");
+    public RefreshCoopDataProtocol.Response onMessage(RefreshCoopDataProtocol.Request message) {
+        UUID uuid = UUID.fromString(message.uuid());
+        String datapoint = message.datapoint();
 
         SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
-        if (player == null) return new JSONObject();
+        if (player == null) return new RefreshCoopDataProtocol.Response();
 
         SkyBlockDataHandler dataHandler = SkyBlockDataHandler.createFromProfileOnly(
                 new ProfilesDatabase(player.getProfiles().getCurrentlySelected().toString()).getDocument()
@@ -33,11 +33,11 @@ public class RedisRefreshCoopData implements ProxyToClient {
         @SuppressWarnings("unchecked")
         SkyBlockDatapoint<Object> targetDatapoint = (SkyBlockDatapoint<Object>) player.getSkyblockDataHandler().getSkyBlockDatapoint(datapoint);
         Object value = dataHandler.getSkyBlockDatapoint(datapoint).getValue();
-        targetDatapoint.setValueBypassCoop(value); // starting to remind me of Python - ArikSquad
+        targetDatapoint.setValueBypassCoop(value);
 
         Document toReplace = player.getSkyblockDataHandler().toProfileDocument();
         ProfilesDatabase.replaceDocument(player.getProfiles().getCurrentlySelected().toString(), toReplace);
 
-        return new JSONObject();
+        return new RefreshCoopDataProtocol.Response();
     }
 }

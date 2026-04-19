@@ -7,7 +7,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -37,7 +37,7 @@ public interface HypixelTypeLoader {
 
     List<HypixelNPC> getNPCs();
 
-    List<ProxyToClient> getProxyRedisListeners();
+    List<TypedProxyHandler<?, ?>> getTypedProxyHandlers();
 
     record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) {}
 

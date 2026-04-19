@@ -2,7 +2,7 @@ package net.swofty.proxyapi;
 
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.objects.proxy.to.RequestServersProtocol;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import org.json.JSONObject;
 
@@ -11,46 +11,37 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class ProxyInformation {
+    private static final RequestServersProtocol PROTOCOL = new RequestServersProtocol();
+
     public CompletableFuture<UnderstandableProxyServer> getServerInformation(UUID uuid) {
-        JSONObject message = new JSONObject()
-                .put("request_type", "UUID")
-                .put("uuid", uuid.toString());
         CompletableFuture<UnderstandableProxyServer> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVERS, message, (response) -> {
-            future.complete(UnderstandableProxyServer.fromJSON(response.getJSONObject("servers_list")).getFirst());
-        });
+        ServerOutboundMessage.sendToProxy(PROTOCOL,
+                new RequestServersProtocol.Request("UUID", null, uuid.toString()),
+                response -> future.complete(UnderstandableProxyServer.fromJSON(new JSONObject(response.serversList())).getFirst()));
         return future;
     }
 
     public CompletableFuture<List<UnderstandableProxyServer>> getServerInformation(ServerType type) {
-        JSONObject message = new JSONObject()
-                .put("request_type", "TYPE")
-                .put("type", type.name());
         CompletableFuture<List<UnderstandableProxyServer>> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVERS, message, (response) -> {
-            future.complete(UnderstandableProxyServer.fromJSON(response.getJSONObject("servers_list")));
-        });
+        ServerOutboundMessage.sendToProxy(PROTOCOL,
+                new RequestServersProtocol.Request("TYPE", type.name(), null),
+                response -> future.complete(UnderstandableProxyServer.fromJSON(new JSONObject(response.serversList()))));
         return future;
     }
 
     public CompletableFuture<List<UnderstandableProxyServer>> getAllServersInformation() {
-        JSONObject message = new JSONObject()
-                .put("request_type", "ALL");
         CompletableFuture<List<UnderstandableProxyServer>> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVERS, message, (response) -> {
-            future.complete(UnderstandableProxyServer.fromJSON(response.getJSONObject("servers_list")));
-        });
+        ServerOutboundMessage.sendToProxy(PROTOCOL,
+                new RequestServersProtocol.Request("ALL", null, null),
+                response -> future.complete(UnderstandableProxyServer.fromJSON(new JSONObject(response.serversList()))));
         return future;
     }
 
     public CompletableFuture<UnderstandableProxyServer> getServerInformation(ProxyPlayer player) {
-        JSONObject message = new JSONObject()
-                .put("request_type", "PLAYER_UUID")
-                .put("uuid", player.getUuid().toString());
         CompletableFuture<UnderstandableProxyServer> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.REQUEST_SERVERS, message, (response) -> {
-            future.complete(UnderstandableProxyServer.fromJSON(response.getJSONObject("servers_list")).getFirst());
-        });
+        ServerOutboundMessage.sendToProxy(PROTOCOL,
+                new RequestServersProtocol.Request("PLAYER_UUID", null, player.getUuid().toString()),
+                response -> future.complete(UnderstandableProxyServer.fromJSON(new JSONObject(response.serversList())).getFirst()));
         return future;
     }
 }
