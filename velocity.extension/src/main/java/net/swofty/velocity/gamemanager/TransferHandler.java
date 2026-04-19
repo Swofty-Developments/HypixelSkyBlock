@@ -132,10 +132,18 @@ public record TransferHandler(Player player) {
 	}
 
 	public void transferTo(ServerType type) {
-		new Thread(() -> {
-			playersGoalServerType.put(player, type);
-			sendToLimbo().join();
-		}).start();
+		if (type == null) {
+			return;
+		}
+
+		GameManager.GameServer server = BalanceConfigurations.getServerFor(player, type);
+		if (server == null) {
+			player.sendMessage(Component.text("§cThere are no Hypixel (type=" + type.name() + ") servers available at the moment."));
+			return;
+		}
+
+		player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
+		transferTo(server.registeredServer());
 	}
 
 	public void forceRemoveFromLimbo() {

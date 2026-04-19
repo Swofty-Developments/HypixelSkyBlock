@@ -11,8 +11,6 @@ import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarm
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmerAgain;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.List;
-
 public class NPCFarmerRigby extends HypixelNPC {
 
     public NPCFarmerRigby() {
@@ -71,8 +69,8 @@ public class NPCFarmerRigby extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("initial-hello", "npcs_hub.farmer_rigby.dialogue.initial_hello", player),
-                DialogueSet.ofTranslation("spoke-again", "npcs_hub.farmer_rigby.dialogue.spoke_again", player)
+            DialogueSet.ofTranslation("initial-hello", "npcs_hub.farmer_rigby.dialogue.initial_hello"),
+            DialogueSet.ofTranslation("spoke-again", "npcs_hub.farmer_rigby.dialogue.spoke_again")
         };
     }
 

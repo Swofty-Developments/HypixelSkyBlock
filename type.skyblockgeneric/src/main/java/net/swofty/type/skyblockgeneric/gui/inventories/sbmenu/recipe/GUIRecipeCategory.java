@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -49,7 +48,7 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
     @Override
     public ViewConfiguration<RecipeCategoryState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.recipe.category.title", ctx.player().getLocale(), Map.of("page", String.valueOf(state.page() + 1), "max_page", String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length))), "category_name", StringUtility.toNormalCase(type.name()))),
+            (state, ctx) -> I18n.string("gui_sbmenu.recipe.category.title", ctx.player().getLocale(), Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / PAGINATED_SLOTS.length)))), Component.text(StringUtility.toNormalCase(type.name()))),
                 InventoryType.CHEST_6_ROW
         );
     }
@@ -146,9 +145,9 @@ public class GUIRecipeCategory extends PaginatedView<SkyBlockRecipe<?>, GUIRecip
             ));
             String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.info", l, Map.of("category_name", categoryName)),
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.category.info", l, Component.text(categoryName)),
                     type.getMaterial(), 1,
-                    I18n.lore("gui_sbmenu.recipe.category.info.lore", l, Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                I18n.iterable("gui_sbmenu.recipe.category.info.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
         });
     }
 

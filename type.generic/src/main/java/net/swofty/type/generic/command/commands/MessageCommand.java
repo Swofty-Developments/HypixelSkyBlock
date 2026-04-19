@@ -1,5 +1,6 @@
 package net.swofty.type.generic.command.commands;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.ArgumentType;
@@ -12,7 +13,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.UUID;
 
 @CommandParameters(aliases = "msg message whipser",
@@ -35,20 +35,21 @@ public class MessageCommand extends HypixelCommand {
 
             @Nullable UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(playerName);
             if (targetUUID == null) {
-                player.sendTranslated("commands.message.player_not_found", Map.of("player", playerName));
+                player.sendTranslated("commands.message.player_not_found", Component.text(playerName));
                 return;
             }
 
             ProxyPlayer target = new ProxyPlayer(targetUUID);
             if (!target.isOnline().join()) {
-                player.sendTranslated("commands.message.player_not_online", Map.of("player", playerName));
+                player.sendTranslated("commands.message.player_not_online", Component.text(playerName));
                 return;
             }
             String targetName = HypixelPlayer.getDisplayName(targetUUID);
             String ourName = player.getFullDisplayName();
 
-            player.sendTranslated("commands.message.outgoing", Map.of("target", targetName, "message", String.join(" ", message)));
-            target.sendMessage(I18n.string("commands.message.incoming", Map.of("sender", ourName, "message", String.join(" ", message))));
+            String joinedMessage = String.join(" ", message);
+            player.sendTranslated("commands.message.outgoing", Component.text(targetName), Component.text(joinedMessage));
+            target.sendMessage(I18n.t("commands.message.incoming", Component.text(ourName), Component.text(joinedMessage)));
         }, playerArgument, messageArgument);
     }
 }

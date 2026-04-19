@@ -1,5 +1,6 @@
 package net.swofty.type.island.tab;
 
+import net.kyori.adventure.text.Component;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.i18n.I18n;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class IslandMemberModule extends TablistModule {
 
@@ -27,7 +27,7 @@ public class IslandMemberModule extends TablistModule {
             toShow = new ArrayList<>(Collections.singletonList(player));
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.island", l, Map.of("count", String.valueOf(toShow.size())))), TablistSkinRegistry.CYAN)
+            new TablistEntry(getCentered(I18n.string("tablist.module.island", l, Component.text(String.valueOf(toShow.size())))), TablistSkinRegistry.CYAN)
         ));
 
         // Sort players by their rank ordinal in reverse

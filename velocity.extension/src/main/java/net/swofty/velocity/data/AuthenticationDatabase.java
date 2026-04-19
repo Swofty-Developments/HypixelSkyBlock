@@ -1,7 +1,10 @@
-package net.swofty.type.generic.data.mongodb;
+package net.swofty.velocity.data;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -19,12 +22,18 @@ import java.util.List;
 import java.util.UUID;
 
 public record AuthenticationDatabase(UUID id) implements MongoDB {
+    public static MongoClient client;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
 
-    public static void connect(MongoClient client) {
+    public MongoDB connect(String connectionString) {
+        ConnectionString cs = new ConnectionString(connectionString);
+        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
+        client = MongoClients.create(settings);
+
         database = client.getDatabase("Minestom");
         collection = database.getCollection("authentication");
+        return this;
     }
 
     @Override
@@ -93,7 +102,7 @@ public record AuthenticationDatabase(UUID id) implements MongoDB {
         if (document == null) {
             return null;
         }
-        return AuthenticationData.deserialize(document);
+        return AuthenticationDatabase.AuthenticationData.deserialize(document);
     }
 
     public void setAuthenticationData(AuthenticationData data) {

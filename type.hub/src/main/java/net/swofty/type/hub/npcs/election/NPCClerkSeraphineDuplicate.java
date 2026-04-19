@@ -52,7 +52,7 @@ public class NPCClerkSeraphineDuplicate extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
-                DialogueSet.ofTranslation("hello", "npcs_hub.clerk_seraphine.dialogue.hello", player)
+            DialogueSet.ofTranslation("hello", "npcs_hub.clerk_seraphine.dialogue.hello")
         ).toArray(DialogueSet[]::new);
     }
 }

@@ -19,7 +19,6 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -63,7 +62,7 @@ public class MuteCommand extends HypixelCommand {
                     long expiryTime = System.currentTimeMillis() + actualTime;
                     mutePlayer(player, targetUuid, type, player.getUuid(), actualTime, expiryTime, playerName);
                 } catch (IOException e) {
-                    player.sendTranslated("commands.common.player_not_found_short", Map.of("player", playerName));
+                    player.sendTranslated("commands.common.player_not_found_short", Component.text(playerName));
                 }
             });
         }, playerArg, durationArg, reasonArg);
@@ -85,7 +84,7 @@ public class MuteCommand extends HypixelCommand {
                     mutePlayer(player, net.minestom.server.utils.mojang.MojangUtils.getUUID(playerName), reason,
                             player.getUuid(), 0, -1, playerName);
                 } catch (IOException e) {
-                    player.sendTranslated("commands.common.player_not_found_short", Map.of("player", playerName));
+                    player.sendTranslated("commands.common.player_not_found_short", Component.text(playerName));
                 }
             });
         }, playerArg, reasonArg);
@@ -107,11 +106,11 @@ public class MuteCommand extends HypixelCommand {
         punishmentService.handleRequest(message).thenAccept(result -> {
             if (result instanceof PunishPlayerProtocolObject.PunishPlayerResponse response) {
                 if (response.success()) {
-                    sender.sendTranslated("commands.mute.success", Map.of("player", playerName, "id", response.punishmentId()));
+                    sender.sendTranslated("commands.mute.success", Component.text(playerName), Component.text(response.punishmentId()));
                 } else if (response.errorCode() == PunishPlayerProtocolObject.ErrorCode.ALREADY_PUNISHED) {
-                    sender.sendTranslated("commands.mute.already_muted", Map.of("id", response.errorMessage()));
+                    sender.sendTranslated("commands.mute.already_muted", Component.text(response.errorMessage()));
                 } else {
-                    sender.sendTranslated("commands.mute.failed", Map.of("error", response.errorMessage()));
+                    sender.sendTranslated("commands.mute.failed", Component.text(response.errorMessage()));
                 }
             }
         }).orTimeout(5, TimeUnit.SECONDS).exceptionally(_ -> {

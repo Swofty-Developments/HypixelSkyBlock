@@ -1,5 +1,6 @@
 package net.swofty.type.hub;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -37,8 +38,8 @@ public class ElectionDisplay {
 
             List<String> message = new ArrayList<>(List.of(
                 I18n.string("gui_election.display.title", l),
-                I18n.string("gui_election.display.year", l, Map.of("year", String.valueOf(SkyBlockCalendar.getYear()))),
-                I18n.string("gui_election.display.time_left", l, Map.of("time", timeLeftFormatted))
+                I18n.string("gui_election.display.year", l, Component.text(String.valueOf(SkyBlockCalendar.getYear()))),
+                I18n.string("gui_election.display.time_left", l, Component.text(timeLeftFormatted))
             ));
 
             String vote = ElectionManager.getPlayerVote(player.getUuid());
@@ -49,7 +50,7 @@ public class ElectionDisplay {
                         .findFirst().orElse(null);
                 if (candidateData != null) {
                     message.add(I18n.string("gui_election.display.your_vote", l,
-                            Map.of("candidate", candidateData.getColoredName())));
+                        Component.text(candidateData.getColoredName())));
                     message.add(I18n.string("gui_election.display.click_switch", l));
                 }
             }

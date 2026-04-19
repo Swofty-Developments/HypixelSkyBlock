@@ -1,10 +1,14 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.View;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -13,7 +17,6 @@ import net.swofty.type.skyblockgeneric.item.components.SoulflowComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 
@@ -41,13 +44,12 @@ public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 					int itemSoulflow = s.item().getComponent(SoulflowComponent.class).getAmount();
 					int addition = s.item().getAmount() * itemSoulflow;
 
-					return TranslatableItemStackCreator.getStackHead(player, "gui_misc.consume_soulflow.confirm_button",
+                return TranslatableItemStackCreator.getStackHead("gui_misc.consume_soulflow.confirm_button",
 							"94f0c693b85658b0bae792c9f9b717eb024ab8c4b349455648ea08358b50ddc4",
 							1,
-							"gui_misc.consume_soulflow.confirm_button.lore", Map.of(
-									"soulflow", String.valueOf(soulflow),
-									"addition", String.valueOf(addition)
-							));
+                    "gui_misc.consume_soulflow.confirm_button.lore",
+                    Component.text(String.valueOf(soulflow)),
+                    Component.text(String.valueOf(addition)));
 				},
 				(click, viewCtx) -> {
 					SkyBlockPlayer player = (SkyBlockPlayer) viewCtx.player();
@@ -59,10 +61,7 @@ public class GUIConsumeSoulflow implements View<GUIConsumeSoulflow.State> {
 
 					data.get(SkyBlockDataHandler.Data.SOULFLOW, DatapointInteger.class).setValue(soulflow + addition);
 					Locale l = player.getLocale();
-					player.sendMessage(I18n.string("gui_misc.consume_soulflow.consumed_message", l, Map.of(
-							"addition", String.valueOf(addition),
-							"total", String.valueOf(soulflow + addition)
-					)));
+                    player.sendMessage(I18n.t("gui_misc.consume_soulflow.consumed_message", Component.text(String.valueOf(addition)), Component.text(String.valueOf(soulflow + addition))));
 
 					player.getInventory().setItemStack(player.getHeldSlot(), ItemStack.AIR);
 					player.closeInventory();

@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 public class GUIShopBuilderGreenThumb extends ShopView {
     public GUIShopBuilderGreenThumb() {
-        super(I18n.string("gui_builder.green_thumb.title"), GREENTHUMB);
+        super(I18n.t("gui_builder.green_thumb.title"), GREENTHUMB);
     }
 
     @Override

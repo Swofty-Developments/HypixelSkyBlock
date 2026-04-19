@@ -1,5 +1,6 @@
 package net.swofty.type.generic.gui.inventory;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
@@ -50,7 +51,7 @@ public abstract class HypixelPaginatedGUI<T> extends HypixelInventoryGUI {
                 paged.removeIf(type -> shouldFilterFromSearch(query, type));
             }
 
-            this.title = getTitle(player, query, page, paged);
+            this.title = Component.text(getTitle(player, query, page, paged));
             latestPaged = paged;
 
             try {

@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -14,7 +15,6 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -31,7 +31,6 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGUI {
 
@@ -50,7 +49,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
     private SkyBlockItem[] potionItems = new SkyBlockItem[3];
 
     public GUIBrewingStand(Instance instance, Point position, SkyBlockBlock block) {
-        super(I18n.string("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
         this.instance = instance;
         this.blockPosition = position;
         this.block = block;
@@ -205,7 +204,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         if (brewingData.isBrewing()) {
             paneMaterial = animationToggle ? Material.RED_STAINED_GLASS_PANE : Material.ORANGE_STAINED_GLASS_PANE;
             long remainingSeconds = brewingData.getRemainingTimeMs() / 1000;
-            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", l, Map.of("seconds", String.valueOf(remainingSeconds)));
+            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", l, Component.text(String.valueOf(remainingSeconds)));
             paneLore = new String[0];
         } else {
             paneMaterial = Material.LIGHT_BLUE_STAINED_GLASS_PANE;

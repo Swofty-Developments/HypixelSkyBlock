@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 public class GUIShopBuilderRocksBricks extends ShopView {
     public GUIShopBuilderRocksBricks() {
-        super(I18n.string("gui_builder.rocks_bricks.title"), UPPER5ROWS);
+        super(I18n.t("gui_builder.rocks_bricks.title"), UPPER5ROWS);
     }
 
     @Override

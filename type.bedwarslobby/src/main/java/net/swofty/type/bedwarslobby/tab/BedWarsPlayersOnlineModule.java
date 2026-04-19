@@ -1,5 +1,6 @@
 package net.swofty.type.bedwarslobby.tab;
 
+import net.kyori.adventure.text.Component;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class BedWarsPlayersOnlineModule extends TablistModule {
     public int page;
@@ -32,7 +32,7 @@ public class BedWarsPlayersOnlineModule extends TablistModule {
         List<HypixelPlayer> players = HypixelGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
+            new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Component.text(String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
         ));
 
         List<HypixelPlayer> toShow = new ArrayList<>();

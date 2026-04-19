@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.museum;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -106,7 +107,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
     @Override
     public void performSearch(HypixelPlayer player, String query, int page, int maxPage) {
         if (!new ProxyService(ServiceType.ITEM_TRACKER).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_museum.empty_display.item_tracker_offline", player.getLocale()));
+            player.sendMessage(I18n.t("gui_museum.empty_display.item_tracker_offline"));
             player.closeInventory();
             return;
         }
@@ -129,9 +130,9 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
                     Locale l = player.getLocale();
-                    return ItemStackCreator.getStack(I18n.string("gui_museum.empty_display.no_items", l, Map.of("display", display.toString(), "position", String.valueOf(position + 1))),
+                    return ItemStackCreator.getStack(I18n.string("gui_museum.empty_display.no_items", l, Component.text(display.toString()), Component.text(String.valueOf(position + 1))),
                             Material.BARRIER, 1,
-                            I18n.lore("gui_museum.empty_display.no_items.lore", l));
+                        I18n.iterable("gui_museum.empty_display.no_items.lore"));
                 }
             });
         }
@@ -139,7 +140,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
 
     @Override
     public String getTitle(HypixelPlayer player, String query, int page, PaginationList<Object> paged) {
-        return I18n.string("gui_museum.empty_display.title", player.getLocale(), Map.of("display", display.toString(), "position", String.valueOf(position + 1), "page", String.valueOf(page), "max_page", String.valueOf(paged.getPageCount())));
+        return I18n.string("gui_museum.empty_display.title", player.getLocale(), Component.text(display.toString()), Component.text(String.valueOf(position + 1)), Component.text(String.valueOf(page)), Component.text(String.valueOf(paged.getPageCount())));
     }
 
     @Override
@@ -163,7 +164,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_museum.empty_display.error", Material.BARRIER, 1,
+                return TranslatableItemStackCreator.getStack("gui_museum.empty_display.error", Material.BARRIER, 1,
                         "gui_museum.empty_display.error.lore");
             }
         };
@@ -182,7 +183,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
-                player.sendMessage(I18n.string("gui_museum.empty_display.set_display_single", player.getLocale(), Map.of("display", display.toString(), "position", String.valueOf(position + 1), "item_name", item.getDisplayName())));
+                player.sendMessage(I18n.t("gui_museum.empty_display.set_display_single", Component.text(display.toString()), Component.text(String.valueOf(position + 1)), Component.text(item.getDisplayName())));
                 DatapointMuseum.MuseumData data = player.getMuseumData();
                 data.getDisplayHandler().addToDisplay(item, display, position);
                 player.setMuseumData(data);
@@ -235,7 +236,7 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.closeInventory();
-                player.sendMessage(I18n.string("gui_museum.empty_display.set_display_armor", player.getLocale(), Map.of("display", display.toString(), "position", String.valueOf(position + 1), "set_name", armorSet.getDisplayName())));
+                player.sendMessage(I18n.t("gui_museum.empty_display.set_display_armor", Component.text(display.toString()), Component.text(String.valueOf(position + 1)), Component.text(armorSet.getDisplayName())));
                 DatapointMuseum.MuseumData data = player.getMuseumData();
 
                 // Add all armor pieces to the same display slot

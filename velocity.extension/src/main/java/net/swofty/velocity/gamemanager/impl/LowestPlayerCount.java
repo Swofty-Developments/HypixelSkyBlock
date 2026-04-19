@@ -1,4 +1,4 @@
-package net.swofty.velocity.gamemanager.balanceconfigurations;
+package net.swofty.velocity.gamemanager.impl;
 
 import com.velocitypowered.api.proxy.Player;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;

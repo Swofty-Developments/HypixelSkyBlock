@@ -6,7 +6,6 @@ import net.swofty.commons.proxy.requirements.from.DoesServerHaveIslandRequiremen
 import net.swofty.commons.proxy.requirements.from.GivePlayersOriginTypeRequirements;
 import net.swofty.commons.proxy.requirements.from.PingServerRequirements;
 import net.swofty.commons.proxy.requirements.from.PlayerHasSwitchedFromHereRequirements;
-import net.swofty.commons.proxy.requirements.from.PromptPlayerForAuthenticationRequirements;
 import net.swofty.commons.proxy.requirements.from.RefreshCoopDataOnServerRequirements;
 import net.swofty.commons.proxy.requirements.from.RunEventRequirements;
 import net.swofty.commons.proxy.requirements.from.TeleportRequirements;
@@ -16,7 +15,6 @@ import org.json.JSONObject;
 @Getter
 public enum FromProxyChannels {
     TELEPORT("teleport", new TeleportRequirements()),
-    PROMPT_PLAYER_FOR_AUTHENTICATION("authenticate", new PromptPlayerForAuthenticationRequirements()),
     PLAYER_HAS_SWITCHED_FROM_HERE("player-has-switched-from-here", new PlayerHasSwitchedFromHereRequirements()),
     DOES_SERVER_HAVE_ISLAND("does-server-have-island", new DoesServerHaveIslandRequirements()),
     REFRESH_COOP_DATA_ON_SERVER("refresh-coop-data", new RefreshCoopDataOnServerRequirements()),

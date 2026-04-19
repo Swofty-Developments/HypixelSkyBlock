@@ -15,23 +15,23 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
+import net.swofty.type.generic.data.datapoints.DatapointLocale;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
 import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewNavigator;
 import net.swofty.type.generic.gui.v2.ViewSession;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -154,11 +154,11 @@ public class HypixelPlayer extends Player {
 	}
 
 	public void sendTranslated(String key) {
-		sendMessage(Component.text(I18n.string(key, getLocale())));
+		sendMessage(I18n.t(key));
 	}
 
-	public void sendTranslated(String key, Map<String, String> placeholders) {
-		sendMessage(Component.text(I18n.string(key, getLocale(), placeholders)));
+	public void sendTranslated(String key, Component... placeholders) {
+		sendMessage(I18n.t(key, placeholders));
 	}
 
 	public PlayerSkin getPlayerSkin() {
@@ -188,6 +188,11 @@ public class HypixelPlayer extends Player {
         ));*/
 
 		player.transferTo(type);
+	}
+
+	public void updateLocale(DatapointLocale.SupportedLocale locale) {
+		getDataHandler().get(HypixelDataHandler.Data.LOCALE, DatapointLocale.class).getValue().switchTo(locale);
+		super.setLocale(locale.getLocale());
 	}
 
 }

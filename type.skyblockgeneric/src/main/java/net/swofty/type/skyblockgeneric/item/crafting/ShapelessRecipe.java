@@ -63,7 +63,9 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
 
     @Override
     public SkyBlockItem[] consume(SkyBlockItem[] stacks) {
-        List<ItemQuantifiable> materialsToConsume = new ArrayList<>(ingredientList);
+        List<ItemQuantifiable> materialsToConsume = ingredientList.stream()
+            .map(ItemQuantifiable::clone)
+            .collect(Collectors.toCollection(ArrayList::new));
         SkyBlockItem[] modifiedStacks = Arrays.copyOf(stacks, stacks.length);
 
         for (int i = 0; i < modifiedStacks.length && !materialsToConsume.isEmpty(); i++) {
@@ -123,8 +125,13 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
 
     @Override
     public SkyBlockRecipe<?> clone() {
-        ShapelessRecipe recipe = new ShapelessRecipe(recipeType, result, amount, canCraft);
+        ShapelessRecipe recipe = new ShapelessRecipe(recipeType, result.clone(), amount, canCraft);
         recipe.ingredientList.addAll(ingredientList.stream().map(ItemQuantifiable::clone).toList());
+        if (customRecipeDisplay != null) {
+            recipe.customRecipeDisplay = Arrays.stream(customRecipeDisplay)
+                .map(item -> item != null ? item.clone() : null)
+                .toArray(SkyBlockItem[]::new);
+        }
         return recipe;
     }
 
@@ -196,6 +203,7 @@ public class ShapelessRecipe extends SkyBlockRecipe<ShapelessRecipe> {
                 ", result=" + result +
                 ", ingredientList=" + ingredientList +
                 ", canCraft=" + canCraft +
-                ", amount=" + amount;
+            ", amount=" + amount +
+            '}';
     }
 }

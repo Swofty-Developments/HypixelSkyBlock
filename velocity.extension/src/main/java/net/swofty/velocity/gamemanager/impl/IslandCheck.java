@@ -1,4 +1,4 @@
-package net.swofty.velocity.gamemanager.balanceconfigurations;
+package net.swofty.velocity.gamemanager.impl;
 
 import com.velocitypowered.api.proxy.Player;
 import net.swofty.commons.ServerType;
@@ -19,20 +19,22 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class IslandCheck extends BalanceConfiguration {
+
     @Override
     public GameManager.GameServer getServer(Player player, List<GameManager.GameServer> servers) {
         Document userDatabase = new UserDatabase(player.getUniqueId()).getDocument();
         if (userDatabase == null || !userDatabase.containsKey("selected")) {
             return null;
         }
+
         UUID activeProfile = UUID.fromString(userDatabase.getString("selected"));
         Document document = new ProfilesDatabase(activeProfile.toString()).getDocument();
         if (document == null || !document.containsKey("island_uuid") ||
-                document.getString("island_uuid").equals("null")) {
+            document.getString("island_uuid").equals("null")) {
             return null;
         }
-        UUID islandUUID = UUID.fromString(document.getString("island_uuid").replace("\"", ""));
 
+        UUID islandUUID = UUID.fromString(document.getString("island_uuid").replace("\"", ""));
         AtomicReference<GameManager.GameServer> toSendTo = getGameServerAtomicReference(islandUUID);
 
         return toSendTo.get();
@@ -49,9 +51,9 @@ public class IslandCheck extends BalanceConfiguration {
 
                 gameServers.forEach(gameServer -> {
                     JSONObject jsonResponse = RedisMessage.sendMessageToServer(
-                            gameServer.internalID(),
-                            FromProxyChannels.DOES_SERVER_HAVE_ISLAND,
-                            new JSONObject().put("island-uuid", islandUUID.toString())).join();
+                        gameServer.internalID(),
+                        FromProxyChannels.DOES_SERVER_HAVE_ISLAND,
+                        new JSONObject().put("island-uuid", islandUUID.toString())).join();
 
                     boolean hasIsland = jsonResponse.getBoolean("server-has-it");
 

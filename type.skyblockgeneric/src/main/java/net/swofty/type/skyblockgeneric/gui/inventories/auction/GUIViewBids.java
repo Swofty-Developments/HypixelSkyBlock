@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
 import net.minestom.server.component.DataComponents;
-import org.tinylog.Logger;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -10,8 +9,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -25,6 +24,7 @@ import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointUUIDList;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIViewBids() {
-        super(I18n.string("gui_auction.bids.title"), InventoryType.CHEST_3_ROW);
+        super(I18n.t("gui_auction.bids.title"), InventoryType.CHEST_3_ROW);
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
         set(GUIClickableItem.getGoBackItem(22, new GUIAuctionHouse()));
@@ -132,7 +132,7 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.bids.offline_message", player.getLocale()));
+            player.sendMessage(I18n.t("gui_auction.bids.offline_message"));
             player.closeInventory();
             return;
         }

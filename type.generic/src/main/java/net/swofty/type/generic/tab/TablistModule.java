@@ -8,6 +8,7 @@ public abstract class TablistModule {
 
     public abstract List<TablistEntry> getEntries(HypixelPlayer player);
 
+    // TODO: use Components
     public record TablistEntry(String content, TablistSkinRegistry registry) {}
 
     public TablistEntry getGrayEntry() {

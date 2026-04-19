@@ -7,6 +7,7 @@ import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointLocale;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -16,6 +17,7 @@ import org.bson.Document;
 import org.tinylog.Logger;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ActionPlayerDataLoad implements HypixelEventClass {
@@ -41,6 +43,9 @@ public class ActionPlayerDataLoad implements HypixelEventClass {
             HypixelDataHandler.userCache.put(playerUuid, handler);
             userDatabase.saveData(handler);
         }
+
+        Locale loc = handler.get(HypixelDataHandler.Data.LOCALE, DatapointLocale.class).getValue().getCurrentLocale().getLocale();
+        player.setLocale(loc);
 
         // Load additional game handlers based on TypeLoader configuration
         List<Class<? extends GameDataHandler>> additionalHandlers =

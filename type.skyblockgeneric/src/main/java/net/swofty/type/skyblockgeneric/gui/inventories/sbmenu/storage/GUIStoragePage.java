@@ -1,20 +1,24 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStorage;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import java.util.Map;
 
 public class GUIStoragePage extends StatelessView {
     private final int page;
@@ -30,7 +34,7 @@ public class GUIStoragePage extends StatelessView {
                     SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
                     int highestPage = player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.STORAGE, DatapointStorage.class)
                             .getValue().getHighestPage();
-                    return I18n.string("gui_sbmenu.storage.page.title", player.getLocale(), Map.of("page", String.valueOf(page), "max_page", String.valueOf(highestPage)));
+                    return I18n.string("gui_sbmenu.storage.page.title", player.getLocale(), Component.text(String.valueOf(page)), Component.text(String.valueOf(highestPage)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -52,7 +56,7 @@ public class GUIStoragePage extends StatelessView {
         layout.slot(1, (s, c) -> {
                     java.util.Locale l = c.player().getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.page.go_back", l), Material.ARROW, 1,
-                        I18n.lore("gui_sbmenu.storage.page.go_back.lore", l));
+                        I18n.iterable("gui_sbmenu.storage.page.go_back.lore"));
                 },
                 (_, c) -> c.player().openView(new GUIStorage()));
 

@@ -7,8 +7,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -36,7 +36,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     public long minimumBidAmount = 0;
 
     public GUIAuctionViewItem(UUID auctionID, HypixelInventoryGUI previousGUI) {
-        super(I18n.string("gui_auction.view.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_auction.view.title"), InventoryType.CHEST_6_ROW);
 
         this.auctionID = auctionID;
         this.previousGUI = previousGUI;
@@ -89,7 +89,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.view.offline_message", player.getLocale()));
+            player.sendMessage(I18n.t("gui_auction.view.offline_message"));
             player.closeInventory();
         }
 

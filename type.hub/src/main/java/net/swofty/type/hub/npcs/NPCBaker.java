@@ -16,7 +16,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class NPCBaker extends HypixelNPC {
 
@@ -84,7 +83,7 @@ public class NPCBaker extends HypixelNPC {
     @Override
     protected DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("initial-hello", "npcs_hub.baker.dialogue.initial_hello", player)
+            DialogueSet.ofTranslation("initial-hello", "npcs_hub.baker.dialogue.initial_hello")
         };
     }
 }

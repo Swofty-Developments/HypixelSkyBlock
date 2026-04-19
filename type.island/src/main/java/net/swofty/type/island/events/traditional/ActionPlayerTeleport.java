@@ -14,7 +14,6 @@ public class ActionPlayerTeleport implements HypixelEventClass {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
         if (!event.isFirstSpawn()) return;
-        if (!player.hasAuthenticated) return;
 
         SharedInstance instance = player.getSkyBlockIsland().getSharedInstance().join();
         player.setInstance(instance, player.getRespawnPoint());
