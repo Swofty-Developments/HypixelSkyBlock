@@ -66,9 +66,9 @@ public class PunishPlayerEndpoint implements ServiceEndpoint
         Gson gson = new Gson();
         ProxyRedis.publishToProxy(new PunishPlayerProtocol(),
                 new PunishPlayerProtocol.Request(
-                        messageObject.target(),
+                        messageObject.target().toString(),
                         messageObject.type(),
-                        id.id(),
+                        id.id().toString(),
                         messageObject.expiresAt(),
                         reason.getBanType() != null ? reason.getBanType().name() : null,
                         reason.getMuteType() != null ? reason.getMuteType().name() : null,
