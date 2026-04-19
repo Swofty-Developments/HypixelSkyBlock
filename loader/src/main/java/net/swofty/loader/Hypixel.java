@@ -162,6 +162,8 @@ public class Hypixel {
                 .forEach(proxyAPI::registerFromProxyHandler);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", ServiceToClient.class)
                 .forEach(proxyAPI::registerFromServiceHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", TypedServiceHandler.class)
+                .forEach(proxyAPI::registerTypedServiceHandler);
         typeLoader.getProxyRedisListeners().forEach(proxyAPI::registerFromProxyHandler);
         typeLoader.getServiceRedisListeners().forEach(proxyAPI::registerFromServiceHandler);
         typeLoader.getTypedServiceHandlers().forEach(proxyAPI::registerTypedServiceHandler);

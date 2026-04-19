@@ -6,6 +6,8 @@ import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.game.GameInformationPushProtocol;
+import net.swofty.commons.protocol.objects.gui.KickFromGUIPushProtocol;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -290,22 +292,16 @@ public class ServiceToServerManager {
                 new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
     }
 
-    /**
-     * Kick players from specific GUIs (like bank interface)
-     */
-    public static CompletableFuture<Map<UUID, JSONObject>> kickFromGUI(List<UUID> serverUUIDs, List<UUID> playerUUIDs, String guiType) {
-        JSONObject message = new JSONObject()
-                .put("playerUUIDs", playerUUIDs)
-                .put("guiType", guiType);
+    private static final KickFromGUIPushProtocol KICK_FROM_GUI_PROTOCOL = new KickFromGUIPushProtocol();
+    private static final GameInformationPushProtocol GAME_INFORMATION_PROTOCOL = new GameInformationPushProtocol();
 
-        return sendToServers(serverUUIDs, FromServiceChannels.KICK_FROM_GUI, message);
+    public static CompletableFuture<Map<UUID, KickFromGUIPushProtocol.Response>> kickFromGUI(List<UUID> serverUUIDs, List<UUID> playerUUIDs, String guiType) {
+        return sendToServers(serverUUIDs, KICK_FROM_GUI_PROTOCOL,
+                new KickFromGUIPushProtocol.Request(playerUUIDs, guiType));
     }
 
-    public static CompletableFuture<Map<UUID, JSONObject>> gameInformation(UUID serverUUID, UUID playerUUID, String gameId) {
-        JSONObject message = new JSONObject()
-                .put("uuid", playerUUID)
-                .put("game-id", gameId);
-
-        return sendToServers(List.of(serverUUID), FromServiceChannels.GAME_INFORMATION, message);
+    public static CompletableFuture<Map<UUID, GameInformationPushProtocol.Response>> gameInformation(UUID serverUUID, UUID playerUUID, String gameId) {
+        return sendToServers(List.of(serverUUID), GAME_INFORMATION_PROTOCOL,
+                new GameInformationPushProtocol.Request(playerUUID, gameId));
     }
 }
