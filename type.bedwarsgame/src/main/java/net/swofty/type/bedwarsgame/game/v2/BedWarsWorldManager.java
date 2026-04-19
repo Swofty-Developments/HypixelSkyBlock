@@ -309,11 +309,6 @@ public class BedWarsWorldManager {
                 }
 
                 @Override
-                public float hologramYOffset() {
-                    return 0.35f;
-                }
-
-                @Override
                 public boolean looking(HypixelPlayer player) {
                     return true;
                 }

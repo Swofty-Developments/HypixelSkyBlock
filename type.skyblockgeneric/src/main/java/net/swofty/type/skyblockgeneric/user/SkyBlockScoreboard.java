@@ -29,11 +29,9 @@ import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,8 +58,6 @@ public class SkyBlockScoreboard {
                 if (dataHandler == null) {
                     continue;
                 }
-
-                String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
 
                 List<Component> lines = new ArrayList<>();
                 lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));

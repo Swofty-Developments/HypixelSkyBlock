@@ -6,6 +6,4 @@ public abstract class AnimalConfiguration implements NPCConfiguration {
 
     public abstract EntityType entityType();
 
-    public abstract float hologramYOffset();
-
 }
