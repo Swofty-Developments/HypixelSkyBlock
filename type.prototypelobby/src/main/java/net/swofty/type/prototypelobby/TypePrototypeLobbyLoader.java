@@ -21,6 +21,7 @@ import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyParkourEvents;
 import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
 import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyPlayerSpawnEvents;
 import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
@@ -137,6 +138,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         // Add lobby base events
         events.add(new LobbyItemEvents());
         events.add(new LobbyPlayerJoinEvents());
+        events.add(new LobbyPlayerSpawnEvents());
         events.add(new LobbyParkourEvents());
         events.add(new LobbyWorldEvent());
         events.add(new LobbyPlayerMove(SPAWN_POS));
