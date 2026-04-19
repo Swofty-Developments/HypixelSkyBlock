@@ -8,7 +8,6 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
@@ -188,13 +187,6 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         ).toList();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.bedwarslobby.redis.service",
-                ServiceToClient.class
-        ).toList();
-    }
 
     @Override
     @SuppressWarnings("unchecked")

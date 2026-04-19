@@ -6,7 +6,6 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.deepcaverns.tab.DeepCavernsServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 
@@ -86,10 +85,6 @@ public class TypeDeepCavernsLoader implements SkyBlockTypeLoader {
         ).toList());
 	}
 
-	@Override
-	public List<ServiceToClient> getServiceRedisListeners() {
-		return List.of();
-	}
 
 	@Override
 	public List<ProxyToClient> getProxyRedisListeners() {

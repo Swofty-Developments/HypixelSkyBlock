@@ -2,7 +2,6 @@ package net.swofty.proxyapi;
 
 import net.swofty.commons.protocol.ServicePushProtocol;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -39,50 +38,6 @@ public class ProxyAPI {
                     "proxy",
                     ChannelRegistry.getFromName(handler.getChannel().getChannelName()),
                     request + "}=-=-={" + response.toString());
-        });
-    }
-
-    public void registerFromServiceHandler(ServiceToClient handler) {
-        RedisAPI.getInstance().registerChannel("service_" + handler.getChannel().getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
-            UUID requestId = UUID.fromString(split[1]);
-            String rawMessage = split[2];
-            JSONObject json = new JSONObject(rawMessage);
-
-            Thread.startVirtualThread(() -> {
-                JSONObject response = handler.onMessage(json);
-
-                // Send response back to service
-                RedisAPI.getInstance().publishMessage(
-                        serviceId,
-                        ChannelRegistry.getFromName("service_response"),
-                        requestId + "}=-=-={" + response.toString());
-            });
-        });
-
-        RedisAPI.getInstance().registerChannel("service_broadcast_" + handler.getChannel().getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
-            UUID requestId = UUID.fromString(split[1]);
-            String rawMessage = split[2];
-            JSONObject json = new JSONObject(rawMessage);
-
-            Thread.startVirtualThread(() -> {
-                // Handle message
-                JSONObject response = handler.onMessage(json);
-
-                if (response == null) {
-                    // Don't send a response if null
-                    return;
-                }
-
-                // Send response back to service with this server's UUID
-                RedisAPI.getInstance().publishMessage(
-                        serviceId,
-                        ChannelRegistry.getFromName("service_broadcast_response"),
-                        requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response);
-            });
         });
     }
 

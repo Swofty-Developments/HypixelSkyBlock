@@ -25,7 +25,6 @@ import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
 import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.pvp.MinestomPvP;
 import net.swofty.type.generic.HypixelConst;
@@ -279,13 +278,6 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
         ).toList();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.murdermysterygame.redis.service",
-                ServiceToClient.class
-        ).toList();
-    }
 
     @Override
     @SuppressWarnings("unchecked")

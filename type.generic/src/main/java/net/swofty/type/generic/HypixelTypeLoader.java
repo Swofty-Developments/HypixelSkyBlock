@@ -8,7 +8,6 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -37,8 +36,6 @@ public interface HypixelTypeLoader {
     List<HypixelEventClass> getCustomEvents();
 
     List<HypixelNPC> getNPCs();
-
-    List<ServiceToClient> getServiceRedisListeners();
 
     List<ProxyToClient> getProxyRedisListeners();
 

@@ -8,7 +8,6 @@ import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.game.GameInformationPushProtocol;
 import net.swofty.commons.protocol.objects.gui.KickFromGUIPushProtocol;
-import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
@@ -60,33 +59,6 @@ public class ServiceToServerManager {
         });
     }
 
-    /**
-     * Send a message to a specific server
-     */
-    public static CompletableFuture<JSONObject> sendToServer(UUID serverUUID, FromServiceChannels channel, JSONObject message) {
-        UUID requestId = UUID.randomUUID();
-        CompletableFuture<JSONObject> future = new CompletableFuture<>();
-
-        pendingRequests.put(requestId, future);
-
-        // Set timeout
-        future.orTimeout(10, TimeUnit.SECONDS).exceptionally(throwable -> {
-            pendingRequests.remove(requestId);
-            return new JSONObject().put("error", "timeout");
-        });
-
-        String channelName = "service_" + channel.getChannelName();
-        String messageContent = currentServiceType.name() + "}=-=-={" + requestId + "}=-=-={" + message.toString();
-
-        RedisAPI.getInstance().publishMessage(
-                serverUUID.toString(),
-                ChannelRegistry.getFromName(channelName),
-                messageContent
-        );
-
-        return future;
-    }
-
     public static <T, R> CompletableFuture<R> sendToServer(
             UUID serverUUID,
             ServicePushProtocol<T, R> protocol,
@@ -125,75 +97,6 @@ public class ServiceToServerManager {
                 ChannelRegistry.getFromName(channelName),
                 messageContent
         );
-
-        return future;
-    }
-
-    /**
-     * Send a message to multiple servers and collect all responses
-     */
-    public static CompletableFuture<Map<UUID, JSONObject>> sendToServers(List<UUID> serverUUIDs, FromServiceChannels channel, JSONObject message) {
-        Map<UUID, CompletableFuture<JSONObject>> futures = new ConcurrentHashMap<>();
-
-        for (UUID serverUUID : serverUUIDs) {
-            futures.put(serverUUID, sendToServer(serverUUID, channel, message));
-        }
-
-        return CompletableFuture.allOf(futures.values().toArray(new CompletableFuture[0]))
-                .thenApply(v -> {
-                    Map<UUID, JSONObject> results = new ConcurrentHashMap<>();
-                    futures.forEach((uuid, future) -> {
-                        try {
-                            results.put(uuid, future.get());
-                        } catch (Exception e) {
-                            results.put(uuid, new JSONObject().put("error", e.getMessage()));
-                        }
-                    });
-                    return results;
-                });
-    }
-
-    /**
-     * Send a message to ALL servers and collect responses
-     */
-    public static CompletableFuture<Map<UUID, JSONObject>> sendToAllServers(FromServiceChannels channel, JSONObject message) {
-        return sendToAllServers(channel, message, 300); // Default 300ms timeout
-    }
-
-    /**
-     * Send a message to all servers and collect responses for up to `timeoutMs` milliseconds.
-     * When the timeout elapses, completes the future with whatever has been collected so far.
-     */
-    public static CompletableFuture<Map<UUID, JSONObject>> sendToAllServers(
-            FromServiceChannels channel,
-            JSONObject message,
-            int timeoutMs
-    ) {
-        UUID requestId = UUID.randomUUID();
-        CompletableFuture<Map<UUID, JSONObject>> future = new CompletableFuture<>();
-
-        // Track this request
-        BroadcastRequest broadcastRequest = new BroadcastRequest(future);
-        pendingBroadcastRequests.put(requestId, broadcastRequest);
-
-        // Build and publish the Redis message
-        String channelName = "service_broadcast_" + channel.getChannelName();
-        String messageContent = currentServiceType.name()
-                + "}=-=-={" + requestId
-                + "}=-=-={" + message.toString();
-        RedisAPI.getInstance()
-                .publishMessage("all",
-                        ChannelRegistry.getFromName(channelName),
-                        messageContent);
-
-        // Schedule the timeout task
-        scheduler.schedule(() -> {
-            // Remove from pending and complete with collected responses
-            BroadcastRequest req = pendingBroadcastRequests.remove(requestId);
-            if (req != null) {
-                req.getFuture().complete(req.getResponses());
-            }
-        }, timeoutMs, TimeUnit.MILLISECONDS);
 
         return future;
     }

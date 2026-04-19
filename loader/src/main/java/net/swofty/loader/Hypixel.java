@@ -26,7 +26,6 @@ import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
@@ -160,25 +159,18 @@ public class Hypixel {
         ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", ProxyToClient.class)
                 .forEach(proxyAPI::registerFromProxyHandler);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", ServiceToClient.class)
-                .forEach(proxyAPI::registerFromServiceHandler);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", TypedServiceHandler.class)
                 .forEach(proxyAPI::registerTypedServiceHandler);
         typeLoader.getProxyRedisListeners().forEach(proxyAPI::registerFromProxyHandler);
-        typeLoader.getServiceRedisListeners().forEach(proxyAPI::registerFromServiceHandler);
         typeLoader.getTypedServiceHandlers().forEach(proxyAPI::registerTypedServiceHandler);
         if (typeLoader instanceof SkyBlockTypeLoader) {
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", ProxyToClient.class)
                     .forEach(proxyAPI::registerFromProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", ServiceToClient.class)
-                    .forEach(proxyAPI::registerFromServiceHandler);
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", TypedServiceHandler.class)
                     .forEach(proxyAPI::registerTypedServiceHandler);
         } else if (typeLoader instanceof RavengardTypeLoader) {
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", ProxyToClient.class)
                     .forEach(proxyAPI::registerFromProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis.service", ServiceToClient.class)
-                    .forEach(proxyAPI::registerFromServiceHandler);
         }
         Arrays.stream(ToProxyChannels.values()).forEach(
                 ServerOutboundMessage::registerServerToProxy

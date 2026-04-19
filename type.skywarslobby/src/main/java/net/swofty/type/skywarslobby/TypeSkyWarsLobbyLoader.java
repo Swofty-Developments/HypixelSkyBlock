@@ -8,7 +8,6 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -197,13 +196,6 @@ public class TypeSkyWarsLobbyLoader implements LobbyTypeLoader {
         ).toList();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.skywarslobby.redis.service",
-                ServiceToClient.class
-        ).toList();
-    }
 
     @Override
     @SuppressWarnings("unchecked")

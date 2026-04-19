@@ -10,7 +10,6 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -146,13 +145,6 @@ public class TypeMurderMysteryConfiguratorLoader implements HypixelTypeLoader {
         ).toList();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
-                "net.swofty.type.murdermysteryconfigurator.redis.service",
-                ServiceToClient.class
-        ).toList();
-    }
 
     @Override
     public List<ProxyToClient> getProxyRedisListeners() {

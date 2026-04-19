@@ -21,7 +21,6 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.InteractionEntity;
@@ -253,10 +252,6 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
         ).toList());
 	}
 
-	@Override
-	public List<ServiceToClient> getServiceRedisListeners() {
-		return List.of();
-	}
 
 	@Override
 	public List<ProxyToClient> getProxyRedisListeners() {
