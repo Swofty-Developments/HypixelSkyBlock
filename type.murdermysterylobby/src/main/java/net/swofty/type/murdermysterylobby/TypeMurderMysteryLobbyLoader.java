@@ -9,6 +9,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -175,6 +176,15 @@ public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
         return HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.murdermysterylobby.redis.service",
                 ServiceToClient.class
+        ).toList();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.murdermysterylobby.redis.service",
+                TypedServiceHandler.class
         ).toList();
     }
 

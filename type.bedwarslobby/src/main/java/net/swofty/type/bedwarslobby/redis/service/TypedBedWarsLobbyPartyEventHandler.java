@@ -1,125 +1,54 @@
-package net.swofty.type.skywarsgame.redis.service;
+package net.swofty.type.bedwarslobby.redis.service;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.party.events.response.*;
-import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol.Request;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol.Response;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
-import net.swofty.type.generic.redis.service.TypedGameInformationHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
-import net.swofty.type.skywarsgame.game.SkywarsGame;
-import net.swofty.type.skywarsgame.user.SkywarsPlayer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
+public class TypedBedWarsLobbyPartyEventHandler implements TypedServiceHandler<Request, Response> {
+
+    private static final PartyEventPushProtocol PROTOCOL = new PartyEventPushProtocol();
 
     @Override
-    public FromServiceChannels getChannel() {
-        return FromServiceChannels.PROPAGATE_PARTY_EVENT;
+    public ServicePushProtocol<Request, Response> getProtocol() {
+        return PROTOCOL;
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
+    public Response onMessage(Request message) {
         try {
-            String eventType = message.getString("eventType");
-            String eventData = message.getString("eventData");
-            JSONArray participantsArray = message.getJSONArray("participants");
-
-            List<UUID> participants = participantsArray.toList().stream()
-                    .map(obj -> UUID.fromString(obj.toString()))
-                    .toList();
-
-            PartyEvent event = parseEvent(eventType, eventData);
+            PartyEvent event = parseEvent(message.eventType(), message.eventData());
             if (event == null) {
-                Logger.error("Failed to parse event of type: " + eventType);
-                return createFailureResponse("Failed to parse event of type: " + eventType);
+                Logger.error("Failed to parse event of type: " + message.eventType());
+                return Response.failure("Failed to parse event of type: " + message.eventType());
             }
 
-            if (event instanceof PartyWarpResponseEvent warpEvent) {
-                return handleWarpEventWithGameValidation(warpEvent, participants);
-            }
-
-            List<UUID> playersHandled = handleEventForPlayers(event, participants);
-            return createSuccessResponse(playersHandled.size(), playersHandled);
+            List<UUID> playersHandled = handleEventForPlayers(event, message.participants());
+            return Response.success(playersHandled.size(), playersHandled);
         } catch (Exception e) {
             Logger.error("Failed to handle party event: " + e.getMessage());
-            return createFailureResponse("Exception occurred: " + e.getMessage());
+            return Response.failure("Exception occurred: " + e.getMessage());
         }
-    }
-
-    private JSONObject handleWarpEventWithGameValidation(PartyWarpResponseEvent warpEvent, List<UUID> participants) {
-        UUID warperUUID = warpEvent.getWarper();
-
-        SkywarsPlayer warper = findPlayerByUuid(warperUUID);
-        if (warper == null) {
-            List<UUID> playersHandled = handleEventForPlayers(warpEvent, participants);
-            return createSuccessResponse(playersHandled.size(), playersHandled);
-        }
-
-        SkywarsGame warperGame = TypeSkywarsGameLoader.getPlayerGame(warper);
-
-        if (warperGame == null) {
-            List<UUID> playersHandled = handleEventForPlayers(warpEvent, participants);
-            return createSuccessResponse(playersHandled.size(), playersHandled);
-        }
-
-        String blockReason = warperGame.canAcceptPartyWarp();
-        if (blockReason != null) {
-            warper.sendMessage(Component.text(blockReason, NamedTextColor.RED));
-            return createBlockedResponse(blockReason);
-        }
-
-        List<UUID> membersToWarp = participants.stream()
-                .filter(uuid -> !uuid.equals(warperUUID))
-                .toList();
-
-        int availableSlots = warperGame.getAvailableSlots();
-        List<UUID> accepted = new ArrayList<>();
-        Map<UUID, String> rejected = new HashMap<>();
-
-        for (UUID memberUUID : membersToWarp) {
-            if (accepted.size() < availableSlots) {
-                accepted.add(memberUUID);
-            } else {
-                rejected.put(memberUUID, "Game is full");
-            }
-        }
-
-        warper.sendMessage(Component.text("Warping party...", NamedTextColor.GRAY));
-
-        for (UUID uuid : accepted) {
-            TypedGameInformationHandler.game.put(uuid, warperGame.getGameId());
-            ProxyPlayer memberProxy = new ProxyPlayer(uuid);
-            if (memberProxy.isOnline().join()) {
-                UnderstandableProxyServer memberServer = memberProxy.getServer().join();
-                if (memberServer != null && !memberServer.uuid().equals(HypixelConst.getServerUUID())) {
-                    memberProxy.sendMessage("§eParty Leader summoned you to their game!");
-                    memberProxy.transferToWithIndication(HypixelConst.getServerUUID());
-                }
-            }
-        }
-
-        return createGameWarpResponse(accepted, rejected);
     }
 
     private PartyEvent parseEvent(String eventType, String eventData) {
@@ -127,18 +56,9 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
             PartyEvent templateEvent = PartyEvent.findFromType(eventType);
             return (PartyEvent) templateEvent.getSerializer().deserialize(eventData);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to parse party event of type: {}", eventType);
             return null;
         }
-    }
-
-    private SkywarsPlayer findPlayerByUuid(UUID uuid) {
-        return HypixelGenericLoader.getLoadedPlayers().stream()
-                .filter(p -> p.getUuid().equals(uuid))
-                .filter(p -> p instanceof SkywarsPlayer)
-                .map(p -> (SkywarsPlayer) p)
-                .findFirst()
-                .orElse(null);
     }
 
     private List<UUID> handleEventForPlayers(PartyEvent event, List<UUID> participants) {
@@ -185,11 +105,8 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
     }
 
     private void handleChatMessageEvent(HypixelPlayer player, PartyChatMessageResponseEvent event) {
-        UUID messenger = event.getPlayer();
-        String message = event.getMessage();
-
-        String messengerName = HypixelPlayer.getDisplayName(messenger);
-        player.sendMessage("§9Party §8> " + messengerName + "§f: " + message);
+        String messengerName = HypixelPlayer.getDisplayName(event.getPlayer());
+        player.sendMessage("§9Party §8> " + messengerName + "§f: " + event.getMessage());
     }
 
     private void handlePlayerSwitchedServerEvent(HypixelPlayer player, PartyPlayerSwitchedServerResponseEvent event) {
@@ -239,16 +156,19 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
 
     private void handleInviteExpiredEvent(HypixelPlayer player, PartyInviteExpiredResponseEvent event) {
         if (event.getInvitee().equals(player.getUuid())) {
-            sendMessage(player, "§eThe party invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas expired!");
+            player.sendMessage("§9§m-----------------------------------------------------");
+            player.sendMessage("§eThe party invite from " + HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas expired!");
+            player.sendMessage("§9§m-----------------------------------------------------");
         } else if (event.getInviter().equals(player.getUuid())) {
-            sendMessage(player, "§eThe party invite to " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §ehas expired.");
+            player.sendMessage("§9§m-----------------------------------------------------");
+            player.sendMessage("§eThe party invite to " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §ehas expired.");
+            player.sendMessage("§9§m-----------------------------------------------------");
         }
     }
 
     private void handleInviteEvent(HypixelPlayer player, PartyInviteResponseEvent event) {
         if (event.getInvitee().equals(player.getUuid())) {
-            UUID inviter = event.getInviter();
-            String inviterName = HypixelPlayer.getRawName(inviter);
+            String inviterName = HypixelPlayer.getRawName(event.getInviter());
 
             player.sendMessage("§9§m-----------------------------------------------------");
             player.sendMessage(HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas invited you to join their party!");
@@ -258,7 +178,9 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
             player.sendMessage(component);
             player.sendMessage("§9§m-----------------------------------------------------");
         } else {
-            sendMessage(player, HypixelPlayer.getDisplayName(event.getInviter()) + " §einvited " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §eto join the party! They have §c60 §eseconds to accept.");
+            player.sendMessage("§9§m-----------------------------------------------------");
+            player.sendMessage(HypixelPlayer.getDisplayName(event.getInviter()) + " §einvited " + HypixelPlayer.getDisplayName(event.getInvitee()) + " §eto join the party! They have §c60 §eseconds to accept.");
+            player.sendMessage("§9§m-----------------------------------------------------");
         }
     }
 
@@ -287,9 +209,7 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
         if (event.getNewLeader().equals(player.getUuid())) {
             sendMessage(player, "§eYou are now the party leader!");
         } else {
-            UUID newLeader = event.getNewLeader();
-            String newLeaderName = HypixelPlayer.getDisplayName(newLeader);
-
+            String newLeaderName = HypixelPlayer.getDisplayName(event.getNewLeader());
             sendMessage(player, "§eThe party was transferred to " + newLeaderName);
         }
     }
@@ -298,11 +218,8 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
         if (event.getKicked().equals(player.getUuid())) {
             sendMessage(player, "§cYou have been kicked from the party!");
         } else {
-            UUID kicked = event.getKicked();
-            String kickedName = HypixelPlayer.getDisplayName(kicked);
-            UUID kicker = event.getKicker();
-            String kickerName = HypixelPlayer.getDisplayName(kicker);
-
+            String kickedName = HypixelPlayer.getDisplayName(event.getKicked());
+            String kickerName = HypixelPlayer.getDisplayName(event.getKicker());
             sendMessage(player, kickerName + " §ehas kicked " + kickedName + " §efrom the party!");
         }
     }
@@ -325,12 +242,8 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
         } else {
             String action = event.getNewRole() == FullParty.Role.MEMBER ? "demoted" : "promoted";
             String role = event.getNewRole().name().toLowerCase();
-
-            UUID promoted = event.getPromoted();
-            String promotedName = HypixelPlayer.getDisplayName(promoted);
-            UUID promoter = event.getPromoter();
-            String promoterName = HypixelPlayer.getDisplayName(promoter);
-
+            String promotedName = HypixelPlayer.getDisplayName(event.getPromoted());
+            String promoterName = HypixelPlayer.getDisplayName(event.getPromoter());
             sendMessage(player, promoterName + " §e" + action + " " + promotedName + " §eto " + role + "!");
         }
     }
@@ -400,54 +313,5 @@ public class RedisSkywarsGamePropagatePartyEvent implements ServiceToClient {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");
-    }
-
-    private JSONObject createSuccessResponse(int playersHandled, List<UUID> playersHandledUuids) {
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("playersHandled", playersHandled);
-        JSONArray participantsArray = new JSONArray();
-        for (UUID uuid : playersHandledUuids) {
-            participantsArray.put(uuid.toString());
-        }
-        response.put("playersHandledUUIDs", participantsArray);
-        return response;
-    }
-
-    private JSONObject createFailureResponse(String reason) {
-        JSONObject response = new JSONObject();
-        response.put("success", false);
-        response.put("error", reason);
-        return response;
-    }
-
-    private JSONObject createBlockedResponse(String reason) {
-        JSONObject response = new JSONObject();
-        response.put("success", false);
-        response.put("blocked", true);
-        response.put("blockReason", reason);
-        return response;
-    }
-
-    private JSONObject createGameWarpResponse(List<UUID> accepted, Map<UUID, String> rejected) {
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("playersHandled", accepted.size());
-
-        JSONArray acceptedArray = new JSONArray();
-        for (UUID uuid : accepted) {
-            acceptedArray.put(uuid.toString());
-        }
-        response.put("playersHandledUUIDs", acceptedArray);
-
-        if (!rejected.isEmpty()) {
-            JSONObject rejectedObj = new JSONObject();
-            for (Map.Entry<UUID, String> entry : rejected.entrySet()) {
-                rejectedObj.put(entry.getKey().toString(), entry.getValue());
-            }
-            response.put("rejectedPlayers", rejectedObj);
-        }
-
-        return response;
     }
 }

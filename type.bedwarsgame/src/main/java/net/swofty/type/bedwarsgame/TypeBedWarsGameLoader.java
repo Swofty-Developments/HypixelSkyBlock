@@ -25,6 +25,7 @@ import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObj
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.pvp.MinestomPvP;
 import net.swofty.pvp.feature.CombatFeatureSet;
 import net.swofty.pvp.feature.CombatFeatures;
@@ -326,6 +327,15 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 				ServiceToClient.class
 		).toList();
 	}
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.bedwarsgame.redis.service",
+                TypedServiceHandler.class
+        ).toList();
+    }
 
 	@Override
 	public List<ProxyToClient> getProxyRedisListeners() {

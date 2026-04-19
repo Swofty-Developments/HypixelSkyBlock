@@ -6,7 +6,7 @@ import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.party.events.*;
 import net.swofty.commons.party.events.response.*;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
-import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
 
@@ -278,24 +278,23 @@ public class PartyCache {
                 .execute(() -> partyWarpCooldown.remove(warperUUID));
 
         PartyWarpResponseEvent responseEvent = new PartyWarpResponseEvent(party, warperUUID);
-        JSONObject message = new JSONObject();
-        message.put("eventType", responseEvent.getClass().getSimpleName());
-        message.put("eventData", responseEvent.getSerializer().serialize(responseEvent));
-        message.put("participants", responseEvent.getParticipants());
+
+        PartyEventPushProtocol.Request request = new PartyEventPushProtocol.Request(
+                responseEvent.getClass().getSimpleName(),
+                responseEvent.getSerializer().serialize(responseEvent),
+                responseEvent.getParticipants()
+        );
 
         List<UUID> intendedToWarp = party.getParticipants().stream().filter(uuid -> !uuid.equals(warperUUID)).toList();
-        Map<UUID, JSONObject> responses = ServiceToServerManager.sendToAllServers(FromServiceChannels.PROPAGATE_PARTY_EVENT, message, 3000).join();
+        Map<UUID, PartyEventPushProtocol.Response> responses = ServiceToServerManager.sendToAllServers(
+                new PartyEventPushProtocol(), request, 3000).join();
         List<UUID> actualWarped = new ArrayList<>();
         Map<UUID, String> failureReasons = new HashMap<>();
 
-        for (JSONObject response : responses.values()) {
-            boolean success = response.getBoolean("success");
-
-            // Check if the warp was blocked (e.g., game already started)
-            if (!success) {
-                if (response.optBoolean("blocked", false)) {
-                    String blockReason = response.optString("blockReason", "Unable to warp");
-                    // Apply block reason to all intended warp targets
+        for (PartyEventPushProtocol.Response response : responses.values()) {
+            if (!response.success()) {
+                if (response.blocked()) {
+                    String blockReason = response.blockReason() != null ? response.blockReason() : "Unable to warp";
                     for (UUID uuid : intendedToWarp) {
                         failureReasons.put(uuid, blockReason);
                     }
@@ -303,31 +302,14 @@ public class PartyCache {
                 continue;
             }
 
-            List<UUID> playersHandledUuids = response.getJSONArray("playersHandledUUIDs")
-                    .toList().stream().map(object -> {
-                        try {
-                            return UUID.fromString(object.toString());
-                        } catch (Exception e) {
-                            return null;
-                        }
-                    }).toList();
-
-            for (UUID uuid : playersHandledUuids) {
+            for (UUID uuid : response.playersHandledUUIDs()) {
                 if (intendedToWarp.contains(uuid)) {
                     actualWarped.add(uuid);
                 }
             }
 
-            // Collect rejection reasons from server response
-            if (response.has("rejectedPlayers")) {
-                JSONObject rejectedPlayers = response.getJSONObject("rejectedPlayers");
-                for (String key : rejectedPlayers.keySet()) {
-                    try {
-                        UUID rejectedUuid = UUID.fromString(key);
-                        String reason = rejectedPlayers.getString(key);
-                        failureReasons.put(rejectedUuid, reason);
-                    } catch (Exception ignored) {}
-                }
+            if (response.rejectedPlayers() != null) {
+                failureReasons.putAll(response.rejectedPlayers());
             }
         }
 
@@ -493,12 +475,15 @@ public class PartyCache {
     }
 
     private static void sendEvent(PartyEvent event) {
-        JSONObject message = new JSONObject();
-        message.put("eventType", event.getClass().getSimpleName());
-        message.put("eventData", event.getSerializer().serialize(event));
-        message.put("participants", event.getParticipants());
-
-        ServiceToServerManager.sendToAllServers(FromServiceChannels.PROPAGATE_PARTY_EVENT, message);
+        ServiceToServerManager.sendToAllServers(
+                new PartyEventPushProtocol(),
+                new PartyEventPushProtocol.Request(
+                        event.getClass().getSimpleName(),
+                        event.getSerializer().serialize(event),
+                        event.getParticipants()
+                ),
+                300
+        );
     }
 
     private static void sendErrorToPlayer(UUID playerUUID, String message) {

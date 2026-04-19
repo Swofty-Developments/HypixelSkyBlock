@@ -7,6 +7,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.GameDataHandler;
@@ -162,6 +163,15 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         return HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.prototypelobby.redis.service",
                 ServiceToClient.class
+        ).toList();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.prototypelobby.redis.service",
+                TypedServiceHandler.class
         ).toList();
     }
 

@@ -9,14 +9,15 @@ import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.party.events.response.*;
-import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol.Request;
+import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol.Response;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -24,35 +25,29 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClient {
+public class TypedMurderMysteryLobbyPartyEventHandler implements TypedServiceHandler<Request, Response> {
+
+    private static final PartyEventPushProtocol PROTOCOL = new PartyEventPushProtocol();
 
     @Override
-    public FromServiceChannels getChannel() {
-        return FromServiceChannels.PROPAGATE_PARTY_EVENT;
+    public ServicePushProtocol<Request, Response> getProtocol() {
+        return PROTOCOL;
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
+    public Response onMessage(Request message) {
         try {
-            String eventType = message.getString("eventType");
-            String eventData = message.getString("eventData");
-            JSONArray participantsArray = message.getJSONArray("participants");
-
-            List<UUID> participants = participantsArray.toList().stream()
-                    .map(obj -> UUID.fromString(obj.toString()))
-                    .toList();
-
-            PartyEvent event = parseEvent(eventType, eventData);
+            PartyEvent event = parseEvent(message.eventType(), message.eventData());
             if (event == null) {
-                Logger.error("Failed to parse event of type: " + eventType);
-                return createFailureResponse("Failed to parse event of type: " + eventType);
+                Logger.error("Failed to parse event of type: " + message.eventType());
+                return Response.failure("Failed to parse event of type: " + message.eventType());
             }
 
-            List<UUID> playersHandled = handleEventForPlayers(event, participants);
-            return createSuccessResponse(playersHandled.size(), playersHandled);
+            List<UUID> playersHandled = handleEventForPlayers(event, message.participants());
+            return Response.success(playersHandled.size(), playersHandled);
         } catch (Exception e) {
             Logger.error("Failed to handle party event: " + e.getMessage());
-            return createFailureResponse("Exception occurred: " + e.getMessage());
+            return Response.failure("Exception occurred: " + e.getMessage());
         }
     }
 
@@ -61,7 +56,7 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
             PartyEvent templateEvent = PartyEvent.findFromType(eventType);
             return (PartyEvent) templateEvent.getSerializer().deserialize(eventData);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.error(e, "Failed to parse party event of type: {}", eventType);
             return null;
         }
     }
@@ -110,11 +105,8 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
     }
 
     private void handleChatMessageEvent(HypixelPlayer player, PartyChatMessageResponseEvent event) {
-        UUID messenger = event.getPlayer();
-        String message = event.getMessage();
-
-        String messengerName = HypixelPlayer.getDisplayName(messenger);
-        player.sendMessage("§9Party §8> " + messengerName + "§f: " + message);
+        String messengerName = HypixelPlayer.getDisplayName(event.getPlayer());
+        player.sendMessage("§9Party §8> " + messengerName + "§f: " + event.getMessage());
     }
 
     private void handlePlayerSwitchedServerEvent(HypixelPlayer player, PartyPlayerSwitchedServerResponseEvent event) {
@@ -176,8 +168,7 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
 
     private void handleInviteEvent(HypixelPlayer player, PartyInviteResponseEvent event) {
         if (event.getInvitee().equals(player.getUuid())) {
-            UUID inviter = event.getInviter();
-            String inviterName = HypixelPlayer.getRawName(inviter);
+            String inviterName = HypixelPlayer.getRawName(event.getInviter());
 
             player.sendMessage("§9§m-----------------------------------------------------");
             player.sendMessage(HypixelPlayer.getDisplayName(event.getInviter()) + " §ehas invited you to join their party!");
@@ -218,9 +209,7 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
         if (event.getNewLeader().equals(player.getUuid())) {
             sendMessage(player, "§eYou are now the party leader!");
         } else {
-            UUID newLeader = event.getNewLeader();
-            String newLeaderName = HypixelPlayer.getDisplayName(newLeader);
-
+            String newLeaderName = HypixelPlayer.getDisplayName(event.getNewLeader());
             sendMessage(player, "§eThe party was transferred to " + newLeaderName);
         }
     }
@@ -229,11 +218,8 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
         if (event.getKicked().equals(player.getUuid())) {
             sendMessage(player, "§cYou have been kicked from the party!");
         } else {
-            UUID kicked = event.getKicked();
-            String kickedName = HypixelPlayer.getDisplayName(kicked);
-            UUID kicker = event.getKicker();
-            String kickerName = HypixelPlayer.getDisplayName(kicker);
-
+            String kickedName = HypixelPlayer.getDisplayName(event.getKicked());
+            String kickerName = HypixelPlayer.getDisplayName(event.getKicker());
             sendMessage(player, kickerName + " §ehas kicked " + kickedName + " §efrom the party!");
         }
     }
@@ -256,12 +242,8 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
         } else {
             String action = event.getNewRole() == FullParty.Role.MEMBER ? "demoted" : "promoted";
             String role = event.getNewRole().name().toLowerCase();
-
-            UUID promoted = event.getPromoted();
-            String promotedName = HypixelPlayer.getDisplayName(promoted);
-            UUID promoter = event.getPromoter();
-            String promoterName = HypixelPlayer.getDisplayName(promoter);
-
+            String promotedName = HypixelPlayer.getDisplayName(event.getPromoted());
+            String promoterName = HypixelPlayer.getDisplayName(event.getPromoter());
             sendMessage(player, promoterName + " §e" + action + " " + promotedName + " §eto " + role + "!");
         }
     }
@@ -331,24 +313,5 @@ public class RedisMurderMysteryLobbyPropagatePartyEvent implements ServiceToClie
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");
-    }
-
-    private JSONObject createSuccessResponse(int playersHandled, List<UUID> playersHandledUuids) {
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("playersHandled", playersHandled);
-        JSONArray participantsArray = new JSONArray();
-        for (UUID uuid : playersHandledUuids) {
-            participantsArray.put(uuid.toString());
-        }
-        response.put("playersHandledUUIDs", participantsArray);
-        return response;
-    }
-
-    private JSONObject createFailureResponse(String reason) {
-        JSONObject response = new JSONObject();
-        response.put("success", false);
-        response.put("error", reason);
-        return response;
     }
 }

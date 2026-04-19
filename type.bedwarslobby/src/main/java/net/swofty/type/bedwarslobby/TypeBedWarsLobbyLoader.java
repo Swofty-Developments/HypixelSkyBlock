@@ -9,6 +9,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.item.impl.Collectibles;
@@ -192,6 +193,15 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         return HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.bedwarslobby.redis.service",
                 ServiceToClient.class
+        ).toList();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.bedwarslobby.redis.service",
+                TypedServiceHandler.class
         ).toList();
     }
 
