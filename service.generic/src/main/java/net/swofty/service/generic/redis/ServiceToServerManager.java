@@ -1,6 +1,7 @@
 package net.swofty.service.generic.redis;
 
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.ServicePushProtocol;
 import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.*;
+import java.util.concurrent.TimeoutException;
 
 public class ServiceToServerManager {
     private static final Map<UUID, CompletableFuture<JSONObject>> pendingRequests = new ConcurrentHashMap<>();
@@ -69,6 +71,48 @@ public class ServiceToServerManager {
 
         String channelName = "service_" + channel.getChannelName();
         String messageContent = currentServiceType.name() + "}=-=-={" + requestId + "}=-=-={" + message.toString();
+
+        RedisAPI.getInstance().publishMessage(
+                serverUUID.toString(),
+                ChannelRegistry.getFromName(channelName),
+                messageContent
+        );
+
+        return future;
+    }
+
+    public static <T, R> CompletableFuture<R> sendToServer(
+            UUID serverUUID,
+            ServicePushProtocol<T, R> protocol,
+            T message
+    ) {
+        UUID requestId = UUID.randomUUID();
+        CompletableFuture<R> future = new CompletableFuture<>();
+        CompletableFuture<JSONObject> rawFuture = new CompletableFuture<>();
+
+        pendingRequests.put(requestId, rawFuture);
+
+        rawFuture.orTimeout(10, TimeUnit.SECONDS).exceptionally(throwable -> {
+            pendingRequests.remove(requestId);
+            return null;
+        });
+
+        rawFuture.thenAccept(json -> {
+            if (json == null) {
+                future.completeExceptionally(new TimeoutException("Service push timed out"));
+                return;
+            }
+            try {
+                R response = protocol.translateReturnFromString(json.toString());
+                future.complete(response);
+            } catch (Exception e) {
+                future.completeExceptionally(e);
+            }
+        });
+
+        String serialized = protocol.translateToString(message);
+        String channelName = "service_" + protocol.channel();
+        String messageContent = currentServiceType.name() + "}=-=-={" + requestId + "}=-=-={" + serialized;
 
         RedisAPI.getInstance().publishMessage(
                 serverUUID.toString(),
@@ -146,6 +190,50 @@ public class ServiceToServerManager {
         }, timeoutMs, TimeUnit.MILLISECONDS);
 
         return future;
+    }
+
+    public static <T, R> CompletableFuture<Map<UUID, R>> sendToAllServers(
+            ServicePushProtocol<T, R> protocol,
+            T message,
+            int timeoutMs
+    ) {
+        UUID requestId = UUID.randomUUID();
+        CompletableFuture<Map<UUID, JSONObject>> rawFuture = new CompletableFuture<>();
+        CompletableFuture<Map<UUID, R>> typedFuture = new CompletableFuture<>();
+
+        BroadcastRequest broadcastRequest = new BroadcastRequest(rawFuture);
+        pendingBroadcastRequests.put(requestId, broadcastRequest);
+
+        String serialized = protocol.translateToString(message);
+        String channelName = "service_broadcast_" + protocol.channel();
+        String messageContent = currentServiceType.name()
+                + "}=-=-={" + requestId
+                + "}=-=-={" + serialized;
+
+        RedisAPI.getInstance().publishMessage("all",
+                ChannelRegistry.getFromName(channelName),
+                messageContent);
+
+        scheduler.schedule(() -> {
+            BroadcastRequest req = pendingBroadcastRequests.remove(requestId);
+            if (req != null) {
+                req.getFuture().complete(req.getResponses());
+            }
+        }, timeoutMs, TimeUnit.MILLISECONDS);
+
+        rawFuture.thenAccept(rawMap -> {
+            Map<UUID, R> typedMap = new ConcurrentHashMap<>();
+            rawMap.forEach((uuid, json) -> {
+                try {
+                    typedMap.put(uuid, protocol.translateReturnFromString(json.toString()));
+                } catch (Exception e) {
+                    System.err.println("Failed to deserialize push response from " + uuid + ": " + e.getMessage());
+                }
+            });
+            typedFuture.complete(typedMap);
+        });
+
+        return typedFuture;
     }
 
     /**
