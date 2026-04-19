@@ -27,6 +27,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -169,6 +170,8 @@ public class Hypixel {
                     .forEach(proxyAPI::registerFromProxyHandler);
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", ServiceToClient.class)
                     .forEach(proxyAPI::registerFromServiceHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", TypedServiceHandler.class)
+                    .forEach(proxyAPI::registerTypedServiceHandler);
         } else if (typeLoader instanceof RavengardTypeLoader) {
             SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", ProxyToClient.class)
                     .forEach(proxyAPI::registerFromProxyHandler);

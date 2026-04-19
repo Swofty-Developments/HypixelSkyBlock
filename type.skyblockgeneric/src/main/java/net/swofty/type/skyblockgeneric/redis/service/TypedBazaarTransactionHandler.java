@@ -1,10 +1,13 @@
 package net.swofty.type.skyblockgeneric.redis.service;
 
+import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarTransactionPushProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarTransactionPushProtocol.Request;
+import net.swofty.commons.protocol.objects.bazaar.BazaarTransactionPushProtocol.Response;
 import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
-import net.swofty.commons.service.FromServiceChannels;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarAwarder;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -13,42 +16,41 @@ import org.tinylog.Logger;
 
 import java.util.UUID;
 
-public class RedisPropogateBazaarTransaction implements ServiceToClient {
+public class TypedBazaarTransactionHandler implements TypedServiceHandler<Request, Response> {
+
+    private static final BazaarTransactionPushProtocol PROTOCOL = new BazaarTransactionPushProtocol();
 
     @Override
-    public FromServiceChannels getChannel() {
-        return FromServiceChannels.PROPAGATE_BAZAAR_TRANSACTION;
+    public ServicePushProtocol<Request, Response> getProtocol() {
+        return PROTOCOL;
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
+    public Response onMessage(Request message) {
         try {
-            String transactionType = message.getString("type");
-            JSONObject data = message.getJSONObject("data");
+            String transactionType = message.transactionType();
+            JSONObject data = new JSONObject(message.transactionJson());
 
             Logger.info("Received bazaar transaction: " + transactionType);
 
-            // Parse the transaction based on type
             BazaarTransaction transaction = parseTransaction(transactionType, data);
             if (transaction == null) {
                 Logger.error("Failed to parse bazaar transaction of type: " + transactionType);
-                return createFailureResponse("Failed to parse transaction");
+                return Response.failure("Failed to parse transaction");
             }
-
-            // Handle the transaction using BazaarAwarder
 
             return switch (transaction) {
                 case SuccessfulBazaarTransaction success -> handleSuccessfulTransaction(success);
                 case OrderExpiredBazaarTransaction expired -> handleExpiredTransaction(expired);
                 default -> {
                     Logger.error("Unknown transaction type: " + transaction.getClass().getSimpleName());
-                    yield createFailureResponse("Unknown transaction type");
+                    yield Response.failure("Unknown transaction type");
                 }
             };
 
         } catch (Exception e) {
             Logger.error(e, "Failed to propagate bazaar transaction");
-            return createFailureResponse("Exception occurred: " + e.getMessage());
+            return Response.failure("Exception occurred: " + e.getMessage());
         }
     }
 
@@ -72,7 +74,7 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
         }
     }
 
-    private JSONObject handleSuccessfulTransaction(SuccessfulBazaarTransaction transaction) {
+    private Response handleSuccessfulTransaction(SuccessfulBazaarTransaction transaction) {
         Logger.info("Handling successful transaction for item: " + transaction.itemName() +
                 " between buyer: " + transaction.buyer() + " and seller: " + transaction.seller());
 
@@ -95,17 +97,10 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
             Logger.info("Seller " + transaction.seller() + " is offline or on different profile");
         }
 
-        // Return status to bazaar service
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("buyerHandled", buyerHandled);
-        response.put("sellerHandled", sellerHandled);
-        response.put("transactionId", transaction.timestamp().toString());
-
-        return response;
+        return new Response(true, buyerHandled, sellerHandled, transaction.timestamp().toString());
     }
 
-    private JSONObject handleExpiredTransaction(OrderExpiredBazaarTransaction transaction) {
+    private Response handleExpiredTransaction(OrderExpiredBazaarTransaction transaction) {
         Logger.info("Handling expired order for: " + transaction.itemName() +
                 " owner: " + transaction.owner());
 
@@ -119,18 +114,6 @@ public class RedisPropogateBazaarTransaction implements ServiceToClient {
             Logger.info("Owner " + transaction.owner() + " is offline or on different profile");
         }
 
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("ownerHandled", ownerHandled);
-        response.put("orderId", transaction.orderId().toString());
-
-        return response;
-    }
-
-    private JSONObject createFailureResponse(String reason) {
-        JSONObject response = new JSONObject();
-        response.put("success", false);
-        response.put("reason", reason);
-        return response;
+        return new Response(true, ownerHandled, false, transaction.orderId().toString());
     }
 }
