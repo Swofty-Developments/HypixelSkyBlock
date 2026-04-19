@@ -30,8 +30,7 @@ public class ShopManager {
         DatapointBedWarsHotbar.HotbarItemType.BLOCKS);
     private final ShopItem LADDER = new BasicItem("ladder", "Ladder", "Useful to save cats stuck in trees.", 8, 8, Currency.IRON, Material.LADDER,
         DatapointBedWarsHotbar.HotbarItemType.BLOCKS);
-    private final ShopItem PLANKS = new BasicItem("wood", "Wood", "Good block to defend your bed.\nStrong against pickaxes.", 4, 16, Currency.GOLD, Material.OAK_PLANKS,
-        DatapointBedWarsHotbar.HotbarItemType.BLOCKS);
+    private final ShopItem PLANKS = new WoodShopItem();
     private final ShopItem STONE_SWORD = new ReplaceAdderItem("stone_sword", "Stone Sword", "", 10, Currency.IRON, Material.STONE_SWORD,
         DatapointBedWarsHotbar.HotbarItemType.MELEE);
     private final ShopItem IRON_SWORD = new ReplaceAdderItem("iron_sword", "Iron Sword", "", 7, Currency.GOLD, Material.IRON_SWORD,

@@ -266,7 +266,7 @@ public class StringUtility {
 	}
 
 	public static String getAuctionSetupFormattedTime(long millis) {
-		return formatTimeLeft(millis).replaceAll(" ", "")
+		return formatTimeLeft(millis).replace(" ", "")
 				.replaceAll("s$", "");
 	}
 

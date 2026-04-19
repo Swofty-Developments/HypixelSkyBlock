@@ -16,6 +16,7 @@ import net.swofty.type.bedwarslobby.parkour.BedWarsLobbyParkour;
 import net.swofty.type.bedwarslobby.util.BedWarsLobbyMap;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -76,6 +77,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        BedWarsCollectibleCatalog.initialize();
         BedWarsLobbyScoreboard.start();
         bedWarsLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
 

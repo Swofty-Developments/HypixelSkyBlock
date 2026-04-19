@@ -12,7 +12,7 @@ public class NPCMainLobby extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§e§lCLICK", "§e§lCLICK"};
+                return new String[]{"§e§lCLICK", "§bMain Lobby"};
             }
 
             @Override

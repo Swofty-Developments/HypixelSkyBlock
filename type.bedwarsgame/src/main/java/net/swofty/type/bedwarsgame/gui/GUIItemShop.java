@@ -260,6 +260,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
         }
 
         boolean hasEnough = hasPlayerEnoughCurrency(game, player, shopItem);
+        ItemStack displayItem = shopItem.getDisplay(player);
         List<String> lore = new ArrayList<>();
         if (quickBuyEditor != null) {
             lore.add("§eClick to replace!");
@@ -281,7 +282,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
                 lore.add("§cYou don't have enough " + shopItem.getCurrency().getName() + "!");
             } else if (!shopItem.isOwned(player)) {
                 lore.add("§aUNLOCKED");
-            } else if (hasBetterItem(player, shopItem.getDisplay().material())) {
+            } else if (hasBetterItem(player, displayItem.material())) {
                 lore.add("§cYou already have a better item!");
             } else {
                 lore.add("§eClick to buy!");
@@ -293,7 +294,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
                 : hasEnough && shopItem.isOwned(player) ? Component.text("§a" + shopItem.getName()) : Component.text("§c" + shopItem.getName());
 
         return ItemStackCreator.updateLore(
-                shopItem.getDisplay().builder().set(DataComponents.CUSTOM_NAME, name),
+            displayItem.builder().set(DataComponents.CUSTOM_NAME, name),
                 lore
         );
     }
@@ -374,7 +375,7 @@ public class GUIItemShop implements StatefulView<GUIItemShop.State> {
             return;
         }
 
-        if (hasBetterItem(player, shopItem.getDisplay().material())) {
+        if (hasBetterItem(player, shopItem.getDisplay(player).material())) {
             player.sendMessage("§cYou already have a better item!");
             return;
         }

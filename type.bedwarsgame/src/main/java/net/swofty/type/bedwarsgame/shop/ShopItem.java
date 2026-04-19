@@ -57,6 +57,10 @@ public abstract class ShopItem {
      */
     public abstract void onPurchase(BedWarsPlayer player);
 
+    public ItemStack getDisplay(BedWarsPlayer player) {
+        return display;
+    }
+
     public boolean isOwned(Player player) {
         return true;
     }

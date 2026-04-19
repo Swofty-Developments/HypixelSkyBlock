@@ -46,6 +46,7 @@ import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
+import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -199,6 +200,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
+        BedWarsCollectibleCatalog.initialize();
         gson = new GsonBuilder().create();
         instanceManager = MinecraftServer.getInstanceManager();
         fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(0.9f).build());

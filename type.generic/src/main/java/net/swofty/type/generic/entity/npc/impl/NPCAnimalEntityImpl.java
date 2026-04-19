@@ -57,14 +57,6 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
         PlayerHolograms.removeExternalPlayerHologram(holo);
     }
 
-    /**
-     * Clears the cache for a player, is only run on quit, {@see QuitAction.java}
-     * @param player The player to clear the cache for
-     */
-    public void clearCache(HypixelPlayer player) {
-        inRangeOf.remove(player);
-    }
-
     @Override
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
