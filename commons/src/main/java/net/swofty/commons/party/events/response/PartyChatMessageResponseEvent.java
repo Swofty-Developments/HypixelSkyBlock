@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -12,7 +14,8 @@ public class PartyChatMessageResponseEvent extends PartyResponseEvent {
     private final String message;
     private final FullParty party;
 
-    public PartyChatMessageResponseEvent(FullParty party, UUID player, String message) {
+    @JsonCreator
+    public PartyChatMessageResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("player") UUID player, @JsonProperty("message") String message) {
         super(party);
 
         this.player = player;

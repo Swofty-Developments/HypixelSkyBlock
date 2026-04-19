@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -13,7 +15,8 @@ public class FriendRequestsListEvent extends FriendEvent {
     private final UUID player;
     private final int page;
 
-    public FriendRequestsListEvent(UUID player, int page) {
+    @JsonCreator
+    public FriendRequestsListEvent(@JsonProperty("player") UUID player, @JsonProperty("page") int page) {
         super();
         this.player = player;
         this.page = page;

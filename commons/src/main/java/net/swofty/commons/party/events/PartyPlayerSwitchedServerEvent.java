@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -10,7 +12,8 @@ import java.util.UUID;
 public class PartyPlayerSwitchedServerEvent extends PartyEvent {
     private final UUID mover;
 
-    public PartyPlayerSwitchedServerEvent(UUID mover) {
+    @JsonCreator
+    public PartyPlayerSwitchedServerEvent(@JsonProperty("mover") UUID mover) {
         super(null);
         this.mover = mover;
     }

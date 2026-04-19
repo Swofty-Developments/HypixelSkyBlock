@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -10,7 +12,8 @@ import java.util.UUID;
 public class PartyWarpResponseEvent extends PartyResponseEvent {
     private final UUID warper;
 
-    public PartyWarpResponseEvent(FullParty party, UUID warper) {
+    @JsonCreator
+    public PartyWarpResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("warper") UUID warper) {
         super(party);
         this.warper = warper;
     }

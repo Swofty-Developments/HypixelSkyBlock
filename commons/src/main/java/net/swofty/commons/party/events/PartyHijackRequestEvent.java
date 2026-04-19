@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -11,7 +13,8 @@ public class PartyHijackRequestEvent extends PartyEvent {
     private final UUID hijacker;
     private final UUID target;
 
-    public PartyHijackRequestEvent(UUID hijacker, UUID target) {
+    @JsonCreator
+    public PartyHijackRequestEvent(@JsonProperty("hijacker") UUID hijacker, @JsonProperty("target") UUID target) {
         super(null);
         this.hijacker = hijacker;
         this.target = target;

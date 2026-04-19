@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -13,7 +15,8 @@ public class FriendToggleBestRequestEvent extends FriendEvent {
     private final UUID player;
     private final UUID target;
 
-    public FriendToggleBestRequestEvent(UUID player, UUID target) {
+    @JsonCreator
+    public FriendToggleBestRequestEvent(@JsonProperty("player") UUID player, @JsonProperty("target") UUID target) {
         super();
         this.player = player;
         this.target = target;

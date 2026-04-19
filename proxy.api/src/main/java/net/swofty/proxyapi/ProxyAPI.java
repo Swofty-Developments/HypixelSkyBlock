@@ -1,13 +1,12 @@
 package net.swofty.proxyapi;
 
+import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.ServicePushProtocol;
 import net.swofty.commons.redis.RedisEnvelope;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.UUID;
 
@@ -21,24 +20,23 @@ public class ProxyAPI {
         RedisAPI.getInstance().setFilterId(serverUUID.toString());
     }
 
-    public void registerFromProxyHandler(ProxyToClient handler) {
-        RedisAPI.getInstance().registerChannel(handler.getChannel().getChannelName(), (event) -> {
+    public <T, R> void registerTypedProxyHandler(TypedProxyHandler<T, R> handler) {
+        ProtocolObject<T, R> protocol = handler.getProtocol();
+
+        RedisAPI.getInstance().registerChannel(protocol.channel(), (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            UUID request = UUID.fromString(envelope.id());
-            JSONObject json = new JSONObject(envelope.payload());
+            String rawMessage = envelope.payload();
 
-            JSONObject response = handler.onMessage(json);
+            T typedMessage = protocol.translateFromString(rawMessage);
+            R response = handler.onMessage(typedMessage);
 
-            if (!handler.getChannel().matchesRequirementsServerSide(response)) {
-                Logger.error("Handler " + handler.getClass().getName());
-                throw new RuntimeException("Message does not match requirements for server side");
-            }
+            String serializedResponse = protocol.translateReturnToString(response);
 
             RedisAPI.getInstance().publishMessage(
                     "proxy",
-                    ChannelRegistry.getFromName(handler.getChannel().getChannelName()),
-                    new RedisEnvelope(envelope.id(), serverUUID.toString(), response.toString()).serialize());
+                    ChannelRegistry.getFromName(protocol.channel()),
+                    new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
         });
     }
 
@@ -50,7 +48,6 @@ public class ProxyAPI {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
             String serviceId = envelope.from();
-            UUID requestId = UUID.fromString(envelope.id());
             String rawMessage = envelope.payload();
 
             Thread.startVirtualThread(() -> {
@@ -70,7 +67,6 @@ public class ProxyAPI {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
             String serviceId = envelope.from();
-            UUID requestId = UUID.fromString(envelope.id());
             String rawMessage = envelope.payload();
 
             Thread.startVirtualThread(() -> {

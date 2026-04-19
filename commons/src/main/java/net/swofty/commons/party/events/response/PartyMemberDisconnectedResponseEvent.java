@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -11,7 +13,8 @@ public class PartyMemberDisconnectedResponseEvent extends PartyResponseEvent {
     private final UUID disconnectedPlayer;
     private final long timeoutSeconds;
 
-    public PartyMemberDisconnectedResponseEvent(FullParty party, UUID disconnectedPlayer, long timeoutSeconds) {
+    @JsonCreator
+    public PartyMemberDisconnectedResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("disconnectedPlayer") UUID disconnectedPlayer, @JsonProperty("timeoutSeconds") long timeoutSeconds) {
         super(party);
         this.disconnectedPlayer = disconnectedPlayer;
         this.timeoutSeconds = timeoutSeconds;

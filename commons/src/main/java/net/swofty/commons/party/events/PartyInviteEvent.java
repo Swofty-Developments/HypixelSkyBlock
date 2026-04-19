@@ -1,12 +1,15 @@
 package net.swofty.commons.party.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
 public class PartyInviteEvent extends PartyEvent {
-    public PartyInviteEvent(PendingParty party) {
+    @JsonCreator
+    public PartyInviteEvent(@JsonProperty("party") PendingParty party) {
         super(party);
     }
 

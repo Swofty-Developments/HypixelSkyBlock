@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -12,7 +14,8 @@ public class PartyDisbandResponseEvent extends PartyResponseEvent {
     private final String reason;
     private final FullParty party;
 
-    public PartyDisbandResponseEvent(FullParty party, UUID disbander, String reason) {
+    @JsonCreator
+    public PartyDisbandResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("disbander") UUID disbander, @JsonProperty("reason") String reason) {
         super(party);
         this.disbander = disbander;
         this.reason = reason;

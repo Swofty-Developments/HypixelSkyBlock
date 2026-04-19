@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -11,7 +13,8 @@ public class PartyChatMessageEvent extends PartyEvent {
     private final UUID player;
     private final String message;
 
-    public PartyChatMessageEvent(UUID player, String message) {
+    @JsonCreator
+    public PartyChatMessageEvent(@JsonProperty("player") UUID player, @JsonProperty("message") String message) {
         super(null);
         this.player = player;
         this.message = message;

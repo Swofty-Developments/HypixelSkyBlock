@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.Party;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.party.PendingParty;
@@ -12,7 +14,8 @@ public class PartyInviteExpiredResponseEvent extends PartyResponseEvent {
     private final UUID inviter;
     private final UUID invitee;
 
-    public PartyInviteExpiredResponseEvent(Party party, UUID inviter, UUID invitee) {
+    @JsonCreator
+    public PartyInviteExpiredResponseEvent(@JsonProperty("party") Party party, @JsonProperty("inviter") UUID inviter, @JsonProperty("invitee") UUID invitee) {
         super(party);
         this.inviter = inviter;
         this.invitee = invitee;

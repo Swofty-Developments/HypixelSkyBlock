@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
@@ -14,7 +16,8 @@ public class PartyMemberJoinResponseEvent extends PartyResponseEvent {
     private final UUID inviter;
     private final UUID joiner;
 
-    public PartyMemberJoinResponseEvent(FullParty party, UUID inviter, UUID joiner) {
+    @JsonCreator
+    public PartyMemberJoinResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("inviter") UUID inviter, @JsonProperty("joiner") UUID joiner) {
         super(party);
 
         this.party = party;

@@ -1,7 +1,11 @@
 package net.swofty.commons.party;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.NonNull;
+import net.swofty.commons.party.events.*;
+import net.swofty.commons.party.events.response.*;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.Arrays;
@@ -9,6 +13,24 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PartyAcceptInviteEvent.class),
+        @JsonSubTypes.Type(value = PartyChatMessageEvent.class),
+        @JsonSubTypes.Type(value = PartyDemoteRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyDisbandRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyHijackRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyInviteEvent.class),
+        @JsonSubTypes.Type(value = PartyKickRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyLeaveRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyPlayerDisconnectEvent.class),
+        @JsonSubTypes.Type(value = PartyPlayerRejoinEvent.class),
+        @JsonSubTypes.Type(value = PartyPlayerSwitchedServerEvent.class),
+        @JsonSubTypes.Type(value = PartyPromoteRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyTransferRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyWarpRequestEvent.class),
+        @JsonSubTypes.Type(value = PartyResponseEvent.class)
+})
 public abstract class PartyEvent {
     private final Party party;
 

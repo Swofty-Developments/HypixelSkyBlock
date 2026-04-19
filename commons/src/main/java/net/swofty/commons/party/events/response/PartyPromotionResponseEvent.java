@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -12,7 +14,8 @@ public class PartyPromotionResponseEvent extends PartyResponseEvent {
     private final UUID promoted;
     private final FullParty.Role newRole;
 
-    public PartyPromotionResponseEvent(FullParty party, UUID promoter, UUID promoted, FullParty.Role newRole) {
+    @JsonCreator
+    public PartyPromotionResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("promoter") UUID promoter, @JsonProperty("promoted") UUID promoted, @JsonProperty("newRole") FullParty.Role newRole) {
         super(party);
         this.promoter = promoter;
         this.promoted = promoted;

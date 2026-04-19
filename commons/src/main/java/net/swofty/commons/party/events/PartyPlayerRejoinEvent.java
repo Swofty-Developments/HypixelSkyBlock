@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -10,7 +12,8 @@ import java.util.UUID;
 public class PartyPlayerRejoinEvent extends PartyEvent {
     private final UUID rejoinedPlayer;
 
-    public PartyPlayerRejoinEvent(UUID rejoinedPlayer) {
+    @JsonCreator
+    public PartyPlayerRejoinEvent(@JsonProperty("rejoinedPlayer") UUID rejoinedPlayer) {
         super(null);
         this.rejoinedPlayer = rejoinedPlayer;
     }

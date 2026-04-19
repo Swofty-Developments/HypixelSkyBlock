@@ -1,20 +1,28 @@
 package net.swofty.velocity.redis.listeners;
 
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.to.ProxyIsOnlineProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
-@ChannelListener(channel = ToProxyChannels.PROXY_IS_ONLINE)
-public class ListenerProxyOnline extends RedisListener {
+@ChannelListener
+public class ListenerProxyOnline extends RedisListener<
+        ProxyIsOnlineProtocol.Request,
+        ProxyIsOnlineProtocol.Response> {
+
     @Override
-    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
+    public ProtocolObject<ProxyIsOnlineProtocol.Request, ProxyIsOnlineProtocol.Response> getProtocol() {
+        return new ProxyIsOnlineProtocol();
+    }
+
+    @Override
+    public ProxyIsOnlineProtocol.Response receivedMessage(ProxyIsOnlineProtocol.Request message, UUID serverUUID) {
         if (GameManager.getFromUUID(serverUUID) == null) {
-            return new JSONObject().put("online", false);
+            return new ProxyIsOnlineProtocol.Response(false);
         }
-        return new JSONObject().put("online", true);
+        return new ProxyIsOnlineProtocol.Response(true);
     }
 }

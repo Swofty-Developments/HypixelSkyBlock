@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
 import net.swofty.commons.friend.FriendSettingType;
@@ -14,7 +16,8 @@ public class FriendToggleSettingRequestEvent extends FriendEvent {
     private final UUID player;
     private final FriendSettingType settingType;
 
-    public FriendToggleSettingRequestEvent(UUID player, FriendSettingType settingType) {
+    @JsonCreator
+    public FriendToggleSettingRequestEvent(@JsonProperty("player") UUID player, @JsonProperty("settingType") FriendSettingType settingType) {
         super();
         this.player = player;
         this.settingType = settingType;

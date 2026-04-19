@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyEvent;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -11,7 +13,8 @@ public class PartyKickRequestEvent extends PartyEvent {
     private final UUID kicker;
     private final UUID target;
 
-    public PartyKickRequestEvent(UUID kicker, UUID target) {
+    @JsonCreator
+    public PartyKickRequestEvent(@JsonProperty("kicker") UUID kicker, @JsonProperty("target") UUID target) {
         super(null);
         this.kicker = kicker;
         this.target = target;
