@@ -2,12 +2,11 @@ package net.swofty.type.lobby;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.swofty.commons.party.FullParty;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 /**
  * Utility class for validating whether a player can join a game queue.
@@ -63,11 +62,11 @@ public final class GameQueueValidator {
 
         for (FullParty.Member member : party.getMembers()) {
             if (!member.isJoined()) {
-                player.sendTranslated("mcp_miscellaneous.364", Map.of(
-                    "gameType", requirements.gameTypeDisplayName(),
-                    "map", requirements.modeDisplayName(),
-                    "player", HypixelPlayer.getDisplayName(member.getUuid())
-                ));
+                player.sendTranslated("mcp_miscellaneous.364", Argument.string(
+                        "game_type", requirements.gameTypeDisplayName()),
+                    Argument.string("map", requirements.modeDisplayName()),
+                    Argument.string("player", HypixelPlayer.getDisplayName(member.getUuid())
+                    ));
                 return false;
             }
         }
@@ -75,16 +74,16 @@ public final class GameQueueValidator {
         int partySize = party.getMembers().size();
         if (partySize > requirements.maxPartySize()) {
             if (requirements.maxPartySize() == 1) {
-                player.sendTranslated("mcp_miscellaneous.468", Map.of(
-                    "gameType", requirements.gameTypeDisplayName(),
-                    "mode", requirements.modeDisplayName()
-                ));
+                player.sendTranslated("mcp_miscellaneous.468", Argument.string(
+                        "game_type", requirements.gameTypeDisplayName()),
+                    Argument.string("mode", requirements.modeDisplayName())
+                );
             } else {
-                player.sendTranslated("mcp_miscellaneous.469", Map.of(
-                    "gameType", requirements.gameTypeDisplayName(),
-                    "mode", requirements.modeDisplayName(),
-                    "number", String.valueOf(requirements.maxPartySize())
-                ));
+                player.sendTranslated("mcp_miscellaneous.469", Argument.string(
+                        "game_type", requirements.gameTypeDisplayName()),
+                    Argument.string("mode", requirements.modeDisplayName()),
+                    Argument.string("number", String.valueOf(requirements.maxPartySize())
+                    ));
             }
             return false;
         }

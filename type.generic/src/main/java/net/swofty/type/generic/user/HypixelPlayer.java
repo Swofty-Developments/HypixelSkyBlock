@@ -3,6 +3,7 @@ package net.swofty.type.generic.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
@@ -22,7 +23,6 @@ import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
 import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.View;
@@ -187,7 +187,7 @@ public class HypixelPlayer extends Player {
 		sendMessage(I18n.t(key));
 	}
 
-	public void sendTranslated(String key, Component... placeholders) {
+	public void sendTranslated(String key, ComponentLike... placeholders) {
 		sendMessage(I18n.t(key, placeholders));
 	}
 

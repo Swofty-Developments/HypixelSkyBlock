@@ -5,10 +5,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.commons.VersionConst;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -26,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class BedWarsGameScoreboard {
     private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -49,6 +44,7 @@ public class BedWarsGameScoreboard {
                     continue;
                 }
 
+
                 HypixelDataHandler dataHandler = player.getDataHandler();
                 BedWarsDataHandler bwDataHandler = BedWarsDataHandler.getUser(player);
 
@@ -58,14 +54,14 @@ public class BedWarsGameScoreboard {
 
                 String tag = "";
                 if (game.getGameType().isDream()) {
-                    tag = "§8[D]";
+                    tag = " §8[D]";
                 }
 
-                String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
+                String date = new SimpleDateFormat("MM/dd/yyyy", player.getLocale()).format(new Date());
 
-                List<String> lines = new ArrayList<>();
-                lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
-                lines.add("§7 ");
+                List<Component> lines = new ArrayList<>();
+                lines.add(I18n.t("scoreboard.bedwars_game.date_line", Component.text(date), Component.text(HypixelConst.getServerName()), Component.text(tag)));
+                lines.add(Component.text("§7 "));
 
                 if (game.getState().isWaiting()) {
                     lines.add(I18n.t("scoreboard.bedwars_game.map_line", Component.text(game.getMapEntry().getName())));
@@ -76,13 +72,13 @@ public class BedWarsGameScoreboard {
 
                     if (game.getState() == GameState.COUNTDOWN) {
                         long seconds = game.getCountdown().getRemainingSeconds();
-                        lines.add("§fStarting in §a" + seconds + "s");
+                        lines.add(Component.text("§fStarting in §a" + seconds + "s"));
                     } else {
-                        lines.add("§fWaiting...");
+                        lines.add(Component.text("§fWaiting..."));
                     }
-                    lines.add("§7 ");
+                    lines.add(Component.text("§7 "));
                     lines.add(I18n.t("scoreboard.bedwars_game.mode_line", Component.text(game.getGameType().getDisplayName())));
-                    lines.add("§fVersion: §7v" + VersionConst.BED_WARS_VERSION);
+                    lines.add(Component.text("§fVersion: §7v" + VersionConst.BED_WARS_VERSION));
                 } else {
                     BedWarsGameEventManager.GamePhase nextGamePhase = game.getGameEventManager().getCurrentPhase().next();
                     String eventName = nextGamePhase != null
@@ -122,7 +118,7 @@ public class BedWarsGameScoreboard {
                             .map(t -> t.getTeamKey() == teamKey)
                             .orElse(false);
                         String isYourTeamSuffix = isYourTeam ? " §7YOU" : "";
-                        lines.add(String.format("%s%s §f%s %s%s", teamKey.chatColor(), teamInitial, teamName, bedStatus, isYourTeamSuffix));
+                        lines.add(Component.text(String.format("%s%s §f%s %s%s", teamKey.chatColor(), teamInitial, teamName, bedStatus, isYourTeamSuffix)));
                     }
                 }
 
@@ -130,11 +126,11 @@ public class BedWarsGameScoreboard {
                 lines.add(I18n.t("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, Component.text(getSidebarName(prototypeName, l)));
+                    scoreboard.createScoreboard(player, getSidebarName(prototypeName));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, Component.text(getSidebarName(prototypeName, l)));
+                scoreboard.updateTitle(player, getSidebarName(prototypeName));
 			}
 			return TaskSchedule.tick(4);
 		});
@@ -144,21 +140,21 @@ public class BedWarsGameScoreboard {
         scoreboard.removeScoreboard(player);
     }
 
-	private static String getSidebarName(int counter, Locale locale) {
-		String baseText = I18n.string("scoreboard.bedwars_game.title_base", locale);
+    private static Component getSidebarName(int counter) {
+        String baseText = "BED WARS";
 		String[] colors = {"§f§l", "§6§l", "§e§l"};
 		String endColor = "§a§l";
 
         if (counter > 0 && counter <= 8) {
-            return colors[0] + baseText.substring(0, counter - 1) +
+            return Component.text(colors[0] + baseText.substring(0, counter - 1) +
                 colors[1] + baseText.charAt(counter - 1) +
                 colors[2] + baseText.substring(counter) +
-                endColor;
+                endColor);
         } else if ((counter >= 9 && counter <= 19) ||
             (counter >= 25 && counter <= 29)) {
-            return colors[0] + baseText + endColor;
+            return Component.text(colors[0] + baseText + endColor);
         } else {
-            return colors[2] + baseText + endColor;
+            return Component.text(colors[2] + baseText + endColor);
         }
     }
 }

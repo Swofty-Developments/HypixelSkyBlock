@@ -56,7 +56,7 @@ public final class CollectibleEvaluator {
 
     private static String defaultReason(CollectibleUnlockRequirement requirement, String fallback) {
         if (requirement.customDisplayText() != null && !requirement.customDisplayText().isBlank()) {
-            return requirement.customDisplayText();
+            return "§c" + requirement.customDisplayText();
         }
         if (requirement.method() == CollectibleUnlockMethod.CURRENCY
             && requirement.cost() != null
