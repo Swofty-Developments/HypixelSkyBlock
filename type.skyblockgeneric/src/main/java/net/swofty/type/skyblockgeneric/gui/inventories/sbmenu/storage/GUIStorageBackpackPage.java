@@ -6,16 +6,21 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBackpacks;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.BackpackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIStorageBackpackPage extends StatelessView {
@@ -55,7 +60,7 @@ public class GUIStorageBackpackPage extends StatelessView {
         layout.slot(1, (s, c) -> {
                     java.util.Locale l = c.player().getLocale();
                     return ItemStackCreator.getStack(I18n.string("gui_sbmenu.storage.backpack_page.go_back", l), Material.ARROW, 1,
-                        I18n.lore("gui_sbmenu.storage.backpack_page.go_back.lore", l));
+                        I18n.iterable("gui_sbmenu.storage.backpack_page.go_back.lore"));
                 },
                 (click, c) -> {
                     saveItems((SkyBlockPlayer) c.player(), c);

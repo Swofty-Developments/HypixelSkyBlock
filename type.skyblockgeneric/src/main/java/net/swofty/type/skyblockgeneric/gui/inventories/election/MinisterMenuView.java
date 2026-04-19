@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.election;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
@@ -19,7 +20,6 @@ import net.swofty.type.skyblockgeneric.elections.SkyBlockMayor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class MinisterMenuView extends StatelessView {
 
@@ -31,7 +31,7 @@ public class MinisterMenuView extends StatelessView {
         }
         return ViewConfiguration.withString(
                 (s, ctx) -> I18n.string("gui_election.minister.title", ctx.player().getLocale(),
-                        Map.of("name", minister.getDisplayName())),
+                    Component.text(minister.getDisplayName())),
                 InventoryType.CHEST_4_ROW);
     }
 
@@ -92,7 +92,7 @@ public class MinisterMenuView extends StatelessView {
             String mayorName = currentMayor != null ? currentMayor.getDisplayName() : "???";
             List<String> resultLore = new ArrayList<>();
             resultLore.add(I18n.string("gui_election.mayor.results_year", l,
-                    Map.of("year", String.valueOf(lastResult.getYear()))));
+                Component.text(String.valueOf(lastResult.getYear()))));
             resultLore.add("");
 
             List<ElectionData.CandidateResult> results = lastResult.getCandidateResults();
@@ -109,7 +109,7 @@ public class MinisterMenuView extends StatelessView {
 
             resultLore.add("");
             resultLore.add(I18n.string("gui_election.mayor.results_footer_1", l));
-            resultLore.add(I18n.string("gui_election.mayor.results_footer_2", l, Map.of("name", mayorName)));
+            resultLore.add(I18n.string("gui_election.mayor.results_footer_2", l, Component.text(mayorName)));
             resultLore.add(I18n.string("gui_election.mayor.results_footer_3", l));
 
             return ItemStackCreator.getStack(I18n.string("gui_election.mayor.results_title", l),

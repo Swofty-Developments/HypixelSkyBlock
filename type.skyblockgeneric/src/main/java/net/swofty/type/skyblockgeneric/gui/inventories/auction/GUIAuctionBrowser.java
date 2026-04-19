@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @Setter
 public class GUIAuctionBrowser extends HypixelInventoryGUI implements RefreshingGUI {
@@ -58,7 +57,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     private List<AuctionItem> itemCache = new ArrayList<>();
 
     public GUIAuctionBrowser() {
-        super(I18n.string("gui_auction.browser.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_auction.browser.title"), InventoryType.CHEST_6_ROW);
 
         Thread.startVirtualThread(this::updateItemsCache);
     }
@@ -90,7 +89,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     private void setItems() {
         fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), ""));
         set(GUIClickableItem.getGoBackItem(49, new GUIAuctionHouse()));
-        getInventory().setTitle(Component.text(I18n.string("gui_auction.browser.title_with_category", getPlayer().getLocale(), Map.of("category", StringUtility.toNormalCase(category.name())))));
+        getInventory().setTitle(I18n.t("gui_auction.browser.title_with_category",
+            Component.text(StringUtility.toNormalCase(category.name()))));
 
         set(new GUIClickableItem(50) {
             @Override
@@ -277,7 +277,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     @Override
     public void refreshItems(HypixelPlayer player) {
         if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.browser.offline_message", player.getLocale()));
+            player.sendMessage(I18n.t("gui_auction.browser.offline_message"));
             player.closeInventory();
         }
 

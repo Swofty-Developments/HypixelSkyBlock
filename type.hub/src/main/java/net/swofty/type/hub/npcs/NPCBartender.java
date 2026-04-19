@@ -10,8 +10,6 @@ import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.stream.Stream;
-
 public class NPCBartender extends HypixelNPC {
 
     public NPCBartender() {
@@ -69,9 +67,9 @@ public class NPCBartender extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello", player),
-                DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk", player),
-                DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete", player)
+            DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello"),
+            DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk"),
+            DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete")
         };
     }
 }

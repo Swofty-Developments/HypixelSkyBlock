@@ -81,7 +81,6 @@ import net.swofty.type.skyblockgeneric.mission.MissionRepeater;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.museum.MuseumableItemCategory;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
-import net.swofty.type.skyblockgeneric.redis.RedisAuthenticate;
 import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
@@ -544,11 +543,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             if (RedisOriginServer.origin.containsKey(uuid)) {
                 player.setOriginServer(RedisOriginServer.origin.get(uuid));
                 RedisOriginServer.origin.remove(uuid);
-            }
-
-            if (RedisAuthenticate.toAuthenticate.contains(uuid)) {
-                player.setHasAuthenticated(false);
-                RedisAuthenticate.toAuthenticate.remove(uuid);
             }
 
             Logger.info("Received new player: " + username + " (" + uuid + ")");

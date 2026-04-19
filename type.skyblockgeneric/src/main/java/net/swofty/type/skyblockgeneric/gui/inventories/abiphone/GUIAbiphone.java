@@ -24,7 +24,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIAbiphone extends HypixelPaginatedGUI<AbiphoneNPC> {
 	@Setter
@@ -66,16 +65,16 @@ public class GUIAbiphone extends HypixelPaginatedGUI<AbiphoneNPC> {
 		set(new GUIItem(50) {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return TranslatableItemStackCreator.getStack(player, "gui_abiphone.sort_button", Material.HOPPER, 1, "gui_abiphone.sort_button.lore");
+				return TranslatableItemStackCreator.getStack("gui_abiphone.sort_button", Material.HOPPER, 1, "gui_abiphone.sort_button.lore");
 			}
 		});
 		set(new GUIItem(51) {
 			@Override
 			public ItemStack.Builder getItem(HypixelPlayer player) {
-				return TranslatableItemStackCreator.getStack(player, "gui_abiphone.contacts_directory", Material.BOOK, 1,
-						"gui_abiphone.contacts_directory.lore", Map.of(
-								"contact_count", String.valueOf(contacts.size()),
-								"total_contacts", String.valueOf(AbiphoneRegistry.getRegisteredContactNPCs().size())));
+				return TranslatableItemStackCreator.getStack("gui_abiphone.contacts_directory", Material.BOOK, 1,
+					"gui_abiphone.contacts_directory.lore",
+					Component.text(String.valueOf(contacts.size())),
+					Component.text(String.valueOf(AbiphoneRegistry.getRegisteredContactNPCs().size())));
 			}
 		});
 
@@ -97,15 +96,14 @@ public class GUIAbiphone extends HypixelPaginatedGUI<AbiphoneNPC> {
 		return new GUIClickableItem(slot) {
 			@Override
 			public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-				Locale l = player.getLocale();
 				Click click = e.getClick();
 				if (click instanceof Click.Left) {
 					player.closeInventory();
-					player.sendMessage(Component.text(I18n.string("gui_abiphone.ring_1", l)));
+					player.sendMessage(I18n.t("gui_abiphone.ring_1"));
 					MinecraftServer.getSchedulerManager().buildTask(() -> {
-						player.sendMessage(Component.text(I18n.string("gui_abiphone.ring_2", l)));
+						player.sendMessage(I18n.t("gui_abiphone.ring_2"));
 						MinecraftServer.getSchedulerManager().buildTask(() -> {
-							player.sendMessage(Component.text(I18n.string("gui_abiphone.ring_3", l)));
+							player.sendMessage(I18n.t("gui_abiphone.ring_3"));
 							MinecraftServer.getSchedulerManager().buildTask(() -> {
 								npc.onCall(player);
 							}).delay(TaskSchedule.seconds(1)).schedule();
@@ -151,4 +149,3 @@ public class GUIAbiphone extends HypixelPaginatedGUI<AbiphoneNPC> {
 		DO_NOT_DISTURB_FIRST
 	}
 }
-

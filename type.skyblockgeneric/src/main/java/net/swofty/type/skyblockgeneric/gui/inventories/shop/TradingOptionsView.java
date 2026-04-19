@@ -8,7 +8,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.View;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
@@ -24,7 +23,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public final class TradingOptionsView implements View<TradingOptionsView.State> {
 
@@ -62,7 +60,7 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
         lore.addAll(totalPrice.getGUIDisplay());
         lore.add("");
         lore.add(I18n.string("gui_shop.trading_options.stock_label", l));
-        lore.add(I18n.string("gui_shop.trading_options.stock_remaining", l, Map.of("count", String.valueOf(player.getShoppingData().getStock(item.getItem().toUnderstandable())))));
+        lore.add(I18n.string("gui_shop.trading_options.stock_remaining", l, Component.text(String.valueOf(player.getShoppingData().getStock(item.getItem().toUnderstandable())))));
         lore.add("");
         lore.add(I18n.string("gui_shop.trading_options.click_to_purchase", l));
 
@@ -87,7 +85,7 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
 
         ShopPrice totalPrice = state.stackPrice.multiply(amount);
         if (!totalPrice.canAfford(player)) {
-            player.sendMessage(I18n.string("gui_shop.trading_options.not_enough", l, Map.of("currency", state.stackPrice.getNamePlural())));
+            player.sendMessage(I18n.string("gui_shop.trading_options.not_enough", l, Component.text(state.stackPrice.getNamePlural())));
             return;
         }
 

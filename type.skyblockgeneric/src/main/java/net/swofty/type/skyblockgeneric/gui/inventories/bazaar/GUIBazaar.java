@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -42,7 +43,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
     private final BazaarCategories category;
 
     public GUIBazaar(BazaarCategories category) {
-        super(I18n.string("gui_bazaar.main.title", Map.of("category", StringUtility.toNormalCase(category.name()))),
+        super(I18n.t("gui_bazaar.main.title", Component.text(StringUtility.toNormalCase(category.name()))),
                 InventoryType.CHEST_6_ROW);
         this.category = category;
 
@@ -59,7 +60,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.manage_orders_button",
+                return TranslatableItemStackCreator.getStack("gui_bazaar.main.manage_orders_button",
                         Material.BOOK, 1,
                         "gui_bazaar.main.manage_orders_button.lore");
             }
@@ -124,7 +125,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.loading", Material.GRAY_STAINED_GLASS_PANE, 1);
+                    return TranslatableItemStackCreator.getStack("gui_bazaar.main.loading", Material.GRAY_STAINED_GLASS_PANE, 1);
                 }
             });
         }
@@ -177,7 +178,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                         BazaarItemSet set = sets.get(i);
 
                         List<String> lore = new ArrayList<>();
-                        lore.add(I18n.string("gui_bazaar.main.item_set_products", l, Map.of("count", String.valueOf(set.items.size()))));
+                        lore.add(I18n.string("gui_bazaar.main.item_set_products", l, Component.text(String.valueOf(set.items.size()))));
                         lore.add(" ");
 
                         // Add price data for each item in the set
@@ -215,7 +216,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                                 @Override
                                 public ItemStack.Builder getItem(HypixelPlayer p) {
                                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                                    return TranslatableItemStackCreator.getStack(p, "gui_bazaar.main.error_loading", Material.BARRIER, 1,
+                                    return TranslatableItemStackCreator.getStack("gui_bazaar.main.error_loading", Material.BARRIER, 1,
                                             "gui_bazaar.main.error_loading.lore");
                                 }
                             });
@@ -288,7 +289,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
         SkyBlockPlayer player = (SkyBlockPlayer) p;
         player.getBazaarConnector().isOnline().thenAccept(online -> {
             if (!online) {
-                player.sendMessage(I18n.string("gui_bazaar.main.offline_message", player.getLocale()));
+                player.sendMessage(I18n.t("gui_bazaar.main.offline_message"));
                 player.closeInventory();
             } else {
                 player.getBazaarConnector().processAllPendingTransactions();

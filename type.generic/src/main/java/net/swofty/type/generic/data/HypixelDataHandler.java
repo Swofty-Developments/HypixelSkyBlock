@@ -210,6 +210,8 @@ public class HypixelDataHandler extends DataHandler {
         CHAT_TYPE("chat_type", DatapointChatType.class,
                 new DatapointChatType("chat_type", new DatapointChatType.ChatType(DatapointChatType.Chats.ALL))),
 
+        LOCALE("locale", DatapointLocale.class, new DatapointLocale("locale", new DatapointLocale.LocaleType(DatapointLocale.SupportedLocale.ENGLISH))),
+
         TOGGLES("toggles", DatapointToggles.class, new DatapointToggles("toggles")),
 
         GAMEMODE("gamemode", DatapointGamemode.class, new DatapointGamemode("gamemode", GameMode.SURVIVAL),
@@ -236,6 +238,7 @@ public class HypixelDataHandler extends DataHandler {
                     return null; // Don't update gamemode for non-SkyBlock servers
                 }),
 
+        // combine these for a HypixelSkin? could use the same in tab then and other places
         SKIN_SIGNATURE("skin_signature",
                 DatapointString.class, new DatapointString("skin_signature", "null"),
                 (player, datapoint) -> {},

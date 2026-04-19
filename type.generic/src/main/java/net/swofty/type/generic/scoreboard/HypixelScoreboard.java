@@ -12,33 +12,33 @@ import java.util.UUID;
 
 public class HypixelScoreboard {
     private final Map<UUID, Sidebar> sidebarCache = new HashMap<>();
-    private final Map<UUID, List<String>> lineCache = new HashMap<>();
+    private final Map<UUID, List<Component>> lineCache = new HashMap<>();
 
     private static String lineId(int index) {
         return "line_" + index;
     }
 
-    public void createScoreboard(Player player, String title) {
+    public void createScoreboard(Player player, Component title) {
         if (sidebarCache.containsKey(player.getUuid())) return;
 
-        Sidebar sidebar = new Sidebar(Component.text(title));
+        Sidebar sidebar = new Sidebar(title);
         sidebar.addViewer(player);
         sidebarCache.put(player.getUuid(), sidebar);
         lineCache.put(player.getUuid(), new ArrayList<>());
     }
 
-    public void updateTitle(Player player, String title) {
+    public void updateTitle(Player player, Component title) {
         Sidebar sidebar = sidebarCache.get(player.getUuid());
         if (sidebar == null) return;
 
-        sidebar.setTitle(Component.text(title));
+        sidebar.setTitle(title);
     }
 
-    public void updateLines(Player player, List<String> lines) {
+    public void updateLines(Player player, List<Component> lines) {
         Sidebar sidebar = sidebarCache.get(player.getUuid());
         if (sidebar == null) return;
 
-        List<String> cached = lineCache.getOrDefault(player.getUuid(), new ArrayList<>());
+        List<Component> cached = lineCache.getOrDefault(player.getUuid(), new ArrayList<>());
         if (cached.equals(lines)) return;
 
         int oldCount = cached.size();
@@ -47,7 +47,7 @@ public class HypixelScoreboard {
 
         for (int i = 0; i < commonCount; i++) {
             if (!cached.get(i).equals(lines.get(i))) {
-                sidebar.updateLineContent(lineId(i), Component.text(lines.get(i)));
+                sidebar.updateLineContent(lineId(i), lines.get(i));
             }
             int oldScore = oldCount - 1 - i;
             int newScore = newCount - 1 - i;
@@ -59,7 +59,7 @@ public class HypixelScoreboard {
         for (int i = oldCount; i < newCount; i++) {
             sidebar.createLine(new Sidebar.ScoreboardLine(
                 lineId(i),
-                Component.text(lines.get(i)),
+                lines.get(i),
                 newCount - 1 - i,
                 Sidebar.NumberFormat.blank()
             ));

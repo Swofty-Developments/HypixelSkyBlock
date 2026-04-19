@@ -1,11 +1,16 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.levels.LevelsGuide;
@@ -14,7 +19,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUILevelsGuide extends StatelessView {
     private final LevelsGuide guide;
@@ -36,7 +40,7 @@ public class GUILevelsGuide extends StatelessView {
     @Override
     public ViewConfiguration<DefaultState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.levels.guide.title", ctx.player().getLocale(), Map.of("guide_name", StringUtility.toNormalCase(guide.name()))),
+            (state, ctx) -> I18n.string("gui_sbmenu.levels.guide.title", ctx.player().getLocale(), Component.text(StringUtility.toNormalCase(guide.name()))),
                 InventoryType.CHEST_6_ROW);
     }
 
@@ -51,7 +55,7 @@ public class GUILevelsGuide extends StatelessView {
         }
 
         // Guide info
-        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.guide.info", Material.REDSTONE_TORCH, 1,
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.levels.guide.info", Material.REDSTONE_TORCH, 1,
                 "gui_sbmenu.levels.guide.info.lore"));
 
         // Task items
@@ -66,7 +70,7 @@ public class GUILevelsGuide extends StatelessView {
                 List<String> lore = new ArrayList<>();
 
                 if (task.getCauses().size() > 1) {
-                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", l, Map.of("count", String.valueOf(task.getCauses().size()))));
+                    lore.add(I18n.string("gui_sbmenu.levels.guide.tasks", l, Component.text(String.valueOf(task.getCauses().size()))));
                     lore.add("");
                 }
 

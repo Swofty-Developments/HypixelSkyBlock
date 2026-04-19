@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
@@ -18,12 +20,10 @@ import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -189,6 +189,10 @@ public abstract class HypixelNPC {
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message) {
+        sendNPCMessage(player, Component.text(message));
+    }
+
+    public void sendNPCMessage(HypixelPlayer player, Component message) {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
@@ -198,7 +202,16 @@ public abstract class HypixelNPC {
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
-        player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
+        sendNPCMessage(player, Component.text(message), sound);
+    }
+
+    public void sendNPCMessage(HypixelPlayer player, Component message, Sound sound) {
+        player.sendMessage(Component.text()
+            .append(Component.text("[NPC] ", NamedTextColor.YELLOW))
+            .append(Component.text(getName(), NamedTextColor.YELLOW))
+            .append(Component.text(": ", NamedTextColor.WHITE))
+            .append(message)
+            .build());
         player.playSound(sound);
     }
 
@@ -266,43 +279,45 @@ public abstract class HypixelNPC {
     }
 
     @Builder
-    public record DialogueSet(String key, String[] lines, Sound sound) {
+    public record DialogueSet(String key, Component[] lines, Sound sound) {
         public static final DialogueSet[] EMPTY = new DialogueSet[0];
 
+        public static class DialogueSetBuilder {
+            public DialogueSetBuilder lines(Component[] lines) {
+                this.lines = lines;
+                return this;
+            }
+
+            public DialogueSetBuilder lines(String[] lines) {
+                if (lines == null) {
+                    this.lines = null;
+                    return this;
+                }
+
+                Component[] components = new Component[lines.length];
+                for (int i = 0; i < lines.length; i++) {
+                    components[i] = Component.text(lines[i]);
+                }
+                this.lines = components;
+                return this;
+            }
+        }
+
         public static DialogueSet ofTranslation(String key, String translationKey) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey), null);
+            return new DialogueSet(key, I18n.iterable(translationKey), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, Component... args) {
+            return new DialogueSet(key, I18n.iterable(translationKey, args), null);
         }
 
         public static DialogueSet ofTranslation(String key, String translationKey, Sound sound) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey), sound);
+            return new DialogueSet(key, I18n.iterable(translationKey), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), null);
+        public static DialogueSet ofTranslation(String key, String translationKey, Sound sound, Component... args) {
+            return new DialogueSet(key, I18n.iterable(translationKey, args), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders, Sound sound) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), sound);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player) {
-            Locale locale = player != null ? player.getLocale() : Locale.US;
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), null);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Sound sound) {
-            Locale locale = player != null ? player.getLocale() : Locale.US;
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale), sound);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders) {
-            Locale locale = player != null ? player.getLocale() : Locale.US;
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), null);
-        }
-
-        public static DialogueSet ofTranslation(String key, String translationKey, @Nullable HypixelPlayer player, Map<String, String> placeholders, Sound sound) {
-            Locale locale = player != null ? player.getLocale() : Locale.US;
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, locale, placeholders), sound);
-        }
     }
 }

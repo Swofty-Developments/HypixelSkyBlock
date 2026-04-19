@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.election;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
@@ -43,7 +44,7 @@ public class ElectionView extends StatelessView {
                     I18n.string("gui_election.view.no_election", l),
                     Material.BARRIER,
                     1,
-                    I18n.lore("gui_election.view.no_election.lore", l)
+                    I18n.iterable("gui_election.view.no_election.lore")
                 );
             });
             return;
@@ -88,14 +89,9 @@ public class ElectionView extends StatelessView {
                 Locale l = c.player().getLocale();
                 ElectionManager.castVote(c.player().getUuid(), candidateName);
                 c.player().sendMessage(I18n.string("gui_election.view.vote_divider", l));
-                c.player().sendMessage(I18n.string("gui_election.view.vote_cast", l, Map.of(
-                        "candidate", candidate.getColoredName(),
-                        "year", String.valueOf(data.getElectionYear()))));
+                c.player().sendMessage(I18n.string("gui_election.view.vote_cast", l, Component.text(candidate.getColoredName()), Component.text(String.valueOf(data.getElectionYear()))));
                 c.player().sendMessage("  " + I18n.string("gui_election.view.vote_fame", l));
-                c.player().sendMessage(I18n.string("gui_election.view.vote_result", l, Map.of(
-                        "candidate", candidate.getColoredName(),
-                        "percentage", pctStr,
-                        "votes", voteStr)));
+                c.player().sendMessage(I18n.string("gui_election.view.vote_result", l, Component.text(candidate.getColoredName()), Component.text(pctStr), Component.text(voteStr)));
                 c.player().sendMessage(I18n.string("gui_election.view.vote_divider", l));
                 c.replace(new ElectionViewStatsView());
             });
@@ -107,15 +103,13 @@ public class ElectionView extends StatelessView {
                                             String voteStr, String pctStr, boolean votedFor) {
         String color = candidate.getColor();
         List<String> lore = new ArrayList<>();
-        lore.add(I18n.string("gui_election.view.candidate.year", l, Map.of("year", String.valueOf(electionYear))));
+        lore.add(I18n.string("gui_election.view.candidate.year", l, Component.text(String.valueOf(electionYear))));
         lore.add("");
-        lore.add(I18n.string("gui_election.view.candidate.votes", l, Map.of(
-                "color", color, "votes", voteStr, "percentage", pctStr)));
+        lore.add(I18n.string("gui_election.view.candidate.votes", l, Component.text(color), Component.text(voteStr), Component.text(pctStr)));
         if (yearsSince >= 0) {
-            lore.add(I18n.string("gui_election.view.candidate.last_elected", l, Map.of(
-                    "color", color, "years", String.valueOf(yearsSince))));
+            lore.add(I18n.string("gui_election.view.candidate.last_elected", l, Component.text(color), Component.text(String.valueOf(yearsSince))));
         } else {
-            lore.add(I18n.string("gui_election.view.candidate.last_elected_never", l, Map.of("color", color)));
+            lore.add(I18n.string("gui_election.view.candidate.last_elected_never", l, Component.text(color)));
         }
         lore.add("");
         lore.add("§8§m--------------------------");
@@ -138,7 +132,7 @@ public class ElectionView extends StatelessView {
 
         if (!mayor.isSpecial()) {
             lore.add("");
-            lore.add(I18n.string("gui_election.view.candidate.minister_note_1", l, Map.of("color", color)));
+            lore.add(I18n.string("gui_election.view.candidate.minister_note_1", l, Component.text(color)));
             lore.add(I18n.string("gui_election.view.candidate.minister_note_2", l));
         }
 
@@ -149,7 +143,7 @@ public class ElectionView extends StatelessView {
             lore.add(I18n.string("gui_election.view.candidate.change_vote_1", l));
             lore.add(I18n.string("gui_election.view.candidate.change_vote_2", l));
             lore.add("");
-            lore.add(I18n.string("gui_election.view.candidate.click_vote", l, Map.of("name", mayor.getDisplayName())));
+            lore.add(I18n.string("gui_election.view.candidate.click_vote", l, Component.text(mayor.getDisplayName())));
         }
 
         return lore;

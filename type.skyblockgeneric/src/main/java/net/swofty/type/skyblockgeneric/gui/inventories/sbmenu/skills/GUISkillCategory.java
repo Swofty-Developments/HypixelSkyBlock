@@ -1,11 +1,16 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
@@ -17,7 +22,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUISkillCategory extends StatelessView {
     private static final int[] DISPLAY_SLOTS = {
@@ -35,7 +39,7 @@ public class GUISkillCategory extends StatelessView {
     @Override
     public ViewConfiguration<DefaultState> configuration() {
         return ViewConfiguration.withString(
-                (state, ctx) -> I18n.string("gui_sbmenu.skills.category.title", ctx.player().getLocale(), Map.of("category_name", category.toString())),
+            (state, ctx) -> I18n.string("gui_sbmenu.skills.category.title", ctx.player().getLocale(), Component.text(category.toString())),
                 InventoryType.CHEST_6_ROW);
     }
 
@@ -67,19 +71,20 @@ public class GUISkillCategory extends StatelessView {
         layout.slot(0, (s, c) -> {
             SkyBlockPlayer p = (SkyBlockPlayer) c.player();
             Locale l = p.getLocale();
-            List<String> lore = new ArrayList<>(category.asCategory().getDescription());
-            lore.add(" ");
+            List<String> baseLore = new ArrayList<>(category.asCategory().getDescription());
+            baseLore.add(" ");
 
             Integer next = p.getSkills().getNextLevel(category);
             if (next == null) {
-                lore.add(I18n.string("gui_sbmenu.skills.category.max_level", l));
+                baseLore.add(I18n.string("gui_sbmenu.skills.category.max_level", l));
             } else {
-                p.getSkills().getDisplay(lore, category, category.asCategory().getReward(next).requirement(),
+                p.getSkills().getDisplay(baseLore, category, category.asCategory().getReward(next).requirement(),
                         "§7Progress to Level " + StringUtility.getAsRomanNumeral(next) + ": ");
             }
 
-            lore.add(" ");
-            lore.addAll(I18n.lore("gui_sbmenu.skills.category.increase_level", l, Map.of("category_name", category.toString())));
+            baseLore.add(" ");
+            List<Object> lore = new ArrayList<>(baseLore);
+            lore.addAll(List.of(I18n.iterable("gui_sbmenu.skills.category.increase_level", Component.text(category.toString()))));
 
             return ItemStackCreator.getStack("§a" + category + " Skill",
                     category.asCategory().getDisplayIcon(), 1, lore);
@@ -92,7 +97,7 @@ public class GUISkillCategory extends StatelessView {
             layout.slot(50, (s, c) -> {
                         Locale l = c.player().getLocale();
                         return ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.category.next_page", l), Material.ARROW, 1,
-                            I18n.lore("gui_sbmenu.skills.category.next_page.lore", l));
+                            I18n.iterable("gui_sbmenu.skills.category.next_page.lore"));
                     },
                     (click, c) -> c.replace(new GUISkillCategory(category, page + 1)));
         }
@@ -102,7 +107,7 @@ public class GUISkillCategory extends StatelessView {
             layout.slot(48, (s, c) -> {
                         Locale l = c.player().getLocale();
                         return ItemStackCreator.getStack(I18n.string("gui_sbmenu.skills.category.previous_page", l), Material.ARROW, 1,
-                            I18n.lore("gui_sbmenu.skills.category.previous_page.lore", l));
+                            I18n.iterable("gui_sbmenu.skills.category.previous_page.lore"));
                     },
                     (click, c) -> c.replace(new GUISkillCategory(category, page - 1)));
         }

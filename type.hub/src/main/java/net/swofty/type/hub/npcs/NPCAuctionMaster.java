@@ -10,8 +10,6 @@ import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToAuctionMaster;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.stream.Stream;
-
 public class NPCAuctionMaster extends HypixelNPC {
     public NPCAuctionMaster() {
         super(new HumanConfiguration() {
@@ -45,7 +43,7 @@ public class NPCAuctionMaster extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("quest-hello", "npcs_hub.auction_master.dialogue.quest_hello", player)
+            DialogueSet.ofTranslation("quest-hello", "npcs_hub.auction_master.dialogue.quest_hello")
         };
     }
 

@@ -100,8 +100,6 @@ public class SkyBlockPlayer extends HypixelPlayer {
     @Setter
     public boolean bypassBuild = false;
     @Setter
-    public boolean hasAuthenticated = true;
-    @Setter
     public boolean speedManaged = false;
     @Setter
     private SkyBlockIsland skyBlockIsland;

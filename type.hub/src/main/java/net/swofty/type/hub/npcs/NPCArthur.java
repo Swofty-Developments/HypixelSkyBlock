@@ -6,8 +6,6 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.stream.Stream;
-
 public class NPCArthur extends HypixelNPC {
 
     public NPCArthur() {
@@ -49,13 +47,13 @@ public class NPCArthur extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("dialogue-1", "npcs_hub.arthur.dialogue.dialogue_1", player),
-                DialogueSet.ofTranslation("dialogue-2", "npcs_hub.arthur.dialogue.dialogue_2", player),
-                DialogueSet.ofTranslation("dialogue-3", "npcs_hub.arthur.dialogue.dialogue_3", player),
-                DialogueSet.ofTranslation("dialogue-4", "npcs_hub.arthur.dialogue.dialogue_4", player),
-                DialogueSet.ofTranslation("dialogue-5", "npcs_hub.arthur.dialogue.dialogue_5", player),
-                DialogueSet.ofTranslation("dialogue-6", "npcs_hub.arthur.dialogue.dialogue_6", player),
-                DialogueSet.ofTranslation("dialogue-7", "npcs_hub.arthur.dialogue.dialogue_7", player)
+            DialogueSet.ofTranslation("dialogue-1", "npcs_hub.arthur.dialogue.dialogue_1"),
+            DialogueSet.ofTranslation("dialogue-2", "npcs_hub.arthur.dialogue.dialogue_2"),
+            DialogueSet.ofTranslation("dialogue-3", "npcs_hub.arthur.dialogue.dialogue_3"),
+            DialogueSet.ofTranslation("dialogue-4", "npcs_hub.arthur.dialogue.dialogue_4"),
+            DialogueSet.ofTranslation("dialogue-5", "npcs_hub.arthur.dialogue.dialogue_5"),
+            DialogueSet.ofTranslation("dialogue-6", "npcs_hub.arthur.dialogue.dialogue_6"),
+            DialogueSet.ofTranslation("dialogue-7", "npcs_hub.arthur.dialogue.dialogue_7")
         };
     }
 }

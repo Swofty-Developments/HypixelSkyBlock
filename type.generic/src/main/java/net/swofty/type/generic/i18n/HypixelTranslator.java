@@ -164,12 +164,12 @@ public class HypixelTranslator extends MiniMessageTranslator {
         return Map.copyOf(index);
     }
 
-    private static Map<String, String> loadPropertiesFileFlat(Path file) {
+    private Map<String, String> loadPropertiesFileFlat(Path file) {
         int initialCapacity = 1024;
         try {
             long size = Files.size(file);
             if (size > 0) {
-                long approxEntries = Math.min(250_000L, Math.max(128L, size / 40L));
+                long approxEntries = Math.clamp(size / 40L, 128L, 250_000L);
                 initialCapacity = (int) Math.min(Integer.MAX_VALUE - 8L, (approxEntries / 0.75d) + 1);
             }
         } catch (IOException ignored) {

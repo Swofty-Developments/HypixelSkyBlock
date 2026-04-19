@@ -2,6 +2,7 @@ package net.swofty.type.skyblockgeneric.gui.inventories;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -10,7 +11,11 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.Layouts;
+import net.swofty.type.generic.gui.v2.PaginatedView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -24,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.CreativeState> {
 
@@ -34,10 +38,7 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
                 (state, ctx) -> {
                     int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / DEFAULT_SLOTS.length));
                     Locale l = ctx.player().getLocale();
-                    return I18n.string("gui_misc.creative.title", l, Map.of(
-                            "page", String.valueOf(state.page() + 1),
-                            "total_pages", String.valueOf(totalPages)
-                    ));
+                    return I18n.string("gui_misc.creative.title", l, Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -79,10 +80,10 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
     @Override
     protected void layoutCustom(ViewLayout<CreativeState> layout, CreativeState state, ViewContext ctx) {
-        layout.slot(49, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_misc.creative.close_button", Material.BARRIER, 1),
+        layout.slot(49, (s, c) -> TranslatableItemStackCreator.getStack("gui_misc.creative.close_button", Material.BARRIER, 1),
                 (_, c) -> c.player().closeInventory());
 
-        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_misc.creative.search_button", Material.OAK_SIGN, 1,
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack("gui_misc.creative.search_button", Material.OAK_SIGN, 1,
                 "gui_misc.creative.search_button.lore"), (_, c) -> {
             new HypixelSignGUI(c.player()).open(new String[]{"Enter query", ""}).thenAccept(line -> {
                 if (line == null) {
@@ -132,12 +133,12 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
             toGive.setAmount(64);
             player.addAndUpdateItem(toGive);
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-            player.sendMessage(I18n.string("gui_misc.creative.given_stack", l, Map.of("item_name", toGive.getDisplayName())));
+            player.sendMessage(I18n.t("gui_misc.creative.given_stack", Component.text(toGive.getDisplayName())));
         } else {
             toGive.setAmount(1);
             player.addAndUpdateItem(toGive);
             player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
-            player.sendMessage(I18n.string("gui_misc.creative.given_single", l, Map.of("item_name", toGive.getDisplayName())));
+            player.sendMessage(I18n.t("gui_misc.creative.given_single", Component.text(toGive.getDisplayName())));
         }
     }
 

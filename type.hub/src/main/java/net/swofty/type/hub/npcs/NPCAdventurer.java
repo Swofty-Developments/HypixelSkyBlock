@@ -57,7 +57,7 @@ public class NPCAdventurer extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("hello", "npcs_hub.adventurer.dialogue.hello", player)
+            DialogueSet.ofTranslation("hello", "npcs_hub.adventurer.dialogue.hello")
         };
     }
 }

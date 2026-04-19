@@ -1,5 +1,6 @@
 package net.swofty.type.prototypelobby;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -42,27 +43,28 @@ public class PrototypeLobbyScoreboard {
                 }
 
                 long hype = prototypeDataHandler.get(PrototypeLobbyDataHandler.Data.HYPE, DatapointLeaderboardLong.class).getValue();
+                String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
 
-                List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
-                lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line1", l));
-                lines.add(I18n.string("scoreboard.prototype_lobby.dev_notice_line2", l));
-                lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line1", l));
-                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_line2", l));
-                lines.add(I18n.string("scoreboard.prototype_lobby.bug_report_url", l));
-                lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.prototype_lobby.hype_label", l) + hype + I18n.string("scoreboard.prototype_lobby.hype_max", l));
-                lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.common.footer", l));
+                List<Component> lines = new ArrayList<>();
+                lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.prototype_lobby.dev_notice_line1"));
+                lines.add(I18n.t("scoreboard.prototype_lobby.dev_notice_line2"));
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.prototype_lobby.bug_report_line1"));
+                lines.add(I18n.t("scoreboard.prototype_lobby.bug_report_line2"));
+                lines.add(I18n.t("scoreboard.prototype_lobby.bug_report_url"));
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.prototype_lobby.hype", Component.text(String.valueOf(hype))));
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.common.footer"));
 
                 if (!scoreboard.hasScoreboard(player)) {
-                    scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
+                    scoreboard.createScoreboard(player, Component.text(getSidebarName(prototypeName, l)));
                 }
 
                 scoreboard.updateLines(player, lines);
-                scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
+                scoreboard.updateTitle(player, Component.text(getSidebarName(prototypeName, l)));
             }
             return TaskSchedule.tick(4);
         });

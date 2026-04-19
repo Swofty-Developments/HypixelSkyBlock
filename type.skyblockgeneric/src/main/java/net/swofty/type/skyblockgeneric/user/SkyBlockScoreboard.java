@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.user;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -56,92 +57,110 @@ public class SkyBlockScoreboard {
                     continue;
                 }
 
-                List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
-                lines.add("§7 ");
-                lines.add("§f " + SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()));
-                lines.add("§7 " + SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()));
+                String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
+
+                List<Component> lines = new ArrayList<>();
+                lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.skyblock.calendar_date_line",
+                    Component.text(SkyBlockCalendar.getMonthName()),
+                    Component.text(StringUtility.ntify(SkyBlockCalendar.getDay()))));
+                lines.add(I18n.t("scoreboard.skyblock.calendar_time_line",
+                    Component.text(SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()))));
                 try {
                     RegionType type = region.getType();
                     String name = type.getName();
                     if (type == RegionType.PLAYER_MUSEUM) {
                         name = name.formatted(player.getUsername());
                     }
-                    lines.add("§7 ⏣ " + region.getType().getColor() + name);
+                    lines.add(I18n.t("scoreboard.skyblock.region_line",
+                        Component.text(region.getType().getColor() + name)));
                 } catch (NullPointerException ignored) {
-                    lines.add(" " + I18n.string("scoreboard.skyblock.region_unknown", l));
+                    lines.add(Component.space().append(I18n.t("scoreboard.skyblock.region_unknown")));
                 }
-                lines.add("§7 ");
+                lines.add(Component.text("§7 "));
 
                 // TODO: make classes / a manager for regions to display scoreboard information.
                 if (region != null && region.getType() == RegionType.ELECTION_ROOM) {
-                    lines.add("§6Year " + SkyBlockCalendar.getYear() + " Votes");
+                    lines.add(I18n.t("scoreboard.skyblock.election_votes_title",
+                        Component.text(String.valueOf(SkyBlockCalendar.getYear()))));
                     Map<String, Long> totalVotes = ElectionManager.getElectionData().tallyVotes();
                     long maxVotes = totalVotes.values().stream().mapToLong(Long::longValue).max().orElse(1);
                     ElectionManager.getElectionData().getCandidates().forEach(candidate -> {
                         long votes = totalVotes.getOrDefault(candidate.getMayorName(), 0L);
                         int barLength = maxVotes > 0 ? (int) Math.round((votes * 15.0) / maxVotes) : 0;
                         String bars = candidate.getColor() + "|".repeat(barLength) + "§f" + "|".repeat(15 - barLength);
-                        lines.add(bars + " " + candidate.getColoredName());
+                        lines.add(I18n.t("scoreboard.skyblock.election_candidate_line",
+                            Component.text(bars),
+                            Component.text(candidate.getColoredName())));
                     });
                 } else {
-                    lines.add(I18n.string("scoreboard.skyblock.purse_label", l) + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()));
-                    lines.add(I18n.string("scoreboard.skyblock.bits_label", l) + StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()));
+                    lines.add(I18n.t("scoreboard.skyblock.purse_line",
+                        Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()))));
+                    lines.add(I18n.t("scoreboard.skyblock.bits_line",
+                        Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()))));
 
                     if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())
                         && DarkAuctionHandler.getLocalState() != null
                         && DarkAuctionHandler.getLocalState().getPhase() == DarkAuctionPhase.BIDDING
                     ) {
-                        lines.add("§8 ");
+                        lines.add(Component.text("§8 "));
                         DarkAuctionHandler.DarkAuctionLocalState auctionState = DarkAuctionHandler.getLocalState();
                         int timeRemaining = DarkAuctionHandler.getTimeLeft().get();
 
-                        lines.add(I18n.string("scoreboard.skyblock.dark_auction.time_left_label", l) + timeRemaining + I18n.string("scoreboard.skyblock.dark_auction.time_left_suffix", l));
-                        lines.add(I18n.string("scoreboard.skyblock.dark_auction.current_item_label", l));
+                        lines.add(I18n.t("scoreboard.skyblock.dark_auction.time_left_line",
+                            Component.text(String.valueOf(timeRemaining))));
+                        lines.add(I18n.t("scoreboard.skyblock.dark_auction.current_item_label"));
 
                         String currentItem = auctionState.getCurrentItemType();
                         if (currentItem != null) {
                             try {
                                 ItemType itemType = ItemType.valueOf(currentItem);
                                 SkyBlockItem item = new SkyBlockItem(itemType);
-                                lines.add(" " + item.getDisplayName());
+                                lines.add(Component.space().append(
+                                    I18n.t("scoreboard.skyblock.dark_auction.current_item_line",
+                                        Component.text(item.getDisplayName()))));
                             } catch (Exception e) {
-                                lines.add(" §f" + currentItem.replace("_", " "));
+                                lines.add(Component.space().append(
+                                    I18n.t("scoreboard.skyblock.dark_auction.current_item_line",
+                                        Component.text(currentItem.replace("_", " ")))));
                             }
                         } else {
-                            lines.add(" " + I18n.string("scoreboard.skyblock.dark_auction.waiting", l));
+                            lines.add(Component.space().append(I18n.t("scoreboard.skyblock.dark_auction.waiting")));
                         }
                     } else {
                         if (region != null &&
                             !missionData.getActiveMissions(region.getType()).isEmpty()) {
-                            lines.add("§7 ");
+                            lines.add(Component.text("§7 "));
                             MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
                             SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
                             if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
-                                lines.add(I18n.string("scoreboard.skyblock.objective_label", l) + " " + BlockUtility.getArrow(
+                                lines.add(I18n.t("scoreboard.skyblock.objective_with_arrow", Component.text(BlockUtility.getArrow(
                                     player.getPosition(),
                                     locationAssociatedMission.getLocation()
-                                ));
-                                lines.add("§e" + mission);
+                                ))));
+                                lines.add(Component.text("§e" + mission));
                             } else {
-                                lines.add(I18n.string("scoreboard.skyblock.objective_label", l));
-                                lines.add("§e" + mission);
+                                lines.add(I18n.t("scoreboard.skyblock.objective_label"));
+                                lines.add(Component.text("§e" + mission));
                             }
 
                             SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
-                            if (progressMission != null)
-                                lines.add("§7 (§e" + mission.getMissionProgress() + "§7/§a" + progressMission.getMaxProgress() + "§7)");
+                            if (progressMission != null) {
+                                lines.add(I18n.t("scoreboard.skyblock.objective_progress",
+                                    Component.text(String.valueOf(mission.getMissionProgress())),
+                                    Component.text(String.valueOf(progressMission.getMaxProgress()))));
+                            }
                         }
                     }
                 }
 
-                lines.add("§7 ");
-                lines.add(I18n.string("scoreboard.common.footer", l));
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.common.footer"));
 
-                String title = "  " + getSidebarName(skyblockName, false, l)
-                        + (player.isCoop() ? " " + I18n.string("scoreboard.skyblock.coop_suffix", l) + "  " : "  ");
-
+                Component title = Component.text("  ")
+                    .append(Component.text(getSidebarName(skyblockName, false, l)));
                 if (!scoreboard.hasScoreboard(player)) {
                     scoreboard.createScoreboard(player, title);
                 }

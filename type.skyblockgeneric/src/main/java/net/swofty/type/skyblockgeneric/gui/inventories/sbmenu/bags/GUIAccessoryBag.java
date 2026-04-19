@@ -1,12 +1,17 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.StatefulView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAccessoryBag;
@@ -14,7 +19,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
@@ -42,10 +46,7 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
                     SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
                     int totalSlots = getTotalSlots(player);
                     int totalPages = Math.max(1, (int) Math.ceil((double) totalSlots / 45));
-                    return I18n.string("gui_sbmenu.bags.accessory.title", ctx.player().getLocale(), Map.of(
-                            "page", String.valueOf(state.page() + 1),
-                            "max_page", String.valueOf(totalPages)
-                    ));
+                    return I18n.string("gui_sbmenu.bags.accessory.title", ctx.player().getLocale(), Component.text(String.valueOf(state.page() + 1)), Component.text(String.valueOf(totalPages)));
                 },
                 InventoryType.CHEST_6_ROW
         );
@@ -92,20 +93,20 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
             int slotIndex = i + startIndex;
             CustomCollectionAward nextUpgrade = getUpgradeNeededForSlotIndex(slotIndex);
             if (nextUpgrade != null) {
-                layout.slot(i, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.bags.accessory.locked", Material.RED_STAINED_GLASS_PANE, 1,
-                        "gui_sbmenu.bags.accessory.locked.lore", Map.of("upgrade_name", nextUpgrade.getDisplay())));
+                layout.slot(i, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.accessory.locked", Material.RED_STAINED_GLASS_PANE, 1,
+                    "gui_sbmenu.bags.accessory.locked.lore", Component.text(nextUpgrade.getDisplay())));
             }
         }
 
         // Previous page
         if (page > 0) {
-            layout.slot(45, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.bags.accessory.previous_page", Material.ARROW, 1),
+            layout.slot(45, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.accessory.previous_page", Material.ARROW, 1),
                     (click, c) -> c.session(AccessoryBagState.class).update(s -> s.withPage(s.page() - 1)));
         }
 
         // Next page
         if (page < totalPages - 1) {
-            layout.slot(53, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.bags.accessory.next_page", Material.ARROW, 1),
+            layout.slot(53, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.accessory.next_page", Material.ARROW, 1),
                     (click, c) -> c.session(AccessoryBagState.class).update(s -> s.withPage(s.page() + 1)));
         }
     }
@@ -125,7 +126,7 @@ public class GUIAccessoryBag implements StatefulView<GUIAccessoryBag.AccessoryBa
             return true;
         }
 
-        player.sendMessage(I18n.string("gui_sbmenu.bags.accessory.msg.cannot_put", player.getLocale()));
+        player.sendMessage(I18n.t("gui_sbmenu.bags.accessory.msg.cannot_put"));
         return false;
     }
 

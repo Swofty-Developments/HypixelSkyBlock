@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -34,7 +35,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
     private BazaarConnector.BazaarStatistics currentStats;
 
     public GUIBazaarItem(ItemType itemType) {
-        super(I18n.string("gui_bazaar.item.title", Map.of("set_name", BazaarCategories.getFromItem(itemType).getValue().displayName, "item_name", itemType.getDisplayName())), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.item.title", Component.text(BazaarCategories.getFromItem(itemType).getValue().displayName), Component.text(itemType.getDisplayName())), InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
@@ -52,7 +53,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStack(p, "gui_bazaar.item.manage_orders_button", Material.BOOK, 1,
+                return TranslatableItemStackCreator.getStack("gui_bazaar.item.manage_orders_button", Material.BOOK, 1,
                         "gui_bazaar.item.manage_orders_button.lore");
             }
         });
@@ -67,7 +68,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return TranslatableItemStackCreator.getStackHead(p, "gui_bazaar.item.go_back_bazaar", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
+                return TranslatableItemStackCreator.getStackHead("gui_bazaar.item.go_back_bazaar", "c232e3820897429157619b0ee099fec0628f602fff12b695de54aef11d923ad7", 1,
                         "gui_bazaar.item.go_back_bazaar.lore");
             }
         });
@@ -97,13 +98,13 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (stats.bestAsk() <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.buy_no_offers_message", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.item.buy_no_offers_message"));
                     return;
                 }
 
                 int maxSpace = player.maxItemFit(itemType);
                 if (maxSpace <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.buy_inventory_full", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.item.buy_inventory_full"));
                     return;
                 }
 
@@ -116,7 +117,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
 
                             double totalCost = priceWithFee * amount;
                             if (totalCost > player.getCoins()) {
-                                p.sendMessage(I18n.string("gui_bazaar.item.buy_need_coins", p.getLocale(), Map.of("amount", FORMATTER.format(totalCost))));
+                                p.sendMessage(I18n.string("gui_bazaar.item.buy_need_coins", p.getLocale(), Component.text(FORMATTER.format(totalCost))));
                                 return;
                             }
 
@@ -140,8 +141,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                     lore.add(I18n.string("gui_bazaar.item.buy_no_offers", l));
                 } else {
                     double priceWithFee = stats.bestAsk() * 1.04;
-                    lore.add(I18n.string("gui_bazaar.item.buy_price", l, Map.of("price", FORMATTER.format(priceWithFee))));
-                    lore.add(I18n.string("gui_bazaar.item.buy_max_space", l, Map.of("amount", String.valueOf(player.maxItemFit(itemType)))));
+                    lore.add(I18n.string("gui_bazaar.item.buy_price", l, Component.text(FORMATTER.format(priceWithFee))));
+                    lore.add(I18n.string("gui_bazaar.item.buy_max_space", l, Component.text(String.valueOf(player.maxItemFit(itemType)))));
                     lore.add(" ");
                     lore.add(I18n.string("gui_bazaar.item.buy_click", l));
                 }
@@ -156,12 +157,12 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.sell_no_items", p.getLocale(), Map.of("item_name", itemType.getDisplayName())));
+                    p.sendMessage(I18n.string("gui_bazaar.item.sell_no_items", p.getLocale(), Component.text(itemType.getDisplayName())));
                     return;
                 }
 
                 if (stats.bestBid() <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.sell_no_orders_message", p.getLocale()));
+                    p.sendMessage(I18n.t("gui_bazaar.item.sell_no_orders_message"));
                     return;
                 }
 
@@ -190,11 +191,11 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 if (have <= 0) {
                     lore.add(I18n.string("gui_bazaar.item.sell_have_zero", l));
                 } else if (stats.bestBid() <= 0) {
-                    lore.add(I18n.string("gui_bazaar.item.sell_have", l, Map.of("amount", String.valueOf(have))));
+                    lore.add(I18n.string("gui_bazaar.item.sell_have", l, Component.text(String.valueOf(have))));
                     lore.add(I18n.string("gui_bazaar.item.sell_no_orders", l));
                 } else {
-                    lore.add(I18n.string("gui_bazaar.item.sell_have", l, Map.of("amount", String.valueOf(have))));
-                    lore.add(I18n.string("gui_bazaar.item.sell_price", l, Map.of("price", FORMATTER.format(stats.bestBid()))));
+                    lore.add(I18n.string("gui_bazaar.item.sell_have", l, Component.text(String.valueOf(have))));
+                    lore.add(I18n.string("gui_bazaar.item.sell_price", l, Component.text(FORMATTER.format(stats.bestBid()))));
                     lore.add(" ");
                     lore.add(I18n.string("gui_bazaar.item.sell_click", l));
                 }
@@ -221,22 +222,22 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                                 double totalCost = price * amount;
                                 Locale l = p.getLocale();
                                 if (totalCost > player.getCoins()) {
-                                    p.sendMessage(I18n.string("gui_bazaar.item.buy_order_need_coins", l, Map.of("amount", FORMATTER.format(totalCost))));
+                                    p.sendMessage(I18n.string("gui_bazaar.item.buy_order_need_coins", l, Component.text(FORMATTER.format(totalCost))));
                                     new GUIBazaarItem(itemType).open(p);
                                     return;
                                 }
 
                                 player.removeCoins(totalCost);
-                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_escrow", l, Map.of("amount", FORMATTER.format(totalCost))));
+                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_escrow", l, Component.text(FORMATTER.format(totalCost))));
 
                                 player.getBazaarConnector().createBuyOrder(itemType, price, amount)
                                         .thenAccept(result -> {
                                             if (result.success()) {
-                                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_created", l, Map.of("amount", String.valueOf(amount), "price", FORMATTER.format(price))));
+                                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_created", l, Component.text(String.valueOf(amount)), Component.text(FORMATTER.format(price))));
                                                 p.closeInventory();
                                             } else {
                                                 player.addCoins(totalCost);
-                                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_failed", l, Map.of("amount", FORMATTER.format(totalCost))));
+                                                p.sendMessage(I18n.string("gui_bazaar.item.buy_order_failed", l, Component.text(FORMATTER.format(totalCost))));
                                                 new GUIBazaarItem(itemType).open(p);
                                             }
                                         });
@@ -253,7 +254,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.item.create_buy_order_max", l));
                 if (stats.bestAsk() > 0) {
-                    lore.add(I18n.string("gui_bazaar.item.create_buy_order_best_ask", l, Map.of("price", FORMATTER.format(stats.bestAsk()))));
+                    lore.add(I18n.string("gui_bazaar.item.create_buy_order_best_ask", l, Component.text(FORMATTER.format(stats.bestAsk()))));
                 }
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.item.create_buy_order_click", l));
@@ -268,7 +269,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 int have = player.getAmountInInventory(itemType);
                 if (have <= 0) {
-                    p.sendMessage(I18n.string("gui_bazaar.item.sell_order_no_items", p.getLocale(), Map.of("item_name", itemType.getDisplayName())));
+                    p.sendMessage(I18n.string("gui_bazaar.item.sell_order_no_items", p.getLocale(), Component.text(itemType.getDisplayName())));
                     return;
                 }
 
@@ -285,21 +286,21 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                                 var items = player.takeItem(itemType, amount);
                                 Locale l = p.getLocale();
                                 if (items == null) {
-                                    p.sendMessage(I18n.string("gui_bazaar.item.sell_order_remove_fail", l));
+                                    p.sendMessage(I18n.t("gui_bazaar.item.sell_order_remove_fail"));
                                     new GUIBazaarItem(itemType).open(p);
                                     return;
                                 }
 
-                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_escrow", l, Map.of("amount", String.valueOf(amount), "item_name", itemType.getDisplayName())));
+                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_escrow", l, Component.text(String.valueOf(amount)), Component.text(itemType.getDisplayName())));
 
                                 player.getBazaarConnector().createSellOrder(itemType, price, amount)
                                         .thenAccept(result -> {
                                             if (result.success()) {
-                                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_created", l, Map.of("amount", String.valueOf(amount), "price", FORMATTER.format(price))));
+                                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_created", l, Component.text(String.valueOf(amount)), Component.text(FORMATTER.format(price))));
                                                 p.closeInventory();
                                             } else {
                                                 player.addAndUpdateItem(items);
-                                                p.sendMessage(I18n.string("gui_bazaar.item.sell_order_failed", l));
+                                                p.sendMessage(I18n.t("gui_bazaar.item.sell_order_failed"));
                                                 new GUIBazaarItem(itemType).open(p);
                                             }
                                         });
@@ -315,9 +316,9 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 lore.add(I18n.string("gui_bazaar.item.create_sell_order_subtitle", l));
                 lore.add(" ");
                 int have = player.getAmountInInventory(itemType);
-                lore.add(I18n.string("gui_bazaar.item.create_sell_order_have", l, Map.of("amount", String.valueOf(have))));
+                lore.add(I18n.string("gui_bazaar.item.create_sell_order_have", l, Component.text(String.valueOf(have))));
                 if (stats.bestBid() > 0) {
-                    lore.add(I18n.string("gui_bazaar.item.create_sell_order_best_bid", l, Map.of("price", FORMATTER.format(stats.bestBid()))));
+                    lore.add(I18n.string("gui_bazaar.item.create_sell_order_best_bid", l, Component.text(FORMATTER.format(stats.bestBid()))));
                 }
                 lore.add(" ");
                 lore.add(I18n.string("gui_bazaar.item.create_sell_order_click", l));

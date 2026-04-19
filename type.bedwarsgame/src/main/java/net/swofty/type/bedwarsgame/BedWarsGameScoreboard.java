@@ -1,9 +1,14 @@
 package net.swofty.type.bedwarsgame;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.commons.VersionConst;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -51,21 +56,24 @@ public class BedWarsGameScoreboard {
                     continue;
                 }
 
-                Locale l = player.getLocale();
-
                 String tag = "";
                 if (game.getGameType().isDream()) {
                     tag = "§8[D]";
                 }
 
+                String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
+
                 List<String> lines = new ArrayList<>();
-                lines.add("§7" + new SimpleDateFormat("MM/dd/yy").format(new Date()) + " §8" + HypixelConst.getServerName() + tag);
+                lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
                 lines.add("§7 ");
 
                 if (game.getState().isWaiting()) {
-                    lines.add("§fMap: §a" + game.getMapEntry().getName());
-                    lines.add("§fPlayers: §a" + game.getPlayers().size() + "/" + game.getGameType().maxPlayers());
-                    lines.add("§7 ");
+                    lines.add(I18n.t("scoreboard.bedwars_game.map_line", Component.text(game.getMapEntry().getName())));
+                    lines.add(I18n.t("scoreboard.bedwars_game.players_line",
+                        Component.text(String.valueOf(game.getPlayers().size())),
+                        Component.text(String.valueOf(game.getMapEntry().getConfiguration().getTeams().size()))));
+                    lines.add(Component.text("§7 "));
+
                     if (game.getState() == GameState.COUNTDOWN) {
                         long seconds = game.getCountdown().getRemainingSeconds();
                         lines.add("§fStarting in §a" + seconds + "s");
@@ -73,7 +81,7 @@ public class BedWarsGameScoreboard {
                         lines.add("§fWaiting...");
                     }
                     lines.add("§7 ");
-                    lines.add("§fMode: §a" + game.getGameType().getDisplayName());
+                    lines.add(I18n.t("scoreboard.bedwars_game.mode_line", Component.text(game.getGameType().getDisplayName())));
                     lines.add("§fVersion: §7v" + VersionConst.BED_WARS_VERSION);
                 } else {
                     BedWarsGameEventManager.GamePhase nextGamePhase = game.getGameEventManager().getCurrentPhase().next();
@@ -84,8 +92,10 @@ public class BedWarsGameScoreboard {
                     long minutesPart = seconds / 60;
                     long secondsPart = seconds % 60;
                     String timeLeft = String.format("%d:%02d", minutesPart, secondsPart);
-                    lines.add("§f" + eventName + " in §a" + timeLeft);
-                    lines.add("§7 ");
+                    lines.add(I18n.t("scoreboard.bedwars_game.event_in_line",
+                        Component.text(eventName),
+                        Component.text(timeLeft)));
+                    lines.add(Component.text("§7 "));
 
                     for (BedWarsTeam team : game.getTeams()) {
                         TeamKey teamKey = team.getTeamKey();
@@ -115,19 +125,20 @@ public class BedWarsGameScoreboard {
                         lines.add(String.format("%s%s §f%s %s%s", teamKey.chatColor(), teamInitial, teamName, bedStatus, isYourTeamSuffix));
                     }
                 }
-                lines.add("§7 ");
-                lines.add("§ewww.hypixel.net");
 
-                if (!scoreboard.hasScoreboard(player)) {
-                    scoreboard.createScoreboard(player, getSidebarName(prototypeName, l));
-                }
+                lines.add(Component.text("§7 "));
+                lines.add(I18n.t("scoreboard.common.footer"));
 
-                scoreboard.updateLines(player, lines);
-                scoreboard.updateTitle(player, getSidebarName(prototypeName, l));
-            }
-            return TaskSchedule.tick(4);
-        });
-    }
+				if (!scoreboard.hasScoreboard(player)) {
+					scoreboard.createScoreboard(player, Component.text(getSidebarName(prototypeName, l)));
+				}
+
+				scoreboard.updateLines(player, lines);
+				scoreboard.updateTitle(player, Component.text(getSidebarName(prototypeName, l)));
+			}
+			return TaskSchedule.tick(4);
+		});
+	}
 
     public static void removeCache(Player player) {
         scoreboard.removeScoreboard(player);

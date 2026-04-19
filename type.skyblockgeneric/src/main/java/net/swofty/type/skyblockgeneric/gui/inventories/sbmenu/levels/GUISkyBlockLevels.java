@@ -1,11 +1,16 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.emblem.GUIEmblems;
@@ -18,7 +23,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUISkyBlockLevels extends StatelessView {
 
@@ -39,11 +43,11 @@ public class GUISkyBlockLevels extends StatelessView {
             Locale l = player.getLocale();
             String status = player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT)
                     ? I18n.string("gui_sbmenu.levels.main.chat_toggle.enabled", l) : I18n.string("gui_sbmenu.levels.main.chat_toggle.disabled", l);
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.main.chat_toggle",
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.chat_toggle",
                     player.getToggles().get(DatapointToggles.Toggles.ToggleType.SKYBLOCK_LEVELS_IN_CHAT)
                             ? Material.LIME_DYE : Material.GRAY_DYE,
                     1,
-                    "gui_sbmenu.levels.main.chat_toggle.lore", Map.of("status", status));
+                "gui_sbmenu.levels.main.chat_toggle.lore", Component.text(status));
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             Locale l = player.getLocale();
@@ -65,8 +69,8 @@ public class GUISkyBlockLevels extends StatelessView {
                 display.append(displayList.get(j));
                 if (j < displayList.size() - 1) display.append("\n");
             }
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.main.level_rewards", Material.CHEST, 1,
-                    "gui_sbmenu.levels.main.level_rewards.lore", Map.of("display", display.toString()));
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.level_rewards", Material.CHEST, 1,
+                "gui_sbmenu.levels.main.level_rewards.lore", Component.text(display.toString()));
         }, (click, c) -> c.player().openView(new GUILevelRewards()));
 
         // Your SkyBlock Level Ranking
@@ -76,21 +80,21 @@ public class GUISkyBlockLevels extends StatelessView {
             int completedChallenges = player.getSkyBlockExperience().getCompletedExperienceCauses().size();
             int totalChallenges = SkyBlockLevelCause.getAmountOfCauses();
 
-            return TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.main.ranking",
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.ranking",
                     Material.PAINTING, 1,
-                    "gui_sbmenu.levels.main.ranking.lore", Map.of(
-                            "level_display", level.getColor() + level.toString(),
-                            "xp", String.valueOf(Math.round(player.getSkyBlockExperience().getTotalXP())),
-                            "percent", new java.text.DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)));
+                "gui_sbmenu.levels.main.ranking.lore",
+                Component.text(level.getColor() + level.toString()),
+                Component.text(String.valueOf(Math.round(player.getSkyBlockExperience().getTotalXP()))),
+                Component.text(new java.text.DecimalFormat("##.##").format((double) completedChallenges / totalChallenges * 100)));
         });
 
         // SkyBlock Guide
-        layout.slot(25, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.main.guide", Material.FILLED_MAP, 1,
+        layout.slot(25, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.guide", Material.FILLED_MAP, 1,
                         "gui_sbmenu.levels.main.guide.lore"),
                 (click, c) -> c.player().openView(new GUILevelsGuide(LevelsGuide.STARTER)));
 
         // Prefix Emblems
-        layout.slot(43, (s, c) -> TranslatableItemStackCreator.getStack(c.player(), "gui_sbmenu.levels.main.emblems", Material.NAME_TAG, 1,
+        layout.slot(43, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.levels.main.emblems", Material.NAME_TAG, 1,
                         "gui_sbmenu.levels.main.emblems.lore"),
                 (click, c) -> c.player().openView(new GUIEmblems()));
 
@@ -136,7 +140,7 @@ public class GUISkyBlockLevels extends StatelessView {
                 }
                 lore.add(I18n.string("gui_sbmenu.levels.main.click_to_view", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Map.of("level", String.valueOf(level.asInt()))), material, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Component.text(String.valueOf(level.asInt()))), material, 1, lore);
             }, (click, c) -> c.player().openView(new GUISkyBlockLevel(level)));
         }
 
@@ -152,13 +156,11 @@ public class GUISkyBlockLevels extends StatelessView {
                 lore.add(I18n.string("gui_sbmenu.levels.main.rewards", l));
                 currentMilestone.getUnlocks().forEach(unlock -> lore.addAll(unlock.getDisplay(p, currentMilestone.asInt())));
                 lore.add(" ");
-                lore.add(I18n.string("gui_sbmenu.levels.main.xp_left", l, Map.of(
-                        "xp", String.valueOf((long) (currentMilestone.getCumulativeExperience() - p.getSkyBlockExperience().getTotalXP())),
-                        "percent", String.valueOf((int) (p.getSkyBlockExperience().getTotalXP() / currentMilestone.getCumulativeExperience() * 100)))));
+                lore.add(I18n.string("gui_sbmenu.levels.main.xp_left", l, Component.text(String.valueOf((long) (currentMilestone.getCumulativeExperience() - p.getSkyBlockExperience().getTotalXP()))), Component.text(String.valueOf((int) (p.getSkyBlockExperience().getTotalXP() / currentMilestone.getCumulativeExperience() * 100)))));
                 lore.add(" ");
                 lore.add(I18n.string("gui_sbmenu.levels.main.click_to_view", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Map.of("level", String.valueOf(currentMilestone.asInt()))), Material.PURPLE_STAINED_GLASS_PANE, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.levels.main.level", l, Component.text(String.valueOf(currentMilestone.asInt()))), Material.PURPLE_STAINED_GLASS_PANE, 1, lore);
             }, (click, c) -> c.player().openView(new GUISkyBlockLevel(currentMilestone)));
         }
     }

@@ -1,5 +1,6 @@
 package net.swofty.type.hub.npcs;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
@@ -9,8 +10,6 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import java.util.Map;
 
 public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
@@ -62,7 +61,7 @@ public class NPCAlchemist extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", player, Map.of("player", player.getUsername()))
+            DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Component.text(player.getUsername()))
         };
     }
 }

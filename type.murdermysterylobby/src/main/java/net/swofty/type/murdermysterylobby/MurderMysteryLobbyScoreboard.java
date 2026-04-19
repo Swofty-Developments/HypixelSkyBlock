@@ -1,5 +1,6 @@
 package net.swofty.type.murdermysterylobby;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -58,25 +59,27 @@ public class MurderMysteryLobbyScoreboard {
 					tokens = stats.getTotalTokens(MurderMysteryLeaderboardPeriod.LIFETIME);
 				}
 
-				List<String> lines = new ArrayList<>();
-				lines.add("§7" + new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date()) + " §8" + HypixelConst.getServerName());
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_kills_label", l) + totalKills);
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.total_wins_label", l) + totalWins);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_detective_label", l) + detectiveWins);
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.wins_as_murderer_label", l) + murdererWins);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.murdermystery_lobby.tokens_label", l) + tokens);
-				lines.add("§7 ");
-				lines.add(I18n.string("scoreboard.common.footer", l));
+				String date = new SimpleDateFormat(I18n.string("scoreboard.common.date_format", l)).format(new Date());
+
+				List<Component> lines = new ArrayList<>();
+				lines.add(I18n.t("scoreboard.common.date_line", Component.text(date), Component.text(HypixelConst.getServerName())));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.murdermystery_lobby.total_kills_line", Component.text(String.valueOf(totalKills))));
+				lines.add(I18n.t("scoreboard.murdermystery_lobby.total_wins_line", Component.text(String.valueOf(totalWins))));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.murdermystery_lobby.wins_as_detective_line", Component.text(String.valueOf(detectiveWins))));
+				lines.add(I18n.t("scoreboard.murdermystery_lobby.wins_as_murderer_line", Component.text(String.valueOf(murdererWins))));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.murdermystery_lobby.tokens_line", Component.text(String.valueOf(tokens))));
+				lines.add(Component.text("§7 "));
+				lines.add(I18n.t("scoreboard.common.footer"));
 
 				if (!scoreboard.hasScoreboard(player)) {
-					scoreboard.createScoreboard(player, getSidebarName(animationFrame, l));
+					scoreboard.createScoreboard(player, Component.text(getSidebarName(animationFrame, l)));
 				}
 
 				scoreboard.updateLines(player, lines);
-				scoreboard.updateTitle(player, getSidebarName(animationFrame, l));
+				scoreboard.updateTitle(player, Component.text(getSidebarName(animationFrame, l)));
 			}
 			return TaskSchedule.tick(4);
 		});

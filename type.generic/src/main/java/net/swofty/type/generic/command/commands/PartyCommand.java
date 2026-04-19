@@ -1,5 +1,6 @@
 package net.swofty.type.generic.command.commands;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.ArgumentType;
@@ -15,7 +16,6 @@ import net.swofty.type.generic.user.categories.Rank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -67,11 +67,11 @@ public class PartyCommand extends HypixelCommand {
 
                     int partySize = party.getMembers().size();
                     player.sendTranslated("commands.common.separator");
-                    player.sendTranslated("commands.party.list_header", Map.of("count", String.valueOf(partySize)));
+                    player.sendTranslated("commands.party.list_header", Component.text(String.valueOf(partySize)));
                     player.sendTranslated("commands.common.empty_line");
 
                     FullParty.Member leader = party.getLeader();
-                    player.sendTranslated("commands.party.list_leader", Map.of("leader", HypixelPlayer.getDisplayName(leader.getUuid())));
+                    player.sendTranslated("commands.party.list_leader", Component.text(HypixelPlayer.getDisplayName(leader.getUuid())));
 
                     boolean hasMods = false;
                     for (FullParty.Member member : party.getMembers()) {
@@ -87,7 +87,7 @@ public class PartyCommand extends HypixelCommand {
                                 .filter(member -> member.getRole() == FullParty.Role.MODERATOR)
                                 .map(member -> HypixelPlayer.getDisplayName(member.getUuid()))
                                 .collect(Collectors.joining(", "));
-                        player.sendTranslated("commands.party.list_moderators", Map.of("moderators", modList));
+                        player.sendTranslated("commands.party.list_moderators", Component.text(modList));
                     }
 
                     boolean hasMembers = false;
@@ -104,7 +104,7 @@ public class PartyCommand extends HypixelCommand {
                             .collect(Collectors.joining(", "));
                     if (hasMembers) {
                         player.sendTranslated("commands.common.empty_line");
-                        player.sendTranslated("commands.party.list_members", Map.of("members", memberList));
+                        player.sendTranslated("commands.party.list_members", Component.text(memberList));
                     }
                     player.sendTranslated("commands.common.separator");
                 }
@@ -149,7 +149,7 @@ public class PartyCommand extends HypixelCommand {
                     UUID targetServer = UUID.fromString(target);
                     player.asProxyPlayer().transferToWithIndication(targetServer);
                 }
-                default -> player.sendTranslated("commands.common.unknown_command_use_help", Map.of("command", "party"));
+                default -> player.sendTranslated("commands.common.unknown_command_use_help", Component.text("party"));
             }
 
             pendingCommands.remove(player.getUuid());
@@ -176,7 +176,7 @@ public class PartyCommand extends HypixelCommand {
 
             switch (sub.toLowerCase()) {
                 case "chat" -> PartyManager.sendChat(player, message);
-                default -> player.sendTranslated("commands.common.unknown_command_use_help", Map.of("command", "party"));
+                default -> player.sendTranslated("commands.common.unknown_command_use_help", Component.text("party"));
             }
 
             pendingCommands.remove(player.getUuid());

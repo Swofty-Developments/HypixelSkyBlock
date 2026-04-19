@@ -9,8 +9,6 @@ import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.stream.Stream;
-
 public class NPCBanker extends HypixelNPC {
     public NPCBanker() {
         super(new HumanConfiguration() {
@@ -59,7 +57,7 @@ public class NPCBanker extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("quest-hello", "npcs_hub.banker.dialogue.quest_hello", player)
+            DialogueSet.ofTranslation("quest-hello", "npcs_hub.banker.dialogue.quest_hello")
         };
     }
 }

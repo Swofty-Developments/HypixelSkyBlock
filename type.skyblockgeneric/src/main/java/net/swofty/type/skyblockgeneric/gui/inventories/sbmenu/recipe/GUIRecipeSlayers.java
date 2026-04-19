@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -18,7 +19,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GUIRecipeSlayers extends StatelessView {
 
@@ -86,9 +86,9 @@ public class GUIRecipeSlayers extends StatelessView {
             ));
             String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Map.of("category_name", categoryName)),
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Component.text(categoryName)),
                     type.getMaterial(), 1,
-                    I18n.lore("gui_sbmenu.recipe.book.category.lore", l, Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                I18n.iterable("gui_sbmenu.recipe.book.category.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
         });
 
         // Category items
@@ -132,9 +132,9 @@ public class GUIRecipeSlayers extends StatelessView {
                 ));
                 String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Map.of("category_name", categoryName)),
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Component.text(categoryName)),
                         type.getMaterial(), 1,
-                        I18n.lore("gui_sbmenu.recipe.book.category.lore", l, Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                    I18n.iterable("gui_sbmenu.recipe.book.category.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
             }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
     }

@@ -79,11 +79,17 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
     };
     public static final int[] SINGLE_SLOT = new int[]{22};
 
-    private final String title;
+    private final Component title;
     private final int[] interiorSlots;
 
-    public ShopView(String title, int[] interiorSlots) {
+    public ShopView(Component title, int[] interiorSlots) {
         this.title = title;
+        this.interiorSlots = interiorSlots;
+    }
+
+    @Deprecated
+    public ShopView(String title, int[] interiorSlots) {
+        this.title = Component.text(title);
         this.interiorSlots = interiorSlots;
     }
 
@@ -105,12 +111,12 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return ViewConfiguration.withString((state, _) -> {
+        return ViewConfiguration.withTitle((state, _) -> {
             int totalPages = Math.max(1, (int) Math.ceil((double) getFilteredItems(state).size() / interiorSlots.length));
             if (totalPages == 1) {
                 return title;
             }
-            return title + " | Page " + (state.page() + 1) + "/" + totalPages;
+            return title.append(Component.text("§f | Page " + (state.page() + 1) + "/" + totalPages));
         }, InventoryType.CHEST_6_ROW);
     }
 
