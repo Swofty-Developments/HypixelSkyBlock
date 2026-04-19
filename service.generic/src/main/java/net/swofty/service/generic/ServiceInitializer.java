@@ -3,6 +3,7 @@ package net.swofty.service.generic;
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.redisapi.api.ChannelRegistry;
@@ -52,7 +53,7 @@ public class ServiceInitializer {
 
                     RedisAPI.getInstance().publishMessage(request.getRequestServer(),
                             ChannelRegistry.getFromName(request.getEndpoint()),
-                            request.getRequestId() + "}=-=---={" + response).join();
+                            new RedisEnvelope(request.getRequestId().toString(), service.getType().name(), response).serialize()).join();
                 });
             });
         });

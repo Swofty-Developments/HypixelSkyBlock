@@ -1,5 +1,7 @@
 package net.swofty.commons.party;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.StringUtility;
@@ -16,7 +18,10 @@ public class FullParty implements Party {
     private final UUID uuid;
     private final List<Member> members;
 
-    private FullParty(UUID uuid, List<Member> members) {
+    @JsonCreator
+    public FullParty(
+            @JsonProperty("uuid") UUID uuid,
+            @JsonProperty("members") List<Member> members) {
         this.uuid = uuid;
         this.members = members;
     }
@@ -93,7 +98,11 @@ public class FullParty implements Party {
         private Role role;
         private boolean joined;
 
-        public Member(UUID uuid, Role role, boolean joined) {
+        @JsonCreator
+        public Member(
+                @JsonProperty("uuid") UUID uuid,
+                @JsonProperty("role") Role role,
+                @JsonProperty("joined") boolean joined) {
             this.uuid = uuid;
             this.role = role;
             this.joined = joined;

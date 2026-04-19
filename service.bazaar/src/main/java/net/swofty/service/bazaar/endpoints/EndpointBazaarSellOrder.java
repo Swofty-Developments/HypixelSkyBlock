@@ -22,20 +22,20 @@ public class EndpointBazaarSellOrder implements ServiceEndpoint<
             ServiceProxyRequest message,
             BazaarSellProtocolObject.BazaarSellMessage msg) {
 
-        String itemName    = msg.itemName;
-        UUID   playerUUID  = msg.playerUUID;
-        UUID   profileUUID = msg.profileUUID;
-        double price       = msg.price;
-        double amount      = msg.amount;
+        String itemName    = msg.itemName();
+        UUID   playerUUID  = msg.playerUUID();
+        UUID   profileUUID = msg.profileUUID();
+        double price       = msg.price();
+        double amount      = msg.amount();
 
         try {
             BazaarMarket.get().submitSell(itemName, playerUUID, profileUUID, price, amount);
             System.out.println("Sell order submitted for " + itemName + " by " + playerUUID
                     + " (profile: " + profileUUID + ") - Price: " + price + ", Amount: " + amount);
-            return new BazaarSellProtocolObject.BazaarSellResponse(true);
+            return new BazaarSellProtocolObject.BazaarSellResponse(true, null);
         } catch (Exception e) {
             System.err.println("Failed to submit sell order: " + e.getMessage());
-            return new BazaarSellProtocolObject.BazaarSellResponse(false);
+            return new BazaarSellProtocolObject.BazaarSellResponse(false, "Sell order failed");
         }
     }
 }

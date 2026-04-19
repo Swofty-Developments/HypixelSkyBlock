@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class PlayerLeftAuctionProtocol extends ProtocolObject<
         PlayerLeftAuctionProtocol.PlayerLeftMessage,
@@ -53,6 +54,7 @@ public class PlayerLeftAuctionProtocol extends ProtocolObject<
                 JSONObject json = new JSONObject();
                 json.put("success", value.success);
                 json.put("refundAmount", value.refundAmount);
+                json.put("error", value.error);
                 return json.toString();
             }
 
@@ -61,13 +63,14 @@ public class PlayerLeftAuctionProtocol extends ProtocolObject<
                 JSONObject jsonObject = new JSONObject(json);
                 return new PlayerLeftResponse(
                         jsonObject.getBoolean("success"),
-                        jsonObject.getLong("refundAmount")
+                        jsonObject.getLong("refundAmount"),
+                        jsonObject.optString("error", null)
                 );
             }
 
             @Override
             public PlayerLeftResponse clone(PlayerLeftResponse value) {
-                return new PlayerLeftResponse(value.success, value.refundAmount);
+                return new PlayerLeftResponse(value.success, value.refundAmount, value.error);
             }
         };
     }
@@ -80,6 +83,7 @@ public class PlayerLeftAuctionProtocol extends ProtocolObject<
 
     public record PlayerLeftResponse(
             boolean success,
-            long refundAmount
+            long refundAmount,
+            @Nullable String error
     ) {}
 }

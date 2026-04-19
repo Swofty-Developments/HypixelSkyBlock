@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class PlaceBidProtocol extends ProtocolObject<
         PlaceBidProtocol.PlaceBidMessage,
@@ -49,6 +50,7 @@ public class PlaceBidProtocol extends ProtocolObject<
                 JSONObject json = new JSONObject();
                 json.put("success", value.success);
                 json.put("message", value.message);
+                json.put("error", value.error);
                 return json.toString();
             }
 
@@ -57,13 +59,14 @@ public class PlaceBidProtocol extends ProtocolObject<
                 JSONObject jsonObject = new JSONObject(json);
                 return new PlaceBidResponse(
                         jsonObject.getBoolean("success"),
-                        jsonObject.getString("message")
+                        jsonObject.getString("message"),
+                        jsonObject.optString("error", null)
                 );
             }
 
             @Override
             public PlaceBidResponse clone(PlaceBidResponse value) {
-                return new PlaceBidResponse(value.success, value.message);
+                return new PlaceBidResponse(value.success, value.message, value.error);
             }
         };
     }
@@ -77,6 +80,7 @@ public class PlaceBidProtocol extends ProtocolObject<
 
     public record PlaceBidResponse(
             boolean success,
-            String message
+            String message,
+            @Nullable String error
     ) {}
 }

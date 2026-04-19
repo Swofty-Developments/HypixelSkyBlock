@@ -26,6 +26,6 @@ public class GameHeartbeatEndpoint implements ServiceEndpoint
                 body.onlinePlayers(),
                 body.games()
         );
-        return new GameHeartbeatProtocolObject.HeartbeatResponse(true);
+        return new GameHeartbeatProtocolObject.HeartbeatResponse(true, null);
     }
 }

@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -20,7 +22,8 @@ public class PartyWarpOverviewResponseEvent extends PartyResponseEvent {
         this(party, warper, successfullyWarped, failedToWarp, new HashMap<>());
     }
 
-    public PartyWarpOverviewResponseEvent(FullParty party, UUID warper, List<UUID> successfullyWarped, List<UUID> failedToWarp, Map<UUID, String> failureReasons) {
+    @JsonCreator
+    public PartyWarpOverviewResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("warper") UUID warper, @JsonProperty("successfullyWarped") List<UUID> successfullyWarped, @JsonProperty("failedToWarp") List<UUID> failedToWarp, @JsonProperty("failureReasons") Map<UUID, String> failureReasons) {
         super(party);
         this.warper = warper;
         this.successfullyWarped = successfullyWarped;

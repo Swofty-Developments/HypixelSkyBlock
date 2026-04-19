@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -11,7 +13,8 @@ public class PartyMemberKickResponseEvent extends PartyResponseEvent {
     private final UUID kicker;
     private final UUID kicked;
 
-    public PartyMemberKickResponseEvent(FullParty party, UUID kicker, UUID kicked) {
+    @JsonCreator
+    public PartyMemberKickResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("kicker") UUID kicker, @JsonProperty("kicked") UUID kicked) {
         super(party);
         this.kicker = kicker;
         this.kicked = kicked;

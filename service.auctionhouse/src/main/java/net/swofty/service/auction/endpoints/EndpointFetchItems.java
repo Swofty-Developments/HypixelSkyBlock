@@ -31,7 +31,7 @@ public class EndpointFetchItems implements ServiceEndpoint<
         List<Document> results = AuctionService.cacheService.getAuctions(category.toString(), filter);
 
         if (results.isEmpty()) {
-            return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(new ArrayList<>());
+            return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(new ArrayList<>(), true, null);
         }
 
         // Sort according to sorting
@@ -66,6 +66,6 @@ public class EndpointFetchItems implements ServiceEndpoint<
                 break;
         }
 
-        return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(results.stream().map(AuctionItem::fromDocument).toList());
+        return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(results.stream().map(AuctionItem::fromDocument).toList(), true, null);
     }
 }

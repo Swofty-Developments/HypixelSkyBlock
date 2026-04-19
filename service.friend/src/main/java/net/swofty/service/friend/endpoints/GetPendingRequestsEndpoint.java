@@ -23,6 +23,6 @@ public class GetPendingRequestsEndpoint implements ServiceEndpoint<
             GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage messageObject) {
 
         List<PendingFriendRequest> requests = FriendCache.getPendingRequestsFor(messageObject.playerUuid());
-        return new GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse(requests);
+        return new GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse(requests, true, null);
     }
 }

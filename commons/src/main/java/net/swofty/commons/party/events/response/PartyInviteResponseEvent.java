@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.protocol.Serializer;
@@ -11,7 +13,8 @@ public class PartyInviteResponseEvent extends PartyResponseEvent {
     private final UUID inviter;
     private final UUID invitee;
 
-    public PartyInviteResponseEvent(PendingParty party) {
+    @JsonCreator
+    public PartyInviteResponseEvent(@JsonProperty("party") PendingParty party) {
         super(party);
         this.inviter = party.getLeader();
         this.invitee = party.getInvitee();

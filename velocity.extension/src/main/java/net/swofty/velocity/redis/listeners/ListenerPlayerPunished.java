@@ -3,7 +3,8 @@ package net.swofty.velocity.redis.listeners;
 import com.google.gson.Gson;
 import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.ActivePunishment;
@@ -14,44 +15,50 @@ import net.swofty.commons.punishment.template.MuteType;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.UUID;
 
-@ChannelListener(channel = ToProxyChannels.PUNISH_PLAYER)
-public class ListenerPlayerPunished extends RedisListener {
+@ChannelListener
+public class ListenerPlayerPunished extends RedisListener<
+        PunishPlayerProtocol.Request,
+        PunishPlayerProtocol.Response> {
 
     @Override
-    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
-        UUID target = UUID.fromString(message.getString("target"));
-        String type = message.getString("type");
-        String id = message.getString("id");
-        long expiresAt = message.getLong("expiresAt");
+    public ProtocolObject<PunishPlayerProtocol.Request, PunishPlayerProtocol.Response> getProtocol() {
+        return new PunishPlayerProtocol();
+    }
+
+    @Override
+    public PunishPlayerProtocol.Response receivedMessage(PunishPlayerProtocol.Request message, UUID serverUUID) {
+        UUID target = UUID.fromString(message.target());
+        String type = message.type();
+        String id = message.id();
+        long expiresAt = message.expiresAt();
 
         PunishmentReason reason;
         try {
-            String banString = message.optString("reason_ban", null);
-            String muteString = message.optString("reason_mute", null);
+            String banString = message.reasonBan();
+            String muteString = message.reasonMute();
 
             if (banString != null) {
                 reason = new PunishmentReason(BanType.valueOf(banString));
             } else if (muteString != null) {
                 reason = new PunishmentReason(MuteType.valueOf(muteString));
             } else {
-                throw new org.json.JSONException("Missing reason ban or reason_mute");
+                throw new IllegalArgumentException("Missing reason ban or reason_mute");
             }
-        } catch (IllegalArgumentException | org.json.JSONException e) {
+        } catch (IllegalArgumentException e) {
             Logger.error("Failed to parse punishment reason from message: " + message, e);
             Sentry.captureException(e);
-            return null;
+            return new PunishPlayerProtocol.Response();
         }
 
         List<PunishmentTag> tags = List.of();
-        if (!message.isNull("tags")) {
+        if (message.tags() != null) {
             try {
-                tags = List.of(new Gson().fromJson(message.getString("tags"), PunishmentTag[].class));
+                tags = List.of(new Gson().fromJson(message.tags(), PunishmentTag[].class));
             } catch (Exception ignored) {
             }
         }
@@ -70,6 +77,6 @@ public class ListenerPlayerPunished extends RedisListener {
             }
         });
 
-        return null;
+        return new PunishPlayerProtocol.Response();
     }
 }

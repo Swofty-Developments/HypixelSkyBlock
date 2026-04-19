@@ -19,7 +19,7 @@ public class GameChooseEndpoint implements ServiceEndpoint
 	public ChooseGameProtocolObject.ChooseGameResponse onMessage(ServiceProxyRequest message,
 																		   ChooseGameProtocolObject.ChooseGameMessage body) {
 		ServiceToServerManager.gameInformation(body.server().uuid(), body.player(), body.gameId());
-		return new ChooseGameProtocolObject.ChooseGameResponse(false);
+		return new ChooseGameProtocolObject.ChooseGameResponse(true, null);
 	}
 
 }

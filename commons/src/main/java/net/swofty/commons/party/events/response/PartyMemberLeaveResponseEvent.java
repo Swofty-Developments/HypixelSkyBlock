@@ -1,5 +1,7 @@
 package net.swofty.commons.party.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -10,7 +12,8 @@ import java.util.UUID;
 public class PartyMemberLeaveResponseEvent extends PartyResponseEvent {
     private final UUID leaver;
 
-    public PartyMemberLeaveResponseEvent(FullParty party, UUID leaver) {
+    @JsonCreator
+    public PartyMemberLeaveResponseEvent(@JsonProperty("party") FullParty party, @JsonProperty("leaver") UUID leaver) {
         super(party);
         this.leaver = leaver;
     }

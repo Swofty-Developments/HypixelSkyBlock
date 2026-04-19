@@ -3,12 +3,11 @@ package net.swofty.service.punishment.endpoints;
 import com.google.gson.Gson;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol;
 import net.swofty.commons.protocol.objects.punishment.PunishPlayerProtocolObject;
-import net.swofty.commons.proxy.ToProxyChannels;
 import net.swofty.commons.punishment.*;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.punishment.ProxyRedis;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.time.Instant;
@@ -65,17 +64,16 @@ public class PunishPlayerEndpoint implements ServiceEndpoint
         }
 
         Gson gson = new Gson();
-        ProxyRedis.publishToProxy(ToProxyChannels.PUNISH_PLAYER, new JSONObject()
-                .put("target", messageObject.target())
-                .put("type", messageObject.type())
-                .put("id", id.id())
-                .put("reason_ban", reason.getBanType() != null ? reason.getBanType().name() : null)
-                .put("reason_mute", reason.getMuteType() != null ? reason.getMuteType().name() : null)
-                .put("staff", messageObject.staff())
-                .put("issuedAt", now.toEpochMilli())
-                .put("expiresAt", messageObject.expiresAt())
-                .put("tags", messageObject.tags() != null ? gson.toJson(messageObject.tags()) : null)
-        );
+        ProxyRedis.publishToProxy(new PunishPlayerProtocol(),
+                new PunishPlayerProtocol.Request(
+                        messageObject.target().toString(),
+                        messageObject.type(),
+                        id.id().toString(),
+                        messageObject.expiresAt(),
+                        reason.getBanType() != null ? reason.getBanType().name() : null,
+                        reason.getMuteType() != null ? reason.getMuteType().name() : null,
+                        messageObject.tags() != null ? gson.toJson(messageObject.tags()) : null
+                ));
         Logger.info("Issued {} punishment to {} for reason '{}' (expires at: {})",
                 messageObject.type(),
                 messageObject.target(),

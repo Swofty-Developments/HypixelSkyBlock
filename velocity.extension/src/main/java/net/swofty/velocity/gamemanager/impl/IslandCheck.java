@@ -2,7 +2,7 @@ package net.swofty.velocity.gamemanager.impl;
 
 import com.velocitypowered.api.proxy.Player;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
 import net.swofty.velocity.data.ProfilesDatabase;
 import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
@@ -10,7 +10,6 @@ import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.RedisMessage;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +49,12 @@ public class IslandCheck extends BalanceConfiguration {
                 ArrayList<GameManager.GameServer> gameServers = entry.getValue();
 
                 gameServers.forEach(gameServer -> {
-                    JSONObject jsonResponse = RedisMessage.sendMessageToServer(
+                    DoesServerHaveIslandProtocol.Response response = RedisMessage.sendMessageToServer(
                         gameServer.internalID(),
-                        FromProxyChannels.DOES_SERVER_HAVE_ISLAND,
-                        new JSONObject().put("island-uuid", islandUUID.toString())).join();
+                        new DoesServerHaveIslandProtocol(),
+                        new DoesServerHaveIslandProtocol.Request(islandUUID.toString())).join();
 
-                    boolean hasIsland = jsonResponse.getBoolean("server-has-it");
-
-                    if (hasIsland) {
+                    if (response.serverHasIt()) {
                         toSendTo.set(gameServer);
                     }
                 });

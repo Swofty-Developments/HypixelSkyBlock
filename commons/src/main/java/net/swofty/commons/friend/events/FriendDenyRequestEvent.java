@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -13,7 +15,8 @@ public class FriendDenyRequestEvent extends FriendEvent {
     private final UUID denier;
     private final UUID requester;
 
-    public FriendDenyRequestEvent(UUID denier, UUID requester) {
+    @JsonCreator
+    public FriendDenyRequestEvent(@JsonProperty("denier") UUID denier, @JsonProperty("requester") UUID requester) {
         super();
         this.denier = denier;
         this.requester = requester;

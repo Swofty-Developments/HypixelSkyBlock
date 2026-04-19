@@ -7,8 +7,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
-import net.swofty.commons.proxy.ToProxyChannels;
-import net.swofty.commons.proxy.requirements.to.PlayerHandlerRequirements;
+import net.swofty.commons.protocol.objects.proxy.to.PlayerHandlerProtocol;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import org.json.JSONObject;
@@ -20,6 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public class ProxyPlayer {
+    private static final PlayerHandlerProtocol PLAYER_HANDLER = new PlayerHandlerProtocol();
+
     public static Map<UUID, CompletableFuture<Void>> waitingForTransferComplete = new ConcurrentHashMap<>();
     private final UUID uuid;
 
@@ -32,181 +33,107 @@ public class ProxyPlayer {
     }
 
     public void sendMessage(Component message) {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("message", JSONComponentSerializer.json().serialize(message));
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.MESSAGE;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.MESSAGE,
+                        Map.of("message", JSONComponentSerializer.json().serialize(message))),
+                response -> {});
     }
 
     public void sendMessage(String message) {
         sendMessage(Component.text(message));
     }
 
-
     public void teleport(Pos pos) {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("x", pos.x());
-        json.put("y", pos.y());
-        json.put("z", pos.z());
-        json.put("yaw", pos.yaw());
-        json.put("pitch", pos.pitch());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.TELEPORT;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TELEPORT,
+                        Map.of("x", pos.x(), "y", pos.y(), "z", pos.z(),
+                                "yaw", pos.yaw(), "pitch", pos.pitch())),
+                response -> {});
     }
 
     public CompletableFuture<UnderstandableProxyServer> getServer() {
         CompletableFuture<UnderstandableProxyServer> future = new CompletableFuture<>();
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.GET_SERVER;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {
-            future.complete(UnderstandableProxyServer.singleFromJSON(s.getJSONObject("server")));
-        });
-
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.GET_SERVER, Map.of()),
+                response -> {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> serverMap = (Map<String, Object>) response.data().get("server");
+                    if (serverMap != null) {
+                        future.complete(UnderstandableProxyServer.singleFromJSON(new JSONObject(serverMap)));
+                    } else {
+                        future.complete(null);
+                    }
+                });
         return future;
     }
 
     public CompletableFuture<Boolean> isOnline() {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
-
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.IS_ONLINE;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {
-            boolean isOnline = (boolean) s.get("isOnline");
-            future.complete(isOnline);
-        });
-
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.IS_ONLINE, Map.of()),
+                response -> {
+                    Object isOnline = response.data().get("isOnline");
+                    future.complete(Boolean.TRUE.equals(isOnline));
+                });
         return future;
     }
 
     public void runEvent(ProxyUnderstandableEvent event) {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("event", event.getClass().getName());
-        json.put("data", event.asProxyUnderstandable());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.EVENT;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.EVENT,
+                        Map.of("event", event.getClass().getName(),
+                                "data", event.asProxyUnderstandable())),
+                response -> {});
     }
 
     public CompletableFuture<Void> transferToWithIndication(UUID serverToTransferTo) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("server_uuid", serverToTransferTo.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER_WITH_UUID;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
-
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER_WITH_UUID,
+                        Map.of("server_uuid", serverToTransferTo.toString())),
+                response -> {});
         waitingForTransferComplete.put(uuid, future);
-
         return future;
     }
 
     public void transferTo(ServerType serverType) {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("type", serverType.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER,
+                        Map.of("type", serverType.toString())),
+                response -> {});
     }
 
     public void transferToLimbo() {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.LIMBO;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, Map.of()),
+                response -> {});
     }
 
     public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("type", serverType.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.TRANSFER;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
-
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER,
+                        Map.of("type", serverType.toString())),
+                response -> {});
         waitingForTransferComplete.put(uuid, future);
-
         return future;
     }
 
     public CompletableFuture<UUID> getBankHash() {
         CompletableFuture<UUID> future = new CompletableFuture<>();
-
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.BANK_HASH;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {
-            future.complete(UUID.fromString((String) s.get("bankHash")));
-        });
-
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.BANK_HASH, Map.of()),
+                response -> {
+                    Object bankHash = response.data().get("bankHash");
+                    future.complete(UUID.fromString((String) bankHash));
+                });
         return future;
     }
 
     public void refreshCoopData(String datapoint) {
-        JSONObject json = new JSONObject();
-        json.put("uuid", uuid.toString());
-        json.put("datapoint", datapoint);
-
-        PlayerHandlerRequirements.PlayerHandlerActions action =
-                PlayerHandlerRequirements.PlayerHandlerActions.REFRESH_COOP_DATA;
-        json.put("action", action.name());
-
-        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
-                json, (s) -> {});
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.REFRESH_COOP_DATA,
+                        Map.of("datapoint", datapoint)),
+                response -> {});
     }
 }

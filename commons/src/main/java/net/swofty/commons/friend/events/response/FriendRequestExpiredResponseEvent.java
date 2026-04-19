@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -15,7 +17,8 @@ public class FriendRequestExpiredResponseEvent extends FriendResponseEvent {
     private final String senderName;
     private final String targetName;
 
-    public FriendRequestExpiredResponseEvent(UUID sender, UUID target, String senderName, String targetName) {
+    @JsonCreator
+    public FriendRequestExpiredResponseEvent(@JsonProperty("sender") UUID sender, @JsonProperty("target") UUID target, @JsonProperty("senderName") String senderName, @JsonProperty("targetName") String targetName) {
         super();
         this.sender = sender;
         this.target = target;

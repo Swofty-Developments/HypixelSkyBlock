@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.friend.FriendSettingType;
@@ -15,7 +17,8 @@ public class FriendSettingToggledResponseEvent extends FriendResponseEvent {
     private final FriendSettingType settingType;
     private final boolean newValue;
 
-    public FriendSettingToggledResponseEvent(UUID player, FriendSettingType settingType, boolean newValue) {
+    @JsonCreator
+    public FriendSettingToggledResponseEvent(@JsonProperty("player") UUID player, @JsonProperty("settingType") FriendSettingType settingType, @JsonProperty("newValue") boolean newValue) {
         super();
         this.player = player;
         this.settingType = settingType;

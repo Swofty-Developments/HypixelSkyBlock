@@ -22,6 +22,6 @@ public class IsPlayerInPartyEndpoint implements ServiceEndpoint<
 
         boolean isInParty = PartyCache.isInParty(playerUUID);
 
-        return new IsPlayerInPartyProtocolObject.IsPlayerInPartyResponse(isInParty);
+        return new IsPlayerInPartyProtocolObject.IsPlayerInPartyResponse(isInParty, true, null);
     }
 }

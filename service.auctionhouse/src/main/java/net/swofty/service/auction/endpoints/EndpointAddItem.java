@@ -41,6 +41,6 @@ public class EndpointAddItem implements ServiceEndpoint<
             }
         });
 
-        return new AuctionAddItemProtocolObject.AuctionAddItemResponse(UUID.fromString((String) document.get("_id")));
+        return new AuctionAddItemProtocolObject.AuctionAddItemResponse(UUID.fromString((String) document.get("_id")), true, null);
     }
 }

@@ -32,20 +32,20 @@ public class GetCandidatesEndpoint implements ServiceEndpoint
         try {
             String rawData = ElectionDatabase.loadElectionData();
             if (rawData == null) {
-                return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of());
+                return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of(), true, null);
             }
 
             Map<String, Object> data = GSON.fromJson(rawData, Map.class);
             Boolean electionOpen = (Boolean) data.get("electionOpen");
             if (electionOpen == null || !electionOpen) {
-                return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of());
+                return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of(), true, null);
             }
 
             int electionYear = ((Number) data.get("electionYear")).intValue();
 
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) data.get("candidates");
             if (candidates == null || candidates.isEmpty()) {
-                return new GetCandidatesProtocolObject.GetCandidatesResponse(true, List.of());
+                return new GetCandidatesProtocolObject.GetCandidatesResponse(true, List.of(), true, null);
             }
 
             Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
@@ -61,10 +61,10 @@ public class GetCandidatesEndpoint implements ServiceEndpoint
                 infos.add(new GetCandidatesProtocolObject.CandidateInfo(name, perks, voteCount, pct));
             }
 
-            return new GetCandidatesProtocolObject.GetCandidatesResponse(true, infos);
+            return new GetCandidatesProtocolObject.GetCandidatesResponse(true, infos, true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to get candidates");
-            return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of());
+            return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of(), true, null);
         }
     }
 }

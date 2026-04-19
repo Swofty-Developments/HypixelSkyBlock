@@ -21,6 +21,6 @@ public class GetFriendDataEndpoint implements ServiceEndpoint<
             GetFriendDataProtocolObject.GetFriendDataMessage messageObject) {
 
         FriendData data = FriendCache.getFriendData(messageObject.playerUuid());
-        return new GetFriendDataProtocolObject.GetFriendDataResponse(data);
+        return new GetFriendDataProtocolObject.GetFriendDataResponse(data, true, null);
     }
 }

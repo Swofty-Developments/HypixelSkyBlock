@@ -61,11 +61,11 @@ public class FriendEventToServiceEndpoint implements ServiceEndpoint<
                 default -> Logger.warn("Unknown friend event type: " + event.getClass().getSimpleName());
             }
 
-            return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(true);
+            return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(true, null);
         } catch (Exception e) {
             System.out.println("Failed to process friend event: " + e.getMessage());
             Logger.error(e, "Failed to process friend event in service endpoint");
-            return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(false);
+            return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(false, "Event processing failed");
         }
     }
 }

@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -17,7 +19,8 @@ public class FriendRequestsListResponseEvent extends FriendResponseEvent {
     private final int page;
     private final int totalPages;
 
-    public FriendRequestsListResponseEvent(UUID player, List<FriendRequestEntry> requests, int page, int totalPages) {
+    @JsonCreator
+    public FriendRequestsListResponseEvent(@JsonProperty("player") UUID player, @JsonProperty("requests") List<FriendRequestEntry> requests, @JsonProperty("page") int page, @JsonProperty("totalPages") int totalPages) {
         super();
         this.player = player;
         this.requests = requests;
@@ -89,7 +92,8 @@ public class FriendRequestsListResponseEvent extends FriendResponseEvent {
         private final String senderName;
         private final long timestamp;
 
-        public FriendRequestEntry(UUID senderUuid, String senderName, long timestamp) {
+        @JsonCreator
+        public FriendRequestEntry(@JsonProperty("senderUuid") UUID senderUuid, @JsonProperty("senderName") String senderName, @JsonProperty("timestamp") long timestamp) {
             this.senderUuid = senderUuid;
             this.senderName = senderName;
             this.timestamp = timestamp;

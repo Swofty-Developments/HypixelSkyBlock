@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -15,7 +17,8 @@ public class FriendAddedResponseEvent extends FriendResponseEvent {
     private final String player1Name;
     private final String player2Name;
 
-    public FriendAddedResponseEvent(UUID player1, UUID player2, String player1Name, String player2Name) {
+    @JsonCreator
+    public FriendAddedResponseEvent(@JsonProperty("player1") UUID player1, @JsonProperty("player2") UUID player2, @JsonProperty("player1Name") String player1Name, @JsonProperty("player2Name") String player2Name) {
         super();
         this.player1 = player1;
         this.player2 = player2;

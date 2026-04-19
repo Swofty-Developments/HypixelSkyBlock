@@ -22,6 +22,6 @@ public class GetPartyEndpoint implements ServiceEndpoint
         UUID memberUUID = messageObject.memberUuid();
         FullParty party = PartyCache.getPartyFromPlayer(memberUUID);
         if (party == null) throw new RuntimeException("Player is not in a party");
-        return new GetPartyProtocolObject.GetPartyResponse(party);
+        return new GetPartyProtocolObject.GetPartyResponse(party, true, null);
     }
 }

@@ -36,7 +36,7 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
         try {
             String rawData = ElectionDatabase.loadElectionData();
             if (rawData == null) {
-                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, null);
+                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, null, true, null);
             }
 
             Map<String, Object> data = GSON.fromJson(rawData, Map.class);
@@ -44,7 +44,7 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
 
             if (electionOpen == null || !electionOpen) {
                 data.remove("votes");
-                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, GSON.toJson(data));
+                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, GSON.toJson(data), true, null);
             }
 
             int electionYear = messageObject.year();
@@ -62,7 +62,7 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
             sorted.sort((a, b) -> Long.compare(b.getValue(), a.getValue()));
 
             if (sorted.isEmpty()) {
-                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, GSON.toJson(data));
+                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, GSON.toJson(data), true, null);
             }
 
             long topVotes = sorted.getFirst().getValue();
@@ -154,10 +154,10 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
 
             ElectionDatabase.saveElectionData(GSON.toJson(data));
 
-            return new ResolveElectionProtocolObject.ResolveElectionResponse(true, GSON.toJson(data));
+            return new ResolveElectionProtocolObject.ResolveElectionResponse(true, GSON.toJson(data), true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to resolve election");
-            return new ResolveElectionProtocolObject.ResolveElectionResponse(false, null);
+            return new ResolveElectionProtocolObject.ResolveElectionResponse(false, null, true, null);
         }
     }
 

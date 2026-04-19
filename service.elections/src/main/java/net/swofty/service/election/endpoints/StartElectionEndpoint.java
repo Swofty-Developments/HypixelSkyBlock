@@ -42,7 +42,7 @@ public class StartElectionEndpoint implements ServiceEndpoint
                     Map<String, Long> tallies = ElectionDatabase.getTallies(messageObject.year());
                     existing.put("voteTallies", tallies);
                     existing.remove("votes");
-                    return new StartElectionProtocolObject.StartElectionResponse(false, GSON.toJson(existing));
+                    return new StartElectionProtocolObject.StartElectionResponse(false, GSON.toJson(existing), true, null);
                 }
             }
 
@@ -62,10 +62,10 @@ public class StartElectionEndpoint implements ServiceEndpoint
             ElectionDatabase.initTallies(messageObject.year(), candidateNames);
 
             electionData.remove("votes");
-            return new StartElectionProtocolObject.StartElectionResponse(true, GSON.toJson(electionData));
+            return new StartElectionProtocolObject.StartElectionResponse(true, GSON.toJson(electionData), true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to start election");
-            return new StartElectionProtocolObject.StartElectionResponse(false, null);
+            return new StartElectionProtocolObject.StartElectionResponse(false, null, true, null);
         }
     }
 }
