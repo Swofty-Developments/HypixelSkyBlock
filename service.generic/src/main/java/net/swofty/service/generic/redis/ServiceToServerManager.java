@@ -2,6 +2,7 @@ package net.swofty.service.generic.redis;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
@@ -36,25 +37,25 @@ public class ServiceToServerManager {
 
         // Register response handler for server responses
         RedisAPI.getInstance().registerChannel("service_response", (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            UUID requestId = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
-            String response = split[1];
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID requestId = UUID.fromString(envelope.id());
 
             CompletableFuture<JSONObject> future = pendingRequests.remove(requestId);
             if (future != null) {
-                future.complete(new JSONObject(response));
+                future.complete(new JSONObject(envelope.payload()));
             }
         });
 
         RedisAPI.getInstance().registerChannel("service_broadcast_response", (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            UUID requestId = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
-            UUID serverUUID = UUID.fromString(split[1]);
-            String response = split[2];
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID requestId = UUID.fromString(envelope.id());
+            UUID serverUUID = UUID.fromString(envelope.from());
 
             BroadcastRequest broadcastRequest = pendingBroadcastRequests.get(requestId);
             if (broadcastRequest != null) {
-                broadcastRequest.addResponse(serverUUID, new JSONObject(response));
+                broadcastRequest.addResponse(serverUUID, new JSONObject(envelope.payload()));
             }
         });
     }
@@ -90,12 +91,11 @@ public class ServiceToServerManager {
 
         String serialized = protocol.translateToString(message);
         String channelName = "service_" + protocol.channel();
-        String messageContent = currentServiceType.name() + "}=-=-={" + requestId + "}=-=-={" + serialized;
 
         RedisAPI.getInstance().publishMessage(
                 serverUUID.toString(),
                 ChannelRegistry.getFromName(channelName),
-                messageContent
+                new RedisEnvelope(requestId.toString(), currentServiceType.name(), serialized).serialize()
         );
 
         return future;
@@ -115,13 +115,10 @@ public class ServiceToServerManager {
 
         String serialized = protocol.translateToString(message);
         String channelName = "service_broadcast_" + protocol.channel();
-        String messageContent = currentServiceType.name()
-                + "}=-=-={" + requestId
-                + "}=-=-={" + serialized;
 
         RedisAPI.getInstance().publishMessage("all",
                 ChannelRegistry.getFromName(channelName),
-                messageContent);
+                new RedisEnvelope(requestId.toString(), currentServiceType.name(), serialized).serialize());
 
         scheduler.schedule(() -> {
             BroadcastRequest req = pendingBroadcastRequests.remove(requestId);

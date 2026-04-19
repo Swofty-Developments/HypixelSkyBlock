@@ -1,6 +1,7 @@
 package net.swofty.proxyapi;
 
 import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.redisapi.api.ChannelRegistry;
@@ -22,10 +23,10 @@ public class ProxyAPI {
 
     public void registerFromProxyHandler(ProxyToClient handler) {
         RedisAPI.getInstance().registerChannel(handler.getChannel().getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
-            String rawMessage = split[1];
-            JSONObject json = new JSONObject(rawMessage);
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID request = UUID.fromString(envelope.id());
+            JSONObject json = new JSONObject(envelope.payload());
 
             JSONObject response = handler.onMessage(json);
 
@@ -37,7 +38,7 @@ public class ProxyAPI {
             RedisAPI.getInstance().publishMessage(
                     "proxy",
                     ChannelRegistry.getFromName(handler.getChannel().getChannelName()),
-                    request + "}=-=-={" + response.toString());
+                    new RedisEnvelope(envelope.id(), serverUUID.toString(), response.toString()).serialize());
         });
     }
 
@@ -46,10 +47,11 @@ public class ProxyAPI {
         String channelName = "service_" + protocol.channel();
 
         RedisAPI.getInstance().registerChannel(channelName, (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
-            UUID requestId = UUID.fromString(split[1]);
-            String rawMessage = split[2];
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            String serviceId = envelope.from();
+            UUID requestId = UUID.fromString(envelope.id());
+            String rawMessage = envelope.payload();
 
             Thread.startVirtualThread(() -> {
                 T typedMessage = protocol.translateFromString(rawMessage);
@@ -60,15 +62,16 @@ public class ProxyAPI {
                 RedisAPI.getInstance().publishMessage(
                         serviceId,
                         ChannelRegistry.getFromName("service_response"),
-                        requestId + "}=-=-={" + serializedResponse);
+                        new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
             });
         });
 
         RedisAPI.getInstance().registerChannel("service_broadcast_" + protocol.channel(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
-            UUID requestId = UUID.fromString(split[1]);
-            String rawMessage = split[2];
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            String serviceId = envelope.from();
+            UUID requestId = UUID.fromString(envelope.id());
+            String rawMessage = envelope.payload();
 
             Thread.startVirtualThread(() -> {
                 T typedMessage = protocol.translateFromString(rawMessage);
@@ -81,7 +84,7 @@ public class ProxyAPI {
                 RedisAPI.getInstance().publishMessage(
                         serviceId,
                         ChannelRegistry.getFromName("service_broadcast_response"),
-                        requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + serializedResponse);
+                        new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
             });
         });
     }

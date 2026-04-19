@@ -1,5 +1,6 @@
 package net.swofty.velocity.redis;
 
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
@@ -17,20 +18,18 @@ public abstract class RedisListener {
     }
 
     public void onMessage(String channel, String message) {
-        String[] split = message.split("}=-=-=\\{");
-        String rawMessage = split[0];
-        UUID uuid = UUID.fromString(split[1]);
-        UUID filterID = UUID.fromString(split[2]);
-
-        String messageWithoutFilter = rawMessage.substring(rawMessage.indexOf(";") + 1);
-        JSONObject json = new JSONObject(messageWithoutFilter);
+        String messageWithoutFilter = message.substring(message.indexOf(";") + 1);
+        RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+        UUID uuid = UUID.fromString(envelope.id());
+        UUID filterID = UUID.fromString(envelope.from());
+        JSONObject json = new JSONObject(envelope.payload());
 
         Thread.startVirtualThread(() -> {
             JSONObject response;
             try {
                 response = receivedMessage(json, filterID);
             } catch (Exception e) {
-                System.out.println("Error on channel " + channel + " with message " + messageWithoutFilter);
+                System.out.println("Error on channel " + channel + " with message " + envelope.payload());
                 Logger.error(e, "Error in Redis listener");
                 return;
             }
@@ -38,7 +37,7 @@ public abstract class RedisListener {
             RedisAPI.getInstance().publishMessage(
                     filterID.toString(),
                     ChannelRegistry.getFromName(channel),
-                    uuid + "}=-=-={" + response.toString());
+                    new RedisEnvelope(envelope.id(), "proxy", response.toString()).serialize());
         });
     }
 

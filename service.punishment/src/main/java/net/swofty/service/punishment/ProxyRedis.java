@@ -5,6 +5,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.redis.RedisEnvelope;
 import org.json.JSONObject;
 
 import java.net.URI;
@@ -66,7 +67,7 @@ public class ProxyRedis {
     public static void publishToProxy(ToProxyChannels channel, JSONObject message) {
         UUID uuid = UUID.randomUUID();
         publishMessage("proxy", channel.getChannelName(),
-                message.toString() + "}=-=-={" + uuid + "}=-=-={" + uuid);
+                new RedisEnvelope(uuid.toString(), uuid.toString(), message.toString()).serialize());
     }
 
     public static boolean isInitialized() {

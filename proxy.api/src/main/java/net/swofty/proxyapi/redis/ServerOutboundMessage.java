@@ -4,6 +4,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
@@ -24,10 +25,10 @@ public class ServerOutboundMessage {
         RedisAPI.getInstance().registerChannel(channel.getChannelName(), (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
 
-            String[] split = messageWithoutFilter.split("}=-=-=\\{");
-            UUID uuid = UUID.fromString(split[0]);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID uuid = UUID.fromString(envelope.id());
 
-            redisMessageListeners.get(uuid).accept(split[1]);
+            redisMessageListeners.get(uuid).accept(envelope.payload());
             redisMessageListeners.remove(uuid);
         });
     }
@@ -43,7 +44,7 @@ public class ServerOutboundMessage {
 
         RedisAPI.getInstance().publishMessage("proxy",
                 ChannelRegistry.getFromName(channel.getChannelName()),
-                message.toString() + "}=-=-={" + uuid + "}=-=-={" + filterID);
+                new RedisEnvelope(uuid.toString(), filterID.toString(), message.toString()).serialize());
     }
 
     public static void registerFromProtocolObject(ProtocolObject object) {
@@ -52,13 +53,10 @@ public class ServerOutboundMessage {
 
         RedisAPI.getInstance().registerChannel(object.channel(), (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            String[] split = messageWithoutFilter.split("}=-=---=\\{");
 
-            UUID uuid = UUID.fromString(split[0]);
-            String message;
-            if (split.length != 1) {
-                message = split[1];
-            } else message = "";
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID uuid = UUID.fromString(envelope.id());
+            String message = envelope.payload();
 
             try {
                 redisMessageListeners.get(uuid).accept(message);

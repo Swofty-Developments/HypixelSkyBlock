@@ -15,6 +15,7 @@ java {
 }
 
 dependencies {
+    implementation(libs.json)
     implementation(libs.snakeyaml)
     implementation(project(":packer"))
     implementation(libs.mongodb.bson)

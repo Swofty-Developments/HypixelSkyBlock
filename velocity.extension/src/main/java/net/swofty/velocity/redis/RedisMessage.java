@@ -1,6 +1,7 @@
 package net.swofty.velocity.redis;
 
 import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
@@ -24,16 +25,17 @@ public class RedisMessage {
         RedisAPI.getInstance().publishMessage(
                 server.toString(),
                 ChannelRegistry.getFromName(channel.getChannelName()),
-                requestID + "}=-=-={" + message.toString());
+                new RedisEnvelope(requestID.toString(), "proxy", message.toString()).serialize());
 
         return future;
     }
 
     public static void registerProxyToServer(FromProxyChannels channel) {
         RedisAPI.getInstance().registerChannel(channel.getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
-            String rawMessage = split[1];
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID request = UUID.fromString(envelope.id());
+            String rawMessage = envelope.payload();
 
             try {
                 callbacks.get(request).complete(new JSONObject(rawMessage));
