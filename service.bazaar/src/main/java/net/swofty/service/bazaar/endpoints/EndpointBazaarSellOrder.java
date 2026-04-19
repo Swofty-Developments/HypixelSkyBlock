@@ -22,11 +22,11 @@ public class EndpointBazaarSellOrder implements ServiceEndpoint<
             ServiceProxyRequest message,
             BazaarSellProtocolObject.BazaarSellMessage msg) {
 
-        String itemName    = msg.itemName;
-        UUID   playerUUID  = msg.playerUUID;
-        UUID   profileUUID = msg.profileUUID;
-        double price       = msg.price;
-        double amount      = msg.amount;
+        String itemName    = msg.itemName();
+        UUID   playerUUID  = msg.playerUUID();
+        UUID   profileUUID = msg.profileUUID();
+        double price       = msg.price();
+        double amount      = msg.amount();
 
         try {
             BazaarMarket.get().submitSell(itemName, playerUUID, profileUUID, price, amount);

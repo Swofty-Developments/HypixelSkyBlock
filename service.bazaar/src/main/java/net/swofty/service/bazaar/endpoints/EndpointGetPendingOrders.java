@@ -26,8 +26,8 @@ public class EndpointGetPendingOrders implements ServiceEndpoint<
             ServiceProxyRequest message,
             BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage msg) {
 
-        UUID player = msg.playerUUID;
-        UUID profile = msg.profileUUID;
+        UUID player = msg.playerUUID();
+        UUID profile = msg.profileUUID();
 
         var docs = OrderDatabase.ordersCollection.find(
                 Filters.and(

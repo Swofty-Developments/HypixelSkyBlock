@@ -35,7 +35,7 @@ public class BazaarConnector {
 
         return bazaarService.<BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage,
                         BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse>handleRequest(message)
-                .thenApply(response -> response.orders.stream()
+                .thenApply(response -> response.orders().stream()
                         .map(order -> new BazaarOrder(
                                 order.orderId(),
                                 order.itemName(),
@@ -56,7 +56,7 @@ public class BazaarConnector {
 
         return bazaarService.<BazaarCancelProtocolObject.CancelMessage,
                         BazaarCancelProtocolObject.CancelResponse>handleRequest(message)
-                .thenApply(response -> response.successful);
+                .thenApply(response -> response.successful());
     }
 
     public CompletableFuture<BazaarItemData> getItemData(ItemType itemType) {
@@ -115,8 +115,8 @@ public class BazaarConnector {
         return bazaarService.<BazaarBuyProtocolObject.BazaarBuyMessage,
                         BazaarBuyProtocolObject.BazaarBuyResponse>handleRequest(message)
                 .thenApply(response -> new BazaarResult(
-                        response.successful,
-                        response.successful ? "Buy order created!" : "Failed to create buy order"
+                        response.successful(),
+                        response.successful() ? "Buy order created!" : "Failed to create buy order"
                 ));
     }
 
@@ -132,8 +132,8 @@ public class BazaarConnector {
         return bazaarService.<BazaarSellProtocolObject.BazaarSellMessage,
                         BazaarSellProtocolObject.BazaarSellResponse>handleRequest(message)
                 .thenApply(response -> new BazaarResult(
-                        response.successful,
-                        response.successful ? "Sell order created!" : "Failed to create sell order"
+                        response.successful(),
+                        response.successful() ? "Sell order created!" : "Failed to create sell order"
                 ));
     }
 
@@ -213,12 +213,12 @@ public class BazaarConnector {
 
         return bazaarService.<BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsMessage,
                         BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsResponse>handleRequest(message)
-                .thenApply(response -> response.transactions.stream()
+                .thenApply(response -> response.transactions().stream()
                         .map(txInfo -> new PendingTransaction(
-                                txInfo.id,
-                                txInfo.transactionType,
-                                txInfo.transactionData,
-                                txInfo.createdAt
+                                txInfo.id(),
+                                txInfo.transactionType(),
+                                new org.json.JSONObject(txInfo.transactionData()),
+                                txInfo.createdAt()
                         ))
                         .collect(Collectors.toList()));
     }
@@ -233,10 +233,10 @@ public class BazaarConnector {
         return bazaarService.<BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage,
                         BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsResponse>handleRequest(message)
                 .thenApply(response -> new TransactionProcessResult(
-                        response.processedCount,
-                        response.failedCount,
-                        response.successfulTransactionIds,
-                        response.failedTransactionIds
+                        response.processedCount(),
+                        response.failedCount(),
+                        response.successfulTransactionIds(),
+                        response.failedTransactionIds()
                 ));
     }
 

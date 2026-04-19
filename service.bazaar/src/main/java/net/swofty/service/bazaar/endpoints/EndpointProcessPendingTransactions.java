@@ -27,12 +27,11 @@ public class EndpointProcessPendingTransactions implements ServiceEndpoint<
         List<String> successfulIds = new ArrayList<>();
         List<String> failedIds = new ArrayList<>();
 
-        System.out.println("Processing " + msg.transactionIds.size() +
-                " pending transactions for player " + msg.playerUUID);
+        System.out.println("Processing " + msg.transactionIds().size() +
+                " pending transactions for player " + msg.playerUUID());
 
-        for (String transactionId : msg.transactionIds) {
+        for (String transactionId : msg.transactionIds()) {
             try {
-                // Mark the transaction as processed in the database
                 PendingTransactionsDatabase.markTransactionProcessed(transactionId);
                 successfulIds.add(transactionId);
                 System.out.println("Successfully processed pending transaction: " + transactionId);
@@ -42,7 +41,6 @@ public class EndpointProcessPendingTransactions implements ServiceEndpoint<
             }
         }
 
-        // Clean up processed transactions
         if (!successfulIds.isEmpty()) {
             try {
                 PendingTransactionsDatabase.cleanupProcessedTransactions();

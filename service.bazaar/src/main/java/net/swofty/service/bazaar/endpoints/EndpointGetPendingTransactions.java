@@ -25,23 +25,21 @@ public class EndpointGetPendingTransactions implements ServiceEndpoint<
             ServiceProxyRequest message,
             BazaarGetPendingTransactionsMessage msg) {
 
-        // Get pending transactions from database
         List<PendingTransactionsDatabase.PendingTransaction> pendingTransactions =
-                PendingTransactionsDatabase.getPendingTransactions(msg.playerUUID, msg.profileUUID);
+                PendingTransactionsDatabase.getPendingTransactions(msg.playerUUID(), msg.profileUUID());
 
-        // Convert to protocol format
         List<PendingTransactionInfo> transactionInfos = pendingTransactions.stream()
                 .map(pt -> new PendingTransactionInfo(
                         pt.getId(),
                         pt.getTransaction().getClass().getSimpleName(),
-                        pt.getTransaction().toJSON(),
+                        pt.getTransaction().toJSON().toMap(),
                         pt.getCreatedAt()
                 ))
                 .collect(Collectors.toList());
 
         System.out.println("Retrieved " + transactionInfos.size() +
-                " pending transactions for player " + msg.playerUUID +
-                " on profile " + msg.profileUUID);
+                " pending transactions for player " + msg.playerUUID() +
+                " on profile " + msg.profileUUID());
 
         return new BazaarGetPendingTransactionsResponse(transactionInfos);
     }

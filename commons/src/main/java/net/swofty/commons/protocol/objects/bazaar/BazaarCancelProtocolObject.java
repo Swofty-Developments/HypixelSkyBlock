@@ -1,10 +1,8 @@
 package net.swofty.commons.protocol.objects.bazaar;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -14,61 +12,15 @@ public class BazaarCancelProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<CancelMessage> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(CancelMessage v) {
-                JSONObject o = new JSONObject();
-                o.put("order-id",   v.orderId.toString());
-                o.put("player-uuid", v.playerUuid.toString());
-                o.put("profile-uuid", v.profileUuid.toString());
-                return o.toString();
-            }
-            @Override
-            public CancelMessage deserialize(String json) {
-                JSONObject o = new JSONObject(json);
-                return new CancelMessage(
-                        UUID.fromString(o.getString("order-id")),
-                        UUID.fromString(o.getString("player-uuid")),
-                        UUID.fromString(o.getString("profile-uuid"))
-                );
-            }
-            @Override
-            public CancelMessage clone(CancelMessage v) {
-                return new CancelMessage(v.orderId, v.playerUuid, v.profileUuid);
-            }
-        };
+        return new JacksonSerializer<>(CancelMessage.class);
     }
 
     @Override
     public Serializer<CancelResponse> getReturnSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(CancelResponse v) {
-                JSONObject o = new JSONObject();
-                o.put("successful", v.successful);
-                return o.toString();
-            }
-            @Override
-            public CancelResponse deserialize(String json) {
-                boolean ok = new JSONObject(json).getBoolean("successful");
-                return new CancelResponse(ok);
-            }
-            @Override
-            public CancelResponse clone(CancelResponse v) {
-                return new CancelResponse(v.successful);
-            }
-        };
+        return new JacksonSerializer<>(CancelResponse.class);
     }
 
-    @AllArgsConstructor @NoArgsConstructor
-    public static class CancelMessage {
-        public UUID orderId;
-        public UUID playerUuid;
-        public UUID profileUuid;
-    }
+    public record CancelMessage(UUID orderId, UUID playerUuid, UUID profileUuid) {}
 
-    @AllArgsConstructor @NoArgsConstructor
-    public static class CancelResponse {
-        public boolean successful;
-    }
+    public record CancelResponse(boolean successful) {}
 }
