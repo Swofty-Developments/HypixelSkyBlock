@@ -182,7 +182,9 @@ public class Hypixel {
             ServerOutboundMessage.registerToProxyProtocol(protocol);
         }
         List<ProtocolObject> protocolObjects = SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.commons.protocol.objects", ProtocolObject.class).toList();
+                "net.swofty.commons.protocol.objects", ProtocolObject.class)
+                .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
+                .toList();
         protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
         proxyAPI.start();
 
