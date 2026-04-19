@@ -1,5 +1,7 @@
 package net.swofty.commons.friend;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
@@ -11,7 +13,10 @@ public class FriendSettings {
     private boolean acceptingRequests;
     private boolean joinLeaveNotifications;
 
-    public FriendSettings(boolean acceptingRequests, boolean joinLeaveNotifications) {
+    @JsonCreator
+    public FriendSettings(
+            @JsonProperty("acceptingRequests") boolean acceptingRequests,
+            @JsonProperty("joinLeaveNotifications") boolean joinLeaveNotifications) {
         this.acceptingRequests = acceptingRequests;
         this.joinLeaveNotifications = joinLeaveNotifications;
     }

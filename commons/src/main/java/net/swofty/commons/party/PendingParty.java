@@ -1,5 +1,7 @@
 package net.swofty.commons.party;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -13,7 +15,11 @@ public class PendingParty implements Party {
     public final UUID invitee;
     public final UUID leader;
 
-    public PendingParty(UUID resultPartyUUID, UUID invitee, UUID leader) {
+    @JsonCreator
+    public PendingParty(
+            @JsonProperty("resultPartyUUID") UUID resultPartyUUID,
+            @JsonProperty("invitee") UUID invitee,
+            @JsonProperty("leader") UUID leader) {
         this.resultPartyUUID = resultPartyUUID;
         this.invitee = invitee;
         this.leader = leader;

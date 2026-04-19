@@ -20,14 +20,14 @@ public class EndpointAuthenticateCode implements ServiceEndpoint<
     public APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse onMessage(
             ServiceProxyRequest message,
             APIAuthenticateCodeProtocolObject.AuthenticateCodeMessage messageObject) {
-        @Nullable APIAdminDatabaseObject document = APIAdminDatabase.getFromCode(messageObject.authCode);
+        @Nullable APIAdminDatabaseObject document = APIAdminDatabase.getFromCode(messageObject.authCode());
 
         if (document == null) {
             return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(false);
         }
 
-        document.setAuthenticatorName(messageObject.playerName);
-        document.setAuthenticatorUUID(messageObject.playerUUID);
+        document.setAuthenticatorName(messageObject.playerName());
+        document.setAuthenticatorUUID(messageObject.playerUUID());
 
         APIAdminDatabase.replaceOrInsert(document);
 

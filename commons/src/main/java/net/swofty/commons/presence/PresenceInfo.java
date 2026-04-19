@@ -1,5 +1,7 @@
 package net.swofty.commons.presence;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -14,7 +16,13 @@ public class PresenceInfo {
     private final String serverId;
     private final long lastSeen;
 
-    public PresenceInfo(UUID uuid, boolean online, String serverType, String serverId, long lastSeen) {
+    @JsonCreator
+    public PresenceInfo(
+            @JsonProperty("uuid") UUID uuid,
+            @JsonProperty("online") boolean online,
+            @JsonProperty("serverType") String serverType,
+            @JsonProperty("serverId") String serverId,
+            @JsonProperty("lastSeen") long lastSeen) {
         this.uuid = uuid;
         this.online = online;
         this.serverType = serverType;
@@ -54,4 +62,3 @@ public class PresenceInfo {
         };
     }
 }
-

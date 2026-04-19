@@ -41,7 +41,7 @@ public class VerifyApiCommand extends HypixelCommand {
                         player.getUuid()
                 )).thenAccept(nonCastedResponse -> {
                     APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse response = (APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse) nonCastedResponse;
-                    if (response.successful) {
+                    if (response.successful()) {
                         sender.sendMessage("§aCode '" + codeString + "' has successfully been verified! Check your web browser.");
                     } else {
                         sender.sendMessage("§cInvalid code!");
