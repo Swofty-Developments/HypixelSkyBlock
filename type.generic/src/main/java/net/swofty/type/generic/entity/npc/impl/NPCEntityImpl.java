@@ -1,7 +1,6 @@
 package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
-import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
@@ -57,9 +56,6 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
 
         setNoGravity(true);
         setAutoViewable(false);
-        setBoundingBox(new BoundingBox(
-            0.6, 1.8, 2
-        ));
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
             .pos(pos.add(0, getBoundingBox().height() - 0.1f, 0))

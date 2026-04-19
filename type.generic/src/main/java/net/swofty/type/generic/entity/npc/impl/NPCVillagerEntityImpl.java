@@ -1,8 +1,6 @@
 package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
@@ -34,14 +32,13 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
         this.config = config;
         this.holograms = holograms;
 
-        this.setCustomNameVisible(false);
-        this.set(DataComponents.CUSTOM_NAME, Component.text(bottomDisplay));
 
         VillagerMeta meta = (VillagerMeta) this.entityMeta;
         meta.setVillagerData(new VillagerMeta.VillagerData(
-                VillagerType.PLAINS, profession, VillagerMeta.Level.EXPERT)
+            VillagerType.PLAINS, profession, VillagerMeta.Level.EXPERT)
         );
 
+        this.setCustomNameVisible(false);
         setAutoViewable(false);
         setNoGravity(true);
 

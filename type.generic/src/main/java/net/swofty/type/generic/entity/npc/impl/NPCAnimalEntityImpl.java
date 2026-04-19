@@ -1,8 +1,6 @@
 package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
@@ -31,8 +29,8 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
 
         this.viewer = viewer;
         this.config = config;
+
         this.setCustomNameVisible(false);
-        this.set(DataComponents.CUSTOM_NAME, Component.text(bottomDisplay));
         setNoGravity(true);
         setAutoViewable(false);
 
