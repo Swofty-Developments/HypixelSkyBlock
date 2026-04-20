@@ -1,6 +1,8 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
@@ -31,7 +33,7 @@ public class NPCFishermanGerald extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(118.500, 71.000, -32.500, 145, 0);
+                return new Pos(118.5, 71, -32.5, 180, 0);
             }
 
             @Override
@@ -52,7 +54,29 @@ public class NPCFishermanGerald extends HypixelNPC {
             return;
         }
 
-        // TODO: finish this quest
+        if(!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERMAN_GERALD)) {
+            setDialogue(player, "first-interaction").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERMAN_GERALD, true);
+            });
+            return;
+        }
+
+        if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERWOMAN_ENID)) {
+            setDialogue(player, "talk-to-enid-again");
+            return;
+        }
+
+        if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_UNLOCKED_SHIP)) {
+            setDialogue(player, Math.random() < 0.5D ? "after-bringing-engine-to-baha" : "idle-" + (1 + (int) (Math.random() * 3)));
+            return;
+        }
+
+        if (player.countItem(ItemType.RUSTY_SHIP_ENGINE) > 0 || "RUSTY_SHIP_ENGINE".equals(player.getShipState().getEngine())) {
+            setDialogue(player, "after-fishing-engine");
+            return;
+        }
+
+        setDialogue(player, "after-talking-to-enid");
     }
 
     @Override
@@ -69,6 +93,45 @@ public class NPCFishermanGerald extends HypixelNPC {
                                 "Keep the noise down, kid!",
                                 "If you want to learn about §aFishing§f, go talk to my wife, Fisherwoman Enid.",
                                 "She's fishing a bit §bupstream§f. Once she's shown you the ropes, come back and talk to me!",
+                    }).build(),
+            DialogueSet.builder()
+                .key("talk-to-enid-again").lines(new String[]{
+                    "If you want to learn about §aFishing§f, go talk to my wife, Fisherwoman Enid.",
+                    "She's fishing a bit §bupstream§f. Once she's shown you the ropes, come back and talk to me!"
+                }).build(),
+            DialogueSet.builder()
+                .key("after-talking-to-enid").lines(new String[]{
+                    "Can you fish up the §cRusty Ship Engine §ffor me?",
+                    "It's somewhere in this pond here.",
+                    "Once you fish it out, you can set sail to the §2Backwater Bayou§f!"
+                }).build(),
+            DialogueSet.builder()
+                .key("after-fishing-engine").lines(new String[]{
+                    "Ah! The §cRusty Ship Engine§f! Perfect!",
+                    "Bring that to §6Captain Baha §fand he'll be able to help you set sail!",
+                    "He's just behind the Fisherman's Hut, waiting by the §6Ship§f!",
+                    "Just leave out the part about me dropping it, will ya?"
+                }).build(),
+            DialogueSet.builder()
+                .key("after-bringing-engine-to-baha").lines(new String[]{
+                    "Thanks for helping me find the §cRusty Ship Engine§f, " + (player == null ? "kid" : player.getUsername()) + "!",
+                    "You can use the §6Ship Navigator §fto set sail to the §2Backwater Bayou§f!",
+                    "Safe travels!"
+                }).build(),
+            DialogueSet.builder()
+                .key("idle-1").lines(new String[]{
+                    "Fishing is the family business.",
+                    "Enid and I are thrilled that our two children love it as much as we do!"
+                }).build(),
+            DialogueSet.builder()
+                .key("idle-2").lines(new String[]{
+                    "I met Captain Baha when i was marooned on a distant pirate cove.",
+                    "He saved my skin then, and I'm forever grateful to him."
+                }).build(),
+            DialogueSet.builder()
+                .key("idle-3").lines(new String[]{
+                    "I've only gone lava fishing a few times in my life.",
+                    "I prefer the open water. More peaceful, less ghasts!"
                         }).build()
         ).toArray(DialogueSet[]::new);
     }

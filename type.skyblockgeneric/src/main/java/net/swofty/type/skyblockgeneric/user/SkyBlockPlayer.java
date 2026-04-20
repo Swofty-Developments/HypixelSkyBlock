@@ -19,8 +19,8 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
+import net.minestom.server.tag.Tag;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.skyblock.item.ItemType;
@@ -549,6 +549,14 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public DatapointQuiver.PlayerQuiver getQuiver() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
+    }
+
+    public DatapointShipState.ShipState getShipState() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SHIP_STATE, DatapointShipState.class).getValue();
+    }
+
+    public DatapointTrophyFish.TrophyFishData getTrophyFishData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.TROPHY_FISH, DatapointTrophyFish.class).getValue();
     }
 
     public DatapointAccessoryBag.PlayerAccessoryBag getAccessoryBag() {

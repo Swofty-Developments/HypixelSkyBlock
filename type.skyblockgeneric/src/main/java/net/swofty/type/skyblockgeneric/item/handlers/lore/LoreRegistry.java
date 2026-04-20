@@ -3,9 +3,15 @@ package net.swofty.type.skyblockgeneric.item.handlers.lore;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.PotatoType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
+import net.swofty.type.skyblockgeneric.fishing.FishingRodLoreBuilder;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LoreRegistry {
@@ -70,6 +76,16 @@ public class LoreRegistry {
                 "§eClick to open!"
         ), (item, player) -> "§aSkyBlock Menu §7(Click)"));
         register("HOT_POTATO_BOOK", new LoreConfig((item, player) -> PotatoType.allLores(), null));
+        register("FISHING_ROD", new LoreConfig(
+            (item, player) -> {
+                var lore = FishingRodLoreBuilder.build(item, player);
+                return lore == null ? List.of() : lore.lore();
+            },
+            (item, player) -> {
+                var lore = FishingRodLoreBuilder.build(item, player);
+                return lore == null ? item.getDisplayName() : lore.displayName();
+            }
+        ));
         register("MIDAS_SWORD", new LoreConfig((item, player) -> {
             List<String> lore = new ArrayList<>();
             long pricePaid = item.getAttributeHandler().getDarkAuctionPrice();

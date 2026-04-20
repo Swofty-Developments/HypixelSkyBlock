@@ -42,9 +42,7 @@ public class TypeCrimsonIsleLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> switch (type) {
-                    default -> new Pos(-360.5, 80, -430.5, -180, 0);
-                }, // Spawn position
+            (type) -> new Pos(-360.5, 80, -430.5, -180, 0), // Spawn position
                 true // Announce death messages
         );
     }
