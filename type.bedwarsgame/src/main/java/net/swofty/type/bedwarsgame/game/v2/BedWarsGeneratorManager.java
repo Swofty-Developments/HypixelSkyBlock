@@ -20,7 +20,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.game.game.GameState;
-import net.swofty.type.generic.entity.BlockDisplayEntity;
+import net.swofty.type.generic.entity.FloatingBlockEntity;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -29,16 +29,13 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class BedWarsGeneratorManager {
     private final BedWarsGame game;
     private final Map<TeamKey, List<Task>> teamGeneratorTasks = new EnumMap<>(TeamKey.class);
     private final Map<BedWarsMapsConfig.GlobalGeneratorKey, List<GeneratorDisplay>> generatorDisplays = new HashMap<>();
     private final Map<BedWarsMapsConfig.GlobalGeneratorKey, GeneratorLimits> generatorLimits = new HashMap<>();
-    private final Map<GeneratorDisplay, Pos> basePositions = new ConcurrentHashMap<>();
     private Task globalTicker;
-    private Task blockDisplayRotation;
 
     public BedWarsGeneratorManager(BedWarsGame game) {
         this.game = game;
@@ -106,40 +103,6 @@ public class BedWarsGeneratorManager {
             updateGeneratorDisplays();
             tickGlobalGenerators();
         }).delay(TaskSchedule.seconds(1)).repeat(TaskSchedule.seconds(1)).schedule();
-
-        // Hypixel does not have this animation on Replay Viewer. Only the default position. Only here in the actual game.
-        if (blockDisplayRotation != null) blockDisplayRotation.cancel();
-        blockDisplayRotation = MinecraftServer.getSchedulerManager().buildTask(() -> {
-                final float BOB_AMPLITUDE = 0.25f;
-                final float BOB_PERIOD_SECONDS = 4.0f;
-                final float ROTATE_DEG_PER_SEC = 180f;
-
-                double timeSeconds = System.currentTimeMillis() / 1000.0;
-                double phase = (timeSeconds / BOB_PERIOD_SECONDS) * Math.PI * 2.0;
-                float bobOffset = (float) (Math.sin(phase) * BOB_AMPLITUDE);
-                boolean goingDown = Math.cos(phase) < 0;
-                float rotation = (float) ((timeSeconds * ROTATE_DEG_PER_SEC) % 360.0);
-                rotation = goingDown ? rotation : -rotation;
-
-                for (List<GeneratorDisplay> displays : generatorDisplays.values()) {
-                    for (GeneratorDisplay display : displays) {
-                        Pos base = basePositions.computeIfAbsent(
-                            display,
-                            d -> d.blockDisplay.getPosition()
-                        );
-
-                        display.blockDisplay.teleport(new Pos(
-                            base.x(),
-                            base.y() + bobOffset,
-                            base.z(),
-                            rotation,
-                            0f
-                        ));
-                    }
-                }
-            }).delay(TaskSchedule.seconds(1))
-            .repeat(TaskSchedule.tick(1))
-            .schedule();
     }
 
     public void recordInitialGeneratorDisplays() {
@@ -214,14 +177,15 @@ public class BedWarsGeneratorManager {
                 MiniMessage.miniMessage().deserialize("<yellow>Spawns in <red>" + delaySeconds + "</red> seconds!</yellow>"));
             spawnDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
 
-            var size = 0.6;
+            float size = 0.6f;
             locY -= size + 0.1 + 0.25;
-            BlockDisplayEntity blockDisplay = new BlockDisplayEntity(getBlockFromType(generatorType), (meta) -> {
-                meta.setScale(new Vec(size, size, size));
-                meta.setTranslation(new Vec(-size / 2, 0, -size / 2));
-                meta.setPosRotInterpolationDuration(1);
-            });
-            blockDisplay.setInstance(game.getInstance(), new Pos(location.x(), locY, location.z()));
+            FloatingBlockEntity blockDisplay = new FloatingBlockEntity(
+                getBlockFromType(generatorType),
+                size,
+                game.getInstance(),
+                new Pos(location.x(), locY, location.z())
+            );
+            blockDisplay.startAnimation();
 
             generatorDisplays.computeIfAbsent(generatorType, _ -> new ArrayList<>())
                 .add(new GeneratorDisplay(tierDisplay, titleDisplay, spawnDisplay, blockDisplay, delaySeconds));
@@ -343,6 +307,7 @@ public class BedWarsGeneratorManager {
                 display.tierDisplay.remove();
                 display.titleDisplay.remove();
                 display.spawnDisplay.remove();
+                display.blockDisplay.remove();
             }
         }
         generatorDisplays.clear();
@@ -351,11 +316,6 @@ public class BedWarsGeneratorManager {
         if (globalTicker != null) {
             globalTicker.cancel();
             globalTicker = null;
-        }
-
-        if (blockDisplayRotation != null) {
-            blockDisplayRotation.cancel();
-            blockDisplayRotation = null;
         }
     }
 
@@ -407,12 +367,12 @@ public class BedWarsGeneratorManager {
         private final TextDisplayEntity tierDisplay;
         private final TextDisplayEntity titleDisplay;
         private final TextDisplayEntity spawnDisplay;
-        private final BlockDisplayEntity blockDisplay;
+        private final FloatingBlockEntity blockDisplay;
         private int maxCountdown;
         private int countdown;
 
         public GeneratorDisplay(TextDisplayEntity tierDisplay, TextDisplayEntity titleDisplay,
-                                TextDisplayEntity spawnDisplay, BlockDisplayEntity blockDisplay, int delay) {
+                                TextDisplayEntity spawnDisplay, FloatingBlockEntity blockDisplay, int delay) {
             this.tierDisplay = tierDisplay;
             this.titleDisplay = titleDisplay;
             this.spawnDisplay = spawnDisplay;
