@@ -17,11 +17,6 @@ public class NPCSherry extends HypixelNPC {
 			}
 
 			@Override
-			public float hologramYOffset() {
-				return 0;
-			}
-
-			@Override
 			public String[] holograms(HypixelPlayer player) {
 				return new String[]{"§cSherry", "§e§lCLICK"};
 			}

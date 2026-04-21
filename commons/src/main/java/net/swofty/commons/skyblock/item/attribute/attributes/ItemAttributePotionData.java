@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
@@ -121,7 +122,7 @@ public class ItemAttributePotionData extends ItemAttribute<ItemAttributePotionDa
          */
         public String getDisplayName() {
             String prefix = isSplash ? "Splash " : "";
-            String levelRoman = toRoman(level);
+            String levelRoman = StringUtility.getAsRomanNumeral(level);
             return prefix + "Potion of " + formatEffectName(effectType) + " " + levelRoman;
         }
 
@@ -129,7 +130,7 @@ public class ItemAttributePotionData extends ItemAttribute<ItemAttributePotionDa
          * Get just the effect display (e.g., "Speed V")
          */
         public String getEffectDisplay() {
-            return formatEffectName(effectType) + " " + toRoman(level);
+            return formatEffectName(effectType) + " " + StringUtility.getAsRomanNumeral(level);
         }
 
         /**
@@ -149,17 +150,6 @@ public class ItemAttributePotionData extends ItemAttribute<ItemAttributePotionDa
                 }
             }
             return result.toString();
-        }
-
-        /**
-         * Convert integer to Roman numeral
-         */
-        private static String toRoman(int level) {
-            String[] romans = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-            if (level >= 1 && level <= 10) {
-                return romans[level];
-            }
-            return String.valueOf(level);
         }
 
         /**

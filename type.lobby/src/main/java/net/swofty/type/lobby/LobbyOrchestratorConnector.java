@@ -68,13 +68,19 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
             return;
         }
 
-        // Check if player is party leader - if so, queue for entire party
         if (PartyManager.isInParty(player)) {
             FullParty party = PartyManager.getPartyFromPlayer(player);
-            if (party != null && party.getLeader().getUuid().equals(player.getUuid())) {
-                sendPartyToGame(targetServerType, gameType, map, party);
+            if (party == null) {
+                player.sendMessage("§cFailed to read your party state. Please try again.");
                 return;
             }
+            if (!party.getLeader().getUuid().equals(player.getUuid())) {
+                player.sendMessage("§cYou are in a party! Ask your leader to start the game, or /p leave");
+                return;
+            }
+
+            sendPartyToGame(targetServerType, gameType, map, party);
+            return;
         }
 
         // Solo queue

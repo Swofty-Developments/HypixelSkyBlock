@@ -42,6 +42,7 @@ import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
@@ -196,7 +197,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.type.skyblockgeneric.entity.mob.mobs", SkyBlockMob.class)
             .forEach(mob -> MobRegistry.registerExtraMob(mob.getClass()));
 
-        MathUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
+        ScheduleUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
 
         /**
          * Start generic SkyBlock tablist

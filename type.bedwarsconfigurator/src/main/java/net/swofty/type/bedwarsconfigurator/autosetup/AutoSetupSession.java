@@ -3,11 +3,24 @@ package net.swofty.type.bedwarsconfigurator.autosetup;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.*;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapEntry;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MinMax;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TwoBlockPosition;
+import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,19 +32,19 @@ public class AutoSetupSession {
 
     private String mapId;
     private String mapName;
-    private final List<BedwarsGameType> gameTypes = new ArrayList<>();
+    private final List<BedWarsGameType> gameTypes = new ArrayList<>();
     private Double minX, maxX, minY, maxY, minZ, maxZ;
     private final Map<TeamKey, TeamConfig> teams = new EnumMap<>(TeamKey.class);
-    private final List<Position> diamondGenerators = new ArrayList<>();
-    private final List<Position> emeraldGenerators = new ArrayList<>();
+    private final List<HypixelPosition> diamondGenerators = new ArrayList<>();
+    private final List<HypixelPosition> emeraldGenerators = new ArrayList<>();
     private GeneratorSpeed generatorSpeed = GeneratorSpeed.SLOW;
     private int diamondAmount = 1;
     private int diamondMax = 4;
     private int emeraldAmount = 1;
     private int emeraldMax = 2;
 
-    private PitchYawPosition waitingLocation;
-    private PitchYawPosition spectatorLocation;
+    private HypixelPosition waitingLocation;
+    private HypixelPosition spectatorLocation;
 
     public AutoSetupSession(UUID playerUuid, Instance instance) {
         this.playerUuid = playerUuid;
@@ -79,7 +92,7 @@ public class AutoSetupSession {
     }
 
     public TeamConfig getOrCreateTeam(TeamKey key) {
-        return teams.computeIfAbsent(key, k -> new TeamConfig());
+        return teams.computeIfAbsent(key, _ -> new TeamConfig());
     }
 
     public void clear() {
@@ -97,6 +110,10 @@ public class AutoSetupSession {
         emeraldMax = 2;
         waitingLocation = null;
         spectatorLocation = null;
+    }
+
+    public void removeTeam(TeamKey key) {
+        teams.remove(key);
     }
 
     public void loadFromMapEntry(BedWarsMapsConfig.MapEntry entry) {
@@ -163,18 +180,18 @@ public class AutoSetupSession {
         if (config.getLocations() != null) {
             var locations = config.getLocations();
             if (locations.getWaiting() != null) {
-                Position w = locations.getWaiting();
-                waitingLocation = new PitchYawPosition(w.x(), w.y(), w.z(), 0, 0);
+                HypixelPosition w = locations.getWaiting();
+                waitingLocation = new HypixelPosition(w.x(), w.y(), w.z(), 0, 0);
             }
             if (locations.getSpectator() != null) {
-                Position s = locations.getSpectator();
-                spectatorLocation = new PitchYawPosition(s.x(), s.y(), s.z(), 0, 0);
+                HypixelPosition s = locations.getSpectator();
+                spectatorLocation = new HypixelPosition(s.x(), s.y(), s.z(), 0, 0);
             }
         }
 
         // Load global generators
-        if (config.getGlobal_generator() != null) {
-            var diamondGen = config.getGlobal_generator().get("diamond");
+        if (config.getGlobalGenerator() != null) {
+            var diamondGen = config.getGlobalGenerator().get(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND);
             if (diamondGen != null) {
                 diamondAmount = diamondGen.getAmount();
                 diamondMax = diamondGen.getMax();
@@ -182,7 +199,7 @@ public class AutoSetupSession {
                     diamondGenerators.addAll(diamondGen.getLocations());
                 }
             }
-            var emeraldGen = config.getGlobal_generator().get("emerald");
+            var emeraldGen = config.getGlobalGenerator().get(BedWarsMapsConfig.GlobalGeneratorKey.EMERALD);
             if (emeraldGen != null) {
                 emeraldAmount = emeraldGen.getAmount();
                 emeraldMax = emeraldGen.getMax();
@@ -239,22 +256,21 @@ public class AutoSetupSession {
         // Locations
         MapEntry.MapConfiguration.MapLocations locations = new MapEntry.MapConfiguration.MapLocations();
         if (waitingLocation != null) {
-            locations.setWaiting(new Position(waitingLocation.x(), waitingLocation.y(), waitingLocation.z()));
+            locations.setWaiting(new HypixelPosition(waitingLocation.x(), waitingLocation.y(), waitingLocation.z()));
         }
         if (spectatorLocation != null) {
-            locations.setSpectator(new Position(spectatorLocation.x(), spectatorLocation.y(), spectatorLocation.z()));
+            locations.setSpectator(new HypixelPosition(spectatorLocation.x(), spectatorLocation.y(), spectatorLocation.z()));
         }
         config.setLocations(locations);
 
         // Global generators
-        Map<String, MapEntry.MapConfiguration.GlobalGenerator> globalGenerators = new HashMap<>();
-
+        Map<BedWarsMapsConfig.GlobalGeneratorKey, MapEntry.MapConfiguration.GlobalGenerator> globalGenerators = new HashMap<>();
         if (!diamondGenerators.isEmpty()) {
             MapEntry.MapConfiguration.GlobalGenerator diamondGen = new MapEntry.MapConfiguration.GlobalGenerator();
             diamondGen.setAmount(diamondAmount);
             diamondGen.setMax(diamondMax);
             diamondGen.setLocations(new ArrayList<>(diamondGenerators));
-            globalGenerators.put("diamond", diamondGen);
+            globalGenerators.put(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND, diamondGen);
         }
 
         if (!emeraldGenerators.isEmpty()) {
@@ -262,10 +278,10 @@ public class AutoSetupSession {
             emeraldGen.setAmount(emeraldAmount);
             emeraldGen.setMax(emeraldMax);
             emeraldGen.setLocations(new ArrayList<>(emeraldGenerators));
-            globalGenerators.put("emerald", emeraldGen);
+            globalGenerators.put(BedWarsMapsConfig.GlobalGeneratorKey.EMERALD, emeraldGen);
         }
 
-        config.setGlobal_generator(globalGenerators);
+        config.setGlobalGenerator(globalGenerators);
         entry.setConfiguration(config);
 
         return entry;
@@ -274,12 +290,12 @@ public class AutoSetupSession {
     @Getter
     @Setter
     public static class TeamConfig {
-        private PitchYawPosition spawn;
-        private Position bedFeet;
-        private Position bedHead;
-        private Position generator;
-        private PitchYawPosition itemShop;
-        private PitchYawPosition teamShop;
+        private HypixelPosition spawn;
+        private Vec3i bedFeet;
+        private Vec3i bedHead;
+        private HypixelPosition generator;
+        private HypixelPosition itemShop;
+        private HypixelPosition teamShop;
     }
 }
 

@@ -40,7 +40,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     private final String skinSignature;
     private String[] holograms;
 
-    public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config, boolean overflowing) {
+    public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config) {
         super(EntityType.MANNEQUIN, UUID.randomUUID());
         this.username = bottomDisplay;
         this.viewer = viewer;
@@ -58,7 +58,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
         setAutoViewable(false);
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-            .pos(pos.add(0, getEyeHeight() + 0.1f, 0))
+            .pos(pos.add(0, getBoundingBox().height() - 0.1f, 0))
             .text(holograms)
             .player(viewer)
             .instance(config.instance())
@@ -125,7 +125,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
         if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.1f, 0));
+            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getBoundingBox().height() - 0.1f, 0));
         }
 
         if (!getPose().equals(config.pose(viewer))) {

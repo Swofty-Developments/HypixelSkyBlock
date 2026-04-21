@@ -11,26 +11,33 @@ import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
-import net.swofty.type.bedwarslobby.item.impl.Collectibles;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
 import net.swofty.type.bedwarslobby.parkour.BedWarsLobbyParkour;
 import net.swofty.type.bedwarslobby.util.BedWarsLobbyMap;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
+import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
+import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
-import net.swofty.type.bedwarslobby.tab.BedWarsPlayersOnlineModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.*;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
+import net.swofty.type.lobby.events.LobbyParkourEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyPlayerSpawnEvents;
+import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
+import net.swofty.type.lobby.item.impl.Collectibles;
 import net.swofty.type.lobby.item.impl.HidePlayers;
 import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
@@ -71,6 +78,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        BedWarsCollectibleCatalog.initialize();
         BedWarsLobbyScoreboard.start();
         bedWarsLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
 
@@ -138,10 +146,10 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                        new BedWarsPlayersOnlineModule(1),
-                        new BedWarsPlayersOnlineModule(2),
-                        new BedWarsPlayersOnlineModule(3),
-                        new BedWarsPlayersOnlineModule(4)
+                    new EmptyTabModule(),
+                    new EmptyTabModule(),
+                    new EmptyTabModule(),
+                    new EmptyTabModule()
                 );
             }
         };
@@ -166,7 +174,8 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
         events.add(new LobbyParkourEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
-        events.add(new LobbyBlockBreak());
+        events.add(new LobbyPlayerSpawnEvents());
+        events.add(new LobbyWorldEvent());
         events.add(new LobbyPlayerMove(spawnPoint));
         return events;
     }

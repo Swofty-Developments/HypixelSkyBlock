@@ -59,7 +59,7 @@ public class DatapointIntegerList extends SkyBlockDatapoint<List<Integer>> {
 
     /**
      * @param value
-     * @return true if it was added, false if it wasn't
+     * @return true if it was added, false if it wasn'distance
      */
     public boolean hasOrAdd(Integer value) {
         if (has(value))

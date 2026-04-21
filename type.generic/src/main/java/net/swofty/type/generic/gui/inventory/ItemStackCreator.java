@@ -28,7 +28,9 @@ import java.util.stream.Collectors;
  */
 public class ItemStackCreator {
 	private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
-			DataComponents.UNBREAKABLE
+			DataComponents.UNBREAKABLE,
+			DataComponents.POTION_CONTENTS,
+			DataComponents.POTION_DURATION_SCALE
 	));
 	private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacySection();
 

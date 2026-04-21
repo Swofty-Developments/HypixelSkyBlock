@@ -2,7 +2,9 @@ package net.swofty.type.skyblockgeneric.entity;
 
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.collision.*;
+import net.minestom.server.collision.CollisionUtils;
+import net.minestom.server.collision.EntityCollisionResult;
+import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
@@ -13,9 +15,9 @@ import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEv
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.event.custom.ArrowHitBlockEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -119,7 +121,7 @@ public class ArrowEntityImpl extends LivingEntity {
             }
 
             // We've hit a block
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 if (isDead() || isRemoved()) return;
                 remove();
                 kill();

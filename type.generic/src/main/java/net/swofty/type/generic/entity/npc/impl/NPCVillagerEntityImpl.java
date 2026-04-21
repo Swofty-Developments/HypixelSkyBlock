@@ -1,8 +1,6 @@
 package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
@@ -28,26 +26,25 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
     private final VillagerConfiguration config;
     private String[] holograms;
 
-    public NPCVillagerEntityImpl(@NotNull HypixelPlayer viewer, Pos pos, @NotNull String bottomDisplay, VillagerProfession profession, VillagerConfiguration config, String[] holograms, boolean overflowing) {
+    public NPCVillagerEntityImpl(@NotNull HypixelPlayer viewer, Pos pos, @NotNull String bottomDisplay, VillagerProfession profession, VillagerConfiguration config, String[] holograms) {
         super(EntityType.VILLAGER);
         this.viewer = viewer;
         this.config = config;
         this.holograms = holograms;
 
-        this.setCustomNameVisible(true);
-        this.set(DataComponents.CUSTOM_NAME, Component.text(bottomDisplay));
 
         VillagerMeta meta = (VillagerMeta) this.entityMeta;
         meta.setVillagerData(new VillagerMeta.VillagerData(
-                VillagerType.PLAINS, profession, VillagerMeta.Level.EXPERT)
+            VillagerType.PLAINS, profession, VillagerMeta.Level.EXPERT)
         );
 
+        this.setCustomNameVisible(false);
         setAutoViewable(false);
         setNoGravity(true);
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-            .pos(pos.add(0, getEyeHeight() + 0.5f + (overflowing ? -0.2f : 0f), 0))
-            .text(Arrays.copyOfRange(holograms, 0, holograms.length - (overflowing ? 0 : 1)))
+            .pos(pos.add(0, getBoundingBox().height() - 0.1f, 0))
+            .text(holograms)
             .player(viewer)
             .instance(config.instance())
             .build();
@@ -97,11 +94,7 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
         if (!getPosition().asVec().equals(npcPosition.asVec())) {
-            String[] holograms = config.holograms(viewer);
-
-            boolean overflowing = holograms[holograms.length - 1].length() > 16;
-            float yOffset = overflowing ? -0.2f : 0.0f;
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.5f + yOffset, 0));
+            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getBoundingBox().height() - 0.1f, 0));
         }
 
         if (!getPose().equals(config.pose(viewer))) {
@@ -109,11 +102,9 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
         }
 
         String[] newHolograms = config.holograms(viewer);
-        boolean isOverflowing = newHolograms[newHolograms.length - 1].length() > 16;
-        String[] finalHolograms = Arrays.copyOfRange(newHolograms, 0, newHolograms.length - (isOverflowing ? 0 : 1));
-        if (!Arrays.equals(finalHolograms, holograms)) {
-            PlayerHolograms.updateExternalPlayerHologramText(holo, finalHolograms);
-            this.holograms = finalHolograms;
+        if (!Arrays.equals(newHolograms, holograms)) {
+            PlayerHolograms.updateExternalPlayerHologramText(holo, newHolograms);
+            this.holograms = newHolograms;
         }
     }
 }

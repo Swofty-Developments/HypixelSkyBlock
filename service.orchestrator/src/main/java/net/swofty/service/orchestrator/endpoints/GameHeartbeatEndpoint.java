@@ -7,8 +7,8 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.orchestrator.OrchestratorCache;
 
 public class GameHeartbeatEndpoint implements ServiceEndpoint
-        <GameHeartbeatProtocolObject.HeartbeatMessage,
-                GameHeartbeatProtocolObject.HeartbeatResponse> {
+    <GameHeartbeatProtocolObject.HeartbeatMessage,
+        GameHeartbeatProtocolObject.HeartbeatResponse> {
 
     @Override
     public ProtocolObject<GameHeartbeatProtocolObject.HeartbeatMessage, GameHeartbeatProtocolObject.HeartbeatResponse> associatedProtocolObject() {
@@ -19,12 +19,14 @@ public class GameHeartbeatEndpoint implements ServiceEndpoint
     public GameHeartbeatProtocolObject.HeartbeatResponse onMessage(ServiceProxyRequest message,
                                                                    GameHeartbeatProtocolObject.HeartbeatMessage body) {
         OrchestratorCache.handleHeartbeat(
-                body.uuid(),
-                body.shortName(),
-                body.type(),
-                body.maxPlayers(),
-                body.onlinePlayers(),
-                body.games()
+            body.uuid(),
+            body.shortName(),
+            body.type(),
+            body.maxPlayers(),
+            body.onlinePlayers(),
+            body.games(),
+            body.mapAdvertisements(),
+            body.remainingGameSlots()
         );
         return new GameHeartbeatProtocolObject.HeartbeatResponse(true);
     }

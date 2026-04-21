@@ -20,7 +20,7 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
@@ -134,7 +134,7 @@ public class SkyBlockIsland {
 
                 int oldVersion = islandVersion;
                 if (islandVersion < HypixelConst.getCurrentIslandVersion()) {
-                    MathUtility.delay(() -> {
+                    ScheduleUtility.delay(() -> {
                         SkyBlockGenericLoader.getLoadedPlayers().stream().filter(player -> player.getSkyBlockIsland().getIslandID() == islandID).forEach(player -> {
                             player.getLogHandler().debug("Your island was migrated from version §c" + oldVersion + " §fto §a" + HypixelConst.getCurrentIslandVersion() + "§f!");
                         });

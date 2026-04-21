@@ -17,13 +17,15 @@ import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.LobbyBlockBreak;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyParkourEvents;
 import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
 import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyPlayerSpawnEvents;
+import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
+import net.swofty.type.lobby.item.impl.Collectibles;
 import net.swofty.type.lobby.item.impl.HidePlayers;
 import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
@@ -93,6 +95,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         return Map.of(
                 0, new PlayCompass(),
                 1, new ProfileItem(),
+            4, new Collectibles(),
                 7, new HidePlayers(),
                 8, new LobbySelector()
         );
@@ -135,8 +138,9 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         // Add lobby base events
         events.add(new LobbyItemEvents());
         events.add(new LobbyPlayerJoinEvents());
+        events.add(new LobbyPlayerSpawnEvents());
         events.add(new LobbyParkourEvents());
-        events.add(new LobbyBlockBreak());
+        events.add(new LobbyWorldEvent());
         events.add(new LobbyPlayerMove(SPAWN_POS));
         return events;
     }

@@ -1,5 +1,10 @@
 package net.swofty.commons;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Tuple<A, B> {
     private A key;
     private B value;
@@ -9,19 +14,4 @@ public class Tuple<A, B> {
         this.value = value;
     }
 
-    public void setKey(A key) {
-        this.key = key;
-    }
-
-    public void setValue(B value) {
-        this.value = value;
-    }
-
-    public A getKey() {
-        return key;
-    }
-
-    public B getValue() {
-        return value;
-    }
 }

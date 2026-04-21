@@ -1,0 +1,276 @@
+gamemode: BEDWARS
+categories:
+  PROJECTILE_TRAILS:
+    displayName: Projectile Trails
+    items: [ ]
+
+  VICTORY_DANCES:
+    displayName: Victory Dances
+    items: [ ]
+
+  FINAL_KILL_EFFECTS:
+    displayName: Final Kill Effects
+    items: [ ]
+
+  SPRAYS:
+    displayName: Sprays
+    items: [ ]
+
+  ISLAND_TOPPERS:
+    displayName: Island Toppers
+    items: [ ]
+
+  DEATH_CRIES:
+    displayName: Death Cries
+    items: [ ]
+
+  SHOPKEEPER_SKINS:
+    displayName: Shopkeeper Skins
+    descriptionKey: bedwars.cosmetics.shopkeeper_skins.description
+    favoriteable: true
+    random: true
+    defaultSelectionId: blacksmith
+    items:
+      - id: blacksmith
+        name: Blacksmith
+        iconMaterial: VILLAGER_SPAWN_EGG
+        rarity: COMMON
+        custom:
+          entity: VILLAGER
+          villager: BLACKSMITH
+        unlock:
+          method: FREE
+
+      - id: skeleton
+        name: Skeleton
+        iconMaterial: SKELETON_SPAWN_EGG
+        rarity: COMMON
+        custom:
+          entity: SKELETON
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 5000
+
+      - id: zombie_pigman
+        name: Zombie Pigman
+        iconMaterial: POLAR_BEAR_SPAWN_EGG
+        rarity: COMMON
+        custom:
+          entity: ZOMBIE_PIGMAN
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 5000
+
+      - id: zombie
+        name: Zombie
+        iconMaterial: ZOMBIE_SPAWN_EGG
+        rarity: COMMON
+        custom:
+          entity: ZOMBIE
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 5000
+
+      - id: villager_zombie
+        name: Villager Zombie
+        iconMaterial: ZOMBIE_SPAWN_EGG
+        rarity: RARE
+        custom:
+          entity: VILLAGER_ZOMBIE
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 10000
+
+      - id: wither_skeleton
+        name: Wither Skeleton
+        iconMaterial: ENDERMAN_SPAWN_EGG
+        rarity: RARE
+        custom:
+          entity: WITHER_SKELETON
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 10000
+
+      - id: blaze
+        name: Blaze
+        iconMaterial: BLAZE_SPAWN_EGG
+        rarity: RARE
+        custom:
+          entity: BLAZE
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 10000
+
+      - id: bed_salesman
+        name: Bed Salesman
+        iconTexture: 574caa78ce6a461416407f41d9f5726fb7bd2b8a257c7472d26bededeaffd9c
+        rarity: EPIC
+        custom:
+          textures: eyJ0aW1lc3RhbXAiOjE0OTc1NDMyMjE1MjIsInByb2ZpbGVJZCI6ImRiYTJmMTE1NmNjMjQwMWJhOWU5YjRkMjdmN2M4OTdkIiwicHJvZmlsZU5hbWUiOiJjb2RlbmFtZV9CIiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81NzRjYWE3OGNlNmE0NjE0MTY0MDdmNDFkOWY1NzI2ZmI3YmQyYjhhMjU3Yzc0NzJkMjZiZWRlZGVhZmZkOWMifSwiQ0FQRSI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzVjM2NhN2VlMmE0OThmMWI1ZDI1OGQ1ZmE5MjdlNjNlNDMzMTQzYWRkNTUzOGNmNjNiNmE5Yjc4YWU3MzUifX19
+          signature: null
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 25000
+
+      - id: creeper
+        name: Creeper
+        iconMaterial: CREEPER_SPAWN_EGG
+        rarity: COMMON
+        custom:
+          entity: CREEPER
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 5000
+
+      - id: witch
+        name: Witch
+        iconMaterial: WITCH_SPAWN_EGG
+        rarity: RARE
+        custom:
+          entity: WITCH
+        unlock:
+          method: CURRENCY
+          currency: BEDWARS_TOKENS
+          cost: 10000
+
+  KILL_MESSAGES:
+    displayName: Kill Messages
+    items: [ ]
+
+  GLYPHS:
+    displayName: Glyphs
+    items: [ ]
+
+  BED_DESTROYS:
+    displayName: Bed Destroys
+    items: [ ]
+
+  WOOD_SKINS:
+    displayName: Wood Skins
+    descriptionKey: bedwars.cosmetics.wood_skins.description
+    defaultSelectionId: oak_plank
+    items:
+      - id: oak_plank
+        name: Oak Plank
+        iconMaterial: OAK_PLANKS
+        selectionValue: OAK_PLANKS
+        rarity: COMMON
+        unlock:
+          method: FREE
+
+      - id: birch_plank
+        name: Birch Plank
+        iconMaterial: BIRCH_PLANKS
+        selectionValue: BIRCH_PLANKS
+        rarity: RARE
+        unlock:
+          method: RANK
+          requiredRank: VIP_PLUS
+
+      - id: spruce_plank
+        name: Spruce Plank
+        iconMaterial: SPRUCE_PLANKS
+        selectionValue: SPRUCE_PLANKS
+        rarity: RARE
+        unlock:
+          method: RANK
+          requiredRank: VIP
+
+      - id: jungle_plank
+        name: Jungle Plank
+        iconMaterial: JUNGLE_PLANKS
+        selectionValue: JUNGLE_PLANKS
+        rarity: EPIC
+        unlock:
+          method: RANK
+          requiredRank: MVP
+
+      - id: acacia_plank
+        name: Acacia Plank
+        iconMaterial: ACACIA_PLANKS
+        selectionValue: ACACIA_PLANKS
+        rarity: EPIC
+        unlock:
+          method: RANK
+          requiredRank: MVP_PLUS
+
+      - id: dark_oak_plank
+        name: Dark Oak Plank
+        iconMaterial: DARK_OAK_PLANKS
+        selectionValue: DARK_OAK_PLANKS
+        rarity: LEGENDARY
+        unlock:
+          method: RANK
+          requiredRank: MVP_PLUS_PLUS
+
+      - id: dark_oak_log
+        name: Dark Oak Log
+        iconMaterial: DARK_OAK_LOG
+        selectionValue: DARK_OAK_LOG
+        rarity: LEGENDARY
+        unlock:
+          method: CUSTOM
+          customResolverKey: bedwars_tournament_hall_unlock
+          customDisplayText: "Unlocked in Tournament Hall!"
+
+      - id: acacia_log
+        name: Acacia Log
+        iconMaterial: ACACIA_LOG
+        selectionValue: ACACIA_LOG
+        rarity: LEGENDARY
+        unlock:
+          method: CUSTOM
+          customResolverKey: bedwars_tournament_hall_unlock
+          customDisplayText: "Unlocked in Tournament Hall!"
+
+      - id: jungle_log
+        name: Jungle Log
+        iconMaterial: JUNGLE_LOG
+        selectionValue: JUNGLE_LOG
+        rarity: LEGENDARY
+        unlock:
+          method: CUSTOM
+          customResolverKey: bedwars_tournament_hall_unlock
+          customDisplayText: "Unlocked in Tournament Hall!"
+
+      - id: birch_log
+        name: Birch Log
+        iconMaterial: BIRCH_LOG
+        selectionValue: BIRCH_LOG
+        rarity: LEGENDARY
+        unlock:
+          method: CUSTOM
+          customResolverKey: bedwars_tournament_hall_unlock
+          customDisplayText: "Unlocked in Tournament Hall!"
+
+      - id: spruce_log
+        name: Spruce Log
+        iconMaterial: SPRUCE_LOG
+        selectionValue: SPRUCE_LOG
+        rarity: LEGENDARY
+        unlock:
+          method: CUSTOM
+          customResolverKey: bedwars_tournament_hall_unlock
+          customDisplayText: "Unlocked in Tournament Hall!"
+
+      - id: oak_log
+        name: Oak Log
+        iconMaterial: OAK_LOG
+        selectionValue: OAK_LOG
+        rarity: LEGENDARY
+        unlock:
+          method: CUSTOM
+          customResolverKey: bedwars_tournament_hall_unlock
+          customDisplayText: "Unlocked in Tournament Hall!"
+
+  FIGURINES:
+    displayName: Figurines
+    items: [ ]

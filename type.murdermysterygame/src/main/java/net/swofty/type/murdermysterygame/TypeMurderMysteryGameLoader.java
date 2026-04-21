@@ -27,6 +27,7 @@ import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ProxyToClient;
 import net.swofty.proxyapi.redis.ServiceToClient;
 import net.swofty.pvp.MinestomPvP;
+import net.swofty.type.game.game.GameObject;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -187,9 +188,9 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
             int maxPlayers = HypixelConst.getMaxPlayers();
             int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
 
-            List<net.swofty.commons.game.Game> commonsGames = new ArrayList<>();
+            List<GameObject> commonsGames = new ArrayList<>();
             for (Game internalGame : TypeMurderMysteryGameLoader.getGames()) {
-                net.swofty.commons.game.Game commonsGame = new net.swofty.commons.game.Game();
+                GameObject commonsGame = new GameObject();
                 commonsGame.setGameId(UUID.fromString(internalGame.getGameId()));
                 commonsGame.setType(ServerType.MURDER_MYSTERY_GAME);
                 commonsGame.setMap(internalGame.getMapEntry().getName());

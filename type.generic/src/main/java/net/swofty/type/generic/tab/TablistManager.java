@@ -24,6 +24,12 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public abstract class TablistManager {
     private static final Map<HypixelPlayer, PlayerTabCache> tablistEntries = new ConcurrentHashMap<>();
@@ -34,6 +40,15 @@ public abstract class TablistManager {
     }
 
     public abstract List<TablistModule> getModules();
+
+    public static TablistManager create(List<TablistModule> modules) {
+        return new TablistManager() {
+            @Override
+            public List<TablistModule> getModules() {
+                return modules;
+            }
+        };
+    }
 
     public void deleteTablistEntries(HypixelPlayer player) {
         tablistEntries.remove(player);
@@ -60,58 +75,55 @@ public abstract class TablistManager {
                 AtomicInteger slot = new AtomicInteger(0);
 
                 getModules().forEach(module -> {
-                    try {
-                        List<TablistModule.TablistEntry> entries = module.getEntries(player);
+                    List<TablistModule.TablistEntry> entries = module.getEntries(player);
 
-                        entries.forEach(entry -> {
-                            int slotIndex = slot.getAndIncrement();
-                            String teamName = getTeamName(slotIndex);
-                            String fakeProfileName = getFakeProfileName(slotIndex);
+                    entries.forEach(entry -> {
+                        int slotIndex = slot.getAndIncrement();
+                        String teamName = getTeamName(slotIndex);
+                        String fakeProfileName = getFakeProfileName(slotIndex);
 
-                            List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
-                            properties.add(new PlayerInfoUpdatePacket.Property(
-                                "textures",
-                                entry.registry().getTexture(),
-                                entry.registry().getSignature()));
+                        List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
+                        properties.add(new PlayerInfoUpdatePacket.Property(
+                            "textures",
+                            entry.registry().getTexture(),
+                            entry.registry().getSignature()));
 
-                            if (cache.createdTeams.add(teamName)) {
-                                TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(
-                                    Component.text(teamName),
-                                    (byte) 0x01,
-                                    TeamsPacket.NameTagVisibility.ALWAYS,
-                                    TeamsPacket.CollisionRule.ALWAYS,
-                                    NamedTextColor.RED,
-                                    Component.text(teamName),
-                                    Component.empty(),
-                                    new ArrayList<>(Collections.singletonList(fakeProfileName))
-                                ));
+                        if (cache.createdTeams.add(teamName)) {
+                            TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(
+                                Component.text(teamName),
+                                (byte) 0x01,
+                                TeamsPacket.NameTagVisibility.ALWAYS,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                NamedTextColor.RED,
+                                Component.text(teamName),
+                                Component.empty(),
+                                new ArrayList<>(Collections.singletonList(fakeProfileName))
+                            ));
 
-                                player.sendPacket(teamPacket);
-                            }
+                            player.sendPacket(teamPacket);
+                        }
 
-                            UUID uuid = UUID.nameUUIDFromBytes((player.getUuid() + "#tab#" + slotIndex)
-                                .getBytes(StandardCharsets.UTF_8));
-                            cache.tabEntries.add(uuid);
+                        UUID uuid = UUID.nameUUIDFromBytes((player.getUuid().toString() + "#tab#" + slotIndex)
+                            .getBytes(StandardCharsets.UTF_8));
+                        cache.tabEntries.add(uuid);
 
-                            player.sendPackets(
-                                new PlayerInfoUpdatePacket(EnumSet.of(
-                                    PlayerInfoUpdatePacket.Action.ADD_PLAYER,
-                                    PlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME,
-                                    PlayerInfoUpdatePacket.Action.UPDATE_LISTED
-                                ), Collections.singletonList(new PlayerInfoUpdatePacket.Entry(
-                                    uuid,
-                                    fakeProfileName,
-                                    properties,
-                                    true,
-                                    0,
-                                    GameMode.CREATIVE,
-                                    Component.text(entry.content()),
-                                    null,
-                                    1, true)))
-                            );
-                        });
-                    } catch (Exception _) {
-                    }
+                        player.sendPackets(
+                            new PlayerInfoUpdatePacket(EnumSet.of(
+                                PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                                PlayerInfoUpdatePacket.Action.UPDATE_DISPLAY_NAME,
+                                PlayerInfoUpdatePacket.Action.UPDATE_LISTED
+                            ), Collections.singletonList(new PlayerInfoUpdatePacket.Entry(
+                                uuid,
+                                fakeProfileName,
+                                properties,
+                                true,
+                                0,
+                                GameMode.CREATIVE,
+                                Component.text(entry.content()),
+                                null,
+                                1, true)))
+                        );
+                    });
                 });
             });
         }, TaskSchedule.seconds(5), TaskSchedule.seconds(3), ExecutionType.TICK_END);

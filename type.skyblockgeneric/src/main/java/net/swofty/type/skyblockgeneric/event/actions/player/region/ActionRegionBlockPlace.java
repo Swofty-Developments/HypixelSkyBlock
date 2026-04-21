@@ -7,8 +7,8 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 
 public class ActionRegionBlockPlace implements HypixelEventClass {
     private static final int ISLAND_SIZE = 161;
@@ -40,7 +40,7 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
         }
 
         // Solve weird placement block issues
-        MathUtility.delay(() -> {
+        ScheduleUtility.delay(() -> {
             //player.getChunk().sendChunk(player);
         }, 5);
 

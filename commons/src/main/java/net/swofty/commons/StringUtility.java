@@ -266,7 +266,7 @@ public class StringUtility {
 	}
 
 	public static String getAuctionSetupFormattedTime(long millis) {
-		return formatTimeLeft(millis).replaceAll(" ", "")
+		return formatTimeLeft(millis).replace(" ", "")
 				.replaceAll("s$", "");
 	}
 
@@ -434,6 +434,25 @@ public class StringUtility {
 			};
 		};
 	}
+
+	/**
+	 * Capitalizes the first letter of each word in the input string and lowercases the rest of the letters in each word.
+	 * @param input The string to capitalize.
+	 * @return The input string with the first letter of each word capitalized and the rest lowercased. If the input is null or empty, it returns the input as is.
+	 */
+	public static String capitalizeSentence(String input) {
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+		String[] words = input.split(" ");
+		StringBuilder capitalized = new StringBuilder();
+		for (String word : words) {
+			if (!word.isEmpty()) {
+				capitalized.append(capitalize(word)).append(" ");
+			}
+		}
+		return capitalized.toString().trim();
+  }
 
 	public static long parseDuration(String duration) {
 		long totalMillis = 0;

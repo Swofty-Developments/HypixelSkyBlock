@@ -7,21 +7,27 @@ import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.minestom.server.command.builder.suggestion.SuggestionEntry;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.minestom.server.instance.block.Block;
+import net.swofty.commons.Tuple;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.GeneratorSpeed;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.PitchYawPosition;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
 import net.swofty.type.bedwarsconfigurator.TypeBedWarsConfiguratorLoader;
 import net.swofty.type.bedwarsconfigurator.autosetup.AutoSetupSession;
 import net.swofty.type.bedwarsconfigurator.autosetup.DebugMarkerManager;
 import net.swofty.type.bedwarsconfigurator.autosetup.WorldScanner;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.raycast.Ray;
+import net.swofty.type.generic.raycast.RayBlockFinder;
+import net.swofty.type.generic.raycast.RayIntersection;
 import net.swofty.type.generic.user.categories.Rank;
 import org.tinylog.Logger;
 
@@ -30,15 +36,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-@CommandParameters(
-        aliases = "setup mapsetup",
-        description = "Automatic BedWars map configuration tool",
-        usage = "/autosetup <subcommand>",
-        permission = Rank.STAFF,
-        allowsConsole = false
-)
+@CommandParameters(aliases = "setup mapsetup", description = "Automatic BedWars map configuration tool", usage = "/autosetup <subcommand>", permission = Rank.STAFF, allowsConsole = false)
 public class AutoSetupCommand extends HypixelCommand {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -180,7 +183,6 @@ public class AutoSetupCommand extends HypixelCommand {
             }
 
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
-
         }, ArgumentType.Literal("bounds"), cornerArg, xArg, yArg, zArg);
     }
 
@@ -193,7 +195,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
         var typeArg = ArgumentType.String("typeName");
         typeArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            for (BedwarsGameType type : BedwarsGameType.values()) {
+            for (BedWarsGameType type : BedWarsGameType.values()) {
                 suggestion.addEntry(new SuggestionEntry(type.name()));
             }
         });
@@ -205,7 +207,7 @@ public class AutoSetupCommand extends HypixelCommand {
             String action = context.get(actionArg);
             String typeName = context.get(typeArg);
 
-            BedwarsGameType gameType = BedwarsGameType.from(typeName);
+            BedWarsGameType gameType = BedWarsGameType.from(typeName);
             if (gameType == null) {
                 player.sendMessage(Component.text("§cInvalid game type: " + typeName));
                 return;
@@ -227,25 +229,47 @@ public class AutoSetupCommand extends HypixelCommand {
                     player.sendMessage(Component.text("§eGame type not in list: " + gameType.getDisplayName()));
                 }
             }
-
         }, ArgumentType.Literal("type"), actionArg, typeArg);
     }
 
     private void registerTeamCommand(MinestomCommand command) {
         var teamArg = ArgumentType.String("teamName");
         teamArg.setSuggestionCallback((sender, ctx, suggestion) -> {
+            Set<SuggestionEntry> entries = new HashSet<>();
             for (TeamKey team : TeamKey.values()) {
-                suggestion.addEntry(new SuggestionEntry(team.name()));
+                entries.add(new SuggestionEntry(team.name()));
             }
+
+            String input = ctx.getInput();
+            String currentInput = input.substring(input.lastIndexOf(" ") + 1).trim().toLowerCase();
+
+            if (currentInput.isEmpty()) {
+                entries.forEach(suggestion::addEntry);
+                return;
+            }
+
+            entries.stream().filter(entry -> entry.getEntry().toLowerCase().startsWith(currentInput)).forEach(suggestion::addEntry);
         });
 
         var propertyArg = ArgumentType.String("property");
-        propertyArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            suggestion.addEntry(new SuggestionEntry("spawn"));
-            suggestion.addEntry(new SuggestionEntry("bed"));
-            suggestion.addEntry(new SuggestionEntry("generator"));
-            suggestion.addEntry(new SuggestionEntry("itemshop"));
-            suggestion.addEntry(new SuggestionEntry("teamshop"));
+        propertyArg.setSuggestionCallback((_, ctx, suggestion) -> {
+            Set<SuggestionEntry> entries = new HashSet<>();
+            entries.add(new SuggestionEntry("spawn"));
+            entries.add(new SuggestionEntry("bed"));
+            entries.add(new SuggestionEntry("generator"));
+            entries.add(new SuggestionEntry("itemshop"));
+            entries.add(new SuggestionEntry("teamshop"));
+            entries.add(new SuggestionEntry("remove"));
+
+            String input = ctx.getInput();
+            String currentInput = input.substring(input.lastIndexOf(" ") + 1).trim().toLowerCase();
+
+            if (currentInput.isEmpty()) {
+                entries.forEach(suggestion::addEntry);
+                return;
+            }
+
+            entries.stream().filter(entry -> entry.getEntry().toLowerCase().startsWith(currentInput)).forEach(suggestion::addEntry);
         });
 
         // /autosetup team <team> <property> - use player position
@@ -268,9 +292,8 @@ public class AutoSetupCommand extends HypixelCommand {
             AutoSetupSession.TeamConfig teamConfig = session.getOrCreateTeam(teamKey);
             Pos pos = player.getPosition();
 
-            setTeamProperty(player, teamConfig, property, pos);
+            setTeamProperty(player, teamKey, teamConfig, property, pos);
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
-
         }, ArgumentType.Literal("team"), teamArg, propertyArg);
 
         // /autosetup team <team> <property> <x> <y> <z>
@@ -300,58 +323,106 @@ public class AutoSetupCommand extends HypixelCommand {
             AutoSetupSession.TeamConfig teamConfig = session.getOrCreateTeam(teamKey);
             Pos pos = new Pos(x, y, z, player.getPosition().yaw(), player.getPosition().pitch());
 
-            setTeamProperty(player, teamConfig, property, pos);
+            setTeamProperty(player, teamKey, teamConfig, property, pos);
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
         }, ArgumentType.Literal("team"), teamArg, propertyArg, xArg, yArg, zArg);
     }
 
-    private void setTeamProperty(Player player, AutoSetupSession.TeamConfig teamConfig, String property, Pos pos) {
+    private void setTeamProperty(Player player, TeamKey key, AutoSetupSession.TeamConfig teamConfig, String property, Pos pos) {
+        final HypixelPosition currentPosition = new HypixelPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw());
         switch (property.toLowerCase()) {
             case "spawn" -> {
-                teamConfig.setSpawn(new PitchYawPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
+                teamConfig.setSpawn(currentPosition);
                 player.sendMessage(Component.text("§aSet team spawn to " + formatPos(pos)));
             }
             case "bed" -> {
-                // For bed, we need both feet and head. Use player facing direction
-                Position feet = new Position(pos.blockX(), pos.blockY(), pos.blockZ());
-                Position head = calculateBedHead(pos);
-                teamConfig.setBedFeet(feet);
-                teamConfig.setBedHead(head);
-                player.sendMessage(Component.text("§aSet team bed (feet: " + formatPosition(feet) + ", head: " + formatPosition(head) + ")"));
+                Optional<Tuple<Vec3i, Vec3i>> positions = calculateBedHead(player);
+                positions.ifPresentOrElse(position -> {
+                    Vec3i head = position.getKey();
+                    Vec3i feet = position.getValue();
+
+                    teamConfig.setBedFeet(feet);
+                    teamConfig.setBedHead(head);
+                    player.sendMessage(Component.text("§aSet team bed (feet: " + formatPosition(feet) + ", head: " + formatPosition(head) + ")"));
+                }, () -> {
+                    player.sendMessage(Component.text("§cYou must be looking at a bed block to set the bed position."));
+                });
             }
             case "generator" -> {
-                teamConfig.setGenerator(new Position(pos.x(), pos.y(), pos.z()));
+                teamConfig.setGenerator(new HypixelPosition(pos.x(), pos.y(), pos.z()));
                 player.sendMessage(Component.text("§aSet team generator to " + formatPos(pos)));
             }
             case "itemshop" -> {
-                teamConfig.setItemShop(new PitchYawPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
+                teamConfig.setItemShop(currentPosition);
                 player.sendMessage(Component.text("§aSet item shop to " + formatPos(pos)));
             }
             case "teamshop" -> {
-                teamConfig.setTeamShop(new PitchYawPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
+                teamConfig.setTeamShop(currentPosition);
                 player.sendMessage(Component.text("§aSet team shop to " + formatPos(pos)));
+            }
+            case "remove" -> {
+                AutoSetupSession.get(player.getUuid()).removeTeam(key);
+                player.sendMessage(Component.text("§cRemoved all properties for team"));
             }
             default -> player.sendMessage(Component.text("§cUnknown property: " + property));
         }
     }
 
-    private Position calculateBedHead(Pos playerPos) {
-        // Calculate head position based on player yaw (where they're looking)
-        float yaw = playerPos.yaw();
-        int dx = 0, dz = 0;
+    private Optional<Tuple<Vec3i, Vec3i>> calculateBedHead(Player player) {
+        Pos start = player.getPosition();
 
-        if (yaw >= -45 && yaw < 45) { // South
-            dz = 1;
-        } else if (yaw >= 45 && yaw < 135) { // West
-            dx = -1;
-        } else if (yaw >= 135 || yaw < -135) { // North
-            dz = -1;
-        } else { // East
-            dx = 1;
+        Ray ray = new Ray(start, start.direction().mul(5));
+
+        RayBlockFinder finder = ray.findBlocks(player.getInstance());
+
+        RayIntersection<Block> hit = null;
+        while (finder.hasNext()) {
+            RayIntersection<Block> result = finder.nextClosest();
+            if (result == null) break;
+
+            Block block = result.object();
+            if (block.key().value().endsWith("_bed")) {
+                hit = result;
+                break;
+            }
         }
 
-        return new Position(playerPos.blockX() + dx, playerPos.blockY(), playerPos.blockZ() + dz);
+        if (hit == null) return Optional.empty();
+
+        Block bedBlock = hit.object();
+        Point hitPoint = hit.point();
+
+        Vec3i hitPos = new Vec3i(hitPoint.blockX(), hitPoint.blockY(), hitPoint.blockZ());
+
+        String part = bedBlock.getProperty("part");
+        String facing = bedBlock.getProperty("facing");
+
+        if (part == null || facing == null) {
+            Logger.warn("Hit bed block missing 'part' or 'facing'");
+            return Optional.empty();
+        }
+
+        Vec3i offset = switch (facing) {
+            case "north" -> new Vec3i(0, 0, -1);
+            case "south" -> new Vec3i(0, 0, 1);
+            case "west" -> new Vec3i(-1, 0, 0);
+            case "east" -> new Vec3i(1, 0, 0);
+            default -> Vec3i.ZERO;
+        };
+
+        Vec3i headPos;
+        Vec3i footPos;
+
+        if ("head".equals(part)) {
+            headPos = hitPos;
+            footPos = headPos.sub(offset);
+        } else {
+            footPos = hitPos;
+            headPos = hitPos.add(offset);
+        }
+
+        return Optional.of(new Tuple<>(headPos, footPos));
     }
 
     private void registerGlobalCommand(MinestomCommand command) {
@@ -378,9 +449,7 @@ public class AutoSetupCommand extends HypixelCommand {
             Pos pos = player.getPosition();
 
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            List<Position> generators = genType.equalsIgnoreCase("diamond")
-                    ? session.getDiamondGenerators()
-                    : session.getEmeraldGenerators();
+            List<HypixelPosition> generators = genType.equalsIgnoreCase("diamond") ? session.getDiamondGenerators() : session.getEmeraldGenerators();
 
             handleGlobalGeneratorAction(player, generators, action, pos, genType);
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
@@ -403,9 +472,7 @@ public class AutoSetupCommand extends HypixelCommand {
             double z = context.get(zArg);
 
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            List<Position> generators = genType.equalsIgnoreCase("diamond")
-                    ? session.getDiamondGenerators()
-                    : session.getEmeraldGenerators();
+            List<HypixelPosition> generators = genType.equalsIgnoreCase("diamond") ? session.getDiamondGenerators() : session.getEmeraldGenerators();
 
             handleGlobalGeneratorAction(player, generators, action, new Pos(x, y, z), genType);
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
@@ -413,19 +480,19 @@ public class AutoSetupCommand extends HypixelCommand {
         }, ArgumentType.Literal("global"), genTypeArg, actionArg, xArg, yArg, zArg);
     }
 
-    private void handleGlobalGeneratorAction(Player player, List<Position> generators, String action, Pos pos, String genType) {
+    private void handleGlobalGeneratorAction(Player player, List<HypixelPosition> generators, String action, Pos pos, String genType) {
         switch (action.toLowerCase()) {
             case "add" -> {
-                Position newPos = new Position(pos.x(), pos.y(), pos.z());
+                HypixelPosition newPos = new HypixelPosition(pos.x(), pos.y(), pos.z());
                 generators.add(newPos);
                 player.sendMessage(Component.text("§aAdded " + genType + " generator at " + formatPos(pos) + " (Total: " + generators.size() + ")"));
             }
             case "remove" -> {
                 // Remove nearest generator within 2 blocks
-                Position toRemove = null;
+                HypixelPosition toRemove = null;
                 double minDist = Double.MAX_VALUE;
 
-                for (Position gen : generators) {
+                for (HypixelPosition gen : generators) {
                     double dist = Math.sqrt(Math.pow(gen.x() - pos.x(), 2) + Math.pow(gen.y() - pos.y(), 2) + Math.pow(gen.z() - pos.z(), 2));
                     if (dist < minDist && dist < 2) {
                         minDist = dist;
@@ -457,7 +524,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
             Pos pos = player.getPosition();
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            session.setWaitingLocation(new PitchYawPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
+            session.setWaitingLocation(new HypixelPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
             player.sendMessage(Component.text("§aSet waiting spawn to " + formatPos(pos)));
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
@@ -469,7 +536,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
             Pos pos = player.getPosition();
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            session.setSpectatorLocation(new PitchYawPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
+            session.setSpectatorLocation(new HypixelPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
             player.sendMessage(Component.text("§aSet spectator spawn to " + formatPos(pos)));
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
@@ -489,7 +556,7 @@ public class AutoSetupCommand extends HypixelCommand {
             double z = context.get(zArg);
 
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            session.setWaitingLocation(new PitchYawPosition(x, y, z, 0, 0));
+            session.setWaitingLocation(new HypixelPosition(x, y, z, 0, 0));
             player.sendMessage(Component.text("§aSet waiting spawn to " + x + ", " + y + ", " + z));
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
@@ -504,7 +571,7 @@ public class AutoSetupCommand extends HypixelCommand {
             double z = context.get(zArg);
 
             AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            session.setSpectatorLocation(new PitchYawPosition(x, y, z, 0, 0));
+            session.setSpectatorLocation(new HypixelPosition(x, y, z, 0, 0));
             player.sendMessage(Component.text("§aSet spectator spawn to " + x + ", " + y + ", " + z));
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
@@ -618,9 +685,7 @@ public class AutoSetupCommand extends HypixelCommand {
             try {
                 GeneratorSpeed speed = GeneratorSpeed.valueOf(speedStr.toUpperCase());
                 session.setGeneratorSpeed(speed);
-                player.sendMessage(Component.text("§aSet generator speed to " + speed.name() +
-                    " (" + speed.getIronAmount() + " iron/" + speed.getIronDelaySeconds() + "s, " +
-                    speed.getGoldAmount() + " gold/" + speed.getGoldDelaySeconds() + "s)"));
+                player.sendMessage(Component.text("§aSet generator speed to " + speed.name() + " (" + speed.getIronAmount() + " iron/" + speed.getIronDelaySeconds() + "s, " + speed.getGoldAmount() + " gold/" + speed.getGoldDelaySeconds() + "s)"));
             } catch (IllegalArgumentException e) {
                 player.sendMessage(Component.text("§cInvalid speed: " + speedStr));
             }
@@ -773,8 +838,8 @@ public class AutoSetupCommand extends HypixelCommand {
         return String.format("%.2f, %.2f, %.2f", pos.x(), pos.y(), pos.z());
     }
 
-    private String formatPosition(Position pos) {
-        return String.format("%.2f, %.2f, %.2f", pos.x(), pos.y(), pos.z());
+    private String formatPosition(Vec3i pos) {
+        return String.format("%d, %d, %d", pos.x(), pos.y(), pos.z());
     }
 }
 

@@ -9,10 +9,9 @@ import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
 import net.minestom.server.command.builder.suggestion.SuggestionEntry;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
-import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig.PitchYawPosition;
-import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig.Position;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
@@ -126,7 +125,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
             Pos pos = player.getPosition();
             MurderMysterySetupSession session = MurderMysterySetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            session.setWaitingLocation(new PitchYawPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
+            session.setWaitingLocation(new HypixelPosition(pos.x(), pos.y(), pos.z(), pos.pitch(), pos.yaw()));
             player.sendMessage(Component.text("§aSet waiting spawn to " + formatPos(pos)));
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
@@ -146,7 +145,7 @@ public class AutoSetupCommand extends HypixelCommand {
             double z = context.get(zArg);
 
             MurderMysterySetupSession session = MurderMysterySetupSession.getOrCreate(player.getUuid(), player.getInstance());
-            session.setWaitingLocation(new PitchYawPosition(x, y, z, 0, 0));
+            session.setWaitingLocation(new HypixelPosition(x, y, z, 0, 0));
             player.sendMessage(Component.text("§aSet waiting spawn to " + x + ", " + y + ", " + z));
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
@@ -239,19 +238,19 @@ public class AutoSetupCommand extends HypixelCommand {
         }, ArgumentType.Literal("spawn"), actionArg, xArg, yArg, zArg);
     }
 
-    private void handleSpawnAction(Player player, List<Position> spawns, String action, Pos pos, String spawnType) {
+    private void handleSpawnAction(Player player, List<HypixelPosition> spawns, String action, Pos pos, String spawnType) {
         switch (action.toLowerCase()) {
             case "add" -> {
-                Position newPos = new Position(pos.x(), pos.y(), pos.z());
+                HypixelPosition newPos = new HypixelPosition(pos.x(), pos.y(), pos.z());
                 spawns.add(newPos);
                 player.sendMessage(Component.text("§aAdded " + spawnType + " at " + formatPos(pos) + " (Total: " + spawns.size() + ")"));
             }
             case "remove" -> {
                 // Remove nearest spawn within 2 blocks
-                Position toRemove = null;
+                HypixelPosition toRemove = null;
                 double minDist = Double.MAX_VALUE;
 
-                for (Position spawn : spawns) {
+                for (HypixelPosition spawn : spawns) {
                     double dist = Math.sqrt(Math.pow(spawn.x() - pos.x(), 2) + Math.pow(spawn.y() - pos.y(), 2) + Math.pow(spawn.z() - pos.z(), 2));
                     if (dist < minDist && dist < 2) {
                         minDist = dist;
@@ -358,7 +357,7 @@ public class AutoSetupCommand extends HypixelCommand {
                     if (region == null) {
                         player.sendMessage(Component.text("§cKill zone '" + name + "' not found. Create it first with /mmsetup killzone add " + name));
                     } else {
-                        region.setMinPos(new Position(pos.x(), pos.y(), pos.z()));
+                        region.setMinPos(new HypixelPosition(pos.x(), pos.y(), pos.z()));
                         player.sendMessage(Component.text("§aSet min corner of '" + name + "' to " + formatPos(pos)));
                         DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
                     }
@@ -368,7 +367,7 @@ public class AutoSetupCommand extends HypixelCommand {
                     if (region == null) {
                         player.sendMessage(Component.text("§cKill zone '" + name + "' not found. Create it first with /mmsetup killzone add " + name));
                     } else {
-                        region.setMaxPos(new Position(pos.x(), pos.y(), pos.z()));
+                        region.setMaxPos(new HypixelPosition(pos.x(), pos.y(), pos.z()));
                         player.sendMessage(Component.text("§aSet max corner of '" + name + "' to " + formatPos(pos)));
                         DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
                     }
@@ -387,7 +386,7 @@ public class AutoSetupCommand extends HypixelCommand {
         }, ArgumentType.Literal("killzone"), actionArg, nameArg);
     }
 
-    private String formatPosition(Position pos) {
+    private String formatPosition(HypixelPosition pos) {
         return String.format("%.2f, %.2f, %.2f", pos.x(), pos.y(), pos.z());
     }
 
@@ -409,7 +408,7 @@ public class AutoSetupCommand extends HypixelCommand {
     }
 
     private void registerHideCommand(MinestomCommand command) {
-        command.addSyntax((sender, context) -> {
+        command.addSyntax((sender, _) -> {
             if (!(sender instanceof Player player)) return;
             if (!permissionCheck(sender)) return;
 

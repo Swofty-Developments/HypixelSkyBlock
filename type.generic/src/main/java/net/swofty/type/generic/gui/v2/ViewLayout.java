@@ -8,9 +8,15 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 
-import java.util.*;
+import java.time.Duration;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -81,15 +87,23 @@ public final class ViewLayout<S> {
 
     public void autoUpdating(int slot,
                              BiFunction<S, ViewContext, ItemStack.Builder> render,
-                             java.time.Duration updateInterval) {
+                             Duration updateInterval) {
         components.put(slot, ViewComponent.autoUpdating(slot, render, updateInterval));
     }
 
     public void autoUpdating(int slot,
                              BiFunction<S, ViewContext, ItemStack.Builder> render,
                              BiConsumer<ClickContext<S>, ViewContext> onClick,
-                             java.time.Duration updateInterval) {
+                             Duration updateInterval) {
         components.put(slot, ViewComponent.autoUpdating(slot, render, onClick, updateInterval));
+    }
+
+    public void autoUpdating(int slot,
+                             BiFunction<S, ViewContext, ItemStack.Builder> render,
+                             BiConsumer<ClickContext<S>, ViewContext> onClick,
+                             Duration updateInterval,
+                             Consumer<ViewContext> update) {
+        components.put(slot, ViewComponent.autoUpdating(slot, render, onClick, updateInterval, update));
     }
 
     public void editable(int slot, SlotChangeHandler<S> onChange) {

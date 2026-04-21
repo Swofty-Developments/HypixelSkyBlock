@@ -397,7 +397,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
             }
             case SPLASH -> {
                 isSplash = true;
-                // Enchanted gunpowder preserves duration, regular gunpowder doesn't
+                // Enchanted gunpowder preserves duration, regular gunpowder doesn'distance
                 if (modifier == PotionModifier.GUNPOWDER) {
                     isExtended = false; // This will halve duration when calculating
                 }

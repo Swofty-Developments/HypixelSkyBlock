@@ -6,7 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
 import net.swofty.commons.bedwars.BedwarsStatType;
 import org.bson.Document;
@@ -43,7 +43,7 @@ public class BedWarsStatsDatabase {
 		));
 	}
 
-	public static void recordStatEvent(UUID playerUuid, BedwarsStatType statType, BedwarsGameType gameMode, int amount) {
+	public static void recordStatEvent(UUID playerUuid, BedwarsStatType statType, BedWarsGameType gameMode, int amount) {
 		Document event = new Document()
 				.append("playerUuid", playerUuid.toString())
 				.append("statType", statType.name())
@@ -54,7 +54,7 @@ public class BedWarsStatsDatabase {
 		collection.insertOne(event);
 	}
 
-	public static void recordStatEventAsync(UUID playerUuid, BedwarsStatType statType, BedwarsGameType gameMode, int amount) {
+	public static void recordStatEventAsync(UUID playerUuid, BedwarsStatType statType, BedWarsGameType gameMode, int amount) {
 		Thread.startVirtualThread(() -> recordStatEvent(playerUuid, statType, gameMode, amount));
 	}
 
@@ -70,7 +70,7 @@ public class BedWarsStatsDatabase {
 		// Add mode filter if not ALL
 		if (mode != BedwarsLeaderboardMode.ALL) {
 			List<String> includedModes = new ArrayList<>();
-			for (BedwarsGameType gameType : BedwarsGameType.values()) {
+			for (BedWarsGameType gameType : BedWarsGameType.values()) {
 				if (mode.includes(gameType)) {
 					includedModes.add(gameType.name());
 				}
@@ -129,7 +129,7 @@ public class BedWarsStatsDatabase {
 
 		if (mode != BedwarsLeaderboardMode.ALL) {
 			List<String> includedModes = new ArrayList<>();
-			for (BedwarsGameType gameType : BedwarsGameType.values()) {
+			for (BedWarsGameType gameType : BedWarsGameType.values()) {
 				if (mode.includes(gameType)) {
 					includedModes.add(gameType.name());
 				}

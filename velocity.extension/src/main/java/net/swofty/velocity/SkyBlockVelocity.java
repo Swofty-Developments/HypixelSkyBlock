@@ -207,6 +207,7 @@ public class SkyBlockVelocity {
 
         CommandMeta lobbyCommandMeta = commandManager.metaBuilder("lobby")
             .plugin(this)
+            .aliases("l")
             .build();
 
         commandManager.register(statusCommandMeta, new ServerStatusCommand());

@@ -2,6 +2,7 @@ package net.swofty.commons.murdermystery.map;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 
 import java.util.List;
@@ -24,25 +25,19 @@ public class MurderMysteryMapsConfig {
         public static class MapConfiguration {
             private List<MurderMysteryGameType> types;
             private MapLocations locations;
-            private List<Position> goldSpawns;
-            private List<Position> playerSpawns;
+            private List<HypixelPosition> goldSpawns;
+            private List<HypixelPosition> playerSpawns;
             private List<KillRegion> killRegions;
 
             @Getter
             @Setter
             public static class MapLocations {
-                private PitchYawPosition waiting;
+                private HypixelPosition waiting;
             }
         }
     }
 
-    public record Position(double x, double y, double z) {
-    }
-
-    public record PitchYawPosition(double x, double y, double z, float pitch, float yaw) {
-    }
-
-    public record KillRegion(String name, Position min, Position max) {
+    public record KillRegion(String name, HypixelPosition min, HypixelPosition max) {
         public boolean isComplete() {
             return min != null && max != null;
         }

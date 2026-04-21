@@ -6,6 +6,7 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithBlockEvent;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
+import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
@@ -15,9 +16,9 @@ import net.minestom.server.instance.block.Block;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -39,8 +40,8 @@ public class ActionGameCustomItems implements HypixelEventClass {
 			return;
 		}
 
-		Game game = shooter.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = shooter.getGame();
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			fireball.remove();
 			return;
 		}
@@ -115,6 +116,12 @@ public class ActionGameCustomItems implements HypixelEventClass {
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerBlockPlaceEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onBlockPlace(event);
+	}
+
+	// InventoryClickItem
+	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	public void run(InventoryPreClickEvent event) {
+		TypeBedWarsGameLoader.getItemHandler().onInventoryClick(event);
 	}
 
 }

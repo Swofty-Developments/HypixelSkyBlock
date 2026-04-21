@@ -8,6 +8,7 @@ import net.swofty.commons.StringUtility;
 public enum Rank {
     STAFF("§c[§6ዞ§c] ", true, NamedTextColor.RED),
     YOUTUBE("§c[§fYOUTUBE§c] ", false, NamedTextColor.RED),
+    MVP_PLUS_PLUS("§6[MVP++] ", false, NamedTextColor.GOLD),
     MVP_PLUS("§b[MVP§c+§b] ", false, NamedTextColor.AQUA),
     MVP("§b[MVP] ", false, NamedTextColor.AQUA),
     VIP_PLUS("§a[VIP§6+§a] ", false, NamedTextColor.GREEN),

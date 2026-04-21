@@ -11,7 +11,7 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 import java.util.Set;
@@ -36,39 +36,44 @@ public abstract class Trap {
 	 * Triggers the trap for the specified team.
 	 *
 	 * @param game      the game instance
-	 * @param teamName  the name of the team that owns the trap
+	 * @param teamKey   the key of the team that owns the trap
 	 * @param triggerer the player who triggered the trap
 	 */
-	public void trigger(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer) {
-		game.getTeamManager().removeTeamTrap(teamName, getKey());
+	public void trigger(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey, BedWarsPlayer triggerer) {
+		game.getTeam(teamKey.name()).ifPresent(team -> team.removeTrap(getKey()));
 
-		game.getTeamManager().getPlayersOnTeam(teamName).forEach(player -> {
-			player.sendTitlePart(TitlePart.TITLE, Component.text("TRAP TRIGGERED")
-					.color(NamedTextColor.RED)
-					.decoration(TextDecoration.BOLD, true));
-			player.playSound(Sound.sound(Key.key("minecraft:entity.enderman.death"), Sound.Source.MASTER, 1.0f, 0.6f));
-		});
-		onTrigger(game, teamName, triggerer);
+		// Notify all team members
+		game.getPlayers().stream()
+				.filter(p -> teamKey.equals(p.getTeamKey()))
+				.forEach(player -> {
+					player.sendTitlePart(TitlePart.TITLE, Component.text("TRAP TRIGGERED")
+							.color(NamedTextColor.RED)
+							.decoration(TextDecoration.BOLD, true));
+					player.playSound(Sound.sound(Key.key("minecraft:entity.enderman.death"), Sound.Source.MASTER, 1.0f, 0.6f));
+				});
+		onTrigger(game, teamKey, triggerer);
 	}
 
 	/**
 	 * Abstract method to define the trap's behavior when triggered.
 	 *
 	 * @param game      the game instance
-	 * @param teamName  the name of the team that owns the trap
+	 * @param teamKey   the key of the team that owns the trap
 	 * @param triggerer the player who triggered the trap
 	 */
-	public abstract void onTrigger(Game game, BedWarsMapsConfig.TeamKey teamName, BedWarsPlayer triggerer);
+	public abstract void onTrigger(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey, BedWarsPlayer triggerer);
 
 	/**
 	 * Gets the price of the trap for the specified team.
 	 *
 	 * @param game     the game instance
-	 * @param teamName the name of the team that owns the trap
+	 * @param teamKey  the key of the team that owns the trap
 	 * @return the price of the trap
 	 */
-	public int getPrice(Game game, BedWarsMapsConfig.TeamKey teamName) {
-		return game.getTeamManager().getTeamTraps(teamName).size() + 1;
+	public int getPrice(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey) {
+		return game.getTeam(teamKey.name())
+				.map(team -> team.getTrapCount() + 1)
+				.orElse(1);
 	}
 
 	public ItemStack getDisplayItem() {

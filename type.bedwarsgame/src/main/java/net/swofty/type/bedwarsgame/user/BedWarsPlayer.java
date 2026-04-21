@@ -1,31 +1,52 @@
 package net.swofty.type.bedwarsgame.user;
 
+import lombok.Getter;
+import lombok.Setter;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.Aerodynamics;
 import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.collision.PhysicsUtils;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.MetadataDef;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.entity.EntityVelocityEvent;
 import net.minestom.server.instance.Chunk;
+import net.minestom.server.network.packet.server.play.EntityHeadLookPacket;
+import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
+import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.TimedPotion;
+import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.chunk.ChunkUtils;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.player.CombatPlayer;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.game.game.GameParticipant;
+import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointHypixelExperience;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.function.Function;
 
 /**
@@ -34,14 +55,116 @@ import java.util.function.Function;
  * CombatPlayer implementation based on <a href="https://github.com/TogAr2/MinestomPvP/blob/master/src/main/java/io/github/togar2/pvp/player/CombatPlayerImpl.java">CombatPlayerImpl</a>
  */
 @SuppressWarnings("UnstableApiUsage")
-public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
+public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GameParticipant {
 
 	private boolean velocityUpdate = false;
 	private PhysicsResult previousPhysicsResult = null;
+	@Getter
+	private long xpThisGame = 0;
+	@Getter
+	private long tokensThisGame = 0;
+	@Getter
+	private long hypixelXpThisGame = 0;
+	@Getter
+	@Setter
+	private boolean shouldShowTrueIdentity = false;
+	@Getter
+	private UUID fakeUuid;
 
 	public BedWarsPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
 		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
+		getAttribute(Attribute.ATTACK_SPEED).setBaseValue(1000); // basically removes the attack indicator
+		fakeUuid = UUID.randomUUID();
+	}
+
+	@Override
+	public String getGameId() {
+		return getTag(Tag.String("gameId"));
+	}
+
+	@Override
+	public void setGameId(String gameId) {
+		if (gameId == null) {
+			removeTag(Tag.String("gameId"));
+			resetTrackable();
+		} else {
+			setTag(Tag.String("gameId"), gameId);
+		}
+	}
+
+	public void reveal() {
+		shouldShowTrueIdentity = true;
+		setSkin(getSkin());
+	}
+
+	public void updateBelowTag() {
+		if (belowNameTag == null)
+			setBelowNameTag(new BelowNameTag("health", Component.text("§c❤")));
+		int health = (int) (getHealth() + getAdditionalHearts());
+		belowNameTag.updateScore(this, health);
+
+		BedWarsGame game = getGame();
+		if (game != null && game.getReplayManager().isRecording()) {
+			game.getReplayManager().recordBelowNameTag(this, health);
+		}
+	}
+
+	@Override
+	public void updateNewViewer(@NonNull Player player) {
+		if (!shouldShowTrueIdentity) {
+			player.sendPackets(
+				new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER,
+					new PlayerInfoUpdatePacket.Entry(
+						fakeUuid,
+						"§k" + fakeUuid.toString().substring(0, new Random().nextInt(10) + 4),
+						List.of(),
+						false,
+						0,
+						GameMode.SURVIVAL,
+						Component.text(fakeUuid.toString().substring(0, 12)),
+						null,
+						1, false)),
+				new SpawnEntityPacket(this.getEntityId(), fakeUuid, EntityType.PLAYER,
+					getPosition(),
+					(float) 0,
+					0,
+					Vec.ZERO),
+				new EntityHeadLookPacket(getEntityId(), getPosition().yaw())
+			);
+			return;
+		}
+		super.updateNewViewer(player);
+	}
+
+	@Override
+	protected @NonNull PlayerInfoUpdatePacket getAddPlayerToList() {
+		if (!shouldShowTrueIdentity) {
+			return new PlayerInfoUpdatePacket(EnumSet.of(
+				PlayerInfoUpdatePacket.Action.ADD_PLAYER),
+				List.of(new PlayerInfoUpdatePacket.Entry(fakeUuid, "§k" + fakeUuid.toString().substring(0, 14), List.of(),
+					false, getLatency(), getGameMode(), Component.text(fakeUuid.toString().substring(0, 12)), null, 0, false)));
+		}
+		final PlayerSkin skin = getSkin();
+		List<PlayerInfoUpdatePacket.Property> prop = skin != null ?
+			List.of(new PlayerInfoUpdatePacket.Property("textures", skin.textures(), skin.signature())) :
+			List.of();
+		byte hatIndex = ((MetadataDef.Entry.BitMask) MetadataDef.Player.IS_HAT_ENABLED).bitMask();
+
+		return new PlayerInfoUpdatePacket(EnumSet.of(PlayerInfoUpdatePacket.Action.ADD_PLAYER, PlayerInfoUpdatePacket.Action.UPDATE_LISTED),
+			List.of(new PlayerInfoUpdatePacket.Entry(getUuid(), getUsername(), prop,
+				false, getLatency(), getGameMode(), getDisplayName(), null, 0, (getSettings().displayedSkinParts() & hatIndex) == hatIndex)));
+	}
+
+	public void resetTrackable() {
+		xpThisGame = 0;
+		tokensThisGame = 0;
+		hypixelXpThisGame = 0;
+	}
+
+	@Override
+	public Player getServerPlayer() {
+		return this;
 	}
 
 	public BedWarsDataHandler getBedWarsDataHandler() {
@@ -53,29 +176,65 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer {
 		return getTag(Tag.String("team"));
 	}
 
+	public void setTeamName(@NotNull BedWarsMapsConfig.TeamKey teamKey) {
+		setTag(Tag.String("team"), teamKey.name());
+	}
+
 	@Nullable
 	public BedWarsMapsConfig.TeamKey getTeamKey() {
 		return BedWarsMapsConfig.TeamKey.valueOf(getTeamName());
 	}
 
-	public Game getGame() {
+	public BedWarsGame getGame() {
 		String gameId = getTag(Tag.String("gameId"));
 		return TypeBedWarsGameLoader.getGameById(gameId);
 	}
 
 	public void xp(ExperienceCause cause) {
+		xpThisGame += cause.getExperience();
+
 		sendMessage("§b+" + cause.getExperience() + " Bed Wars XP (" + cause.getFormattedName() + ")");
 		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
 		dp.setValue(dp.getValue() + cause.getExperience());
+
+		setLevel(BedwarsLevelUtil.calculateLevel(dp.getValue()));
+		setExp((float) BedwarsLevelUtil.calculateExperienceSinceLastLevel(dp.getValue()) / BedwarsLevelUtil.calculateMaxExperienceFromExperience(dp.getValue()));
 	}
 
 	public void xp(ExperienceCause cause, long units) {
 		long amount = cause.calculateXp(units);
+		xpThisGame += amount;
+
 		sendMessage("§b+" + amount + " Bed Wars XP (" + cause.getFormattedName() + ")");
 		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
 		dp.setValue(dp.getValue() + amount);
+
+		setLevel(BedwarsLevelUtil.calculateLevel(dp.getValue()));
+		setExp((float) BedwarsLevelUtil.calculateExperienceSinceLastLevel(dp.getValue()) / BedwarsLevelUtil.calculateMaxExperienceFromExperience(dp.getValue()));
 	}
 
+	public void hypixelXp(long amount) {
+		hypixelXpThisGame += amount;
+		sendMessage("§b+" + amount + " Hypixel Experience");
+		DatapointHypixelExperience dp = getDataHandler().get(HypixelDataHandler.Data.HYPIXEL_EXPERIENCE, DatapointHypixelExperience.class);
+		dp.setValue(dp.getValue() + amount);
+	}
+
+	public void token(TokenCause cause) {
+		tokensThisGame += cause.getExperience();
+		sendMessage("§2+" + cause.getExperience() + " Tokens (" + cause.getFormattedName() + ")");
+		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.TOKENS, DatapointLeaderboardLong.class);
+		dp.setValue(dp.getValue() + cause.getExperience());
+	}
+
+	public long getCurrentBedWarsExperience() {
+		DatapointLeaderboardLong dp = getBedWarsDataHandler().get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class);
+		return dp.getValue();
+	}
+
+	public long getCurrentBedWarsLevel() {
+		return BedwarsLevelUtil.calculateLevel(getCurrentBedWarsExperience());
+	}
 
 	@Override
 	public void setVelocity(@NotNull Vec velocity) {

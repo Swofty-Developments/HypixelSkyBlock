@@ -1,11 +1,9 @@
 package net.swofty.type.generic.utility;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.Direction;
 
 import java.util.ArrayList;
@@ -49,14 +47,6 @@ public class MathUtility {
 
     public static <T> T getRandomElement(List<T> list) {
         return list.get(random(0, list.size() - 1));
-    }
-
-    public static void delay(Runnable runnable, int ticks) {
-        MinecraftServer.getSchedulerManager().scheduleTask(runnable, TaskSchedule.tick(ticks), TaskSchedule.stop());
-    }
-
-    public static void delay(Runnable runnable, TaskSchedule schedule) {
-        MinecraftServer.getSchedulerManager().scheduleTask(runnable, schedule, TaskSchedule.stop());
     }
 
     public static long ticksToMilliseconds(long ticks) {

@@ -15,7 +15,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.Consumable;
 import net.minestom.server.item.component.ConsumeEffect;
-import net.minestom.server.item.component.ConsumeEffect.*;
+import net.minestom.server.item.component.ConsumeEffect.ApplyEffects;
+import net.minestom.server.item.component.ConsumeEffect.ClearAllEffects;
+import net.minestom.server.item.component.ConsumeEffect.PlaySound;
+import net.minestom.server.item.component.ConsumeEffect.RemoveEffects;
+import net.minestom.server.item.component.ConsumeEffect.TeleportRandomly;
 import net.minestom.server.item.component.Food;
 import net.minestom.server.item.component.SuspiciousStewEffects;
 import net.minestom.server.potion.CustomPotionEffect;
@@ -29,6 +33,7 @@ import net.swofty.pvp.feature.RegistrableFeature;
 import net.swofty.pvp.feature.config.DefinedFeature;
 import net.swofty.pvp.feature.config.FeatureConfiguration;
 import net.swofty.pvp.feature.cooldown.ItemCooldownFeature;
+import net.swofty.pvp.feature.provider.SoundProvider;
 import net.swofty.pvp.utils.PotionFlags;
 import net.swofty.pvp.utils.ViewUtil;
 import org.jetbrains.annotations.Nullable;
@@ -46,18 +51,19 @@ import java.util.concurrent.ThreadLocalRandom;
 public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 	public static final DefinedFeature<VanillaFoodFeature> DEFINED = new DefinedFeature<>(
 			FeatureType.FOOD, VanillaFoodFeature::new,
-			FeatureType.ITEM_COOLDOWN
+			FeatureType.ITEM_COOLDOWN, FeatureType.SOUND
 	);
 
 	private final FeatureConfiguration configuration;
 
 	private ItemCooldownFeature itemCooldownFeature;
+	private SoundProvider soundProvider;
 
 	public VanillaFoodFeature(FeatureConfiguration configuration) {
 		this.configuration = configuration;
 	}
 
-	public static void applyConsumeEffect(Entity entity, ConsumeEffect effect, Random random) {
+	public static void applyConsumeEffect(Entity entity, ConsumeEffect effect, Random random, SoundProvider soundProvider) {
 		switch (effect) {
 			case ApplyEffects(List<CustomPotionEffect> effects, float probability) -> {
 				if (random.nextFloat() >= probability) return;
@@ -80,10 +86,14 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 					.forEach(entity::removeEffect);
 			case ClearAllEffects ignored -> entity.clearEffects();
 			case TeleportRandomly(float diameter) -> ChorusFruitUtil.tryChorusTeleport(entity, diameter);
-			case PlaySound(SoundEvent sound) -> ViewUtil.viewersAndSelf(entity).playSound(Sound.sound(
-					sound, Sound.Source.PLAYER,
-					1.0f, 1.0f
-			), entity);
+			case PlaySound(SoundEvent sound) -> soundProvider.playSound(
+                ViewUtil.viewersAndSelf(entity),
+                Sound.sound(
+                    sound, Sound.Source.PLAYER,
+                    1.0f, 1.0f
+                ),
+                entity.getPosition().x(), entity.getPosition().y(), entity.getPosition().z() // TODO: emitter
+            );
 			default -> throw new IllegalArgumentException("Unexpected value: " + effect);
 		}
 	}
@@ -91,6 +101,7 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 	@Override
 	public void initDependencies() {
 		this.itemCooldownFeature = configuration.get(FeatureType.ITEM_COOLDOWN);
+		this.soundProvider = configuration.get(FeatureType.SOUND);
 	}
 
 	@Override
@@ -140,16 +151,20 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 		triggerEatingSound(player, consumable);
 
 		if (food != null) {
-			ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
+			soundProvider.playSound(
+				ViewUtil.viewersAndSelf(player),
+				Sound.sound(
 					SoundEvent.ENTITY_PLAYER_BURP, Sound.Source.PLAYER,
 					0.5f, random.nextFloat() * 0.1f + 0.9f
-			), player);
+				),
+				player.getPosition().x(), player.getPosition().y(), player.getPosition().z() // TODO: emitter
+			);
 		}
 
 		List<ConsumeEffect> effectList = consumable.effects();
 
 		for (ConsumeEffect effect : effectList) {
-			applyConsumeEffect(player, effect, random);
+			applyConsumeEffect(player, effect, random, soundProvider);
 		}
 
 		if (stack.has(DataComponents.SUSPICIOUS_STEW_EFFECTS)) {
@@ -218,10 +233,14 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 
 	protected void triggerEatingSound(Player player, Consumable consumable) {
 		ThreadLocalRandom random = ThreadLocalRandom.current();
-		player.getViewersAsAudience().playSound(Sound.sound(
+		soundProvider.playSound(
+			player.getViewersAsAudience(),
+			Sound.sound(
 				consumable.sound(), Sound.Source.PLAYER,
 				0.5f + 0.5f * random.nextInt(2),
 				(random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f
-		), player);
+			),
+			player.getPosition().x(), player.getPosition().y(), player.getPosition().z()
+		);
 	}
 }

@@ -3,11 +3,14 @@ package net.swofty.type.generic.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
+import net.minestom.server.scoreboard.BelowNameTag;
 import net.swofty.commons.ServerType;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.HypixelConst;
@@ -20,7 +23,6 @@ import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.StatefulPaginatedView;
 import net.swofty.type.generic.gui.v2.StatefulView;
 import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.View;
@@ -30,6 +32,8 @@ import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -39,17 +43,29 @@ public class HypixelPlayer extends Player {
 	public long joined;
 	@Setter
 	@Getter
-	private ServerType originServer = ServerType.SKYBLOCK_HUB;
+	private ServerType originServer;
 	@Getter
 	private boolean readyForEvents = false;
 	@Getter
 	private PlayerHookManager hookManager;
+	protected BelowNameTag belowNameTag;
+
+	@Getter
+	private boolean spectating = false;
 
 	public HypixelPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
 
 		joined = System.currentTimeMillis();
+		originServer = resolveInitialOriginServer();
 		hookManager = new PlayerHookManager(this, new HashMap<>());
+	}
+
+	private static ServerType resolveInitialOriginServer() {
+		if (HypixelConst.getTypeLoader() == null || HypixelConst.getTypeLoader().getType() == null) {
+			return ServerType.PROTOTYPE_LOBBY;
+		}
+		return HypixelConst.getTypeLoader().getType();
 	}
 
 	public void notImplemented() {
@@ -102,11 +118,6 @@ public class HypixelPlayer extends Player {
             case StatelessView _ -> {
                 return ViewNavigator.get(this).push(view, null);
             }
-            case StatefulPaginatedView<?, ?> state -> {
-                @SuppressWarnings("unchecked")
-                S initialState = (S) state.initialState();
-                return ViewNavigator.get(this).push(view, initialState);
-            }
             default -> throw new IllegalArgumentException("View must be either StatefulView or StatelessView");
         }
 	}
@@ -125,6 +136,33 @@ public class HypixelPlayer extends Player {
 
 	public DatapointToggles.Toggles getToggles() {
 		return getDataHandler().get(HypixelDataHandler.Data.TOGGLES, DatapointToggles.class).getValue();
+	}
+
+	@Override
+	public void updateNewViewer(@NonNull Player player) {
+		super.updateNewViewer(player);
+		if (belowNameTag != null) {
+			belowNameTag.addViewer(player);
+		}
+	}
+
+	/**
+	 * Changes the tag below the name.
+	 *
+	 * @param belowNameTag The new below name tag
+	 */
+	@Override
+	public void setBelowNameTag(@Nullable BelowNameTag belowNameTag) {
+		if (this.belowNameTag == belowNameTag) return;
+
+		if (this.belowNameTag != null) {
+			this.belowNameTag.removeViewer(this);
+		}
+
+		this.belowNameTag = belowNameTag;
+
+		if (belowNameTag != null)
+			getViewers().forEach(this.belowNameTag::addViewer); // this is missing from the super method (bug most likely)
 	}
 
 	public String getFullDisplayName() {
@@ -157,7 +195,7 @@ public class HypixelPlayer extends Player {
 		sendMessage(I18n.t(key));
 	}
 
-	public void sendTranslated(String key, Component... placeholders) {
+	public void sendTranslated(String key, ComponentLike... placeholders) {
 		sendMessage(I18n.t(key, placeholders));
 	}
 
@@ -193,6 +231,18 @@ public class HypixelPlayer extends Player {
 	public void updateLocale(DatapointLocale.SupportedLocale locale) {
 		getDataHandler().get(HypixelDataHandler.Data.LOCALE, DatapointLocale.class).getValue().switchTo(locale);
 		super.setLocale(locale.getLocale());
+	}
+
+	@Override
+	public void spectate(@NonNull Entity entity) {
+		super.spectate(entity);
+		spectating = true;
+	}
+
+	@Override
+	public void stopSpectating() {
+		super.stopSpectating();
+		spectating = false;
 	}
 
 }

@@ -50,7 +50,7 @@ public class AbiphoneRusty extends AbiphoneNPC {
 								"§fMe?",
 								"§fThe janitor?",
 								"§fI...",
-								"§fI don't... don't know what to say...",
+						"§fI don't... don't know what to say...",
 								"§fYes of course you can have it!",
 						}).build()
 		};
