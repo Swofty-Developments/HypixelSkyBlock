@@ -19,7 +19,7 @@ public class NPCTrios extends HypixelNPC {
             public String[] holograms(HypixelPlayer player) {
                 int amountOnline = GameCountCache.getPlayerCount(
                     ServerType.BEDWARS_GAME,
-                    BedWarsGameType.THREE_THREE_THREE_THREE.name()
+                    BedWarsGameType.FOUR_THREE.name()
                 );
 
                 String commmaified = StringUtility.commaify(amountOnline);
@@ -54,6 +54,6 @@ public class NPCTrios extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().openView(new GUIPlay(BedWarsGameType.THREE_THREE_THREE_THREE));
+        e.player().openView(new GUIPlay(BedWarsGameType.FOUR_THREE));
     }
 }

@@ -19,7 +19,7 @@ public class NPCFourFour extends HypixelNPC {
             public String[] holograms(HypixelPlayer player) {
                 int amountOnline = GameCountCache.getPlayerCount(
                     ServerType.BEDWARS_GAME,
-                    BedWarsGameType.FOUR_FOUR.name()
+                    BedWarsGameType.TWO_FOUR.name()
                 );
 
                 String commmaified = StringUtility.commaify(amountOnline);
@@ -54,6 +54,6 @@ public class NPCFourFour extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().openView(new GUIPlay(BedWarsGameType.FOUR_FOUR));
+        e.player().openView(new GUIPlay(BedWarsGameType.TWO_FOUR));
     }
 }

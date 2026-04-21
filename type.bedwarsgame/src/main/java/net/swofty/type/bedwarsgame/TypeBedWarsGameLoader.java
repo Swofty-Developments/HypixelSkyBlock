@@ -94,6 +94,19 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     public static final Tag<@NotNull Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
     public static final Tag<@NotNull Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
 
+    @Deprecated // please remember to remove this ARI
+    public static void printHierarchy(Class<?> clazz) {
+        if (clazz == null) return;
+
+        System.out.println(clazz.getName());
+
+        for (Class<?> iface : clazz.getInterfaces()) {
+            System.out.println("  Implements: " + iface.getName());
+        }
+
+        printHierarchy(clazz.getSuperclass());
+    }
+
     static CombatFeatureSet combatFeatures = CombatFeatures.empty().version(CombatVersion.LEGACY).addAll(List.of(
         VANILLA_ARMOR, VANILLA_ATTACK, VANILLA_CRITICAL, //VANILLA_SWEEPING,
         VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, VANILLA_ITEM_COOLDOWN,
@@ -104,6 +117,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         VANILLA_PROJECTILE_ITEM, VANILLA_TRIDENT, VANILLA_SPECTATE,
         VANILLA_PLAYER_STATE, VANILLA_TOTEM//, VANILLA_DEATH_MESSAGE
     )).soundProvider((audience, original, x, y, z) -> {
+        printHierarchy(audience.getClass());
         audience.playSound(original, x, y, z);
         // Try to get the game from the audience context
         BedWarsGame game = null;
@@ -116,6 +130,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             game.getReplayManager().recordSound(original, x, y, z);
         }
     }).packetProvider((viewable, packet) -> {
+        printHierarchy(viewable.getClass());
         viewable.sendPacketToViewersAndSelf(packet);
         BedWarsGame game = null;
         if (viewable instanceof BedWarsPlayer bwPlayer) {

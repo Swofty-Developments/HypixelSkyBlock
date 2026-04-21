@@ -78,7 +78,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		}
 
 		List<BedWarsPlayer> receivers;
-		if (game.getGameType() == BedWarsGameType.SOLO) {
+		if (game.getGameType() == BedWarsGameType.ONE_EIGHT) {
 			receivers = new ArrayList<>(game.getPlayers());
 		} else {
 			receivers = game.getPlayersOnTeam(player.getTeamKey());

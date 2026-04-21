@@ -237,7 +237,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 DatapointBedWarsHotbar.HotbarItemType.PICKAXE);
         }
 
-        if (gameType != BedWarsGameType.SOLO) {
+        if (gameType != BedWarsGameType.ONE_EIGHT) {
             BedWarsInventoryManipulator.addItemWithHotbarPriority(player, TypeBedWarsGameLoader.getItemHandler().getItem("compass").getItemStack(),
                 DatapointBedWarsHotbar.HotbarItemType.COMPASS);
         }

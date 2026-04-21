@@ -24,13 +24,12 @@ import net.swofty.commons.config.ConfigProvider;
 import net.swofty.type.generic.achievement.AchievementRegistry;
 import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.BannerBlockHandler;
-import net.swofty.type.generic.achievement.AchievementRegistry;
-import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.PlayerHeadBlockHandler;
 import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.handlers.ArcadeDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
@@ -212,6 +211,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         GameDataHandlerRegistry.register(new MurderMysteryDataHandler());
         GameDataHandlerRegistry.register(new SkywarsDataHandler());
         GameDataHandlerRegistry.register(new ReplayDataHandler());
+        GameDataHandlerRegistry.register(new ArcadeDataHandler());
 
         // Register Block Handlers
         MinecraftServer.getBlockManager().registerHandler(PlayerHeadBlockHandler.KEY, PlayerHeadBlockHandler::new);

@@ -28,7 +28,7 @@ public class GUIBedWarsMenuShop extends StatelessView {
             "§7Browse your unlocked Bed Wars",
             "§7cosmetics, or buy them directly with",
             "§7Tokens."
-        ), (s, c) -> {
+        ), (_, c) -> {
             c.push(new GUIMyCosmetics());
         });
         layout.slot(13, ItemStackCreator.getStack(
@@ -37,12 +37,12 @@ public class GUIBedWarsMenuShop extends StatelessView {
             1,
             "§7Click to view your Slumber Hotel",
             "§7progress & quest log."
-        ), (s, c) -> c.player().notImplemented());
+        ), (_, c) -> c.player().notImplemented());
         layout.slot(15, ItemStackCreator.getStack(
             "§aBed Wars Settings",
             Material.COMPARATOR,
             1,
             "§7Adjust game settings for Bed Wars."
-        ), (s, c) -> c.player().notImplemented());
+        ), (_, c) -> c.player().notImplemented());
     }
 }

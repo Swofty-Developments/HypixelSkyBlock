@@ -19,7 +19,7 @@ public class NPCSolo extends HypixelNPC {
             public String[] holograms(HypixelPlayer player) {
                 int amountOnline = GameCountCache.getPlayerCount(
                     ServerType.BEDWARS_GAME,
-                    BedWarsGameType.SOLO.name()
+                    BedWarsGameType.ONE_EIGHT.name()
                 );
 
                 String commmaified = StringUtility.commaify(amountOnline);
@@ -54,6 +54,6 @@ public class NPCSolo extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent e) {
-        e.player().openView(new GUIPlay(BedWarsGameType.SOLO));
+        e.player().openView(new GUIPlay(BedWarsGameType.ONE_EIGHT));
     }
 }

@@ -219,19 +219,19 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
         } catch (IllegalArgumentException e) {
             switch (mode.toLowerCase()) {
                 case "solo", "1v1v1v1v1v1v1v1" -> {
-                    return BedWarsGameType.SOLO;
+                    return BedWarsGameType.ONE_EIGHT;
                 }
                 case "doubles", "2v2v2v2" -> {
-                    return BedWarsGameType.DOUBLES;
+                    return BedWarsGameType.TWO_EIGHT;
                 }
                 case "triples", "3v3v3v3" -> {
-                    return BedWarsGameType.THREE_THREE_THREE_THREE;
+                    return BedWarsGameType.FOUR_THREE;
                 }
                 case "quads", "4v4v4v4" -> {
-                    return BedWarsGameType.FOUR_FOUR_FOUR_FOUR;
+                    return BedWarsGameType.FOUR_FOUR;
                 }
                 case "4v4" -> {
-                    return BedWarsGameType.FOUR_FOUR;
+                    return BedWarsGameType.TWO_FOUR;
                 }
                 default -> {
                     return null;

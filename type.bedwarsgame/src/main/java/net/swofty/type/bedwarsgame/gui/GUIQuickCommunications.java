@@ -178,7 +178,7 @@ public class GUIQuickCommunications extends StatelessView {
 
         TeamKey teamKey = resolveTeamKey(player);
         List<BedWarsPlayer> receivers;
-        if (game.getGameType() == BedWarsGameType.SOLO || teamKey == null) {
+        if (game.getGameType() == BedWarsGameType.ONE_EIGHT || teamKey == null) {
             receivers = new ArrayList<>(game.getPlayers());
         } else {
             receivers = game.getPlayersOnTeam(teamKey);

@@ -39,7 +39,7 @@ public class GUIPlay extends StatelessView {
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         layout.allowHotkey(false);
 
-        int playSlot = type == BedWarsGameType.FOUR_FOUR ? 13 : 12;
+        int playSlot = type == BedWarsGameType.TWO_FOUR ? 13 : 12;
         layout.slot(playSlot, (s, viewCtx) -> {
             String description = String.join("\n", type.getDescription());
             return ItemStackCreator.getSingleLoreStackLineSplit(
@@ -66,7 +66,7 @@ public class GUIPlay extends StatelessView {
         });
 
 
-        if (type != BedWarsGameType.FOUR_FOUR) {
+        if (type != BedWarsGameType.TWO_FOUR) {
             layout.slot(14,
                 (_, _) -> ItemStackCreator.getStack("§aMap Selector " + type.getDisplayName(),
                     Material.OAK_SIGN, 1,

@@ -19,7 +19,7 @@ public class NPCDoubles extends HypixelNPC {
 			public String[] holograms(HypixelPlayer player) {
 				int amountOnline = GameCountCache.getPlayerCount(
 						ServerType.BEDWARS_GAME,
-						BedWarsGameType.DOUBLES.name()
+					BedWarsGameType.TWO_EIGHT.name()
 				);
 
 				String commaified = StringUtility.commaify(amountOnline);
@@ -54,6 +54,6 @@ public class NPCDoubles extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent e) {
-		e.player().openView(new GUIPlay(BedWarsGameType.DOUBLES));
+		e.player().openView(new GUIPlay(BedWarsGameType.TWO_EIGHT));
 	}
 }
