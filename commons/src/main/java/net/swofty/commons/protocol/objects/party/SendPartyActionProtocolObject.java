@@ -23,7 +23,7 @@ public class SendPartyActionProtocolObject extends ProtocolObject<
     public record Request(PartyAction action) {}
 
     public record Response(boolean success, @Nullable String error) {
-        public static Response success() {
+        public static Response ok() {
             return new Response(true, null);
         }
 

@@ -36,7 +36,7 @@ public class PartyActionEndpoint implements ServiceEndpoint<Request, Response> {
                 case PartyAction.PlayerDisconnect a -> PartyCache.handlePlayerDisconnect(a);
                 case PartyAction.PlayerRejoin a -> PartyCache.handlePlayerRejoin(a);
             }
-            return Response.success();
+            return Response.ok();
         } catch (Exception e) {
             Logger.error(e, "Failed to process party action");
             return Response.failure("Action processing failed: " + e.getMessage());
