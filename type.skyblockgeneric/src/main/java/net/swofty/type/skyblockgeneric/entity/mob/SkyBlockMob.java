@@ -90,7 +90,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                         + "§f/§a"
                         + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
         );
-        this.set(DataComponents.CUSTOM_NAME, customName); // ARI - could be removed
+        this.set(DataComponents.CUSTOM_NAME, customName);
         nameDisplayEntity = new TextDisplayEntity(customName, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
 
         setAutoViewable(true);
@@ -151,7 +151,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     }
 
     public float getNameDisplayHeightOffset() {
-        return 0.3f;
+        return 0.2f;
     }
 
     public abstract String getDisplayName();
@@ -271,7 +271,10 @@ public abstract class SkyBlockMob extends EntityCreature {
         this.customName = newName;
         this.set(DataComponents.CUSTOM_NAME, customName);
         if (nameDisplayEntity != null) {
-            nameDisplayEntity.editEntityMeta(TextDisplayMeta.class, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
+            nameDisplayEntity.editEntityMeta(TextDisplayMeta.class, meta -> {
+                meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0));
+                meta.setText(newName);
+            });
         }
     }
 
