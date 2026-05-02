@@ -106,7 +106,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
                     + " §einvited " + HypixelPlayer.getDisplayName(invitee)
                     + " §eto join the party! They have §c60 §eseconds to accept.");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderInviteExpired(HypixelPlayer player, PartyBroadcast.InviteExpired b) {
@@ -115,7 +115,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
         } else if (b.inviter().equals(player.getUuid())) {
             sendBoxed(player, "§eThe party invite to " + HypixelPlayer.getDisplayName(b.invitee()) + " §ehas expired.");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderJoined(HypixelPlayer player, PartyBroadcast.MemberJoined b) {
@@ -133,7 +133,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
             sendBoxed(player, "§eYou have joined " + HypixelPlayer.getDisplayName(leaderUUID)
                     + "'s §eparty using an invite from " + HypixelPlayer.getDisplayName(b.inviter()) + "!");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderLeft(HypixelPlayer player, PartyBroadcast.MemberLeft b) {
@@ -142,7 +142,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
         } else {
             sendBoxed(player, HypixelPlayer.getDisplayName(b.leaver()) + " §ehas left the party.");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderKicked(HypixelPlayer player, PartyBroadcast.MemberKicked b) {
@@ -152,7 +152,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
             sendBoxed(player, HypixelPlayer.getDisplayName(b.kicker())
                     + " §ehas kicked " + HypixelPlayer.getDisplayName(b.kicked()) + " §efrom the party!");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderTransferred(HypixelPlayer player, PartyBroadcast.LeaderTransferred b) {
@@ -161,7 +161,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
         } else {
             sendBoxed(player, "§eThe party was transferred to " + HypixelPlayer.getDisplayName(b.newLeader()));
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderRoleChanged(HypixelPlayer player, PartyBroadcast.RoleChanged b) {
@@ -174,23 +174,23 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
             sendBoxed(player, HypixelPlayer.getDisplayName(b.promoter()) + " §e" + verb + " "
                     + HypixelPlayer.getDisplayName(b.promoted()) + " §eto " + roleName + "!");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderDisbanded(HypixelPlayer player, PartyBroadcast.Disbanded b) {
         sendBoxed(player, HypixelPlayer.getDisplayName(b.disbander()) + " §ehas disbanded the party!");
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderChat(HypixelPlayer player, PartyBroadcast.Chat b) {
         player.sendMessage("§9Party §8> " + HypixelPlayer.getDisplayName(b.sender()) + "§f: " + b.message());
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderWarp(HypixelPlayer player, PartyBroadcast.Warp b) {
         if (b.warper().equals(player.getUuid())) {
             player.sendMessage("§7Warping party...");
-            return DispatchResult.handled();
+            return DispatchResult.ok();
         }
 
         UUID warper = b.warper();
@@ -207,7 +207,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
 
         UnderstandableProxyServer warperServer = warperProxy.getServer().join();
         if (warperServer.uuid().equals(HypixelConst.getServerUUID())) {
-            return DispatchResult.handled();
+            return DispatchResult.ok();
         }
 
         new ProxyPlayer(player.getUuid()).transferToWithIndication(warperServer.uuid())
@@ -218,11 +218,11 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
                     }
                     return null;
                 }).join();
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderWarpOverview(HypixelPlayer player, PartyBroadcast.WarpOverview b) {
-        if (!b.warper().equals(player.getUuid())) return DispatchResult.handled();
+        if (!b.warper().equals(player.getUuid())) return DispatchResult.ok();
         int total = b.warped().size() + b.failed().size();
         boolean plural = total > 1;
         String label = HypixelConst.getTypeLoader().getType().isSkyBlock() ? "§eSkyBlock Party Warp" : "§eParty Warp";
@@ -238,14 +238,14 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
             player.sendMessage("§c§l✖ " + HypixelPlayer.getDisplayName(uuid) + " §c- " + reason);
         }
         player.sendMessage(SEPARATOR);
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderSwitchedServer(HypixelPlayer player, PartyBroadcast.MemberSwitchedServer b) {
-        if (b.mover().equals(player.getUuid())) return DispatchResult.handled();
+        if (b.mover().equals(player.getUuid())) return DispatchResult.ok();
 
         ProxyPlayer mover = new ProxyPlayer(b.mover());
-        if (!mover.isOnline().join()) return DispatchResult.handled();
+        if (!mover.isOnline().join()) return DispatchResult.ok();
 
         String moverName = HypixelPlayer.getDisplayName(b.mover());
         UnderstandableProxyServer moverServer = mover.getServer().join();
@@ -262,21 +262,21 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
         component = component.hoverEvent(hover);
         component = component.clickEvent(ClickEvent.runCommand("/p movetoserver " + moverServer.uuid()));
         player.sendMessage(component);
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderDisconnected(HypixelPlayer player, PartyBroadcast.MemberDisconnected b) {
-        if (b.disconnectedPlayer().equals(player.getUuid())) return DispatchResult.handled();
+        if (b.disconnectedPlayer().equals(player.getUuid())) return DispatchResult.ok();
         int minutes = (int) (b.timeoutSeconds() / 60);
         sendBoxed(player, HypixelPlayer.getDisplayName(b.disconnectedPlayer())
                 + " §ehas disconnected. They have §c" + minutes + " minutes §eto rejoin before being removed.");
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderRejoined(HypixelPlayer player, PartyBroadcast.MemberRejoined b) {
-        if (b.rejoinedPlayer().equals(player.getUuid())) return DispatchResult.handled();
+        if (b.rejoinedPlayer().equals(player.getUuid())) return DispatchResult.ok();
         sendBoxed(player, HypixelPlayer.getDisplayName(b.rejoinedPlayer()) + " §ehas reconnected to the party.");
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static DispatchResult renderDisconnectTimedOut(HypixelPlayer player, PartyBroadcast.MemberDisconnectTimedOut b) {
@@ -286,7 +286,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
         } else if (!b.timedOutPlayer().equals(player.getUuid())) {
             sendBoxed(player, name + " §ehas been removed from the party due to disconnect timeout.");
         }
-        return DispatchResult.handled();
+        return DispatchResult.ok();
     }
 
     private static void sendBoxed(HypixelPlayer player, String message) {
@@ -296,7 +296,7 @@ public class PartyBroadcastHandler implements TypedServiceHandler<Request, Respo
     }
 
     private record DispatchResult(boolean handled, String rejection) {
-        static DispatchResult handled() { return new DispatchResult(true, null); }
+        static DispatchResult ok() { return new DispatchResult(true, null); }
         static DispatchResult rejected(String reason) { return new DispatchResult(false, reason); }
     }
 }
