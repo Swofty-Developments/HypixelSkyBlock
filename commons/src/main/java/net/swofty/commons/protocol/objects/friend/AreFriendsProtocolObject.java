@@ -21,7 +21,7 @@ public class AreFriendsProtocolObject extends ProtocolObject
         return new JacksonSerializer<>(AreFriendsResponse.class);
     }
 
-    public record AreFriendsMessage(UUID player1, UUID player2) {
+    public record AreFriendsMessage(UUID player, UUID other) {
     }
 
     public record AreFriendsResponse(boolean areFriends, boolean success, @Nullable String error) {

@@ -19,7 +19,7 @@ public class AreFriendsEndpoint implements ServiceEndpoint<
             ServiceProxyRequest message,
             AreFriendsProtocolObject.AreFriendsMessage messageObject) {
 
-        boolean areFriends = FriendCache.areFriends(messageObject.player1(), messageObject.player2());
+        boolean areFriends = FriendCache.areFriends(messageObject.player(), messageObject.other());
         return new AreFriendsProtocolObject.AreFriendsResponse(areFriends, true, null);
     }
 }
