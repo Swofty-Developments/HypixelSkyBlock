@@ -1,5 +1,6 @@
 package net.swofty.velocity.packet;
 
+import com.velocitypowered.proxy.network.Connections;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.connection.UserConnectionImpl;
 import com.viaversion.viaversion.protocol.ProtocolPipelineImpl;
@@ -11,8 +12,6 @@ import net.swofty.velocity.viaversion.handler.PacketEncodeHandler;
 import java.lang.reflect.Method;
 
 public class PlayerChannelInitializer extends ChannelInitializer<Channel> {
-    public static final String MINECRAFT_ENCODER = "minecraft-encoder";
-    public static final String MINECRAFT_DECODER = "minecraft-decoder";
     public static final String VIA_ENCODER = "via-encoder";
     public static final String VIA_DECODER = "via-decoder";
     public static final Object COMPRESSION_ENABLED_EVENT;
@@ -45,7 +44,7 @@ public class PlayerChannelInitializer extends ChannelInitializer<Channel> {
         UserConnection user = new UserConnectionImpl(channel, clientSide);
         new ProtocolPipelineImpl(user);
 
-        channel.pipeline().addBefore(MINECRAFT_ENCODER, VIA_ENCODER, new PacketEncodeHandler(user));
-        channel.pipeline().addBefore(MINECRAFT_DECODER, VIA_DECODER, new PacketDecodeHandler(user));
+        channel.pipeline().addBefore(Connections.MINECRAFT_ENCODER, VIA_ENCODER, new PacketEncodeHandler(user));
+        channel.pipeline().addBefore(Connections.MINECRAFT_DECODER, VIA_DECODER, new PacketDecodeHandler(user));
     }
 }

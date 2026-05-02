@@ -20,6 +20,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
+import net.swofty.type.lobby.events.LobbyAFKEvents;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
 import net.swofty.type.lobby.events.LobbyParkourEvents;
@@ -146,6 +147,7 @@ public class TypeMurderMysteryLobbyLoader implements LobbyTypeLoader {
                 HypixelEventClass.class
         ).toList());
         // Add lobby base events
+        events.add(new LobbyAFKEvents());
         events.add(new LobbyItemEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());

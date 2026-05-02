@@ -157,6 +157,24 @@ public class ProxyPlayer {
         json.put("action", action.name());
 
         ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
+            json, (s) -> {
+            });
+    }
+
+    public void transferToLimboFromAfk(ServerType originType) {
+        JSONObject json = new JSONObject();
+        json.put("uuid", uuid.toString());
+        json.put("reason", "AFK");
+
+        if (originType != null) {
+            json.put("origin-type", originType.name());
+        }
+
+        PlayerHandlerRequirements.PlayerHandlerActions action =
+            PlayerHandlerRequirements.PlayerHandlerActions.LIMBO;
+        json.put("action", action.name());
+
+        ServerOutboundMessage.sendMessageToProxy(ToProxyChannels.PLAYER_HANDLER,
                 json, (s) -> {});
     }
 

@@ -21,6 +21,9 @@ repositories {
     maven("https://jitpack.io")
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.viaversion.com")
+
+    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
+    maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
 }
 
 dependencies {
@@ -38,6 +41,8 @@ dependencies {
     implementation(libs.viabackwards.common)
     implementation(libs.viarewind.common)
     implementation(libs.viaversion)
+
+    implementation(libs.packetevents.velocity)
 
     implementation(platform(libs.netty.bom))
     implementation(libs.netty.buffer)

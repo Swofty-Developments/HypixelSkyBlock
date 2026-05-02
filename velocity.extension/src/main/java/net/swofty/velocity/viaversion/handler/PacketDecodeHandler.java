@@ -1,5 +1,6 @@
 package net.swofty.velocity.viaversion.handler;
 
+import com.velocitypowered.proxy.network.Connections;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.exception.CancelCodecException;
 import com.viaversion.viaversion.exception.CancelDecoderException;
@@ -57,10 +58,10 @@ public class PacketDecodeHandler extends MessageToMessageDecoder<ByteBuf> {
         ChannelPipeline pipeline = ctx.pipeline();
 
         ChannelHandler encoder = pipeline.remove(PlayerChannelInitializer.VIA_ENCODER);
-        pipeline.addBefore(PlayerChannelInitializer.MINECRAFT_ENCODER, PlayerChannelInitializer.VIA_ENCODER, encoder);
+        pipeline.addBefore(Connections.MINECRAFT_ENCODER, PlayerChannelInitializer.VIA_ENCODER, encoder);
 
         ChannelHandler decoder = pipeline.remove(PlayerChannelInitializer.VIA_DECODER);
-        pipeline.addBefore(PlayerChannelInitializer.MINECRAFT_DECODER, PlayerChannelInitializer.VIA_DECODER, decoder);
+        pipeline.addBefore(Connections.MINECRAFT_DECODER, PlayerChannelInitializer.VIA_DECODER, decoder);
 
         super.userEventTriggered(ctx, event);
     }

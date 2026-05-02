@@ -38,6 +38,7 @@ viabackwards = "5.7.2"
 vialoader = "4.0.6"
 viarewind = "4.0.15"
 viaversion = "5.7.1"
+packetevents = "2.12.1"
 
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
@@ -93,3 +94,4 @@ viabackwards-common = { module = "com.viaversion:viabackwards-common", version.r
 vialoader = { module = "com.viaversion:vialoader", version.ref = "vialoader" }
 viarewind-common = { module = "com.viaversion:viarewind-common", version.ref = "viarewind" }
 viaversion = { module = "com.viaversion:viaversion", version.ref = "viaversion" }
+packetevents-velocity = { module = "com.github.retrooper:packetevents-velocity", version.ref = "packetevents" }

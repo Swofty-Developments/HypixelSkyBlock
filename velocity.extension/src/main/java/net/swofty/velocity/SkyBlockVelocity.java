@@ -1,5 +1,8 @@
 package net.swofty.velocity;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.EventManager;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
@@ -16,9 +19,11 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.permission.PermissionFunction;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -31,10 +36,12 @@ import com.velocitypowered.proxy.network.Connections;
 import com.viaversion.vialoader.ViaLoader;
 import com.viaversion.vialoader.impl.platform.ViaBackwardsPlatformImpl;
 import com.viaversion.vialoader.impl.platform.ViaRewindPlatformImpl;
+import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
@@ -65,6 +72,7 @@ import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
+import net.swofty.velocity.packet.listener.PlayerMovementListener;
 import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -100,31 +108,37 @@ import java.util.stream.Stream;
 )
 public class SkyBlockVelocity {
     @Getter
-    private static ProxyServer server = null;
+    private static ProxyServer server;
     @Getter
     private static SkyBlockVelocity plugin;
+    @Getter
+    private final PluginContainer pluginContainer;
+    @Getter
+    private final org.slf4j.Logger logger;
+    @Getter
+    private final Path dataDirectory;
     @Getter
     private static RegisteredServer limboServer;
     @Getter
     private static boolean supportCrossVersion = false;
-    @Inject
-    private ProxyServer proxy;
 
     @Getter
     private static final Set<UUID> unauthenticated = ConcurrentHashMap.newKeySet();
 
     @Inject
-    public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
+    public SkyBlockVelocity(ProxyServer tempServer, org.slf4j.Logger logger, PluginContainer pluginContainer, @DataDirectory Path dataDirectory) {
         plugin = this;
         server = tempServer;
+        this.logger = logger;
+        this.pluginContainer = pluginContainer;
+        this.dataDirectory = dataDirectory;
 
         Settings.LimboSettings limbo = ConfigProvider.settings().getLimbo();
         limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(limbo.getHostName(), limbo.getPort())));
     }
 
     @Subscribe
-    public void onProxyInitialization(ProxyInitializeEvent event) {
-        server = proxy;
+    public void onProxyInitialization(final ProxyInitializeEvent event) {
         supportCrossVersion = ConfigProvider.settings().getIntegrations().isViaVersion();
 
         // Initialize ViaVersion for cross-version support
@@ -182,7 +196,7 @@ public class SkyBlockVelocity {
         }).repeat(Duration.ofSeconds(10)).schedule();
 
         // Register commands
-        CommandManager commandManager = proxy.getCommandManager();
+        CommandManager commandManager = server.getCommandManager();
         CommandMeta statusCommandMeta = commandManager.metaBuilder("serverstatus")
             .aliases("status")
             .plugin(this)
@@ -243,6 +257,16 @@ public class SkyBlockVelocity {
 
         // Setup GameManager
         GameManager.loopServers(server);
+
+        // Setup PacketEvents
+        PacketEvents.setAPI(VelocityPacketEventsBuilder.build(server, this.pluginContainer, this.logger, this.dataDirectory));
+        PacketEvents.getAPI().getSettings().checkForUpdates(false);
+        PacketEvents.getAPI().load();
+
+        EventManager events = PacketEvents.getAPI().getEventManager();
+        events.registerListener(new PlayerMovementListener(), PacketListenerPriority.NORMAL);
+
+        PacketEvents.getAPI().init();
     }
 
     private boolean checkPunished(Player player) {
@@ -373,6 +397,7 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onPlayerDisconnect(DisconnectEvent event) {
         unauthenticated.remove(event.getPlayer().getUniqueId());
+        new TransferHandler(event.getPlayer()).forceRemoveFromLimbo();
     }
 
     @Subscribe
@@ -466,10 +491,26 @@ public class SkyBlockVelocity {
             if (connection.getServer() == limboServer) {
                 if (unauthenticated.contains(player.getUniqueId())) return;
 
+                TransferHandler transferHandler = new TransferHandler(player);
+                if (transferHandler.isInAfkLimbo()) {
+                    player.sendMessage(Component.text("§cYou are AFK. Move around to return from AFK."));
+                    player.showTitle(Title.title(
+                        Component.text("§cYou are AFK"),
+                        Component.text("§eMove around to return to the lobby."),
+                        Title.Times.times(Duration.ZERO, Duration.ofHours(1), Duration.ZERO)
+                    ));
+                    return;
+                }
+
                 player.sendMessage(Component.text("§cYou were spawned in Limbo."));
                 player.sendMessage(Component.text("§b/limbo for more information."));
             }
         });
+    }
+
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent event) {
+        PacketEvents.getAPI().terminate();
     }
 
     public static <T> Stream<T> loopThroughPackage(String packageName, Class<T> clazz) {

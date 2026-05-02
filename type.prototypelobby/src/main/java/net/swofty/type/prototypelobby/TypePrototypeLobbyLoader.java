@@ -17,6 +17,7 @@ import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
+import net.swofty.type.lobby.events.LobbyAFKEvents;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyParkourEvents;
 import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
@@ -136,6 +137,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
                 HypixelEventClass.class
         ).toList());
         // Add lobby base events
+        events.add(new LobbyAFKEvents());
         events.add(new LobbyItemEvents());
         events.add(new LobbyPlayerJoinEvents());
         events.add(new LobbyPlayerSpawnEvents());
