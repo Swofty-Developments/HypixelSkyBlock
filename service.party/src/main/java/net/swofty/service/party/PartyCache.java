@@ -1,14 +1,12 @@
 package net.swofty.service.party;
 
 import net.swofty.commons.party.FullParty;
-import net.swofty.commons.party.PartyEvent;
+import net.swofty.commons.party.PartyAction;
+import net.swofty.commons.party.PartyBroadcast;
 import net.swofty.commons.party.PendingParty;
-import net.swofty.commons.party.events.*;
-import net.swofty.commons.party.events.response.*;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
-import net.swofty.commons.protocol.objects.party.PartyEventPushProtocol;
+import net.swofty.commons.protocol.objects.party.PartyBroadcastPushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,130 +18,99 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class PartyCache {
+    private static final long DISCONNECT_TIMEOUT_MS = 300_000;
+    private static final long INVITE_TIMEOUT_MS = 60_000;
+    private static final long WARP_COOLDOWN_MS = 5_000;
+    private static final int BROADCAST_TIMEOUT_MS = 300;
+    private static final int WARP_BROADCAST_TIMEOUT_MS = 3_000;
+
     private static final Map<UUID, FullParty> activeParties = new ConcurrentHashMap<>();
     private static final Map<UUID, UUID> playerToParty = new ConcurrentHashMap<>();
     private static final Map<UUID, PendingParty> pendingInvites = new ConcurrentHashMap<>();
-    private static final List<UUID> partyWarpCooldown = new ArrayList<>();
-    private static final Map<UUID, UUID> disconnectTimers = new ConcurrentHashMap<>(); // playerUUID -> timerUUID (for cancellation tracking)
-    private static final long DISCONNECT_TIMEOUT_MS = 300000; // 5 minutes
+    private static final Map<UUID, UUID> disconnectTimers = new ConcurrentHashMap<>();
+    private static final List<UUID> warpCooldown = new ArrayList<>();
 
     public static boolean isInParty(UUID playerUUID) {
         return playerToParty.containsKey(playerUUID);
     }
 
-    public static void handleChatMessage(PartyChatMessageEvent event) {
-        UUID playerUUID = event.getPlayer();
-        String message = event.getMessage();
+    public static FullParty getPartyFromPlayer(UUID playerUUID) {
+        UUID partyUUID = playerToParty.get(playerUUID);
+        return partyUUID != null ? activeParties.get(partyUUID) : null;
+    }
 
-        FullParty party = getPlayerParty(playerUUID);
-        if (party == null) {
-            sendErrorToPlayer(playerUUID, "§cYou are not in a party!");
+    public static void handleInvite(PartyAction.Invite action) {
+        PendingParty pending = action.party();
+        pendingInvites.put(pending.invitee(), pending);
+        scheduleInviteExpiration(pending.leader(), pending.invitee());
+        broadcast(new PartyBroadcast.Invited(pending));
+    }
+
+    public static void handleAcceptInvite(PartyAction.AcceptInvite action) {
+        UUID accepter = action.accepter();
+        UUID inviter = action.inviter();
+
+        PendingParty pending = pendingInvites.remove(accepter);
+        if (pending == null || !pending.leader().equals(inviter)) {
+            sendErrorToPlayer(accepter, "§cYou haven't been invited to a party, or the invitation has expired!");
             return;
         }
 
-        PartyChatMessageResponseEvent responseEvent = new PartyChatMessageResponseEvent(party, playerUUID, message);
-        sendEvent(responseEvent);
-    }
-
-    public static void handleInviteEvent(PartyInviteEvent event) {
-        PendingParty pending = (PendingParty) event.getParty();
-        pendingInvites.put(pending.getInvitee(), pending);
-
-        scheduleInviteExpiration(pending.getLeader(), pending.getInvitee(), 60000);
-
-        PartyInviteResponseEvent responseEvent = new PartyInviteResponseEvent(pending);
-        sendEvent(responseEvent);
-    }
-
-    public static void handlePlayerSwitchedServer(PartyPlayerSwitchedServerEvent event) {
-        UUID playerUUID = event.getMover();
-
-        FullParty party = getPlayerParty(playerUUID);
+        FullParty party = getPartyFromPlayer(inviter);
         if (party == null) {
-            return;
-        }
-
-        PartyPlayerSwitchedServerResponseEvent responseEvent = new PartyPlayerSwitchedServerResponseEvent(party, playerUUID);
-        sendEvent(responseEvent);
-    }
-
-    public static void handleAcceptInvite(PartyAcceptInviteEvent event) {
-        UUID playerUUID = event.getAccepter();
-        UUID inviterUUID = event.getInviter();
-
-        PendingParty pending = pendingInvites.get(playerUUID);
-        if (pending == null || !pending.getLeader().equals(inviterUUID)) {
-            sendErrorToPlayer(playerUUID, "§cYou haven't been invited to a party, or the invitation has expired!");
-            return;
-        }
-
-        FullParty party = getPlayerParty(inviterUUID);
-
-        if (party == null) {
-            party = FullParty.create(inviterUUID, playerUUID);
+            party = FullParty.create(inviter, accepter);
             activeParties.put(party.getUuid(), party);
-            playerToParty.put(inviterUUID, party.getUuid());
-            playerToParty.put(playerUUID, party.getUuid());
-
-            PartyMemberJoinResponseEvent responseEvent = new PartyMemberJoinResponseEvent(party, inviterUUID, playerUUID);
-            sendEvent(responseEvent);
+            playerToParty.put(inviter, party.getUuid());
         } else {
-            FullParty.Member newMember = new FullParty.Member(playerUUID, FullParty.Role.MEMBER, true);
-            party.getMembers().add(newMember);
-            playerToParty.put(playerUUID, party.getUuid());
-
-            PartyMemberJoinResponseEvent responseEvent = new PartyMemberJoinResponseEvent(party, inviterUUID, playerUUID);
-            sendEvent(responseEvent);
+            party.getMembers().add(new FullParty.Member(accepter, FullParty.Role.MEMBER, true));
         }
+        playerToParty.put(accepter, party.getUuid());
 
-        pendingInvites.remove(playerUUID);
+        broadcast(new PartyBroadcast.MemberJoined(party, inviter, accepter));
     }
 
-    public static void handleLeaveRequest(PartyLeaveRequestEvent event) {
-        UUID playerUUID = event.getLeaver();
-        FullParty party = getPlayerParty(playerUUID);
+    public static void handleLeave(PartyAction.Leave action) {
+        UUID leaver = action.leaver();
+        FullParty party = getPartyFromPlayer(leaver);
         if (party == null) {
-            sendErrorToPlayer(playerUUID, "§cYou are not in a party.");
+            sendErrorToPlayer(leaver, "§cYou are not in a party.");
             return;
         }
 
-        // Cancel any pending disconnect timer for this player
-        cancelDisconnectTimer(playerUUID);
+        cancelDisconnectTimer(leaver);
 
-        FullParty.Member member = getMember(party, playerUUID);
+        FullParty.Member member = getMember(party, leaver);
         if (member.getRole() == FullParty.Role.LEADER) {
-            disbandParty(party, playerUUID);
+            disbandParty(party, leaver, "leader-left");
         } else {
             party.getMembers().remove(member);
-            playerToParty.remove(playerUUID);
-
-            PartyMemberLeaveResponseEvent responseEvent = new PartyMemberLeaveResponseEvent(party, playerUUID);
-            sendEvent(responseEvent);
+            playerToParty.remove(leaver);
+            broadcast(new PartyBroadcast.MemberLeft(party, leaver));
         }
     }
 
-    public static void handleDisbandRequest(PartyDisbandRequestEvent event) {
-        UUID playerUUID = event.getDisbander();
-        FullParty party = getPlayerParty(playerUUID);
+    public static void handleDisband(PartyAction.Disband action) {
+        UUID disbander = action.disbander();
+        FullParty party = getPartyFromPlayer(disbander);
         if (party == null) {
-            sendErrorToPlayer(playerUUID, "§cYou are not in a party.");
+            sendErrorToPlayer(disbander, "§cYou are not in a party.");
             return;
         }
 
-        FullParty.Member member = getMember(party, playerUUID);
+        FullParty.Member member = getMember(party, disbander);
         if (member.getRole() != FullParty.Role.LEADER) {
-            sendErrorToPlayer(playerUUID, "§cYou are not the party leader!");
+            sendErrorToPlayer(disbander, "§cYou are not the party leader!");
             return;
         }
 
-        disbandParty(party, playerUUID);
+        disbandParty(party, disbander, "disbanded");
     }
 
-    public static void handleTransferRequest(PartyTransferRequestEvent event) {
-        UUID currentLeaderUUID = event.getCurrentLeader();
-        UUID newLeaderUUID = event.getNewLeader();
+    public static void handleTransfer(PartyAction.Transfer action) {
+        UUID currentLeaderUUID = action.currentLeader();
+        UUID newLeaderUUID = action.newLeader();
 
-        FullParty party = getPlayerParty(currentLeaderUUID);
+        FullParty party = getPartyFromPlayer(currentLeaderUUID);
         if (party == null) {
             sendErrorToPlayer(currentLeaderUUID, "§cYou are not in a party!");
             return;
@@ -156,7 +123,6 @@ public class PartyCache {
             sendErrorToPlayer(currentLeaderUUID, "§cYou are not the party leader!");
             return;
         }
-
         if (newLeader == null) {
             sendErrorToPlayer(currentLeaderUUID, "§cThat player is not in your party!");
             return;
@@ -164,16 +130,14 @@ public class PartyCache {
 
         currentLeader.setRole(FullParty.Role.MEMBER);
         newLeader.setRole(FullParty.Role.LEADER);
-
-        PartyLeaderTransferResponseEvent responseEvent = new PartyLeaderTransferResponseEvent(party, currentLeaderUUID, newLeaderUUID);
-        sendEvent(responseEvent);
+        broadcast(new PartyBroadcast.LeaderTransferred(party, currentLeaderUUID, newLeaderUUID));
     }
 
-    public static void handleKickRequest(PartyKickRequestEvent event) {
-        UUID kickerUUID = event.getKicker();
-        UUID targetUUID = event.getTarget();
+    public static void handleKick(PartyAction.Kick action) {
+        UUID kickerUUID = action.kicker();
+        UUID targetUUID = action.target();
 
-        FullParty party = getPlayerParty(kickerUUID);
+        FullParty party = getPartyFromPlayer(kickerUUID);
         if (party == null) {
             sendErrorToPlayer(kickerUUID, "§cYou are not in a party!");
             return;
@@ -186,32 +150,26 @@ public class PartyCache {
             sendErrorToPlayer(kickerUUID, "§cOnly party leaders and moderators can kick players!");
             return;
         }
-
         if (target == null) {
             sendErrorToPlayer(kickerUUID, "§cThat player is not in your party!");
             return;
         }
-
         if (target.getRole() == FullParty.Role.LEADER) {
             sendErrorToPlayer(kickerUUID, "§cYou cannot kick the party leader!");
             return;
         }
 
-        // Cancel any pending disconnect timer for the kicked player
         cancelDisconnectTimer(targetUUID);
-
         party.getMembers().remove(target);
         playerToParty.remove(targetUUID);
-
-        PartyMemberKickResponseEvent responseEvent = new PartyMemberKickResponseEvent(party, kickerUUID, targetUUID);
-        sendEvent(responseEvent);
+        broadcast(new PartyBroadcast.MemberKicked(party, kickerUUID, targetUUID));
     }
 
-    public static void handlePromoteRequest(PartyPromoteRequestEvent event) {
-        UUID promoterUUID = event.getPromoter();
-        UUID targetUUID = event.getTarget();
+    public static void handlePromote(PartyAction.Promote action) {
+        UUID promoterUUID = action.promoter();
+        UUID targetUUID = action.target();
 
-        FullParty party = getPlayerParty(promoterUUID);
+        FullParty party = getPartyFromPlayer(promoterUUID);
         if (party == null) return;
 
         FullParty.Member promoter = getMember(party, promoterUUID);
@@ -221,20 +179,17 @@ public class PartyCache {
             sendErrorToPlayer(promoterUUID, "§cOnly the party leader can promote players!");
             return;
         }
-
         if (target == null || target.getRole() == FullParty.Role.MODERATOR) return;
 
         target.setRole(FullParty.Role.MODERATOR);
-
-        PartyPromotionResponseEvent responseEvent = new PartyPromotionResponseEvent(party, promoterUUID, targetUUID, FullParty.Role.MODERATOR);
-        sendEvent(responseEvent);
+        broadcast(new PartyBroadcast.RoleChanged(party, promoterUUID, targetUUID, FullParty.Role.MODERATOR));
     }
 
-    public static void handleDemoteRequest(PartyDemoteRequestEvent event) {
-        UUID demoterUUID = event.getDemoter();
-        UUID targetUUID = event.getTarget();
+    public static void handleDemote(PartyAction.Demote action) {
+        UUID demoterUUID = action.demoter();
+        UUID targetUUID = action.target();
 
-        FullParty party = getPlayerParty(demoterUUID);
+        FullParty party = getPartyFromPlayer(demoterUUID);
         if (party == null) return;
 
         FullParty.Member demoter = getMember(party, demoterUUID);
@@ -244,15 +199,56 @@ public class PartyCache {
         if (target == null || target.getRole() == FullParty.Role.MEMBER) return;
 
         target.setRole(FullParty.Role.MEMBER);
-
-        PartyPromotionResponseEvent responseEvent = new PartyPromotionResponseEvent(party, demoterUUID, targetUUID, FullParty.Role.MEMBER);
-        sendEvent(responseEvent);
+        broadcast(new PartyBroadcast.RoleChanged(party, demoterUUID, targetUUID, FullParty.Role.MEMBER));
     }
 
-    public static void handleWarpRequest(PartyWarpRequestEvent event) {
-        UUID warperUUID = event.getWarper();
+    public static void handleChat(PartyAction.Chat action) {
+        UUID sender = action.player();
+        FullParty party = getPartyFromPlayer(sender);
+        if (party == null) {
+            sendErrorToPlayer(sender, "§cYou are not in a party!");
+            return;
+        }
+        broadcast(new PartyBroadcast.Chat(party, sender, action.message()));
+    }
 
-        FullParty party = getPlayerParty(warperUUID);
+    public static void handleSwitchedServer(PartyAction.SwitchedServer action) {
+        UUID mover = action.mover();
+        FullParty party = getPartyFromPlayer(mover);
+        if (party == null) return;
+        broadcast(new PartyBroadcast.MemberSwitchedServer(party, mover));
+    }
+
+    public static void handleHijack(PartyAction.Hijack action) {
+        UUID hijackerUUID = action.hijacker();
+        UUID targetUUID = action.target();
+
+        FullParty targetParty = getPartyFromPlayer(targetUUID);
+        if (targetParty == null) {
+            sendErrorToPlayer(hijackerUUID, "§cThat player is not in a party!");
+            return;
+        }
+
+        FullParty currentParty = getPartyFromPlayer(hijackerUUID);
+        if (currentParty != null) {
+            handleLeave(new PartyAction.Leave(hijackerUUID));
+        }
+
+        FullParty.Member currentLeader = targetParty.getMembers().stream()
+                .filter(m -> m.getRole() == FullParty.Role.LEADER)
+                .findFirst().orElse(null);
+        if (currentLeader != null) {
+            currentLeader.setRole(FullParty.Role.MEMBER);
+        }
+
+        targetParty.getMembers().add(new FullParty.Member(hijackerUUID, FullParty.Role.LEADER, true));
+        playerToParty.put(hijackerUUID, targetParty.getUuid());
+    }
+
+    public static void handleWarp(PartyAction.Warp action) {
+        UUID warperUUID = action.warper();
+
+        FullParty party = getPartyFromPlayer(warperUUID);
         if (party == null) {
             sendErrorToPlayer(warperUUID, "§cYou are not in a party!");
             return;
@@ -263,244 +259,127 @@ public class PartyCache {
             sendErrorToPlayer(warperUUID, "§cYou are not the party leader!");
             return;
         }
-
         if (party.getMembers().size() == 1) {
             sendErrorToPlayer(warperUUID, "§cYou need someone else in the party to warp!");
             return;
         }
-
-        if (partyWarpCooldown.contains(warperUUID)) {
+        if (warpCooldown.contains(warperUUID)) {
             sendErrorToPlayer(warperUUID, "§cYou can only warp once every 5 seconds!");
             return;
         }
-        partyWarpCooldown.add(warperUUID);
-        CompletableFuture.delayedExecutor(5000, TimeUnit.MILLISECONDS)
-                .execute(() -> partyWarpCooldown.remove(warperUUID));
 
-        PartyWarpResponseEvent responseEvent = new PartyWarpResponseEvent(party, warperUUID);
+        warpCooldown.add(warperUUID);
+        CompletableFuture.delayedExecutor(WARP_COOLDOWN_MS, TimeUnit.MILLISECONDS)
+                .execute(() -> warpCooldown.remove(warperUUID));
 
-        PartyEventPushProtocol.Request request = new PartyEventPushProtocol.Request(
-                responseEvent.getClass().getSimpleName(),
-                responseEvent.getSerializer().serialize(responseEvent),
-                responseEvent.getParticipants()
-        );
+        List<UUID> intendedToWarp = party.getParticipants().stream()
+                .filter(uuid -> !uuid.equals(warperUUID))
+                .toList();
 
-        List<UUID> intendedToWarp = party.getParticipants().stream().filter(uuid -> !uuid.equals(warperUUID)).toList();
-        Map<UUID, PartyEventPushProtocol.Response> responses = ServiceToServerManager.sendToAllServers(
-                new PartyEventPushProtocol(), request, 3000).join();
-        List<UUID> actualWarped = new ArrayList<>();
-        Map<UUID, String> failureReasons = new HashMap<>();
+        Map<UUID, PartyBroadcastPushProtocol.Response> responses = ServiceToServerManager.sendToAllServers(
+                new PartyBroadcastPushProtocol(),
+                new PartyBroadcastPushProtocol.Request(new PartyBroadcast.Warp(party, warperUUID)),
+                WARP_BROADCAST_TIMEOUT_MS).join();
 
-        for (PartyEventPushProtocol.Response response : responses.values()) {
-            if (!response.success()) {
-                if (response.blocked()) {
-                    String blockReason = response.blockReason() != null ? response.blockReason() : "Unable to warp";
-                    for (UUID uuid : intendedToWarp) {
-                        failureReasons.put(uuid, blockReason);
-                    }
-                }
-                continue;
+        List<UUID> warped = new ArrayList<>();
+        Map<UUID, String> failures = new HashMap<>();
+        for (PartyBroadcastPushProtocol.Response response : responses.values()) {
+            if (!response.success()) continue;
+            for (UUID uuid : response.playersHandled()) {
+                if (intendedToWarp.contains(uuid)) warped.add(uuid);
             }
-
-            for (UUID uuid : response.playersHandledUUIDs()) {
-                if (intendedToWarp.contains(uuid)) {
-                    actualWarped.add(uuid);
-                }
-            }
-
             if (response.rejectedPlayers() != null) {
-                failureReasons.putAll(response.rejectedPlayers());
+                failures.putAll(response.rejectedPlayers());
             }
         }
-
-        List<UUID> didNotWarp = new ArrayList<>();
-        intendedToWarp.forEach(uuid -> {
-            if (!actualWarped.contains(uuid)) {
-                didNotWarp.add(uuid);
-            }
-        });
-
-        PartyWarpOverviewResponseEvent warpOverviewResponse = new PartyWarpOverviewResponseEvent(party, warperUUID, actualWarped, didNotWarp, failureReasons);
-        sendEvent(warpOverviewResponse);
+        List<UUID> didNotWarp = intendedToWarp.stream().filter(uuid -> !warped.contains(uuid)).toList();
+        broadcast(new PartyBroadcast.WarpOverview(party, warperUUID, warped, didNotWarp, failures));
     }
 
-    public static FullParty getPartyFromPlayer(UUID playerUUID) {
-        return getPlayerParty(playerUUID);
-    }
+    public static void handlePlayerDisconnect(PartyAction.PlayerDisconnect action) {
+        UUID playerUUID = action.disconnectedPlayer();
+        FullParty party = getPartyFromPlayer(playerUUID);
+        if (party == null || disconnectTimers.containsKey(playerUUID)) return;
 
-    public static void handleHijackRequest(PartyHijackRequestEvent event) {
-        UUID hijackerUUID = event.getHijacker();
-        UUID targetUUID = event.getTarget();
-
-        FullParty targetParty = getPlayerParty(targetUUID);
-
-        if (targetParty == null) {
-            sendErrorToPlayer(hijackerUUID, "§cThat player is not in a party!");
-            return;
-        }
-
-        FullParty currentParty = getPlayerParty(hijackerUUID);
-        if (currentParty != null) {
-            handleLeaveRequest(new PartyLeaveRequestEvent(hijackerUUID));
-        }
-
-        FullParty.Member currentLeader = targetParty.getMembers().stream()
-                .filter(m -> m.getRole() == FullParty.Role.LEADER)
-                .findFirst().orElse(null);
-
-        if (currentLeader != null) {
-            currentLeader.setRole(FullParty.Role.MEMBER);
-        }
-
-        FullParty.Member hijacker = new FullParty.Member(hijackerUUID, FullParty.Role.LEADER, true);
-        targetParty.getMembers().add(hijacker);
-        playerToParty.put(hijackerUUID, targetParty.getUuid());
-    }
-
-    public static void handlePlayerDisconnect(PartyPlayerDisconnectEvent event) {
-        UUID playerUUID = event.getDisconnectedPlayer();
-
-        FullParty party = getPlayerParty(playerUUID);
-        if (party == null) {
-            return; // Player not in a party, nothing to do
-        }
-
-        // Check if player already has an active disconnect timer (prevent duplicates)
-        if (disconnectTimers.containsKey(playerUUID)) {
-            return;
-        }
-
-        // Create a unique timer ID for this disconnect event
         UUID timerId = UUID.randomUUID();
         disconnectTimers.put(playerUUID, timerId);
 
-        // Schedule the timeout
         CompletableFuture.delayedExecutor(DISCONNECT_TIMEOUT_MS, TimeUnit.MILLISECONDS)
-                .execute(() -> {
-                    // Race condition check 1: Timer was cancelled (player rejoined or was removed)
-                    UUID currentTimerId = disconnectTimers.get(playerUUID);
-                    if (currentTimerId == null || !currentTimerId.equals(timerId)) {
-                        return;
-                    }
+                .execute(() -> resolveDisconnectTimeout(playerUUID, timerId));
 
-                    // Race condition check 2: Party still exists
-                    FullParty currentParty = getPlayerParty(playerUUID);
-                    if (currentParty == null) {
-                        disconnectTimers.remove(playerUUID);
-                        return;
-                    }
-
-                    // Race condition check 3: Player still in party
-                    FullParty.Member member = getMember(currentParty, playerUUID);
-                    if (member == null) {
-                        disconnectTimers.remove(playerUUID);
-                        return;
-                    }
-
-                    // Remove the timer
-                    disconnectTimers.remove(playerUUID);
-
-                    // Handle timeout based on role
-                    boolean isLeader = member.getRole() == FullParty.Role.LEADER;
-
-                    if (isLeader) {
-                        // Leader timed out - disband the party
-                        disbandPartyDueToTimeout(currentParty, playerUUID);
-                    } else {
-                        // Regular member timed out - kick them
-                        currentParty.getMembers().remove(member);
-                        playerToParty.remove(playerUUID);
-
-                        PartyMemberDisconnectTimeoutResponseEvent responseEvent =
-                                new PartyMemberDisconnectTimeoutResponseEvent(currentParty, playerUUID, false);
-                        sendEvent(responseEvent);
-                    }
-                });
-
-        // Notify all party members about the disconnect
-        PartyMemberDisconnectedResponseEvent responseEvent =
-                new PartyMemberDisconnectedResponseEvent(party, playerUUID, DISCONNECT_TIMEOUT_MS / 1000);
-        sendEvent(responseEvent);
+        broadcast(new PartyBroadcast.MemberDisconnected(party, playerUUID, DISCONNECT_TIMEOUT_MS / 1000));
     }
 
-    public static void handlePlayerRejoin(PartyPlayerRejoinEvent event) {
-        UUID playerUUID = event.getRejoinedPlayer();
+    public static void handlePlayerRejoin(PartyAction.PlayerRejoin action) {
+        UUID playerUUID = action.rejoinedPlayer();
+        if (disconnectTimers.remove(playerUUID) == null) return;
 
-        // Check if player has a pending disconnect timer
-        UUID timerId = disconnectTimers.remove(playerUUID);
-        if (timerId == null) {
-            return; // No pending timer, nothing to do
-        }
+        FullParty party = getPartyFromPlayer(playerUUID);
+        if (party == null) return;
 
-        // Verify player is still in a party
-        FullParty party = getPlayerParty(playerUUID);
+        broadcast(new PartyBroadcast.MemberRejoined(party, playerUUID));
+    }
+
+    private static void resolveDisconnectTimeout(UUID playerUUID, UUID timerId) {
+        UUID currentTimerId = disconnectTimers.get(playerUUID);
+        if (currentTimerId == null || !currentTimerId.equals(timerId)) return;
+
+        FullParty party = getPartyFromPlayer(playerUUID);
         if (party == null) {
-            return; // Party was disbanded while they were disconnected
+            disconnectTimers.remove(playerUUID);
+            return;
         }
+        FullParty.Member member = getMember(party, playerUUID);
+        if (member == null) {
+            disconnectTimers.remove(playerUUID);
+            return;
+        }
+        disconnectTimers.remove(playerUUID);
 
-        // Notify party members about the rejoin
-        PartyMemberRejoinedResponseEvent responseEvent =
-                new PartyMemberRejoinedResponseEvent(party, playerUUID);
-        sendEvent(responseEvent);
+        if (member.getRole() == FullParty.Role.LEADER) {
+            disbandPartyDueToTimeout(party, playerUUID);
+        } else {
+            party.getMembers().remove(member);
+            playerToParty.remove(playerUUID);
+            broadcast(new PartyBroadcast.MemberDisconnectTimedOut(party, playerUUID, false));
+        }
     }
 
     private static void disbandPartyDueToTimeout(FullParty party, UUID timedOutLeader) {
-        // Cancel all disconnect timers for party members
         for (FullParty.Member member : party.getMembers()) {
             disconnectTimers.remove(member.getUuid());
             playerToParty.remove(member.getUuid());
         }
         activeParties.remove(party.getUuid());
+        broadcast(new PartyBroadcast.MemberDisconnectTimedOut(party, timedOutLeader, true));
+    }
 
-        // Send timeout response event (indicating leader timed out)
-        PartyMemberDisconnectTimeoutResponseEvent responseEvent =
-                new PartyMemberDisconnectTimeoutResponseEvent(party, timedOutLeader, true);
-        sendEvent(responseEvent);
+    private static void disbandParty(FullParty party, UUID disbander, String reason) {
+        for (FullParty.Member member : party.getMembers()) {
+            cancelDisconnectTimer(member.getUuid());
+            playerToParty.remove(member.getUuid());
+        }
+        activeParties.remove(party.getUuid());
+        broadcast(new PartyBroadcast.Disbanded(party, disbander, reason));
     }
 
     private static void cancelDisconnectTimer(UUID playerUUID) {
         disconnectTimers.remove(playerUUID);
     }
 
-    private static void disbandParty(FullParty party, UUID disbander) {
-        // Cancel all disconnect timers for party members
-        for (FullParty.Member member : party.getMembers()) {
-            cancelDisconnectTimer(member.getUuid());
-            playerToParty.remove(member.getUuid());
-        }
-        activeParties.remove(party.getUuid());
-
-        PartyDisbandResponseEvent responseEvent = new PartyDisbandResponseEvent(party, disbander, "disbanded");
-        sendEvent(responseEvent);
-    }
-
-    private static void sendEvent(PartyEvent event) {
+    private static void broadcast(PartyBroadcast broadcast) {
         ServiceToServerManager.sendToAllServers(
-                new PartyEventPushProtocol(),
-                new PartyEventPushProtocol.Request(
-                        event.getClass().getSimpleName(),
-                        event.getSerializer().serialize(event),
-                        event.getParticipants()
-                ),
-                300
-        );
+                new PartyBroadcastPushProtocol(),
+                new PartyBroadcastPushProtocol.Request(broadcast),
+                BROADCAST_TIMEOUT_MS);
     }
 
     private static void sendErrorToPlayer(UUID playerUUID, String message) {
-        sendMessageToPlayer(playerUUID, "§9§m-----------------------------------------------------\n" + message + "\n§9§m-----------------------------------------------------");
-    }
-
-    private static void sendMessageToPlayer(UUID playerUUID, String message) {
+        String separator = "§9§m-----------------------------------------------------";
         ServiceToServerManager.sendToAllServers(
                 new SendMessagePushProtocol(),
-                new SendMessagePushProtocol.Request(playerUUID, message),
-                300
-        );
-    }
-
-    private static FullParty getPlayerParty(UUID playerUUID) {
-        UUID partyUUID = playerToParty.get(playerUUID);
-        return partyUUID != null ? activeParties.get(partyUUID) : null;
+                new SendMessagePushProtocol.Request(playerUUID, separator + "\n" + message + "\n" + separator),
+                BROADCAST_TIMEOUT_MS);
     }
 
     private static FullParty.Member getMember(FullParty party, UUID playerUUID) {
@@ -509,18 +388,14 @@ public class PartyCache {
                 .findFirst().orElse(null);
     }
 
-    private static void scheduleInviteExpiration(UUID inviter, UUID invitee, long delayMs) {
-        CompletableFuture.delayedExecutor(delayMs, TimeUnit.MILLISECONDS)
+    private static void scheduleInviteExpiration(UUID inviter, UUID invitee) {
+        CompletableFuture.delayedExecutor(INVITE_TIMEOUT_MS, TimeUnit.MILLISECONDS)
                 .execute(() -> {
-                    pendingInvites.remove(invitee);
-
-                    // Check if the player joined the party
-                    FullParty party = getPlayerParty(invitee);
-                    if (party != null) {
-                        FullParty.Member inviteeMember = getMember(party, invitee);
-                        if (inviteeMember == null) {
-                            sendEvent(new PartyInviteExpiredResponseEvent(party, inviter, invitee));
-                        }
+                    PendingParty removed = pendingInvites.remove(invitee);
+                    if (removed == null) return;
+                    FullParty party = getPartyFromPlayer(invitee);
+                    if (party == null || getMember(party, invitee) == null) {
+                        broadcast(new PartyBroadcast.InviteExpired(removed, inviter, invitee));
                     }
                 });
     }

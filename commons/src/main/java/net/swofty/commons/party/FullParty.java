@@ -5,16 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public class FullParty implements Party {
+public final class FullParty implements Party {
     private final UUID uuid;
     private final List<Member> members;
 
@@ -39,51 +36,6 @@ public class FullParty implements Party {
         Member inviteeMember = new Member(invitee, Role.MEMBER, true);
 
         return new FullParty(UUID.randomUUID(), new ArrayList<>(List.of(leaderMember, inviteeMember)));
-    }
-
-    public static Serializer<FullParty> getStaticSerializer() {
-        FullParty party = create(UUID.randomUUID(), UUID.randomUUID());
-        return party.getSerializer();
-    }
-
-    @Override
-    public Serializer<FullParty> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FullParty value) {
-                JSONObject json = new JSONObject();
-                json.put("uuid", value.uuid.toString());
-                json.put("members", value.members.stream()
-                    .map(member -> new JSONObject()
-                        .put("uuid", member.uuid.toString())
-                        .put("role", member.role.name())
-                        .put("joined", member.joined)
-                    ).toList());
-                return json.toString();
-            }
-
-            @Override
-            public FullParty deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                UUID uuid = UUID.fromString(jsonObject.getString("uuid"));
-                List<Member> members = jsonObject.getJSONArray("members").toList().stream()
-                    .map(member -> {
-                        Map<String, Object> memberObject = (Map<String, Object>) member;
-
-                        return new Member(
-                            UUID.fromString(memberObject.get("uuid").toString()),
-                            Role.valueOf(memberObject.get("role").toString()),
-                            memberObject.get("joined").toString().equals("true")
-                        );
-                    }).toList();
-                return new FullParty(uuid, members);
-            }
-
-            @Override
-            public FullParty clone(FullParty value) {
-                return new FullParty(value.uuid, value.members);
-            }
-        };
     }
 
     @Override
