@@ -7,15 +7,19 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.EventNode;
+import net.minestom.server.event.item.PlayerBeginItemUseEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
-import net.minestom.server.event.player.PlayerPreEatEvent;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.event.trait.EntityInstanceEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.Consumable;
 import net.minestom.server.item.component.ConsumeEffect;
-import net.minestom.server.item.component.ConsumeEffect.*;
+import net.minestom.server.item.component.ConsumeEffect.ApplyEffects;
+import net.minestom.server.item.component.ConsumeEffect.ClearAllEffects;
+import net.minestom.server.item.component.ConsumeEffect.PlaySound;
+import net.minestom.server.item.component.ConsumeEffect.RemoveEffects;
+import net.minestom.server.item.component.ConsumeEffect.TeleportRandomly;
 import net.minestom.server.item.component.Food;
 import net.minestom.server.item.component.SuspiciousStewEffects;
 import net.minestom.server.potion.CustomPotionEffect;
@@ -95,7 +99,7 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 
 	@Override
 	public void init(EventNode<EntityInstanceEvent> node) {
-		node.addListener(PlayerPreEatEvent.class, event -> {
+		node.addListener(PlayerBeginItemUseEvent.class, event -> {
 			if (!event.getItemStack().has(DataComponents.CONSUMABLE))
 				return;
 			@Nullable Food foodComponent = event.getItemStack().get(DataComponents.FOOD);
@@ -110,7 +114,7 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 				return;
 			}
 
-			if (consumableComponent != null) event.setEatingTime(consumableComponent.consumeTicks());
+			if (consumableComponent != null) event.setItemUseDuration(consumableComponent.consumeTicks());
 		});
 
 		node.addListener(PlayerFinishItemUseEvent.class, event -> {
