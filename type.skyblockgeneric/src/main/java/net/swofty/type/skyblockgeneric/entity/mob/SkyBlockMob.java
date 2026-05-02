@@ -9,7 +9,13 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.*;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityCreature;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Metadata;
+import net.minestom.server.entity.MetadataDef;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.attribute.Attribute;
@@ -203,7 +209,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public void kill() {
         super.kill();
         mobs.remove(this);
-        nameDisplayEntity.kill();
+        nameDisplayEntity.remove();
 
         if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
 
