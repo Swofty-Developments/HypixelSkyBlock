@@ -1,7 +1,11 @@
 package net.swofty.commons.friend;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.NonNull;
+import net.swofty.commons.friend.events.*;
+import net.swofty.commons.friend.events.response.*;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.Arrays;
@@ -9,6 +13,20 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = FriendAcceptRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendAddRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendDenyRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendListRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendRemoveAllRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendRemoveRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendRequestsListEvent.class),
+        @JsonSubTypes.Type(value = FriendSetNicknameRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendToggleBestRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendToggleSettingRequestEvent.class),
+        @JsonSubTypes.Type(value = FriendResponseEvent.class)
+})
 public abstract class FriendEvent {
     public FriendEvent() {
     }

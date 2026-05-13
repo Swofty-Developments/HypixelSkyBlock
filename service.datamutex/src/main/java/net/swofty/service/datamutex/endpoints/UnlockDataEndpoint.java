@@ -34,12 +34,10 @@ public class UnlockDataEndpoint implements ServiceEndpoint<
             // Release service-level lock
             DataLockManager.releaseLock(lockKey, requesterId);
 
-            // Release locks on all servers
             ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey)
                     .thenAccept(results -> {
-                        // Log any unlock failures for debugging
                         results.forEach((serverUUID, response) -> {
-                            if (!response.optBoolean("success", false)) {
+                            if (!response.success()) {
                                 System.err.println("Failed to unlock data on server " + serverUUID +
                                         " for player " + playerUUID + ", dataKey: " + dataKey);
                             }
@@ -51,7 +49,7 @@ public class UnlockDataEndpoint implements ServiceEndpoint<
                     });
 
             return new UnlockDataProtocolObject.UnlockDataResponse(
-                    true, "Data unlocked successfully");
+                    true, null);
 
         } catch (Exception e) {
             return new UnlockDataProtocolObject.UnlockDataResponse(

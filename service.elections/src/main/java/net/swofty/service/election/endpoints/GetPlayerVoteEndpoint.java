@@ -30,23 +30,23 @@ public class GetPlayerVoteEndpoint implements ServiceEndpoint
         try {
             String rawData = ElectionDatabase.loadElectionData();
             if (rawData == null) {
-                return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null);
+                return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null, true, null);
             }
 
             Map<String, Object> data = GSON.fromJson(rawData, Map.class);
             Number yearNum = (Number) data.get("electionYear");
             if (yearNum == null) {
-                return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null);
+                return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null, true, null);
             }
 
             String vote = ElectionDatabase.getPlayerVote(
                     messageObject.accountId().toString(),
                     yearNum.intValue()
             );
-            return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(vote);
+            return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(vote, true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to get player vote");
-            return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null);
+            return new GetPlayerVoteProtocolObject.GetPlayerVoteResponse(null, true, null);
         }
     }
 }

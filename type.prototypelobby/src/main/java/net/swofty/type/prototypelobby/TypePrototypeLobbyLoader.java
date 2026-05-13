@@ -5,8 +5,8 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.GameDataHandler;
@@ -157,16 +157,18 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         ).toList();
     }
 
+
     @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.prototypelobby.redis.service",
-                ServiceToClient.class
+                TypedServiceHandler.class
         ).toList();
     }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
         return List.of();
     }
 

@@ -3,6 +3,7 @@ package net.swofty.commons.protocol.objects.darkauction;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
+import org.jetbrains.annotations.Nullable;
 
 public class TriggerDarkAuctionProtocol extends ProtocolObject<
         TriggerDarkAuctionProtocol.TriggerMessage,
@@ -42,6 +43,7 @@ public class TriggerDarkAuctionProtocol extends ProtocolObject<
                 JSONObject json = new JSONObject();
                 json.put("success", value.success);
                 json.put("message", value.message);
+                json.put("error", value.error);
                 return json.toString();
             }
 
@@ -50,12 +52,14 @@ public class TriggerDarkAuctionProtocol extends ProtocolObject<
                 JSONObject jsonObject = new JSONObject(json);
                 boolean success = jsonObject.getBoolean("success");
                 String message = jsonObject.optString("message", "");
-                return new TriggerResponse(success, message);
+                String error = jsonObject.optString("error", null);
+                if ("null".equals(error)) error = null;
+                return new TriggerResponse(success, message, error);
             }
 
             @Override
             public TriggerResponse clone(TriggerResponse value) {
-                return new TriggerResponse(value.success, value.message);
+                return new TriggerResponse(value.success, value.message, value.error);
             }
         };
     }
@@ -66,5 +70,5 @@ public class TriggerDarkAuctionProtocol extends ProtocolObject<
         }
     }
 
-    public record TriggerResponse(boolean success, String message) {}
+    public record TriggerResponse(boolean success, String message, @Nullable String error) {}
 }

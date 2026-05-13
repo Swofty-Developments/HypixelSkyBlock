@@ -1,5 +1,7 @@
 package net.swofty.commons.friend;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.protocol.Serializer;
@@ -17,7 +19,11 @@ public class FriendData {
     @Setter
     private FriendSettings settings;
 
-    public FriendData(UUID playerUuid, List<Friend> friends, FriendSettings settings) {
+    @JsonCreator
+    public FriendData(
+            @JsonProperty("playerUuid") UUID playerUuid,
+            @JsonProperty("friends") List<Friend> friends,
+            @JsonProperty("settings") FriendSettings settings) {
         this.playerUuid = playerUuid;
         this.friends = friends;
         this.settings = settings;

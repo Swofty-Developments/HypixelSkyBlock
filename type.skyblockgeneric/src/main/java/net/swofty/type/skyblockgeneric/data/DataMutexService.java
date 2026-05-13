@@ -96,11 +96,11 @@ public class DataMutexService {
                                 service.handleRequest(updateRequest);
 
                         updateFuture.thenAccept(updateResponse -> {
-                            Logger.info("Update response: success=" + updateResponse.success() + ", message=" + updateResponse.message());
+                            Logger.info("Update response: success=" + updateResponse.success() + ", error=" + updateResponse.error());
 
                             if (!updateResponse.success()) {
                                 // If update fails, unlock the data
-                                Logger.error("Failed to update data: " + updateResponse.message());
+                                Logger.error("Failed to update data: " + updateResponse.error());
                                 unlockData(onlineServers, playerUUID, dataType.getKey());
                                 onFailure.run();
                             } else {
@@ -180,11 +180,11 @@ public class DataMutexService {
                 serverUUIDs, playerUUID, dataKey
         )).thenAccept(response -> {
             UnlockDataProtocolObject.UnlockDataResponse responseObject = (UnlockDataProtocolObject.UnlockDataResponse) response;
-            Logger.info("Unlock response: success=" + responseObject.success() + ", message=" + responseObject.message());
+            Logger.info("Unlock response: success=" + responseObject.success() + ", error=" + responseObject.error());
 
             if (!responseObject.success()) {
                 Logger.error("Failed to unlock data for player " + playerUUID +
-                        ", dataKey: " + dataKey + " - " + responseObject.message());
+                        ", dataKey: " + dataKey + " - " + responseObject.error());
             }
         }).exceptionally(throwable -> {
             Logger.error("Error unlocking data: " + throwable.getMessage(), throwable);

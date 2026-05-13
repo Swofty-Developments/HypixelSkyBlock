@@ -23,7 +23,7 @@ public class GetActivePunishmentEndpoint implements ServiceEndpoint
     public GetActivePunishmentProtocolObject.GetActivePunishmentResponse onMessage(ServiceProxyRequest message, GetActivePunishmentProtocolObject.GetActivePunishmentMessage messageObject) {
         Optional<ActivePunishment> existing = PunishmentRedis.getActive(messageObject.target(), messageObject.type());
         if (existing.isEmpty()) {
-            return new GetActivePunishmentProtocolObject.GetActivePunishmentResponse(false, null, null, null, 0, List.of());
+            return new GetActivePunishmentProtocolObject.GetActivePunishmentResponse(false, null, null, null, 0, List.of(), true, null);
         }
 
         ActivePunishment punishment = existing.get();
@@ -33,7 +33,9 @@ public class GetActivePunishmentEndpoint implements ServiceEndpoint
                 punishment.banId(),
                 punishment.reason(),
                 punishment.expiresAt(),
-                punishment.tags()
+                punishment.tags(),
+                true,
+                null
         );
     }
 }

@@ -2,7 +2,7 @@ package net.swofty.type.generic.event.actions.data;
 
 import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.objects.proxy.to.FinishedWithPlayerProtocol;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.DataHandler;
@@ -20,7 +20,6 @@ import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
 import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.MathUtility;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.List;
@@ -78,12 +77,9 @@ public class ActionPlayerDataSave implements HypixelEventClass {
             gameHandler.removeFromCache(uuid);
         }
 
-        // Notify proxy that we're done with this player
-        ServerOutboundMessage.sendMessageToProxy(
-                ToProxyChannels.FINISHED_WITH_PLAYER,
-                new JSONObject().put("uuid", uuid.toString()),
-                (response) -> {}
-        );
+        ServerOutboundMessage.sendToProxy(new FinishedWithPlayerProtocol(),
+                new FinishedWithPlayerProtocol.Request(uuid.toString()),
+                response -> {});
 
         // Clean up tablist entries
         MathUtility.delay(() -> {

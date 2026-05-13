@@ -24,8 +24,8 @@ import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObj
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.commons.skywars.map.SkywarsMapsConfig;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.pvp.MinestomPvP;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -291,16 +291,18 @@ public class TypeSkywarsGameLoader implements HypixelTypeLoader {
         return List.of();
     }
 
+
     @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.skywarsgame.redis.service",
-                ServiceToClient.class
+                TypedServiceHandler.class
         ).toList();
     }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
         return List.of();
     }
 

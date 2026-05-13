@@ -5,14 +5,13 @@ import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
+import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol;
 import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.skywars.SkywarsGameType;
-import net.swofty.commons.service.FromServiceChannels;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.orchestrator.OrchestratorCache;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -33,7 +32,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 			case BEDWARS_GAME -> handleBedwars(body);
 			case MURDER_MYSTERY_GAME -> handleMurderMystery(body);
 			case SKYWARS_GAME -> handleSkywars(body);
-			default -> new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			default -> new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		};
 	}
 
@@ -42,7 +41,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 		try {
 			BedwarsGameType gameType = parseBedwarsGameType(body.mode());
 			if (gameType == null) {
-				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 			}
 
 			int neededSlots = body.neededSlots() > 0 ? body.neededSlots() : 1;
@@ -61,29 +60,23 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 							hostingServer.maxPlayers(),
 							hostingServer.shortName()
 					);
-					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString());
+					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString(), true, null);
 				}
 			}
 
 			// If no existing game found, find a server that can instantiate a new one
 			OrchestratorCache.GameServerState availableServer = OrchestratorCache.instantiateServer(gameType, body.map());
 			if (availableServer != null) {
-				// Send service message to create the game
-				JSONObject instantiateMessage = new JSONObject();
-				instantiateMessage.put("gameType", gameType.toString());
-				instantiateMessage.put("map", body.map());
-
 				try {
-					CompletableFuture<JSONObject> responseFuture = ServiceToServerManager.sendToServer(
+					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = ServiceToServerManager.sendToServer(
 							availableServer.uuid(),
-							FromServiceChannels.INSTANTIATE_GAME,
-							instantiateMessage
+							new InstantiateGamePushProtocol(),
+							new InstantiateGamePushProtocol.Request(gameType.toString(), body.map())
 					);
 
-					JSONObject response = responseFuture.get();
+					InstantiateGamePushProtocol.Response response = responseFuture.get();
 
-					if (response != null && response.optBoolean("success", false)) {
-						// Game created successfully, return the server
+					if (response != null && response.success()) {
 						UnderstandableProxyServer proxy = new UnderstandableProxyServer(
 								availableServer.shortName(),
 								availableServer.uuid(),
@@ -93,16 +86,16 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 								availableServer.maxPlayers(),
 								availableServer.shortName()
 						);
-						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.getString("gameId"));
+						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.gameId(), true, null);
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to instantiate Bedwars game: " + e.getMessage());
 				}
 			}
 
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		} catch (Exception e) {
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		}
 	}
 
@@ -111,7 +104,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 		try {
 			MurderMysteryGameType gameType = parseMurderMysteryGameType(body.mode());
 			if (gameType == null) {
-				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 			}
 
 			int neededSlots = body.neededSlots() > 0 ? body.neededSlots() : 1;
@@ -131,7 +124,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 							hostingServer.maxPlayers(),
 							hostingServer.shortName()
 					);
-					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString());
+					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString(), true, null);
 				}
 			}
 
@@ -139,22 +132,16 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 			OrchestratorCache.GameServerState availableServer = OrchestratorCache.instantiateServer(
 					ServerType.MURDER_MYSTERY_GAME, gameType.getMaxPlayers());
 			if (availableServer != null) {
-				// Send service message to create the game
-				JSONObject instantiateMessage = new JSONObject();
-				instantiateMessage.put("gameType", gameType.name());
-				instantiateMessage.put("map", body.map());
-
 				try {
-					CompletableFuture<JSONObject> responseFuture = ServiceToServerManager.sendToServer(
+					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = ServiceToServerManager.sendToServer(
 							availableServer.uuid(),
-							FromServiceChannels.INSTANTIATE_GAME,
-							instantiateMessage
+							new InstantiateGamePushProtocol(),
+							new InstantiateGamePushProtocol.Request(gameType.name(), body.map())
 					);
 
-					JSONObject response = responseFuture.get();
+					InstantiateGamePushProtocol.Response response = responseFuture.get();
 
-					if (response != null && response.optBoolean("success", false)) {
-						// Game created successfully, return the server
+					if (response != null && response.success()) {
 						UnderstandableProxyServer proxy = new UnderstandableProxyServer(
 								availableServer.shortName(),
 								availableServer.uuid(),
@@ -164,16 +151,16 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 								availableServer.maxPlayers(),
 								availableServer.shortName()
 						);
-						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.getString("gameId"));
+						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.gameId(), true, null);
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to instantiate Murder Mystery game: " + e.getMessage());
 				}
 			}
 
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		} catch (Exception e) {
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		}
 	}
 
@@ -219,7 +206,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 		try {
 			SkywarsGameType gameType = parseSkywarsGameType(body.mode());
 			if (gameType == null) {
-				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+				return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 			}
 
 			int neededSlots = body.neededSlots() > 0 ? body.neededSlots() : 1;
@@ -239,7 +226,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 							hostingServer.maxPlayers(),
 							hostingServer.shortName()
 					);
-					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString());
+					return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, existingGameWithServer.game().getGameId().toString(), true, null);
 				}
 			}
 
@@ -247,22 +234,16 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 			OrchestratorCache.GameServerState availableServer = OrchestratorCache.instantiateServer(
 					ServerType.SKYWARS_GAME, gameType.getMaxPlayers());
 			if (availableServer != null) {
-				// Send service message to create the game
-				JSONObject instantiateMessage = new JSONObject();
-				instantiateMessage.put("gameType", gameType.name());
-				instantiateMessage.put("map", body.map());
-
 				try {
-					CompletableFuture<JSONObject> responseFuture = ServiceToServerManager.sendToServer(
+					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = ServiceToServerManager.sendToServer(
 							availableServer.uuid(),
-							FromServiceChannels.INSTANTIATE_GAME,
-							instantiateMessage
+							new InstantiateGamePushProtocol(),
+							new InstantiateGamePushProtocol.Request(gameType.name(), body.map())
 					);
 
-					JSONObject response = responseFuture.get();
+					InstantiateGamePushProtocol.Response response = responseFuture.get();
 
-					if (response != null && response.optBoolean("success", false)) {
-						// Game created successfully, return the server
+					if (response != null && response.success()) {
 						UnderstandableProxyServer proxy = new UnderstandableProxyServer(
 								availableServer.shortName(),
 								availableServer.uuid(),
@@ -272,16 +253,16 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 								availableServer.maxPlayers(),
 								availableServer.shortName()
 						);
-						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.getString("gameId"));
+						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.gameId(), true, null);
 					}
 				} catch (Exception e) {
 					System.err.println("Failed to instantiate Skywars game: " + e.getMessage());
 				}
 			}
 
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		} catch (Exception e) {
-			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null);
+			return new GetServerForMapProtocolObject.GetServerForMapResponse(null, null, true, null);
 		}
 	}
 

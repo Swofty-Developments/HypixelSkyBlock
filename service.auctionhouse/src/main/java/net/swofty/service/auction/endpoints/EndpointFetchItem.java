@@ -35,6 +35,6 @@ public class EndpointFetchItem implements ServiceEndpoint<
             toReturn = AuctionItem.fromDocument(inactiveItem);
         }
 
-        return new AuctionFetchItemProtocolObject.AuctionFetchItemResponse(toReturn);
+        return new AuctionFetchItemProtocolObject.AuctionFetchItemResponse(toReturn, true, null);
     }
 }

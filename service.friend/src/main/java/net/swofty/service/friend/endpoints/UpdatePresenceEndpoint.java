@@ -35,7 +35,7 @@ public class UpdatePresenceEndpoint implements ServiceEndpoint<
             }
         }
 
-        return new UpdatePresenceProtocolObject.UpdatePresenceResponse(true);
+        return new UpdatePresenceProtocolObject.UpdatePresenceResponse(true, null);
     }
 }
 

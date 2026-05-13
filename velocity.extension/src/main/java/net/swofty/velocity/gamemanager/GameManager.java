@@ -6,12 +6,11 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import lombok.Getter;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
@@ -106,7 +105,7 @@ public class GameManager {
                     long startTime = System.currentTimeMillis();
 
                     RedisMessage.sendMessageToServer(registeredServer.internalID(),
-                            FromProxyChannels.PING_SERVER, new JSONObject()
+                            new PingServerProtocol(), new PingServerProtocol.Request()
                     ).thenRun(() -> {
                         pingSuccess.set(true);
                     });

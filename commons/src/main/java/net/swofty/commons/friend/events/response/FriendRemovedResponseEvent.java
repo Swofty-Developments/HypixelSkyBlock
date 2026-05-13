@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -14,7 +16,8 @@ public class FriendRemovedResponseEvent extends FriendResponseEvent {
     private final UUID removed;
     private final String removerName;
 
-    public FriendRemovedResponseEvent(UUID remover, UUID removed, String removerName) {
+    @JsonCreator
+    public FriendRemovedResponseEvent(@JsonProperty("remover") UUID remover, @JsonProperty("removed") UUID removed, @JsonProperty("removerName") String removerName) {
         super();
         this.remover = remover;
         this.removed = removed;

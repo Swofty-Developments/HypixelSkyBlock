@@ -5,9 +5,9 @@ import com.mongodb.client.model.Filters;
 import net.swofty.commons.friend.*;
 import net.swofty.commons.friend.events.*;
 import net.swofty.commons.friend.events.response.*;
-import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.commons.protocol.objects.friend.FriendEventPushProtocol;
+import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONObject;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -496,12 +496,15 @@ public class FriendCache {
     }
 
     private static void sendEvent(FriendEvent event) {
-        JSONObject message = new JSONObject();
-        message.put("eventType", event.getClass().getSimpleName());
-        message.put("eventData", event.getSerializer().serialize(event));
-        message.put("participants", event.getParticipants());
-
-        ServiceToServerManager.sendToAllServers(FromServiceChannels.PROPAGATE_FRIEND_EVENT, message);
+        ServiceToServerManager.sendToAllServers(
+                new FriendEventPushProtocol(),
+                new FriendEventPushProtocol.Request(
+                        event.getClass().getSimpleName(),
+                        event.getSerializer().serialize(event),
+                        event.getParticipants()
+                ),
+                300
+        );
     }
 
     private static void sendErrorToPlayer(UUID playerUUID, String message) {
@@ -509,10 +512,10 @@ public class FriendCache {
     }
 
     private static void sendMessageToPlayer(UUID playerUUID, String message) {
-        JSONObject messageData = new JSONObject();
-        messageData.put("playerUUID", playerUUID.toString());
-        messageData.put("message", message);
-
-        ServiceToServerManager.sendToAllServers(FromServiceChannels.SEND_MESSAGE, messageData);
+        ServiceToServerManager.sendToAllServers(
+                new SendMessagePushProtocol(),
+                new SendMessagePushProtocol.Request(playerUUID, message),
+                300
+        );
     }
 }

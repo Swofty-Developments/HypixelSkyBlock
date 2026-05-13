@@ -29,26 +29,26 @@ public class CastVoteEndpoint implements ServiceEndpoint
         try {
             String rawData = ElectionDatabase.loadElectionData();
             if (rawData == null) {
-                return new CastVoteProtocolObject.CastVoteResponse(false, null);
+                return new CastVoteProtocolObject.CastVoteResponse(false, null, "Vote failed");
             }
 
             Map<String, Object> data = new Gson().fromJson(rawData, Map.class);
             Boolean electionOpen = (Boolean) data.get("electionOpen");
             if (electionOpen == null || !electionOpen) {
-                return new CastVoteProtocolObject.CastVoteResponse(false, null);
+                return new CastVoteProtocolObject.CastVoteResponse(false, null, "Vote failed");
             }
 
             int electionYear = ((Number) data.get("electionYear")).intValue();
 
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) data.get("candidates");
             if (candidates == null) {
-                return new CastVoteProtocolObject.CastVoteResponse(false, null);
+                return new CastVoteProtocolObject.CastVoteResponse(false, null, "Vote failed");
             }
 
             boolean validCandidate = candidates.stream()
                     .anyMatch(c -> messageObject.candidateName().equals(c.get("mayorName")));
             if (!validCandidate) {
-                return new CastVoteProtocolObject.CastVoteResponse(false, null);
+                return new CastVoteProtocolObject.CastVoteResponse(false, null, "Vote failed");
             }
 
             ElectionDatabase.castVote(
@@ -58,10 +58,10 @@ public class CastVoteEndpoint implements ServiceEndpoint
             );
 
             Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
-            return new CastVoteProtocolObject.CastVoteResponse(true, tallies);
+            return new CastVoteProtocolObject.CastVoteResponse(true, tallies, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to cast vote");
-            return new CastVoteProtocolObject.CastVoteResponse(false, null);
+            return new CastVoteProtocolObject.CastVoteResponse(false, null, "Vote failed");
         }
     }
 }

@@ -27,7 +27,7 @@ public class EndpointGetAuctionState implements ServiceEndpoint<
 
         if (auction == null) {
             return new GetAuctionStateProtocol.GetAuctionStateResponse(
-                    false, null, null, 0, null, 0, null, null, List.of()
+                    false, null, null, 0, null, 0, null, null, List.of(), true, null
             );
         }
 
@@ -40,7 +40,9 @@ public class EndpointGetAuctionState implements ServiceEndpoint<
                 auction.getCurrentBid(),
                 auction.getHighestBidderId(),
                 auction.getHighestBidderName(),
-                auction.getRoundItemNames()
+                auction.getRoundItemNames(),
+                true,
+                null
         );
     }
 }
