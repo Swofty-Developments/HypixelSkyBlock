@@ -20,6 +20,7 @@ import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarItemSet;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,8 +159,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                             ));
                         })
                         .exceptionally(throwable -> {
-                            System.err.println("Failed to fetch bazaar data for " + type.name() + ": " + throwable.getMessage());
-                            // Store empty data on failure
+                            Logger.error(throwable, "Failed to fetch bazaar data for {}", type.name());
                             setDataMap.get(set).put(type, new PriceData(type, 0, 0));
                             return null;
                         });
@@ -207,7 +207,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                     }, 1);
                 })
                 .exceptionally(throwable -> {
-                    System.err.println("Failed to rebuild bazaar cache: " + throwable.getMessage());
+                    Logger.error(throwable, "Failed to rebuild bazaar cache");
 
                     // Fallback: render with "Error loading" placeholders
                     MathUtility.delay(() -> {
