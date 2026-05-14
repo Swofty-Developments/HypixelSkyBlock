@@ -359,7 +359,7 @@ public class SkyBlockVelocity {
                 return;
             }
 
-            List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
+            List<BalanceConfiguration> configurations = BalanceConfigurations.CONFIGURATIONS.get(ServerType.BEDWARS_LOBBY);
             GameManager.GameServer toSendTo = gameServers.getFirst();
 
             for (BalanceConfiguration configuration : configurations) {
