@@ -3,7 +3,10 @@ package net.swofty.type.generic.utility;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-public class BufferUtility {
+public final class BufferUtility {
+
+    private BufferUtility() {}
+
     public static int getUnsignedShort(ByteBuffer buffer) {
         byte[] bytes = new byte[2];
         buffer.get(bytes);

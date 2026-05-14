@@ -5,7 +5,10 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 
-public class ChestUtility {
+public final class ChestUtility {
+
+    private ChestUtility() {}
+
 
     public static Point[] getDoubleChestPositions(Instance instance, Point point) {
         Point[] positions = new Point[2];
