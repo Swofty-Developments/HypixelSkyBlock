@@ -1,4 +1,3 @@
-// Replace your UpdateSynchronizedDataEndpoint with this debug version
 package net.swofty.service.datamutex.endpoints;
 
 import org.tinylog.Logger;
@@ -10,6 +9,7 @@ import net.swofty.service.datamutex.DataLockManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,74 +29,52 @@ public class UpdateSynchronizedDataEndpoint implements ServiceEndpoint<
             ServiceProxyRequest request,
             UpdateSynchronizedDataProtocolObject.UpdateDataRequest messageObject) {
 
-        System.out.println("=== UPDATE ENDPOINT DEBUG ===");
-        System.out.println("Received update request from: " + request.getRequestServer());
-        System.out.println("Player UUID: " + messageObject.playerUUID());
-        System.out.println("Data Key: " + messageObject.dataKey());
-        System.out.println("Server UUIDs: " + messageObject.serverUUIDs());
-        System.out.println("New Data Length: " + messageObject.newData().length() + " chars");
-
         List<UUID> serverUUIDs = messageObject.serverUUIDs();
         UUID playerUUID = messageObject.playerUUID();
         String dataKey = messageObject.dataKey();
         String newData = messageObject.newData();
         String requesterId = request.getRequestServer();
-
         String lockKey = playerUUID + ":" + dataKey;
-        System.out.println("Lock key: " + lockKey);
+
+        Logger.debug("update: requester={} player={} key={} servers={} bytes={} lockKey={}",
+                requesterId, playerUUID, dataKey, serverUUIDs, newData.length(), lockKey);
 
         try {
-            // Verify we still hold the lock
-            System.out.println("Verifying service lock...");
             DataLockManager.LockInfo lockInfo = DataLockManager.getLockInfo(lockKey);
             if (lockInfo == null || !lockInfo.requesterId.equals(requesterId)) {
-                System.out.println("Lock verification failed - lockInfo: " + lockInfo + ", requesterId: " + requesterId);
+                Logger.debug("update: lock check failed (held by {})",
+                        lockInfo == null ? "<none>" : lockInfo.requesterId);
                 return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
                         false, "Lock has expired or is held by another requester");
             }
-            System.out.println("Service lock verified successfully");
 
-            System.out.println("Updating data on servers: " + serverUUIDs);
-            Map<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> updateFutures = new java.util.HashMap<>();
+            Map<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> updateFutures = new HashMap<>();
             for (UUID serverUUID : serverUUIDs) {
-                System.out.println("Sending update to server " + serverUUID);
-
                 updateFutures.put(serverUUID,
                         ServiceToServerManager.updatePlayerData(serverUUID, playerUUID, dataKey, newData));
             }
 
-            System.out.println("Waiting for update responses...");
-            Map<UUID, UpdatePlayerDataPushProtocol.Response> updateResults = new java.util.HashMap<>();
+            Map<UUID, UpdatePlayerDataPushProtocol.Response> updateResults = new HashMap<>();
             for (Map.Entry<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> entry : updateFutures.entrySet()) {
-                UpdatePlayerDataPushProtocol.Response result = entry.getValue().get();
-                updateResults.put(entry.getKey(), result);
-                System.out.println("Update result from " + entry.getKey() + ": " + result);
+                updateResults.put(entry.getKey(), entry.getValue().get());
             }
 
             boolean allUpdated = updateResults.values().stream()
                     .allMatch(UpdatePlayerDataPushProtocol.Response::success);
 
-            System.out.println("All servers updated successfully: " + allUpdated);
-
             if (!allUpdated) {
-                System.out.println("Some updates failed, returning error");
+                Logger.warn("update: partial failure (results={})", updateResults);
                 return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
                         false, "Failed to update data on all servers");
             }
 
-            System.out.println("All updates successful!");
-            return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
-                    true, null);
+            return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(true, null);
 
         } catch (Exception e) {
-            System.out.println("Exception in update endpoint: " + e.getMessage());
-            Logger.error(e, "Error occurred in data mutex endpoint");
-
+            Logger.error(e, "Error occurred in data mutex update endpoint (lockKey={})", lockKey);
             return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
                     false, "Error during data update: " + e.getMessage());
         } finally {
-            // Always release locks when done
-            System.out.println("Releasing locks in finally block...");
             DataLockManager.releaseLock(lockKey, requesterId);
             ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
         }

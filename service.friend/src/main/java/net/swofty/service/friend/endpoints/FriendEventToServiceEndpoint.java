@@ -25,7 +25,7 @@ public class FriendEventToServiceEndpoint implements ServiceEndpoint<
         try {
             FriendEvent event = messageObject.event();
 
-            System.out.println("Received friend event: " + event.getClass().getSimpleName());
+            Logger.debug("Received friend event: {}", event.getClass().getSimpleName());
             switch (event) {
                 case FriendAddRequestEvent e -> FriendCache.handleAddRequest(
                         e,
@@ -63,7 +63,6 @@ public class FriendEventToServiceEndpoint implements ServiceEndpoint<
 
             return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(true, null);
         } catch (Exception e) {
-            System.out.println("Failed to process friend event: " + e.getMessage());
             Logger.error(e, "Failed to process friend event in service endpoint");
             return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(false, "Event processing failed");
         }
