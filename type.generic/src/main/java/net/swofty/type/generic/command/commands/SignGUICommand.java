@@ -7,6 +7,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import org.tinylog.Logger;
 
 @CommandParameters(aliases = "signgraphicaluserinterface",
         description = "Opens a graphical user interface",
@@ -26,12 +27,12 @@ public class SignGUICommand extends HypixelCommand {
 
             new HypixelSignGUI(player).open(new String[]{"Test1", "Test2"}).thenAccept(line -> {
                 if (line == null) {
-                    System.out.println(player.getDisplayName().toString() + " left server while GUI was open");
+                    Logger.debug("{} left server while sign GUI was open", player.getDisplayName());
                     return;
                 }
 
                 player.sendMessage("§7You wrote: §a" + line);
-                System.out.println(line);
+                Logger.debug("Sign GUI input: {}", line);
             });
         }, text);
     }
