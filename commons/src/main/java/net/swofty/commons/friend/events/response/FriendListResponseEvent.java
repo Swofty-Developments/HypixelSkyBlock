@@ -6,7 +6,6 @@ import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
