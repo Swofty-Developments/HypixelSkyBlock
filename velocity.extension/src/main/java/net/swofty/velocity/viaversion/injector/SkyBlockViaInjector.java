@@ -10,6 +10,7 @@ import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.packet.PlayerChannelInitializer;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,7 +23,7 @@ public class SkyBlockViaInjector implements ViaInjector {
         try {
             return Class.forName("com.velocitypowered.proxy.config.VelocityConfiguration").getMethod("getPlayerInfoForwardingMode");
         } catch (NoSuchMethodException | ClassNotFoundException e) {
-            System.out.println("Failed to get getPlayerInfoForwardingMode method from Velocity");
+            Logger.warn(e, "Failed to get getPlayerInfoForwardingMode method from Velocity");
             return null;
         }
     }
