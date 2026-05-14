@@ -5,6 +5,7 @@ import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointTrophyFish;
 import net.swofty.type.skyblockgeneric.entity.FishingHook;
+import net.swofty.type.skyblockgeneric.entity.mob.seacreature.SeaCreatureSpawner;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
 import net.swofty.type.skyblockgeneric.item.components.FishingRodPartComponent;
@@ -147,7 +148,7 @@ public final class FishingService {
         }
 
         if (result.kind() == FishingCatchKind.SEA_CREATURE && result.seaCreatureId() != null) {
-            // TODO: sea creatures
+            SeaCreatureSpawner.spawn(player, result.seaCreatureId(), hook.getSpawnPosition());
         }
         player.setItemInHand(rod);
     }

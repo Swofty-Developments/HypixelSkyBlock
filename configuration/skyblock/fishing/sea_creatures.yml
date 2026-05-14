@@ -1,0 +1,25 @@
+seaCreatures:
+  - id: SQUID
+    requiredFishingLevel: 1
+    skillXp: 20
+    tags: [WATER, COMMON]
+  - id: SEA_WALKER
+    requiredFishingLevel: 4
+    skillXp: 40
+    tags: [WATER, COMMON]
+  - id: NIGHT_SQUID
+    requiredFishingLevel: 6
+    skillXp: 80
+    tags: [WATER, NIGHT]
+  - id: SEA_GUARDIAN
+    requiredFishingLevel: 8
+    skillXp: 120
+    tags: [WATER]
+  - id: MAGMA_SLUG
+    requiredFishingLevel: 21
+    skillXp: 450
+    tags: [LAVA, CRIMSON]
+  - id: LAVA_BLAZE
+    requiredFishingLevel: 30
+    skillXp: 1000
+    tags: [LAVA, CRIMSON]
