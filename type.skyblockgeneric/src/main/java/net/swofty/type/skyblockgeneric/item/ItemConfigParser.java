@@ -74,7 +74,7 @@ public class ItemConfigParser {
 			return item;
 
 		} catch (SafeConfig.ConfigParseException e) {
-			Logger.error("Failed to parse item: {}", e.getMessage());
+			Logger.error(e, "Failed to parse item");
 			return null;
 		} catch (Exception e) {
 			Logger.error(e, "Unexpected error parsing item");
@@ -674,7 +674,7 @@ public class ItemConfigParser {
 				default -> throw new IllegalArgumentException("Unknown component type: " + id);
 			};
 		} catch (SafeConfig.ConfigParseException e) {
-			Logger.error("Failed to parse component {} for item {}: {}", id, itemId, e.getMessage());
+			Logger.error(e, "Failed to parse component {} for item {}", id, itemId);
 			return null;
 		} catch (Exception e) {
 			Logger.error(e, "Unexpected error parsing component {} for item {}", id, itemId);
