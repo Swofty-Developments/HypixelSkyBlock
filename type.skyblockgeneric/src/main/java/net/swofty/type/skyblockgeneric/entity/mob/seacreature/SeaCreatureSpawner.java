@@ -9,36 +9,34 @@ import org.tinylog.Logger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public final class SeaCreatureSpawner {
 
-    private static final Map<String, Supplier<SeaCreatureMob>> FACTORIES = new LinkedHashMap<>();
+    private static final Map<String, SeaCreatureProfile> PROFILES = new LinkedHashMap<>();
 
     static {
-        register(MobSquid::new);
-        register(MobSeaWalker::new);
-        register(MobNightSquid::new);
-        register(MobSeaGuardian::new);
-        register(MobLavaBlaze::new);
-        register(MobMagmaSlug::new);
+        SeaCreatureProfiles.CANONICAL.forEach(SeaCreatureSpawner::register);
     }
 
     private SeaCreatureSpawner() {
     }
 
-    public static void register(Supplier<SeaCreatureMob> factory) {
-        FACTORIES.put(factory.get().getSeaCreatureId(), factory);
+    public static void register(SeaCreatureProfile profile) {
+        PROFILES.put(profile.id(), profile);
     }
 
     public static boolean canSpawn(String seaCreatureId) {
-        return FACTORIES.containsKey(seaCreatureId);
+        return PROFILES.containsKey(seaCreatureId);
+    }
+
+    public static @Nullable SeaCreatureProfile getProfile(String seaCreatureId) {
+        return PROFILES.get(seaCreatureId);
     }
 
     public static @Nullable SeaCreatureMob spawn(SkyBlockPlayer angler, String seaCreatureId, Pos position) {
-        Supplier<SeaCreatureMob> factory = FACTORIES.get(seaCreatureId);
-        if (factory == null) {
-            Logger.warn("No sea creature factory registered for id={}, falling back to nothing", seaCreatureId);
+        SeaCreatureProfile profile = PROFILES.get(seaCreatureId);
+        if (profile == null) {
+            Logger.warn("No sea creature profile registered for id={}, no spawn will occur", seaCreatureId);
             return null;
         }
 
@@ -47,19 +45,22 @@ public final class SeaCreatureSpawner {
             return null;
         }
 
-        SeaCreatureMob mob = factory.get();
+        SeaCreatureMob mob = SeaCreatureMob.create(profile);
         mob.setInstance(instance, position);
 
-        Component selfMessage = Component.text("§3§lSEA CREATURE! §bA " + mob.getDisplayName().toUpperCase() + " has spawned!");
+        broadcastCatch(angler, profile, instance, position);
+        return mob;
+    }
+
+    private static void broadcastCatch(SkyBlockPlayer angler, SeaCreatureProfile profile, Instance instance, Pos position) {
+        Component selfMessage = Component.text("§3§lSEA CREATURE! §bA " + profile.displayName().toUpperCase() + " has spawned!");
         angler.sendMessage(selfMessage);
 
         Component nearbyMessage = Component.text("§3§lSEA CREATURE! §b" + angler.getUsername()
-                + " caught §a" + mob.getDisplayName() + "§b!");
+                + " caught §a" + profile.displayName() + "§b!");
         instance.getPlayers().stream()
                 .filter(player -> player.getPosition().distance(position) <= 32)
                 .filter(player -> !player.getUuid().equals(angler.getUuid()))
                 .forEach(player -> player.sendMessage(nearbyMessage));
-
-        return mob;
     }
 }
