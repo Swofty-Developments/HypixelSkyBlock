@@ -13,7 +13,10 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class YamlFileUtils {
+public final class YamlFileUtils {
+
+    private YamlFileUtils() {}
+
     /**
      * Get all YAML files in a directory and its subdirectories
      * @param directory The base directory to search in

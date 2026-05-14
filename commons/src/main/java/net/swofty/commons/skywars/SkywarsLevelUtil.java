@@ -2,7 +2,9 @@ package net.swofty.commons.skywars;
 
 import java.text.DecimalFormat;
 
-public class SkywarsLevelUtil {
+public final class SkywarsLevelUtil {
+
+    private SkywarsLevelUtil() {}
 
     private static final DecimalFormat FORMAT = new DecimalFormat("#,###.#");
 
