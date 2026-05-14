@@ -32,12 +32,21 @@ public class HypixelDataHandler extends DataHandler {
     public HypixelDataHandler(UUID uuid) { super(uuid); }
 
     public static HypixelDataHandler getUser(UUID uuid) {
-        if (!userCache.containsKey(uuid)) throw new RuntimeException("User " + uuid + " does not exist!");
-        return (HypixelDataHandler) userCache.get(uuid);
+        HypixelDataHandler handler = (HypixelDataHandler) userCache.get(uuid);
+        if (handler == null) throw new RuntimeException("User " + uuid + " does not exist!");
+        return handler;
     }
 
     public static @Nullable HypixelDataHandler getUser(Player player) {
-        try { return getUser(player.getUuid()); } catch (Exception e) { return null; }
+        return (HypixelDataHandler) userCache.get(player.getUuid());
+    }
+
+    public static java.util.Optional<HypixelDataHandler> findHypixelUser(UUID uuid) {
+        return java.util.Optional.ofNullable((HypixelDataHandler) userCache.get(uuid));
+    }
+
+    public static java.util.Optional<HypixelDataHandler> awaitHypixelUser(UUID uuid, long timeoutMillis) {
+        return awaitUser(uuid, timeoutMillis).map(h -> (HypixelDataHandler) h);
     }
 
     @Override
