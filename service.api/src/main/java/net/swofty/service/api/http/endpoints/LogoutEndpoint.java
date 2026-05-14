@@ -27,7 +27,6 @@ public class LogoutEndpoint extends SkyBlockEndpoint {
     @Override
     public @Nullable APIResponse handle(Map<String, String> headers, Request req, Response res) {
         String sessionId = req.cookie("sessionId");
-        System.out.println("Session ID: " + sessionId);
 
         if (sessionId == null) {
             return APIResponse.error("Missing required headers");
