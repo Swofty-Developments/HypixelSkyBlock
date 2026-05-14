@@ -4,17 +4,16 @@ import com.velocitypowered.api.proxy.Player;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.GameManager;
 
+import java.util.Comparator;
 import java.util.List;
 
-public class LowestPlayerCount extends BalanceConfiguration {
+public final class LowestPlayerCount extends BalanceConfiguration {
+
+    private static final Comparator<GameManager.GameServer> BY_PLAYER_COUNT =
+            Comparator.comparingInt(server -> server.registeredServer().getPlayersConnected().size());
 
     @Override
     public GameManager.GameServer getServer(Player player, List<GameManager.GameServer> servers) {
-        return servers.stream().min((server1, server2) -> {
-            int server1Players = server1.registeredServer().getPlayersConnected().size();
-            int server2Players = server2.registeredServer().getPlayersConnected().size();
-
-            return Integer.compare(server1Players, server2Players);
-        }).orElse(null);
+        return servers.stream().min(BY_PLAYER_COUNT).orElse(null);
     }
 }
