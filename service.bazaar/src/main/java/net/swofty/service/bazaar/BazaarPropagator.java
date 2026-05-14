@@ -6,6 +6,7 @@ import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.service.generic.redis.ServiceToServerManager;
+import org.tinylog.Logger;
 
 import java.util.Map;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class BazaarPropagator {
     private static final BazaarTransactionPushProtocol PROTOCOL = new BazaarTransactionPushProtocol();
 
     public void propagate(BazaarTransaction tx) {
-        System.out.println("Propagating transaction " + tx.getClass().getSimpleName());
+        Logger.debug("Propagating transaction {}", tx.getClass().getSimpleName());
 
         var request = new BazaarTransactionPushProtocol.Request(
                 tx.getClass().getSimpleName(),
@@ -25,7 +26,7 @@ public class BazaarPropagator {
         ServiceToServerManager.sendToAllServers(PROTOCOL, request, 5000)
                 .thenAccept(responses -> handleServerResponses(tx, responses))
                 .exceptionally(throwable -> {
-                    System.err.println("Failed to get responses from servers for transaction: " + throwable.getMessage());
+                    Logger.error(throwable, "Failed to get responses from servers for transaction");
                     return null;
                 });
     }
@@ -34,7 +35,7 @@ public class BazaarPropagator {
         switch (tx) {
             case SuccessfulBazaarTransaction success -> handleSuccessfulTransactionResponses(success, responses);
             case OrderExpiredBazaarTransaction expired -> handleExpiredTransactionResponses(expired, responses);
-            default -> System.err.println("Unknown transaction type for response handling: " + tx.getClass().getSimpleName());
+            default -> Logger.warn("Unknown transaction type for response handling: {}", tx.getClass().getSimpleName());
         }
     }
 
@@ -42,8 +43,7 @@ public class BazaarPropagator {
         boolean buyerHandled = false;
         boolean sellerHandled = false;
 
-        for (Map.Entry<UUID, Response> entry : responses.entrySet()) {
-            Response response = entry.getValue();
+        for (Response response : responses.values()) {
             if (response != null && response.success()) {
                 buyerHandled |= response.buyerHandled();
                 sellerHandled |= response.sellerHandled();
@@ -51,33 +51,32 @@ public class BazaarPropagator {
         }
 
         if (!buyerHandled) {
-            System.out.println("Buyer " + tx.buyer() + " not handled by any server - storing as pending");
+            Logger.info("Buyer {} not handled by any server — storing as pending", tx.buyer());
             PendingTransactionsDatabase.storePendingTransaction(tx.buyer(), tx.buyerProfile(), tx);
         }
 
         if (!sellerHandled) {
-            System.out.println("Seller " + tx.seller() + " not handled by any server - storing as pending");
+            Logger.info("Seller {} not handled by any server — storing as pending", tx.seller());
             PendingTransactionsDatabase.storePendingTransaction(tx.seller(), tx.sellerProfile(), tx);
         }
 
-        System.out.println("Transaction handled - Buyer: " + buyerHandled + ", Seller: " + sellerHandled);
+        Logger.debug("Transaction handled — buyer={}, seller={}", buyerHandled, sellerHandled);
     }
 
     private void handleExpiredTransactionResponses(OrderExpiredBazaarTransaction tx, Map<UUID, Response> responses) {
         boolean ownerHandled = false;
 
-        for (Map.Entry<UUID, Response> entry : responses.entrySet()) {
-            Response response = entry.getValue();
+        for (Response response : responses.values()) {
             if (response != null && response.success()) {
                 ownerHandled |= response.buyerHandled();
             }
         }
 
         if (!ownerHandled) {
-            System.out.println("Owner " + tx.owner() + " not handled by any server - storing as pending");
+            Logger.info("Owner {} not handled by any server — storing as pending", tx.owner());
             PendingTransactionsDatabase.storePendingTransaction(tx.owner(), tx.ownerProfile(), tx);
         }
 
-        System.out.println("Expired order handled - Owner: " + ownerHandled);
+        Logger.debug("Expired order handled — owner={}", ownerHandled);
     }
 }
