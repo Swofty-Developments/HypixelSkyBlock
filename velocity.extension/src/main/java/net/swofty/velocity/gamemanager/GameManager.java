@@ -112,8 +112,12 @@ public class GameManager {
 
                     server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), () -> {
                         if (!pingSuccess.get()) {
-                            System.out.println("Server " + givenServer.getServerInfo().getName() + " is offline! Removing from list...");
-                            System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
+                            org.tinylog.Logger.warn(
+                                "Server {} is offline! Removing from list (ping sent at {}, deadline {}ms)",
+                                givenServer.getServerInfo().getName(),
+                                startTime,
+                                System.currentTimeMillis() - startTime
+                            );
                             servers.get(serverType).remove(registeredServer);
 
                             TestFlowManager.handleServerDisconnect(registeredServer.internalID);

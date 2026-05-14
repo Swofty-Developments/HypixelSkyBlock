@@ -77,8 +77,7 @@ public class ItemConfigParser {
 			Logger.error("Failed to parse item: {}", e.getMessage());
 			return null;
 		} catch (Exception e) {
-			Logger.error("Unexpected error parsing item: {}", e.getMessage());
-			e.printStackTrace();
+			Logger.error(e, "Unexpected error parsing item");
 			Sentry.captureException(e);
 			return null;
 		}
@@ -678,8 +677,7 @@ public class ItemConfigParser {
 			Logger.error("Failed to parse component {} for item {}: {}", id, itemId, e.getMessage());
 			return null;
 		} catch (Exception e) {
-			Logger.error("Unexpected error parsing component {} for item {}: {}", id, itemId, e.getMessage());
-			e.printStackTrace();
+			Logger.error(e, "Unexpected error parsing component {} for item {}", id, itemId);
 			return null;
 		}
 	}

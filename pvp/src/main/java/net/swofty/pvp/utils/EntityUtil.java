@@ -46,7 +46,8 @@ public class EntityUtil {
 			field.setAccessible(true);
 			field.set(livingEntity, lastDamage);
 		} catch (NoSuchFieldException | IllegalAccessException e) {
-			e.printStackTrace();
+			java.util.logging.Logger.getLogger("PVP").log(java.util.logging.Level.SEVERE,
+				"Failed to set LivingEntity.lastDamage via reflection", e);
 			Sentry.captureException(e);
 		}
 	}

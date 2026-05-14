@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.*;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 public class OrderDatabase {
     public static MongoClient client;
@@ -20,7 +21,7 @@ public class OrderDatabase {
         database = client.getDatabase("Minestom");
         ordersCollection = database.getCollection("bazaarOrders");
 
-        System.out.println("Connected to MongoDB for bazaar orders");
+        Logger.info("Connected to MongoDB for bazaar orders");
     }
 
     public static void disconnect() {

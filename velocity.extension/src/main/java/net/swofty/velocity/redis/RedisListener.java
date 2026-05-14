@@ -35,8 +35,7 @@ public abstract class RedisListener<T, R> {
             try {
                 response = receivedMessage(typedMessage, filterID);
             } catch (Exception e) {
-                System.out.println("Error on channel " + channel + " with message " + envelope.payload());
-                Logger.error(e, "Error in Redis listener");
+                Logger.error(e, "Error on channel {} with message {}", channel, envelope.payload());
                 return;
             }
 

@@ -28,6 +28,8 @@ dependencies {
     implementation(libs.caffeine)
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driver.sync)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }
 
 application {
