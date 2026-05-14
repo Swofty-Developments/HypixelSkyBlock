@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public final class FriendAddedResponseEvent extends FriendResponseEvent {
+    private static final Serializer<FriendAddedResponseEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendAddedResponseEvent.class);
+
     private final UUID player1;
     private final UUID player2;
     private final String player1Name;
@@ -33,32 +36,6 @@ public final class FriendAddedResponseEvent extends FriendResponseEvent {
 
     @Override
     public Serializer<FriendAddedResponseEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendAddedResponseEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player1", value.player1.toString());
-                json.put("player2", value.player2.toString());
-                json.put("player1Name", value.player1Name);
-                json.put("player2Name", value.player2Name);
-                return json.toString();
-            }
-
-            @Override
-            public FriendAddedResponseEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendAddedResponseEvent(
-                        UUID.fromString(jsonObject.getString("player1")),
-                        UUID.fromString(jsonObject.getString("player2")),
-                        jsonObject.getString("player1Name"),
-                        jsonObject.getString("player2Name")
-                );
-            }
-
-            @Override
-            public FriendAddedResponseEvent clone(FriendAddedResponseEvent value) {
-                return new FriendAddedResponseEvent(value.player1, value.player2, value.player1Name, value.player2Name);
-            }
-        };
+        return SERIALIZER;
     }
 }

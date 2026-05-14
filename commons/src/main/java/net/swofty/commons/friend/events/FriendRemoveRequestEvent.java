@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public final class FriendRemoveRequestEvent extends FriendEvent {
+    private static final Serializer<FriendRemoveRequestEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendRemoveRequestEvent.class);
+
     private final UUID remover;
     private final UUID target;
 
@@ -29,28 +32,6 @@ public final class FriendRemoveRequestEvent extends FriendEvent {
 
     @Override
     public Serializer<FriendRemoveRequestEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendRemoveRequestEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("remover", value.remover.toString());
-                json.put("target", value.target.toString());
-                return json.toString();
-            }
-
-            @Override
-            public FriendRemoveRequestEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendRemoveRequestEvent(
-                        UUID.fromString(jsonObject.getString("remover")),
-                        UUID.fromString(jsonObject.getString("target"))
-                );
-            }
-
-            @Override
-            public FriendRemoveRequestEvent clone(FriendRemoveRequestEvent value) {
-                return new FriendRemoveRequestEvent(value.remover, value.target);
-            }
-        };
+        return SERIALIZER;
     }
 }

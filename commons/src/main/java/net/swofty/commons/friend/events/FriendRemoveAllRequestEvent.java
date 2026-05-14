@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public final class FriendRemoveAllRequestEvent extends FriendEvent {
+    private static final Serializer<FriendRemoveAllRequestEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendRemoveAllRequestEvent.class);
+
     private final UUID player;
 
     @JsonCreator
@@ -27,26 +30,6 @@ public final class FriendRemoveAllRequestEvent extends FriendEvent {
 
     @Override
     public Serializer<FriendRemoveAllRequestEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendRemoveAllRequestEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player", value.player.toString());
-                return json.toString();
-            }
-
-            @Override
-            public FriendRemoveAllRequestEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendRemoveAllRequestEvent(
-                        UUID.fromString(jsonObject.getString("player"))
-                );
-            }
-
-            @Override
-            public FriendRemoveAllRequestEvent clone(FriendRemoveAllRequestEvent value) {
-                return new FriendRemoveAllRequestEvent(value.player);
-            }
-        };
+        return SERIALIZER;
     }
 }

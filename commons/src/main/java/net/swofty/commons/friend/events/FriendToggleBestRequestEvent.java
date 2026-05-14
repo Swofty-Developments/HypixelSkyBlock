@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public final class FriendToggleBestRequestEvent extends FriendEvent {
+    private static final Serializer<FriendToggleBestRequestEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendToggleBestRequestEvent.class);
+
     private final UUID player;
     private final UUID target;
 
@@ -29,28 +32,6 @@ public final class FriendToggleBestRequestEvent extends FriendEvent {
 
     @Override
     public Serializer<FriendToggleBestRequestEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendToggleBestRequestEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player", value.player.toString());
-                json.put("target", value.target.toString());
-                return json.toString();
-            }
-
-            @Override
-            public FriendToggleBestRequestEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendToggleBestRequestEvent(
-                        UUID.fromString(jsonObject.getString("player")),
-                        UUID.fromString(jsonObject.getString("target"))
-                );
-            }
-
-            @Override
-            public FriendToggleBestRequestEvent clone(FriendToggleBestRequestEvent value) {
-                return new FriendToggleBestRequestEvent(value.player, value.target);
-            }
-        };
+        return SERIALIZER;
     }
 }

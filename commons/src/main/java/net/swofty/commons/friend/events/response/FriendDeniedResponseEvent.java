@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public final class FriendDeniedResponseEvent extends FriendResponseEvent {
+    private static final Serializer<FriendDeniedResponseEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendDeniedResponseEvent.class);
+
     private final UUID denier;
     private final UUID requester;
     private final String denierName;
@@ -31,30 +34,6 @@ public final class FriendDeniedResponseEvent extends FriendResponseEvent {
 
     @Override
     public Serializer<FriendDeniedResponseEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendDeniedResponseEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("denier", value.denier.toString());
-                json.put("requester", value.requester.toString());
-                json.put("denierName", value.denierName);
-                return json.toString();
-            }
-
-            @Override
-            public FriendDeniedResponseEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendDeniedResponseEvent(
-                        UUID.fromString(jsonObject.getString("denier")),
-                        UUID.fromString(jsonObject.getString("requester")),
-                        jsonObject.getString("denierName")
-                );
-            }
-
-            @Override
-            public FriendDeniedResponseEvent clone(FriendDeniedResponseEvent value) {
-                return new FriendDeniedResponseEvent(value.denier, value.requester, value.denierName);
-            }
-        };
+        return SERIALIZER;
     }
 }
