@@ -11,15 +11,19 @@ import org.jetbrains.annotations.Nullable;
 public class BazaarProcessPendingTransactionsProtocolObject extends ProtocolObject<
         BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage,
         BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsResponse> {
+    private static final Serializer<BazaarProcessPendingTransactionsMessage> SERIALIZER =
+            new JacksonSerializer<>(BazaarProcessPendingTransactionsMessage.class);
+    private static final Serializer<BazaarProcessPendingTransactionsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(BazaarProcessPendingTransactionsResponse.class);
 
     @Override
     public Serializer<BazaarProcessPendingTransactionsMessage> getSerializer() {
-        return new JacksonSerializer<>(BazaarProcessPendingTransactionsMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<BazaarProcessPendingTransactionsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(BazaarProcessPendingTransactionsResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record BazaarProcessPendingTransactionsMessage(UUID playerUUID, UUID profileUUID, List<String> transactionIds) {}

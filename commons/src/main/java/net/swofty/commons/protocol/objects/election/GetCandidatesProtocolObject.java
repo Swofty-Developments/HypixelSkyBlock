@@ -10,15 +10,19 @@ import org.jetbrains.annotations.Nullable;
 public class GetCandidatesProtocolObject
         extends ProtocolObject<GetCandidatesProtocolObject.GetCandidatesMessage,
         GetCandidatesProtocolObject.GetCandidatesResponse> {
+    private static final Serializer<GetCandidatesMessage> SERIALIZER =
+            new JacksonSerializer<>(GetCandidatesMessage.class);
+    private static final Serializer<GetCandidatesResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetCandidatesResponse.class);
 
     @Override
     public Serializer<GetCandidatesMessage> getSerializer() {
-        return new JacksonSerializer<>(GetCandidatesMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<GetCandidatesResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetCandidatesResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record GetCandidatesMessage() {}

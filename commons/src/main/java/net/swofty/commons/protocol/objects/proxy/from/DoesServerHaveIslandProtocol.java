@@ -8,15 +8,19 @@ import org.jetbrains.annotations.Nullable;
 public class DoesServerHaveIslandProtocol extends ProtocolObject<
         DoesServerHaveIslandProtocol.Request,
         DoesServerHaveIslandProtocol.Response> {
+    private static final Serializer<Request> SERIALIZER =
+            new JacksonSerializer<>(Request.class);
+    private static final Serializer<Response> RETURN_SERIALIZER =
+            new JacksonSerializer<>(Response.class);
 
     @Override
     public Serializer<Request> getSerializer() {
-        return new JacksonSerializer<>(Request.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<Response> getReturnSerializer() {
-        return new JacksonSerializer<>(Response.class);
+        return RETURN_SERIALIZER;
     }
 
     public record Request(String islandUuid) {}

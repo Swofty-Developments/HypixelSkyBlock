@@ -11,15 +11,19 @@ import org.jetbrains.annotations.Nullable;
 public class UnlockDataProtocolObject extends ProtocolObject<
         UnlockDataProtocolObject.UnlockDataRequest,
         UnlockDataProtocolObject.UnlockDataResponse> {
+    private static final Serializer<UnlockDataRequest> SERIALIZER =
+            new JacksonSerializer<>(UnlockDataRequest.class);
+    private static final Serializer<UnlockDataResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(UnlockDataResponse.class);
 
     @Override
     public Serializer<UnlockDataRequest> getSerializer() {
-        return new JacksonSerializer<>(UnlockDataRequest.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<UnlockDataResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(UnlockDataResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record UnlockDataRequest(

@@ -7,15 +7,19 @@ import net.swofty.commons.protocol.Serializer;
 public class FinishedWithPlayerProtocol extends ProtocolObject<
         FinishedWithPlayerProtocol.Request,
         FinishedWithPlayerProtocol.Response> {
+    private static final Serializer<Request> SERIALIZER =
+            new JacksonSerializer<>(Request.class);
+    private static final Serializer<Response> RETURN_SERIALIZER =
+            new JacksonSerializer<>(Response.class);
 
     @Override
     public Serializer<Request> getSerializer() {
-        return new JacksonSerializer<>(Request.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<Response> getReturnSerializer() {
-        return new JacksonSerializer<>(Response.class);
+        return RETURN_SERIALIZER;
     }
 
     public record Request(String uuid) {}

@@ -11,15 +11,19 @@ import org.jetbrains.annotations.Nullable;
 public class UpdateSynchronizedDataProtocolObject extends ProtocolObject<
         UpdateSynchronizedDataProtocolObject.UpdateDataRequest,
         UpdateSynchronizedDataProtocolObject.UpdateDataResponse> {
+    private static final Serializer<UpdateDataRequest> SERIALIZER =
+            new JacksonSerializer<>(UpdateDataRequest.class);
+    private static final Serializer<UpdateDataResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(UpdateDataResponse.class);
 
     @Override
     public Serializer<UpdateDataRequest> getSerializer() {
-        return new JacksonSerializer<>(UpdateDataRequest.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<UpdateDataResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(UpdateDataResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record UpdateDataRequest(

@@ -14,15 +14,19 @@ import org.jetbrains.annotations.Nullable;
 public class AuctionFetchItemsProtocolObject extends ProtocolObject<
         AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage,
         AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse> {
+    private static final Serializer<AuctionFetchItemsMessage> SERIALIZER =
+            new JacksonSerializer<>(AuctionFetchItemsMessage.class);
+    private static final Serializer<AuctionFetchItemsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(AuctionFetchItemsResponse.class);
 
     @Override
     public Serializer<AuctionFetchItemsMessage> getSerializer() {
-        return new JacksonSerializer<>(AuctionFetchItemsMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<AuctionFetchItemsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(AuctionFetchItemsResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record AuctionFetchItemsMessage(

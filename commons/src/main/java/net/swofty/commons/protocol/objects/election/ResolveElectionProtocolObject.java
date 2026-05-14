@@ -8,15 +8,19 @@ import org.jetbrains.annotations.Nullable;
 public class ResolveElectionProtocolObject
         extends ProtocolObject<ResolveElectionProtocolObject.ResolveElectionMessage,
         ResolveElectionProtocolObject.ResolveElectionResponse> {
+    private static final Serializer<ResolveElectionMessage> SERIALIZER =
+            new JacksonSerializer<>(ResolveElectionMessage.class);
+    private static final Serializer<ResolveElectionResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(ResolveElectionResponse.class);
 
     @Override
     public Serializer<ResolveElectionMessage> getSerializer() {
-        return new JacksonSerializer<>(ResolveElectionMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<ResolveElectionResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(ResolveElectionResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record ResolveElectionMessage(int year) {}

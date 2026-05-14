@@ -10,15 +10,19 @@ import java.util.UUID;
 public class BazaarSellProtocolObject extends ProtocolObject<
         BazaarSellProtocolObject.BazaarSellMessage,
         BazaarSellProtocolObject.BazaarSellResponse> {
+    private static final Serializer<BazaarSellMessage> SERIALIZER =
+            new JacksonSerializer<>(BazaarSellMessage.class);
+    private static final Serializer<BazaarSellResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(BazaarSellResponse.class);
 
     @Override
     public Serializer<BazaarSellMessage> getSerializer() {
-        return new JacksonSerializer<>(BazaarSellMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<BazaarSellResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(BazaarSellResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record BazaarSellMessage(String itemName, UUID playerUUID, UUID profileUUID, Double price, int amount) {}

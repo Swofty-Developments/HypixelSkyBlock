@@ -9,15 +9,19 @@ import org.jetbrains.annotations.Nullable;
 public class UpdatePresenceProtocolObject extends ProtocolObject<
         UpdatePresenceProtocolObject.UpdatePresenceMessage,
         UpdatePresenceProtocolObject.UpdatePresenceResponse> {
+    private static final Serializer<UpdatePresenceMessage> SERIALIZER =
+            new JacksonSerializer<>(UpdatePresenceMessage.class);
+    private static final Serializer<UpdatePresenceResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(UpdatePresenceResponse.class);
 
     @Override
     public Serializer<UpdatePresenceMessage> getSerializer() {
-        return new JacksonSerializer<>(UpdatePresenceMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<UpdatePresenceResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(UpdatePresenceResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record UpdatePresenceMessage(PresenceInfo presence) {}

@@ -14,15 +14,19 @@ import java.util.UUID;
 public class PunishPlayerProtocolObject
         extends ProtocolObject<PunishPlayerProtocolObject.PunishPlayerMessage,
         PunishPlayerProtocolObject.PunishPlayerResponse> {
+    private static final Serializer<PunishPlayerMessage> SERIALIZER =
+            new JacksonSerializer<>(PunishPlayerMessage.class);
+    private static final Serializer<PunishPlayerResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(PunishPlayerResponse.class);
 
     @Override
     public Serializer<PunishPlayerMessage> getSerializer() {
-        return new JacksonSerializer<>(PunishPlayerMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<PunishPlayerResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(PunishPlayerResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record PunishPlayerMessage(

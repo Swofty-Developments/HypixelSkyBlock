@@ -8,15 +8,19 @@ import org.jetbrains.annotations.Nullable;
 public class StartElectionProtocolObject
         extends ProtocolObject<StartElectionProtocolObject.StartElectionMessage,
         StartElectionProtocolObject.StartElectionResponse> {
+    private static final Serializer<StartElectionMessage> SERIALIZER =
+            new JacksonSerializer<>(StartElectionMessage.class);
+    private static final Serializer<StartElectionResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(StartElectionResponse.class);
 
     @Override
     public Serializer<StartElectionMessage> getSerializer() {
-        return new JacksonSerializer<>(StartElectionMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<StartElectionResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(StartElectionResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record StartElectionMessage(int year, String candidatesJson) {}

@@ -11,15 +11,19 @@ import org.jetbrains.annotations.Nullable;
 public class CastVoteProtocolObject
         extends ProtocolObject<CastVoteProtocolObject.CastVoteMessage,
         CastVoteProtocolObject.CastVoteResponse> {
+    private static final Serializer<CastVoteMessage> SERIALIZER =
+            new JacksonSerializer<>(CastVoteMessage.class);
+    private static final Serializer<CastVoteResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(CastVoteResponse.class);
 
     @Override
     public Serializer<CastVoteMessage> getSerializer() {
-        return new JacksonSerializer<>(CastVoteMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<CastVoteResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(CastVoteResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record CastVoteMessage(UUID accountId, String candidateName) {}

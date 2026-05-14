@@ -10,15 +10,19 @@ import org.jetbrains.annotations.Nullable;
 public class GetPlayerVoteProtocolObject
         extends ProtocolObject<GetPlayerVoteProtocolObject.GetPlayerVoteMessage,
         GetPlayerVoteProtocolObject.GetPlayerVoteResponse> {
+    private static final Serializer<GetPlayerVoteMessage> SERIALIZER =
+            new JacksonSerializer<>(GetPlayerVoteMessage.class);
+    private static final Serializer<GetPlayerVoteResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetPlayerVoteResponse.class);
 
     @Override
     public Serializer<GetPlayerVoteMessage> getSerializer() {
-        return new JacksonSerializer<>(GetPlayerVoteMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<GetPlayerVoteResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetPlayerVoteResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record GetPlayerVoteMessage(UUID accountId) {}

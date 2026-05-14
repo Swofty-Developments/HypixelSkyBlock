@@ -13,15 +13,19 @@ import org.jetbrains.annotations.Nullable;
 public class BazaarGetPendingTransactionsProtocolObject extends ProtocolObject<
         BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsMessage,
         BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsResponse> {
+    private static final Serializer<BazaarGetPendingTransactionsMessage> SERIALIZER =
+            new JacksonSerializer<>(BazaarGetPendingTransactionsMessage.class);
+    private static final Serializer<BazaarGetPendingTransactionsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(BazaarGetPendingTransactionsResponse.class);
 
     @Override
     public Serializer<BazaarGetPendingTransactionsMessage> getSerializer() {
-        return new JacksonSerializer<>(BazaarGetPendingTransactionsMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<BazaarGetPendingTransactionsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(BazaarGetPendingTransactionsResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record BazaarGetPendingTransactionsMessage(UUID playerUUID, UUID profileUUID) {}

@@ -11,15 +11,19 @@ import java.util.UUID;
 public class RejoinGameProtocolObject extends ProtocolObject<
         RejoinGameProtocolObject.RejoinGameRequest,
         RejoinGameProtocolObject.RejoinGameResponse> {
+    private static final Serializer<RejoinGameRequest> SERIALIZER =
+            new JacksonSerializer<>(RejoinGameRequest.class);
+    private static final Serializer<RejoinGameResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(RejoinGameResponse.class);
 
     @Override
     public Serializer<RejoinGameRequest> getSerializer() {
-        return new JacksonSerializer<>(RejoinGameRequest.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<RejoinGameResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(RejoinGameResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record RejoinGameRequest(UUID playerUuid) {

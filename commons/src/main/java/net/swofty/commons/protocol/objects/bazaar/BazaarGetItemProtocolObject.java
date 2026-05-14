@@ -11,15 +11,19 @@ import org.jetbrains.annotations.Nullable;
 public class BazaarGetItemProtocolObject extends ProtocolObject<
         BazaarGetItemProtocolObject.BazaarGetItemMessage,
         BazaarGetItemProtocolObject.BazaarGetItemResponse> {
+    private static final Serializer<BazaarGetItemMessage> SERIALIZER =
+            new JacksonSerializer<>(BazaarGetItemMessage.class);
+    private static final Serializer<BazaarGetItemResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(BazaarGetItemResponse.class);
 
     @Override
     public Serializer<BazaarGetItemMessage> getSerializer() {
-        return new JacksonSerializer<>(BazaarGetItemMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<BazaarGetItemResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(BazaarGetItemResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record BazaarGetItemMessage(String itemName) {}

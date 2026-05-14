@@ -11,15 +11,19 @@ import java.util.UUID;
 public class UnpunishPlayerProtocolObject
         extends ProtocolObject<UnpunishPlayerProtocolObject.UnpunishPlayerMessage,
         UnpunishPlayerProtocolObject.UnpunishPlayerResponse> {
+    private static final Serializer<UnpunishPlayerMessage> SERIALIZER =
+            new JacksonSerializer<>(UnpunishPlayerMessage.class);
+    private static final Serializer<UnpunishPlayerResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(UnpunishPlayerResponse.class);
 
     @Override
     public Serializer<UnpunishPlayerMessage> getSerializer() {
-        return new JacksonSerializer<>(UnpunishPlayerMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<UnpunishPlayerResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(UnpunishPlayerResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record UnpunishPlayerMessage(

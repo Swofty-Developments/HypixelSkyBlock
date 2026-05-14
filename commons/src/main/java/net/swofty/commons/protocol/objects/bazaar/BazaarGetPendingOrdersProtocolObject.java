@@ -12,15 +12,19 @@ public class BazaarGetPendingOrdersProtocolObject
         extends ProtocolObject<
         BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage,
         BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse> {
+    private static final Serializer<BazaarGetPendingOrdersMessage> SERIALIZER =
+            new JacksonSerializer<>(BazaarGetPendingOrdersMessage.class);
+    private static final Serializer<BazaarGetPendingOrdersResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(BazaarGetPendingOrdersResponse.class);
 
     @Override
     public Serializer<BazaarGetPendingOrdersMessage> getSerializer() {
-        return new JacksonSerializer<>(BazaarGetPendingOrdersMessage.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<BazaarGetPendingOrdersResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(BazaarGetPendingOrdersResponse.class);
+        return RETURN_SERIALIZER;
     }
 
     public record BazaarGetPendingOrdersMessage(UUID playerUUID, UUID profileUUID) {}
