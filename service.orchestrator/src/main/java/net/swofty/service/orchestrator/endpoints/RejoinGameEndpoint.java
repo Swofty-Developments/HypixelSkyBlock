@@ -7,6 +7,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocolObject;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.orchestrator.OrchestratorCache;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 
@@ -71,7 +72,7 @@ public class RejoinGameEndpoint implements ServiceEndpoint<
                     null
             );
         } catch (Exception e) {
-            System.err.println("Failed to check rejoin: " + e.getMessage());
+            Logger.error(e, "Failed to check rejoin");
             return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false, true, null);
         }
     }

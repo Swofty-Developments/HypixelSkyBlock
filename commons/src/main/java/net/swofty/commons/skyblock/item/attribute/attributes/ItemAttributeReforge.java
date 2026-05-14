@@ -4,6 +4,7 @@ import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 public class ItemAttributeReforge extends ItemAttribute<String> {
     @Override
@@ -26,7 +27,7 @@ public class ItemAttributeReforge extends ItemAttribute<String> {
             return string;
         }
 
-        System.err.println("Unknown reforge: " + string);
+        Logger.warn("Unknown reforge: {}", string);
         return null;
     }
 

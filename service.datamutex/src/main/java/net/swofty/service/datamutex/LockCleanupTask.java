@@ -1,5 +1,7 @@
 package net.swofty.service.datamutex;
 
+import org.tinylog.Logger;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +15,7 @@ public class LockCleanupTask {
             try {
                 DataLockManager.cleanupExpiredLocks();
             } catch (Exception e) {
-                System.err.println("Error during lock cleanup: " + e.getMessage());
+                Logger.error(e, "Error during lock cleanup");
             }
         }, 10, 10, TimeUnit.SECONDS);
     }
