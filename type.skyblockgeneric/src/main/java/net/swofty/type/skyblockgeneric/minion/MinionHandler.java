@@ -53,13 +53,12 @@ public record MinionHandler(Scheduler scheduler) {
 
             if (!instance.isChunkLoaded(minionEntity.getPosition().chunkX(), minionEntity.getPosition().chunkZ())) return;
 
-            /** seems like I need this debug every other week, so keep it here for now
-            System.out.println("Minion loop");
-            System.out.println("Time between actions: " + timeBetweenActions);
-            System.out.println("Current time diff: " + (System.currentTimeMillis() - lastAction));
-            System.out.println("Tier: " + islandMinion.getTier());
-            System.out.println("State: " + tags.getState());
-            System.out.println("Step: " + tags.getCurrentStep());*/
+            // Diagnostic trace — enable via tinylog debug level instead of uncommenting prints.
+            if (Logger.isDebugEnabled()) {
+                Logger.debug("Minion loop tier={} state={} step={} timeBetween={}ms timeSince={}ms",
+                        islandMinion.getTier(), tags.getState(), tags.getCurrentStep(),
+                        timeBetweenActions, System.currentTimeMillis() - lastAction);
+            }
 
             //Get the extra minion range granted from minion expanders
             int extraMinionRange = islandMinion.getBonusRange();
