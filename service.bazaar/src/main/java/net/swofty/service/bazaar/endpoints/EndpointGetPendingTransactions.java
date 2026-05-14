@@ -7,9 +7,9 @@ import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsPr
 import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocolObject.PendingTransactionInfo;
 import net.swofty.service.bazaar.PendingTransactionsDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EndpointGetPendingTransactions implements ServiceEndpoint<
         BazaarGetPendingTransactionsMessage,
@@ -35,11 +35,10 @@ public class EndpointGetPendingTransactions implements ServiceEndpoint<
                         pt.getTransaction().toJSON().toMap(),
                         pt.getCreatedAt()
                 ))
-                .collect(Collectors.toList());
+                .toList();
 
-        System.out.println("Retrieved " + transactionInfos.size() +
-                " pending transactions for player " + msg.playerUUID() +
-                " on profile " + msg.profileUUID());
+        Logger.debug("Retrieved {} pending transactions for player {} on profile {}",
+                transactionInfos.size(), msg.playerUUID(), msg.profileUUID());
 
         return new BazaarGetPendingTransactionsResponse(transactionInfos, true, null);
     }

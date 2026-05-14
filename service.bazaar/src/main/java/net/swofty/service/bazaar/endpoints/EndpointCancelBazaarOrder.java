@@ -8,6 +8,7 @@ import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.Can
 import net.swofty.service.bazaar.BazaarMarket;
 import net.swofty.service.bazaar.OrderDatabase;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
 public class EndpointCancelBazaarOrder implements ServiceEndpoint<
         CancelMessage, CancelResponse> {
@@ -27,7 +28,8 @@ public class EndpointCancelBazaarOrder implements ServiceEndpoint<
                 )
         );
         BazaarMarket.get().submitDelete(msg.orderId(), msg.playerUuid(), msg.profileUuid());
-        System.out.println("Deleted order " + msg.orderId() + " for player " + msg.playerUuid() + " and profile " + msg.profileUuid());
+        Logger.info("Deleted order {} for player {} and profile {}",
+                msg.orderId(), msg.playerUuid(), msg.profileUuid());
 
         boolean success = result.getDeletedCount() > 0;
         return new CancelResponse(success, success ? null : "Cancel failed");

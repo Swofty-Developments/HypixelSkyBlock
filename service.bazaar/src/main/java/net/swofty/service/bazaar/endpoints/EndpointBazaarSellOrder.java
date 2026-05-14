@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
 import net.swofty.service.bazaar.BazaarMarket;
 import net.swofty.service.generic.redis.ServiceEndpoint;
+import org.tinylog.Logger;
 
 import java.util.UUID;
 
@@ -30,11 +31,11 @@ public class EndpointBazaarSellOrder implements ServiceEndpoint<
 
         try {
             BazaarMarket.get().submitSell(itemName, playerUUID, profileUUID, price, amount);
-            System.out.println("Sell order submitted for " + itemName + " by " + playerUUID
-                    + " (profile: " + profileUUID + ") - Price: " + price + ", Amount: " + amount);
+            Logger.info("Sell order submitted for {} by {} (profile: {}) — price={}, amount={}",
+                    itemName, playerUUID, profileUUID, price, amount);
             return new BazaarSellProtocolObject.BazaarSellResponse(true, null);
         } catch (Exception e) {
-            System.err.println("Failed to submit sell order: " + e.getMessage());
+            Logger.error(e, "Failed to submit sell order for {} by {}", itemName, playerUUID);
             return new BazaarSellProtocolObject.BazaarSellResponse(false, "Sell order failed");
         }
     }
