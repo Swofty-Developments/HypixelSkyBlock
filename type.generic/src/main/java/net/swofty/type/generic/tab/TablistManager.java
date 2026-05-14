@@ -69,10 +69,11 @@ public abstract class TablistManager {
                             String fakeProfileName = getFakeProfileName(slotIndex);
 
                             List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
+                            net.minestom.server.entity.PlayerSkin skin = entry.registry().getSkin();
                             properties.add(new PlayerInfoUpdatePacket.Property(
                                 "textures",
-                                entry.registry().getTexture(),
-                                entry.registry().getSignature()));
+                                skin.textures(),
+                                skin.signature()));
 
                             if (cache.createdTeams.add(teamName)) {
                                 TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(

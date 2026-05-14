@@ -1,6 +1,7 @@
 package net.swofty.type.generic.tab;
 
 import lombok.Getter;
+import net.minestom.server.entity.PlayerSkin;
 
 @Getter
 public enum TablistSkinRegistry {
@@ -12,11 +13,17 @@ public enum TablistSkinRegistry {
     ORANGE("ewogICJ0aW1lc3RhbXAiIDogMTYwMjg1MDU1NTI0NCwKICAicHJvZmlsZUlkIiA6ICIwZjczMDA3NjEyNGU0NGM3YWYxMTE1NDY5YzQ5OTY3OSIsCiAgInByb2ZpbGVOYW1lIiA6ICJPcmVfTWluZXIxMjMiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTEzMmIxYzY5NzQxMzEwM2QxNjkyN2IyMTRkYTY5MmY3ZmZmZjg1MjdkYThkMzg2NDg1ZThkOGZkMmUyYTNiOSIKICAgIH0KICB9Cn0=", "dY6A5XFXhA5wF9D5hROJmUnyBt8eYTGIB2i6W1+ffLfT7uebBbFw8ucafgWM6nFEzZ1hhdNRm6oFe0D9DLAedvo8ZY6yQklxtZ56U3hQUyiWiyQLHQk62JyFN2024cDhgt7XIvPGWIlsWMjHXYXxV5xA04JoHb+OqyTM64QCZa0SM0E5Kxq3vXs3aMLOC14XPkWxMMFGsUOccIDgIujEx8c1tZDzBUuJH/+KVS5GKrx/YsqNTJk7q1qOVTFXOtCCnvoIG3A6YMn5i2x162PUIxXyQK9aDk+DJs9zig/QhEr9coaOyoRUR9eRuHREsh/A18Fba7wSK7XPp+9XCZy4pPYfUEOmVWWzsMVPyG9UYwh79fM8r2zAcZIZdY3PqfbqbGftluQDVEKNfWRq79ZXuxLKIHHLeLzMNJCx1b0ud6nK0lER/1fvcNy5DRYMmH+GP1iW3+xcT29MYSPT+QTn27V24nrgG4vljDA7HhhQ5zJVMN/k2kB3L8wbdj8WYg2YoDWR2y+DMDsxazhXVFPzMjz55DHRnKBsygn1TTZzqNnBWYeDnh638TyYGp1Z12ATyRvT0XzjTPoWknNQaG8azz/XW7SOH9B2bL/lsFZ0pwoY6HwaccvjWjJoMc7cKlsR1LkIUIjyFq17GYrXfFeSRwR7pYFobHT/IfcxT5IHmkY="),
     ;
 
-    private final String texture;
-    private final String signature;
+    private final PlayerSkin skin;
 
     TablistSkinRegistry(String texture, String signature) {
-        this.texture = texture;
-        this.signature = signature;
+        this.skin = new PlayerSkin(texture, signature);
+    }
+
+    public String getTexture() {
+        return skin.textures();
+    }
+
+    public String getSignature() {
+        return skin.signature();
     }
 }
