@@ -403,18 +403,9 @@ public class SkyBlockVelocity {
 
         CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
             .execute(() -> {
-                // Determine if the registeredServer disconnect was due to a crash
-                // if it was, then we send the player back to another registeredServer
-                // of that type, otherwise we disconnect them for the same
-                // reason as the original
-
-                    /*boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
-                    if (isOnline) {
-                        transferHandler.forceRemoveFromLimbo();
-                        event.getPlayer().disconnect(reason);
-                        return;
-                    }*/
-
+                // Determine if the registeredServer disconnect was due to a crash —
+                // if it was, send the player to another server of that type;
+                // otherwise disconnect them with the original reason.
                 try {
                     ServerType serverTypeToTry = serverType;
                     if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {
