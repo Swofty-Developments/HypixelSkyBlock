@@ -3,7 +3,6 @@ package net.swofty.type.skywarslobby.perk;
 import org.tinylog.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Registry for all SkyWars perks.
@@ -62,19 +61,17 @@ public class SkywarsPerkRegistry {
         ensureInitialized();
         return PERKS.values().stream()
                 .filter(perk -> perk.isAvailableFor(mode))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
      * Get all perks sorted by rarity (lowest first)
      */
     public static List<SkywarsPerk> getPerksSortedByRarity(String mode, boolean lowestFirst) {
-        List<SkywarsPerk> perks = getPerksForMode(mode);
-        perks.sort((a, b) -> {
-            int comparison = Integer.compare(a.getRarity().getSortOrder(), b.getRarity().getSortOrder());
-            return lowestFirst ? comparison : -comparison;
-        });
-        return perks;
+        Comparator<SkywarsPerk> byRarity = Comparator.comparingInt(p -> p.getRarity().getSortOrder());
+        return getPerksForMode(mode).stream()
+                .sorted(lowestFirst ? byRarity : byRarity.reversed())
+                .toList();
     }
 
     /**
@@ -84,7 +81,7 @@ public class SkywarsPerkRegistry {
         ensureInitialized();
         return PERKS.values().stream()
                 .filter(SkywarsPerk::isSoulWellDrop)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -96,7 +93,7 @@ public class SkywarsPerkRegistry {
         return PERKS.values().stream()
                 .filter(SkywarsPerk::isSoulWellDrop)
                 .filter(perk -> !ownedPerkIds.contains(perk.getId()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -119,7 +116,7 @@ public class SkywarsPerkRegistry {
         ensureInitialized();
         return PERKS.values().stream()
                 .filter(perk -> perk.getRarity() == rarity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -137,7 +134,7 @@ public class SkywarsPerkRegistry {
         ensureInitialized();
         return PERKS.values().stream()
                 .filter(SkywarsPerk::isGlobal)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -148,19 +145,17 @@ public class SkywarsPerkRegistry {
         return PERKS.values().stream()
                 .filter(perk -> perk.isAvailableFor(mode))
                 .filter(SkywarsPerk::isSelectable)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
      * Get selectable perks sorted by rarity
      */
     public static List<SkywarsPerk> getSelectablePerksSortedByRarity(String mode, boolean lowestFirst) {
-        List<SkywarsPerk> perks = getSelectablePerksForMode(mode);
-        perks.sort((a, b) -> {
-            int comparison = Integer.compare(a.getRarity().getSortOrder(), b.getRarity().getSortOrder());
-            return lowestFirst ? comparison : -comparison;
-        });
-        return perks;
+        Comparator<SkywarsPerk> byRarity = Comparator.comparingInt(p -> p.getRarity().getSortOrder());
+        return getSelectablePerksForMode(mode).stream()
+                .sorted(lowestFirst ? byRarity : byRarity.reversed())
+                .toList();
     }
 
     private static void ensureInitialized() {
