@@ -5,6 +5,7 @@ import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocolObject;
 import net.swofty.service.datamutex.DataLockManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceToServerManager;
+import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,16 +36,14 @@ public class UnlockDataEndpoint implements ServiceEndpoint<
             DataLockManager.releaseLock(lockKey, requesterId);
 
             ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey)
-                    .thenAccept(results -> {
-                        results.forEach((serverUUID, response) -> {
-                            if (!response.success()) {
-                                System.err.println("Failed to unlock data on server " + serverUUID +
-                                        " for player " + playerUUID + ", dataKey: " + dataKey);
-                            }
-                        });
-                    })
+                    .thenAccept(results -> results.forEach((serverUUID, response) -> {
+                        if (!response.success()) {
+                            Logger.warn("Failed to unlock data on server {} for player {}, dataKey: {}",
+                                    serverUUID, playerUUID, dataKey);
+                        }
+                    }))
                     .exceptionally(throwable -> {
-                        System.err.println("Error unlocking data on servers: " + throwable.getMessage());
+                        Logger.error(throwable, "Error unlocking data on servers");
                         return null;
                     });
 
