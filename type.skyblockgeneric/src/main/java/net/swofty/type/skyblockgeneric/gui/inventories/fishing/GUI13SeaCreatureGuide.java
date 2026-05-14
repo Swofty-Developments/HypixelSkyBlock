@@ -1,0 +1,645 @@
+package net.swofty.type.skyblockgeneric.gui.inventories.fishing;
+
+import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.Material;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
+
+// make these actually paginated views
+public class GUI13SeaCreatureGuide extends StatelessView {
+
+    @Override
+    public ViewConfiguration<DefaultState> configuration() {
+        return new ViewConfiguration<>("(1/3) Sea Creature Guide", InventoryType.CHEST_6_ROW);
+    }
+
+    @Override
+    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        Components.close(layout, 49);
+
+        layout.slot(4, ItemStackCreator.getStack(
+            "§aSea Creature Guide",
+            Material.BOOK,
+            1,
+            "§7Your guide to the creatures of the",
+            "§7deep! Can also be accessed with",
+            "§a/scg§7!",
+            "",
+            "§7Beware, Sea Creatures spawn much",
+            "§7less often on your private island.",
+            "",
+            "§7Your Fishing: §aLevel XVIII"
+        ));
+        layout.slot(10, ItemStackCreator.getStackHead(
+            "§7[Lvl 1] Squid (§f§lCommon§7)",
+            "32581d564f01d712255125e1f101e534217f76e3599dab7f4ae0ffe328f729eb",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Ink Sac",
+            "§7- Lily Pad",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 1",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b64"
+        ));
+        layout.slot(11, ItemStackCreator.getStackHead(
+            "§7[Lvl 4] Sea Walker (§f§lCommon§7)",
+            "d88ba8bb50b79e441e47b7e452764d5fff6693779d2dadd9f7f52f98d7ea0",
+            1,
+            "§9⚓ Aquatic§7, §2༕ Undead",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Raw Cod",
+            "§7- Rotten Flesh",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 1",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b64"
+        ));
+        layout.slot(12, ItemStackCreator.getStackHead(
+            "§7[Lvl 6] Night Squid (§f§lCommon§7)",
+            "32581d564f01d712255125e1f101e534217f76e3599dab7f4ae0ffe328f729eb",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Ink Sac",
+            "§7- Lily Pad",
+            "§7- §aFishing Exp Boost",
+            "§7- §aSquid Boots",
+            "§7- §9Fishing Exp Boost",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 3",
+            "§7- §bWater",
+            "§7- Nighttime",
+            "§7- §fDark Bait"
+        ));
+        layout.slot(13, ItemStackCreator.getStackHead(
+            "§7[Lvl 10] Sea Guardian (§f§lCommon§7)",
+            "221025434045bda7025b3e514b316a4b770c6faa4ba9adb4be3809526db77f9d",
+            1,
+            "§9⚓ Aquatic§7, §5♃ Arcane",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Prismarine Crystals",
+            "§7- Prismarine Shard",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b48"
+        ));
+        layout.slot(14, ItemStackCreator.getStackHead(
+            "§7[Lvl 10] Frog Man (§f§lCommon§7)",
+            "6157f19da077a3df49b2925fb6e8b400222ba6e559e86815f9b296d9e9667dd7",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal§7, §e✰ Humanoid",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Tropical Fish",
+            "§7- §aHalf-Eaten Mushroom",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "§7- §dFishing Hotspot",
+            "",
+            "§cStats",
+            "§7- Kills: §b28"
+        ));
+        layout.slot(15, ItemStackCreator.getStackHead(
+            "§7[Lvl 8] Trash Gobbler (§f§lCommon§7)",
+            "18ae7046da98dcb33f3ed42f1dc41d08ac8dfa5db3a3860de5b1b5c056804187",
+            1,
+            "§9⚓ Aquatic§7, §4Ж Arthropod",
+            "",
+            "§cDrops:",
+            "§7- Clay Ball",
+            "§7- Lily Pad",
+            "§7- Raw Cod",
+            "§7- §aCan of Worms",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "§7- §2Backwater Bayou",
+            "",
+            "§cStats",
+            "§7- Kills: §b57"
+        ));
+        layout.slot(16, ItemStackCreator.getStackHead(
+            "§7[Lvl 10] Bogged (§f§lCommon§7)",
+            "a3b9003ba2d05562c75119b8a62185c67130e9282f7acbac4bc2824c21eb95d9",
+            1,
+            "§f🦴 Skeletal§7, §9⚓ Aquatic",
+            "",
+            "§cDrops:",
+            "§7- Mangrove Log",
+            "§7- Sea Lumies",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "§7- §2Galatea"
+        ));
+        layout.slot(19, ItemStackCreator.getStackHead(
+            "§7[Lvl 7] Frozen Steve (§f§lCommon§7)",
+            "54690f5aa6d0e800f9b8d1890fc158b921819a81dfd7342a2170e7efc46b9ed7",
+            1,
+            "§9⚓ Aquatic§7, §f☃ Frozen§7, §e✰ Humanoid",
+            "",
+            "§cDrops:",
+            "§7- §9Ice Essence",
+            "§7- Ice",
+            "§7- Lily Pad",
+            "§7- Pufferfish",
+            "§7- Raw Cod",
+            "§7- Raw Salmon",
+            "§7- White Gift",
+            "§7- §aHunk of Ice",
+            "§7- §9Icy Sinker",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "§7- §cJerry's Workshop",
+            "",
+            "§cStats",
+            "§7- Kills: §b9"
+        ));
+        layout.slot(20, ItemStackCreator.getStackHead(
+            "§7[Lvl 15] Dumpster Diver (§a§lUncommon§7)",
+            "f5c5eb5ee072c06580986d12a029e28010c1290875534810c53140bc76dabfeb",
+            1,
+            "§9⚓ Aquatic§7, §e✰ Humanoid",
+            "",
+            "§cDrops:",
+            "§7- Clay Ball",
+            "§7- Lily Pad",
+            "§7- Raw Cod",
+            "§7- Sponge",
+            "§7- §aBronze Bowl",
+            "§7- §aOverflowing Trash Can",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "§7- §2Backwater Bayou",
+            "",
+            "§cStats",
+            "§7- Kills: §b38"
+        ));
+        layout.slot(21, ItemStackCreator.getStackHead(
+            "§7[Lvl 6] Nurse Shark (§a§lUncommon§7)",
+            "2067ccefba5d811f47e3e18438556b704393aafcafccedd5d0981999286f598a",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- §aCarnival Ticket",
+            "§7- §aNurse Shark Tooth",
+            "§7- §9Shark Fin",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 5",
+            "§7- §bWater",
+            "§7- §bFishing Festival"
+        ));
+        layout.slot(22, ItemStackCreator.getStack(
+            "§7[Lvl 13] Frosty (§f§lCommon§7)",
+            Material.CARVED_PUMPKIN,
+            1,
+            "§9⚓ Aquatic§7, §f☃ Frozen§7, ⚙ Construct",
+            "",
+            "§cDrops:",
+            "§7- §9Ice Essence",
+            "§7- Carrot",
+            "§7- Ice",
+            "§7- Lily Pad",
+            "§7- Raw Cod",
+            "§7- Snow Block",
+            "§7- Sponge",
+            "§7- White Gift",
+            "§7- §aHunk of Ice",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 6",
+            "§7- §bWater",
+            "§7- §cJerry's Workshop",
+            "",
+            "§cStats",
+            "§7- Kills: §b9"
+        ));
+        layout.slot(23, ItemStackCreator.getStackHead(
+            "§7[Lvl 15] Mithril Grubber (§a§lUncommon§7)",
+            "811a1173af3bead305e6339f555662e990d5faadb87e07299fa68ca828a6d2fb",
+            1,
+            "§9⚓ Aquatic§7, §4Ж Arthropod",
+            "",
+            "§cDrops:",
+            "§7- §9Mithril Powder",
+            "§7- Mithril",
+            "§7- Raw Cod",
+            "§7- §9Enchanted Mithril",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 6",
+            "§7- §bWater",
+            "§7- §2Abandoned Quarry"
+        ));
+        layout.slot(24, ItemStackCreator.getStackHead(
+            "§7[Lvl 18] Wetwing (§a§lUncommon§7)",
+            "dbc0f7c9e926c320ba472d4a88763ef932a660c470f786ac0c04c15a78fd505f",
+            1,
+            "§9⚓ Aquatic§7, §2༕ Undead§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Mangrove Log",
+            "§7- Sea Lumies",
+            "§7- §aWet Water",
+            "§7- §9Enchanted Mangrove Log",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 7",
+            "§7- §bWater",
+            "§7- §2Galatea",
+            "",
+            "§cStats",
+            "§7- Kills: §b1"
+        ));
+        layout.slot(25, ItemStackCreator.getStackHead(
+            "§7[Lvl 15] Sea Witch (§a§lUncommon§7)",
+            "fce6604157fc4ab5591e4bcf507a749918ee9c41e357d47376e0ee7342074c90",
+            1,
+            "§9⚓ Aquatic§7, §e✰ Humanoid§7, §5♃ Arcane",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Raw Salmon",
+            "§7- Tropical Fish",
+            "§7- §9Fairy's Fedora",
+            "§7- §9Fairy's Galoshes",
+            "§7- §9Fairy's Polo",
+            "§7- §9Fairy's Trousers",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 7",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b52"
+        ));
+        layout.slot(28, ItemStackCreator.getStack(
+            "§7[Lvl 9] Scarecrow (§f§lCommon§7)",
+            Material.CARVED_PUMPKIN,
+            1,
+            "§9⚓ Aquatic§7, §6☽ Spooky",
+            "",
+            "§cDrops:",
+            "§7- Hay Bale",
+            "§7- Lily Pad",
+            "§7- §aGreen Candy",
+            "§7- §5Purple Candy",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 9",
+            "§7- §bWater",
+            "§7- §6Spooky Festival"
+        ));
+        layout.slot(29, ItemStackCreator.getStack(
+            "§7[Lvl 15] Sea Archer (§a§lUncommon§7)",
+            Material.SKELETON_SKULL,
+            1,
+            "§9⚓ Aquatic§7, §f🦴 Skeletal",
+            "",
+            "§cDrops:",
+            "§7- Bone",
+            "§7- Lily Pad",
+            "§7- Raw Cod",
+            "§7- §aEnchanted Bone",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 9",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b48"
+        ));
+        layout.slot(30, ItemStackCreator.getStackHead(
+            "§7[Lvl 8] Tadgang (§9§lRare§7)",
+            "1608d86ffb297bf93b7190d24bc3b2dc094f8086740f7541a752fbe661f175fc",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Mangrove Log",
+            "§7- Sea Lumies",
+            "§7- §aEnchanted Sea Lumies",
+            "§7- §aGill Membrane",
+            "§7- §9Enchanted Mangrove Log",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 9",
+            "§7- §bWater",
+            "§7- §2Galatea",
+            "",
+            "§cStats",
+            "§7- Kills: §b1"
+        ));
+        layout.slot(31, ItemStackCreator.getStackHead(
+            "§7[Lvl 10] Oasis Sheep (§a§lUncommon§7)",
+            "292df216ecd27624ac771bacfbfe006e1ed84a79e9270be0f88e9c8791d1ece4",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Raw Mutton",
+            "§7- White Wool",
+            "§7- §aEnchanted Raw Mutton",
+            "§7- §9Enchanted Cooked Mutton",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 10",
+            "§7- §bWater",
+            "§7- §bOasis"
+        ));
+        layout.slot(32, ItemStackCreator.getStackHead(
+            "§7[Lvl 10] Oasis Rabbit (§a§lUncommon§7)",
+            "b50459bcb08db5ce93e021079c1cfc038c9ebe7ad9a149516efe4d5ee8afb59f",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Rabbit Hide",
+            "§7- Rabbit's Foot",
+            "§7- Raw Rabbit",
+            "§7- §aEnchanted Raw Rabbit",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 10",
+            "§7- §bWater",
+            "§7- §bOasis"
+        ));
+        layout.slot(33, ItemStackCreator.getStackHead(
+            "§7[Lvl 10] Banshee (§9§lRare§7)",
+            "30ccc3c9a06de657b98f881e23a57ecaeb252c364ddb7b92564f5ed2b8087e3b",
+            1,
+            "§9⚓ Aquatic§7, §e✰ Humanoid",
+            "",
+            "§cDrops:",
+            "§7- Clay Ball",
+            "§7- Lily Pad",
+            "§7- Raw Salmon",
+            "§7- Tropical Fish",
+            "§7- §aEnchanted Clay Ball",
+            "§7- §aTorn Cloth",
+            "§7- §9Calcified Heart",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 10",
+            "§7- §bWater",
+            "§7- §2Backwater Bayou",
+            "",
+            "§cStats",
+            "§7- Kills: §b22"
+        ));
+        layout.slot(34, ItemStackCreator.getStackHead(
+            "§7[Lvl 20] Blue Shark (§9§lRare§7)",
+            "381e1d06e5f0654a682a3264905b5dc4b8e7b613ab6697ac45f2e0da3bc9b4fd",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- §aCarnival Ticket",
+            "§7- §9Blue Shark Tooth",
+            "§7- §9Shark Fin",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 10",
+            "§7- §bWater",
+            "§7- §bFishing Festival"
+        ));
+        layout.slot(37, ItemStackCreator.getStackHead(
+            "§7[Lvl 30] Snapping Turtle (§9§lRare§7)",
+            "e08fc1ae87a7035d32b0b0da58de4801463aaf8b238618024aacb0c515ae3bba",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Gold Ingot",
+            "§7- Lily Pad",
+            "§7- Raw Cod",
+            "§7- §aEnchanted Gold Ingot",
+            "§7- §9Broken Radar",
+            "§7- §9Edible Seaweed",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 10",
+            "§7- §bWater",
+            "§7- §dFishing Hotspot",
+            "",
+            "§cStats",
+            "§7- Kills: §b5"
+        ));
+        layout.slot(38, ItemStackCreator.getStackHead(
+            "§7[Lvl 20] Rider of the Deep (§a§lUncommon§7)",
+            "cfb7dbbe002f69463768113c1e925848197f59b62694ce105792dd5a52dc17a1",
+            1,
+            "§9⚓ Aquatic§7, §2༕ Undead§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Dark Bait",
+            "§7- Lily Pad",
+            "§7- Sponge",
+            "§7- §9Enchanted Book",
+            "§7   (Magnet VI)",
+            "§7- §aEnchanted Feather",
+            "§7- §aEnchanted Rotten Flesh",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 11",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b36"
+        ));
+        layout.slot(39, ItemStackCreator.getStackHead(
+            "§7[Lvl 14] Ent (§5§lEpic§7)",
+            "30519f79e5829136c3df10b6bd727db255717c87e5c102892ef67e7f46929515",
+            1,
+            "§2⸙ Woodland§7, §9⚓ Aquatic",
+            "",
+            "§cDrops:",
+            "§7- Sea Lumies",
+            "§7- §aEnchanted Sea Lumies",
+            "§7- §9Enchanted Mangrove Log",
+            "§7- §5Foraging Exp Boost",
+            "§7- §5Mangcore",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 12",
+            "§7- §bWater",
+            "§7- §2Galatea"
+        ));
+        layout.slot(40, ItemStackCreator.getStackHead(
+            "§7[Lvl 21] Grinch (§a§lUncommon§7)",
+            "2508e4a2f88502c019652b2437b76c82fedff9091389d88118ecc673f628b547",
+            1,
+            "§9⚓ Aquatic§7, §f☃ Frozen§7, §e✰ Humanoid",
+            "",
+            "§cDrops:",
+            "§7- §9Ice Essence",
+            "§7- White Gift",
+            "§7- §aGreen Gift",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 13",
+            "§7- §bWater",
+            "§7- §cJerry's Workshop",
+            "",
+            "§cStats",
+            "§7- Kills: §b2"
+        ));
+        layout.slot(41, ItemStackCreator.getStackHead(
+            "§7[Lvl 23] Catfish (§9§lRare§7)",
+            "e18f77331b2cab64e2b430fa8e4273e4db7f78fcdfa4b1a9a418af47375056eb",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Pufferfish",
+            "§7- Raw Cod",
+            "§7- Raw Salmon",
+            "§7- Sponge",
+            "§7- Tropical Fish",
+            "§7- §9Enchanted Book",
+            "§7   (Frail VI)",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 13",
+            "§7- §bWater",
+            "",
+            "§cStats",
+            "§7- Kills: §b26"
+        ));
+        layout.slot(42, ItemStackCreator.getStack(
+            "§7[Lvl 30] Fried Chicken (§f§lCommon§7)",
+            Material.COOKED_CHICKEN,
+            1,
+            "§c♆ Magmatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Raw Chicken",
+            "§7- §aEnchanted Raw Chicken",
+            "§7- §aFried Feather",
+            "§7- §9Magmafish",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 14",
+            "§7- §cLava",
+            "§7- §dFishing Hotspot",
+            "§7- §cCrimson Isle"
+        ));
+        layout.slot(43, ItemStackCreator.getStackHead(
+            "§7[Lvl 25] Carrot King (§9§lRare§7)",
+            "b50459bcb08db5ce93e021079c1cfc038c9ebe7ad9a149516efe4d5ee8afb59f",
+            1,
+            "§9⚓ Aquatic§7, §a☮ Animal",
+            "",
+            "§cDrops:",
+            "§7- Lily Pad",
+            "§7- Sponge",
+            "§7- §9Enchanted Book",
+            "§7   (Caster VI)",
+            "§7- §aEnchanted Carrot",
+            "§7- §aRabbit Hat",
+            "§7- §9Enchanted Rabbit Foot",
+            "§7- §5Lucky Clover Core",
+            "",
+            "§cRequirements:",
+            "§7- §aFishing Skill 14",
+            "§7- §bWater",
+            "§7- §fCarrot Bait"
+        ));
+        layout.slot(48, ItemStackCreator.getStack(
+            "§aGo Back",
+            Material.ARROW,
+            1,
+            "§7To Fishing Skill"
+        ));
+        layout.slot(50, ItemStackCreator.getStack(
+            "§aSort",
+            Material.HOPPER,
+            1,
+            "",
+            "§b▶ Fishing Level Req",
+            "§7  Alphabetical",
+            "§7  Mob Level",
+            "§7  Killed Most",
+            "§7  Ascending Rarity",
+            "§7  Descending Rarity",
+            "",
+            "§bRight-click to go backwards!",
+            "§eClick to switch!"
+        ));
+        layout.slot(51, ItemStackCreator.getStack(
+            "§aFilter",
+            Material.ENDER_EYE,
+            1,
+            "",
+            "§f▶ All Sea Creatures",
+            "§7  Has Level Requirement",
+            "§7  Has Never Killed",
+            "",
+            "§bRight-click to go backwards!",
+            "§eClick to switch!"
+        ));
+        layout.slot(52, ItemStackCreator.getStack(
+            "§aCategory",
+            Material.CAULDRON,
+            1,
+            "",
+            "§a▶ Any Category",
+            "§7  Water",
+            "§7  Lava",
+            "§7  Winter",
+            "§7  Spooky",
+            "§7  Shark",
+            "§7  Oasis",
+            "§7  Bayou",
+            "§7  Hotspot",
+            "§7  Galatea",
+            "",
+            "§bRight-click to go backwards!",
+            "§eClick to switch!"
+        ));
+        layout.slot(53, ItemStackCreator.getStack(
+            "§aNext Page",
+            Material.ARROW,
+            1,
+            "§ePage 2"
+        ));
+    }
+}

@@ -1,0 +1,13 @@
+trophyFish:
+  - id: MAGMAFISH
+    displayName: Magmafish
+    catchChance: 18
+    regions: [ ]
+    requiredFishingLevel: 0
+    minimumCastTimeMs: 0
+    requiresStarterRodWithoutEnchantments: false
+    specialGoldenFish: false
+    bronzeItemId: MAGMAFISH
+    silverItemId: SILVER_MAGMAFISH
+    goldItemId: GOLD_MAGMAFISH
+    diamondItemId: DIAMOND_MAGMAFISH
