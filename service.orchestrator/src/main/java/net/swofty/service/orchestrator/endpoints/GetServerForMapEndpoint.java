@@ -12,6 +12,7 @@ import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.orchestrator.OrchestratorCache;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -89,7 +90,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.gameId(), true, null);
 					}
 				} catch (Exception e) {
-					System.err.println("Failed to instantiate Bedwars game: " + e.getMessage());
+					Logger.error(e, "Failed to instantiate Bedwars game");
 				}
 			}
 
@@ -154,7 +155,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.gameId(), true, null);
 					}
 				} catch (Exception e) {
-					System.err.println("Failed to instantiate Murder Mystery game: " + e.getMessage());
+					Logger.error(e, "Failed to instantiate Murder Mystery game");
 				}
 			}
 
@@ -256,7 +257,7 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
 						return new GetServerForMapProtocolObject.GetServerForMapResponse(proxy, response.gameId(), true, null);
 					}
 				} catch (Exception e) {
-					System.err.println("Failed to instantiate Skywars game: " + e.getMessage());
+					Logger.error(e, "Failed to instantiate Skywars game");
 				}
 			}
 
