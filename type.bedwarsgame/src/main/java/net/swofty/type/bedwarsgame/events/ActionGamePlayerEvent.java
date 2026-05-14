@@ -53,27 +53,30 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 	}
 
+	private static final java.util.Set<String> UNDROPPABLE_TOOLS = java.util.Set.of(
+			"wooden_sword",
+			"wooden_pickaxe",
+			"wooden_axe",
+			"stone_axe",
+			"iron_pickaxe",
+			"iron_axe",
+			"diamond_pickaxe",
+			"diamond_axe"
+	);
+
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(ItemDropEvent event) {
-		switch (event.getItemStack().material().name()) {
-			case "wooden_sword":
-			case "wooden_pickaxe":
-			case "wooden_axe":
-			case "stone_axe":
-			case "iron_pickaxe":
-			case "iron_axe":
-			case "diamond_pickaxe":
-			case "diamond_axe":
-				event.setCancelled(true);
-				event.getPlayer().sendMessage("§cYou cannot drop your tools!");
-				break;
-			default:
-				ItemEntity itemEntity = new ItemEntity(event.getItemStack());
-				itemEntity.setInstance(event.getPlayer().getInstance(), event.getPlayer().getPosition().add(0, event.getPlayer().getEyeHeight(), 0));
-				itemEntity.setVelocity(event.getPlayer().getPosition().add(0, 0.3, 0).direction().mul(6));
-				itemEntity.setPickupDelay(Duration.ofMillis(500));
-				break;
+		if (UNDROPPABLE_TOOLS.contains(event.getItemStack().material().name())) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage("§cYou cannot drop your tools!");
+			return;
 		}
+
+		ItemEntity itemEntity = new ItemEntity(event.getItemStack());
+		itemEntity.setInstance(event.getPlayer().getInstance(),
+				event.getPlayer().getPosition().add(0, event.getPlayer().getEyeHeight(), 0));
+		itemEntity.setVelocity(event.getPlayer().getPosition().add(0, 0.3, 0).direction().mul(6));
+		itemEntity.setPickupDelay(Duration.ofMillis(500));
 	}
 
 	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
