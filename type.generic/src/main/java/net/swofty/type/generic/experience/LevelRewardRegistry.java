@@ -1,6 +1,7 @@
 package net.swofty.type.generic.experience;
 
 import net.swofty.commons.YamlFileUtils;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -14,7 +15,7 @@ public class LevelRewardRegistry {
 
         File rewardsFile = new File(configRoot, "leveling/rewards.yml");
         if (!rewardsFile.exists()) {
-            System.out.println("[LevelRewardRegistry] rewards.yml not found at: " + rewardsFile.getAbsolutePath());
+            Logger.warn("rewards.yml not found at: {}", rewardsFile.getAbsolutePath());
             initialized = true;
             return;
         }
@@ -23,19 +24,19 @@ public class LevelRewardRegistry {
         try {
             yaml = YamlFileUtils.loadYaml(rewardsFile);
         } catch (java.io.IOException e) {
-            System.out.println("[LevelRewardRegistry] Failed to load rewards.yml: " + e.getMessage());
+            Logger.error(e, "Failed to load rewards.yml");
             initialized = true;
             return;
         }
         if (yaml == null) {
-            System.out.println("[LevelRewardRegistry] Failed to load rewards.yml");
+            Logger.warn("rewards.yml parsed to null — empty file?");
             initialized = true;
             return;
         }
 
         loadRewards(yaml);
         initialized = true;
-        System.out.println("[LevelRewardRegistry] Loaded " + REWARDS.size() + " level rewards");
+        Logger.info("Loaded {} level rewards", REWARDS.size());
     }
 
     @SuppressWarnings("unchecked")
@@ -66,7 +67,7 @@ public class LevelRewardRegistry {
                 LevelReward reward = builder.build();
                 REWARDS.put(level, reward);
             } catch (Exception e) {
-                System.err.println("[LevelRewardRegistry] Error loading reward: " + e.getMessage());
+                Logger.error(e, "Error loading level reward entry");
             }
         }
     }
