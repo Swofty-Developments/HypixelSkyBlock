@@ -9,6 +9,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCompletedBazaarT
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
@@ -93,12 +94,12 @@ public class BazaarAwarder {
                     return processExpiredOrder(player, transaction);
                 }
                 default -> {
-                    System.err.println("Unknown pending transaction type: " + transactionType);
+                    Logger.warn("Unknown pending transaction type: {}", transactionType);
                     return false;
                 }
             }
         } catch (Exception e) {
-            System.err.println("Failed to process pending transaction: " + e.getMessage());
+            Logger.error(e, "Failed to process pending transaction");
             return false;
         }
     }
@@ -138,7 +139,7 @@ public class BazaarAwarder {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Failed to process buyer transaction: " + e.getMessage());
+            Logger.error(e, "Failed to process buyer transaction");
             return false;
         }
     }
@@ -174,7 +175,7 @@ public class BazaarAwarder {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Failed to process refund transaction: " + e.getMessage());
+            Logger.error(e, "Failed to process refund transaction");
             return false;
         }
     }
@@ -214,7 +215,7 @@ public class BazaarAwarder {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Failed to process seller transaction: " + e.getMessage());
+            Logger.error(e, "Failed to process seller transaction");
             return false;
         }
     }
@@ -263,7 +264,7 @@ public class BazaarAwarder {
 
             return true;
         } catch (Exception e) {
-            System.err.println("Failed to process expired order: " + e.getMessage());
+            Logger.error(e, "Failed to process expired order");
             return false;
         }
     }
