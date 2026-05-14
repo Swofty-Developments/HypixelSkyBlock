@@ -12,6 +12,7 @@ import net.swofty.commons.protocol.objects.gui.KickFromGUIPushProtocol;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -133,7 +134,7 @@ public class ServiceToServerManager {
                 try {
                     typedMap.put(uuid, protocol.translateReturnFromString(json.toString()));
                 } catch (Exception e) {
-                    System.err.println("Failed to deserialize push response from " + uuid + ": " + e.getMessage());
+                    Logger.error(e, "Failed to deserialize push response from {}", uuid);
                 }
             });
             typedFuture.complete(typedMap);
