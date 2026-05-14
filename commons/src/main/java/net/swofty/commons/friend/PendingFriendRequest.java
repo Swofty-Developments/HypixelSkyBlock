@@ -3,14 +3,17 @@ package net.swofty.commons.friend;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public class PendingFriendRequest {
+    private static final Serializer<PendingFriendRequest> SERIALIZER =
+            new JacksonSerializer<>(PendingFriendRequest.class);
+
     private final UUID from;
     private final UUID to;
     private final String fromName;
@@ -40,38 +43,10 @@ public class PendingFriendRequest {
     }
 
     public static Serializer<PendingFriendRequest> getStaticSerializer() {
-        return create(UUID.randomUUID(), UUID.randomUUID(), "", "").getSerializer();
+        return SERIALIZER;
     }
 
     public Serializer<PendingFriendRequest> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(PendingFriendRequest value) {
-                JSONObject json = new JSONObject();
-                json.put("from", value.from.toString());
-                json.put("to", value.to.toString());
-                json.put("fromName", value.fromName);
-                json.put("toName", value.toName);
-                json.put("timestamp", value.timestamp);
-                return json.toString();
-            }
-
-            @Override
-            public PendingFriendRequest deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new PendingFriendRequest(
-                        UUID.fromString(jsonObject.getString("from")),
-                        UUID.fromString(jsonObject.getString("to")),
-                        jsonObject.optString("fromName", "Unknown"),
-                        jsonObject.optString("toName", "Unknown"),
-                        jsonObject.getLong("timestamp")
-                );
-            }
-
-            @Override
-            public PendingFriendRequest clone(PendingFriendRequest value) {
-                return new PendingFriendRequest(value.from, value.to, value.fromName, value.toName, value.timestamp);
-            }
-        };
+        return SERIALIZER;
     }
 }
