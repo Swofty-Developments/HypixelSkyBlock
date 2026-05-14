@@ -22,7 +22,6 @@ import net.swofty.type.skywarslobby.kit.SkywarsKitRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class GUICageKitSelector extends HypixelInventoryGUI {
     private static final int[] KIT_SLOTS = {
