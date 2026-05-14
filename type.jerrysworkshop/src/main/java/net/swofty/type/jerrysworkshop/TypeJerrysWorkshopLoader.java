@@ -21,7 +21,7 @@ import net.swofty.type.skyblockgeneric.entity.GlassDisplay;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.jerrysworkshop.tab.JerrysWorkshopServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -66,7 +66,7 @@ public class TypeJerrysWorkshopLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                     new SkyBlockPlayersOnlineModule(1),
                     new SkyBlockPlayersOnlineModule(2),
-                    new JerrysWorkshopServerModule(),
+                    new AreaServerModule("tablist.server_info.area.jerrys_workshop"),
                     new AccountInformationModule()
                 ));
             }

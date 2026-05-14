@@ -6,7 +6,7 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.type.deepcaverns.tab.DeepCavernsServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -57,7 +57,7 @@ public class TypeDeepCavernsLoader implements SkyBlockTypeLoader {
 				return new ArrayList<>(List.of(
 						new SkyBlockPlayersOnlineModule(1),
 						new SkyBlockPlayersOnlineModule(2),
-						new DeepCavernsServerModule(),
+						new AreaServerModule("tablist.server_info.area.deep_caverns"),
 						new AccountInformationModule()
 				));
 			}

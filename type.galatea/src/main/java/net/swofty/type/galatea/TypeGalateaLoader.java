@@ -7,7 +7,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.Songs;
 import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.type.galatea.tab.GalateaServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -61,7 +61,7 @@ public class TypeGalateaLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new GalateaServerModule(),
+                        new AreaServerModule("tablist.server_info.area.galatea"),
                         new AccountInformationModule()
                 ));
             }

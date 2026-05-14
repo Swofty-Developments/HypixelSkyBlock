@@ -30,7 +30,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
-import net.swofty.type.hub.tab.HubServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.hub.util.HubMap;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
@@ -207,7 +207,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 				return new ArrayList<>(List.of(
 						new SkyBlockPlayersOnlineModule(1),
 						new SkyBlockPlayersOnlineModule(2),
-						new HubServerModule(),
+						new AreaServerModule("tablist.server_info.area.hub"),
 						new AccountInformationModule()
 				));
 			}

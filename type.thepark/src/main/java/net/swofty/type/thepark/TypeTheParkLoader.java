@@ -35,7 +35,7 @@ import net.swofty.type.skyblockgeneric.race.RaceManager;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.thepark.tab.TheParkServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.tinylog.Logger;
@@ -243,7 +243,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader, RaceInstance {
 				return new ArrayList<>(List.of(
 						new SkyBlockPlayersOnlineModule(1),
 						new SkyBlockPlayersOnlineModule(2),
-						new TheParkServerModule(),
+						new AreaServerModule("tablist.server_info.area.the_park"),
 						new AccountInformationModule()
 				));
 			}

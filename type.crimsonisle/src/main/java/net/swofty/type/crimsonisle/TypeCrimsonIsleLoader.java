@@ -6,7 +6,7 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.type.crimsonisle.tab.CrimsonIsleServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -53,7 +53,7 @@ public class TypeCrimsonIsleLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new CrimsonIsleServerModule(),
+                        new AreaServerModule("tablist.server_info.area.crimson_isle"),
                         new AccountInformationModule()
                 ));
             }
