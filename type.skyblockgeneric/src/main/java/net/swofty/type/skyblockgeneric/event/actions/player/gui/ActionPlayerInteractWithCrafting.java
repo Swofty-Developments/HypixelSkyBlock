@@ -18,10 +18,21 @@ public class ActionPlayerInteractWithCrafting implements HypixelEventClass {
         if (event.getSlot() < 37 || event.getSlot() > 40) return;
 
         event.setCancelled(true);
-        player.addAndUpdateItem(player.getInventory().getCursorItem());
-        player.getInventory().setCursorItem(ItemStack.AIR);
-        player.getInventory().update();
 
+        ItemStack cursor = player.getInventory().getCursorItem();
+        if (!cursor.isAir()) {
+            player.addAndUpdateItem(cursor);
+            player.getInventory().setCursorItem(ItemStack.AIR);
+        }
+
+        // Rescue any item already sitting in the vanilla crafting slot — see #777
+        ItemStack inSlot = player.getInventory().getItemStack(event.getSlot());
+        if (!inSlot.isAir()) {
+            player.addAndUpdateItem(inSlot);
+            player.getInventory().setItemStack(event.getSlot(), ItemStack.AIR);
+        }
+
+        player.getInventory().update();
         player.openView(new GUICrafting());
     }
 }
