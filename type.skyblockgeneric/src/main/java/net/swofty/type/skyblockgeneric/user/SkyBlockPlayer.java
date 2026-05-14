@@ -677,7 +677,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         if (matcher.find()) {
             sackCategory = matcher.group(2);
         } else {
-            System.out.println("Invalid sack name: " + sack.name());
+            org.tinylog.Logger.warn("Invalid sack name: {}", sack.name());
             return 0;
         }
 

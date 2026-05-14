@@ -279,7 +279,7 @@ public class BazaarConnector {
                         failedIds.add(tx.id());
                     }
                 } catch (Exception e) {
-                    System.err.println("Failed to process pending transaction " + tx.id() + ": " + e.getMessage());
+                    org.tinylog.Logger.error(e, "Failed to process pending transaction {}", tx.id());
                     failedIds.add(tx.id());
                 }
             }
