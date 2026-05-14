@@ -51,9 +51,9 @@ public class GetTrackedItemInformationCommand extends HypixelCommand {
             player.sendMessage("§7- §eItem UUID: §7" + trackedItem.getItemUUID());
             player.sendMessage("§7- §eNumber Made: §7" + trackedItem.getNumberMade());
             player.sendMessage("§7- §eMade: §7" + StringUtility.formatTimeAsAgo(trackedItem.getCreated()));
-            player.sendMessage("§8Attached Players: §7" + trackedItem.attachedPlayers.size());
+            player.sendMessage("§8Attached Players: §7" + trackedItem.getAttachedPlayers().size());
 
-            trackedItem.attachedPlayers.forEach(log -> {
+            trackedItem.getAttachedPlayers().forEach(log -> {
                 player.sendMessage("§7- §ePlayer UUID: §7" + log.playerUUID());
                 player.sendMessage("§7- §eProfile UUID: §7" + log.playerProfileUUID());
                 player.sendMessage("§7- §eFirst Seen: §7" + StringUtility.formatTimeAsAgo(log.firstSeen()));
