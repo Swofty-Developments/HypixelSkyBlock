@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.objects.proxy.to.TestFlowServerReadyProtocol;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.testflow.TestFlowManager;
+import org.tinylog.Logger;
 
 import java.util.UUID;
 
@@ -28,13 +29,13 @@ public class ListenerTestFlowServerReady extends RedisListener<
 
             TestFlowManager.markServerReady(testFlowName, serverType, serverIndex, serverUUID);
 
-            System.out.println("Server " + serverType.name() + " #" + serverIndex +
-                    " is ready for test flow '" + testFlowName + "' (UUID: " + serverUUID + ")");
+            Logger.info("Server {} #{} is ready for test flow '{}' (UUID: {})",
+                    serverType.name(), serverIndex, testFlowName, serverUUID);
 
             return new TestFlowServerReadyProtocol.Response(true, "Server ready status recorded", null);
 
         } catch (Exception e) {
-            System.out.println("Failed to process test flow server ready from server " + serverUUID);
+            Logger.error(e, "Failed to process test flow server ready from server {}", serverUUID);
             return new TestFlowServerReadyProtocol.Response(false, null, e.getMessage());
         }
     }

@@ -6,6 +6,7 @@ import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +38,12 @@ public class ListenerRegisterTestFlow extends RedisListener<
 
             TestFlowManager.registerTestFlow(testFlowName, handler, players, serverConfigs);
 
-            System.out.println("Registered test flow '" + testFlowName + "' from server " + serverUUID);
+            Logger.info("Registered test flow '{}' from server {}", testFlowName, serverUUID);
 
             return new RegisterTestFlowProtocol.Response(true, "Test flow registered successfully", null);
 
         } catch (Exception e) {
-            System.out.println("Failed to register test flow from server " + serverUUID);
+            Logger.error(e, "Failed to register test flow from server {}", serverUUID);
             return new RegisterTestFlowProtocol.Response(false, null, e.getMessage());
         }
     }

@@ -4,6 +4,7 @@ import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
+import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +42,8 @@ public class RedisMessage {
                 callbacks.get(request).complete(rawMessage);
                 callbacks.remove(request);
             } catch (Exception e) {
-                System.out.println("RedisMessage: Error while processing message");
-                System.out.println("Channel: " + event.channel);
-                System.out.println("Message: " + event.message);
+                Logger.error(e, "RedisMessage error processing channel={} message={}",
+                        event.channel, event.message);
             }
         });
     }
