@@ -1,11 +1,9 @@
 package net.swofty.type.skyblockgeneric.fishing;
 
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointTrophyFish;
 import net.swofty.type.skyblockgeneric.entity.FishingHook;
-import net.swofty.type.skyblockgeneric.entity.mob.seacreature.SeaCreatureSpawner;
+import net.swofty.type.skyblockgeneric.fishing.catches.CatchAwardContext;
+import net.swofty.type.skyblockgeneric.fishing.catches.CatchPayload;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
 import net.swofty.type.skyblockgeneric.item.components.FishingRodPartComponent;
@@ -69,7 +67,7 @@ public final class FishingService {
         return Math.max(20L, Math.round(baseTicks - Math.min(50D, fishingSpeed / 2D)));
     }
 
-    public static @Nullable FishingCatchResult resolveCatch(SkyBlockPlayer player, SkyBlockItem rod, FishingHook hook) {
+    public static @Nullable CatchPayload resolveCatch(SkyBlockPlayer player, SkyBlockItem rod, FishingHook hook) {
         FishingSession session = getSession(player.getUuid());
         if (session == null || session.resolved()) {
             return null;
@@ -93,64 +91,65 @@ public final class FishingService {
             System.currentTimeMillis() - session.castAt()
         );
 
-        FishingCatchResult result = FishingCatchResolver.resolve(context);
-        if (result == null) {
+        CatchPayload payload = FishingCatchResolver.resolve(context);
+        if (payload == null) {
             return null;
         }
 
-        if (session.baitItemId() != null) {
-            boolean preserve = false;
-            var caster = rod.getAttributeHandler().getEnchantment(net.swofty.type.skyblockgeneric.enchantment.EnchantmentType.CASTER);
-            if (caster != null) {
-                preserve |= Math.random() * 100 < caster.level();
-            }
-            FishingRodPartComponent sinker = FishingRodPartService.getSinker(rod);
-            if (!preserve && sinker != null && sinker.getBaitPreservationChance() > 0) {
-                preserve = Math.random() * 100 < sinker.getBaitPreservationChance();
-            }
-            if (!preserve) {
-                FishingBaitService.consumeOneBait(player, session.baitItemId());
-            }
-        }
-
-        awardCatch(player, rod, hook, result);
+        consumeBait(player, rod, session);
+        awardCatch(player, rod, hook, payload);
         updateSession(session.withResolved(true));
-        return result;
+        return payload;
     }
 
-    private static void awardCatch(SkyBlockPlayer player, SkyBlockItem rod, FishingHook hook, FishingCatchResult result) {
+    private static void consumeBait(SkyBlockPlayer player, SkyBlockItem rod, FishingSession session) {
+        if (session.baitItemId() == null) {
+            return;
+        }
+        if (rollBaitPreservation(rod)) {
+            return;
+        }
+        FishingBaitService.consumeOneBait(player, session.baitItemId());
+    }
+
+    private static boolean rollBaitPreservation(SkyBlockItem rod) {
+        var caster = rod.getAttributeHandler().getEnchantment(net.swofty.type.skyblockgeneric.enchantment.EnchantmentType.CASTER);
+        if (caster != null && Math.random() * 100 < caster.level()) {
+            return true;
+        }
+        FishingRodPartComponent sinker = FishingRodPartService.getSinker(rod);
+        return sinker != null
+                && sinker.getBaitPreservationChance() > 0
+                && Math.random() * 100 < sinker.getBaitPreservationChance();
+    }
+
+    private static void awardCatch(SkyBlockPlayer player, SkyBlockItem rod, FishingHook hook, CatchPayload payload) {
+        markFirstFishToggle(player);
+        rollSinkerMaterialize(player, rod);
+
+        payload.apply(new CatchAwardContext(player, rod, hook.getSpawnPosition()));
+
+        if (!(payload instanceof CatchPayload.SeaCreature) && payload.skillXp() > 0) {
+            player.getSkills().increase(player, net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING, payload.skillXp());
+        }
+
+        player.setItemInHand(rod);
+    }
+
+    private static void markFirstFishToggle(SkyBlockPlayer player) {
         if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_CAUGHT_FIRST_FISH)) {
             player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_CAUGHT_FIRST_FISH, true);
         }
+    }
 
-        if (result.itemId() != null) {
-            player.addAndUpdateItem(net.swofty.commons.skyblock.item.ItemType.valueOf(result.itemId()), result.amount());
-            player.getCollection().increase(net.swofty.commons.skyblock.item.ItemType.valueOf(result.itemId()), result.amount());
-            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).setValue(player.getCollection());
-        }
-
+    private static void rollSinkerMaterialize(SkyBlockPlayer player, SkyBlockItem rod) {
         FishingRodPartComponent sinker = FishingRodPartService.getSinker(rod);
-        if (sinker != null && sinker.getMaterializedItemId() != null && Math.random() <= sinker.getMaterializedChance()) {
+        if (sinker == null || sinker.getMaterializedItemId() == null) {
+            return;
+        }
+        if (Math.random() <= sinker.getMaterializedChance()) {
             player.addAndUpdateItem(net.swofty.commons.skyblock.item.ItemType.valueOf(sinker.getMaterializedItemId()));
         }
-
-        if (result.trophyFishId() != null) {
-            String tier = result.itemId() != null && result.itemId().contains("_DIAMOND") ? "DIAMOND" :
-                result.itemId() != null && result.itemId().contains("_GOLD") ? "GOLD" :
-                    result.itemId() != null && result.itemId().contains("_SILVER") ? "SILVER" : "BRONZE";
-            DatapointTrophyFish.TrophyFishData data = player.getTrophyFishData();
-            data.getProgress(result.trophyFishId()).increment(tier);
-            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.TROPHY_FISH, DatapointTrophyFish.class).setValue(data);
-        }
-
-        if (result.kind() != FishingCatchKind.SEA_CREATURE && result.skillXp() > 0) {
-            player.getSkills().increase(player, net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING, result.skillXp());
-        }
-
-        if (result.kind() == FishingCatchKind.SEA_CREATURE && result.seaCreatureId() != null) {
-            SeaCreatureSpawner.spawn(player, result.seaCreatureId(), hook.getSpawnPosition());
-        }
-        player.setItemInHand(rod);
     }
 
     private static boolean hasAnyBuffValue(net.swofty.commons.skyblock.statistics.ItemStatistics statistics) {

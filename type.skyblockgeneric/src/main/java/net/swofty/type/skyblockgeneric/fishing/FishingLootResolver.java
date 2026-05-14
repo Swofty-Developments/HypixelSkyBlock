@@ -3,6 +3,9 @@ package net.swofty.type.skyblockgeneric.fishing;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.skyblockgeneric.fishing.catches.CatchPayload;
+import net.swofty.type.skyblockgeneric.fishing.catches.TrophyTier;
+import net.swofty.type.skyblockgeneric.fishing.tags.FishingTag;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 import java.util.ArrayList;
@@ -10,23 +13,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 public final class FishingLootResolver {
 
-    private static final List<Function<FishingContext, Optional<FishingCatchResult>>> SPECIAL_CATCHES = List.of(
+    private static final List<Function<FishingContext, Optional<CatchPayload>>> SPECIAL_CATCHES = List.of(
         FishingLootResolver::tryResolveQuestCatch,
         FishingLootResolver::tryResolveTrophyFish,
         FishingLootResolver::tryResolveSeaCreature
     );
 
-    private static final FishingCatchResult DEFAULT_CATCH =
-        new FishingCatchResult(FishingCatchKind.ITEM, "RAW_FISH", null, null, 1, 5.0D, false, null);
+    private static final CatchPayload DEFAULT_CATCH =
+        new CatchPayload.Item("RAW_FISH", 1, 5.0D, false);
 
     private FishingLootResolver() {
     }
 
-    public static FishingCatchResult resolve(FishingContext context) {
+    public static CatchPayload resolve(FishingContext context) {
         return SPECIAL_CATCHES.stream()
             .map(resolver -> resolver.apply(context))
             .flatMap(Optional::stream)
@@ -34,7 +36,7 @@ public final class FishingLootResolver {
             .orElseGet(() -> resolveItem(context));
     }
 
-    private static Optional<FishingCatchResult> tryResolveTrophyFish(FishingContext context) {
+    private static Optional<CatchPayload> tryResolveTrophyFish(FishingContext context) {
         if (context.medium() != FishingMedium.LAVA) {
             return Optional.empty();
         }
@@ -61,25 +63,24 @@ public final class FishingLootResolver {
         eligible.sort(Comparator.comparingDouble(TrophyFishDefinition::catchChance));
         for (TrophyFishDefinition definition : eligible) {
             if (Math.random() * 100 <= definition.catchChance() + bonus) {
-                String tier = rollTrophyTier(context, definition);
+                TrophyTier tier = rollTrophyTier(context, definition);
                 String itemId = switch (tier) {
-                    case "DIAMOND" -> definition.diamondItemId();
-                    case "GOLD" -> definition.goldItemId();
-                    case "SILVER" -> definition.silverItemId();
-                    default -> definition.bronzeItemId();
+                    case DIAMOND -> definition.diamondItemId();
+                    case GOLD -> definition.goldItemId();
+                    case SILVER -> definition.silverItemId();
+                    case BRONZE -> definition.bronzeItemId();
                 };
                 if (itemId == null) {
                     continue;
                 }
-                return Optional.of(new FishingCatchResult(
-                    FishingCatchKind.TROPHY_FISH, itemId, null, definition.id(), 1, 300.0D, false, null));
+                return Optional.of(new CatchPayload.TrophyFish(definition.id(), tier, itemId, 300.0D));
             }
         }
 
         return Optional.empty();
     }
 
-    private static Optional<FishingCatchResult> tryResolveQuestCatch(FishingContext context) {
+    private static Optional<CatchPayload> tryResolveQuestCatch(FishingContext context) {
         if (context.medium() != FishingMedium.WATER) return Optional.empty();
         if (context.regionId() == null) return Optional.empty();
         if (!"FISHING_OUTPOST".equals(context.regionId()) && !"FISHERMANS_HUT".equals(context.regionId())) {
@@ -95,25 +96,21 @@ public final class FishingLootResolver {
         if (context.player().countItem(ItemType.RUSTY_SHIP_ENGINE) > 0) return Optional.empty();
         if (Math.random() * 100 > 1.0D) return Optional.empty();
 
-        return Optional.of(new FishingCatchResult(
-            FishingCatchKind.QUEST,
+        return Optional.of(new CatchPayload.Quest(
             ItemType.RUSTY_SHIP_ENGINE.name(),
-            null,
-            null,
             1,
             15.0D,
-            false,
             "You fished up a Rusty Ship Engine!"
         ));
     }
 
-    private static String rollTrophyTier(FishingContext context, TrophyFishDefinition definition) {
+    private static TrophyTier rollTrophyTier(FishingContext context, TrophyFishDefinition definition) {
         var progress = context.player().getTrophyFishData().getProgress(definition.id());
-        if (progress.getTotalCatches() + 1 >= 600 && !progress.hasTier("DIAMOND")) {
-            return "DIAMOND";
+        if (progress.getTotalCatches() + 1 >= 600 && !progress.hasTier(TrophyTier.DIAMOND.name())) {
+            return TrophyTier.DIAMOND;
         }
-        if (progress.getTotalCatches() + 1 >= 100 && !progress.hasTier("GOLD")) {
-            return "GOLD";
+        if (progress.getTotalCatches() + 1 >= 100 && !progress.hasTier(TrophyTier.GOLD.name())) {
+            return TrophyTier.GOLD;
         }
 
         double charmBonus = 0.0D;
@@ -122,13 +119,13 @@ public final class FishingLootResolver {
             charmBonus = charm.level() * 2.0D;
         }
 
-        if (Math.random() <= (0.002D * (1 + charmBonus / 100D))) return "DIAMOND";
-        if (Math.random() <= (0.02D * (1 + charmBonus / 100D))) return "GOLD";
-        if (Math.random() <= (0.25D * (1 + charmBonus / 100D))) return "SILVER";
-        return "BRONZE";
+        if (Math.random() <= (0.002D * (1 + charmBonus / 100D))) return TrophyTier.DIAMOND;
+        if (Math.random() <= (0.02D * (1 + charmBonus / 100D))) return TrophyTier.GOLD;
+        if (Math.random() <= (0.25D * (1 + charmBonus / 100D))) return TrophyTier.SILVER;
+        return TrophyTier.BRONZE;
     }
 
-    private static Optional<FishingCatchResult> tryResolveSeaCreature(FishingContext context) {
+    private static Optional<CatchPayload> tryResolveSeaCreature(FishingContext context) {
         Optional<FishingTableDefinition> tableOpt = findTable(context);
         if (tableOpt.isEmpty()) return Optional.empty();
         FishingTableDefinition table = tableOpt.get();
@@ -149,14 +146,13 @@ public final class FishingLootResolver {
             double tagBonus = definition == null ? 0.0D : getTagBonus(context, definition.tags());
             if (Math.random() * 100 <= roll.chance() + seaCreatureChance + tagBonus) {
                 double skillXp = definition == null ? 0.0D : definition.skillXp();
-                return Optional.of(new FishingCatchResult(
-                    FishingCatchKind.SEA_CREATURE, null, roll.seaCreatureId(), null, 1, skillXp, false, null));
+                return Optional.of(new CatchPayload.SeaCreature(roll.seaCreatureId(), skillXp));
             }
         }
         return Optional.empty();
     }
 
-    private static FishingCatchResult resolveItem(FishingContext context) {
+    private static CatchPayload resolveItem(FishingContext context) {
         Optional<FishingTableDefinition> tableOpt = findTable(context);
         if (tableOpt.isEmpty()) return DEFAULT_CATCH;
         FishingTableDefinition table = tableOpt.get();
@@ -172,15 +168,15 @@ public final class FishingLootResolver {
 
         if (!table.treasures().isEmpty() && Math.random() * 100 <= treasureChance) {
             pool = context.sinker() != null && context.sinker().isBayouTreasureToJunk() ? table.junk() : table.treasures();
-            return pick(pool, FishingCatchKind.TREASURE).orElse(DEFAULT_CATCH);
+            return pick(pool, true).orElse(DEFAULT_CATCH);
         }
 
-        return pick(pool, FishingCatchKind.ITEM)
-            .or(() -> table.junk().isEmpty() ? Optional.empty() : pick(table.junk(), FishingCatchKind.ITEM))
+        return pick(pool, false)
+            .or(() -> table.junk().isEmpty() ? Optional.empty() : pick(table.junk(), false))
             .orElse(DEFAULT_CATCH);
     }
 
-    private static Optional<FishingCatchResult> pick(List<FishingTableDefinition.LootEntry> pool, FishingCatchKind kind) {
+    private static Optional<CatchPayload> pick(List<FishingTableDefinition.LootEntry> pool, boolean fromTreasure) {
         if (pool.isEmpty()) return Optional.empty();
 
         double roll = Math.random() * 100;
@@ -188,13 +184,11 @@ public final class FishingLootResolver {
         for (FishingTableDefinition.LootEntry entry : pool) {
             cursor += entry.chance();
             if (roll <= cursor) {
-                return Optional.of(new FishingCatchResult(
-                    kind, entry.itemId(), null, null, entry.amount(), entry.skillXp(), false, null));
+                return Optional.of(new CatchPayload.Item(entry.itemId(), entry.amount(), entry.skillXp(), fromTreasure));
             }
         }
         FishingTableDefinition.LootEntry first = pool.getFirst();
-        return Optional.of(new FishingCatchResult(
-            kind, first.itemId(), null, null, first.amount(), first.skillXp(), false, null));
+        return Optional.of(new CatchPayload.Item(first.itemId(), first.amount(), first.skillXp(), fromTreasure));
     }
 
     private static Optional<FishingTableDefinition> findTable(FishingContext context) {
@@ -226,7 +220,7 @@ public final class FishingLootResolver {
         return total;
     }
 
-    private static double getTagBonus(FishingContext context, List<net.swofty.type.skyblockgeneric.fishing.tags.FishingTag> tags) {
+    private static double getTagBonus(FishingContext context, List<FishingTag> tags) {
         double total = 0.0D;
         if (context.hook() != null) {
             total += getTagBonus(context.hook().getTagBonuses(), tags);
@@ -243,9 +237,9 @@ public final class FishingLootResolver {
         return total;
     }
 
-    private static double getTagBonus(java.util.Map<String, Double> bonuses, List<net.swofty.type.skyblockgeneric.fishing.tags.FishingTag> tags) {
+    private static double getTagBonus(java.util.Map<String, Double> bonuses, List<FishingTag> tags) {
         double total = 0.0D;
-        for (net.swofty.type.skyblockgeneric.fishing.tags.FishingTag tag : tags) {
+        for (FishingTag tag : tags) {
             total += bonuses.getOrDefault(tag.id(), 0.0D);
         }
         return total;
