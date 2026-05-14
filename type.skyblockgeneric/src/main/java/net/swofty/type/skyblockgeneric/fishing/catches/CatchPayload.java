@@ -46,12 +46,27 @@ public sealed interface CatchPayload {
         }
     }
 
-    record SeaCreature(String seaCreatureId, double skillXp) implements CatchPayload {
-        @Override public String summary() { return "sea creature " + seaCreatureId; }
+    record SeaCreature(String seaCreatureId, double skillXp, int spawnCount) implements CatchPayload {
+        public SeaCreature(String seaCreatureId, double skillXp) {
+            this(seaCreatureId, skillXp, 1);
+        }
+
+        public SeaCreature withDoubleHook() {
+            return new SeaCreature(seaCreatureId, skillXp, 2);
+        }
+
+        @Override public String summary() {
+            return spawnCount > 1 ? "double-hook " + seaCreatureId : "sea creature " + seaCreatureId;
+        }
 
         @Override
         public void apply(CatchAwardContext ctx) {
-            SeaCreatureSpawner.spawn(ctx.player(), seaCreatureId, ctx.hookPosition());
+            if (spawnCount > 1) {
+                ctx.player().sendMessage(net.kyori.adventure.text.Component.text("§a§lDOUBLE HOOK!"));
+            }
+            for (int i = 0; i < spawnCount; i++) {
+                SeaCreatureSpawner.spawn(ctx.player(), seaCreatureId, ctx.hookPosition());
+            }
         }
     }
 

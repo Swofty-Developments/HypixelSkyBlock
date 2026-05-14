@@ -146,7 +146,11 @@ public final class FishingLootResolver {
             double tagBonus = definition == null ? 0.0D : getTagBonus(context, definition.tags());
             if (Math.random() * 100 <= roll.chance() + seaCreatureChance + tagBonus) {
                 double skillXp = definition == null ? 0.0D : definition.skillXp();
-                return Optional.of(new CatchPayload.SeaCreature(roll.seaCreatureId(), skillXp));
+                CatchPayload.SeaCreature payload = new CatchPayload.SeaCreature(roll.seaCreatureId(), skillXp);
+                if (rollDoubleHook(context)) {
+                    payload = payload.withDoubleHook();
+                }
+                return Optional.of(payload);
             }
         }
         return Optional.empty();
@@ -205,6 +209,14 @@ public final class FishingLootResolver {
             }
         }
         return Optional.ofNullable(fallback);
+    }
+
+    private static boolean rollDoubleHook(FishingContext context) {
+        double chance = getTotalStatistic(context, ItemStatistic.DOUBLE_HOOK_CHANCE);
+        if (context.bait() != null) {
+            chance += context.bait().getDoubleHookChanceBonus();
+        }
+        return chance > 0 && Math.random() * 100 <= chance;
     }
 
     private static double getTotalStatistic(FishingContext context, ItemStatistic statistic) {
