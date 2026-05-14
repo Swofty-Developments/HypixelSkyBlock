@@ -138,13 +138,12 @@ public final class FishingLootResolver {
             return Optional.empty();
         }
 
-        boolean isNight = isSkyBlockNight();
         for (FishingTableDefinition.SeaCreatureRoll roll : table.seaCreatures()) {
             SeaCreatureDefinition definition = FishingRegistry.getSeaCreature(roll.seaCreatureId());
             if (definition != null && context.player().getSkills().getCurrentLevel(net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING) < definition.requiredFishingLevel()) {
                 continue;
             }
-            if (definition != null && definition.tags().contains("NIGHT") && !isNight) {
+            if (definition != null && !definition.isAvailable(context)) {
                 continue;
             }
             double tagBonus = definition == null ? 0.0D : getTagBonus(context, definition.tags());
@@ -155,11 +154,6 @@ public final class FishingLootResolver {
             }
         }
         return Optional.empty();
-    }
-
-    private static boolean isSkyBlockNight() {
-        int hour = net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar.getHour();
-        return hour < 6 || hour >= 20;
     }
 
     private static FishingCatchResult resolveItem(FishingContext context) {
@@ -232,7 +226,7 @@ public final class FishingLootResolver {
         return total;
     }
 
-    private static double getTagBonus(FishingContext context, List<String> tags) {
+    private static double getTagBonus(FishingContext context, List<net.swofty.type.skyblockgeneric.fishing.tags.FishingTag> tags) {
         double total = 0.0D;
         if (context.hook() != null) {
             total += getTagBonus(context.hook().getTagBonuses(), tags);
@@ -249,10 +243,10 @@ public final class FishingLootResolver {
         return total;
     }
 
-    private static double getTagBonus(java.util.Map<String, Double> bonuses, List<String> tags) {
+    private static double getTagBonus(java.util.Map<String, Double> bonuses, List<net.swofty.type.skyblockgeneric.fishing.tags.FishingTag> tags) {
         double total = 0.0D;
-        for (String tag : tags) {
-            total += bonuses.getOrDefault(tag, 0.0D);
+        for (net.swofty.type.skyblockgeneric.fishing.tags.FishingTag tag : tags) {
+            total += bonuses.getOrDefault(tag.id(), 0.0D);
         }
         return total;
     }

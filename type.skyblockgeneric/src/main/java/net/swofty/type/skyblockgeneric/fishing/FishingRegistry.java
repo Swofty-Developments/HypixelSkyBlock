@@ -138,7 +138,7 @@ public final class FishingRegistry {
                 id,
                 intValue(entry, "requiredFishingLevel", 0),
                 doubleValue(entry, "skillXp", 0.0D),
-                stringList(entry.get("tags"))
+                net.swofty.type.skyblockgeneric.fishing.tags.FishingTagRegistry.resolve(stringList(entry.get("tags")))
             ));
         }
     }
