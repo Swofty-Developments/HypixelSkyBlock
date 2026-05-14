@@ -13,6 +13,7 @@ import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ServiceInitializer {
     private final SkyBlockService service;
 
     public void init() {
-        System.out.println("Initializing service " + service.getType().name() + "...");
+        Logger.info("Initializing service {}...", service.getType().name());
         ItemAttribute.registerItemAttributes();
 
         /**
@@ -38,7 +39,7 @@ public class ServiceInitializer {
 
         endpoints.forEach(endpoint -> {
             ProtocolObject protocolObject = endpoint.associatedProtocolObject();
-            System.out.println("Registering channel " + protocolObject.channel());
+            Logger.debug("Registering channel {}", protocolObject.channel());
 
             RedisAPI.getInstance().registerChannel(protocolObject.channel(), message -> {
                 // Everything after the first semicolon is the actual message
@@ -59,7 +60,7 @@ public class ServiceInitializer {
         });
 
         RedisAPI.getInstance().startListeners();
-        System.out.println("Service " + service.getType().name() + " initialized!");
+        Logger.info("Service {} initialized!", service.getType().name());
 
         try {
             new CountDownLatch(1).await();
