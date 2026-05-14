@@ -138,9 +138,13 @@ public final class FishingLootResolver {
             return Optional.empty();
         }
 
+        boolean isNight = isSkyBlockNight();
         for (FishingTableDefinition.SeaCreatureRoll roll : table.seaCreatures()) {
             SeaCreatureDefinition definition = FishingRegistry.getSeaCreature(roll.seaCreatureId());
             if (definition != null && context.player().getSkills().getCurrentLevel(net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING) < definition.requiredFishingLevel()) {
+                continue;
+            }
+            if (definition != null && definition.tags().contains("NIGHT") && !isNight) {
                 continue;
             }
             double tagBonus = definition == null ? 0.0D : getTagBonus(context, definition.tags());
@@ -151,6 +155,11 @@ public final class FishingLootResolver {
             }
         }
         return Optional.empty();
+    }
+
+    private static boolean isSkyBlockNight() {
+        int hour = net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar.getHour();
+        return hour < 6 || hour >= 20;
     }
 
     private static FishingCatchResult resolveItem(FishingContext context) {
