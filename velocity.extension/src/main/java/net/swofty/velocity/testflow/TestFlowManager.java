@@ -209,20 +209,12 @@ public class TestFlowManager {
     /**
      * Server configuration for test flows
      */
-    @Getter
-    public static class ServerConfig {
-        private final ServerType serverType;
-        private final int count;
-
-        public ServerConfig(ServerType serverType, int count) {
-            this.serverType = serverType;
-            this.count = count;
-        }
-
+    public record ServerConfig(ServerType serverType, int count) {
         public static ServerConfig fromJson(org.json.JSONObject json) {
-            ServerType type = ServerType.valueOf(json.getString("type"));
-            int count = json.getInt("count");
-            return new ServerConfig(type, count);
+            return new ServerConfig(
+                    ServerType.valueOf(json.getString("type")),
+                    json.getInt("count")
+            );
         }
     }
 
@@ -282,7 +274,7 @@ public class TestFlowManager {
 
         public int getTotalExpectedServers() {
             return serverConfigs.stream()
-                    .mapToInt(ServerConfig::getCount)
+                    .mapToInt(ServerConfig::count)
                     .sum();
         }
 
