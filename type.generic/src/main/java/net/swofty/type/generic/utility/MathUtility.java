@@ -7,6 +7,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.Direction;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +109,7 @@ public class MathUtility {
                                 blocks.add(new Pos(x, y, z));
                             }
                         } catch (Exception e) {
-                            System.out.println("Threw an error for " + x + " " + y + " " + z);
-                            continue;
+                            Logger.debug(e, "Block read failed at {} {} {} during getBlocksInRadius", x, y, z);
                         }
                     }
                 }
