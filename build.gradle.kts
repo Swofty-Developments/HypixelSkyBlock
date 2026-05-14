@@ -6,7 +6,7 @@ plugins {
     base
     java
     id("io.freefair.lombok") version "9.1.0"
-    id("io.sentry.jvm.gradle") version "5.12.2"
+    id("io.sentry.jvm.gradle") version "6.4.0"
 }
 
 group = "net.swofty"
