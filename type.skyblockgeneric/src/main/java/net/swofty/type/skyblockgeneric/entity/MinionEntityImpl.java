@@ -76,8 +76,9 @@ public class MinionEntityImpl extends LivingEntity {
 
         try {
             setItemInMainHand(ItemStack.builder(minionTier.heldItem()).build());
-        } catch (Exception e) {}
-        // TODO: Fix this, I have no clue why it stopped working
+        } catch (Exception e) {
+            org.tinylog.Logger.warn(e, "Failed to set held item for minion tier {}", minionTier);
+        }
     }
 
     @Override

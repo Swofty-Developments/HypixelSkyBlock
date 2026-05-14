@@ -48,7 +48,12 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     write(ctx, respawn, ctx.newPromise());
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            // Limbo packet replay is best-effort: a malformed cached respawn
+            // shouldn't drop the player. Log at debug so it surfaces during
+            // diagnostic runs without spamming production logs.
+            org.tinylog.Logger.debug(e, "Failed to replay cached respawn during limbo transfer");
+        }
 
 
         super.write(ctx, packet, promise);
