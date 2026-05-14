@@ -12,7 +12,10 @@ import org.tinylog.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MathUtility {
+public final class MathUtility {
+
+    private MathUtility() {}
+
     public static double normalizeAngle(double angle, double maximum) {
         return (angle % maximum + maximum) % maximum - (maximum / 2);
     }
