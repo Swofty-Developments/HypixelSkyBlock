@@ -1,20 +1,10 @@
 package net.swofty.commons.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.json.JSONObject;
 
 import java.util.UUID;
 
-@AllArgsConstructor
-@Getter
-@Setter
-public class ServiceProxyRequest {
-    private UUID requestId;
-    private String requestServer;
-    private String endpoint;
-    private String message;
+public record ServiceProxyRequest(UUID requestId, String requestServer, String endpoint, String message) {
 
     public JSONObject toJSON() {
         return new JSONObject()
@@ -32,4 +22,11 @@ public class ServiceProxyRequest {
                 json.getString("message")
         );
     }
+
+    // Compatibility accessors so existing call sites that used Lombok-generated
+    // getters keep compiling — records expose component(), not getComponent().
+    public UUID getRequestId() { return requestId; }
+    public String getRequestServer() { return requestServer; }
+    public String getEndpoint() { return endpoint; }
+    public String getMessage() { return message; }
 }
