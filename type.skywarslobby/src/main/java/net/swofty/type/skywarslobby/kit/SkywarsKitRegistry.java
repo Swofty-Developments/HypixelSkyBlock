@@ -116,7 +116,7 @@ public class SkywarsKitRegistry {
         if (unownedKits.isEmpty()) {
             return null;
         }
-        return unownedKits.get(new Random().nextInt(unownedKits.size()));
+        return unownedKits.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(unownedKits.size()));
     }
 
     /**

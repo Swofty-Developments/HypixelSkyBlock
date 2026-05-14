@@ -106,7 +106,7 @@ public class SkywarsPerkRegistry {
         if (unownedPerks.isEmpty()) {
             return null;
         }
-        return unownedPerks.get(new Random().nextInt(unownedPerks.size()));
+        return unownedPerks.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(unownedPerks.size()));
     }
 
     /**
