@@ -50,7 +50,7 @@ public class ChestManager {
         chest.clear();
         List<ItemStack> loot = ChestLootTable.generateLoot(tier, gameType.isInsane(), gameType);
 
-        Random random = new Random();
+        java.util.concurrent.ThreadLocalRandom random = java.util.concurrent.ThreadLocalRandom.current();
         Set<Integer> usedSlots = new HashSet<>();
 
         for (ItemStack item : loot) {
@@ -61,8 +61,7 @@ public class ChestManager {
                 attempts++;
             } while (usedSlots.contains(slot) && attempts < 50);
 
-            if (!usedSlots.contains(slot)) {
-                usedSlots.add(slot);
+            if (usedSlots.add(slot)) {
                 chest.setItemStack(slot, item);
             }
         }
