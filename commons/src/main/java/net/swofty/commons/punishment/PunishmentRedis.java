@@ -88,7 +88,7 @@ public class PunishmentRedis {
             if (expiresAt > 0) {
                 long ttlSeconds = (expiresAt - System.currentTimeMillis()) / 1000;
                 if (ttlSeconds > 0) {
-                    jedis.expire(redisKey, (int) ttlSeconds);
+                    jedis.expire(redisKey, ttlSeconds);
                 }
             } else {
                 jedis.persist(redisKey);
