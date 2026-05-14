@@ -41,9 +41,9 @@ public class UpdateSynchronizedDataEndpoint implements ServiceEndpoint<
 
         try {
             DataLockManager.LockInfo lockInfo = DataLockManager.getLockInfo(lockKey);
-            if (lockInfo == null || !lockInfo.requesterId.equals(requesterId)) {
+            if (lockInfo == null || !lockInfo.requesterId().equals(requesterId)) {
                 Logger.debug("update: lock check failed (held by {})",
-                        lockInfo == null ? "<none>" : lockInfo.requesterId);
+                        lockInfo == null ? "<none>" : lockInfo.requesterId());
                 return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
                         false, "Lock has expired or is held by another requester");
             }
