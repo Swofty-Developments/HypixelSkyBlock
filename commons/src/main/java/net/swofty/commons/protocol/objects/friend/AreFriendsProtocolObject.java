@@ -10,15 +10,25 @@ import org.jetbrains.annotations.Nullable;
 public class AreFriendsProtocolObject extends ProtocolObject
         <AreFriendsProtocolObject.AreFriendsMessage,
                 AreFriendsProtocolObject.AreFriendsResponse> {
+    private static final Serializer<AreFriendsMessage> SERIALIZER =
+            new JacksonSerializer<>(AreFriendsMessage.class);
+    private static final Serializer<AreFriendsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(AreFriendsResponse.class);
 
     @Override
+
     public Serializer<AreFriendsMessage> getSerializer() {
-        return new JacksonSerializer<>(AreFriendsMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<AreFriendsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(AreFriendsResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record AreFriendsMessage(UUID player, UUID other) {

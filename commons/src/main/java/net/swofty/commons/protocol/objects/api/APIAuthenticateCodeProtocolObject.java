@@ -9,15 +9,25 @@ import java.util.UUID;
 
 public class APIAuthenticateCodeProtocolObject extends ProtocolObject
         <APIAuthenticateCodeProtocolObject.AuthenticateCodeMessage, APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse> {
+    private static final Serializer<AuthenticateCodeMessage> SERIALIZER =
+            new JacksonSerializer<>(AuthenticateCodeMessage.class);
+    private static final Serializer<AuthenticateCodeResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(AuthenticateCodeResponse.class);
 
     @Override
+
     public Serializer<AuthenticateCodeMessage> getSerializer() {
-        return new JacksonSerializer<>(AuthenticateCodeMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<AuthenticateCodeResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(AuthenticateCodeResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record AuthenticateCodeMessage(String authCode, String playerName, UUID playerUUID) {}

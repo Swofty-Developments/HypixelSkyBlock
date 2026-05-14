@@ -9,15 +9,25 @@ import org.jetbrains.annotations.Nullable;
 public class GetGameCountsProtocolObject extends ProtocolObject
         <GetGameCountsProtocolObject.GetGameCountsMessage,
                 GetGameCountsProtocolObject.GetGameCountsResponse> {
+    private static final Serializer<GetGameCountsMessage> SERIALIZER =
+            new JacksonSerializer<>(GetGameCountsMessage.class);
+    private static final Serializer<GetGameCountsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetGameCountsResponse.class);
 
     @Override
+
     public Serializer<GetGameCountsMessage> getSerializer() {
-        return new JacksonSerializer<>(GetGameCountsMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<GetGameCountsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetGameCountsResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record GetGameCountsMessage(ServerType type, String gameTypeName, String mapName) { }

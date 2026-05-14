@@ -10,15 +10,25 @@ import org.jetbrains.annotations.Nullable;
 public class IsPlayerInPartyProtocolObject extends ProtocolObject
         <IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage,
                 IsPlayerInPartyProtocolObject.IsPlayerInPartyResponse> {
+    private static final Serializer<IsPlayerInPartyMessage> SERIALIZER =
+            new JacksonSerializer<>(IsPlayerInPartyMessage.class);
+    private static final Serializer<IsPlayerInPartyResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(IsPlayerInPartyResponse.class);
 
     @Override
+
     public Serializer<IsPlayerInPartyMessage> getSerializer() {
-        return new JacksonSerializer<>(IsPlayerInPartyMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<IsPlayerInPartyResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(IsPlayerInPartyResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record IsPlayerInPartyMessage(UUID playerUUID) {

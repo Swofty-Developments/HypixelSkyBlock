@@ -12,15 +12,25 @@ import org.jetbrains.annotations.Nullable;
 public class GetPendingFriendRequestsProtocolObject extends ProtocolObject
         <GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage,
                 GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse> {
+    private static final Serializer<GetPendingRequestsMessage> SERIALIZER =
+            new JacksonSerializer<>(GetPendingRequestsMessage.class);
+    private static final Serializer<GetPendingRequestsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetPendingRequestsResponse.class);
 
     @Override
+
     public Serializer<GetPendingRequestsMessage> getSerializer() {
-        return new JacksonSerializer<>(GetPendingRequestsMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<GetPendingRequestsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetPendingRequestsResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record GetPendingRequestsMessage(UUID playerUuid) {

@@ -11,15 +11,25 @@ import org.jetbrains.annotations.Nullable;
 public class GetPartyProtocolObject extends ProtocolObject
         <GetPartyProtocolObject.GetPartyMessage,
                 GetPartyProtocolObject.GetPartyResponse> {
+    private static final Serializer<GetPartyMessage> SERIALIZER =
+            new JacksonSerializer<>(GetPartyMessage.class);
+    private static final Serializer<GetPartyResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetPartyResponse.class);
 
     @Override
+
     public Serializer<GetPartyMessage> getSerializer() {
-        return new JacksonSerializer<>(GetPartyMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<GetPartyResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetPartyResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record GetPartyMessage(UUID memberUuid) { }

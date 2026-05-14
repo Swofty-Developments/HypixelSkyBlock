@@ -10,15 +10,25 @@ import org.jetbrains.annotations.Nullable;
 public class GetServerForMapProtocolObject extends ProtocolObject
         <GetServerForMapProtocolObject.GetServerForMapMessage,
                 GetServerForMapProtocolObject.GetServerForMapResponse> {
+    private static final Serializer<GetServerForMapMessage> SERIALIZER =
+            new JacksonSerializer<>(GetServerForMapMessage.class);
+    private static final Serializer<GetServerForMapResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetServerForMapResponse.class);
 
     @Override
+
     public Serializer<GetServerForMapMessage> getSerializer() {
-        return new JacksonSerializer<>(GetServerForMapMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<GetServerForMapResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetServerForMapResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record GetServerForMapMessage(ServerType type, @Nullable String map, String mode, int neededSlots) {

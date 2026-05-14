@@ -11,15 +11,25 @@ import org.jetbrains.annotations.Nullable;
 public class GetFriendDataProtocolObject extends ProtocolObject
         <GetFriendDataProtocolObject.GetFriendDataMessage,
                 GetFriendDataProtocolObject.GetFriendDataResponse> {
+    private static final Serializer<GetFriendDataMessage> SERIALIZER =
+            new JacksonSerializer<>(GetFriendDataMessage.class);
+    private static final Serializer<GetFriendDataResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetFriendDataResponse.class);
 
     @Override
+
     public Serializer<GetFriendDataMessage> getSerializer() {
-        return new JacksonSerializer<>(GetFriendDataMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<GetFriendDataResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetFriendDataResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record GetFriendDataMessage(UUID playerUuid) {

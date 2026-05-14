@@ -11,15 +11,25 @@ import org.jetbrains.annotations.Nullable;
 public class TrackedItemRetrieveProtocolObject extends ProtocolObject
         <TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage,
         TrackedItemRetrieveProtocolObject.TrackedItemResponse> {
+    private static final Serializer<TrackedItemRetrieveMessage> SERIALIZER =
+            new JacksonSerializer<>(TrackedItemRetrieveMessage.class);
+    private static final Serializer<TrackedItemResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(TrackedItemResponse.class);
 
     @Override
+
     public Serializer<TrackedItemRetrieveMessage> getSerializer() {
-        return new JacksonSerializer<>(TrackedItemRetrieveMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<TrackedItemResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(TrackedItemResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record TrackedItemRetrieveMessage(UUID itemUUID) {

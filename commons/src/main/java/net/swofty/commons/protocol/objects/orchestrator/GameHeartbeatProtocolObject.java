@@ -13,15 +13,25 @@ import org.jetbrains.annotations.Nullable;
 public class GameHeartbeatProtocolObject extends ProtocolObject
         <GameHeartbeatProtocolObject.HeartbeatMessage,
                 GameHeartbeatProtocolObject.HeartbeatResponse> {
+    private static final Serializer<HeartbeatMessage> SERIALIZER =
+            new JacksonSerializer<>(HeartbeatMessage.class);
+    private static final Serializer<HeartbeatResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(HeartbeatResponse.class);
 
     @Override
+
     public Serializer<HeartbeatMessage> getSerializer() {
-        return new JacksonSerializer<>(HeartbeatMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<HeartbeatResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(HeartbeatResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record HeartbeatMessage(UUID uuid, String shortName, ServerType type, int maxPlayers, int onlinePlayers, List<Game> games) { }

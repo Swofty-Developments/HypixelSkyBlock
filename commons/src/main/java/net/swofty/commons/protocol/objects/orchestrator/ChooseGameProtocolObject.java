@@ -11,15 +11,25 @@ import org.jetbrains.annotations.Nullable;
 public class ChooseGameProtocolObject extends ProtocolObject
         <ChooseGameProtocolObject.ChooseGameMessage,
                 ChooseGameProtocolObject.ChooseGameResponse> {
+    private static final Serializer<ChooseGameMessage> SERIALIZER =
+            new JacksonSerializer<>(ChooseGameMessage.class);
+    private static final Serializer<ChooseGameResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(ChooseGameResponse.class);
 
     @Override
+
     public Serializer<ChooseGameMessage> getSerializer() {
-        return new JacksonSerializer<>(ChooseGameMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<ChooseGameResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(ChooseGameResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record ChooseGameMessage(UUID player, UnderstandableProxyServer server, String gameId) {

@@ -11,15 +11,25 @@ import org.jetbrains.annotations.Nullable;
 public class GetMapsProtocolObject extends ProtocolObject
         <GetMapsProtocolObject.GetMapsMessage,
                 GetMapsProtocolObject.GetMapsResponse> {
+    private static final Serializer<GetMapsMessage> SERIALIZER =
+            new JacksonSerializer<>(GetMapsMessage.class);
+    private static final Serializer<GetMapsResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(GetMapsResponse.class);
 
     @Override
+
     public Serializer<GetMapsMessage> getSerializer() {
-        return new JacksonSerializer<>(GetMapsMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<GetMapsResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(GetMapsResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record GetMapsMessage(ServerType type, String mode) { }

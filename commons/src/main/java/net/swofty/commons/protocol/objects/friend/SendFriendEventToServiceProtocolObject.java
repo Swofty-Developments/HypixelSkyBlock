@@ -9,15 +9,25 @@ import org.jetbrains.annotations.Nullable;
 public class SendFriendEventToServiceProtocolObject extends ProtocolObject
         <SendFriendEventToServiceProtocolObject.SendFriendEventToServiceMessage,
                 SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse> {
+    private static final Serializer<SendFriendEventToServiceMessage> SERIALIZER =
+            new JacksonSerializer<>(SendFriendEventToServiceMessage.class);
+    private static final Serializer<SendFriendEventToServiceResponse> RETURN_SERIALIZER =
+            new JacksonSerializer<>(SendFriendEventToServiceResponse.class);
 
     @Override
+
     public Serializer<SendFriendEventToServiceMessage> getSerializer() {
-        return new JacksonSerializer<>(SendFriendEventToServiceMessage.class);
+
+        return SERIALIZER;
+
     }
 
     @Override
+
     public Serializer<SendFriendEventToServiceResponse> getReturnSerializer() {
-        return new JacksonSerializer<>(SendFriendEventToServiceResponse.class);
+
+        return RETURN_SERIALIZER;
+
     }
 
     public record SendFriendEventToServiceMessage(FriendEvent event) {
