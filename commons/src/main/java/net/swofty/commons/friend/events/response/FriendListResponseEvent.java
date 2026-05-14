@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendListResponseEvent extends FriendResponseEvent {
+public final class FriendListResponseEvent extends FriendResponseEvent {
     private final UUID player;
     private final List<FriendListEntry> friends;
     private final int page;

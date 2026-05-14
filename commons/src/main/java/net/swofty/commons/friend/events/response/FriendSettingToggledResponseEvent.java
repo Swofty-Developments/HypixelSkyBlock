@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendSettingToggledResponseEvent extends FriendResponseEvent {
+public final class FriendSettingToggledResponseEvent extends FriendResponseEvent {
     private final UUID player;
     private final FriendSettingType settingType;
     private final boolean newValue;

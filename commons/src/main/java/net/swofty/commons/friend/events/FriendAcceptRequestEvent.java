@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendAcceptRequestEvent extends FriendEvent {
+public final class FriendAcceptRequestEvent extends FriendEvent {
     private final UUID accepter;
     private final UUID requester;
 

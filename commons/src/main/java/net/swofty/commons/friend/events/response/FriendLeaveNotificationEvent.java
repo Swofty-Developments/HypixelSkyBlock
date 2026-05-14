@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendLeaveNotificationEvent extends FriendResponseEvent {
+public final class FriendLeaveNotificationEvent extends FriendResponseEvent {
     private final UUID player;
     private final UUID friend;
     private final String friendName;

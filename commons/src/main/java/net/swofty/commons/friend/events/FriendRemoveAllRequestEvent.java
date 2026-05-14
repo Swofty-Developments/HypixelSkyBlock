@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendRemoveAllRequestEvent extends FriendEvent {
+public final class FriendRemoveAllRequestEvent extends FriendEvent {
     private final UUID player;
 
     @JsonCreator

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendListRequestEvent extends FriendEvent {
+public final class FriendListRequestEvent extends FriendEvent {
     private final UUID player;
     private final int page;
     private final boolean bestOnly;

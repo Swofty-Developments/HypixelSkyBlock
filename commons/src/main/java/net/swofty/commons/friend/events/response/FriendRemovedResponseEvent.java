@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendRemovedResponseEvent extends FriendResponseEvent {
+public final class FriendRemovedResponseEvent extends FriendResponseEvent {
     private final UUID remover;
     private final UUID removed;
     private final String removerName;

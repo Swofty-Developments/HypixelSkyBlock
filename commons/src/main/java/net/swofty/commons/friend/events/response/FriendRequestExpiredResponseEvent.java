@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendRequestExpiredResponseEvent extends FriendResponseEvent {
+public final class FriendRequestExpiredResponseEvent extends FriendResponseEvent {
     private final UUID sender;
     private final UUID target;
     private final String senderName;
