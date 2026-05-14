@@ -16,6 +16,7 @@ import net.swofty.type.skyblockgeneric.item.components.MinionUpgradeComponent;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
 import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
 import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import org.tinylog.Logger;
 
 import java.util.*;
 
@@ -96,8 +97,8 @@ public class IslandMinionData {
             } else {
                 // If the item does not exist, add it as a new entry.
                 if (item.getAttributeHandler().getPotentialType() == null) {
-                    System.out.println(item.getAttributeHandler().getTypeAsString());
-                    throw new NullPointerException("Item type is null");
+                    throw new NullPointerException(
+                            "Item type is null for " + item.getAttributeHandler().getTypeAsString());
                 }
                 itemsInMinion.add(new ItemQuantifiable(item.getAttributeHandler().getPotentialType(), item.getAmount()));
             }
@@ -172,7 +173,7 @@ public class IslandMinionData {
                     try {
                         amount = Integer.parseInt(item.substring(splitIndex + 1));
                     } catch (NumberFormatException e) {
-                        System.err.println("Failed to parse item amount: " + item);
+                        Logger.error("Failed to parse item amount: {}", item);
                         throw new RuntimeException("Failed to parse item amount: " + item, e);
                     }
                     itemsInMinion.add(new ItemQuantifiable(
@@ -180,7 +181,7 @@ public class IslandMinionData {
                             amount
                     ));
                 } else {
-                    System.err.println("Invalid item format: " + item);
+                    Logger.error("Invalid item format: {}", item);
                     throw new RuntimeException("Invalid item format: " + item);
                 }
             });
