@@ -27,6 +27,11 @@ public class ActionItemDrop implements HypixelEventClass {
             return;
         }
 
+        if (player.isInLaunchpad()) {
+            event.setCancelled(true);
+            return;
+        }
+
         boolean hideMessage = player.getToggles().get(DatapointToggles.Toggles.ToggleType.DISABLE_DROP_MESSAGES);
 
         if (!hideMessage) {
