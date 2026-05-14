@@ -33,7 +33,7 @@ public class GameManager {
         String rootName = isLobby ? "L" : (maxPlayers <= 20 ? "mini" : "mega");
         String shortenedRootName = isLobby ? "L" : (maxPlayers <= 20 ? "m" : "M");
 
-        char letter = (char) (new Random().nextInt(26) + (isLobby ? 'a' : 'A'));
+        char letter = (char) (java.util.concurrent.ThreadLocalRandom.current().nextInt(26) + (isLobby ? 'a' : 'A'));
         String displayName = getNextAvailableDisplayName() + "" + letter;
 
         GameServer server = new GameServer(

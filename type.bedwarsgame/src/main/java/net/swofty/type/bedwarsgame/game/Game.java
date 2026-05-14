@@ -110,7 +110,7 @@ public final class Game {
 
 		int maxPlayers = getMaxPlayers();
 		String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
-				.substring(0, new Random().nextInt(10) + 4);
+				.substring(0, java.util.concurrent.ThreadLocalRandom.current().nextInt(10) + 4);
 		for (BedWarsPlayer p : players) {
 			String name = p.getUuid().compareTo(player.getUuid()) == 0 ? player.getUsername() : "§k" + randomLetters;
 			p.sendMessage(name + " §ehas joined (§b" + players.size() + "§e/§b" + maxPlayers + "§e)");

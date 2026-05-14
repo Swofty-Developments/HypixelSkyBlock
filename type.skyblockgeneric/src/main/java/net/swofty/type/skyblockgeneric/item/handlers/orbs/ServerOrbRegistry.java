@@ -16,7 +16,7 @@ public class ServerOrbRegistry {
         registerHandler("WHEAT_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> Block.WHEAT));
         registerHandler("FLOWER_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> {
             List<Material> flowers = Groups.FLOWERS;
-            Material randomMaterial = flowers.get(new Random().nextInt(flowers.size()));
+            Material randomMaterial = flowers.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(flowers.size()));
             return randomMaterial.block();
         }));
         registerHandler("PUMPKIN_AND_MELON_CRYSTAL_ORB_HANDLER", new ServerOrbHandler(crystalImpl -> {

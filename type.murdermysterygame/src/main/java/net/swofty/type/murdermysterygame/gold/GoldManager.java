@@ -51,7 +51,7 @@ public class GoldManager {
             if (spawnedGold.size() >= MAX_GOLD_SPAWNED || spawnLocations.isEmpty()) {
                 return;
             }
-            MurderMysteryMapsConfig.Position randomSpawn = spawnLocations.get(new Random().nextInt(spawnLocations.size()));
+            MurderMysteryMapsConfig.Position randomSpawn = spawnLocations.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(spawnLocations.size()));
             Pos spawnPos = new Pos(randomSpawn.x(), randomSpawn.y(), randomSpawn.z());
             // Issue #673: cap each spawn point at one gold coin. The previous loop
             // rolled the same point repeatedly and stacked up to five coins there.

@@ -209,7 +209,7 @@ public class GUICageKitSelector extends HypixelInventoryGUI {
                     return;
                 }
 
-                SkywarsKit randomKit = ownedKits.get(new Random().nextInt(ownedKits.size()));
+                SkywarsKit randomKit = ownedKits.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(ownedKits.size()));
                 currentUnlocks.selectKitForMode(mode, randomKit.getId());
                 player.sendMessage("§aRandomly selected the §e" + randomKit.getName() + " §akit!");
 
