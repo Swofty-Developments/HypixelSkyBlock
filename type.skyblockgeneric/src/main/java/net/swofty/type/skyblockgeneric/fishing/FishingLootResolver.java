@@ -8,33 +8,35 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public final class FishingLootResolver {
+
+    private static final List<Function<FishingContext, Optional<FishingCatchResult>>> SPECIAL_CATCHES = List.of(
+        FishingLootResolver::tryResolveQuestCatch,
+        FishingLootResolver::tryResolveTrophyFish,
+        FishingLootResolver::tryResolveSeaCreature
+    );
+
+    private static final FishingCatchResult DEFAULT_CATCH =
+        new FishingCatchResult(FishingCatchKind.ITEM, "RAW_FISH", null, null, 1, 5.0D, false, null);
+
     private FishingLootResolver() {
     }
 
     public static FishingCatchResult resolve(FishingContext context) {
-        FishingCatchResult questCatch = tryResolveQuestCatch(context);
-        if (questCatch != null) {
-            return questCatch;
-        }
-
-        FishingCatchResult trophyFish = tryResolveTrophyFish(context);
-        if (trophyFish != null) {
-            return trophyFish;
-        }
-
-        FishingCatchResult seaCreature = tryResolveSeaCreature(context);
-        if (seaCreature != null) {
-            return seaCreature;
-        }
-
-        return resolveItem(context);
+        return SPECIAL_CATCHES.stream()
+            .map(resolver -> resolver.apply(context))
+            .flatMap(Optional::stream)
+            .findFirst()
+            .orElseGet(() -> resolveItem(context));
     }
 
-    private static FishingCatchResult tryResolveTrophyFish(FishingContext context) {
+    private static Optional<FishingCatchResult> tryResolveTrophyFish(FishingContext context) {
         if (context.medium() != FishingMedium.LAVA) {
-            return null;
+            return Optional.empty();
         }
 
         double bonus = getTotalStatistic(context, ItemStatistic.TROPHY_FISH_CHANCE);
@@ -69,40 +71,31 @@ public final class FishingLootResolver {
                 if (itemId == null) {
                     continue;
                 }
-                return new FishingCatchResult(FishingCatchKind.TROPHY_FISH, itemId, null, definition.id(), 1, 300.0D, false, null);
+                return Optional.of(new FishingCatchResult(
+                    FishingCatchKind.TROPHY_FISH, itemId, null, definition.id(), 1, 300.0D, false, null));
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    private static FishingCatchResult tryResolveQuestCatch(FishingContext context) {
-        if (context.medium() != FishingMedium.WATER) {
-            return null;
-        }
-        if (context.regionId() == null) {
-            return null;
-        }
+    private static Optional<FishingCatchResult> tryResolveQuestCatch(FishingContext context) {
+        if (context.medium() != FishingMedium.WATER) return Optional.empty();
+        if (context.regionId() == null) return Optional.empty();
         if (!"FISHING_OUTPOST".equals(context.regionId()) && !"FISHERMANS_HUT".equals(context.regionId())) {
-            return null;
+            return Optional.empty();
         }
         if (!context.player().getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERWOMAN_ENID)) {
-            return null;
+            return Optional.empty();
         }
         if (context.player().getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_UNLOCKED_SHIP)) {
-            return null;
+            return Optional.empty();
         }
-        if (context.player().getShipState().getEngine() != null) {
-            return null;
-        }
-        if (context.player().countItem(ItemType.RUSTY_SHIP_ENGINE) > 0) {
-            return null;
-        }
-        if (Math.random() * 100 > 1.0D) {
-            return null;
-        }
+        if (context.player().getShipState().getEngine() != null) return Optional.empty();
+        if (context.player().countItem(ItemType.RUSTY_SHIP_ENGINE) > 0) return Optional.empty();
+        if (Math.random() * 100 > 1.0D) return Optional.empty();
 
-        return new FishingCatchResult(
+        return Optional.of(new FishingCatchResult(
             FishingCatchKind.QUEST,
             ItemType.RUSTY_SHIP_ENGINE.name(),
             null,
@@ -111,7 +104,7 @@ public final class FishingLootResolver {
             15.0D,
             false,
             "You fished up a Rusty Ship Engine!"
-        );
+        ));
     }
 
     private static String rollTrophyTier(FishingContext context, TrophyFishDefinition definition) {
@@ -129,27 +122,20 @@ public final class FishingLootResolver {
             charmBonus = charm.level() * 2.0D;
         }
 
-        if (Math.random() <= (0.002D * (1 + charmBonus / 100D))) {
-            return "DIAMOND";
-        }
-        if (Math.random() <= (0.02D * (1 + charmBonus / 100D))) {
-            return "GOLD";
-        }
-        if (Math.random() <= (0.25D * (1 + charmBonus / 100D))) {
-            return "SILVER";
-        }
+        if (Math.random() <= (0.002D * (1 + charmBonus / 100D))) return "DIAMOND";
+        if (Math.random() <= (0.02D * (1 + charmBonus / 100D))) return "GOLD";
+        if (Math.random() <= (0.25D * (1 + charmBonus / 100D))) return "SILVER";
         return "BRONZE";
     }
 
-    private static FishingCatchResult tryResolveSeaCreature(FishingContext context) {
-        FishingTableDefinition table = findTable(context);
-        if (table == null) {
-            return null;
-        }
+    private static Optional<FishingCatchResult> tryResolveSeaCreature(FishingContext context) {
+        Optional<FishingTableDefinition> tableOpt = findTable(context);
+        if (tableOpt.isEmpty()) return Optional.empty();
+        FishingTableDefinition table = tableOpt.get();
 
         double seaCreatureChance = getTotalStatistic(context, ItemStatistic.SEA_CREATURE_CHANCE);
         if (context.hook() != null && context.hook().isTreasureOnly()) {
-            return null;
+            return Optional.empty();
         }
 
         for (FishingTableDefinition.SeaCreatureRoll roll : table.seaCreatures()) {
@@ -160,17 +146,17 @@ public final class FishingLootResolver {
             double tagBonus = definition == null ? 0.0D : getTagBonus(context, definition.tags());
             if (Math.random() * 100 <= roll.chance() + seaCreatureChance + tagBonus) {
                 double skillXp = definition == null ? 0.0D : definition.skillXp();
-                return new FishingCatchResult(FishingCatchKind.SEA_CREATURE, null, roll.seaCreatureId(), null, 1, skillXp, false, null);
+                return Optional.of(new FishingCatchResult(
+                    FishingCatchKind.SEA_CREATURE, null, roll.seaCreatureId(), null, 1, skillXp, false, null));
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     private static FishingCatchResult resolveItem(FishingContext context) {
-        FishingTableDefinition table = findTable(context);
-        if (table == null) {
-            return new FishingCatchResult(FishingCatchKind.ITEM, "RAW_FISH", null, null, 1, 5.0D, false, null);
-        }
+        Optional<FishingTableDefinition> tableOpt = findTable(context);
+        if (tableOpt.isEmpty()) return DEFAULT_CATCH;
+        FishingTableDefinition table = tableOpt.get();
 
         List<FishingTableDefinition.LootEntry> pool = table.items();
         double treasureChance = getTotalStatistic(context, ItemStatistic.TREASURE_CHANCE);
@@ -183,45 +169,45 @@ public final class FishingLootResolver {
 
         if (!table.treasures().isEmpty() && Math.random() * 100 <= treasureChance) {
             pool = context.sinker() != null && context.sinker().isBayouTreasureToJunk() ? table.junk() : table.treasures();
-            return pick(pool, FishingCatchKind.TREASURE);
+            return pick(pool, FishingCatchKind.TREASURE).orElse(DEFAULT_CATCH);
         }
 
-        FishingCatchResult result = pick(pool, FishingCatchKind.ITEM);
-        if (result != null) {
-            return result;
-        }
-        if (!table.junk().isEmpty()) {
-            return pick(table.junk(), FishingCatchKind.ITEM);
-        }
-        return new FishingCatchResult(FishingCatchKind.ITEM, "RAW_FISH", null, null, 1, 5.0D, false, null);
+        return pick(pool, FishingCatchKind.ITEM)
+            .or(() -> table.junk().isEmpty() ? Optional.empty() : pick(table.junk(), FishingCatchKind.ITEM))
+            .orElse(DEFAULT_CATCH);
     }
 
-    private static FishingCatchResult pick(List<FishingTableDefinition.LootEntry> pool, FishingCatchKind kind) {
+    private static Optional<FishingCatchResult> pick(List<FishingTableDefinition.LootEntry> pool, FishingCatchKind kind) {
+        if (pool.isEmpty()) return Optional.empty();
+
         double roll = Math.random() * 100;
         double cursor = 0;
         for (FishingTableDefinition.LootEntry entry : pool) {
             cursor += entry.chance();
             if (roll <= cursor) {
-                return new FishingCatchResult(kind, entry.itemId(), null, null, entry.amount(), entry.skillXp(), false, null);
+                return Optional.of(new FishingCatchResult(
+                    kind, entry.itemId(), null, null, entry.amount(), entry.skillXp(), false, null));
             }
         }
-        return pool.isEmpty() ? null : new FishingCatchResult(kind, pool.getFirst().itemId(), null, null, pool.getFirst().amount(), pool.getFirst().skillXp(), false, null);
+        FishingTableDefinition.LootEntry first = pool.getFirst();
+        return Optional.of(new FishingCatchResult(
+            kind, first.itemId(), null, null, first.amount(), first.skillXp(), false, null));
     }
 
-    private static FishingTableDefinition findTable(FishingContext context) {
+    private static Optional<FishingTableDefinition> findTable(FishingContext context) {
         FishingTableDefinition fallback = null;
         for (FishingTableDefinition definition : FishingRegistry.getTables()) {
             if (!definition.mediums().isEmpty() && !definition.mediums().contains(context.medium())) {
                 continue;
             }
             if (context.regionId() != null && definition.regions().contains(context.regionId())) {
-                return definition;
+                return Optional.of(definition);
             }
             if (definition.regions().isEmpty() && fallback == null) {
                 fallback = definition;
             }
         }
-        return fallback;
+        return Optional.ofNullable(fallback);
     }
 
     private static double getTotalStatistic(FishingContext context, ItemStatistic statistic) {
