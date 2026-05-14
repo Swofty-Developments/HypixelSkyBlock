@@ -37,7 +37,6 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     && packet.getClass() != KnownPacksPacket.class
                     && packet.getClass() != TagsUpdatePacket.class
             ) {
-                //System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
                 return;
             }
             if (respawn == null && packet.getClass() == RespawnPacket.class) {
