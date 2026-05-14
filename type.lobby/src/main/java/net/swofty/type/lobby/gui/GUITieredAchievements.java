@@ -317,14 +317,7 @@ public class GUITieredAchievements extends HypixelInventoryGUI {
     }
 
     private String toRoman(int num) {
-        return switch (num) {
-            case 1 -> "I";
-            case 2 -> "II";
-            case 3 -> "III";
-            case 4 -> "IV";
-            case 5 -> "V";
-            default -> String.valueOf(num);
-        };
+        return AchievementTier.toRomanNumeral(num);
     }
 
     private int getMaxPages(int totalAchievements) {
