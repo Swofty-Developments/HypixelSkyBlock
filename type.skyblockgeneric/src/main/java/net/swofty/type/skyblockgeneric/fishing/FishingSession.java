@@ -1,8 +1,7 @@
 package net.swofty.type.skyblockgeneric.fishing;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public record FishingSession(
     UUID ownerUuid,

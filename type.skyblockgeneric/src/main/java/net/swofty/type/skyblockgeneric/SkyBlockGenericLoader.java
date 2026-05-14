@@ -61,7 +61,7 @@ import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
-import net.swofty.type.skyblockgeneric.fishing.FishingRegistry;
+import net.swofty.type.skyblockgeneric.fishing.registry.FishingRegistry;
 import net.swofty.type.skyblockgeneric.item.ItemConfigParser;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;

@@ -5,7 +5,8 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCollection;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointTrophyFish;
-import net.swofty.type.skyblockgeneric.entity.mob.seacreature.SeaCreatureSpawner;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.seacreature.SeaCreatureSpawner;
+import net.swofty.type.skyblockgeneric.fishing.FishingService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 /**

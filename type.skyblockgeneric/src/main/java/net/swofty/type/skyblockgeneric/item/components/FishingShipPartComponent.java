@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 
 import lombok.Getter;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.skyblockgeneric.fishing.FishingShipPartSlot;
+import net.swofty.type.skyblockgeneric.fishing.rod.FishingShipPartSlot;
 
 @Getter
 public class FishingShipPartComponent extends net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent {

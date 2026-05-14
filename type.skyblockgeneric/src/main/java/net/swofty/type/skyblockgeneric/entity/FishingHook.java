@@ -17,7 +17,7 @@ import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.fishing.FishingMedium;
 import net.swofty.type.skyblockgeneric.fishing.FishingService;
 import net.swofty.type.skyblockgeneric.fishing.FishingSession;

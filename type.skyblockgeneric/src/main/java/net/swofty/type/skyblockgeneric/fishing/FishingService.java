@@ -1,19 +1,23 @@
 package net.swofty.type.skyblockgeneric.fishing;
 
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.skyblockgeneric.entity.FishingHook;
+import net.swofty.type.skyblockgeneric.fishing.bait.FishingBaitService;
 import net.swofty.type.skyblockgeneric.fishing.catches.CatchAwardContext;
 import net.swofty.type.skyblockgeneric.fishing.catches.CatchPayload;
+import net.swofty.type.skyblockgeneric.fishing.hotspot.FishingHotspotService;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.resolver.FishingCatchResolver;
+import net.swofty.type.skyblockgeneric.fishing.rod.FishingRodPartService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
 import net.swofty.type.skyblockgeneric.item.components.FishingRodPartComponent;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class FishingService {
     private static final Map<UUID, FishingSession> SESSIONS = new ConcurrentHashMap<>();

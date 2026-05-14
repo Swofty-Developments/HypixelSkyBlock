@@ -21,7 +21,7 @@ import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
-import net.swofty.type.skyblockgeneric.fishing.FishingRodLoreBuilder;
+import net.swofty.type.skyblockgeneric.fishing.rod.FishingRodLoreBuilder;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.components.*;

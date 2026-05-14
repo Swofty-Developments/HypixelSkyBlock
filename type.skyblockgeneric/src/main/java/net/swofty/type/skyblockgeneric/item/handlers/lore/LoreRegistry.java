@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item.handlers.lore;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.PotatoType;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
-import net.swofty.type.skyblockgeneric.fishing.FishingRodLoreBuilder;
+import net.swofty.type.skyblockgeneric.fishing.rod.FishingRodLoreBuilder;
 import net.swofty.type.skyblockgeneric.utility.groups.EnchantItemGroups;
 
 import java.util.ArrayList;

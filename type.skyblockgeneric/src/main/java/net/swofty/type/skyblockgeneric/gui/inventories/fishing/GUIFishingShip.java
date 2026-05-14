@@ -9,8 +9,8 @@ import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
-import net.swofty.type.skyblockgeneric.fishing.FishingShipService;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.ship.FishingShipService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIFishingShip extends HypixelInventoryGUI {

@@ -12,7 +12,7 @@ import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 

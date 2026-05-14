@@ -9,8 +9,8 @@ import net.swofty.type.generic.gui.v2.StatelessView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
-import net.swofty.type.skyblockgeneric.fishing.FishingPartCategory;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.rod.FishingPartCategory;
 
 public class GUIHookGuide extends StatelessView {
     private static final int[] PART_SLOTS = {10, 11, 12, 13, 14, 15, 16};

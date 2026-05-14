@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.swofty.type.skyblockgeneric.entity.FishingHook;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.fishing.FishingService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 

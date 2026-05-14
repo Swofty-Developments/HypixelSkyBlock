@@ -10,8 +10,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.fishing.GUIGFishingShip;
-import net.swofty.type.skyblockgeneric.fishing.FishingItemSupport;
-import net.swofty.type.skyblockgeneric.fishing.FishingShipService;
+import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
+import net.swofty.type.skyblockgeneric.fishing.ship.FishingShipService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
