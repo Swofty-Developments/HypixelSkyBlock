@@ -7,7 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.lang.reflect.Field;
 
-public class ColorUtil {
+public final class ColorUtil {
+
+    private ColorUtil() {}
+
 
     @Nullable
     public static Color getColorByName(String name) {

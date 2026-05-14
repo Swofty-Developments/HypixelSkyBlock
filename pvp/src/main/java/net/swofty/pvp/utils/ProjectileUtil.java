@@ -11,7 +11,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 // Copied from Minestom, added singleCollision parameter and removed velocity update
-public class ProjectileUtil {
+public final class ProjectileUtil {
+
+    private ProjectileUtil() {}
+
 	public static @NotNull PhysicsResult simulateMovement(@NotNull Pos entityPosition, @NotNull Vec entityVelocityPerTick,
 	                                                      @NotNull BoundingBox entityBoundingBox, @NotNull WorldBorder worldBorder,
 	                                                      @NotNull Block.Getter blockGetter, boolean entityHasPhysics,

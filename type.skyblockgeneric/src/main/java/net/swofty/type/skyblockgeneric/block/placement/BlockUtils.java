@@ -10,7 +10,8 @@ import net.swofty.type.skyblockgeneric.block.placement.states.state.Facing;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class BlockUtils {
+public final class BlockUtils {
+
     private final Instance instance;
     private final Point position;
     private final BlockState blockState;

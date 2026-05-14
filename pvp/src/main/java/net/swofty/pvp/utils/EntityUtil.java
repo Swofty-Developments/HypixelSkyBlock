@@ -15,7 +15,10 @@ import net.minestom.server.utils.time.TimeUnit;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-public class EntityUtil {
+public final class EntityUtil {
+
+    private EntityUtil() {}
+
 	public static void spawnItemAtLocation(Entity entity, ItemStack itemStack, double up) {
 		if (itemStack.isAir()) return;
 

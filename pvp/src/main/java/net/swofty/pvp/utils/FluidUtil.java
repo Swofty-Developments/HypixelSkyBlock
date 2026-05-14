@@ -8,7 +8,10 @@ import net.minestom.server.instance.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidUtil {
+public final class FluidUtil {
+
+    private FluidUtil() {}
+
 	public static int getLevel(Block block) {
 		String levelStr = block.getProperty("level");
 		if (levelStr == null) return 8;

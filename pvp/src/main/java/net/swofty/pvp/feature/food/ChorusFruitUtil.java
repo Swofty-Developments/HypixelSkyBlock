@@ -13,7 +13,10 @@ import net.minestom.server.world.DimensionType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ChorusFruitUtil {
+public final class ChorusFruitUtil {
+
+    private ChorusFruitUtil() {}
+
 	private static boolean randomTeleport(Entity entity, Pos to) {
 		Instance instance = entity.getInstance();
 		assert instance != null;

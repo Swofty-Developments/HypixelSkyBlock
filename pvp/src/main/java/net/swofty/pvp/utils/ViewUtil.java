@@ -6,7 +6,10 @@ import net.minestom.server.entity.Entity;
 
 import java.util.Collections;
 
-public class ViewUtil {
+public final class ViewUtil {
+
+    private ViewUtil() {}
+
 	public static Audience viewersAndSelf(Entity origin) {
 		if (origin.getChunk() == null) return Audience.empty();
 		return origin.getChunk().getViewersAsAudience();

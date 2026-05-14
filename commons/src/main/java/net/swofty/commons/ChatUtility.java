@@ -4,7 +4,10 @@ import lombok.Getter;
 
 import java.util.List;
 
-public class ChatUtility {
+public final class ChatUtility {
+
+    private ChatUtility() {}
+
 
 	public enum FontInfo {
 		A('A', 5),

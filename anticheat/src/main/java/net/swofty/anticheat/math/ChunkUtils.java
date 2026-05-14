@@ -1,6 +1,9 @@
 package net.swofty.anticheat.math;
 
-public class ChunkUtils {
+public final class ChunkUtils {
+
+    private ChunkUtils() {}
+
     public static int getChunkCoordinate(double xz) {
         return getChunkCoordinate((int) Math.floor(xz));
     }

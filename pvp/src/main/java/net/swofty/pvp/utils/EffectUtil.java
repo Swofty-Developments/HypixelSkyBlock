@@ -8,7 +8,10 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.utils.PacketSendingUtils;
 
-public class EffectUtil {
+public final class EffectUtil {
+
+    private EffectUtil() {}
+
 	public static void sendNearby(@NotNull Instance instance, @NotNull WorldEvent effect,
 	                              int x, int y, int z, int data, double distance, boolean global) {
 		WorldEventPacket packet = new WorldEventPacket(effect.id(), new Pos(x, y, z), data, global);
