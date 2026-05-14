@@ -2,7 +2,9 @@ package net.swofty.commons.bedwars;
 
 import java.text.DecimalFormat;
 
-public class BedwarsLevelUtil {
+public final class BedwarsLevelUtil {
+
+    private BedwarsLevelUtil() {}
 
     private static final DecimalFormat FORMAT = new DecimalFormat("#,###.#");
 
