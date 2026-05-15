@@ -1,14 +1,14 @@
 package net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.ability;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.minestom.server.entity.damage.Damage;
 import net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.SlayerBossMob;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class NoopSlayerBossAbility implements SlayerBossAbility {
     static final NoopSlayerBossAbility INSTANCE = new NoopSlayerBossAbility();
-
-    private NoopSlayerBossAbility() {
-    }
 
     @Override public void onSpawn(SlayerBossMob boss) {}
     @Override public float modifyIncomingDamage(SlayerBossMob boss, Damage damage, float amount) { return amount; }

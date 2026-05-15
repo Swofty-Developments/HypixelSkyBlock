@@ -1,6 +1,8 @@
 package net.swofty.type.skyblockgeneric.slayer;
 
 import java.util.Optional;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
@@ -14,10 +16,8 @@ import net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.SlayerBossProfile;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SlayerService {
-    private SlayerService() {
-    }
-
     public static StartResult startQuest(SkyBlockPlayer player, SlayerType type, SlayerTier tier) {
         DatapointSlayer.SlayerData data = data(player);
         if (data.getActiveQuest() != null) {

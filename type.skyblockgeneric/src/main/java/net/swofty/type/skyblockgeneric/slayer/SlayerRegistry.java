@@ -9,18 +9,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SlayerRegistry {
     private static final File SLAYERS_FILE = new File("./configuration/skyblock/slayers.yml");
     private static final Map<SlayerType, SlayerDefinition> DEFINITIONS = new LinkedHashMap<>();
-
-    private SlayerRegistry() {
-    }
 
     public static void loadAll() {
         DEFINITIONS.clear();

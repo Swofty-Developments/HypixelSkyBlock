@@ -1,11 +1,11 @@
 package net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.ability;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.swofty.type.skyblockgeneric.slayer.SlayerType;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SlayerBossAbilityFactory {
-    private SlayerBossAbilityFactory() {
-    }
-
     public static SlayerBossAbility create(SlayerType type) {
         return switch (type) {
             case REVENANT_HORROR -> new RevenantHorrorAbility();
