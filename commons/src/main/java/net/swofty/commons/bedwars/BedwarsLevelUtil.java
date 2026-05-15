@@ -1,10 +1,12 @@
 package net.swofty.commons.bedwars;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.text.DecimalFormat;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BedwarsLevelUtil {
-
-    private BedwarsLevelUtil() {}
 
     private static final DecimalFormat FORMAT = new DecimalFormat("#,###.#");
 

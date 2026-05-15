@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.bait;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.fishing.FishingMedium;
@@ -9,9 +12,8 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingBaitService {
-    private FishingBaitService() {
-    }
 
     public static @Nullable FishingBaitComponent getFirstAvailableBait(SkyBlockPlayer player, FishingMedium medium) {
         for (int slot = 0; slot < 36; slot++) {

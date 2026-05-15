@@ -1,5 +1,8 @@
 package net.swofty.velocity.redis;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisChannels;
 import net.swofty.commons.redis.RedisEndpoint;
@@ -9,9 +12,8 @@ import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RedisHandlerRegistry {
-    private RedisHandlerRegistry() {
-    }
 
     public static <T, R> void register(RedisMessageHandler<T, R> handler) {
         RedisProtocol<T, R> protocol = handler.protocol();

@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.registry;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import net.swofty.type.skyblockgeneric.fishing.hotspot.HotspotDefinition;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingRegistry {
     private static final File FISHING_DIR = new File("./configuration/skyblock/fishing");
 
@@ -23,9 +27,6 @@ public final class FishingRegistry {
     private static final Map<String, TrophyFishDefinition> TROPHY_FISH = new LinkedHashMap<>();
     private static final Map<String, SeaCreatureDefinition> SEA_CREATURES = new LinkedHashMap<>();
     private static final Map<String, HotspotDefinition> HOTSPOTS = new LinkedHashMap<>();
-
-    private FishingRegistry() {
-    }
 
     public static void loadAll() {
         TABLES.clear();

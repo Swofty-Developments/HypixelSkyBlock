@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.entity.mob.mobs.seacreature;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 import net.minestom.server.entity.EntityType;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
@@ -9,6 +12,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.MobType;
  * declarative spec for one creature: stats, AI flavour, fishing rewards.
  * Adding a new creature is one builder chain, not a new class.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SeaCreatureProfiles {
 
     /* ---------- water ---------- */
@@ -253,7 +257,4 @@ public final class SeaCreatureProfiles {
             MAGMA_SLUG, MOOGMA, LAVA_LEECH, PYROCLASTIC_WORM, FIRE_EEL,
             LAVA_BLAZE, TAURUS, LORD_JAWBUS
     );
-
-    private SeaCreatureProfiles() {
-    }
 }

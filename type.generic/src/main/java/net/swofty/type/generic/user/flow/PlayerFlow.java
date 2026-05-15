@@ -1,11 +1,13 @@
 package net.swofty.type.generic.user.flow;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PlayerFlow {
-    private PlayerFlow() {
-    }
 
     public static void run(HypixelPlayer player, String stage, Runnable action) {
         long started = System.currentTimeMillis();

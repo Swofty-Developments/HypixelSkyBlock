@@ -1,5 +1,8 @@
 package net.swofty.pvp.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
@@ -8,9 +11,8 @@ import net.minestom.server.instance.block.Block;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FluidUtil {
-
-    private FluidUtil() {}
 
 	public static int getLevel(Block block) {
 		String levelStr = block.getProperty("level");

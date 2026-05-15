@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.resolver;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -20,13 +23,11 @@ import net.swofty.type.skyblockgeneric.fishing.rod.FishingRodPartService;
 import net.swofty.type.skyblockgeneric.fishing.tag.FishingTag;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingLootResolver {
 
     private static final CatchPayload DEFAULT_CATCH =
         new CatchPayload.Item("RAW_FISH", 1, 5.0D, false);
-
-    private FishingLootResolver() {
-    }
 
     public static CatchPayload resolve(FishingContext context) {
         Optional<CatchPayload> questCatch = tryResolveQuestCatch(context);

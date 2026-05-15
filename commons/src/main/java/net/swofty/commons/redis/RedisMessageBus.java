@@ -1,5 +1,8 @@
 package net.swofty.commons.redis;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -16,6 +19,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RedisMessageBus {
     private static final Map<String, List<RegisteredHandler<?, ?>>> handlers = new ConcurrentHashMap<>();
     private static final Map<UUID, CompletableFuture<String>> pendingResponses = new ConcurrentHashMap<>();
@@ -26,9 +30,6 @@ public final class RedisMessageBus {
         thread.setDaemon(true);
         return thread;
     });
-
-    private RedisMessageBus() {
-    }
 
     public static <T, R> void registerHandler(RedisEndpoint localEndpoint,
                                               String channel,

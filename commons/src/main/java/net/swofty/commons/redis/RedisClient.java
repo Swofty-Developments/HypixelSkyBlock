@@ -1,5 +1,8 @@
 package net.swofty.commons.redis;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.PingProtocol;
@@ -13,12 +16,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RedisClient {
     private static final Map<String, RedisProtocol<?, ?>> protocolsByRequest = new ConcurrentHashMap<>();
     private static volatile RedisEndpoint localEndpoint;
-
-    private RedisClient() {
-    }
 
     public static void identify(RedisEndpoint endpoint) {
         localEndpoint = endpoint;

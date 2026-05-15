@@ -1,12 +1,14 @@
 package net.swofty.type.generic.utility;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;
 import org.json.JSONObject;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BlockUtility {
-
-    private BlockUtility() {}
 
 
     public static Block applyTexture(Block block, String texture) {

@@ -1,5 +1,8 @@
 package net.swofty.commons.redis;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -7,9 +10,8 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.net.URI;
 import java.time.Duration;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RedisConnectionPool {
-    private RedisConnectionPool() {
-    }
 
     public static JedisPool connect(String redisUri, Settings settings) {
         JedisPoolConfig poolConfig = new JedisPoolConfig();

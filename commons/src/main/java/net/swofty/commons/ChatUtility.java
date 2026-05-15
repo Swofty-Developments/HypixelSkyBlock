@@ -1,12 +1,14 @@
 package net.swofty.commons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import lombok.Getter;
 
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ChatUtility {
-
-    private ChatUtility() {}
 
 
 	public enum FontInfo {

@@ -1,5 +1,8 @@
 package net.swofty.velocity.presence;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.presence.PresenceInfo;
@@ -8,9 +11,8 @@ import net.swofty.commons.redis.RedisClient;
 
 import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PresencePublisher {
-
-    private PresencePublisher() {}
 
     public static void publish(Player player, boolean online, String serverType, UUID serverId) {
         PresenceInfo info = new PresenceInfo(

@@ -1,13 +1,15 @@
 package net.swofty.type.generic.utility;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ChestUtility {
-
-    private ChestUtility() {}
 
 
     public static Point[] getDoubleChestPositions(Instance instance, Point point) {

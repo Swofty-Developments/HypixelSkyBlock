@@ -1,14 +1,16 @@
 package net.swofty.pvp.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.kyori.adventure.audience.Audience;
 import net.minestom.server.adventure.audience.PacketGroupingAudience;
 import net.minestom.server.entity.Entity;
 
 import java.util.Collections;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ViewUtil {
-
-    private ViewUtil() {}
 
 	public static Audience viewersAndSelf(Entity origin) {
 		if (origin.getChunk() == null) return Audience.empty();

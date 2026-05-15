@@ -1,15 +1,16 @@
 package net.swofty.type.skyblockgeneric.user.island;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.tinylog.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IslandLifecycle {
     private static final List<IslandLifecycleStep> steps = new CopyOnWriteArrayList<>();
-
-    private IslandLifecycle() {
-    }
 
     public static void register(IslandLifecycleStep step) {
         steps.add(step);

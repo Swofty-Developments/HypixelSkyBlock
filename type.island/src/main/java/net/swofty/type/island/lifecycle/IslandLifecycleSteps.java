@@ -1,12 +1,13 @@
 package net.swofty.type.island.lifecycle;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.type.skyblockgeneric.user.island.IslandLifecycle;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IslandLifecycleSteps {
     private static boolean registered = false;
-
-    private IslandLifecycleSteps() {
-    }
 
     public static void register() {
         if (registered) return;

@@ -1,5 +1,8 @@
 package net.swofty.pvp.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.network.packet.server.play.WorldEventPacket;
 import net.minestom.server.worldevent.WorldEvent;
 import org.jetbrains.annotations.NotNull;
@@ -8,9 +11,8 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.utils.PacketSendingUtils;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EffectUtil {
-
-    private EffectUtil() {}
 
 	public static void sendNearby(@NotNull Instance instance, @NotNull WorldEvent effect,
 	                              int x, int y, int z, int data, double distance, boolean global) {

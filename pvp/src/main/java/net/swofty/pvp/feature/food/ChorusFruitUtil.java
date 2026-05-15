@@ -1,5 +1,8 @@
 package net.swofty.pvp.feature.food;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.pvp.utils.ViewUtil;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.MinecraftServer;
@@ -13,9 +16,8 @@ import net.minestom.server.world.DimensionType;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ChorusFruitUtil {
-
-    private ChorusFruitUtil() {}
 
 	private static boolean randomTeleport(Entity entity, Pos to) {
 		Instance instance = entity.getInstance();

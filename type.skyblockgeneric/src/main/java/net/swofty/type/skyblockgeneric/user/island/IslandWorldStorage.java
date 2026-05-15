@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.user.island;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.hollowcube.polar.PolarLoader;
 import net.hollowcube.polar.PolarReader;
 import net.hollowcube.polar.PolarWorld;
@@ -13,11 +16,9 @@ import org.tinylog.Logger;
 import java.io.IOException;
 import java.nio.file.Path;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IslandWorldStorage {
     private static final Path TEMPLATE_PATH = CustomWorlds.SKYBLOCK_ISLAND_TEMPLATE.getPath();
-
-    private IslandWorldStorage() {
-    }
 
     public static LoadedIslandWorld load(IslandDatabase database) {
         if (!database.exists()) {

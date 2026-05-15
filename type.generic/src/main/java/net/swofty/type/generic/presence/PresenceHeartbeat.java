@@ -1,5 +1,8 @@
 package net.swofty.type.generic.presence;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServiceType;
@@ -13,8 +16,8 @@ import net.swofty.type.generic.user.HypixelPlayer;
 /**
  * Periodically refreshes player presence to the friend service to avoid stale status.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PresenceHeartbeat {
-    private PresenceHeartbeat() {}
 
     public static void start() {
         MinecraftServer.getSchedulerManager().buildTask(PresenceHeartbeat::pulse)

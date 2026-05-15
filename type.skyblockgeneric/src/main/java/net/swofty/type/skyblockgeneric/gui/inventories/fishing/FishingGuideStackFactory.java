@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.fishing;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingGuideStackFactory {
     private static final List<ItemStatistic> GUIDE_STAT_ORDER = List.of(
         ItemStatistic.DAMAGE,
@@ -26,9 +30,6 @@ public final class FishingGuideStackFactory {
         ItemStatistic.TROPHY_FISH_CHANCE,
         ItemStatistic.MAGIC_FIND
     );
-
-    private FishingGuideStackFactory() {
-    }
 
     public static net.minestom.server.item.ItemStack.Builder buildBaitStack(SkyBlockItem baitItem) {
         FishingBaitComponent bait = baitItem.getComponent(FishingBaitComponent.class);

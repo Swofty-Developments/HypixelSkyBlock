@@ -1,14 +1,16 @@
 package net.swofty.type.skyblockgeneric.fishing.rod;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.fishing.item.FishingItemSupport;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.FishingRodPartComponent;
 import org.jetbrains.annotations.Nullable;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingRodPartService {
-    private FishingRodPartService() {
-    }
 
     public static @Nullable FishingRodPartComponent getHook(SkyBlockItem rod) {
         return FishingItemSupport.getRodPart(rod.getAttributeHandler().getFishingHook());

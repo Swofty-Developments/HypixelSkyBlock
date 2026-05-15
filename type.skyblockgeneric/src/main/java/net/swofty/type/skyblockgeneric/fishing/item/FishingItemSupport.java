@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.item;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,9 +16,8 @@ import net.swofty.type.skyblockgeneric.item.components.FishingRodPartComponent;
 import net.swofty.type.skyblockgeneric.item.components.FishingShipPartComponent;
 import org.jetbrains.annotations.Nullable;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingItemSupport {
-    private FishingItemSupport() {
-    }
 
     public static @Nullable FishingRodMetadataComponent getRodMetadata(@Nullable String itemId) {
         return getComponent(itemId, FishingRodMetadataComponent.class);

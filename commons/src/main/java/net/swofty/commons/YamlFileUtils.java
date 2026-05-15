@@ -1,5 +1,8 @@
 package net.swofty.commons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -13,9 +16,8 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class YamlFileUtils {
-
-    private YamlFileUtils() {}
 
     /**
      * Get all YAML files in a directory and its subdirectories

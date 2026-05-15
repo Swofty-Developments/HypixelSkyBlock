@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.tag;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,7 @@ import org.tinylog.Logger;
  * the resolver uses. Built-in tags are pre-registered; custom tags (events,
  * project-specific regions) can be added via {@link #register}.
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingTagRegistry {
 
     private static final Map<String, FishingTag> TAGS = new LinkedHashMap<>();
@@ -41,9 +45,6 @@ public final class FishingTagRegistry {
                 RarityTag.LEGENDARY,
                 RarityTag.MYTHIC
         );
-    }
-
-    private FishingTagRegistry() {
     }
 
     public static void register(FishingTag tag) {

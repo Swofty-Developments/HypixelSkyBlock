@@ -1,5 +1,8 @@
 package net.swofty.type.generic.user.flow;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.protocol.objects.proxy.to.FinishedWithPlayerProtocol;
 import net.swofty.commons.redis.RedisClient;
 import net.swofty.type.generic.HypixelConst;
@@ -26,9 +29,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GenericPlayerDataFlow {
-    private GenericPlayerDataFlow() {
-    }
 
     public static void load(HypixelPlayer player) {
         UUID playerUuid = player.getUuid();

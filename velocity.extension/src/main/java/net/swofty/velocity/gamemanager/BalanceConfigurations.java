@@ -1,5 +1,8 @@
 package net.swofty.velocity.gamemanager;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import com.velocitypowered.api.proxy.Player;
 import net.swofty.commons.ServerType;
 import net.swofty.velocity.gamemanager.impl.IslandCheck;
@@ -11,6 +14,7 @@ import org.tinylog.Logger;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BalanceConfigurations {
 
     // Shared singletons — the strategies are stateless, so there's no reason to
@@ -46,9 +50,6 @@ public final class BalanceConfigurations {
             Map.entry(ServerType.MURDER_MYSTERY_CONFIGURATOR, DEFAULT_CHAIN),
             Map.entry(ServerType.RAVENGARD_LOBBY, DEFAULT_CHAIN)
     );
-
-    private BalanceConfigurations() {
-    }
 
     public static @Nullable GameManager.GameServer getServerFor(Player player, ServerType type) {
         final boolean inTestFlow = TestFlowManager.isPlayerInTestFlow(player.getUsername());

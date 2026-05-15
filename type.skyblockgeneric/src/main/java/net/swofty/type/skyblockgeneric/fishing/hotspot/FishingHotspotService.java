@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.hotspot;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
@@ -10,11 +13,9 @@ import net.swofty.type.skyblockgeneric.fishing.rod.FishingRodPartService;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingHotspotService {
     private static final double HOTSPOT_RADIUS_SQUARED = 25.0D;
-
-    private FishingHotspotService() {
-    }
 
     public static boolean isBobberInHotspot(SkyBlockPlayer player, FishingMedium medium, Pos bobberPos) {
         ItemStatistics buffs = getActiveHotspotBuffs(player, medium, bobberPos);

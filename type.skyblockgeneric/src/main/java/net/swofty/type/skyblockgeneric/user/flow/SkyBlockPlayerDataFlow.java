@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.user.flow;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
@@ -33,9 +36,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SkyBlockPlayerDataFlow {
-    private SkyBlockPlayerDataFlow() {
-    }
 
     public static void load(SkyBlockPlayer player) {
         UUID playerUuid = player.getUuid();

@@ -1,5 +1,8 @@
 package net.swofty.pvp.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.collision.CollisionUtils;
 import net.minestom.server.collision.PhysicsResult;
@@ -11,9 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 // Copied from Minestom, added singleCollision parameter and removed velocity update
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProjectileUtil {
-
-    private ProjectileUtil() {}
 
 	public static @NotNull PhysicsResult simulateMovement(@NotNull Pos entityPosition, @NotNull Vec entityVelocityPerTick,
 	                                                      @NotNull BoundingBox entityBoundingBox, @NotNull WorldBorder worldBorder,

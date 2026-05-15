@@ -1,8 +1,10 @@
 package net.swofty.anticheat.math;
 
-public final class ChunkUtils {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-    private ChunkUtils() {}
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ChunkUtils {
 
     public static int getChunkCoordinate(double xz) {
         return getChunkCoordinate((int) Math.floor(xz));

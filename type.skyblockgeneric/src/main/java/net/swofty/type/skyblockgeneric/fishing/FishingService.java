@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,11 +22,9 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingService {
     private static final Map<UUID, FishingSession> SESSIONS = new ConcurrentHashMap<>();
-
-    private FishingService() {
-    }
 
     public static FishingSession beginCast(SkyBlockPlayer player, SkyBlockItem rod, FishingMedium medium) {
         FishingBaitComponent bait = FishingBaitService.getFirstAvailableBait(player, medium);

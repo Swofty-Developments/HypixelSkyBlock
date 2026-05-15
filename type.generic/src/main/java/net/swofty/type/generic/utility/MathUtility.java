@@ -1,5 +1,8 @@
 package net.swofty.type.generic.utility;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
@@ -12,9 +15,8 @@ import org.tinylog.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MathUtility {
-
-    private MathUtility() {}
 
     public static double normalizeAngle(double angle, double maximum) {
         return (angle % maximum + maximum) % maximum - (maximum / 2);

@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.entity.mob.mobs.seacreature;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.kyori.adventure.text.Component;
@@ -9,15 +12,13 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SeaCreatureSpawner {
 
     private static final Map<String, SeaCreatureProfile> PROFILES = new LinkedHashMap<>();
 
     static {
         SeaCreatureProfiles.CANONICAL.forEach(SeaCreatureSpawner::register);
-    }
-
-    private SeaCreatureSpawner() {
     }
 
     public static void register(SeaCreatureProfile profile) {

@@ -1,5 +1,8 @@
 package net.swofty.type.skyblockgeneric.fishing.rod;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 import net.swofty.commons.StringUtility;
@@ -12,6 +15,7 @@ import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingRodLoreBuilder {
     private static final List<ItemStatistic> STAT_ORDER = List.of(
         ItemStatistic.DAMAGE,
@@ -22,9 +26,6 @@ public final class FishingRodLoreBuilder {
         ItemStatistic.DOUBLE_HOOK_CHANCE,
         ItemStatistic.TROPHY_FISH_CHANCE
     );
-
-    private FishingRodLoreBuilder() {
-    }
 
     public static @Nullable FishingRodLore build(SkyBlockItem item, @Nullable SkyBlockPlayer player) {
         if (!item.hasComponent(FishingRodMetadataComponent.class)) {
