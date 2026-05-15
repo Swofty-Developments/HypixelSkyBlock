@@ -9,7 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -135,13 +135,13 @@ public class GUIMuseumNonEmptyDisplay extends HypixelInventoryGUI {
         // Get tracked item info
         TrackedItem trackedItem = null;
         try {
-            TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message =
-                    new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+            TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message =
+                    new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                             UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                     );
             ProxyService proxyService = new ProxyService(ServiceType.ITEM_TRACKER);
-            TrackedItemRetrieveProtocolObject.TrackedItemResponse response =
-                    (TrackedItemRetrieveProtocolObject.TrackedItemResponse) proxyService.handleRequest(message).join();
+            TrackedItemRetrieveProtocol.TrackedItemResponse response =
+                    (TrackedItemRetrieveProtocol.TrackedItemResponse) proxyService.handleRequest(message).join();
             trackedItem = response.trackedItem();
         } catch (Exception e) {
             Logger.error(e, "Error displaying museum items");

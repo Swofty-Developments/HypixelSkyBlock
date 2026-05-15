@@ -3,7 +3,7 @@ package net.swofty.velocity.presence;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.presence.PresenceInfo;
-import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocolObject;
+import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocol;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 
 import java.util.UUID;
@@ -22,8 +22,8 @@ public final class PresencePublisher {
         );
 
         ServerOutboundMessage.sendMessageToAllServicesFireAndForget(
-                new UpdatePresenceProtocolObject(),
-                new UpdatePresenceProtocolObject.UpdatePresenceMessage(info)
+                new UpdatePresenceProtocol(),
+                new UpdatePresenceProtocol.UpdatePresenceMessage(info)
         );
     }
 

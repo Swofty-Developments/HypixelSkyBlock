@@ -1,12 +1,12 @@
 package net.swofty.commons.protocol.objects.data;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 import java.util.UUID;
 import org.jetbrains.annotations.Nullable;
 
 public class UnlockPlayerDataPushProtocol
-        extends ServicePushProtocol<UnlockPlayerDataPushProtocol.Request, UnlockPlayerDataPushProtocol.Response> {
+        extends RedisProtocol<UnlockPlayerDataPushProtocol.Request, UnlockPlayerDataPushProtocol.Response> {
 
     public UnlockPlayerDataPushProtocol() {
         super(Request.class, Response.class);

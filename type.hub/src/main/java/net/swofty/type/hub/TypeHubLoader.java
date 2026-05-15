@@ -20,7 +20,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.InteractionEntity;
@@ -254,7 +254,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 
 	@Override
-	public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+	public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
 		return List.of();
 	}
 

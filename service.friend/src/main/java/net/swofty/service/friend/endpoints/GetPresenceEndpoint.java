@@ -1,29 +1,27 @@
 package net.swofty.service.friend.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.presence.PresenceInfo;
-import net.swofty.commons.protocol.objects.presence.GetPresenceBulkProtocolObject;
+import net.swofty.commons.protocol.objects.presence.GetPresenceBulkProtocol;
 import net.swofty.service.friend.PresenceStorage;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GetPresenceEndpoint implements ServiceEndpoint<
-        GetPresenceBulkProtocolObject.GetPresenceBulkMessage,
-        GetPresenceBulkProtocolObject.GetPresenceBulkResponse> {
+public class GetPresenceEndpoint implements RedisMessageHandler<
+        GetPresenceBulkProtocol.GetPresenceBulkMessage,
+        GetPresenceBulkProtocol.GetPresenceBulkResponse> {
 
     @Override
-    public GetPresenceBulkProtocolObject associatedProtocolObject() {
-        return new GetPresenceBulkProtocolObject();
+    public GetPresenceBulkProtocol protocol() {
+        return new GetPresenceBulkProtocol();
     }
 
     @Override
-    public GetPresenceBulkProtocolObject.GetPresenceBulkResponse onMessage(
-            ServiceProxyRequest message,
-            GetPresenceBulkProtocolObject.GetPresenceBulkMessage messageObject) {
+    public GetPresenceBulkProtocol.GetPresenceBulkResponse handle(GetPresenceBulkProtocol.GetPresenceBulkMessage messageObject, RedisMessageContext context) {
 
         List<PresenceInfo> presence = PresenceStorage.getBulk(messageObject.uuids());
-        return new GetPresenceBulkProtocolObject.GetPresenceBulkResponse(presence, true, null);
+        return new GetPresenceBulkProtocol.GetPresenceBulkResponse(presence, true, null);
     }
 }
 

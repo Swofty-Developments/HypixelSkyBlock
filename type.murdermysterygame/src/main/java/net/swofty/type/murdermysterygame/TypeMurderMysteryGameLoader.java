@@ -22,10 +22,9 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
-import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocol;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.pvp.MinestomPvP;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -205,7 +204,7 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
                 commonsGames.add(commonsGame);
             }
 
-            var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
+            var heartbeat = new GameHeartbeatProtocol.HeartbeatMessage(
                     uuid,
                     shortName,
                     getType(),
@@ -281,19 +280,19 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
         return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.murdermysterygame.redis.service",
-                TypedServiceHandler.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
-        return (List<TypedProxyHandler<?, ?>>) (List<?>) HypixelGenericLoader.loopThroughPackage(
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
+        return (List<RedisMessageHandler<?, ?>>) (List<?>) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.murdermysterygame.redis",
-                TypedProxyHandler.class
+                RedisMessageHandler.class
         ).toList();
     }
 

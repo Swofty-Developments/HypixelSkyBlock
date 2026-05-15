@@ -1,12 +1,12 @@
 package net.swofty.commons.protocol.objects.friend;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 import java.util.List;
 import java.util.UUID;
 
 public class FriendEventPushProtocol
-        extends ServicePushProtocol<FriendEventPushProtocol.Request, FriendEventPushProtocol.Response> {
+        extends RedisProtocol<FriendEventPushProtocol.Request, FriendEventPushProtocol.Response> {
 
     public FriendEventPushProtocol() {
         super(Request.class, Response.class);

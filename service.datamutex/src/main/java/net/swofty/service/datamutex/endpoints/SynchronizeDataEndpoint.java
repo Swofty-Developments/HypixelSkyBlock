@@ -2,12 +2,11 @@ package net.swofty.service.datamutex.endpoints;
 
 import org.tinylog.Logger;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
-import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocolObject;
+import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 
 import java.util.HashMap;
@@ -15,25 +14,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class SynchronizeDataEndpoint implements ServiceEndpoint<
-        SynchronizeDataProtocolObject.SynchronizeDataRequest,
-        SynchronizeDataProtocolObject.SynchronizeDataResponse> {
+public class SynchronizeDataEndpoint implements RedisMessageHandler<
+        SynchronizeDataProtocol.SynchronizeDataRequest,
+        SynchronizeDataProtocol.SynchronizeDataResponse> {
 
     @Override
-    public SynchronizeDataProtocolObject associatedProtocolObject() {
-        return new SynchronizeDataProtocolObject();
+    public SynchronizeDataProtocol protocol() {
+        return new SynchronizeDataProtocol();
     }
 
     @Override
-    public SynchronizeDataProtocolObject.SynchronizeDataResponse onMessage(
-            ServiceProxyRequest request,
-            SynchronizeDataProtocolObject.SynchronizeDataRequest messageObject) {
+    public SynchronizeDataProtocol.SynchronizeDataResponse handle(SynchronizeDataProtocol.SynchronizeDataRequest messageObject, RedisMessageContext context) {
 
         List<UUID> serverUUIDs = messageObject.serverUUIDs();
         UUID playerUUID = messageObject.playerUUID();
         String dataKey = messageObject.dataKey();
-        String requesterId = request.getRequestServer();
+        String requesterId = context.origin().id();
         String lockKey = playerUUID + ":" + dataKey;
 
         Logger.debug("sync: requester={} player={} key={} servers={} lockKey={}",
@@ -42,7 +40,7 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
         try {
             if (!DataLockManager.acquireLock(lockKey, requesterId)) {
                 Logger.debug("sync: service lock {} already held", lockKey);
-                return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
+                return new SynchronizeDataProtocol.SynchronizeDataResponse(
                         false, null, "Data is currently locked by another operation");
             }
 
@@ -58,7 +56,7 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
                         lockResults);
                 DataLockManager.releaseLock(lockKey, requesterId);
                 ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
-                return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
+                return new SynchronizeDataProtocol.SynchronizeDataResponse(
                         false, null, "Failed to acquire locks on all servers");
             }
 
@@ -86,19 +84,19 @@ public class SynchronizeDataEndpoint implements ServiceEndpoint<
                 Logger.debug("sync: no valid data among {} responses, rolling back", allData.size());
                 DataLockManager.releaseLock(lockKey, requesterId);
                 ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
-                return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
+                return new SynchronizeDataProtocol.SynchronizeDataResponse(
                         false, null, "No valid data found on any server");
             }
 
             Logger.debug("sync: settled on timestamp={}", latestTimestamp);
-            return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
+            return new SynchronizeDataProtocol.SynchronizeDataResponse(
                     true, latestData.data(), null);
 
         } catch (Exception e) {
             Logger.error(e, "Error occurred in data mutex endpoint (lockKey={})", lockKey);
             DataLockManager.releaseLock(lockKey, requesterId);
             ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
-            return new SynchronizeDataProtocolObject.SynchronizeDataResponse(
+            return new SynchronizeDataProtocol.SynchronizeDataResponse(
                     false, null, "Error during synchronization: " + e.getMessage());
         }
     }

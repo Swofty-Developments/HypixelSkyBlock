@@ -8,7 +8,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
-import net.swofty.type.generic.redis.service.TypedGameInformationHandler;
+import net.swofty.type.generic.redis.service.GameInformationHandler;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
@@ -31,7 +31,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
     private void tryJoinGame(SkywarsPlayer player, boolean isRetry) {
         if (!player.isOnline()) return;
 
-        String assignedGameId = TypedGameInformationHandler.game.remove(player.getUuid());
+        String assignedGameId = GameInformationHandler.game.remove(player.getUuid());
         if (assignedGameId == null) {
             if (!isRetry) {
                 Logger.info("No game assignment found for " + player.getUsername() + ", retrying in 1 second...");

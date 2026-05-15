@@ -1,8 +1,8 @@
 package net.swofty.proxyapi;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.PingProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.PingProtocol;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 
 import java.util.concurrent.CompletableFuture;
@@ -14,8 +14,8 @@ public record ProxyService(ServiceType type) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         AtomicBoolean hasReceivedResponse = new AtomicBoolean(false);
 
-        ServerOutboundMessage.sendMessageToService(type, new PingProtocolObject(),
-            new PingProtocolObject.EmptyMessage(), (s) -> {
+        ServerOutboundMessage.sendMessageToService(type, new PingProtocol(),
+            new PingProtocol.EmptyMessage(), (s) -> {
                 future.complete(true);
                 hasReceivedResponse.set(true);
             });
@@ -31,16 +31,16 @@ public record ProxyService(ServiceType type) {
     }
 
     public <T, R> CompletableFuture<R> handleRequest(T request) {
-        ProtocolObject<T, R> protocolObject = ServerOutboundMessage.protocolObjects.get(request.getClass().getSimpleName());
+        RedisProtocol<T, R> protocol = ServerOutboundMessage.protocols.get(request.getClass().getSimpleName());
 
         CompletableFuture<R> future = new CompletableFuture<>();
         Thread.startVirtualThread(() ->
             ServerOutboundMessage.sendMessageToService(
                 type,
-                protocolObject,
+                protocol,
                 request,
                 (s) -> Thread.startVirtualThread(
-                    () -> future.complete(protocolObject.translateReturnFromString(s))
+                    () -> future.complete(protocol.translateReturnFromString(s))
                 )
             ));
         return future;

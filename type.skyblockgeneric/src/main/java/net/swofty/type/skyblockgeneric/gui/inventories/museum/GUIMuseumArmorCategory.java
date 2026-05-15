@@ -11,7 +11,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
@@ -206,11 +206,11 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                 continue;
 
             if (armorSets.contains(ArmorSetRegistry.getArmorSet(item.getAttributeHandler().getPotentialType()))) {
-                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                         UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                 );
                 ProxyService proxyService = new ProxyService(ServiceType.ITEM_TRACKER);
-                TrackedItemRetrieveProtocolObject.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) proxyService.handleRequest(message).join();
+                TrackedItemRetrieveProtocol.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocol.TrackedItemResponse) proxyService.handleRequest(message).join();
                 TrackedItem trackedItem = trackedItemResponse.trackedItem();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
@@ -295,13 +295,13 @@ public class GUIMuseumArmorCategory extends HypixelPaginatedGUI<ArmorSetRegistry
                 UUID leggingsUUID = UUID.fromString(leggings.getAttributeHandler().getUniqueTrackedID());
                 UUID bootsUUID = UUID.fromString(boots.getAttributeHandler().getUniqueTrackedID());
 
-                TrackedItemRetrieveProtocolObject.TrackedItemResponse helmetResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(helmetUUID)).join();
+                TrackedItemRetrieveProtocol.TrackedItemResponse helmetResponse = (TrackedItemRetrieveProtocol.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(helmetUUID)).join();
                 TrackedItem trackedHelmet = helmetResponse.trackedItem();
-                TrackedItemRetrieveProtocolObject.TrackedItemResponse chestplateResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(chestplateUUID)).join();
+                TrackedItemRetrieveProtocol.TrackedItemResponse chestplateResponse = (TrackedItemRetrieveProtocol.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(chestplateUUID)).join();
                 TrackedItem trackedChestplate = chestplateResponse.trackedItem();
-                TrackedItemRetrieveProtocolObject.TrackedItemResponse leggingsResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(leggingsUUID)).join();
+                TrackedItemRetrieveProtocol.TrackedItemResponse leggingsResponse = (TrackedItemRetrieveProtocol.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(leggingsUUID)).join();
                 TrackedItem trackedLeggings = leggingsResponse.trackedItem();
-                TrackedItemRetrieveProtocolObject.TrackedItemResponse bootsResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(bootsUUID)).join();
+                TrackedItemRetrieveProtocol.TrackedItemResponse bootsResponse = (TrackedItemRetrieveProtocol.TrackedItemResponse) itemTracker.handleRequest(new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(bootsUUID)).join();
                 TrackedItem trackedBoots = bootsResponse.trackedItem();
 
                 int helmetValue = new ItemPriceCalculator(helmet).calculateCleanPrice().intValue();

@@ -1,8 +1,8 @@
 package net.swofty.type.skyblockgeneric.redis;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -11,15 +11,16 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisRefreshCoopData implements TypedProxyHandler<RefreshCoopDataProtocol.Request, RefreshCoopDataProtocol.Response> {
+public class RedisRefreshCoopData implements RedisMessageHandler<RefreshCoopDataProtocol.Request, RefreshCoopDataProtocol.Response> {
     @Override
-    public ProtocolObject<RefreshCoopDataProtocol.Request, RefreshCoopDataProtocol.Response> getProtocol() {
+    public RedisProtocol<RefreshCoopDataProtocol.Request, RefreshCoopDataProtocol.Response> protocol() {
         return new RefreshCoopDataProtocol();
     }
 
     @Override
-    public RefreshCoopDataProtocol.Response onMessage(RefreshCoopDataProtocol.Request message) {
+    public RefreshCoopDataProtocol.Response handle(RefreshCoopDataProtocol.Request message, RedisMessageContext context) {
         UUID uuid = UUID.fromString(message.uuid());
         String datapoint = message.datapoint();
 

@@ -5,7 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -24,11 +24,11 @@ public class ActionRejoinCheck implements HypixelEventClass {
         // Delay slightly to ensure player is fully spawned
         MathUtility.delay(() -> {
             // Check if player has an active game to rejoin
-            RejoinGameProtocolObject.RejoinGameRequest request =
-                    new RejoinGameProtocolObject.RejoinGameRequest(player.getUuid());
+            RejoinGameProtocol.RejoinGameRequest request =
+                    new RejoinGameProtocol.RejoinGameRequest(player.getUuid());
 
             ORCHESTRATOR.handleRequest(request).thenAccept(response -> {
-                if (response instanceof RejoinGameProtocolObject.RejoinGameResponse resp
+                if (response instanceof RejoinGameProtocol.RejoinGameResponse resp
                         && resp.hasActiveGame()) {
                     // Show rejoin message
                     Component message = Component.text("You have a game currently ongoing! ", NamedTextColor.RED)

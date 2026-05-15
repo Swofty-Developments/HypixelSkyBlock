@@ -1,27 +1,25 @@
 package net.swofty.service.darkauction.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.darkauction.GetAuctionStateProtocol;
 import net.swofty.service.darkauction.DarkAuctionService;
 import net.swofty.service.darkauction.DarkAuctionState;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointGetAuctionState implements ServiceEndpoint<
+public class EndpointGetAuctionState implements RedisMessageHandler<
         GetAuctionStateProtocol.GetAuctionStateMessage,
         GetAuctionStateProtocol.GetAuctionStateResponse> {
 
     @Override
-    public ProtocolObject<GetAuctionStateProtocol.GetAuctionStateMessage, GetAuctionStateProtocol.GetAuctionStateResponse> associatedProtocolObject() {
+    public RedisProtocol<GetAuctionStateProtocol.GetAuctionStateMessage, GetAuctionStateProtocol.GetAuctionStateResponse> protocol() {
         return new GetAuctionStateProtocol();
     }
 
     @Override
-    public GetAuctionStateProtocol.GetAuctionStateResponse onMessage(
-            ServiceProxyRequest request,
-            GetAuctionStateProtocol.GetAuctionStateMessage msg) {
+    public GetAuctionStateProtocol.GetAuctionStateResponse handle(GetAuctionStateProtocol.GetAuctionStateMessage msg, RedisMessageContext context) {
 
         DarkAuctionState auction = DarkAuctionService.getCurrentAuction();
 

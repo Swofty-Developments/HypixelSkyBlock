@@ -1,13 +1,13 @@
 package net.swofty.commons.protocol.objects.darkauction;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class PlayerLeftAuctionProtocol extends ProtocolObject<
+public class PlayerLeftAuctionProtocol extends RedisProtocol<
         PlayerLeftAuctionProtocol.PlayerLeftMessage,
         PlayerLeftAuctionProtocol.PlayerLeftResponse> {
 

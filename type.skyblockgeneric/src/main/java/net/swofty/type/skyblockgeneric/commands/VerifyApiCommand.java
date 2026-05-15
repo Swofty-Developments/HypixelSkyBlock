@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocolObject;
+import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -35,12 +35,12 @@ public class VerifyApiCommand extends HypixelCommand {
 
                 SkyBlockPlayer player = (SkyBlockPlayer) sender;
                 ProxyService apiService = new ProxyService(ServiceType.API);
-                apiService.handleRequest(new APIAuthenticateCodeProtocolObject.AuthenticateCodeMessage(
+                apiService.handleRequest(new APIAuthenticateCodeProtocol.AuthenticateCodeMessage(
                         codeString,
                         player.getUsername(),
                         player.getUuid()
                 )).thenAccept(nonCastedResponse -> {
-                    APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse response = (APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse) nonCastedResponse;
+                    APIAuthenticateCodeProtocol.AuthenticateCodeResponse response = (APIAuthenticateCodeProtocol.AuthenticateCodeResponse) nonCastedResponse;
                     if (response.success()) {
                         sender.sendMessage("§aCode '" + codeString + "' has successfully been verified! Check your web browser.");
                     } else {

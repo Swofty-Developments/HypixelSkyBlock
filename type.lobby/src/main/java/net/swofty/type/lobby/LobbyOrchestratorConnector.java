@@ -4,8 +4,8 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.party.FullParty;
-import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocol;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.party.PartyManager;
@@ -36,8 +36,8 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
 
         PLAYERS_SEARCHING.add(player.getUuid());
 
-        GetServerForMapProtocolObject.GetServerForMapMessage message =
-                new GetServerForMapProtocolObject.GetServerForMapMessage(
+        GetServerForMapProtocol.GetServerForMapMessage message =
+                new GetServerForMapProtocol.GetServerForMapMessage(
                         targetServerType,
                         map,
                         gameType,
@@ -48,7 +48,7 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
                 .thenApply(response -> {
                     PLAYERS_SEARCHING.remove(player.getUuid());
 
-                    if (response instanceof GetServerForMapProtocolObject.GetServerForMapResponse(
+                    if (response instanceof GetServerForMapProtocol.GetServerForMapResponse(
                             UnderstandableProxyServer server, String gameId, boolean success, String error
                     )) {
                         return new Pair<>(server, gameId);
@@ -80,8 +80,8 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
         // Solo queue
         findGameServer(targetServerType, gameType, map, 1).thenAccept(pair -> {
             if (pair != null && pair.first() != null) {
-                ChooseGameProtocolObject.ChooseGameMessage message =
-                        new ChooseGameProtocolObject.ChooseGameMessage(player.getUuid(), pair.first(), pair.second());
+                ChooseGameProtocol.ChooseGameMessage message =
+                        new ChooseGameProtocol.ChooseGameMessage(player.getUuid(), pair.first(), pair.second());
 
                 PROXY_SERVICE.handleRequest(message)
                         .exceptionally(throwable -> {
@@ -113,8 +113,8 @@ public record LobbyOrchestratorConnector(HypixelPlayer player) {
 
                 List<CompletableFuture<Void>> registrationFutures = new ArrayList<>();
                 for (UUID memberUuid : partyMemberUuids) {
-                    ChooseGameProtocolObject.ChooseGameMessage message =
-                            new ChooseGameProtocolObject.ChooseGameMessage(memberUuid, server, gameId);
+                    ChooseGameProtocol.ChooseGameMessage message =
+                            new ChooseGameProtocol.ChooseGameMessage(memberUuid, server, gameId);
 
                     registrationFutures.add(
                             PROXY_SERVICE.handleRequest(message)

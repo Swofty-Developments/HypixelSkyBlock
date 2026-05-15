@@ -1,34 +1,32 @@
 package net.swofty.service.election.endpoints;
 
 import com.google.gson.Gson;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.election.StartElectionProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.election.StartElectionProtocol;
 import net.swofty.service.election.ElectionDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class StartElectionEndpoint implements ServiceEndpoint
-        <StartElectionProtocolObject.StartElectionMessage,
-                StartElectionProtocolObject.StartElectionResponse> {
+public class StartElectionEndpoint implements RedisMessageHandler
+        <StartElectionProtocol.StartElectionMessage,
+                StartElectionProtocol.StartElectionResponse> {
 
     private static final Gson GSON = new Gson();
 
     @Override
-    public ProtocolObject<StartElectionProtocolObject.StartElectionMessage,
-            StartElectionProtocolObject.StartElectionResponse> associatedProtocolObject() {
-        return new StartElectionProtocolObject();
+    public RedisProtocol<StartElectionProtocol.StartElectionMessage,
+            StartElectionProtocol.StartElectionResponse> protocol() {
+        return new StartElectionProtocol();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public StartElectionProtocolObject.StartElectionResponse onMessage(
-            ServiceProxyRequest message,
-            StartElectionProtocolObject.StartElectionMessage messageObject) {
+    public StartElectionProtocol.StartElectionResponse handle(StartElectionProtocol.StartElectionMessage messageObject, RedisMessageContext context) {
         try {
             String rawData = ElectionDatabase.loadElectionData();
 
@@ -42,7 +40,7 @@ public class StartElectionEndpoint implements ServiceEndpoint
                     Map<String, Long> tallies = ElectionDatabase.getTallies(messageObject.year());
                     existing.put("voteTallies", tallies);
                     existing.remove("votes");
-                    return new StartElectionProtocolObject.StartElectionResponse(false, GSON.toJson(existing), true, null);
+                    return new StartElectionProtocol.StartElectionResponse(false, GSON.toJson(existing), true, null);
                 }
             }
 
@@ -62,10 +60,10 @@ public class StartElectionEndpoint implements ServiceEndpoint
             ElectionDatabase.initTallies(messageObject.year(), candidateNames);
 
             electionData.remove("votes");
-            return new StartElectionProtocolObject.StartElectionResponse(true, GSON.toJson(electionData), true, null);
+            return new StartElectionProtocol.StartElectionResponse(true, GSON.toJson(electionData), true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to start election");
-            return new StartElectionProtocolObject.StartElectionResponse(false, null, true, null);
+            return new StartElectionProtocol.StartElectionResponse(false, null, true, null);
         }
     }
 }

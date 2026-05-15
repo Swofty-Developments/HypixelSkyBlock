@@ -1,7 +1,7 @@
 package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PlayerCountProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.ChannelListener;
@@ -16,7 +16,7 @@ public class ListenerPlayerCount extends RedisListener<
         PlayerCountProtocol.Response> {
 
     @Override
-    public ProtocolObject<PlayerCountProtocol.Request, PlayerCountProtocol.Response> getProtocol() {
+    public RedisProtocol<PlayerCountProtocol.Request, PlayerCountProtocol.Response> protocol() {
         return new PlayerCountProtocol();
     }
 

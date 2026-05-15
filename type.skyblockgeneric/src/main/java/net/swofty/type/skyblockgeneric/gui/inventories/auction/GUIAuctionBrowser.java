@@ -14,7 +14,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.skyblock.auctions.AuctionsFilter;
@@ -63,8 +63,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     }
 
     private void updateItemsCache() {
-        AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage message =
-                new AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage(
+        AuctionFetchItemsProtocol.AuctionFetchItemsMessage message =
+                new AuctionFetchItemsProtocol.AuctionFetchItemsMessage(
                         sorting,
                         filter,
                         category
@@ -72,7 +72,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
         new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message)
                 .thenAccept(responseRaw -> {
-                    AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
+                    AuctionFetchItemsProtocol.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocol.AuctionFetchItemsResponse) responseRaw;
                     List<AuctionItem> auctionItems = response.items();
 
                     // Items are already sorted, so just paginate them

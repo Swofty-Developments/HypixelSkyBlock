@@ -1,8 +1,8 @@
 package net.swofty.proxyapi.redis;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.redis.RedisChannels;
 import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -17,9 +17,9 @@ import java.util.function.Consumer;
 
 public class ServerOutboundMessage {
     private static final Map<UUID, Consumer<String>> redisMessageListeners = new HashMap<>();
-    public static final Map<String, ProtocolObject> protocolObjects = new HashMap<>();
+    public static final Map<String, RedisProtocol> protocols = new HashMap<>();
 
-    public static <T, R> void sendToProxy(ProtocolObject<T, R> protocol, T request, Consumer<R> response) {
+    public static <T, R> void sendToProxy(RedisProtocol<T, R> protocol, T request, Consumer<R> response) {
         UUID uuid = UUID.randomUUID();
         UUID filterID = UUID.fromString(RedisAPI.getInstance().getFilterId());
 
@@ -30,13 +30,13 @@ public class ServerOutboundMessage {
         redisMessageListeners.put(uuid, consumer);
 
         String serialized = protocol.translateToString(request);
-        RedisAPI.getInstance().publishMessage("proxy",
-                ChannelRegistry.getFromName(protocol.channel()),
+        RedisAPI.getInstance().publishMessage(RedisChannels.PROXY_RESPONSE,
+                ChannelRegistry.getFromName(RedisChannels.protocol(protocol)),
                 new RedisEnvelope(uuid.toString(), filterID.toString(), serialized).serialize());
     }
 
-    public static void registerToProxyProtocol(ProtocolObject<?, ?> protocol) {
-        RedisAPI.getInstance().registerChannel(protocol.channel(), (event) -> {
+    public static void registerToProxyProtocol(RedisProtocol<?, ?> protocol) {
+        RedisAPI.getInstance().registerChannel(RedisChannels.protocol(protocol), (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
 
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
@@ -47,11 +47,11 @@ public class ServerOutboundMessage {
         });
     }
 
-    public static void registerFromProtocolObject(ProtocolObject object) {
-        String requestTypeName = getRequestTypeName(object);
-        protocolObjects.put(requestTypeName, object);
+    public static void registerResponseProtocol(RedisProtocol protocol) {
+        String requestTypeName = getRequestTypeName(protocol);
+        protocols.put(requestTypeName, protocol);
 
-        RedisAPI.getInstance().registerChannel(object.channel(), (event) -> {
+        RedisAPI.getInstance().registerChannel(RedisChannels.protocol(protocol), (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
 
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
@@ -68,7 +68,7 @@ public class ServerOutboundMessage {
     }
 
     public static void sendMessageToService(ServiceType service,
-                                            ProtocolObject specification,
+                                            RedisProtocol specification,
                                             Object rawMessage,
                                             Consumer<String> response) {
         UUID requestId = UUID.randomUUID();
@@ -81,12 +81,11 @@ public class ServerOutboundMessage {
 
         RedisAPI.getInstance().publishMessage(service.name(),
                 ChannelRegistry.getFromName(specification.channel()),
-                new ServiceProxyRequest(requestId, callbackId,
-                        specification.channel(), message).toJSON().toString());
+                new RedisEnvelope(requestId.toString(), callbackId, message).serialize());
     }
 
     public static void sendMessageToServiceFireAndForget(ServiceType service,
-                                                         ProtocolObject specification,
+                                                         RedisProtocol specification,
                                                          Object rawMessage) {
         UUID requestId = UUID.randomUUID();
         String callback = null;
@@ -99,23 +98,18 @@ public class ServerOutboundMessage {
         RedisAPI.getInstance().publishMessage(
                 service.name(),
                 ChannelRegistry.getFromName(specification.channel()),
-                new ServiceProxyRequest(
-                        requestId,
-                        callback != null ? callback : "proxy",
-                        specification.channel(),
-                        message
-                ).toJSON().toString()
+                new RedisEnvelope(requestId.toString(), callback != null ? callback : "proxy", message).serialize()
         );
     }
 
-    public static void sendMessageToAllServicesFireAndForget(ProtocolObject specification,
+    public static void sendMessageToAllServicesFireAndForget(RedisProtocol specification,
                                                              Object rawMessage) {
         for (ServiceType serviceType : ServiceType.values()) {
             sendMessageToServiceFireAndForget(serviceType, specification, rawMessage);
         }
     }
 
-    private static String getRequestTypeName(ProtocolObject<?, ?> protocolObject) {
+    private static String getRequestTypeName(RedisProtocol<?, ?> protocolObject) {
         Class<?> clazz = protocolObject.getClass();
         Type genericSuperclass = clazz.getGenericSuperclass();
 
@@ -131,6 +125,6 @@ public class ServerOutboundMessage {
             }
         }
 
-        throw new IllegalArgumentException("Could not determine the type T for the given ProtocolObject");
+        throw new IllegalArgumentException("Could not determine the type T for the given RedisProtocol");
     }
 }

@@ -1,25 +1,25 @@
 package net.swofty.service.bazaar.endpoints;
 
 import com.mongodb.client.model.Filters;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.CancelMessage;
-import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.CancelResponse;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol.CancelMessage;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol.CancelResponse;
 import net.swofty.service.bazaar.BazaarMarket;
 import net.swofty.service.bazaar.OrderDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointCancelBazaarOrder implements ServiceEndpoint<
+public class EndpointCancelBazaarOrder implements RedisMessageHandler<
         CancelMessage, CancelResponse> {
 
     @Override
-    public BazaarCancelProtocolObject associatedProtocolObject() {
-        return new BazaarCancelProtocolObject();
+    public BazaarCancelProtocol protocol() {
+        return new BazaarCancelProtocol();
     }
 
     @Override
-    public CancelResponse onMessage(ServiceProxyRequest _msg, CancelMessage msg) {
+    public CancelResponse handle(CancelMessage msg, RedisMessageContext context) {
         var result = OrderDatabase.ordersCollection.deleteOne(
                 Filters.and(
                         Filters.eq("_id", msg.orderId().toString()),

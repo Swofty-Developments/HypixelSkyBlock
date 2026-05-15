@@ -8,12 +8,12 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyBroadcast;
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.party.PartyBroadcastPushProtocol;
 import net.swofty.commons.protocol.objects.party.PartyBroadcastPushProtocol.Request;
 import net.swofty.commons.protocol.objects.party.PartyBroadcastPushProtocol.Response;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -25,19 +25,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class PartyBroadcastHandler implements TypedServiceHandler<Request, Response> {
+public class PartyBroadcastHandler implements RedisMessageHandler<Request, Response> {
 
     private static final String SEPARATOR = "§9§m-----------------------------------------------------";
     private static final PartyBroadcastPushProtocol PROTOCOL = new PartyBroadcastPushProtocol();
 
     @Override
-    public ServicePushProtocol<Request, Response> getProtocol() {
+    public RedisProtocol<Request, Response> protocol() {
         return PROTOCOL;
     }
 
     @Override
-    public Response onMessage(Request message) {
+    public Response handle(Request message, RedisMessageContext context) {
         try {
             PartyBroadcast broadcast = message.broadcast();
             List<UUID> handled = new ArrayList<>();

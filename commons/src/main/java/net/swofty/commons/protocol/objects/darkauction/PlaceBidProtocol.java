@@ -1,13 +1,13 @@
 package net.swofty.commons.protocol.objects.darkauction;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class PlaceBidProtocol extends ProtocolObject<
+public class PlaceBidProtocol extends RedisProtocol<
         PlaceBidProtocol.PlaceBidMessage,
         PlaceBidProtocol.PlaceBidResponse> {
 

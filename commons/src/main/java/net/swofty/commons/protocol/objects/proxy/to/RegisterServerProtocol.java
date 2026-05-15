@@ -1,11 +1,11 @@
 package net.swofty.commons.protocol.objects.proxy.to;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 import org.jetbrains.annotations.Nullable;
 
-public class RegisterServerProtocol extends ProtocolObject<
+public class RegisterServerProtocol extends RedisProtocol<
         RegisterServerProtocol.Request,
         RegisterServerProtocol.Response> {
     private static final Serializer<Request> SERIALIZER =

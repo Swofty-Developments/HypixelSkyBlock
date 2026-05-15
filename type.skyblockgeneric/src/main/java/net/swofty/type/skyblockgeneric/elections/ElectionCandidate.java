@@ -1,6 +1,6 @@
 package net.swofty.type.skyblockgeneric.elections;
 
-import net.swofty.commons.protocol.objects.election.GetCandidatesProtocolObject;
+import net.swofty.commons.protocol.objects.election.GetCandidatesProtocol;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public record ElectionCandidate(
         double votePercentage
 ) {
 
-    public static ElectionCandidate fromProtocol(GetCandidatesProtocolObject.CandidateInfo info) {
+    public static ElectionCandidate fromProtocol(GetCandidatesProtocol.CandidateInfo info) {
         SkyBlockMayor mayor;
         try {
             mayor = SkyBlockMayor.valueOf(info.mayorName());
@@ -33,7 +33,7 @@ public record ElectionCandidate(
         return new ElectionCandidate(mayor, perks, info.votes(), info.votePercentage());
     }
 
-    public static List<ElectionCandidate> fromProtocolList(List<GetCandidatesProtocolObject.CandidateInfo> infos) {
+    public static List<ElectionCandidate> fromProtocolList(List<GetCandidatesProtocol.CandidateInfo> infos) {
         return infos.stream()
                 .map(ElectionCandidate::fromProtocol)
                 .filter(c -> c != null)

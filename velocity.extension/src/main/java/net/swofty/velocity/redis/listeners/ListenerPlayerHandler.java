@@ -7,7 +7,7 @@ import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
@@ -33,7 +33,7 @@ public class ListenerPlayerHandler extends RedisListener<
     private static final PlayerHandlerProtocol.Response EMPTY = new PlayerHandlerProtocol.Response(Map.of(), true, null);
 
     @Override
-    public ProtocolObject<PlayerHandlerProtocol.Request, PlayerHandlerProtocol.Response> getProtocol() {
+    public RedisProtocol<PlayerHandlerProtocol.Request, PlayerHandlerProtocol.Response> protocol() {
         return new PlayerHandlerProtocol();
     }
 

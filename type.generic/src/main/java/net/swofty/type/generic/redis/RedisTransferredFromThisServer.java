@@ -1,22 +1,23 @@
 package net.swofty.type.generic.redis;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisTransferredFromThisServer implements TypedProxyHandler<PlayerSwitchedProtocol.Request, PlayerSwitchedProtocol.Response> {
+public class RedisTransferredFromThisServer implements RedisMessageHandler<PlayerSwitchedProtocol.Request, PlayerSwitchedProtocol.Response> {
     @Override
-    public ProtocolObject<PlayerSwitchedProtocol.Request, PlayerSwitchedProtocol.Response> getProtocol() {
+    public RedisProtocol<PlayerSwitchedProtocol.Request, PlayerSwitchedProtocol.Response> protocol() {
         return new PlayerSwitchedProtocol();
     }
 
     @Override
-    public PlayerSwitchedProtocol.Response onMessage(PlayerSwitchedProtocol.Request message) {
+    public PlayerSwitchedProtocol.Response handle(PlayerSwitchedProtocol.Request message, RedisMessageContext context) {
         UUID uuid = UUID.fromString(message.uuid());
         if (!ProxyPlayer.waitingForTransferComplete.containsKey(uuid)) {
             return new PlayerSwitchedProtocol.Response();

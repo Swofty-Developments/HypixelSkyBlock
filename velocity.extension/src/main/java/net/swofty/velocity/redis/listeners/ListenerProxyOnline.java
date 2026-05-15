@@ -1,6 +1,6 @@
 package net.swofty.velocity.redis.listeners;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.ProxyIsOnlineProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.redis.ChannelListener;
@@ -14,7 +14,7 @@ public class ListenerProxyOnline extends RedisListener<
         ProxyIsOnlineProtocol.Response> {
 
     @Override
-    public ProtocolObject<ProxyIsOnlineProtocol.Request, ProxyIsOnlineProtocol.Response> getProtocol() {
+    public RedisProtocol<ProxyIsOnlineProtocol.Request, ProxyIsOnlineProtocol.Response> protocol() {
         return new ProxyIsOnlineProtocol();
     }
 

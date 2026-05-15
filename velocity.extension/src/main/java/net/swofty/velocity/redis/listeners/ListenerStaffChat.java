@@ -1,6 +1,6 @@
 package net.swofty.velocity.redis.listeners;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.StaffChatProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
@@ -16,7 +16,7 @@ public class ListenerStaffChat extends RedisListener<
         StaffChatProtocol.Response> {
 
     @Override
-    public ProtocolObject<StaffChatProtocol.Request, StaffChatProtocol.Response> getProtocol() {
+    public RedisProtocol<StaffChatProtocol.Request, StaffChatProtocol.Response> protocol() {
         return new StaffChatProtocol();
     }
 

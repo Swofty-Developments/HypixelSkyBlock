@@ -7,8 +7,8 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocol;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -107,8 +107,8 @@ public class AuctionViewThirdBin implements AuctionView {
 
                 player.sendMessage(I18n.t("gui_auction.view_third_bin.processing"));
 
-                CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future = new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(
-                    new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(item.getUuid())
+                CompletableFuture<AuctionFetchItemProtocol.AuctionFetchItemResponse> future = new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(
+                    new AuctionFetchItemProtocol.AuctionFetchItemMessage(item.getUuid())
                 );
                 AuctionItem item = future.join().item();
 
@@ -139,8 +139,8 @@ public class AuctionViewThirdBin implements AuctionView {
                 }});
                 item.setEndTime(System.currentTimeMillis());
 
-                AuctionAddItemProtocolObject.AuctionAddItemMessage message =
-                    new AuctionAddItemProtocolObject.AuctionAddItemMessage(
+                AuctionAddItemProtocol.AuctionAddItemMessage message =
+                    new AuctionAddItemProtocol.AuctionAddItemMessage(
                         item, AuctionCategories.TOOLS);
 
                 new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).join();

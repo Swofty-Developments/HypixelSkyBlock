@@ -1,10 +1,10 @@
 package net.swofty.commons.protocol.objects.proxy.from;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
-public class PingServerProtocol extends ProtocolObject<
+public class PingServerProtocol extends RedisProtocol<
         PingServerProtocol.Request,
         PingServerProtocol.Response> {
     private static final Serializer<Request> SERIALIZER =

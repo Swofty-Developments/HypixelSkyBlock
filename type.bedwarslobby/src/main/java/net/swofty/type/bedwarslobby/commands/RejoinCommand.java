@@ -1,8 +1,8 @@
 package net.swofty.type.bedwarslobby.commands;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -26,18 +26,18 @@ public class RejoinCommand extends HypixelCommand {
             HypixelPlayer player = (HypixelPlayer) sender;
 
             // Query orchestrator for active game
-            RejoinGameProtocolObject.RejoinGameRequest request =
-                    new RejoinGameProtocolObject.RejoinGameRequest(player.getUuid());
+            RejoinGameProtocol.RejoinGameRequest request =
+                    new RejoinGameProtocol.RejoinGameRequest(player.getUuid());
 
             ORCHESTRATOR.handleRequest(request).thenAccept(response -> {
-                if (response instanceof RejoinGameProtocolObject.RejoinGameResponse resp) {
+                if (response instanceof RejoinGameProtocol.RejoinGameResponse resp) {
                     if (resp.hasActiveGame() && resp.server() != null) {
                         // Send the player to the game
                         player.sendMessage("§aRejoining your game...");
 
                         // Notify the game server about this player
-                        ChooseGameProtocolObject.ChooseGameMessage chooseMsg =
-                                new ChooseGameProtocolObject.ChooseGameMessage(
+                        ChooseGameProtocol.ChooseGameMessage chooseMsg =
+                                new ChooseGameProtocol.ChooseGameMessage(
                                         player.getUuid(),
                                         resp.server(),
                                         resp.gameId()

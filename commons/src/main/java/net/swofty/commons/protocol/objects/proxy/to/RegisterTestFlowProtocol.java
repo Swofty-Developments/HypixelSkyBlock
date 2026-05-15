@@ -1,13 +1,13 @@
 package net.swofty.commons.protocol.objects.proxy.to;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.Map;
 
-public class RegisterTestFlowProtocol extends ProtocolObject<
+public class RegisterTestFlowProtocol extends RedisProtocol<
         RegisterTestFlowProtocol.Request,
         RegisterTestFlowProtocol.Response> {
     private static final Serializer<Request> SERIALIZER =

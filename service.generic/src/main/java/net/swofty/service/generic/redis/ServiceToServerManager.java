@@ -1,7 +1,8 @@
 package net.swofty.service.generic.redis;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.redis.RedisChannels;
 import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
@@ -37,7 +38,7 @@ public class ServiceToServerManager {
         currentServiceType = serviceType;
 
         // Register response handler for server responses
-        RedisAPI.getInstance().registerChannel("service_response", (event) -> {
+        RedisAPI.getInstance().registerChannel(RedisChannels.SERVICE_RESPONSE, (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
             UUID requestId = UUID.fromString(envelope.id());
@@ -48,7 +49,7 @@ public class ServiceToServerManager {
             }
         });
 
-        RedisAPI.getInstance().registerChannel("service_broadcast_response", (event) -> {
+        RedisAPI.getInstance().registerChannel(RedisChannels.SERVICE_BROADCAST_RESPONSE, (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
             RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
             UUID requestId = UUID.fromString(envelope.id());
@@ -63,7 +64,7 @@ public class ServiceToServerManager {
 
     public static <T, R> CompletableFuture<R> sendToServer(
             UUID serverUUID,
-            ServicePushProtocol<T, R> protocol,
+            RedisProtocol<T, R> protocol,
             T message
     ) {
         UUID requestId = UUID.randomUUID();
@@ -91,7 +92,7 @@ public class ServiceToServerManager {
         });
 
         String serialized = protocol.translateToString(message);
-        String channelName = "service_" + protocol.channel();
+        String channelName = RedisChannels.serviceRequest(protocol);
 
         RedisAPI.getInstance().publishMessage(
                 serverUUID.toString(),
@@ -103,7 +104,7 @@ public class ServiceToServerManager {
     }
 
     public static <T, R> CompletableFuture<Map<UUID, R>> sendToAllServers(
-            ServicePushProtocol<T, R> protocol,
+            RedisProtocol<T, R> protocol,
             T message,
             int timeoutMs
     ) {
@@ -115,9 +116,9 @@ public class ServiceToServerManager {
         pendingBroadcastRequests.put(requestId, broadcastRequest);
 
         String serialized = protocol.translateToString(message);
-        String channelName = "service_broadcast_" + protocol.channel();
+        String channelName = RedisChannels.serviceBroadcast(protocol);
 
-        RedisAPI.getInstance().publishMessage("all",
+        RedisAPI.getInstance().publishMessage(RedisChannels.ALL_SERVERS,
                 ChannelRegistry.getFromName(channelName),
                 new RedisEnvelope(requestId.toString(), currentServiceType.name(), serialized).serialize());
 
@@ -145,7 +146,7 @@ public class ServiceToServerManager {
 
     public static <T, R> CompletableFuture<Map<UUID, R>> sendToServers(
             List<UUID> serverUUIDs,
-            ServicePushProtocol<T, R> protocol,
+            RedisProtocol<T, R> protocol,
             T message
     ) {
         Map<UUID, CompletableFuture<R>> futures = new ConcurrentHashMap<>();

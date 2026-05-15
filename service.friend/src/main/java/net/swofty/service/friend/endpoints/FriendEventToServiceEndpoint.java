@@ -1,26 +1,24 @@
 package net.swofty.service.friend.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.friend.FriendEvent;
 import net.swofty.commons.friend.events.*;
-import net.swofty.commons.protocol.objects.friend.SendFriendEventToServiceProtocolObject;
+import net.swofty.commons.protocol.objects.friend.SendFriendEventToServiceProtocol;
 import net.swofty.service.friend.FriendCache;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class FriendEventToServiceEndpoint implements ServiceEndpoint<
-        SendFriendEventToServiceProtocolObject.SendFriendEventToServiceMessage,
-        SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse> {
+public class FriendEventToServiceEndpoint implements RedisMessageHandler<
+        SendFriendEventToServiceProtocol.SendFriendEventToServiceMessage,
+        SendFriendEventToServiceProtocol.SendFriendEventToServiceResponse> {
 
     @Override
-    public SendFriendEventToServiceProtocolObject associatedProtocolObject() {
-        return new SendFriendEventToServiceProtocolObject();
+    public SendFriendEventToServiceProtocol protocol() {
+        return new SendFriendEventToServiceProtocol();
     }
 
     @Override
-    public SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse onMessage(
-            ServiceProxyRequest message,
-            SendFriendEventToServiceProtocolObject.SendFriendEventToServiceMessage messageObject) {
+    public SendFriendEventToServiceProtocol.SendFriendEventToServiceResponse handle(SendFriendEventToServiceProtocol.SendFriendEventToServiceMessage messageObject, RedisMessageContext context) {
 
         try {
             FriendEvent event = messageObject.event();
@@ -61,10 +59,10 @@ public class FriendEventToServiceEndpoint implements ServiceEndpoint<
                 default -> Logger.warn("Unknown friend event type: " + event.getClass().getSimpleName());
             }
 
-            return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(true, null);
+            return new SendFriendEventToServiceProtocol.SendFriendEventToServiceResponse(true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to process friend event in service endpoint");
-            return new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceResponse(false, "Event processing failed");
+            return new SendFriendEventToServiceProtocol.SendFriendEventToServiceResponse(false, "Event processing failed");
         }
     }
 }

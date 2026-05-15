@@ -1,30 +1,28 @@
 package net.swofty.service.bazaar.endpoints;
 
 import com.mongodb.client.model.Filters;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocolObject.PendingOrder;
-import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocol.PendingOrder;
 import net.swofty.service.bazaar.OrderDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointGetPendingOrders implements ServiceEndpoint<
-        BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage,
-        BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse> {
+public class EndpointGetPendingOrders implements RedisMessageHandler<
+        BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersMessage,
+        BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersResponse> {
 
     @Override
-    public BazaarGetPendingOrdersProtocolObject associatedProtocolObject() {
-        return new BazaarGetPendingOrdersProtocolObject();
+    public BazaarGetPendingOrdersProtocol protocol() {
+        return new BazaarGetPendingOrdersProtocol();
     }
 
     @Override
-    public BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage msg) {
+    public BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersResponse handle(BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersMessage msg, RedisMessageContext context) {
 
         UUID player = msg.playerUUID();
         UUID profile = msg.profileUUID();
@@ -48,6 +46,6 @@ public class EndpointGetPendingOrders implements ServiceEndpoint<
             ));
         }
 
-        return new BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse(out, true, null);
+        return new BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersResponse(out, true, null);
     }
 }

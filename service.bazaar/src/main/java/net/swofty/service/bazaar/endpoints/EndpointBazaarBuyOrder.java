@@ -1,26 +1,24 @@
 package net.swofty.service.bazaar.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarBuyProtocolObject;
+import net.swofty.commons.protocol.objects.bazaar.BazaarBuyProtocol;
 import net.swofty.service.bazaar.BazaarMarket;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointBazaarBuyOrder implements ServiceEndpoint<
-        BazaarBuyProtocolObject.BazaarBuyMessage,
-        BazaarBuyProtocolObject.BazaarBuyResponse> {
+public class EndpointBazaarBuyOrder implements RedisMessageHandler<
+        BazaarBuyProtocol.BazaarBuyMessage,
+        BazaarBuyProtocol.BazaarBuyResponse> {
 
     @Override
-    public BazaarBuyProtocolObject associatedProtocolObject() {
-        return new BazaarBuyProtocolObject();
+    public BazaarBuyProtocol protocol() {
+        return new BazaarBuyProtocol();
     }
 
     @Override
-    public BazaarBuyProtocolObject.BazaarBuyResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarBuyProtocolObject.BazaarBuyMessage msg) {
+    public BazaarBuyProtocol.BazaarBuyResponse handle(BazaarBuyProtocol.BazaarBuyMessage msg, RedisMessageContext context) {
 
         String itemName    = msg.itemName();
         UUID   playerUUID  = msg.playerUUID();
@@ -32,10 +30,10 @@ public class EndpointBazaarBuyOrder implements ServiceEndpoint<
             BazaarMarket.get().submitBuy(itemName, playerUUID, profileUUID, price, amount);
             Logger.info("Buy order submitted for {} by {} (profile: {}) — price={}, amount={}",
                     itemName, playerUUID, profileUUID, price, amount);
-            return new BazaarBuyProtocolObject.BazaarBuyResponse(true, null);
+            return new BazaarBuyProtocol.BazaarBuyResponse(true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to submit buy order for {} by {}", itemName, playerUUID);
-            return new BazaarBuyProtocolObject.BazaarBuyResponse(false, "Buy order failed");
+            return new BazaarBuyProtocol.BazaarBuyResponse(false, "Buy order failed");
         }
     }
 }

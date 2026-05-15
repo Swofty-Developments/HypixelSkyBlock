@@ -4,7 +4,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisEnvelope;
 
 import java.net.URI;
@@ -63,7 +63,7 @@ public class ProxyRedis {
         });
     }
 
-    public static <T> void publishToProxy(ProtocolObject<T, ?> protocol, T message) {
+    public static <T> void publishToProxy(RedisProtocol<T, ?> protocol, T message) {
         UUID uuid = UUID.randomUUID();
         String serialized = protocol.translateToString(message);
         publishMessage("proxy", protocol.channel(),

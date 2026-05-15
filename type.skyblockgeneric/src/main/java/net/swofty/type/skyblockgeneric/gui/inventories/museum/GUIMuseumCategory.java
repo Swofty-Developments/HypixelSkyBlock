@@ -11,7 +11,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
@@ -135,10 +135,10 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             }
 
             if (category.contains(item.getAttributeHandler().getPotentialType())) {
-                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                         UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                 );
-                TrackedItem trackedItem = ((TrackedItemRetrieveProtocolObject.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join()).trackedItem();
+                TrackedItem trackedItem = ((TrackedItemRetrieveProtocol.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join()).trackedItem();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
                 List<String> lore = new ArrayList<>(item.getLore(player));
@@ -201,8 +201,8 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                 }
 
                 UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
-                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(trackedItemUUID);
-                TrackedItem trackedItem = ((TrackedItemRetrieveProtocolObject.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER)
+                TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(trackedItemUUID);
+                TrackedItem trackedItem = ((TrackedItemRetrieveProtocol.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER)
                         .handleRequest(message).join()).trackedItem();
 
                 Locale l = player.getLocale();

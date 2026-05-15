@@ -1,7 +1,7 @@
 package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.FinishedWithPlayerProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.TransferHandler;
@@ -17,7 +17,7 @@ public class ListenerServerFinishedWithPlayer extends RedisListener<
         FinishedWithPlayerProtocol.Response> {
 
     @Override
-    public ProtocolObject<FinishedWithPlayerProtocol.Request, FinishedWithPlayerProtocol.Response> getProtocol() {
+    public RedisProtocol<FinishedWithPlayerProtocol.Request, FinishedWithPlayerProtocol.Response> protocol() {
         return new FinishedWithPlayerProtocol();
     }
 

@@ -3,7 +3,7 @@ package net.swofty.type.generic.command.commands;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.utils.mojang.MojangUtils;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.punishment.UnpunishPlayerProtocolObject;
+import net.swofty.commons.protocol.objects.punishment.UnpunishPlayerProtocol;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
@@ -39,12 +39,12 @@ public class UnBanCommand extends HypixelCommand {
                 try {
                     UUID targetUuid = MojangUtils.getUUID(playerName);
                     ProxyService punishmentService = new ProxyService(ServiceType.PUNISHMENT);
-                    UnpunishPlayerProtocolObject.UnpunishPlayerMessage message = new UnpunishPlayerProtocolObject.UnpunishPlayerMessage(
+                    UnpunishPlayerProtocol.UnpunishPlayerMessage message = new UnpunishPlayerProtocol.UnpunishPlayerMessage(
                             targetUuid, player.getUuid(), PunishmentType.BAN.name()
                     );
 
                     punishmentService.handleRequest(message).thenAccept(result -> {
-                        if (result instanceof UnpunishPlayerProtocolObject.UnpunishPlayerResponse response) {
+                        if (result instanceof UnpunishPlayerProtocol.UnpunishPlayerResponse response) {
                             if (response.success()) {
                                 player.sendMessage("§aSuccessfully unbanned player: " + playerName);
                             } else {

@@ -8,7 +8,7 @@ import net.minestom.server.command.builder.suggestion.SuggestionEntry;
 import net.minestom.server.utils.mojang.MojangUtils;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.protocol.objects.punishment.PunishPlayerProtocolObject;
+import net.swofty.commons.protocol.objects.punishment.PunishPlayerServiceProtocol;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
@@ -145,7 +145,7 @@ public class BanCommand extends HypixelCommand {
         ProxyService punishmentService = new ProxyService(ServiceType.PUNISHMENT);
         PunishmentReason reason = new PunishmentReason(type);
         ArrayList<PunishmentTag> tagList = (tags != null) ? new ArrayList<>(tags) : new ArrayList<>();
-        PunishPlayerProtocolObject.PunishPlayerMessage message = new PunishPlayerProtocolObject.PunishPlayerMessage(
+        PunishPlayerServiceProtocol.PunishPlayerMessage message = new PunishPlayerServiceProtocol.PunishPlayerMessage(
                 targetUuid,
                 PunishmentType.BAN.name(),
                 reason,
@@ -155,14 +155,14 @@ public class BanCommand extends HypixelCommand {
         );
 
         punishmentService.handleRequest(message).thenAccept(result -> {
-            if (result instanceof PunishPlayerProtocolObject.PunishPlayerResponse(
-                boolean success, String punishmentId, PunishPlayerProtocolObject.ErrorCode errorCode,
+            if (result instanceof PunishPlayerServiceProtocol.PunishPlayerResponse(
+                boolean success, String punishmentId, PunishPlayerServiceProtocol.ErrorCode errorCode,
                 String errorMessage
             )) {
                 if (success) {
                     new ProxyPlayer(targetUuid).transferToLimbo();
                     sender.sendTranslated("commands.ban.success", Component.text(playerName), Component.text(punishmentId));
-                } else if (errorCode == PunishPlayerProtocolObject.ErrorCode.ALREADY_PUNISHED) {
+                } else if (errorCode == PunishPlayerServiceProtocol.ErrorCode.ALREADY_PUNISHED) {
                     sender.sendTranslated("commands.ban.already_banned", Component.text(errorMessage));
                 } else {
                     sender.sendTranslated("commands.ban.failed", Component.text(errorMessage));

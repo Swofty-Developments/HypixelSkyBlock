@@ -1,26 +1,24 @@
 package net.swofty.service.darkauction.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.darkauction.TriggerDarkAuctionProtocol;
 import net.swofty.service.darkauction.DarkAuctionScheduler;
 import net.swofty.service.darkauction.DarkAuctionService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointTriggerAuction implements ServiceEndpoint<
+public class EndpointTriggerAuction implements RedisMessageHandler<
         TriggerDarkAuctionProtocol.TriggerMessage,
         TriggerDarkAuctionProtocol.TriggerResponse> {
 
     @Override
-    public ProtocolObject<TriggerDarkAuctionProtocol.TriggerMessage, TriggerDarkAuctionProtocol.TriggerResponse> associatedProtocolObject() {
+    public RedisProtocol<TriggerDarkAuctionProtocol.TriggerMessage, TriggerDarkAuctionProtocol.TriggerResponse> protocol() {
         return new TriggerDarkAuctionProtocol();
     }
 
     @Override
-    public TriggerDarkAuctionProtocol.TriggerResponse onMessage(
-            ServiceProxyRequest request,
-            TriggerDarkAuctionProtocol.TriggerMessage msg) {
+    public TriggerDarkAuctionProtocol.TriggerResponse handle(TriggerDarkAuctionProtocol.TriggerMessage msg, RedisMessageContext context) {
 
         Logger.info("Received trigger request - calendarTime: {}, forced: {}", msg.calendarTime(), msg.forced());
 

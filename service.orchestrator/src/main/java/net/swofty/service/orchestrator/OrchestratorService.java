@@ -2,7 +2,7 @@ package net.swofty.service.orchestrator;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -28,7 +28,7 @@ public class OrchestratorService implements SkyBlockService {
 	}
 
 	@Override
-	public List<ServiceEndpoint> getEndpoints() {
-		return loopThroughPackage("net.swofty.service.orchestrator.endpoints", ServiceEndpoint.class).toList();
+	public List<RedisMessageHandler> getEndpoints() {
+		return loopThroughPackage("net.swofty.service.orchestrator.endpoints", RedisMessageHandler.class).toList();
 	}
 }

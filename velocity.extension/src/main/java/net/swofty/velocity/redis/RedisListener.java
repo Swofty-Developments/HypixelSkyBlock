@@ -1,6 +1,7 @@
 package net.swofty.velocity.redis;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.redis.RedisChannels;
 import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
@@ -9,17 +10,17 @@ import org.tinylog.Logger;
 import java.util.UUID;
 
 public abstract class RedisListener<T, R> {
-    private final ProtocolObject<T, R> protocol;
+    private final RedisProtocol<T, R> protocol;
 
     public RedisListener() {
-        this.protocol = getProtocol();
+        this.protocol = protocol();
     }
 
-    public abstract ProtocolObject<T, R> getProtocol();
+    public abstract RedisProtocol<T, R> protocol();
     public abstract R receivedMessage(T message, UUID serverUUID);
 
     public String getChannelName() {
-        return protocol.channel();
+        return RedisChannels.protocol(protocol);
     }
 
     public void onMessage(String channel, String message) {

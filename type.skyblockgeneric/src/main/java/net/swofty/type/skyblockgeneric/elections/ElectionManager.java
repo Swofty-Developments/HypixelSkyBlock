@@ -5,12 +5,12 @@ import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.election.CastVoteProtocolObject;
-import net.swofty.commons.protocol.objects.election.GetCandidatesProtocolObject;
-import net.swofty.commons.protocol.objects.election.GetElectionDataProtocolObject;
-import net.swofty.commons.protocol.objects.election.GetPlayerVoteProtocolObject;
-import net.swofty.commons.protocol.objects.election.ResolveElectionProtocolObject;
-import net.swofty.commons.protocol.objects.election.StartElectionProtocolObject;
+import net.swofty.commons.protocol.objects.election.CastVoteProtocol;
+import net.swofty.commons.protocol.objects.election.GetCandidatesProtocol;
+import net.swofty.commons.protocol.objects.election.GetElectionDataProtocol;
+import net.swofty.commons.protocol.objects.election.GetPlayerVoteProtocol;
+import net.swofty.commons.protocol.objects.election.ResolveElectionProtocol;
+import net.swofty.commons.protocol.objects.election.StartElectionProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import org.tinylog.Logger;
@@ -35,10 +35,10 @@ public class ElectionManager {
     public static void loadFromService() {
         SERVICE = new ProxyService(ServiceType.ELECTION);
         try {
-            GetElectionDataProtocolObject.GetElectionDataResponse response =
-                SERVICE.<GetElectionDataProtocolObject.GetElectionDataMessage,
-                    GetElectionDataProtocolObject.GetElectionDataResponse>handleRequest(
-                    new GetElectionDataProtocolObject.GetElectionDataMessage()
+            GetElectionDataProtocol.GetElectionDataResponse response =
+                SERVICE.<GetElectionDataProtocol.GetElectionDataMessage,
+                    GetElectionDataProtocol.GetElectionDataResponse>handleRequest(
+                    new GetElectionDataProtocol.GetElectionDataMessage()
                 ).join();
 
             if (response.found() && response.serializedData() != null) {
@@ -81,10 +81,10 @@ public class ElectionManager {
         String serialized = GSON.toJson(electionData);
 
         try {
-            StartElectionProtocolObject.StartElectionResponse response =
-                SERVICE.<StartElectionProtocolObject.StartElectionMessage,
-                    StartElectionProtocolObject.StartElectionResponse>handleRequest(
-                    new StartElectionProtocolObject.StartElectionMessage(currentYear, serialized)
+            StartElectionProtocol.StartElectionResponse response =
+                SERVICE.<StartElectionProtocol.StartElectionMessage,
+                    StartElectionProtocol.StartElectionResponse>handleRequest(
+                    new StartElectionProtocol.StartElectionMessage(currentYear, serialized)
                 ).join();
 
             if (response.serializedData() != null) {
@@ -107,10 +107,10 @@ public class ElectionManager {
         int currentYear = SkyBlockCalendar.getYear();
 
         try {
-            ResolveElectionProtocolObject.ResolveElectionResponse response =
-                SERVICE.<ResolveElectionProtocolObject.ResolveElectionMessage,
-                    ResolveElectionProtocolObject.ResolveElectionResponse>handleRequest(
-                    new ResolveElectionProtocolObject.ResolveElectionMessage(currentYear)
+            ResolveElectionProtocol.ResolveElectionResponse response =
+                SERVICE.<ResolveElectionProtocol.ResolveElectionMessage,
+                    ResolveElectionProtocol.ResolveElectionResponse>handleRequest(
+                    new ResolveElectionProtocol.ResolveElectionMessage(currentYear)
                 ).join();
 
             if (response.serializedData() != null) {
@@ -136,9 +136,9 @@ public class ElectionManager {
             .anyMatch(c -> c.getMayorName().equals(candidateName));
         if (!validCandidate) return CompletableFuture.completedFuture(null);
 
-        return SERVICE.<CastVoteProtocolObject.CastVoteMessage,
-            CastVoteProtocolObject.CastVoteResponse>handleRequest(
-            new CastVoteProtocolObject.CastVoteMessage(accountId, candidateName)
+        return SERVICE.<CastVoteProtocol.CastVoteMessage,
+            CastVoteProtocol.CastVoteResponse>handleRequest(
+            new CastVoteProtocol.CastVoteMessage(accountId, candidateName)
         ).thenAccept(response -> {
             if (response.success()) {
                 playerVoteCache.put(accountId, candidateName);
@@ -160,9 +160,9 @@ public class ElectionManager {
         String cached = playerVoteCache.get(accountId);
         if (cached != null) return CompletableFuture.completedFuture(cached);
 
-        return SERVICE.<GetPlayerVoteProtocolObject.GetPlayerVoteMessage,
-            GetPlayerVoteProtocolObject.GetPlayerVoteResponse>handleRequest(
-            new GetPlayerVoteProtocolObject.GetPlayerVoteMessage(accountId)
+        return SERVICE.<GetPlayerVoteProtocol.GetPlayerVoteMessage,
+            GetPlayerVoteProtocol.GetPlayerVoteResponse>handleRequest(
+            new GetPlayerVoteProtocol.GetPlayerVoteMessage(accountId)
         ).thenApply(response -> {
             if (response.candidateName() != null) {
                 playerVoteCache.put(accountId, response.candidateName());
@@ -196,11 +196,11 @@ public class ElectionManager {
         return isMayorPerkActive(perk) || isMinisterPerkActive(perk);
     }
 
-    public static CompletableFuture<List<GetCandidatesProtocolObject.CandidateInfo>> fetchCandidates() {
-        return SERVICE.<GetCandidatesProtocolObject.GetCandidatesMessage,
-            GetCandidatesProtocolObject.GetCandidatesResponse>handleRequest(
-            new GetCandidatesProtocolObject.GetCandidatesMessage()
-        ).thenApply(GetCandidatesProtocolObject.GetCandidatesResponse::candidates);
+    public static CompletableFuture<List<GetCandidatesProtocol.CandidateInfo>> fetchCandidates() {
+        return SERVICE.<GetCandidatesProtocol.GetCandidatesMessage,
+            GetCandidatesProtocol.GetCandidatesResponse>handleRequest(
+            new GetCandidatesProtocol.GetCandidatesMessage()
+        ).thenApply(GetCandidatesProtocol.GetCandidatesResponse::candidates);
     }
 
     public static void checkElectionCycle() {
@@ -228,13 +228,13 @@ public class ElectionManager {
     }
 
     private static void refreshTalliesAsync() {
-        SERVICE.<GetCandidatesProtocolObject.GetCandidatesMessage,
-            GetCandidatesProtocolObject.GetCandidatesResponse>handleRequest(
-            new GetCandidatesProtocolObject.GetCandidatesMessage()
+        SERVICE.<GetCandidatesProtocol.GetCandidatesMessage,
+            GetCandidatesProtocol.GetCandidatesResponse>handleRequest(
+            new GetCandidatesProtocol.GetCandidatesMessage()
         ).thenAccept(response -> {
             if (response.electionOpen()) {
                 Map<String, Long> tallies = new HashMap<>();
-                for (GetCandidatesProtocolObject.CandidateInfo info : response.candidates()) {
+                for (GetCandidatesProtocol.CandidateInfo info : response.candidates()) {
                     tallies.put(info.mayorName(), info.votes());
                 }
                 electionData.updateTallies(tallies);

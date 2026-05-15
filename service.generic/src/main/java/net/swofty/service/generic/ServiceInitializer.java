@@ -2,21 +2,22 @@ package net.swofty.service.generic;
 
 import lombok.RequiredArgsConstructor;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.impl.ServiceProxyRequest;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.redis.RedisChannels;
 import net.swofty.commons.redis.RedisEnvelope;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
-import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
-import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 @RequiredArgsConstructor
@@ -34,27 +35,33 @@ public class ServiceInitializer {
         // Initialize service-to-server communication
         ServiceToServerManager.initialize(service.getType());
 
-        List<ServiceEndpoint> endpoints = new ArrayList<>(service.getEndpoints());
+        List<RedisMessageHandler> endpoints = new ArrayList<>(service.getEndpoints());
         endpoints.add(new PingEndpoint());
 
         endpoints.forEach(endpoint -> {
-            ProtocolObject protocolObject = endpoint.associatedProtocolObject();
+            RedisProtocol protocolObject = endpoint.protocol();
             Logger.debug("Registering channel {}", protocolObject.channel());
 
-            RedisAPI.getInstance().registerChannel(protocolObject.channel(), message -> {
+            RedisAPI.getInstance().registerChannel(RedisChannels.protocol(protocolObject), message -> {
                 // Everything after the first semicolon is the actual message
                 String realMessage = message.message.substring(message.message.indexOf(";") + 1);
-                ServiceProxyRequest request = ServiceProxyRequest.fromJSON(new JSONObject(realMessage));
+                RedisEnvelope envelope = RedisEnvelope.deserialize(realMessage);
 
-                Object messageData = protocolObject.translateFromString(request.getMessage());
+                Object messageData = protocolObject.translateFromString(envelope.payload());
 
                 Thread.startVirtualThread(() -> {
-                    Object rawResponse = endpoint.onMessage(request, messageData);
+                    RedisMessageContext context = RedisMessageContext.serverToService(
+                            UUID.fromString(envelope.id()),
+                            envelope.from(),
+                            service.getType().name(),
+                            protocolObject.channel()
+                    );
+                    Object rawResponse = endpoint.handle(messageData, context);
                     String response = protocolObject.translateReturnToString(rawResponse);
 
-                    RedisAPI.getInstance().publishMessage(request.getRequestServer(),
-                            ChannelRegistry.getFromName(request.getEndpoint()),
-                            new RedisEnvelope(request.getRequestId().toString(), service.getType().name(), response).serialize()).join();
+                    RedisAPI.getInstance().publishMessage(envelope.from(),
+                            ChannelRegistry.getFromName(protocolObject.channel()),
+                            new RedisEnvelope(envelope.id(), service.getType().name(), response).serialize()).join();
                 });
             });
         });

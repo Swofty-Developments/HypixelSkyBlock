@@ -1,7 +1,7 @@
 package net.swofty.commons.protocol.objects.darkauction;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import org.jetbrains.annotations.Nullable;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class DarkAuctionEventProtocol extends ProtocolObject<
+public class DarkAuctionEventProtocol extends RedisProtocol<
         DarkAuctionEventProtocol.DarkAuctionMessage,
         DarkAuctionEventProtocol.DarkAuctionResponse> {
 

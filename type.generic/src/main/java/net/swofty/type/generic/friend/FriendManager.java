@@ -7,11 +7,11 @@ import net.swofty.commons.friend.FriendSettingType;
 import net.swofty.commons.friend.PendingFriendRequest;
 import net.swofty.commons.friend.events.*;
 import net.swofty.commons.presence.PresenceInfo;
-import net.swofty.commons.protocol.objects.friend.AreFriendsProtocolObject;
-import net.swofty.commons.protocol.objects.friend.GetFriendDataProtocolObject;
-import net.swofty.commons.protocol.objects.friend.GetPendingFriendRequestsProtocolObject;
-import net.swofty.commons.protocol.objects.friend.SendFriendEventToServiceProtocolObject;
-import net.swofty.commons.protocol.objects.presence.GetPresenceBulkProtocolObject;
+import net.swofty.commons.protocol.objects.friend.AreFriendsProtocol;
+import net.swofty.commons.protocol.objects.friend.GetFriendDataProtocol;
+import net.swofty.commons.protocol.objects.friend.GetPendingFriendRequestsProtocol;
+import net.swofty.commons.protocol.objects.friend.SendFriendEventToServiceProtocol;
+import net.swofty.commons.protocol.objects.presence.GetPresenceBulkProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -25,40 +25,40 @@ public class FriendManager {
 
     public static boolean areFriends(HypixelPlayer player, UUID targetUuid) {
         if (!friendService.isOnline().join()) return false;
-        AreFriendsProtocolObject.AreFriendsMessage message = new AreFriendsProtocolObject.AreFriendsMessage(player.getUuid(), targetUuid);
-        return friendService.<AreFriendsProtocolObject.AreFriendsMessage,
-                        AreFriendsProtocolObject.AreFriendsResponse>handleRequest(message)
-                .thenApply(AreFriendsProtocolObject.AreFriendsResponse::areFriends)
+        AreFriendsProtocol.AreFriendsMessage message = new AreFriendsProtocol.AreFriendsMessage(player.getUuid(), targetUuid);
+        return friendService.<AreFriendsProtocol.AreFriendsMessage,
+                        AreFriendsProtocol.AreFriendsResponse>handleRequest(message)
+                .thenApply(AreFriendsProtocol.AreFriendsResponse::areFriends)
                 .join();
     }
 
     public static @Nullable FriendData getFriendData(HypixelPlayer player) {
         if (!friendService.isOnline().join()) return null;
-        GetFriendDataProtocolObject.GetFriendDataMessage message = new GetFriendDataProtocolObject.GetFriendDataMessage(player.getUuid());
-        return friendService.<GetFriendDataProtocolObject.GetFriendDataMessage,
-                        GetFriendDataProtocolObject.GetFriendDataResponse>handleRequest(message)
-                .thenApply(GetFriendDataProtocolObject.GetFriendDataResponse::friendData)
+        GetFriendDataProtocol.GetFriendDataMessage message = new GetFriendDataProtocol.GetFriendDataMessage(player.getUuid());
+        return friendService.<GetFriendDataProtocol.GetFriendDataMessage,
+                        GetFriendDataProtocol.GetFriendDataResponse>handleRequest(message)
+                .thenApply(GetFriendDataProtocol.GetFriendDataResponse::friendData)
                 .join();
     }
 
     public static List<PendingFriendRequest> getPendingRequests(HypixelPlayer player) {
         if (!friendService.isOnline().join()) return List.of();
-        GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage message =
-                new GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage(player.getUuid());
-        return friendService.<GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage,
-                        GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse>handleRequest(message)
-                .thenApply(GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse::requests)
+        GetPendingFriendRequestsProtocol.GetPendingRequestsMessage message =
+                new GetPendingFriendRequestsProtocol.GetPendingRequestsMessage(player.getUuid());
+        return friendService.<GetPendingFriendRequestsProtocol.GetPendingRequestsMessage,
+                        GetPendingFriendRequestsProtocol.GetPendingRequestsResponse>handleRequest(message)
+                .thenApply(GetPendingFriendRequestsProtocol.GetPendingRequestsResponse::requests)
                 .join();
     }
 
     public static List<PresenceInfo> getPresenceBulk(List<UUID> uuids) {
         if (!friendService.isOnline().join()) return List.of();
         if (uuids.isEmpty()) return List.of();
-        GetPresenceBulkProtocolObject.GetPresenceBulkMessage message =
-                new GetPresenceBulkProtocolObject.GetPresenceBulkMessage(uuids);
-        return friendService.<GetPresenceBulkProtocolObject.GetPresenceBulkMessage,
-                        GetPresenceBulkProtocolObject.GetPresenceBulkResponse>handleRequest(message)
-                .thenApply(GetPresenceBulkProtocolObject.GetPresenceBulkResponse::presence)
+        GetPresenceBulkProtocol.GetPresenceBulkMessage message =
+                new GetPresenceBulkProtocol.GetPresenceBulkMessage(uuids);
+        return friendService.<GetPresenceBulkProtocol.GetPresenceBulkMessage,
+                        GetPresenceBulkProtocol.GetPresenceBulkResponse>handleRequest(message)
+                .thenApply(GetPresenceBulkProtocol.GetPresenceBulkResponse::presence)
                 .join();
     }
 
@@ -159,7 +159,7 @@ public class FriendManager {
     }
 
     private static void sendEventToService(FriendEvent event) {
-        var message = new SendFriendEventToServiceProtocolObject.SendFriendEventToServiceMessage(event);
+        var message = new SendFriendEventToServiceProtocol.SendFriendEventToServiceMessage(event);
         friendService.handleRequest(message);
     }
 

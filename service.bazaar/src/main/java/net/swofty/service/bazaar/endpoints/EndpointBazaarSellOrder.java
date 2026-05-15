@@ -1,27 +1,25 @@
 package net.swofty.service.bazaar.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocol;
 import net.swofty.service.bazaar.BazaarMarket;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointBazaarSellOrder implements ServiceEndpoint<
-        BazaarSellProtocolObject.BazaarSellMessage,
-        BazaarSellProtocolObject.BazaarSellResponse> {
+public class EndpointBazaarSellOrder implements RedisMessageHandler<
+        BazaarSellProtocol.BazaarSellMessage,
+        BazaarSellProtocol.BazaarSellResponse> {
 
     @Override
-    public ProtocolObject associatedProtocolObject() {
-        return new BazaarSellProtocolObject();
+    public RedisProtocol protocol() {
+        return new BazaarSellProtocol();
     }
 
     @Override
-    public BazaarSellProtocolObject.BazaarSellResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarSellProtocolObject.BazaarSellMessage msg) {
+    public BazaarSellProtocol.BazaarSellResponse handle(BazaarSellProtocol.BazaarSellMessage msg, RedisMessageContext context) {
 
         String itemName    = msg.itemName();
         UUID   playerUUID  = msg.playerUUID();
@@ -33,10 +31,10 @@ public class EndpointBazaarSellOrder implements ServiceEndpoint<
             BazaarMarket.get().submitSell(itemName, playerUUID, profileUUID, price, amount);
             Logger.info("Sell order submitted for {} by {} (profile: {}) — price={}, amount={}",
                     itemName, playerUUID, profileUUID, price, amount);
-            return new BazaarSellProtocolObject.BazaarSellResponse(true, null);
+            return new BazaarSellProtocol.BazaarSellResponse(true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to submit sell order for {} by {}", itemName, playerUUID);
-            return new BazaarSellProtocolObject.BazaarSellResponse(false, "Sell order failed");
+            return new BazaarSellProtocol.BazaarSellResponse(false, "Sell order failed");
         }
     }
 }

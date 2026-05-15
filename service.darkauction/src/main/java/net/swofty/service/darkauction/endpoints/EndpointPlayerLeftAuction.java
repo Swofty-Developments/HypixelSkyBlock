@@ -1,30 +1,28 @@
 package net.swofty.service.darkauction.endpoints;
 
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.darkauction.PlayerLeftAuctionProtocol;
 import net.swofty.service.darkauction.DarkAuctionScheduler;
 import net.swofty.service.darkauction.DarkAuctionService;
 import net.swofty.service.darkauction.DarkAuctionState;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointPlayerLeftAuction implements ServiceEndpoint<
+public class EndpointPlayerLeftAuction implements RedisMessageHandler<
         PlayerLeftAuctionProtocol.PlayerLeftMessage,
         PlayerLeftAuctionProtocol.PlayerLeftResponse> {
 
     @Override
-    public ProtocolObject<PlayerLeftAuctionProtocol.PlayerLeftMessage, PlayerLeftAuctionProtocol.PlayerLeftResponse> associatedProtocolObject() {
+    public RedisProtocol<PlayerLeftAuctionProtocol.PlayerLeftMessage, PlayerLeftAuctionProtocol.PlayerLeftResponse> protocol() {
         return new PlayerLeftAuctionProtocol();
     }
 
     @Override
-    public PlayerLeftAuctionProtocol.PlayerLeftResponse onMessage(
-            ServiceProxyRequest request,
-            PlayerLeftAuctionProtocol.PlayerLeftMessage msg) {
+    public PlayerLeftAuctionProtocol.PlayerLeftResponse handle(PlayerLeftAuctionProtocol.PlayerLeftMessage msg, RedisMessageContext context) {
 
         DarkAuctionState auction = DarkAuctionService.getCurrentAuction();
 

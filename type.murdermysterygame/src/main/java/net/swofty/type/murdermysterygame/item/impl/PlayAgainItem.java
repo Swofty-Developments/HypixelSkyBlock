@@ -5,8 +5,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
@@ -36,8 +36,8 @@ public class PlayAgainItem extends SimpleInteractableItem {
             game.leave(player);
 
             // Queue for new game using ProxyService directly
-            GetServerForMapProtocolObject.GetServerForMapMessage message =
-                new GetServerForMapProtocolObject.GetServerForMapMessage(
+            GetServerForMapProtocol.GetServerForMapMessage message =
+                new GetServerForMapProtocol.GetServerForMapMessage(
                     ServerType.MURDER_MYSTERY_GAME,
                     null,
                     gameType,
@@ -45,10 +45,10 @@ public class PlayAgainItem extends SimpleInteractableItem {
                 );
 
             PROXY_SERVICE.handleRequest(message).thenAccept(response -> {
-                if (response instanceof GetServerForMapProtocolObject.GetServerForMapResponse resp) {
+                if (response instanceof GetServerForMapProtocol.GetServerForMapResponse resp) {
                     if (resp.server() != null) {
-                        ChooseGameProtocolObject.ChooseGameMessage chooseMessage =
-                            new ChooseGameProtocolObject.ChooseGameMessage(
+                        ChooseGameProtocol.ChooseGameMessage chooseMessage =
+                            new ChooseGameProtocol.ChooseGameMessage(
                                 player.getUuid(),
                                 resp.server(),
                                 resp.gameId()

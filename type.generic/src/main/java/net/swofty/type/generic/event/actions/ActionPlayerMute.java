@@ -3,7 +3,7 @@ package net.swofty.type.generic.event.actions;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
+import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
 import net.swofty.commons.punishment.PunishmentReason;
@@ -25,12 +25,12 @@ public class ActionPlayerMute implements HypixelEventClass {
         Player player = event.getPlayer();
         try {
             Object response = new ProxyService(ServiceType.PUNISHMENT)
-                    .handleRequest(new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(
+                    .handleRequest(new GetActivePunishmentProtocol.GetActivePunishmentMessage(
                             player.getUuid(), PunishmentType.MUTE.name()))
                     .orTimeout(2, TimeUnit.SECONDS)
                     .join();
 
-            if (response instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+            if (response instanceof GetActivePunishmentProtocol.GetActivePunishmentResponse(
                 boolean found, String type, String banId, PunishmentReason reason,
                 long expiresAt, List<PunishmentTag> tags, boolean success, String error
             ) && found) {

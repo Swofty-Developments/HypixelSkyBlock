@@ -1,6 +1,6 @@
 package net.swofty.velocity.redis.listeners;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.RegisterTestFlowProtocol;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -19,7 +19,7 @@ public class ListenerRegisterTestFlow extends RedisListener<
         RegisterTestFlowProtocol.Response> {
 
     @Override
-    public ProtocolObject<RegisterTestFlowProtocol.Request, RegisterTestFlowProtocol.Response> getProtocol() {
+    public RedisProtocol<RegisterTestFlowProtocol.Request, RegisterTestFlowProtocol.Response> protocol() {
         return new RegisterTestFlowProtocol();
     }
 

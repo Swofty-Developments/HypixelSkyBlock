@@ -4,7 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.presence.PresenceInfo;
-import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocolObject;
+import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocol;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -47,8 +47,8 @@ public final class PresenceHeartbeat {
 
             ServerOutboundMessage.sendMessageToService(
                     ServiceType.FRIEND,
-                    new UpdatePresenceProtocolObject(),
-                    new UpdatePresenceProtocolObject.UpdatePresenceMessage(info),
+                    new UpdatePresenceProtocol(),
+                    new UpdatePresenceProtocol.UpdatePresenceMessage(info),
                     (ignored) -> {}
             );
         }

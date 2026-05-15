@@ -16,7 +16,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.BlockDisplayEntity;
@@ -273,7 +273,7 @@ public class TypeTheParkLoader implements SkyBlockTypeLoader, RaceInstance {
 
 
 	@Override
-	public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+	public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
 		return List.of();
 	}
 

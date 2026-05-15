@@ -7,8 +7,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.item.impl.Collectibles;
@@ -190,15 +189,15 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
         return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.bedwarslobby.redis.service",
-                TypedServiceHandler.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

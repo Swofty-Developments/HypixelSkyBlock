@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -38,8 +38,8 @@ public class GetTrackedItemInformationCommand extends HypixelCommand {
             }
             long start = System.currentTimeMillis();
 
-            CompletableFuture<TrackedItemRetrieveProtocolObject.TrackedItemResponse> trackedItemFuture = service.handleRequest(
-                    new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+            CompletableFuture<TrackedItemRetrieveProtocol.TrackedItemResponse> trackedItemFuture = service.handleRequest(
+                    new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                             UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
             ));
 

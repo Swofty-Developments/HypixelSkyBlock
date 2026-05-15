@@ -1,7 +1,7 @@
 package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.TestFlowServerReadyProtocol;
 import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
@@ -16,7 +16,7 @@ public class ListenerTestFlowServerReady extends RedisListener<
         TestFlowServerReadyProtocol.Response> {
 
     @Override
-    public ProtocolObject<TestFlowServerReadyProtocol.Request, TestFlowServerReadyProtocol.Response> getProtocol() {
+    public RedisProtocol<TestFlowServerReadyProtocol.Request, TestFlowServerReadyProtocol.Response> protocol() {
         return new TestFlowServerReadyProtocol();
     }
 

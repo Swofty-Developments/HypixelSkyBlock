@@ -1,10 +1,10 @@
 package net.swofty.commons.protocol.objects.proxy.to;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
-public class StaffChatProtocol extends ProtocolObject<
+public class StaffChatProtocol extends RedisProtocol<
         StaffChatProtocol.Request,
         StaffChatProtocol.Response> {
     private static final Serializer<Request> SERIALIZER =

@@ -8,7 +8,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -171,11 +171,11 @@ public class GUIMuseumEmptyDisplay extends HypixelPaginatedGUI<Object> {
     }
 
     private GUIClickableItem createIndividualItemDisplay(SkyBlockItem item, int slot, SkyBlockPlayer player) {
-        TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+        TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                 UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
         );
         ProxyService proxyService = new ProxyService(ServiceType.ITEM_TRACKER);
-        TrackedItemRetrieveProtocolObject.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocolObject.TrackedItemResponse) proxyService.handleRequest(message).join();
+        TrackedItemRetrieveProtocol.TrackedItemResponse trackedItemResponse = (TrackedItemRetrieveProtocol.TrackedItemResponse) proxyService.handleRequest(message).join();
         TrackedItem trackedItem = trackedItemResponse.trackedItem();
 
         return new GUIClickableItem(slot) {

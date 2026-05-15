@@ -20,13 +20,12 @@ import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.*;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -155,22 +154,22 @@ public class Hypixel {
 
         // Initialize proxy support
         ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", TypedProxyHandler.class)
-                .forEach(proxyAPI::registerTypedProxyHandler);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", TypedServiceHandler.class)
-                .forEach(proxyAPI::registerTypedServiceHandler);
-        typeLoader.getTypedProxyHandlers().forEach(proxyAPI::registerTypedProxyHandler);
-        typeLoader.getTypedServiceHandlers().forEach(proxyAPI::registerTypedServiceHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", RedisMessageHandler.class)
+                .forEach(proxyAPI::registerProxyHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", RedisMessageHandler.class)
+                .forEach(proxyAPI::registerServiceHandler);
+        typeLoader.getProxyHandlers().forEach(proxyAPI::registerProxyHandler);
+        typeLoader.getServiceHandlers().forEach(proxyAPI::registerServiceHandler);
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", TypedProxyHandler.class)
-                    .forEach(proxyAPI::registerTypedProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", TypedServiceHandler.class)
-                    .forEach(proxyAPI::registerTypedServiceHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerServiceHandler);
         } else if (typeLoader instanceof RavengardTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", TypedProxyHandler.class)
-                    .forEach(proxyAPI::registerTypedProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerProxyHandler);
         }
-        ProtocolObject<?, ?>[] toProxyProtocols = {
+        RedisProtocol<?, ?>[] toProxyProtocols = {
                 new RequestServerNameProtocol(), new PlayerCountProtocol(),
                 new PlayerHandlerProtocol(), new ProxyIsOnlineProtocol(),
                 new RegisterServerProtocol(), new FinishedWithPlayerProtocol(),
@@ -178,14 +177,14 @@ public class Hypixel {
                 new TestFlowServerReadyProtocol(), new StaffChatProtocol(),
                 new PunishPlayerProtocol()
         };
-        for (ProtocolObject<?, ?> protocol : toProxyProtocols) {
+        for (RedisProtocol<?, ?> protocol : toProxyProtocols) {
             ServerOutboundMessage.registerToProxyProtocol(protocol);
         }
-        List<ProtocolObject> protocolObjects = SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.commons.protocol.objects", ProtocolObject.class)
+        List<RedisProtocol> protocols = SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.commons.protocol.objects", RedisProtocol.class)
                 .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
                 .toList();
-        protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
+        protocols.forEach(ServerOutboundMessage::registerResponseProtocol);
         proxyAPI.start();
 
         // Start spark if enabled

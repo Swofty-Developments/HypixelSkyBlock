@@ -1,33 +1,31 @@
 package net.swofty.service.datamutex.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocolObject;
+import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class UnlockDataEndpoint implements ServiceEndpoint<
-        UnlockDataProtocolObject.UnlockDataRequest,
-        UnlockDataProtocolObject.UnlockDataResponse> {
+public class UnlockDataEndpoint implements RedisMessageHandler<
+        UnlockDataProtocol.UnlockDataRequest,
+        UnlockDataProtocol.UnlockDataResponse> {
 
     @Override
-    public UnlockDataProtocolObject associatedProtocolObject() {
-        return new UnlockDataProtocolObject();
+    public UnlockDataProtocol protocol() {
+        return new UnlockDataProtocol();
     }
 
     @Override
-    public UnlockDataProtocolObject.UnlockDataResponse onMessage(
-            ServiceProxyRequest request,
-            UnlockDataProtocolObject.UnlockDataRequest messageObject) {
+    public UnlockDataProtocol.UnlockDataResponse handle(UnlockDataProtocol.UnlockDataRequest messageObject, RedisMessageContext context) {
 
         List<UUID> serverUUIDs = messageObject.serverUUIDs();
         UUID playerUUID = messageObject.playerUUID();
         String dataKey = messageObject.dataKey();
-        String requesterId = request.getRequestServer();
+        String requesterId = context.origin().id();
 
         String lockKey = playerUUID + ":" + dataKey;
 
@@ -47,11 +45,11 @@ public class UnlockDataEndpoint implements ServiceEndpoint<
                         return null;
                     });
 
-            return new UnlockDataProtocolObject.UnlockDataResponse(
+            return new UnlockDataProtocol.UnlockDataResponse(
                     true, null);
 
         } catch (Exception e) {
-            return new UnlockDataProtocolObject.UnlockDataResponse(
+            return new UnlockDataProtocol.UnlockDataResponse(
                     false, "Error during unlock: " + e.getMessage());
         }
     }

@@ -3,7 +3,7 @@ package net.swofty.velocity.redis.listeners;
 import com.google.gson.Gson;
 import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
@@ -26,7 +26,7 @@ public class ListenerPlayerPunished extends RedisListener<
         PunishPlayerProtocol.Response> {
 
     @Override
-    public ProtocolObject<PunishPlayerProtocol.Request, PunishPlayerProtocol.Response> getProtocol() {
+    public RedisProtocol<PunishPlayerProtocol.Request, PunishPlayerProtocol.Response> protocol() {
         return new PunishPlayerProtocol();
     }
 

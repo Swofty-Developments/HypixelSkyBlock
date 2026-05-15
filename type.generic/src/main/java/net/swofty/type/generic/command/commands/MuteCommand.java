@@ -7,7 +7,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.suggestion.SuggestionEntry;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.protocol.objects.punishment.PunishPlayerProtocolObject;
+import net.swofty.commons.protocol.objects.punishment.PunishPlayerServiceProtocol;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.commons.punishment.template.MuteType;
@@ -94,7 +94,7 @@ public class MuteCommand extends HypixelCommand {
                             long actualTime, long expiryTime, String playerName) {
         ProxyService punishmentService = new ProxyService(ServiceType.PUNISHMENT);
         PunishmentReason reason = new PunishmentReason(type);
-        PunishPlayerProtocolObject.PunishPlayerMessage message = new PunishPlayerProtocolObject.PunishPlayerMessage(
+        PunishPlayerServiceProtocol.PunishPlayerMessage message = new PunishPlayerServiceProtocol.PunishPlayerMessage(
                 targetUuid,
                 PunishmentType.MUTE.name(),
                 reason,
@@ -104,10 +104,10 @@ public class MuteCommand extends HypixelCommand {
         );
 
         punishmentService.handleRequest(message).thenAccept(result -> {
-            if (result instanceof PunishPlayerProtocolObject.PunishPlayerResponse response) {
+            if (result instanceof PunishPlayerServiceProtocol.PunishPlayerResponse response) {
                 if (response.success()) {
                     sender.sendTranslated("commands.mute.success", Component.text(playerName), Component.text(response.punishmentId()));
-                } else if (response.errorCode() == PunishPlayerProtocolObject.ErrorCode.ALREADY_PUNISHED) {
+                } else if (response.errorCode() == PunishPlayerServiceProtocol.ErrorCode.ALREADY_PUNISHED) {
                     sender.sendTranslated("commands.mute.already_muted", Component.text(response.errorMessage()));
                 } else {
                     sender.sendTranslated("commands.mute.failed", Component.text(response.errorMessage()));

@@ -39,9 +39,9 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.config.Settings;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.*;
-import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
+import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
 import net.swofty.commons.punishment.PunishmentReason;
@@ -233,17 +233,17 @@ public class SkyBlockVelocity {
                         listener.onMessage(event2.channel, event2.message);
                     });
             });
-        ProtocolObject<?, ?>[] fromProxyProtocols = {
+        RedisProtocol<?, ?>[] fromProxyProtocols = {
             new TeleportProtocol(), new PlayerSwitchedProtocol(),
             new DoesServerHaveIslandProtocol(), new RefreshCoopDataProtocol(),
             new RunEventProtocol(), new PingServerProtocol(),
             new GivePlayersOriginTypeProtocol(), new BroadcastStaffChatProtocol()
         };
-        for (ProtocolObject<?, ?> protocol : fromProxyProtocols) {
+        for (RedisProtocol<?, ?> protocol : fromProxyProtocols) {
             RedisMessage.registerProxyToServer(protocol);
         }
-        loopThroughPackage("net.swofty.commons.protocol.objects", ProtocolObject.class)
-            .forEach(ServerOutboundMessage::registerFromProtocolObject);
+        loopThroughPackage("net.swofty.commons.protocol.objects", RedisProtocol.class)
+            .forEach(ServerOutboundMessage::registerResponseProtocol);
         RedisAPI.getInstance().startListeners();
 
         // Setup GameManager
@@ -255,14 +255,14 @@ public class SkyBlockVelocity {
             ProxyService service = new ProxyService(ServiceType.PUNISHMENT);
 
             CompletableFuture<?> banFuture = service.handleRequest(
-                new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.BAN.name()));
+                new GetActivePunishmentProtocol.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.BAN.name()));
             CompletableFuture<?> muteFuture = service.handleRequest(
-                new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.MUTE.name()));
+                new GetActivePunishmentProtocol.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.MUTE.name()));
 
             CompletableFuture.allOf(banFuture, muteFuture).orTimeout(3, TimeUnit.SECONDS).join();
 
             Object banResult = banFuture.join();
-            if (banResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+            if (banResult instanceof GetActivePunishmentProtocol.GetActivePunishmentResponse(
                 boolean found1, String type1, String id, PunishmentReason reason1,
                 long at, List<PunishmentTag> tags1, boolean success1, String error1
             ) && found1) {
@@ -273,7 +273,7 @@ public class SkyBlockVelocity {
             }
 
             Object muteResult = muteFuture.join();
-            if (muteResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+            if (muteResult instanceof GetActivePunishmentProtocol.GetActivePunishmentResponse(
                 boolean found, String type, String banId, PunishmentReason reason,
                 long expiresAt, List<PunishmentTag> tags, boolean success, String error
             ) && found) {

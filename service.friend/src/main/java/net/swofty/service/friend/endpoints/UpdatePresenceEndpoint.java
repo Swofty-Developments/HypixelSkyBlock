@@ -1,25 +1,23 @@
 package net.swofty.service.friend.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.presence.PresenceInfo;
-import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocolObject;
+import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocol;
 import net.swofty.service.friend.FriendCache;
 import net.swofty.service.friend.PresenceStorage;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class UpdatePresenceEndpoint implements ServiceEndpoint<
-        UpdatePresenceProtocolObject.UpdatePresenceMessage,
-        UpdatePresenceProtocolObject.UpdatePresenceResponse> {
+public class UpdatePresenceEndpoint implements RedisMessageHandler<
+        UpdatePresenceProtocol.UpdatePresenceMessage,
+        UpdatePresenceProtocol.UpdatePresenceResponse> {
 
     @Override
-    public UpdatePresenceProtocolObject associatedProtocolObject() {
-        return new UpdatePresenceProtocolObject();
+    public UpdatePresenceProtocol protocol() {
+        return new UpdatePresenceProtocol();
     }
 
     @Override
-    public UpdatePresenceProtocolObject.UpdatePresenceResponse onMessage(
-            ServiceProxyRequest message,
-            UpdatePresenceProtocolObject.UpdatePresenceMessage messageObject) {
+    public UpdatePresenceProtocol.UpdatePresenceResponse handle(UpdatePresenceProtocol.UpdatePresenceMessage messageObject, RedisMessageContext context) {
 
         PresenceInfo incoming = messageObject.presence();
         PresenceInfo previous = PresenceStorage.upsertPreservingServer(incoming);
@@ -35,7 +33,7 @@ public class UpdatePresenceEndpoint implements ServiceEndpoint<
             }
         }
 
-        return new UpdatePresenceProtocolObject.UpdatePresenceResponse(true, null);
+        return new UpdatePresenceProtocol.UpdatePresenceResponse(true, null);
     }
 }
 

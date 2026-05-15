@@ -6,7 +6,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.GetMapsProtocol;
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -61,12 +61,12 @@ public class GUIMapSelectionSkywars extends HypixelInventoryGUI {
     private void loadMaps(HypixelPlayer player) {
         ProxyService orchestratorService = new ProxyService(ServiceType.ORCHESTRATOR);
 
-        GetMapsProtocolObject.GetMapsMessage message =
-                new GetMapsProtocolObject.GetMapsMessage(ServerType.SKYWARS_GAME, gameType.name());
+        GetMapsProtocol.GetMapsMessage message =
+                new GetMapsProtocol.GetMapsMessage(ServerType.SKYWARS_GAME, gameType.name());
 
         orchestratorService.handleRequest(message)
                 .thenAccept(response -> {
-                    if (response instanceof GetMapsProtocolObject.GetMapsResponse mapsResponse) {
+                    if (response instanceof GetMapsProtocol.GetMapsResponse mapsResponse) {
                         maps = mapsResponse.maps();
                         mapsLoaded = true;
                         populateMaps(player);

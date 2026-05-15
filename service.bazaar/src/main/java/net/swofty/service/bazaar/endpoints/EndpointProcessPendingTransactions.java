@@ -1,29 +1,27 @@
 package net.swofty.service.bazaar.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage;
-import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsResponse;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsMessage;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsResponse;
 import net.swofty.service.bazaar.PendingTransactionsDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointProcessPendingTransactions implements ServiceEndpoint<
+public class EndpointProcessPendingTransactions implements RedisMessageHandler<
         BazaarProcessPendingTransactionsMessage,
         BazaarProcessPendingTransactionsResponse> {
 
     @Override
-    public BazaarProcessPendingTransactionsProtocolObject associatedProtocolObject() {
-        return new BazaarProcessPendingTransactionsProtocolObject();
+    public BazaarProcessPendingTransactionsProtocol protocol() {
+        return new BazaarProcessPendingTransactionsProtocol();
     }
 
     @Override
-    public BazaarProcessPendingTransactionsResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarProcessPendingTransactionsMessage msg) {
+    public BazaarProcessPendingTransactionsResponse handle(BazaarProcessPendingTransactionsMessage msg, RedisMessageContext context) {
 
         List<String> successfulIds = new ArrayList<>();
         List<String> failedIds = new ArrayList<>();
