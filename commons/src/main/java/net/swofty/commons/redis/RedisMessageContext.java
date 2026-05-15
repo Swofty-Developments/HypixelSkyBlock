@@ -9,6 +9,13 @@ public record RedisMessageContext(
         String channel,
         boolean broadcast
 ) {
+    public static RedisMessageContext between(UUID requestId,
+                                              RedisEndpoint origin,
+                                              RedisEndpoint destination,
+                                              String channel) {
+        return new RedisMessageContext(requestId, origin, destination, channel, false);
+    }
+
     public static RedisMessageContext proxyToServer(UUID requestId, String proxyId, String serverId, String channel) {
         return new RedisMessageContext(
                 requestId,

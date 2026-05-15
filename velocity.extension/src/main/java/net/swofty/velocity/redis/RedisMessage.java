@@ -2,50 +2,27 @@ package net.swofty.velocity.redis;
 
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisChannels;
-import net.swofty.commons.redis.RedisEnvelope;
-import net.swofty.redisapi.api.ChannelRegistry;
-import net.swofty.redisapi.api.RedisAPI;
-import org.tinylog.Logger;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageBus;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class RedisMessage {
-    private static final Map<UUID, CompletableFuture<String>> callbacks = new HashMap<>();
-
     public static <T, R> CompletableFuture<R> sendMessageToServer(UUID server,
                                                                     RedisProtocol<T, R> protocol,
                                                                     T message) {
-        UUID requestID = UUID.randomUUID();
-        CompletableFuture<String> rawFuture = new CompletableFuture<>();
-
-        callbacks.put(requestID, rawFuture);
-
-        String serialized = protocol.translateToString(message);
-        RedisAPI.getInstance().publishMessage(
+        return RedisMessageBus.request(
+                RedisEndpoint.proxy(),
                 server.toString(),
-                ChannelRegistry.getFromName(RedisChannels.protocol(protocol)),
-                new RedisEnvelope(requestID.toString(), "proxy", serialized).serialize());
-
-        return rawFuture.thenApply(protocol::translateReturnFromString);
+                RedisChannels.protocol(protocol),
+                RedisChannels.protocol(protocol),
+                protocol,
+                message
+        );
     }
 
     public static void registerProxyToServer(RedisProtocol<?, ?> protocol) {
-        RedisAPI.getInstance().registerChannel(RedisChannels.protocol(protocol), (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            UUID request = UUID.fromString(envelope.id());
-            String rawMessage = envelope.payload();
-
-            try {
-                callbacks.get(request).complete(rawMessage);
-                callbacks.remove(request);
-            } catch (Exception e) {
-                Logger.error(e, "RedisMessage error processing channel={} message={}",
-                        event.channel, event.message);
-            }
-        });
+        RedisMessageBus.registerResponseChannel(RedisChannels.protocol(protocol));
     }
 }

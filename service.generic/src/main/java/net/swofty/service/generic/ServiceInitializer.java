@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisChannels;
-import net.swofty.commons.redis.RedisEnvelope;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageBus;
 import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
-import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
@@ -28,11 +28,7 @@ public class ServiceInitializer {
         Logger.info("Initializing service {}...", service.getType().name());
         ItemAttribute.registerItemAttributes();
 
-        /**
-         * Register Redis
-         */
         ServiceRedisManager.connect(ConfigProvider.settings().getRedisUri(), service.getType());
-        // Initialize service-to-server communication
         ServiceToServerManager.initialize(service.getType());
 
         List<RedisMessageHandler> endpoints = new ArrayList<>(service.getEndpoints());
@@ -42,28 +38,19 @@ public class ServiceInitializer {
             RedisProtocol protocolObject = endpoint.protocol();
             Logger.debug("Registering channel {}", protocolObject.channel());
 
-            RedisAPI.getInstance().registerChannel(RedisChannels.protocol(protocolObject), message -> {
-                // Everything after the first semicolon is the actual message
-                String realMessage = message.message.substring(message.message.indexOf(";") + 1);
-                RedisEnvelope envelope = RedisEnvelope.deserialize(realMessage);
-
-                Object messageData = protocolObject.translateFromString(envelope.payload());
-
-                Thread.startVirtualThread(() -> {
-                    RedisMessageContext context = RedisMessageContext.serverToService(
+            RedisMessageBus.registerHandler(
+                    RedisEndpoint.service(service.getType()),
+                    RedisChannels.protocol(protocolObject),
+                    endpoint,
+                    (envelope, channel) -> RedisMessageContext.between(
                             UUID.fromString(envelope.id()),
-                            envelope.from(),
-                            service.getType().name(),
+                            RedisEndpoint.server(envelope.from()),
+                            RedisEndpoint.service(service.getType()),
                             protocolObject.channel()
-                    );
-                    Object rawResponse = endpoint.handle(messageData, context);
-                    String response = protocolObject.translateReturnToString(rawResponse);
-
-                    RedisAPI.getInstance().publishMessage(envelope.from(),
-                            ChannelRegistry.getFromName(protocolObject.channel()),
-                            new RedisEnvelope(envelope.id(), service.getType().name(), response).serialize()).join();
-                });
-            });
+                    ),
+                    envelope -> envelope.from(),
+                    envelope -> RedisChannels.protocol(protocolObject)
+            );
         });
 
         RedisAPI.getInstance().startListeners();

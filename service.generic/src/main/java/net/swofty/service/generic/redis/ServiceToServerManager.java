@@ -3,63 +3,28 @@ package net.swofty.service.generic.redis;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisChannels;
-import net.swofty.commons.redis.RedisEnvelope;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageBus;
 import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.game.GameInformationPushProtocol;
 import net.swofty.commons.protocol.objects.gui.KickFromGUIPushProtocol;
-import net.swofty.redisapi.api.ChannelRegistry;
-import net.swofty.redisapi.api.RedisAPI;
-import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.*;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceToServerManager {
-    private static final Map<UUID, CompletableFuture<JSONObject>> pendingRequests = new ConcurrentHashMap<>();
-    // Keep track of in-flight broadcasts
-    private static final Map<UUID, BroadcastRequest> pendingBroadcastRequests = new ConcurrentHashMap<>();
-    // Single threaded scheduler to fire timeouts
-    private static final ScheduledExecutorService scheduler =
-            Executors.newSingleThreadScheduledExecutor(r -> {
-                Thread t = new Thread(r, "broadcast-timeouter");
-                t.setDaemon(true);
-                return t;
-            });
     private static ServiceType currentServiceType;
 
     public static void initialize(ServiceType serviceType) {
         currentServiceType = serviceType;
-
-        // Register response handler for server responses
-        RedisAPI.getInstance().registerChannel(RedisChannels.SERVICE_RESPONSE, (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            UUID requestId = UUID.fromString(envelope.id());
-
-            CompletableFuture<JSONObject> future = pendingRequests.remove(requestId);
-            if (future != null) {
-                future.complete(new JSONObject(envelope.payload()));
-            }
-        });
-
-        RedisAPI.getInstance().registerChannel(RedisChannels.SERVICE_BROADCAST_RESPONSE, (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            UUID requestId = UUID.fromString(envelope.id());
-            UUID serverUUID = UUID.fromString(envelope.from());
-
-            BroadcastRequest broadcastRequest = pendingBroadcastRequests.get(requestId);
-            if (broadcastRequest != null) {
-                broadcastRequest.addResponse(serverUUID, new JSONObject(envelope.payload()));
-            }
-        });
+        RedisMessageBus.registerResponseChannel(RedisChannels.SERVICE_RESPONSE);
+        RedisMessageBus.registerResponseChannel(RedisChannels.SERVICE_BROADCAST_RESPONSE);
     }
 
     public static <T, R> CompletableFuture<R> sendToServer(
@@ -67,40 +32,14 @@ public class ServiceToServerManager {
             RedisProtocol<T, R> protocol,
             T message
     ) {
-        UUID requestId = UUID.randomUUID();
-        CompletableFuture<R> future = new CompletableFuture<>();
-        CompletableFuture<JSONObject> rawFuture = new CompletableFuture<>();
-
-        pendingRequests.put(requestId, rawFuture);
-
-        rawFuture.orTimeout(10, TimeUnit.SECONDS).exceptionally(throwable -> {
-            pendingRequests.remove(requestId);
-            return null;
-        });
-
-        rawFuture.thenAccept(json -> {
-            if (json == null) {
-                future.completeExceptionally(new TimeoutException("Service push timed out"));
-                return;
-            }
-            try {
-                R response = protocol.translateReturnFromString(json.toString());
-                future.complete(response);
-            } catch (Exception e) {
-                future.completeExceptionally(e);
-            }
-        });
-
-        String serialized = protocol.translateToString(message);
-        String channelName = RedisChannels.serviceRequest(protocol);
-
-        RedisAPI.getInstance().publishMessage(
+        return RedisMessageBus.request(
+                RedisEndpoint.service(currentServiceType),
                 serverUUID.toString(),
-                ChannelRegistry.getFromName(channelName),
-                new RedisEnvelope(requestId.toString(), currentServiceType.name(), serialized).serialize()
+                RedisChannels.serviceRequest(protocol),
+                RedisChannels.SERVICE_RESPONSE,
+                protocol,
+                message
         );
-
-        return future;
     }
 
     public static <T, R> CompletableFuture<Map<UUID, R>> sendToAllServers(
@@ -108,40 +47,15 @@ public class ServiceToServerManager {
             T message,
             int timeoutMs
     ) {
-        UUID requestId = UUID.randomUUID();
-        CompletableFuture<Map<UUID, JSONObject>> rawFuture = new CompletableFuture<>();
-        CompletableFuture<Map<UUID, R>> typedFuture = new CompletableFuture<>();
-
-        BroadcastRequest broadcastRequest = new BroadcastRequest(rawFuture);
-        pendingBroadcastRequests.put(requestId, broadcastRequest);
-
-        String serialized = protocol.translateToString(message);
-        String channelName = RedisChannels.serviceBroadcast(protocol);
-
-        RedisAPI.getInstance().publishMessage(RedisChannels.ALL_SERVERS,
-                ChannelRegistry.getFromName(channelName),
-                new RedisEnvelope(requestId.toString(), currentServiceType.name(), serialized).serialize());
-
-        scheduler.schedule(() -> {
-            BroadcastRequest req = pendingBroadcastRequests.remove(requestId);
-            if (req != null) {
-                req.getFuture().complete(req.getResponses());
-            }
-        }, timeoutMs, TimeUnit.MILLISECONDS);
-
-        rawFuture.thenAccept(rawMap -> {
-            Map<UUID, R> typedMap = new ConcurrentHashMap<>();
-            rawMap.forEach((uuid, json) -> {
-                try {
-                    typedMap.put(uuid, protocol.translateReturnFromString(json.toString()));
-                } catch (Exception e) {
-                    Logger.error(e, "Failed to deserialize push response from {}", uuid);
-                }
-            });
-            typedFuture.complete(typedMap);
-        });
-
-        return typedFuture;
+        return RedisMessageBus.requestBroadcast(
+                RedisEndpoint.service(currentServiceType),
+                RedisChannels.ALL_SERVERS,
+                RedisChannels.serviceBroadcast(protocol),
+                RedisChannels.SERVICE_BROADCAST_RESPONSE,
+                protocol,
+                message,
+                timeoutMs
+        );
     }
 
     public static <T, R> CompletableFuture<Map<UUID, R>> sendToServers(

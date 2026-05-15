@@ -3,9 +3,11 @@ package net.swofty.service.punishment.endpoints;
 import com.google.gson.Gson;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.punishment.PunishPlayerServiceProtocol;
+import net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol;
 import net.swofty.commons.punishment.*;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageBus;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.service.punishment.ProxyRedis;
 import org.tinylog.Logger;
 
 import java.time.Instant;
@@ -63,8 +65,12 @@ public class PunishPlayerEndpoint implements RedisMessageHandler
         }
 
         Gson gson = new Gson();
-        ProxyRedis.publishToProxy(new net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol(),
-                new net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol.Request(
+        RedisMessageBus.publish(
+                RedisEndpoint.service(context.destination().id()),
+                RedisEndpoint.proxy().id(),
+                new PunishPlayerProtocol().channel(),
+                new PunishPlayerProtocol(),
+                new PunishPlayerProtocol.Request(
                         messageObject.target().toString(),
                         messageObject.type(),
                         id.id().toString(),
@@ -72,7 +78,8 @@ public class PunishPlayerEndpoint implements RedisMessageHandler
                         reason.getBanType() != null ? reason.getBanType().name() : null,
                         reason.getMuteType() != null ? reason.getMuteType().name() : null,
                         messageObject.tags() != null ? gson.toJson(messageObject.tags()) : null
-                ));
+                )
+        );
         Logger.info("Issued {} punishment to {} for reason '{}' (expires at: {})",
                 messageObject.type(),
                 messageObject.target(),
