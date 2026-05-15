@@ -9,6 +9,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.SlayerBossMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -38,6 +39,10 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
             ((SkyBlockPlayer) event.getTarget()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));
+
+            if (mob instanceof SlayerBossMob slayerBoss) {
+                slayerBoss.getAbility().onMeleeHit(slayerBoss, (SkyBlockPlayer) event.getTarget());
+            }
 
             new DamageIndicator()
                     .damage((float) valueEvent.getValue())
