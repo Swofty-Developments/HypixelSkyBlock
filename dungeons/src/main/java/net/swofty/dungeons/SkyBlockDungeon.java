@@ -22,6 +22,14 @@ public class SkyBlockDungeon {
         return rooms.get(Map.entry(x, y));
     }
 
+    public Map<Map.Entry<Integer, Integer>, DungeonRoom> getRooms() {
+        return Map.copyOf(rooms);
+    }
+
+    public List<DungeonDoor> getDoorConnections() {
+        return List.copyOf(doors);
+    }
+
     public boolean isConnected(int x1, int y1, int x2, int y2) {
         return doors.stream().anyMatch(door -> (door.x1() == x1 && door.y1() == y1 && door.x2() == x2 && door.y2() == y2) || (door.x1() == x2 && door.y1() == y2 && door.x2() == x1 && door.y2() == y1));
     }
