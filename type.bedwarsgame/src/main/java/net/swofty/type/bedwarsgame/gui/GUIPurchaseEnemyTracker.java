@@ -3,7 +3,6 @@ package net.swofty.type.bedwarsgame.gui;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
@@ -25,8 +24,6 @@ public class GUIPurchaseEnemyTracker extends StatelessView {
 
     private static final int TRACKER_PRICE = 2;
     private static final int[] TEAM_SLOTS = {10, 11, 12, 13, 14, 15, 16, 19};
-    // TODO: reset between games, move to bwgame
-    public static final Tag<String> TRACKED_TEAM_TAG = Tag.String("bedwars_compass_tracked_team");
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
@@ -142,17 +139,21 @@ public class GUIPurchaseEnemyTracker extends StatelessView {
         }
 
         BedWarsInventoryManipulator.removeItems(player, Material.EMERALD, TRACKER_PRICE);
-        player.setTag(TRACKED_TEAM_TAG, targetTeam.name());
+        game.getTrackers().put(player.getUuid(), targetTeam);
         player.sendMessage("§aYour compass is now tracking " + targetTeam.chatColor() + "Team " + targetTeam.getName() + "§a!");
 
-        // TODO: implement
         GUIQuickCommunications.playBuySound(player);
         ctx.session(DefaultState.class).refresh();
     }
 
     private boolean isTrackingTeam(BedWarsPlayer player, TeamKey teamKey) {
-        String trackedTeam = player.getTag(TRACKED_TEAM_TAG);
-        return trackedTeam != null && trackedTeam.equals(teamKey.name());
+        BedWarsGame game = player.getGame();
+        if (game == null) {
+            return false;
+        }
+
+        TeamKey trackedTeam = game.getTrackers().get(player.getUuid());
+        return trackedTeam == teamKey;
     }
 
     private List<TeamKey> getEnemyTeams(BedWarsGame game, TeamKey ownTeam) {
@@ -164,7 +165,8 @@ public class GUIPurchaseEnemyTracker extends StatelessView {
             .toList();
     }
 
-    @Deprecated
+    // there's a better way to do this
+    @Deprecated(forRemoval = true)
     private Material getWool(TeamKey teamKey) {
         return switch (teamKey) {
             case RED -> Material.RED_WOOL;

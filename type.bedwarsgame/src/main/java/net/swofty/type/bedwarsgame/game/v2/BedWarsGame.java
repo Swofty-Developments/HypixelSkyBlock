@@ -64,6 +64,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     private final Map<TeamKey, Map<Integer, ItemStack>> teamChests = new EnumMap<>(TeamKey.class);
     private final Map<UUID, Map<Integer, ItemStack>> enderChests = new HashMap<>();
+    private final Map<UUID, TeamKey> trackers = new HashMap<>();
 
     public BedWarsGame(
         BedWarsMapsConfig.MapEntry mapEntry,
@@ -207,11 +208,13 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         TeamKey teamKey = player.getTeamKey();
         MapTeam playerTeam = getMapEntry().getConfiguration().getTeams().get(teamKey);
         HypixelPosition spawnPos = playerTeam.getSpawn();
+        Pos spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
 
         player.getInventory().clear();
         player.clearTitle();
         player.setVelocity(Vec.ZERO); // prevent high velocity movement on respawn
-        player.teleport(new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw()));
+        player.teleport(spawnPoint);
+        player.setRespawnPoint(spawnPoint);
         player.setGameMode(GameMode.SURVIVAL);
         player.setInvisible(false);
         player.setFlying(false);
@@ -334,7 +337,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     /**
-     * Respawns a team's bed. Usually an admin action, Lucky Block Bed Wars beds can be placed at any location
+     * Respawns a team's bed. Usually an admin action, Lucky Block Bed Wars beds can be placed at any location,
      * which isn't supported yet.
      */
     public void respawnBed(TeamKey teamKey) {
