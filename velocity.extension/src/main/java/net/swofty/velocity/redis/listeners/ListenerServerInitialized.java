@@ -5,13 +5,12 @@ import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.RegisterServerProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerServerInitialized extends RedisListener<
+public class ListenerServerInitialized implements RedisMessageHandler<
         RegisterServerProtocol.Request,
         RegisterServerProtocol.Response> {
 
@@ -21,7 +20,7 @@ public class ListenerServerInitialized extends RedisListener<
     }
 
     @Override
-    public RegisterServerProtocol.Response receivedMessage(RegisterServerProtocol.Request message, UUID serverUUID) {
+    public RegisterServerProtocol.Response handle(RegisterServerProtocol.Request message, RedisMessageContext context) {
         ServerType type = ServerType.valueOf(message.type());
         int port = message.port() != null ? message.port() : -1;
 
@@ -31,7 +30,7 @@ public class ListenerServerInitialized extends RedisListener<
 
         int maxPlayers = message.maxPlayers();
 
-        GameManager.GameServer server = GameManager.addServer(type, serverUUID, host, port, maxPlayers);
+        GameManager.GameServer server = GameManager.addServer(type, UUID.fromString(context.origin().id()), host, port, maxPlayers);
         return new RegisterServerProtocol.Response(
                 server.registeredServer().getServerInfo().getAddress().getHostString(),
                 server.registeredServer().getServerInfo().getAddress().getPort(),

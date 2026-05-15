@@ -2,8 +2,8 @@ package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.RegisterTestFlowProtocol;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.json.JSONObject;
 import org.tinylog.Logger;
@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerRegisterTestFlow extends RedisListener<
+public class ListenerRegisterTestFlow implements RedisMessageHandler<
         RegisterTestFlowProtocol.Request,
         RegisterTestFlowProtocol.Response> {
 
@@ -24,7 +23,7 @@ public class ListenerRegisterTestFlow extends RedisListener<
     }
 
     @Override
-    public RegisterTestFlowProtocol.Response receivedMessage(RegisterTestFlowProtocol.Request message, UUID serverUUID) {
+    public RegisterTestFlowProtocol.Response handle(RegisterTestFlowProtocol.Request message, RedisMessageContext context) {
         try {
             String testFlowName = message.testFlowName();
             String handler = message.handler();
@@ -38,12 +37,12 @@ public class ListenerRegisterTestFlow extends RedisListener<
 
             TestFlowManager.registerTestFlow(testFlowName, handler, players, serverConfigs);
 
-            Logger.info("Registered test flow '{}' from server {}", testFlowName, serverUUID);
+            Logger.info("Registered test flow '{}' from server {}", testFlowName, UUID.fromString(context.origin().id()));
 
             return new RegisterTestFlowProtocol.Response(true, "Test flow registered successfully", null);
 
         } catch (Exception e) {
-            Logger.error(e, "Failed to register test flow from server {}", serverUUID);
+            Logger.error(e, "Failed to register test flow from server {}", UUID.fromString(context.origin().id()));
             return new RegisterTestFlowProtocol.Response(false, null, e.getMessage());
         }
     }

@@ -17,16 +17,15 @@ import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.presence.PresencePublisher;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.velocity.redis.RedisMessage;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerPlayerHandler extends RedisListener<
+public class ListenerPlayerHandler implements RedisMessageHandler<
         PlayerHandlerProtocol.Request,
         PlayerHandlerProtocol.Response> {
 
@@ -38,7 +37,7 @@ public class ListenerPlayerHandler extends RedisListener<
     }
 
     @Override
-    public PlayerHandlerProtocol.Response receivedMessage(PlayerHandlerProtocol.Request message, UUID serverUUID) {
+    public PlayerHandlerProtocol.Response handle(PlayerHandlerProtocol.Request message, RedisMessageContext context) {
         UUID uuid = UUID.fromString(message.uuid());
         PlayerHandlerProtocol.Action action = message.action();
         Map<String, Object> data = message.data() != null ? message.data() : Map.of();

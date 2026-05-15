@@ -7,14 +7,13 @@ import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.RequestServersProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.velocity.testflow.TestFlowManager;
 
 import java.util.*;
 
-@ChannelListener
-public class ListenerServersInformation extends RedisListener<
+public class ListenerServersInformation implements RedisMessageHandler<
         RequestServersProtocol.Request,
         RequestServersProtocol.Response> {
 
@@ -24,9 +23,9 @@ public class ListenerServersInformation extends RedisListener<
     }
 
     @Override
-    public RequestServersProtocol.Response receivedMessage(RequestServersProtocol.Request message, UUID serverUUID) {
+    public RequestServersProtocol.Response handle(RequestServersProtocol.Request message, RedisMessageContext context) {
         String requestType = message.requestType();
-        boolean isInTestFlow = TestFlowManager.isServerInTestFlow(serverUUID);
+        boolean isInTestFlow = TestFlowManager.isServerInTestFlow(UUID.fromString(context.origin().id()));
 
         switch (requestType) {
             case "ALL" -> {

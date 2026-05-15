@@ -4,14 +4,13 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PlayerCountProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerPlayerCount extends RedisListener<
+public class ListenerPlayerCount implements RedisMessageHandler<
         PlayerCountProtocol.Request,
         PlayerCountProtocol.Response> {
 
@@ -21,7 +20,7 @@ public class ListenerPlayerCount extends RedisListener<
     }
 
     @Override
-    public PlayerCountProtocol.Response receivedMessage(PlayerCountProtocol.Request message, UUID serverUUID) {
+    public PlayerCountProtocol.Response handle(PlayerCountProtocol.Request message, RedisMessageContext context) {
         switch (message.lookupType()) {
             case ALL -> {
                 int count = GameManager.getServers().values().stream()

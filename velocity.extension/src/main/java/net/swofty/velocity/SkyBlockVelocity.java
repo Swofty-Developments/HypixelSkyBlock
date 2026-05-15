@@ -42,6 +42,7 @@ import net.swofty.commons.config.Settings;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.*;
 import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
 import net.swofty.commons.punishment.PunishmentReason;
@@ -66,8 +67,7 @@ import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.presence.PresencePublisher;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.velocity.redis.RedisHandlerRegistry;
 import net.swofty.velocity.redis.RedisMessage;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
@@ -225,14 +225,8 @@ public class SkyBlockVelocity {
         // Setup Redis
         RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());
         RedisAPI.getInstance().setFilterId("proxy");
-        loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
-            .forEach(listener -> {
-                RedisAPI.getInstance().registerChannel(
-                    listener.getChannelName(),
-                    (event2) -> {
-                        listener.onMessage(event2.channel, event2.message);
-                    });
-            });
+        loopThroughPackage("net.swofty.velocity.redis.listeners", RedisMessageHandler.class)
+            .forEach(RedisHandlerRegistry::register);
         RedisProtocol<?, ?>[] fromProxyProtocols = {
             new TeleportProtocol(), new PlayerSwitchedProtocol(),
             new DoesServerHaveIslandProtocol(), new RefreshCoopDataProtocol(),

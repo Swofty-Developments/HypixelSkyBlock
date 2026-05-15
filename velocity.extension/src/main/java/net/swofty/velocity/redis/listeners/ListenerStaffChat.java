@@ -4,14 +4,13 @@ import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.StaffChatProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.velocity.redis.RedisMessage;
 
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerStaffChat extends RedisListener<
+public class ListenerStaffChat implements RedisMessageHandler<
         StaffChatProtocol.Request,
         StaffChatProtocol.Response> {
 
@@ -21,7 +20,7 @@ public class ListenerStaffChat extends RedisListener<
     }
 
     @Override
-    public StaffChatProtocol.Response receivedMessage(StaffChatProtocol.Request message, UUID serverUUID) {
+    public StaffChatProtocol.Response handle(StaffChatProtocol.Request message, RedisMessageContext context) {
         broadcastToAllServers(new BroadcastStaffChatProtocol.Request(
                 message.type(), message.formattedMessage(), message.uuid()));
         return new StaffChatProtocol.Response();
