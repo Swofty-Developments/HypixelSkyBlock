@@ -11,6 +11,7 @@ public record TrophyFishDefinition(
     int requiredFishingLevel,
     long minimumCastTimeMs,
     @Nullable String requiredRodId,
+    @Nullable String requiredBaitId,
     @Nullable Double minimumMana,
     @Nullable Double minimumBobberDepth,
     @Nullable Double maximumPlayerDistance,

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
@@ -23,12 +22,6 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 
 public final class FishingLootResolver {
 
-    private static final List<Function<FishingContext, Optional<CatchPayload>>> SPECIAL_CATCHES = List.of(
-        FishingLootResolver::tryResolveQuestCatch,
-        FishingLootResolver::tryResolveTrophyFish,
-        FishingLootResolver::tryResolveSeaCreature
-    );
-
     private static final CatchPayload DEFAULT_CATCH =
         new CatchPayload.Item("RAW_FISH", 1, 5.0D, false);
 
@@ -36,11 +29,23 @@ public final class FishingLootResolver {
     }
 
     public static CatchPayload resolve(FishingContext context) {
-        return SPECIAL_CATCHES.stream()
-            .map(resolver -> resolver.apply(context))
-            .flatMap(Optional::stream)
-            .findFirst()
-            .orElseGet(() -> resolveItem(context));
+        Optional<CatchPayload> questCatch = tryResolveQuestCatch(context);
+        if (questCatch.isPresent()) {
+            return questCatch.get();
+        }
+
+        Optional<CatchPayload> seaCreature = tryResolveSeaCreature(context);
+        Optional<CatchPayload> trophyFish = tryResolveTrophyFish(context);
+        if (seaCreature.isPresent() && trophyFish.isPresent()) {
+            return new CatchPayload.Multi(List.of(seaCreature.get(), trophyFish.get()));
+        }
+        if (seaCreature.isPresent()) {
+            return seaCreature.get();
+        }
+        if (trophyFish.isPresent()) {
+            return trophyFish.get();
+        }
+        return resolveItem(context);
     }
 
     private static Optional<CatchPayload> tryResolveTrophyFish(FishingContext context) {
@@ -55,21 +60,15 @@ public final class FishingLootResolver {
 
         List<TrophyFishDefinition> eligible = new ArrayList<>();
         for (TrophyFishDefinition definition : FishingRegistry.getTrophyFish()) {
-            if (!definition.regions().isEmpty() && context.regionId() != null && !definition.regions().contains(context.regionId())) {
-                continue;
-            }
-            if (context.player().getSkills().getCurrentLevel(net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING) < definition.requiredFishingLevel()) {
-                continue;
-            }
-            if (context.castDurationMs() < definition.minimumCastTimeMs()) {
+            if (!isEligibleForTrophyFish(context, definition)) {
                 continue;
             }
             eligible.add(definition);
         }
 
-        eligible.sort(Comparator.comparingDouble(TrophyFishDefinition::catchChance));
+        eligible.sort(Comparator.comparingDouble(TrophyFishDefinition::catchChance).thenComparing(TrophyFishDefinition::id));
         for (TrophyFishDefinition definition : eligible) {
-            if (Math.random() * 100 <= definition.catchChance() + bonus) {
+            if (Math.random() * 100 <= effectiveTrophyChance(context, definition, bonus)) {
                 TrophyTier tier = rollTrophyTier(context, definition);
                 String itemId = switch (tier) {
                     case DIAMOND -> definition.diamondItemId();
@@ -85,6 +84,53 @@ public final class FishingLootResolver {
         }
 
         return Optional.empty();
+    }
+
+    private static boolean isEligibleForTrophyFish(FishingContext context, TrophyFishDefinition definition) {
+        if (!definition.regions().isEmpty() && (context.regionId() == null || !definition.regions().contains(context.regionId()))) {
+            return false;
+        }
+        if (context.player().getSkills().getCurrentLevel(net.swofty.type.skyblockgeneric.skill.SkillCategories.FISHING) < definition.requiredFishingLevel()) {
+            return false;
+        }
+        if (context.castDurationMs() < definition.minimumCastTimeMs()) {
+            return false;
+        }
+        if (definition.requiredRodId() != null && !definition.requiredRodId().equals(context.rod().getAttributeHandler().getPotentialType().name())) {
+            return false;
+        }
+        if (definition.requiredBaitId() != null && (context.bait() == null || !definition.requiredBaitId().equals(context.bait().getItemId()))) {
+            return false;
+        }
+        if (definition.requiresStarterRodWithoutEnchantments()
+            && (!"STARTER_LAVA_ROD".equals(context.rod().getAttributeHandler().getPotentialType().name())
+            || context.rod().getAttributeHandler().getEnchantments().findAny().isPresent())) {
+            return false;
+        }
+        if (definition.minimumMana() != null && context.player().getMaxMana() < definition.minimumMana()) {
+            return false;
+        }
+        if (definition.minimumBobberDepth() != null && context.player().getPosition().y() - context.hookPosition().y() < definition.minimumBobberDepth()) {
+            return false;
+        }
+        if (definition.maximumPlayerDistance() != null && context.player().getPosition().distance(context.hookPosition()) > definition.maximumPlayerDistance()) {
+            return false;
+        }
+        return true;
+    }
+
+    private static double effectiveTrophyChance(FishingContext context, TrophyFishDefinition definition, double bonus) {
+        if (!definition.specialGoldenFish()) {
+            if ("MANA_RAY".equals(definition.id())) {
+                return (context.player().getMaxMana() / 1000.0D) * (1.0D + bonus / 100.0D);
+            }
+            return definition.catchChance() * (1.0D + bonus / 100.0D);
+        }
+        long duration = context.castDurationMs();
+        if (duration < 480_000L) {
+            return 0.0D;
+        }
+        return Math.min(100.0D, ((duration - 480_000L) / 240_000.0D) * 100.0D);
     }
 
     private static Optional<CatchPayload> tryResolveQuestCatch(FishingContext context) {

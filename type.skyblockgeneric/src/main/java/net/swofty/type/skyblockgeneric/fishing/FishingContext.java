@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.fishing;
 
+import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.FishingBaitComponent;
@@ -16,6 +17,7 @@ public record FishingContext(
     @Nullable FishingRodPartComponent line,
     @Nullable FishingRodPartComponent sinker,
     @Nullable String regionId,
+    Pos hookPosition,
     boolean hotspotActive,
     ItemStatistics hotspotBuffs,
     long castDurationMs

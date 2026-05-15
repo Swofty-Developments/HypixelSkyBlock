@@ -9,6 +9,8 @@ import net.swofty.type.skyblockgeneric.entity.mob.mobs.seacreature.SeaCreatureSp
 import net.swofty.type.skyblockgeneric.fishing.FishingService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
+import java.util.List;
+
 /**
  * Sealed view of what the rod can pull out of the water. Each variant
  * carries exactly its own fields — no bag of nullable @Nullable strings —
@@ -29,6 +31,12 @@ public sealed interface CatchPayload {
     /* ------------------------------------------------------------------ */
     /*  Variants                                                          */
     /* ------------------------------------------------------------------ */
+
+    record Multi(List<CatchPayload> payloads) implements CatchPayload {
+        @Override public double skillXp() { return payloads.stream().mapToDouble(CatchPayload::skillXp).sum(); }
+        @Override public String summary() { return payloads.stream().map(CatchPayload::summary).toList().toString(); }
+        @Override public void apply(CatchAwardContext ctx) { payloads.forEach(payload -> payload.apply(ctx)); }
+    }
 
     record Item(String itemId, int amount, double skillXp, boolean fromTreasure) implements CatchPayload {
         @Override public String summary() { return (fromTreasure ? "treasure " : "") + amount + "x " + itemId; }

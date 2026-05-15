@@ -90,6 +90,7 @@ public final class FishingService {
             FishingRodPartService.getLine(rod),
             FishingRodPartService.getSinker(rod),
             region == null ? null : region.getType().name(),
+            hook.getSpawnPosition(),
             hotspotActive,
             hotspotBuffs,
             System.currentTimeMillis() - session.castAt()

@@ -112,6 +112,7 @@ public final class FishingRegistry {
                 intValue(entry, "requiredFishingLevel", 0),
                 longValue(entry, "minimumCastTimeMs", 0L),
                 nullableString(entry, "requiredRodId"),
+                nullableString(entry, "requiredBaitId"),
                 nullableDouble(entry.get("minimumMana")),
                 nullableDouble(entry.get("minimumBobberDepth")),
                 nullableDouble(entry.get("maximumPlayerDistance")),
