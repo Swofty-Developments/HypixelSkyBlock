@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class DarkAuctionEventProtocol extends ProtocolObject<
         DarkAuctionEventProtocol.DarkAuctionMessage,
@@ -103,6 +104,7 @@ public class DarkAuctionEventProtocol extends ProtocolObject<
                 JSONObject json = new JSONObject();
                 json.put("success", value.success);
                 json.put("playersInAuction", value.playersInAuction);
+                json.put("error", value.error);
                 return json.toString();
             }
 
@@ -111,13 +113,14 @@ public class DarkAuctionEventProtocol extends ProtocolObject<
                 JSONObject jsonObject = new JSONObject(json);
                 return new DarkAuctionResponse(
                         jsonObject.getBoolean("success"),
-                        jsonObject.getInt("playersInAuction")
+                        jsonObject.getInt("playersInAuction"),
+                        jsonObject.optString("error", null)
                 );
             }
 
             @Override
             public DarkAuctionResponse clone(DarkAuctionResponse value) {
-                return new DarkAuctionResponse(value.success, value.playersInAuction);
+                return new DarkAuctionResponse(value.success, value.playersInAuction, value.error);
             }
         };
     }
@@ -139,6 +142,7 @@ public class DarkAuctionEventProtocol extends ProtocolObject<
 
     public record DarkAuctionResponse(
             boolean success,
-            int playersInAuction
+            int playersInAuction,
+            @Nullable String error
     ) {}
 }

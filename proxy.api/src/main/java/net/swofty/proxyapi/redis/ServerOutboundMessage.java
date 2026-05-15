@@ -3,10 +3,9 @@ package net.swofty.proxyapi.redis;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.lang.reflect.ParameterizedType;
@@ -20,30 +19,32 @@ public class ServerOutboundMessage {
     private static final Map<UUID, Consumer<String>> redisMessageListeners = new HashMap<>();
     public static final Map<String, ProtocolObject> protocolObjects = new HashMap<>();
 
-    public static void registerServerToProxy(ToProxyChannels channel) {
-        RedisAPI.getInstance().registerChannel(channel.getChannelName(), (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-
-            String[] split = messageWithoutFilter.split("}=-=-=\\{");
-            UUID uuid = UUID.fromString(split[0]);
-
-            redisMessageListeners.get(uuid).accept(split[1]);
-            redisMessageListeners.remove(uuid);
-        });
-    }
-
-    public static void sendMessageToProxy(ToProxyChannels channel, JSONObject message, Consumer<JSONObject> response) {
+    public static <T, R> void sendToProxy(ProtocolObject<T, R> protocol, T request, Consumer<R> response) {
         UUID uuid = UUID.randomUUID();
         UUID filterID = UUID.fromString(RedisAPI.getInstance().getFilterId());
 
         Consumer<String> consumer = (s) -> {
-            response.accept(new JSONObject(s));
+            R typed = protocol.translateReturnFromString(s);
+            response.accept(typed);
         };
         redisMessageListeners.put(uuid, consumer);
 
+        String serialized = protocol.translateToString(request);
         RedisAPI.getInstance().publishMessage("proxy",
-                ChannelRegistry.getFromName(channel.getChannelName()),
-                message.toString() + "}=-=-={" + uuid + "}=-=-={" + filterID);
+                ChannelRegistry.getFromName(protocol.channel()),
+                new RedisEnvelope(uuid.toString(), filterID.toString(), serialized).serialize());
+    }
+
+    public static void registerToProxyProtocol(ProtocolObject<?, ?> protocol) {
+        RedisAPI.getInstance().registerChannel(protocol.channel(), (event) -> {
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID uuid = UUID.fromString(envelope.id());
+
+            redisMessageListeners.get(uuid).accept(envelope.payload());
+            redisMessageListeners.remove(uuid);
+        });
     }
 
     public static void registerFromProtocolObject(ProtocolObject object) {
@@ -52,13 +53,10 @@ public class ServerOutboundMessage {
 
         RedisAPI.getInstance().registerChannel(object.channel(), (event) -> {
             String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            String[] split = messageWithoutFilter.split("}=-=---=\\{");
 
-            UUID uuid = UUID.fromString(split[0]);
-            String message;
-            if (split.length != 1) {
-                message = split[1];
-            } else message = "";
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            UUID uuid = UUID.fromString(envelope.id());
+            String message = envelope.payload();
 
             try {
                 redisMessageListeners.get(uuid).accept(message);
@@ -87,9 +85,6 @@ public class ServerOutboundMessage {
                         specification.channel(), message).toJSON().toString());
     }
 
-    /**
-     * Fire-and-forget: send to a service and do not wait for or register a response.
-     */
     public static void sendMessageToServiceFireAndForget(ServiceType service,
                                                          ProtocolObject specification,
                                                          Object rawMessage) {
@@ -113,9 +108,6 @@ public class ServerOutboundMessage {
         );
     }
 
-    /**
-     * Fire-and-forget broadcast to all service types.
-     */
     public static void sendMessageToAllServicesFireAndForget(ProtocolObject specification,
                                                              Object rawMessage) {
         for (ServiceType serviceType : ServiceType.values()) {
@@ -134,7 +126,6 @@ public class ServerOutboundMessage {
                 if (firstTypeArg instanceof Class) {
                     return ((Class<?>) firstTypeArg).getSimpleName();
                 } else {
-                    // Handle cases where T might be another generic type
                     return firstTypeArg.getTypeName();
                 }
             }

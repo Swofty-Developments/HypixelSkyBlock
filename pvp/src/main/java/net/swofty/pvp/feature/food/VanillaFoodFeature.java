@@ -7,8 +7,8 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.EventNode;
+import net.minestom.server.event.item.PlayerBeginItemUseEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
-import net.minestom.server.event.player.PlayerPreEatEvent;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.event.trait.EntityInstanceEvent;
 import net.minestom.server.item.ItemStack;
@@ -106,7 +106,7 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 
 	@Override
 	public void init(EventNode<EntityInstanceEvent> node) {
-		node.addListener(PlayerPreEatEvent.class, event -> {
+		node.addListener(PlayerBeginItemUseEvent.class, event -> {
 			if (!event.getItemStack().has(DataComponents.CONSUMABLE))
 				return;
 			@Nullable Food foodComponent = event.getItemStack().get(DataComponents.FOOD);
@@ -121,7 +121,7 @@ public class VanillaFoodFeature implements FoodFeature, RegistrableFeature {
 				return;
 			}
 
-			if (consumableComponent != null) event.setEatingTime(consumableComponent.consumeTicks());
+			if (consumableComponent != null) event.setItemUseDuration(consumableComponent.consumeTicks());
 		});
 
 		node.addListener(PlayerFinishItemUseEvent.class, event -> {

@@ -1,36 +1,39 @@
 package net.swofty.commons.protocol;
 
-import lombok.SneakyThrows;
-import tools.jackson.databind.DeserializationFeature;
-import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
 
 public class JacksonSerializer<T> implements Serializer<T> {
-    private final JsonMapper mapper;
-    private final Class<T> clazz;
+    private static final ObjectMapper MAPPER = JsonMapper.builder()
+            .findAndAddModules()
+            .build();
 
-    public JacksonSerializer(Class<T> clazz) {
-        this.mapper = JsonMapper.builder()
-                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .build();
-        this.clazz = clazz;
+    private final Class<T> type;
+
+    public JacksonSerializer(Class<T> type) {
+        this.type = type;
     }
 
-    @SneakyThrows
     @Override
     public String serialize(T value) {
-        return mapper.writeValueAsString(value);
+        try {
+            return MAPPER.writeValueAsString(value);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to serialize " + type.getSimpleName(), e);
+        }
     }
 
-    @SneakyThrows
     @Override
     public T deserialize(String json) {
-        return mapper.readValue(json, clazz);
+        try {
+            return MAPPER.readValue(json, type);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to deserialize " + type.getSimpleName() + ": " + json, e);
+        }
     }
 
     @Override
     public T clone(T value) {
-        return value;
+        return deserialize(serialize(value));
     }
 }

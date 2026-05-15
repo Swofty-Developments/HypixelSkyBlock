@@ -4,10 +4,10 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.redis.RedisMessage;
-import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Set;
@@ -151,10 +151,9 @@ public record TransferHandler(Player player) {
 			UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
 
 			RedisMessage.sendMessageToServer(serverUUID,
-					FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-					new JSONObject().put("uuid", player.getUniqueId().toString())
-							.put("origin-type", originServerType.name())
-			);
+					new GivePlayersOriginTypeProtocol(),
+					new GivePlayersOriginTypeProtocol.Request(
+							player.getUniqueId().toString(), originServerType.name()));
 
 			playersGoalServerType.remove(player);
 			playersOriginServer.remove(player);
@@ -164,8 +163,8 @@ public record TransferHandler(Player player) {
 			player.createConnectionRequest(manualPick).connectWithIndication();
 
 			RedisMessage.sendMessageToServer(originServerUUID,
-					FromProxyChannels.PLAYER_HAS_SWITCHED_FROM_HERE,
-					new JSONObject().put("uuid", player.getUniqueId().toString()));
+					new PlayerSwitchedProtocol(),
+					new PlayerSwitchedProtocol.Request(player.getUniqueId().toString()));
 		}).start();
 	}
 
@@ -198,10 +197,9 @@ public record TransferHandler(Player player) {
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
 			RedisMessage.sendMessageToServer(sendingToServerUUID,
-					FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-					new JSONObject().put("uuid", player.getUniqueId().toString())
-							.put("origin-type", originServerType.name())
-			);
+					new GivePlayersOriginTypeProtocol(),
+					new GivePlayersOriginTypeProtocol.Request(
+							player.getUniqueId().toString(), originServerType.name()));
 
 			playersOriginServer.remove(player);
 			playersGoalServerType.remove(player);
@@ -210,8 +208,8 @@ public record TransferHandler(Player player) {
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
 			RedisMessage.sendMessageToServer(originServerUUID,
-					FromProxyChannels.PLAYER_HAS_SWITCHED_FROM_HERE,
-					new JSONObject().put("uuid", player.getUniqueId().toString()));
+					new PlayerSwitchedProtocol(),
+					new PlayerSwitchedProtocol.Request(player.getUniqueId().toString()));
 		}).start();
 	}
 
@@ -254,10 +252,9 @@ public record TransferHandler(Player player) {
 
 				if (originServer != null && originServerType != null) {
 					RedisMessage.sendMessageToServer(serverUUID,
-							FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE,
-							new JSONObject().put("uuid", player.getUniqueId().toString())
-									.put("origin-type", originServerType.name())
-					);
+							new GivePlayersOriginTypeProtocol(),
+							new GivePlayersOriginTypeProtocol.Request(
+									player.getUniqueId().toString(), originServerType.name()));
 				}
 
 				player.createConnectionRequest(toTransferTo).connectWithIndication();

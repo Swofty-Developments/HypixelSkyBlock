@@ -1,53 +1,50 @@
 package net.swofty.type.generic.redis;
 
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.command.commands.ChatCommand;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.user.categories.Rank;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
-public class RedisStaffChatBroadcast implements ProxyToClient {
+public class RedisStaffChatBroadcast implements TypedProxyHandler<BroadcastStaffChatProtocol.Request, BroadcastStaffChatProtocol.Response> {
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.BROADCAST_STAFF_CHAT;
+    public ProtocolObject<BroadcastStaffChatProtocol.Request, BroadcastStaffChatProtocol.Response> getProtocol() {
+        return new BroadcastStaffChatProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        String type = message.getString("type");
+    public BroadcastStaffChatProtocol.Response onMessage(BroadcastStaffChatProtocol.Request message) {
+        String type = message.type();
 
         switch (type) {
             case "message" -> {
-                // Staff chat message - already formatted, just send to local staff
-                String formattedMessage = message.getString("formatted_message");
+                String formattedMessage = message.formattedMessage();
                 sendToLocalStaff(formattedMessage, null);
             }
             case "join" -> {
-                UUID playerUuid = UUID.fromString(message.getString("uuid"));
+                UUID playerUuid = UUID.fromString(message.uuid());
                 handleJoinLeave(playerUuid, true);
             }
             case "leave" -> {
-                UUID playerUuid = UUID.fromString(message.getString("uuid"));
+                UUID playerUuid = UUID.fromString(message.uuid());
                 handleJoinLeave(playerUuid, false);
             }
         }
 
-        return new JSONObject();
+        return new BroadcastStaffChatProtocol.Response();
     }
 
     private void handleJoinLeave(UUID playerUuid, boolean isJoin) {
         try {
-            // Get player data (will check cache first, then query DB)
             HypixelDataHandler handler = HypixelDataHandler.getOfOfflinePlayer(playerUuid);
             Rank rank = handler.get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();
 
-            // Only send notification if the player is staff
             if (!rank.isStaff()) {
                 return;
             }
@@ -59,7 +56,6 @@ public class RedisStaffChatBroadcast implements ProxyToClient {
 
             sendToLocalStaff(formattedMessage, playerUuid);
         } catch (Exception e) {
-            // Player may not have data yet (first join), silently ignore
         }
     }
 

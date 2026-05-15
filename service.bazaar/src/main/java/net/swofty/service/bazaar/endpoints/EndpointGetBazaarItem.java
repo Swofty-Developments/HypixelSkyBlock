@@ -51,7 +51,9 @@ public class EndpointGetBazaarItem implements ServiceEndpoint<
         return new BazaarGetItemProtocolObject.BazaarGetItemResponse(
                 itemName,
                 buyOrderRecords,
-                sellOrderRecords
+                sellOrderRecords,
+                true,
+                null
         );
     }
 }

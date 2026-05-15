@@ -81,7 +81,7 @@ public class GUIMapSelection extends StatefulPaginatedView<String, GUIMapSelecti
 							return;
 						}
 
-						if (response instanceof GetMapsProtocolObject.GetMapsResponse(List<String> maps)) {
+						if (response instanceof GetMapsProtocolObject.GetMapsResponse(List<String> maps, boolean success, String error)) {
 							List<String> loadedMaps = new ArrayList<>(maps);
 							loadedMaps.sort(String.CASE_INSENSITIVE_ORDER);
 							session.update(current -> current.loaded(loadedMaps, requestId));

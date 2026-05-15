@@ -27,8 +27,8 @@ import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.pvp.MinestomPvP;
 import net.swofty.pvp.feature.CombatFeatureSet;
 import net.swofty.pvp.feature.CombatFeatures;
@@ -405,20 +405,22 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     }
 
     @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
-            "net.swofty.type.bedwarsgame.redis.service",
-            ServiceToClient.class
+    @SuppressWarnings("unchecked")
+    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
+                "net.swofty.type.bedwarsgame.redis.service",
+                TypedServiceHandler.class
         ).toList();
     }
 
-    @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
-            "net.swofty.type.bedwarsgame.redis",
-            ProxyToClient.class
-        ).toList();
-    }
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+		return (List<TypedProxyHandler<?, ?>>) (List<?>) HypixelGenericLoader.loopThroughPackage(
+				"net.swofty.type.bedwarsgame.redis",
+				TypedProxyHandler.class
+		).toList();
+	}
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {

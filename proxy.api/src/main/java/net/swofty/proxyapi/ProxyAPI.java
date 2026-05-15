@@ -1,11 +1,12 @@
 package net.swofty.proxyapi;
 
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.redis.RedisEnvelope;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import org.json.JSONObject;
-import org.tinylog.Logger;
 
 import java.util.UUID;
 
@@ -19,67 +20,67 @@ public class ProxyAPI {
         RedisAPI.getInstance().setFilterId(serverUUID.toString());
     }
 
-    public void registerFromProxyHandler(ProxyToClient handler) {
-        RedisAPI.getInstance().registerChannel(handler.getChannel().getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            UUID request = UUID.fromString(split[0].substring(split[0].indexOf(";") + 1));
-            String rawMessage = split[1];
-            JSONObject json = new JSONObject(rawMessage);
+    public <T, R> void registerTypedProxyHandler(TypedProxyHandler<T, R> handler) {
+        ProtocolObject<T, R> protocol = handler.getProtocol();
 
-            JSONObject response = handler.onMessage(json);
+        RedisAPI.getInstance().registerChannel(protocol.channel(), (event) -> {
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            String rawMessage = envelope.payload();
 
-            if (!handler.getChannel().matchesRequirementsServerSide(response)) {
-                Logger.error("Handler " + handler.getClass().getName());
-                throw new RuntimeException("Message does not match requirements for server side");
-            }
+            T typedMessage = protocol.translateFromString(rawMessage);
+            R response = handler.onMessage(typedMessage);
+
+            String serializedResponse = protocol.translateReturnToString(response);
 
             RedisAPI.getInstance().publishMessage(
                     "proxy",
-                    ChannelRegistry.getFromName(handler.getChannel().getChannelName()),
-                    request + "}=-=-={" + response.toString());
+                    ChannelRegistry.getFromName(protocol.channel()),
+                    new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
         });
     }
 
-    public void registerFromServiceHandler(ServiceToClient handler) {
-        RedisAPI.getInstance().registerChannel("service_" + handler.getChannel().getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
-            UUID requestId = UUID.fromString(split[1]);
-            String rawMessage = split[2];
-            JSONObject json = new JSONObject(rawMessage);
+    public <T, R> void registerTypedServiceHandler(TypedServiceHandler<T, R> handler) {
+        ServicePushProtocol<T, R> protocol = handler.getProtocol();
+        String channelName = "service_" + protocol.channel();
+
+        RedisAPI.getInstance().registerChannel(channelName, (event) -> {
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            String serviceId = envelope.from();
+            String rawMessage = envelope.payload();
 
             Thread.startVirtualThread(() -> {
-                JSONObject response = handler.onMessage(json);
+                T typedMessage = protocol.translateFromString(rawMessage);
+                R response = handler.onMessage(typedMessage);
 
-                // Send response back to service
+                String serializedResponse = protocol.translateReturnToString(response);
+
                 RedisAPI.getInstance().publishMessage(
                         serviceId,
                         ChannelRegistry.getFromName("service_response"),
-                        requestId + "}=-=-={" + response.toString());
+                        new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
             });
         });
 
-        RedisAPI.getInstance().registerChannel("service_broadcast_" + handler.getChannel().getChannelName(), (event) -> {
-            String[] split = event.message.split("}=-=-=\\{");
-            String serviceId = split[0].substring(split[0].indexOf(";") + 1);
-            UUID requestId = UUID.fromString(split[1]);
-            String rawMessage = split[2];
-            JSONObject json = new JSONObject(rawMessage);
+        RedisAPI.getInstance().registerChannel("service_broadcast_" + protocol.channel(), (event) -> {
+            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
+            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+            String serviceId = envelope.from();
+            String rawMessage = envelope.payload();
 
             Thread.startVirtualThread(() -> {
-                // Handle message
-                JSONObject response = handler.onMessage(json);
+                T typedMessage = protocol.translateFromString(rawMessage);
+                R response = handler.onMessage(typedMessage);
 
-                if (response == null) {
-                    // Don't send a response if null
-                    return;
-                }
+                if (response == null) return;
 
-                // Send response back to service with this server's UUID
+                String serializedResponse = protocol.translateReturnToString(response);
+
                 RedisAPI.getInstance().publishMessage(
                         serviceId,
                         ChannelRegistry.getFromName("service_broadcast_response"),
-                        requestId + "}=-=-={" + serverUUID.toString() + "}=-=-={" + response);
+                        new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
             });
         });
     }

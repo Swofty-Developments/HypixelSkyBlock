@@ -1,35 +1,31 @@
 package net.swofty.type.skyblockgeneric.redis;
 
 import net.minestom.server.event.Event;
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
-public class RedisRunEvent implements ProxyToClient {
+public class RedisRunEvent implements TypedProxyHandler<RunEventProtocol.Request, RunEventProtocol.Response> {
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.RUN_EVENT_ON_SERVER;
+    public ProtocolObject<RunEventProtocol.Request, RunEventProtocol.Response> getProtocol() {
+        return new RunEventProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        UUID uuid = UUID.fromString(message.getString("uuid"));
-        String eventClassName = message.getString("event");
-        String eventArgs = message.getString("data");
+    public RunEventProtocol.Response onMessage(RunEventProtocol.Request message) {
+        UUID uuid = UUID.fromString(message.uuid());
+        String eventClassName = message.event();
+        String eventArgs = message.data();
 
         SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
-        if (player == null) return new JSONObject();
-
-        // Access static method
-        // public static CollectionUpdateEvent fromProxyUnderstandable(SkyBlockPlayer player, String string) {
-        // with the arguments player and eventArgsWithoutPlayerName
+        if (player == null) return new RunEventProtocol.Response();
 
         Class<?> eventClass = null;
         try {
@@ -48,6 +44,6 @@ public class RedisRunEvent implements ProxyToClient {
 
         HypixelEventHandler.callCustomEvent(event);
 
-        return new JSONObject();
+        return new RunEventProtocol.Response();
     }
 }

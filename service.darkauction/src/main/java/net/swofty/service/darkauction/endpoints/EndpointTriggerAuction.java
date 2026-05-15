@@ -27,17 +27,17 @@ public class EndpointTriggerAuction implements ServiceEndpoint<
         // Check if auction is already active (deduplication)
         if (DarkAuctionService.hasActiveAuction()) {
             Logger.info("Auction already active, ignoring trigger");
-            return new TriggerDarkAuctionProtocol.TriggerResponse(false, "Auction already in progress");
+            return new TriggerDarkAuctionProtocol.TriggerResponse(false, "Auction already in progress", null);
         }
 
         // Start the auction
         try {
             DarkAuctionScheduler.startNewAuction();
             Logger.info("Dark Auction started successfully via calendar trigger");
-            return new TriggerDarkAuctionProtocol.TriggerResponse(true, "Auction started");
+            return new TriggerDarkAuctionProtocol.TriggerResponse(true, "Auction started", null);
         } catch (Exception e) {
             Logger.error(e, "Failed to start Dark Auction");
-            return new TriggerDarkAuctionProtocol.TriggerResponse(false, "Failed to start: " + e.getMessage());
+            return new TriggerDarkAuctionProtocol.TriggerResponse(false, "Failed to start: " + e.getMessage(), null);
         }
     }
 }

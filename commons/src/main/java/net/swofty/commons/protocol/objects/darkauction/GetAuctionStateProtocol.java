@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
 
 public class GetAuctionStateProtocol extends ProtocolObject<
         GetAuctionStateProtocol.GetAuctionStateMessage,
@@ -41,6 +42,8 @@ public class GetAuctionStateProtocol extends ProtocolObject<
             public String serialize(GetAuctionStateResponse value) {
                 JSONObject json = new JSONObject();
                 json.put("auctionActive", value.auctionActive);
+                json.put("success", value.success);
+                json.put("error", value.error);
                 if (value.auctionActive) {
                     json.put("auctionId", value.auctionId.toString());
                     json.put("phase", value.phase.toString());
@@ -63,9 +66,12 @@ public class GetAuctionStateProtocol extends ProtocolObject<
             public GetAuctionStateResponse deserialize(String json) {
                 JSONObject jsonObject = new JSONObject(json);
                 boolean auctionActive = jsonObject.getBoolean("auctionActive");
+                boolean success = jsonObject.optBoolean("success", true);
+                String error = jsonObject.optString("error", null);
+                if ("null".equals(error)) error = null;
 
                 if (!auctionActive) {
-                    return new GetAuctionStateResponse(false, null, null, 0, null, 0, null, null, List.of());
+                    return new GetAuctionStateResponse(false, null, null, 0, null, 0, null, null, List.of(), success, error);
                 }
 
                 UUID auctionId = UUID.fromString(jsonObject.getString("auctionId"));
@@ -87,14 +93,15 @@ public class GetAuctionStateProtocol extends ProtocolObject<
                 }
 
                 return new GetAuctionStateResponse(true, auctionId, DarkAuctionPhase.valueOf(phase), currentRound, currentItemType,
-                        currentBid, highestBidderId, highestBidderName, roundItems);
+                        currentBid, highestBidderId, highestBidderName, roundItems, success, error);
             }
 
             @Override
             public GetAuctionStateResponse clone(GetAuctionStateResponse value) {
                 return new GetAuctionStateResponse(value.auctionActive, value.auctionId, value.phase,
                         value.currentRound, value.currentItemType, value.currentBid,
-                        value.highestBidderId, value.highestBidderName, new ArrayList<>(value.roundItems));
+                        value.highestBidderId, value.highestBidderName, new ArrayList<>(value.roundItems),
+                        value.success, value.error);
             }
         };
     }
@@ -110,6 +117,8 @@ public class GetAuctionStateProtocol extends ProtocolObject<
             long currentBid,
             UUID highestBidderId,
             String highestBidderName,
-            List<String> roundItems
+            List<String> roundItems,
+            boolean success,
+            @Nullable String error
     ) {}
 }

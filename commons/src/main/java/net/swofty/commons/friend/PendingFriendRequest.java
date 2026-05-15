@@ -1,5 +1,7 @@
 package net.swofty.commons.friend;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -15,7 +17,13 @@ public class PendingFriendRequest {
     private final String toName;
     private final long timestamp;
 
-    public PendingFriendRequest(UUID from, UUID to, String fromName, String toName, long timestamp) {
+    @JsonCreator
+    public PendingFriendRequest(
+            @JsonProperty("from") UUID from,
+            @JsonProperty("to") UUID to,
+            @JsonProperty("fromName") String fromName,
+            @JsonProperty("toName") String toName,
+            @JsonProperty("timestamp") long timestamp) {
         this.from = from;
         this.to = to;
         this.fromName = fromName;

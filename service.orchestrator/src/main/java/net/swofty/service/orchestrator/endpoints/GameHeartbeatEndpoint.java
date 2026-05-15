@@ -28,6 +28,6 @@ public class GameHeartbeatEndpoint implements ServiceEndpoint
             body.mapAdvertisements(),
             body.remainingGameSlots()
         );
-        return new GameHeartbeatProtocolObject.HeartbeatResponse(true);
+        return new GameHeartbeatProtocolObject.HeartbeatResponse(true, null);
     }
 }
