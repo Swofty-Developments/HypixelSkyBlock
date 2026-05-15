@@ -1,22 +1,21 @@
 package net.swofty.type.skyblockgeneric.redis;
 
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.proxyapi.redis.ProxyToClient;
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
-public class RedisHasIslandLoaded implements ProxyToClient {
-
+public class RedisHasIslandLoaded implements TypedProxyHandler<DoesServerHaveIslandProtocol.Request, DoesServerHaveIslandProtocol.Response> {
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.DOES_SERVER_HAVE_ISLAND;
+    public ProtocolObject<DoesServerHaveIslandProtocol.Request, DoesServerHaveIslandProtocol.Response> getProtocol() {
+        return new DoesServerHaveIslandProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        UUID islandUUID = UUID.fromString(message.getString("island-uuid"));
-        return new JSONObject().put("server-has-it", SkyBlockIsland.hasIsland(islandUUID));
+    public DoesServerHaveIslandProtocol.Response onMessage(DoesServerHaveIslandProtocol.Request message) {
+        UUID islandUUID = UUID.fromString(message.islandUuid());
+        return new DoesServerHaveIslandProtocol.Response(SkyBlockIsland.hasIsland(islandUUID), true, null);
     }
 }

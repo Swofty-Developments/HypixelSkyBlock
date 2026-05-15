@@ -15,6 +15,7 @@ java {
 }
 
 dependencies {
+    implementation(libs.json)
     implementation(libs.snakeyaml)
     implementation(project(":packer"))
     implementation(libs.mongodb.bson)
@@ -32,6 +33,13 @@ dependencies {
 
     implementation(libs.configurate.yaml)
     implementation(libs.javapoet)
+
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 sourceSets {

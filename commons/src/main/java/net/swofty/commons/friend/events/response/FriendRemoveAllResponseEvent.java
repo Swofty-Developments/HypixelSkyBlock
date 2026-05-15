@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -13,7 +15,8 @@ public class FriendRemoveAllResponseEvent extends FriendResponseEvent {
     private final UUID player;
     private final int removedCount;
 
-    public FriendRemoveAllResponseEvent(UUID player, int removedCount) {
+    @JsonCreator
+    public FriendRemoveAllResponseEvent(@JsonProperty("player") UUID player, @JsonProperty("removedCount") int removedCount) {
         super();
         this.player = player;
         this.removedCount = removedCount;

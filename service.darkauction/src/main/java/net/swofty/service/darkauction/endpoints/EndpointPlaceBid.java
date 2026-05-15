@@ -31,19 +31,19 @@ public class EndpointPlaceBid implements ServiceEndpoint<
         // Check if there's an active auction
         if (auction == null) {
             Logger.warn("Bid rejected: No active auction");
-            return new PlaceBidProtocol.PlaceBidResponse(false, "No active auction");
+            return new PlaceBidProtocol.PlaceBidResponse(false, "No active auction", null);
         }
 
         // Check if auction ID matches
         if (!auction.getAuctionId().equals(msg.auctionId())) {
             Logger.warn("Bid rejected: Auction ID mismatch");
-            return new PlaceBidProtocol.PlaceBidResponse(false, "Invalid auction ID");
+            return new PlaceBidProtocol.PlaceBidResponse(false, "Invalid auction ID", null);
         }
 
         // Check if we're in bidding phase
         if (auction.getPhase() != DarkAuctionPhase.BIDDING) {
             Logger.warn("Bid rejected: Not in bidding phase (current: {})", auction.getPhase());
-            return new PlaceBidProtocol.PlaceBidResponse(false, "Auction is not in bidding phase");
+            return new PlaceBidProtocol.PlaceBidResponse(false, "Auction is not in bidding phase", null);
         }
 
         // SYNCHRONIZED to prevent race conditions
@@ -53,7 +53,7 @@ public class EndpointPlaceBid implements ServiceEndpoint<
                 Logger.info("Bid rejected: {} tried to bid {} but current bid is {}",
                         msg.playerName(), msg.bidAmount(), auction.getCurrentBid());
                 return new PlaceBidProtocol.PlaceBidResponse(false,
-                        "Bid too low - someone else bid first! Current bid is " + auction.getCurrentBid());
+                        "Bid too low - someone else bid first! Current bid is " + auction.getCurrentBid(), null);
             }
 
             // If there's a previous bidder, queue their refund
@@ -83,7 +83,7 @@ public class EndpointPlaceBid implements ServiceEndpoint<
             // Broadcast BID_PLACED with refund info
             DarkAuctionScheduler.broadcastBidPlaced(auction, previousBidder, previousBid);
 
-            return new PlaceBidProtocol.PlaceBidResponse(true, "Bid accepted");
+            return new PlaceBidProtocol.PlaceBidResponse(true, "Bid accepted", null);
         }
     }
 }

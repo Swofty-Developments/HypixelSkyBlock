@@ -2,12 +2,12 @@ package net.swofty.service.darkauction;
 
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.commons.protocol.objects.darkauction.DarkAuctionEventProtocol;
-import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.commons.protocol.objects.darkauction.DarkAuctionEventPushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -149,40 +149,37 @@ public class DarkAuctionScheduler {
 
     private static void broadcastEvent(DarkAuctionEventProtocol.EventType type, DarkAuctionState auction,
                                        int countdown, UUID refundPlayerId, long refundAmount) {
-        JSONObject message = new JSONObject();
-        message.put("eventType", type.name());
-        message.put("auctionId", auction.getAuctionId().toString());
-        message.put("phase", auction.getPhase().name());
-        message.put("currentRound", auction.getCurrentRound());
-        message.put("currentItemType", auction.getCurrentItem() != null ? auction.getCurrentItem().name() : null);
-        message.put("currentBid", auction.getCurrentBid());
-        message.put("highestBidderId", auction.getHighestBidderId() != null ? auction.getHighestBidderId().toString() : null);
-        message.put("highestBidderName", auction.getHighestBidderName());
-        message.put("countdown", countdown);
+        List<String> roundItems = new ArrayList<>(auction.getRoundItemNames());
 
-        JSONArray itemsArray = new JSONArray();
-        for (String item : auction.getRoundItemNames()) {
-            itemsArray.put(item);
-        }
-        message.put("roundItems", itemsArray);
-
-        // Include refund info for BID_PLACED events
-        if (refundPlayerId != null) {
-            message.put("refundPlayerId", refundPlayerId.toString());
-            message.put("refundAmount", refundAmount);
-        }
-
-        // Include new bidder info for coin handling
+        String newBidderId = null;
+        long newBidAmount = 0;
         if (type == DarkAuctionEventProtocol.EventType.BID_PLACED) {
-            message.put("newBidderId", auction.getHighestBidderId().toString());
-            message.put("newBidAmount", auction.getCurrentBid());
+            newBidderId = auction.getHighestBidderId().toString();
+            newBidAmount = auction.getCurrentBid();
         }
+
+        DarkAuctionEventPushProtocol.Request request = new DarkAuctionEventPushProtocol.Request(
+                type.name(),
+                auction.getAuctionId().toString(),
+                auction.getPhase().name(),
+                auction.getCurrentRound(),
+                auction.getCurrentItem() != null ? auction.getCurrentItem().name() : null,
+                auction.getCurrentBid(),
+                auction.getHighestBidderId() != null ? auction.getHighestBidderId().toString() : null,
+                auction.getHighestBidderName(),
+                countdown,
+                roundItems,
+                refundPlayerId != null ? refundPlayerId.toString() : null,
+                refundAmount,
+                newBidderId,
+                newBidAmount
+        );
 
         Logger.debug("Broadcasting {} event for auction {}", type, auction.getAuctionId());
 
         ServiceToServerManager.sendToAllServers(
-                FromServiceChannels.DARK_AUCTION_EVENT,
-                message,
+                new DarkAuctionEventPushProtocol(),
+                request,
                 5000
         ).thenAccept(responses -> {
             Logger.debug("Received {} responses for {} event", responses.size(), type);

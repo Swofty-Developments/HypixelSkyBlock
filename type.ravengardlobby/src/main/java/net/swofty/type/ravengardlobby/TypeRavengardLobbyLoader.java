@@ -10,8 +10,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.proxyapi.redis.TypedProxyHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -113,13 +112,9 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
         return new ArrayList<>();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
         return List.of();
     }
 

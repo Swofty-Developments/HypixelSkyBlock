@@ -24,7 +24,7 @@ import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.playback.MapDeserializer;
 import net.swofty.type.replayviewer.playback.ReplayData;
 import net.swofty.type.replayviewer.playback.ReplaySession;
-import net.swofty.type.replayviewer.redis.service.RedisChosenMap;
+import net.swofty.type.replayviewer.redis.service.TypedViewReplayHandler;
 import net.swofty.type.replayviewer.util.ReplayShareCodec;
 import org.tinylog.Logger;
 
@@ -44,7 +44,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
     }
 
     private void tryGame(HypixelPlayer player, boolean isRetry, AsyncPlayerConfigurationEvent event) {
-        String replayStr = RedisChosenMap.replay.remove(player.getUuid());
+        String replayStr = TypedViewReplayHandler.replay.remove(player.getUuid());
         if (replayStr == null) {
             if (!isRetry) {
                 ScheduleUtility.delay(() -> tryGame(player, true, event), 20);
@@ -94,7 +94,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
     private void loadReplay(Player player, UUID replayId, InstanceContainer instance) {
         try {
             // Get share code if present
-            String shareCode = RedisChosenMap.getAndRemoveShareCode(player.getUuid());
+            String shareCode = TypedViewReplayHandler.getAndRemoveShareCode(player.getUuid());
 
             ProxyService replayService = new ProxyService(ServiceType.REPLAY);
             var request = new ReplayLoadProtocolObject.LoadRequest(replayId);

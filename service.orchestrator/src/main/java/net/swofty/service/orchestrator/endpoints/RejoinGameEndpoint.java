@@ -27,17 +27,17 @@ public class RejoinGameEndpoint implements ServiceEndpoint<
             OrchestratorCache.GameWithServer gameWithServer = OrchestratorCache.findPlayerGame(body.playerUuid());
 
             if (gameWithServer == null) {
-                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
+                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false, true, null);
             }
 
             OrchestratorCache.GameServerState hostingServer = OrchestratorCache.getServerByUuid(gameWithServer.serverUuid());
             if (hostingServer == null) {
-                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
+                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false, true, null);
             }
 
             // Skywars does not support rejoining
             if (hostingServer.type() == ServerType.SKYWARS_GAME) {
-                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
+                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false, true, null);
             }
 
             // Check if this player is in the disconnected list (meaning they should rejoin)
@@ -47,7 +47,7 @@ public class RejoinGameEndpoint implements ServiceEndpoint<
 
             if (!isDisconnected) {
                 // Player is already in an active game, not a rejoin scenario
-                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
+                return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false, true, null);
             }
 
             UnderstandableProxyServer proxy = new UnderstandableProxyServer(
@@ -65,12 +65,14 @@ public class RejoinGameEndpoint implements ServiceEndpoint<
                     proxy,
                     gameWithServer.game().getGameId().toString(),
                     gameWithServer.game().getMap(),
-                    null, // Team name not available from commons Game, will be determined on game server
-                    false // Whether spectator determined on game server based on current bed status
+                    null,
+                    false,
+                    true,
+                    null
             );
         } catch (Exception e) {
             System.err.println("Failed to check rejoin: " + e.getMessage());
-            return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false);
+            return new RejoinGameProtocolObject.RejoinGameResponse(false, null, null, null, null, false, true, null);
         }
     }
 }

@@ -8,7 +8,7 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.redis.service.RedisGameMessage;
+import net.swofty.type.generic.redis.service.TypedGameInformationHandler;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
@@ -31,7 +31,7 @@ public class ActionPlayerJoin implements HypixelEventClass {
     private void tryJoinGame(MurderMysteryPlayer player, boolean isRetry) {
         if (!player.isOnline()) return;
 
-        String preferredGameId = RedisGameMessage.game.remove(player.getUuid());
+        String preferredGameId = TypedGameInformationHandler.game.remove(player.getUuid());
         if (preferredGameId == null) {
             if (!isRetry) {
                 Logger.info("No game assignment found for " + player.getUsername() + ", retrying in 1 second...");

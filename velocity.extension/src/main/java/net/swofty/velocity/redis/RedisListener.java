@@ -1,46 +1,51 @@
 package net.swofty.velocity.redis;
 
+import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.redisapi.api.ChannelRegistry;
 import net.swofty.redisapi.api.RedisAPI;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.UUID;
 
-public abstract class RedisListener {
+public abstract class RedisListener<T, R> {
+    private final ProtocolObject<T, R> protocol;
 
     public RedisListener() {
-        ChannelListener annotation = this.getClass().getAnnotation(ChannelListener.class);
-        if (annotation == null) {
-            throw new RuntimeException("Class " + this.getClass().getName() + " does not have a @ChannelListener annotation!");
-        }
+        this.protocol = getProtocol();
+    }
+
+    public abstract ProtocolObject<T, R> getProtocol();
+    public abstract R receivedMessage(T message, UUID serverUUID);
+
+    public String getChannelName() {
+        return protocol.channel();
     }
 
     public void onMessage(String channel, String message) {
-        String[] split = message.split("}=-=-=\\{");
-        String rawMessage = split[0];
-        UUID uuid = UUID.fromString(split[1]);
-        UUID filterID = UUID.fromString(split[2]);
+        String messageWithoutFilter = message.substring(message.indexOf(";") + 1);
+        RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
+        UUID uuid = UUID.fromString(envelope.id());
+        UUID filterID = UUID.fromString(envelope.from());
 
-        String messageWithoutFilter = rawMessage.substring(rawMessage.indexOf(";") + 1);
-        JSONObject json = new JSONObject(messageWithoutFilter);
+        T typedMessage = protocol.translateFromString(envelope.payload());
 
         Thread.startVirtualThread(() -> {
-            JSONObject response;
+            R response;
             try {
-                response = receivedMessage(json, filterID);
+                response = receivedMessage(typedMessage, filterID);
             } catch (Exception e) {
-                System.out.println("Error on channel " + channel + " with message " + messageWithoutFilter);
+                System.out.println("Error on channel " + channel + " with message " + envelope.payload());
                 Logger.error(e, "Error in Redis listener");
                 return;
             }
 
+            String serializedResponse = protocol.translateReturnToString(response);
+
             RedisAPI.getInstance().publishMessage(
                     filterID.toString(),
                     ChannelRegistry.getFromName(channel),
-                    uuid + "}=-=-={" + response.toString());
+                    new RedisEnvelope(envelope.id(), "proxy", serializedResponse).serialize());
         });
     }
-
-    public abstract JSONObject receivedMessage(JSONObject message, UUID serverUUID);
 }

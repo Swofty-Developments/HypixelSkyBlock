@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -18,7 +20,8 @@ public class FriendListResponseEvent extends FriendResponseEvent {
     private final int totalPages;
     private final boolean bestOnly;
 
-    public FriendListResponseEvent(UUID player, List<FriendListEntry> friends, int page, int totalPages, boolean bestOnly) {
+    @JsonCreator
+    public FriendListResponseEvent(@JsonProperty("player") UUID player, @JsonProperty("friends") List<FriendListEntry> friends, @JsonProperty("page") int page, @JsonProperty("totalPages") int totalPages, @JsonProperty("bestOnly") boolean bestOnly) {
         super();
         this.player = player;
         this.friends = friends;
@@ -108,7 +111,8 @@ public class FriendListResponseEvent extends FriendResponseEvent {
         private final long friendSince;
         private final String server;
 
-        public FriendListEntry(UUID uuid, String name, String nickname, boolean isBest, boolean isOnline, long lastSeen, long friendSince, String server) {
+        @JsonCreator
+        public FriendListEntry(@JsonProperty("uuid") UUID uuid, @JsonProperty("name") String name, @JsonProperty("nickname") String nickname, @JsonProperty("isBest") boolean isBest, @JsonProperty("isOnline") boolean isOnline, @JsonProperty("lastSeen") long lastSeen, @JsonProperty("friendSince") long friendSince, @JsonProperty("server") String server) {
             this.uuid = uuid;
             this.name = name;
             this.nickname = nickname;

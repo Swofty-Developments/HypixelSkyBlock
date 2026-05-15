@@ -1,5 +1,7 @@
 package net.swofty.commons.friend.events.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
 import net.swofty.commons.protocol.Serializer;
@@ -14,7 +16,8 @@ public class FriendRequestSentResponseEvent extends FriendResponseEvent {
     private final UUID target;
     private final String targetName;
 
-    public FriendRequestSentResponseEvent(UUID sender, UUID target, String targetName) {
+    @JsonCreator
+    public FriendRequestSentResponseEvent(@JsonProperty("sender") UUID sender, @JsonProperty("target") UUID target, @JsonProperty("targetName") String targetName) {
         super();
         this.sender = sender;
         this.target = target;

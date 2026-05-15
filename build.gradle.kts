@@ -12,6 +12,10 @@ plugins {
 group = "net.swofty"
 version = "1.0"
 
+repositories {
+    mavenCentral()
+}
+
 val libsCatalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 subprojects {
