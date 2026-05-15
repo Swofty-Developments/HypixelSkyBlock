@@ -1,7 +1,7 @@
 package net.swofty.type.generic.user.flow;
 
 import net.swofty.commons.protocol.objects.proxy.to.FinishedWithPlayerProtocol;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
@@ -109,9 +109,7 @@ public final class GenericPlayerDataFlow {
             gameHandler.removeFromCache(uuid);
         }
 
-        ServerOutboundMessage.sendToProxy(new FinishedWithPlayerProtocol(),
-                new FinishedWithPlayerProtocol.Request(uuid.toString()),
-                response -> {});
+        RedisClient.requestProxy(new FinishedWithPlayerProtocol(), new FinishedWithPlayerProtocol.Request(uuid.toString()));
 
         MathUtility.delay(() -> HypixelConst.getTypeLoader().getTablistManager().deleteTablistEntries(player), 5);
     }

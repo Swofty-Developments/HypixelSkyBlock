@@ -7,7 +7,7 @@ import net.swofty.commons.friend.events.*;
 import net.swofty.commons.friend.events.response.*;
 import net.swofty.commons.protocol.objects.friend.FriendEventPushProtocol;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 import org.bson.Document;
 import org.tinylog.Logger;
 
@@ -496,7 +496,7 @@ public class FriendCache {
     }
 
     private static void sendEvent(FriendEvent event) {
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
                 new FriendEventPushProtocol(),
                 new FriendEventPushProtocol.Request(
                         event.getClass().getSimpleName(),
@@ -512,7 +512,7 @@ public class FriendCache {
     }
 
     private static void sendMessageToPlayer(UUID playerUUID, String message) {
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
                 new SendMessagePushProtocol(),
                 new SendMessagePushProtocol.Request(playerUUID, message),
                 300

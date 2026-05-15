@@ -2,6 +2,7 @@ package net.swofty.proxyapi;
 
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisChannels;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.commons.redis.RedisEndpoint;
 import net.swofty.commons.redis.RedisMessageBus;
 import net.swofty.commons.redis.RedisMessageContext;
@@ -18,6 +19,7 @@ public class ProxyAPI {
 
         RedisAPI.generateInstance(URI);
         RedisAPI.getInstance().setFilterId(serverUUID.toString());
+        RedisClient.identify(RedisEndpoint.server(serverUUID));
     }
 
     public <T, R> void registerProxyHandler(RedisMessageHandler<T, R> handler) {

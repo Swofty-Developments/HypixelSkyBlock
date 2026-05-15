@@ -5,7 +5,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocol;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -45,13 +45,11 @@ public final class PresenceHeartbeat {
                     System.currentTimeMillis()
             );
 
-            ServerOutboundMessage.sendMessageToService(
+            RedisClient.publishService(
                     ServiceType.FRIEND,
                     new UpdatePresenceProtocol(),
-                    new UpdatePresenceProtocol.UpdatePresenceMessage(info),
-                    (ignored) -> {}
+                    new UpdatePresenceProtocol.UpdatePresenceMessage(info)
             );
         }
     }
 }
-

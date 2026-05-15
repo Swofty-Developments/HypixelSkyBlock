@@ -1,9 +1,10 @@
 package net.swofty.service.datamutex.endpoints;
 
+import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 import org.tinylog.Logger;
 
 import java.util.List;
@@ -33,7 +34,8 @@ public class UnlockDataEndpoint implements RedisMessageHandler<
             // Release service-level lock
             DataLockManager.releaseLock(lockKey, requesterId);
 
-            ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey)
+            RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                            new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey))
                     .thenAccept(results -> results.forEach((serverUUID, response) -> {
                         if (!response.success()) {
                             Logger.warn("Failed to unlock data on server {} for player {}, dataKey: {}",

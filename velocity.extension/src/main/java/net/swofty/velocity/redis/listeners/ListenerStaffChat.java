@@ -6,7 +6,7 @@ import net.swofty.commons.protocol.objects.proxy.to.StaffChatProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class ListenerStaffChat implements RedisMessageHandler<
     public static void broadcastToAllServers(BroadcastStaffChatProtocol.Request message) {
         GameManager.getServers().forEach((serverType, serverList) -> {
             serverList.forEach(gameServer -> {
-                RedisMessage.sendMessageToServer(
+                RedisClient.requestServer(
                         gameServer.internalID(),
                         new BroadcastStaffChatProtocol(),
                         message

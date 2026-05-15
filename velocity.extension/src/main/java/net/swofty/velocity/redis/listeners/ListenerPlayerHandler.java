@@ -19,7 +19,7 @@ import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.Map;
 import java.util.Optional;
@@ -125,7 +125,7 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
                 Number z = (Number) data.get("z");
                 Number yaw = (Number) data.get("yaw");
                 Number pitch = (Number) data.get("pitch");
-                RedisMessage.sendMessageToServer(server,
+                RedisClient.requestServer(server,
                     new TeleportProtocol(),
                     new TeleportProtocol.Request(uuid.toString(),
                         x.doubleValue(), y.doubleValue(), z.doubleValue(),
@@ -136,7 +136,7 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
                     return EMPTY;
                 }
                 UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisMessage.sendMessageToServer(server,
+                RedisClient.requestServer(server,
                     new RunEventProtocol(),
                     new RunEventProtocol.Request(uuid.toString(),
                         (String) data.get("event"),
@@ -147,7 +147,7 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
                     return EMPTY;
                 }
                 UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisMessage.sendMessageToServer(server,
+                RedisClient.requestServer(server,
                     new RefreshCoopDataProtocol(),
                     new RefreshCoopDataProtocol.Request(uuid.toString(),
                         (String) data.get("datapoint"))).join();

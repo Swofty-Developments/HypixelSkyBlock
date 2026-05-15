@@ -5,7 +5,7 @@ import net.swofty.commons.protocol.objects.bazaar.BazaarTransactionPushProtocol.
 import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 import org.tinylog.Logger;
 
 import java.util.Map;
@@ -23,7 +23,7 @@ public class BazaarPropagator {
                 tx.toJSON().toString()
         );
 
-        ServiceToServerManager.sendToAllServers(PROTOCOL, request, 5000)
+        RedisClient.requestAllServersFromService(PROTOCOL, request, 5000)
                 .thenAccept(responses -> handleServerResponses(tx, responses))
                 .exceptionally(throwable -> {
                     Logger.error(throwable, "Failed to get responses from servers for transaction");

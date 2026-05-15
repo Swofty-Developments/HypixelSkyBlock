@@ -3,7 +3,7 @@ package net.swofty.service.darkauction;
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
 import net.swofty.commons.protocol.objects.darkauction.DarkAuctionEventProtocol;
 import net.swofty.commons.protocol.objects.darkauction.DarkAuctionEventPushProtocol;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -177,7 +177,7 @@ public class DarkAuctionScheduler {
 
         Logger.debug("Broadcasting {} event for auction {}", type, auction.getAuctionId());
 
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
                 new DarkAuctionEventPushProtocol(),
                 request,
                 5000

@@ -8,7 +8,7 @@ import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol;
 import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.skywars.SkywarsGameType;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.orchestrator.OrchestratorCache;
 import org.tinylog.Logger;
@@ -68,7 +68,7 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 			OrchestratorCache.GameServerState availableServer = OrchestratorCache.instantiateServer(gameType, body.map());
 			if (availableServer != null) {
 				try {
-					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = ServiceToServerManager.sendToServer(
+					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = RedisClient.requestServerFromService(
 							availableServer.uuid(),
 							new InstantiateGamePushProtocol(),
 							new InstantiateGamePushProtocol.Request(gameType.toString(), body.map())
@@ -133,7 +133,7 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 					ServerType.MURDER_MYSTERY_GAME, gameType.getMaxPlayers());
 			if (availableServer != null) {
 				try {
-					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = ServiceToServerManager.sendToServer(
+					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = RedisClient.requestServerFromService(
 							availableServer.uuid(),
 							new InstantiateGamePushProtocol(),
 							new InstantiateGamePushProtocol.Request(gameType.name(), body.map())
@@ -235,7 +235,7 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 					ServerType.SKYWARS_GAME, gameType.getMaxPlayers());
 			if (availableServer != null) {
 				try {
-					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = ServiceToServerManager.sendToServer(
+					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = RedisClient.requestServerFromService(
 							availableServer.uuid(),
 							new InstantiateGamePushProtocol(),
 							new InstantiateGamePushProtocol.Request(gameType.name(), body.map())

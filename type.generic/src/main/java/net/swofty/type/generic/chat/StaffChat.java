@@ -1,7 +1,7 @@
 package net.swofty.type.generic.chat;
 
 import net.swofty.commons.protocol.objects.proxy.to.StaffChatProtocol;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public final class StaffChat {
@@ -20,8 +20,6 @@ public final class StaffChat {
     }
 
     private static void broadcastViaProxy(String formattedMessage) {
-        ServerOutboundMessage.sendToProxy(PROTOCOL,
-                new StaffChatProtocol.Request("message", formattedMessage, null),
-                response -> {});
+        RedisClient.requestProxy(PROTOCOL, new StaffChatProtocol.Request("message", formattedMessage, null));
     }
 }

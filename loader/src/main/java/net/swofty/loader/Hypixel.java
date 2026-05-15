@@ -22,9 +22,9 @@ import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.*;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
@@ -178,13 +178,13 @@ public class Hypixel {
                 new PunishPlayerProtocol()
         };
         for (RedisProtocol<?, ?> protocol : toProxyProtocols) {
-            ServerOutboundMessage.registerToProxyProtocol(protocol);
+            RedisClient.registerResponseProtocol(protocol);
         }
         List<RedisProtocol> protocols = SkyBlockGenericLoader.loopThroughPackage(
                 "net.swofty.commons.protocol.objects", RedisProtocol.class)
                 .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
                 .toList();
-        protocols.forEach(ServerOutboundMessage::registerResponseProtocol);
+        protocols.forEach(RedisClient::registerResponseProtocol);
         proxyAPI.start();
 
         // Start spark if enabled
@@ -226,9 +226,9 @@ public class Hypixel {
             HypixelConst.setMaxPlayers(maxPlayers);
             HypixelConst.setServerUUID(serverUUID);
 
-            ServerOutboundMessage.sendToProxy(new RequestServerNameProtocol(),
-                    new RequestServerNameProtocol.Request(),
-                    (response) -> {
+            RedisClient.requestProxy(new RequestServerNameProtocol(),
+                    new RequestServerNameProtocol.Request())
+                    .thenAccept(response -> {
                         if (isTestFlow) {
                             String serverNameRaw = response.shortenedServerName().substring(1);
                             String serverName = "isolated" + serverNameRaw;
@@ -276,14 +276,14 @@ public class Hypixel {
                     System.exit(0);
                 });
 
-        ServerOutboundMessage.sendToProxy(new RegisterServerProtocol(),
+        RedisClient.requestProxy(new RegisterServerProtocol(),
                 new RegisterServerProtocol.Request(
                         serverType.name(), maxPlayers, InetAddress.getLocalHost().getHostName(), null,
                         isTestFlow ? true : null,
                         isTestFlow ? testFlowName : null,
                         isTestFlow ? testFlowIndex : null,
-                        isTestFlow ? testFlowTotal : null),
-                (response) -> startServer.complete(response.port()));
+                        isTestFlow ? testFlowTotal : null))
+                .thenAccept(response -> startServer.complete(response.port()));
     }
 
     private static void handleTestFlowRegistration(String testFlowName, String handler, String players,
@@ -310,9 +310,9 @@ public class Hypixel {
                 configList.add(Map.of("type", type, "count", count));
             }
 
-            ServerOutboundMessage.sendToProxy(new RegisterTestFlowProtocol(),
-                    new RegisterTestFlowProtocol.Request(testFlowName, handler, playerList, configList),
-                    (response) -> {
+            RedisClient.requestProxy(new RegisterTestFlowProtocol(),
+                    new RegisterTestFlowProtocol.Request(testFlowName, handler, playerList, configList))
+                    .thenAccept(response -> {
                         Logger.info("Test flow registered successfully with proxy");
                         notifyTestFlowServerReady(testFlowName, serverType, index);
                     });
@@ -323,9 +323,9 @@ public class Hypixel {
     }
 
     private static void notifyTestFlowServerReady(String testFlowName, ServerType serverType, String index) {
-        ServerOutboundMessage.sendToProxy(new TestFlowServerReadyProtocol(),
-                new TestFlowServerReadyProtocol.Request(testFlowName, serverType.name(), Integer.parseInt(index)),
-                (response) -> {
+        RedisClient.requestProxy(new TestFlowServerReadyProtocol(),
+                new TestFlowServerReadyProtocol.Request(testFlowName, serverType.name(), Integer.parseInt(index)))
+                .thenAccept(response -> {
                     Logger.info("Notified proxy that " + serverType.name() + " server " + index + " is ready for test flow: " + testFlowName);
                 });
     }
@@ -345,8 +345,8 @@ public class Hypixel {
             AtomicBoolean responded = new AtomicBoolean(false);
 
             try {
-                ServerOutboundMessage.sendToProxy(new ProxyIsOnlineProtocol(),
-                        new ProxyIsOnlineProtocol.Request(), (response) -> {
+                RedisClient.requestProxy(new ProxyIsOnlineProtocol(),
+                        new ProxyIsOnlineProtocol.Request()).thenAccept(response -> {
                             if (response.online()) {
                                 responded.set(true);
                             }

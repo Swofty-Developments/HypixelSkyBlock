@@ -3,10 +3,11 @@ package net.swofty.service.datamutex.endpoints;
 import org.tinylog.Logger;
 
 import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +50,8 @@ public class UpdateSynchronizedDataEndpoint implements RedisMessageHandler<
             Map<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> updateFutures = new HashMap<>();
             for (UUID serverUUID : serverUUIDs) {
                 updateFutures.put(serverUUID,
-                        ServiceToServerManager.updatePlayerData(serverUUID, playerUUID, dataKey, newData));
+                        RedisClient.requestServerFromService(serverUUID, new UpdatePlayerDataPushProtocol(),
+                                new UpdatePlayerDataPushProtocol.Request(playerUUID, dataKey, newData)));
             }
 
             Map<UUID, UpdatePlayerDataPushProtocol.Response> updateResults = new HashMap<>();
@@ -74,7 +76,8 @@ public class UpdateSynchronizedDataEndpoint implements RedisMessageHandler<
                     false, "Error during data update: " + e.getMessage());
         } finally {
             DataLockManager.releaseLock(lockKey, requesterId);
-            ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
+            RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                    new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
         }
     }
 }

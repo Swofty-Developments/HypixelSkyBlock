@@ -4,7 +4,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.objects.presence.UpdatePresenceProtocol;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.UUID;
 
@@ -21,7 +21,7 @@ public final class PresencePublisher {
                 System.currentTimeMillis()
         );
 
-        ServerOutboundMessage.sendMessageToAllServicesFireAndForget(
+        RedisClient.publishAllServices(
                 new UpdatePresenceProtocol(),
                 new UpdatePresenceProtocol.UpdatePresenceMessage(info)
         );
@@ -38,4 +38,3 @@ public final class PresencePublisher {
         publish(player, online, serverType, serverId);
     }
 }
-

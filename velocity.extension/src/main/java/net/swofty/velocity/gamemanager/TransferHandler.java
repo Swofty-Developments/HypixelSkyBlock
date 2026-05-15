@@ -7,7 +7,7 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.Map;
 import java.util.Set;
@@ -66,7 +66,7 @@ public record TransferHandler(Player player) {
 			UUID serverUUID = UUID.fromString(manualPick.getServerInfo().getName());
 			UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
 
-			RedisMessage.sendMessageToServer(serverUUID,
+			RedisClient.requestServer(serverUUID,
 					new GivePlayersOriginTypeProtocol(),
 					new GivePlayersOriginTypeProtocol.Request(
 							player.getUniqueId().toString(), originServerType.name()));
@@ -78,7 +78,7 @@ public record TransferHandler(Player player) {
 			player.sendMessage(Component.text("§7Sending to server " + manualPickAsGame.displayName() + "..."));
 			player.createConnectionRequest(manualPick).connectWithIndication();
 
-			RedisMessage.sendMessageToServer(originServerUUID,
+			RedisClient.requestServer(originServerUUID,
 					new PlayerSwitchedProtocol(),
 					new PlayerSwitchedProtocol.Request(player.getUniqueId().toString()));
 		}).start();
@@ -112,7 +112,7 @@ public record TransferHandler(Player player) {
 			UUID sendingToServerUUID = server.internalID();
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
-			RedisMessage.sendMessageToServer(sendingToServerUUID,
+			RedisClient.requestServer(sendingToServerUUID,
 					new GivePlayersOriginTypeProtocol(),
 					new GivePlayersOriginTypeProtocol.Request(
 							player.getUniqueId().toString(), originServerType.name()));
@@ -123,7 +123,7 @@ public record TransferHandler(Player player) {
 			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
 
-			RedisMessage.sendMessageToServer(originServerUUID,
+			RedisClient.requestServer(originServerUUID,
 					new PlayerSwitchedProtocol(),
 					new PlayerSwitchedProtocol.Request(player.getUniqueId().toString()));
 		}).start();
@@ -166,7 +166,7 @@ public record TransferHandler(Player player) {
 				UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
 
 				if (originServer != null && originServerType != null) {
-					RedisMessage.sendMessageToServer(serverUUID,
+					RedisClient.requestServer(serverUUID,
 							new GivePlayersOriginTypeProtocol(),
 							new GivePlayersOriginTypeProtocol.Request(
 									player.getUniqueId().toString(), originServerType.name()));

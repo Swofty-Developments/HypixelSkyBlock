@@ -42,6 +42,8 @@ import net.swofty.commons.config.Settings;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.*;
 import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
+import net.swofty.commons.redis.RedisClient;
+import net.swofty.commons.redis.RedisEndpoint;
 import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
@@ -49,7 +51,6 @@ import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.LimboCommand;
 import net.swofty.velocity.command.LobbyCommand;
@@ -68,7 +69,6 @@ import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.RedisHandlerRegistry;
-import net.swofty.velocity.redis.RedisMessage;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
@@ -225,6 +225,7 @@ public class SkyBlockVelocity {
         // Setup Redis
         RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());
         RedisAPI.getInstance().setFilterId("proxy");
+        RedisClient.identify(RedisEndpoint.proxy());
         loopThroughPackage("net.swofty.velocity.redis.listeners", RedisMessageHandler.class)
             .forEach(RedisHandlerRegistry::register);
         RedisProtocol<?, ?>[] fromProxyProtocols = {
@@ -234,10 +235,10 @@ public class SkyBlockVelocity {
             new GivePlayersOriginTypeProtocol(), new BroadcastStaffChatProtocol()
         };
         for (RedisProtocol<?, ?> protocol : fromProxyProtocols) {
-            RedisMessage.registerProxyToServer(protocol);
+            RedisClient.registerResponseProtocol(protocol);
         }
         loopThroughPackage("net.swofty.commons.protocol.objects", RedisProtocol.class)
-            .forEach(ServerOutboundMessage::registerResponseProtocol);
+            .forEach(RedisClient::registerResponseProtocol);
         RedisAPI.getInstance().startListeners();
 
         // Setup GameManager

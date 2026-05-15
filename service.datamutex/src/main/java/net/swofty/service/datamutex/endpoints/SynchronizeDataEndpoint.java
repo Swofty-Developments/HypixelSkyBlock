@@ -4,10 +4,11 @@ import org.tinylog.Logger;
 
 import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,8 +45,9 @@ public class SynchronizeDataEndpoint implements RedisMessageHandler<
                         false, null, "Data is currently locked by another operation");
             }
 
-            Map<UUID, LockPlayerDataPushProtocol.Response> lockResults = ServiceToServerManager
-                    .lockPlayerData(serverUUIDs, playerUUID, dataKey)
+            Map<UUID, LockPlayerDataPushProtocol.Response> lockResults = RedisClient
+                    .requestServersFromService(serverUUIDs, new LockPlayerDataPushProtocol(),
+                            new LockPlayerDataPushProtocol.Request(playerUUID, dataKey))
                     .get();
 
             boolean allLocked = lockResults.values().stream()
@@ -55,7 +57,8 @@ public class SynchronizeDataEndpoint implements RedisMessageHandler<
                 Logger.debug("sync: failed to lock all servers (results={}), rolling back",
                         lockResults);
                 DataLockManager.releaseLock(lockKey, requesterId);
-                ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
+                RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                        new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
                 return new SynchronizeDataProtocol.SynchronizeDataResponse(
                         false, null, "Failed to acquire locks on all servers");
             }
@@ -63,7 +66,8 @@ public class SynchronizeDataEndpoint implements RedisMessageHandler<
             Map<UUID, CompletableFuture<GetPlayerDataPushProtocol.Response>> dataFutures = new HashMap<>();
             for (UUID serverUUID : serverUUIDs) {
                 dataFutures.put(serverUUID,
-                        ServiceToServerManager.getPlayerData(serverUUID, playerUUID, dataKey));
+                        RedisClient.requestServerFromService(serverUUID, new GetPlayerDataPushProtocol(),
+                                new GetPlayerDataPushProtocol.Request(playerUUID, dataKey)));
             }
 
             Map<UUID, GetPlayerDataPushProtocol.Response> allData = new HashMap<>();
@@ -83,7 +87,8 @@ public class SynchronizeDataEndpoint implements RedisMessageHandler<
             if (latestData == null) {
                 Logger.debug("sync: no valid data among {} responses, rolling back", allData.size());
                 DataLockManager.releaseLock(lockKey, requesterId);
-                ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
+                RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                        new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
                 return new SynchronizeDataProtocol.SynchronizeDataResponse(
                         false, null, "No valid data found on any server");
             }
@@ -95,7 +100,8 @@ public class SynchronizeDataEndpoint implements RedisMessageHandler<
         } catch (Exception e) {
             Logger.error(e, "Error occurred in data mutex endpoint (lockKey={})", lockKey);
             DataLockManager.releaseLock(lockKey, requesterId);
-            ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
+            RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                    new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
             return new SynchronizeDataProtocol.SynchronizeDataResponse(
                     false, null, "Error during synchronization: " + e.getMessage());
         }

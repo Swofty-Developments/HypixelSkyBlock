@@ -8,8 +8,8 @@ import net.minestom.server.entity.Player;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.objects.proxy.to.PlayerHandlerProtocol;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.proxyapi.impl.ProxyUnderstandableEvent;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -33,10 +33,9 @@ public class ProxyPlayer {
     }
 
     public void sendMessage(Component message) {
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.MESSAGE,
-                        Map.of("message", JSONComponentSerializer.json().serialize(message))),
-                response -> {});
+                        Map.of("message", JSONComponentSerializer.json().serialize(message))));
     }
 
     public void sendMessage(String message) {
@@ -44,18 +43,17 @@ public class ProxyPlayer {
     }
 
     public void teleport(Pos pos) {
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TELEPORT,
                         Map.of("x", pos.x(), "y", pos.y(), "z", pos.z(),
-                                "yaw", pos.yaw(), "pitch", pos.pitch())),
-                response -> {});
+                                "yaw", pos.yaw(), "pitch", pos.pitch())));
     }
 
     public CompletableFuture<UnderstandableProxyServer> getServer() {
         CompletableFuture<UnderstandableProxyServer> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.GET_SERVER, Map.of()),
-                response -> {
+        RedisClient.requestProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.GET_SERVER, Map.of()))
+                .thenAccept(response -> {
                     @SuppressWarnings("unchecked")
                     Map<String, Object> serverMap = (Map<String, Object>) response.data().get("server");
                     if (serverMap != null) {
@@ -69,9 +67,9 @@ public class ProxyPlayer {
 
     public CompletableFuture<Boolean> isOnline() {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.IS_ONLINE, Map.of()),
-                response -> {
+        RedisClient.requestProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.IS_ONLINE, Map.of()))
+                .thenAccept(response -> {
                     Object isOnline = response.data().get("isOnline");
                     future.complete(Boolean.TRUE.equals(isOnline));
                 });
@@ -79,51 +77,46 @@ public class ProxyPlayer {
     }
 
     public void runEvent(ProxyUnderstandableEvent event) {
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.EVENT,
                         Map.of("event", event.getClass().getName(),
-                                "data", event.asProxyUnderstandable())),
-                response -> {});
+                                "data", event.asProxyUnderstandable())));
     }
 
     public CompletableFuture<Void> transferToWithIndication(UUID serverToTransferTo) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER_WITH_UUID,
-                        Map.of("server_uuid", serverToTransferTo.toString())),
-                response -> {});
+                        Map.of("server_uuid", serverToTransferTo.toString())));
         waitingForTransferComplete.put(uuid, future);
         return future;
     }
 
     public void transferTo(ServerType serverType) {
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER,
-                        Map.of("type", serverType.toString())),
-                response -> {});
+                        Map.of("type", serverType.toString())));
     }
 
     public void transferToLimbo() {
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, Map.of()),
-                response -> {});
+        RedisClient.requestProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, Map.of()));
     }
 
     public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER,
-                        Map.of("type", serverType.toString())),
-                response -> {});
+                        Map.of("type", serverType.toString())));
         waitingForTransferComplete.put(uuid, future);
         return future;
     }
 
     public CompletableFuture<UUID> getBankHash() {
         CompletableFuture<UUID> future = new CompletableFuture<>();
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.BANK_HASH, Map.of()),
-                response -> {
+        RedisClient.requestProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.BANK_HASH, Map.of()))
+                .thenAccept(response -> {
                     Object bankHash = response.data().get("bankHash");
                     future.complete(UUID.fromString((String) bankHash));
                 });
@@ -131,9 +124,8 @@ public class ProxyPlayer {
     }
 
     public void refreshCoopData(String datapoint) {
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+        RedisClient.requestProxy(PLAYER_HANDLER,
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.REFRESH_COOP_DATA,
-                        Map.of("datapoint", datapoint)),
-                response -> {});
+                        Map.of("datapoint", datapoint)));
     }
 }
