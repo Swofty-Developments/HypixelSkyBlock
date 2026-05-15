@@ -12,8 +12,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skywarsgame.luckyblock.items.LuckyBlockItemRegistry;
 import net.swofty.type.skywarsgame.luckyblock.items.weapons.ExplosiveBow;
 import net.swofty.type.skywarsgame.luckyblock.items.weapons.Invisibow;
@@ -27,7 +28,7 @@ public class ActionLuckyBlockArrows implements HypixelEventClass {
 
     private static final Map<UUID, String> arrowBowMap = new ConcurrentHashMap<>();
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onArrowShoot(EntityShootEvent event) {
         if (!(event.getEntity() instanceof SkywarsPlayer player)) return;
 
@@ -39,7 +40,7 @@ public class ActionLuckyBlockArrows implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onArrowHitBlock(ProjectileCollideWithBlockEvent event) {
         Entity projectile = event.getEntity();
         String bowId = arrowBowMap.remove(projectile.getUuid());
@@ -49,7 +50,7 @@ public class ActionLuckyBlockArrows implements HypixelEventClass {
         handleArrowEffect(bowId, projectile, event.getCollisionPosition(), null);
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onArrowHitEntity(ProjectileCollideWithEntityEvent event) {
         Entity projectile = event.getEntity();
         String bowId = arrowBowMap.get(projectile.getUuid());

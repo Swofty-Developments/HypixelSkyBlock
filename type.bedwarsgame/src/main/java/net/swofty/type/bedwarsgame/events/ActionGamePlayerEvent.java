@@ -20,8 +20,9 @@ import net.swofty.type.bedwarsgame.gui.GUITeamChest;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -32,7 +33,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 
 	public static final ConcurrentHashMap<TeamKey, String> ACTIVE_TEAM_CHESTS = new ConcurrentHashMap<>();
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(InventoryPreClickEvent event) {
 		if (!(event.getInventory() instanceof PlayerInventory)) {
 			return;
@@ -64,7 +65,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 			"diamond_axe"
 	);
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(ItemDropEvent event) {
 		if (UNDROPPABLE_TOOLS.contains(event.getItemStack().material().name())) {
 			event.setCancelled(true);
@@ -79,7 +80,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		itemEntity.setPickupDelay(Duration.ofMillis(500));
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerBlockInteractEvent event) {
 		Block block = event.getBlock();
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
@@ -149,7 +150,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
 		}
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerStartDiggingEvent event) {
 		Block block = event.getBlock();
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();

@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.redis;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
 import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 
 import java.util.UUID;
 

@@ -9,13 +9,14 @@ import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class ActionGamePickup implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(PickupItemEvent event) {
 		ItemStack itemStack = event.getItemEntity().getItemStack();
 		if (event.getLivingEntity() instanceof BedWarsPlayer player) {

@@ -5,8 +5,9 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.skill.SkillCategory;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 public class ActionSkillLevelUp implements HypixelEventClass {
 
 
-	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(SkillUpdateEvent event) {
 		if (event.getNewValueRaw() <= event.getOldValueRaw()) return;
 

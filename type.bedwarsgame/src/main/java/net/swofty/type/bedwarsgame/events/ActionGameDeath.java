@@ -30,8 +30,9 @@ import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -41,7 +42,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ActionGameDeath implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerDeathEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 

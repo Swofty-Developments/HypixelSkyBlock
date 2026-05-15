@@ -7,8 +7,9 @@ import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
 import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
@@ -24,7 +25,7 @@ import java.util.UUID;
 public class ActionPlayerDamageBlock implements HypixelEventClass {
     public static final Map<UUID, BreakingTask> CLICKING = new HashMap<>();
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerDamageSkyBlockBlockEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         SkyBlockRegion region = SkyBlockRegion.getRegionOfPosition(event.getBlockPosition());

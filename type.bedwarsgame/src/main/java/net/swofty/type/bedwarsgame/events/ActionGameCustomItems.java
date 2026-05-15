@@ -19,8 +19,9 @@ import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 import java.util.UUID;
 
@@ -64,14 +65,14 @@ public class ActionGameCustomItems implements HypixelEventClass {
 		fireball.remove();
 	}
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(ProjectileCollideWithBlockEvent event) {
 		if (event.getEntity().getEntityType() == EntityType.FIREBALL) {
 			handleFireballExplosion((FireballProjectile) event.getEntity());
 		}
 	}
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(ProjectileCollideWithEntityEvent event) {
 		if (event.getEntity().getEntityType() != EntityType.FIREBALL) {
 			return;
@@ -97,22 +98,22 @@ public class ActionGameCustomItems implements HypixelEventClass {
 		handleFireballExplosion(fireball);
 	}
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerUseItemOnBlockEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onItemUseOnBlock(event);
 	}
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerFinishItemUseEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onItemFinishUse(event);
 	}
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerUseItemEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onItemUse(event);
 	}
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerBlockPlaceEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onBlockPlace(event);
 	}

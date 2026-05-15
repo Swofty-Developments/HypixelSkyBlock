@@ -1,8 +1,9 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.skill;
 
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -11,7 +12,7 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 
 public class ActionSkillMiningHandler implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(CustomBlockBreakEvent event) {
         if (event.getPlayerPlaced()) return;
 

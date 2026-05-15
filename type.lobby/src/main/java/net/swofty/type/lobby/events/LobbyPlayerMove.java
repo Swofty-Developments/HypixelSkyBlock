@@ -4,8 +4,9 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class LobbyPlayerMove implements HypixelEventClass {
 	private final Pos spawnPoint;
@@ -14,7 +15,7 @@ public class LobbyPlayerMove implements HypixelEventClass {
 		this.spawnPoint = spawnPoint;
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 		if (player.getPosition().y() < 0) {

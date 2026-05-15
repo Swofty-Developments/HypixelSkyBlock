@@ -3,15 +3,16 @@ package net.swofty.type.skywarsgame.events;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.EntityDamageEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.game.SkywarsGameStatus;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 public class ActionPlayerCombat implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof SkywarsPlayer victim)) return;
 

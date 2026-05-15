@@ -5,8 +5,9 @@ import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 public class ActionBedWarsLobbyDataSave implements HypixelEventClass {
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true, phase = EventPhase.PERSIST, order = 10)
     public void run(PlayerDisconnectEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         UUID uuid = player.getUuid();

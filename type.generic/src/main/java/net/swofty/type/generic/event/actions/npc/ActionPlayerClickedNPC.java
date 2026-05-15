@@ -8,8 +8,9 @@ import net.swofty.type.generic.entity.npc.impl.NPCAnimalEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCEntityImpl;
 import net.swofty.type.generic.entity.npc.impl.NPCVillagerEntityImpl;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -17,7 +18,7 @@ import org.tinylog.Logger;
 
 public class ActionPlayerClickedNPC implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerEntityInteractEvent event) {
 		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

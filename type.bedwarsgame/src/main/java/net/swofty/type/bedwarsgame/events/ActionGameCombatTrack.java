@@ -7,12 +7,13 @@ import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionGameCombatTrack implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ENTITY, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ENTITY, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(FinalDamageEvent event) {
         if (!(event.getEntity() instanceof BedWarsPlayer victim)) {
             return;

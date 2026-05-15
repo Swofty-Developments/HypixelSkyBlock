@@ -15,7 +15,7 @@ import net.swofty.type.skyblockgeneric.item.components.MinionFuelComponent;
 import net.swofty.type.skyblockgeneric.item.components.MinionUpgradeComponent;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
 import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionFuelExtension;
-import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import org.tinylog.Logger;
 
 import java.util.*;

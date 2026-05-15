@@ -5,8 +5,9 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.item.LobbyItem;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class LobbyPlayerJoinEvents implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(AsyncPlayerConfigurationEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

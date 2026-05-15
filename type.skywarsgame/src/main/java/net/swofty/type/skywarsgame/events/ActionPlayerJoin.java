@@ -5,8 +5,9 @@ import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.redis.service.TypedGameInformationHandler;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
@@ -16,7 +17,7 @@ import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 import org.tinylog.Logger;
 
 public class ActionPlayerJoin implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.CONNECT)
     public void onJoin(AsyncPlayerConfigurationEvent event) {
         SkywarsPlayer player = (SkywarsPlayer) event.getPlayer();
         Logger.info("Player " + player.getUsername() + " joined the server from origin server " + player.getOriginServer());

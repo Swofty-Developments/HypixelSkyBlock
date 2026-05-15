@@ -14,8 +14,9 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
@@ -35,7 +36,7 @@ public class ActionPlayerLaunchPads implements HypixelEventClass {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static final Set<UUID> notifiedPlayers = ConcurrentHashMap.newKeySet();
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerMoveEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

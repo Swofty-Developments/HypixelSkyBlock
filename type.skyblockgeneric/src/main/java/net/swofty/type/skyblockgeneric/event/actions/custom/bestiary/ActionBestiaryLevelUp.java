@@ -4,8 +4,9 @@ import net.swofty.commons.ChatUtility;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.event.custom.BestiaryUpdateEvent;
@@ -20,7 +21,7 @@ public class ActionBestiaryLevelUp implements HypixelEventClass {
 
 	private final BestiaryData bestiaryData = new BestiaryData();
 
-	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(BestiaryUpdateEvent event) {
 		SkyBlockPlayer player = event.getPlayer();
 		BestiaryMob mob = event.getBestiaryMob();

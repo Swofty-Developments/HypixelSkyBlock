@@ -6,8 +6,9 @@ import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
@@ -15,7 +16,7 @@ import net.swofty.type.generic.utility.MathUtility;
 public class ActionPlayerTransferServerParty implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerDisconnectEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

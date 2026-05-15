@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.mission.missions.blacksmith;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -13,10 +12,12 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionTalkToBlacksmith extends SkyBlockMission implements LocationAssociatedMission {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerRegionChangeEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 

@@ -3,15 +3,16 @@ package net.swofty.type.generic.gui.v2.event;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.inventory.InventoryOpenEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.gui.v2.ViewNavigator;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 public class ActionInventoryOpen implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.INVENTORY, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.INVENTORY, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onPlayerInventoryOpen(InventoryOpenEvent event) {
         MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
             HypixelPlayer player = (HypixelPlayer) event.getPlayer();

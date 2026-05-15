@@ -9,8 +9,9 @@ import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.redis.service.TypedGameInformationHandler;
 import net.swofty.type.generic.utility.MathUtility;
 import org.tinylog.Logger;
@@ -18,7 +19,7 @@ import org.tinylog.Logger;
 public class ActionPlayerJoin implements HypixelEventClass {
 
 	@SneakyThrows
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.CONNECT)
 	public void run(AsyncPlayerConfigurationEvent event) {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Logger.info("Player " + player.getUsername() + " joined the server from origin server " + player.getOriginServer());

@@ -11,15 +11,16 @@ import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ActionPlayerMute implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onPlayerChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
         try {

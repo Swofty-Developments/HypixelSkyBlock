@@ -6,13 +6,14 @@ import net.swofty.pvp.projectile.BowModule;
 import net.swofty.pvp.projectile.entities.ArrowProjectile;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerDataSpawn implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
+	@PhasedEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true, phase = EventPhase.POST_SPAWN)
 	public void run(PlayerSpawnEvent event) {
 		if (!event.isFirstSpawn()) return;
 		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();

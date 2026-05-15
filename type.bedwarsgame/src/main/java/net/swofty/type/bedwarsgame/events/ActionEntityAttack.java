@@ -7,12 +7,13 @@ import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionEntityAttack implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(PrepareAttackEvent event) {
 		if (event.getEntity() instanceof BedWarsPlayer player) {
 			Game game = player.getGame();

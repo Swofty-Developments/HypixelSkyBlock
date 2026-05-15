@@ -3,8 +3,9 @@ package net.swofty.type.skyblockgeneric.event.actions.npc;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
@@ -15,7 +16,7 @@ import org.tinylog.Logger;
 
 public class ActionPlayerInteractNPC implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void run(NPCInteractEvent event) {
 		final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 		HypixelNPC npc = event.getNpc();

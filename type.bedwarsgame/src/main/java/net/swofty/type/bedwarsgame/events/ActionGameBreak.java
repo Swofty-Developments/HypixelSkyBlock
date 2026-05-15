@@ -16,15 +16,16 @@ import net.swofty.type.bedwarsgame.game.GameStatus;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 import java.util.Map;
 import java.util.Objects;
 
 public class ActionGameBreak implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerBlockBreakEvent event) {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		Block blockBeingBroken = event.getBlock();
