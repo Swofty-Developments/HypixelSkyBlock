@@ -560,6 +560,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.TROPHY_FISH, DatapointTrophyFish.class).getValue();
     }
 
+    public DatapointSlayer.SlayerData getSlayerData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SLAYER, DatapointSlayer.class).getValue();
+    }
+
     public DatapointAccessoryBag.PlayerAccessoryBag getAccessoryBag() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).getValue();
     }

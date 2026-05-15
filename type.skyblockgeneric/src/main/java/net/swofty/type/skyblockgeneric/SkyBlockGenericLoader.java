@@ -73,6 +73,7 @@ import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredPassiveAb
 import net.swofty.type.skyblockgeneric.item.set.impl.SetRepeatable;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
+import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
@@ -178,6 +179,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
             Logger.error("Failed to scan for YAML files", e);
         }
         FishingRegistry.loadAll();
+        SlayerRegistry.loadAll();
 
         /**
          * Register commands
