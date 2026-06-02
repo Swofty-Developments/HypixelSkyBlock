@@ -8,6 +8,7 @@ import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 import net.swofty.type.bedwarsgame.item.impl.BridgeEgg;
 import net.swofty.type.bedwarsgame.item.impl.Fireball;
 import net.swofty.type.bedwarsgame.item.impl.GoldenApple;
+import net.swofty.type.bedwarsgame.item.impl.PopupTower;
 import net.swofty.type.bedwarsgame.shop.impl.*;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
@@ -54,7 +55,7 @@ public class ShopManager {
     private final ShopItem PICKAXE = new PickaxeShopItem();
     private final ShopItem AXE = new AxeShopItem();
     private final ShopItem FIREBALL = new InteractableShopItem(new Fireball());
-    private final ShopItem POPUP_TOWER = new PopupTowerItem();
+    private final ShopItem POPUP_TOWER = new InteractableShopItem(new PopupTower());
     private final ShopItem GOLDEN_APPLE = new InteractableShopItem(new GoldenApple());
     private final ShopItem INVISIBILITY_POTION = new PotionShopItem("invisibility_potion", "Invisibility Potion (30 seconds)", "§9Complete invisibility (0:30).", 2, 1, Currency.EMERALD, PotionType.INVISIBILITY);
     private final ShopItem SPEED_POTION = new PotionShopItem("speed_potion", "Speed II Potion (45 seconds)", "§9Speed II (0:45).", 2, 1, Currency.EMERALD, PotionType.SWIFTNESS);

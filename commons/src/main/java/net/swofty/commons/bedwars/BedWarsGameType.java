@@ -1,6 +1,7 @@
 package net.swofty.commons.bedwars;
 
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -95,13 +96,21 @@ public enum BedWarsGameType {
     }
 
     @Nullable
-    public static BedWarsGameType from(String field) {
+    public static BedWarsGameType from(@NotNull String field) {
         for (BedWarsGameType type : values()) {
             if (type.name().equalsIgnoreCase(field)) {
                 return type;
             }
         }
-        return null;
+
+        return switch (field.toUpperCase()) {
+            case "SOLO" -> ONE_EIGHT;
+            case "DOUBLES" -> TWO_EIGHT;
+            case "TRIPLES", "THREE_THREE_THREE_THREE" -> FOUR_THREE;
+            case "QUADS", "FOUR_FOUR_FOUR_FOUR" -> FOUR_FOUR;
+            case "FOUR_FOUR" -> TWO_FOUR;
+            default -> null;
+        };
     }
 
     @Nullable

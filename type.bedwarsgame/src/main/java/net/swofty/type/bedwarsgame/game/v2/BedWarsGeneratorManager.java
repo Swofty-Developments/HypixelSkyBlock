@@ -32,6 +32,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BedWarsGeneratorManager {
     private final BedWarsGame game;
@@ -122,8 +123,12 @@ public class BedWarsGeneratorManager {
         teamGeneratorTasks.computeIfAbsent(teamKey, _ -> new ArrayList<>()).add(task);
     }
 
+    // TODO: it's not like this, it's NORMAL and PROMISING on team generator
+    //  fortunate and offensive on diamond gen
+    //  miracle on emerald gen
+    //  and it's timed, not random whether it'll spawn. like every 4th normal spawn.
     private LuckyBlockTier rollLuckyBlockTier() {
-        int roll = java.util.concurrent.ThreadLocalRandom.current().nextInt(100);
+        int roll = ThreadLocalRandom.current().nextInt(100);
         if (roll < 58) return LuckyBlockTier.NORMAL;
         if (roll < 78) return LuckyBlockTier.PROMISING;
         if (roll < 91) return LuckyBlockTier.FORTUNATE;

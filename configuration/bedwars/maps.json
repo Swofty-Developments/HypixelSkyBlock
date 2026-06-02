@@ -6,8 +6,7 @@
       "configuration": {
         "types": [
           "SOLO",
-          "DOUBLES",
-          "ULTIMATE_DOUBLES"
+          "DOUBLES"
         ],
         "generatorSpeed": "SLOW",
         "bounds": {
@@ -1871,7 +1870,7 @@
         "types": [
           "THREE_THREE_THREE_THREE",
           "FOUR_FOUR_FOUR_FOUR",
-          "DREAM_FOURS"
+          "LUCKY_BLOCK_DOUBLES"
         ],
         "generatorSpeed": "SLOW",
         "bounds": {

@@ -71,14 +71,15 @@ public class BedWarsMapsConfig {
     }
 
     public enum TeamKey {
-        RED("Red", "§c", 0xFF5555, Material.RED_BED),
-        BLUE("Blue", "§9", 0x5555FF, Material.BLUE_BED),
-        GREEN("Green", "§a", 0x55FF55, Material.GREEN_BED),
-        YELLOW("Yellow", "§e", 0xFFFF55, Material.YELLOW_BED),
-        AQUA("Aqua", "§b", 0x00AAAA, Material.LIGHT_BLUE_BED),
-        WHITE("White", "§f", 0xFFFFFF, Material.WHITE_BED),
-        PINK("Pink", "§d", 0xFF55FF, Material.PINK_BED),
-        GRAY("Gray", "§7", 0xAAAAAA, Material.GRAY_BED);
+        RED("Red", "§c", 0xFF5555, Material.RED_BED, Material.RED_WOOL),
+        BLUE("Blue", "§9", 0x5555FF, Material.BLUE_BED, Material.BLUE_BED),
+        GREEN("Green", "§a", 0x55FF55, Material.LIME_BED, Material.LIME_WOOL),
+        YELLOW("Yellow", "§e", 0xFFFF55, Material.YELLOW_BED, Material.YELLOW_WOOL),
+        AQUA("Aqua", "§b", 0x00AAAA, Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_WOOL),
+        WHITE("White", "§f", 0xFFFFFF, Material.WHITE_BED, Material.WHITE_WOOL),
+        PINK("Pink", "§d", 0xFF55FF, Material.PINK_BED, Material.PINK_WOOL),
+        GRAY("Gray", "§7", 0xAAAAAA, Material.GRAY_BED, Material.GRAY_WOOL),
+        ;
 
         @Getter
         private final String name;
@@ -86,12 +87,15 @@ public class BedWarsMapsConfig {
         private final int rgb;
         @NotNull
         private final Material bedMaterial;
+        @NotNull
+        private final Material woolMaterial;
 
-        TeamKey(@NotNull String name, @NotNull String chatColor, int rgb, @NotNull Material bedMaterial) {
+        TeamKey(@NotNull String name, @NotNull String chatColor, int rgb, @NotNull Material bedMaterial, @NotNull Material woolMaterial) {
             this.name = name;
             this.chatColor = chatColor;
             this.rgb = rgb;
             this.bedMaterial = bedMaterial;
+            this.woolMaterial = woolMaterial;
         }
 
         @NotNull
@@ -106,6 +110,11 @@ public class BedWarsMapsConfig {
         @NotNull
         public Material bedMaterial() {
             return bedMaterial;
+        }
+
+        @NotNull
+        public Material woolMaterial() {
+            return woolMaterial;
         }
     }
 

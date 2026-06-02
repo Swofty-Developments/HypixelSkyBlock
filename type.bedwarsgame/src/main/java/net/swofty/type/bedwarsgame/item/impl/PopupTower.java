@@ -118,11 +118,11 @@ public class PopupTower extends SimpleInteractableItem {
 					double worldX = basePos.x() + rotX;
 					double worldZ = basePos.z() + rotZ;
 
-					Pos target = new Pos(worldX, basePos.y() + layerIndex - 1, worldZ);
+					Pos target = new Pos(worldX, basePos.y() + layerIndex, worldZ);
 					try {
 						if (val == 1) {
 							if (instance.getBlock(target).isAir()) {
-								instance.setBlock(target, teamKey.bedMaterial().block());
+								instance.setBlock(target, teamKey.woolMaterial().block());
 							}
 						} else if (val == 5) {
 							try {

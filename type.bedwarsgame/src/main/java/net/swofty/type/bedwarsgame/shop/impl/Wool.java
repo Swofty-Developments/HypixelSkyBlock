@@ -2,7 +2,6 @@ package net.swofty.type.bedwarsgame.shop.impl;
 
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -15,23 +14,9 @@ public class Wool extends ShopItem {
 			DatapointBedWarsHotbar.HotbarItemType.BLOCKS);
 	}
 
-	private Material mapTeamToWool(BedWarsMapsConfig.TeamKey teamKey) {
-		return switch (teamKey) {
-			case RED -> Material.RED_WOOL;
-			case BLUE -> Material.BLUE_WOOL;
-			case GREEN -> Material.LIME_WOOL;
-			case YELLOW -> Material.YELLOW_WOOL;
-			case AQUA -> Material.LIGHT_BLUE_WOOL;
-			case PINK -> Material.PINK_WOOL;
-			case WHITE -> Material.WHITE_WOOL;
-			case GRAY -> Material.GRAY_WOOL;
-		};
-	}
-
 	@Override
 	public void onPurchase(BedWarsPlayer player) {
-		Material woolMaterial = mapTeamToWool(player.getTeamKey());
-		giveItem(player, ItemStack.builder(woolMaterial)
+		giveItem(player, ItemStack.builder(player.getTeamKey().woolMaterial())
 				.amount(16)
 				.build());
 	}

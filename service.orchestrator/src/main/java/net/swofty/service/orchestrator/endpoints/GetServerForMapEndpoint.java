@@ -6,8 +6,8 @@ import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
 import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocolObject;
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.service.generic.redis.ServiceEndpoint;
 import net.swofty.service.generic.redis.ServiceToServerManager;
@@ -228,30 +228,10 @@ public class GetServerForMapEndpoint implements ServiceEndpoint
     private BedWarsGameType parseBedwarsGameType(String mode) {
         if (mode == null) return null;
 
-        try {
-            return BedWarsGameType.valueOf(mode.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            switch (mode.toLowerCase()) {
-                case "solo", "1v1v1v1v1v1v1v1" -> {
-                    return BedWarsGameType.ONE_EIGHT;
-                }
-                case "doubles", "2v2v2v2" -> {
-                    return BedWarsGameType.TWO_EIGHT;
-                }
-                case "triples", "3v3v3v3" -> {
-                    return BedWarsGameType.FOUR_THREE;
-                }
-                case "quads", "4v4v4v4" -> {
-                    return BedWarsGameType.FOUR_FOUR;
-                }
-                case "4v4" -> {
-                    return BedWarsGameType.TWO_FOUR;
-                }
-                default -> {
-                    return null;
-                }
-            }
-        }
+        BedWarsGameType type = BedWarsGameType.from(mode);
+        if (type != null) return type;
+
+        return BedWarsGameType.fromDisplayName(mode);
     }
 
     private MurderMysteryGameType parseMurderMysteryGameType(String mode) {

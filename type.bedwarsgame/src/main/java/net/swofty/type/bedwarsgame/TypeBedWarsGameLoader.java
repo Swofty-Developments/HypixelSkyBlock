@@ -2,6 +2,8 @@ package net.swofty.type.bedwarsgame;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonParseException;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.hollowcube.polar.PolarLoader;
@@ -219,7 +221,16 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     @Override
     public void onInitialize(MinecraftServer server) {
         BedWarsCollectibleCatalog.initialize();
-        gson = new GsonBuilder().create();
+        gson = new GsonBuilder()
+            .registerTypeAdapter(BedWarsGameType.class, (JsonDeserializer<BedWarsGameType>) (json, _, _) -> {
+                String value = json.getAsString();
+                BedWarsGameType gameType = BedWarsGameType.from(value);
+                if (gameType == null) {
+                    throw new JsonParseException("Unknown BedWars game type: " + value);
+                }
+                return gameType;
+            })
+            .create();
         instanceManager = MinecraftServer.getInstanceManager();
         fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(0.9f).build());
         MinecraftServer.getGlobalEventHandler().addChild(combatFeatures.createNode());
