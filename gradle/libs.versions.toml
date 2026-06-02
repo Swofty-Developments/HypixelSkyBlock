@@ -33,9 +33,8 @@ spark = "1.10.158-20260110.094844-1"
 sparkjava = "2.9.4"
 tinylog = "2.7.0"
 velocity-api = "3.5.0-SNAPSHOT"
-vialoader = "4.0.6"
 viarewind = "4.1.1"
-viaversion = "5.8.1"
+viaversion = "5.9.1"
 packetevents = "2.12.2"
 shadow = "9.4.1"
 examination = "1.3.0"
@@ -91,7 +90,6 @@ tinylog-api = { module = "org.tinylog:tinylog-api", version.ref = "tinylog" }
 tinylog-impl = { module = "org.tinylog:tinylog-impl", version.ref = "tinylog" }
 velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity-api" }
 viabackwards-common = { module = "com.viaversion:viabackwards-common", version.ref = "viaversion" }
-vialoader = { module = "com.viaversion:vialoader", version.ref = "vialoader" }
 viarewind-common = { module = "com.viaversion:viarewind-common", version.ref = "viarewind" }
 viaversion = { module = "com.viaversion:viaversion", version.ref = "viaversion" }
 packetevents-velocity = { module = "com.github.retrooper:packetevents-velocity", version.ref = "packetevents" }

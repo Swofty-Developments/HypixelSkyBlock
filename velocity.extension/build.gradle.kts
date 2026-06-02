@@ -37,7 +37,6 @@ dependencies {
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driver.sync)
 
-    implementation(libs.vialoader)
     implementation(libs.viabackwards.common)
     implementation(libs.viarewind.common)
     implementation(libs.viaversion)

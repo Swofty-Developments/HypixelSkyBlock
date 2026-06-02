@@ -61,7 +61,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
             }
         }
 
-        System.out.println("Panic, no protocol id found for " + playerVersion);
+        System.err.println("Panic, no protocol id found for " + playerVersion);
         return playerVersion;
     }
 }

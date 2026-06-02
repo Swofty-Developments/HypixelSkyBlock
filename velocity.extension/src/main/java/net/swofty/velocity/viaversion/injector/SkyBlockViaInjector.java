@@ -5,11 +5,12 @@ import com.viaversion.viaversion.api.platform.ViaInjector;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.libs.gson.JsonObject;
 import com.viaversion.viaversion.util.ReflectionUtil;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.packet.PlayerChannelInitializer;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,16 +28,18 @@ public class SkyBlockViaInjector implements ViaInjector {
         }
     }
 
-    private ChannelInitializer getInitializer() throws Exception {
+    @SuppressWarnings("unchecked")
+    private ChannelInitializer<Channel> getInitializer() throws Exception {
         Object connectionManager = ReflectionUtil.get(SkyBlockVelocity.getServer(), "cm", Object.class);
         Object channelInitializerHolder = ReflectionUtil.invoke(connectionManager, "getServerChannelInitializer");
-        return (ChannelInitializer) ReflectionUtil.invoke(channelInitializerHolder, "get");
+        return (ChannelInitializer<Channel>) ReflectionUtil.invoke(channelInitializerHolder, "get");
     }
 
-    private ChannelInitializer getBackendInitializer() throws Exception {
+    @SuppressWarnings("unchecked")
+    private ChannelInitializer<Channel> getBackendInitializer() throws Exception {
         Object connectionManager = ReflectionUtil.get(SkyBlockVelocity.getServer(), "cm", Object.class);
         Object channelInitializerHolder = ReflectionUtil.invoke(connectionManager, "getBackendChannelInitializer");
-        return (ChannelInitializer) ReflectionUtil.invoke(channelInitializerHolder, "get");
+        return (ChannelInitializer<Channel>) ReflectionUtil.invoke(channelInitializerHolder, "get");
     }
 
     @Override
@@ -45,14 +48,14 @@ public class SkyBlockViaInjector implements ViaInjector {
 
         Object connectionManager = ReflectionUtil.get(SkyBlockVelocity.getServer(), "cm", Object.class);
         Object channelInitializerHolder = ReflectionUtil.invoke(connectionManager, "getServerChannelInitializer");
-        ChannelInitializer originalInitializer = getInitializer();
+        ChannelInitializer<Channel> originalInitializer = getInitializer();
         channelInitializerHolder.getClass().getMethod("set", ChannelInitializer.class)
-                .invoke(channelInitializerHolder, new PlayerChannelInitializer(originalInitializer, false));
+            .invoke(channelInitializerHolder, new SkyBlockViaChannelInitializer(originalInitializer, false));
 
         Object backendInitializerHolder = ReflectionUtil.invoke(connectionManager, "getBackendChannelInitializer");
-        ChannelInitializer backendInitializer = getBackendInitializer();
+        ChannelInitializer<Channel> backendInitializer = getBackendInitializer();
         backendInitializerHolder.getClass().getMethod("set", ChannelInitializer.class)
-                .invoke(backendInitializerHolder, new PlayerChannelInitializer(backendInitializer, true));
+            .invoke(backendInitializerHolder, new SkyBlockViaChannelInitializer(backendInitializer, true));
     }
 
     @Override
@@ -80,8 +83,8 @@ public class SkyBlockViaInjector implements ViaInjector {
     public static int getLowestSupportedProtocolVersion() {
         try {
             if (GET_PLAYER_INFO_FORWARDING_MODE != null
-                    && ((Enum<?>) GET_PLAYER_INFO_FORWARDING_MODE.invoke(SkyBlockVelocity.getServer().getConfiguration()))
-                    .name().equals("MODERN")) {
+                && ((Enum<?>) GET_PLAYER_INFO_FORWARDING_MODE.invoke(SkyBlockVelocity.getServer().getConfiguration()))
+                .name().equals("MODERN")) {
                 return ProtocolVersion.v1_13.getVersion();
             }
         } catch (IllegalAccessException | InvocationTargetException _) {
@@ -91,11 +94,19 @@ public class SkyBlockViaInjector implements ViaInjector {
 
     @Override
     public JsonObject getDump() {
-        JsonObject data = new JsonObject();
+        JsonObject dump = new JsonObject();
+        dump.addProperty("currentInitializer", getInitializerName());
+
+        return dump;
+    }
+
+    @Nullable
+    private String getInitializerName() {
         try {
-            data.addProperty("currentInitializer", getInitializer().getClass().getName());
-        } catch (Exception _) {
+            return getInitializer().getClass().getName();
+        } catch (Exception exception) {
+            Logger.error(exception);
+            return null;
         }
-        return data;
     }
 }

@@ -33,9 +33,10 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
-import com.viaversion.vialoader.ViaLoader;
-import com.viaversion.vialoader.impl.platform.ViaBackwardsPlatformImpl;
-import com.viaversion.vialoader.impl.platform.ViaRewindPlatformImpl;
+import com.viaversion.viabackwards.ViaBackwardsPlatformImpl;
+import com.viaversion.viarewind.ViaRewindPlatformImpl;
+import com.viaversion.viaversion.ViaManagerImpl;
+import com.viaversion.viaversion.commands.ViaCommandHandler;
 import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
@@ -87,7 +88,8 @@ import net.swofty.velocity.redis.RedisMessage;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
-import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
+import net.swofty.velocity.viaversion.loader.SkyBlockPlatformLoader;
+import net.swofty.velocity.viaversion.platform.SkyBlockPlatform;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -148,9 +150,25 @@ public class SkyBlockVelocity {
     public void onProxyInitialization(final ProxyInitializeEvent event) {
         supportCrossVersion = ConfigProvider.settings().getIntegrations().isViaVersion();
 
+        PacketEvents.setAPI(VelocityPacketEventsBuilder.build(server, this.pluginContainer, this.logger, this.dataDirectory));
+        PacketEvents.getAPI().getSettings().checkForUpdates(false);
+        PacketEvents.getAPI().load();
+
+        EventManager events = PacketEvents.getAPI().getEventManager();
+        events.registerListener(new PlayerMovementListener(), PacketListenerPriority.NORMAL);
+
+        PacketEvents.getAPI().init();
+
         // Initialize ViaVersion for cross-version support
         if (supportCrossVersion) {
-            ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
+            ViaManagerImpl.initAndLoad(
+                new SkyBlockPlatform(dataDirectory.toFile()),
+                new SkyBlockViaInjector(),
+                new ViaCommandHandler(false),
+                new SkyBlockPlatformLoader(),
+                ViaBackwardsPlatformImpl::new,
+                ViaRewindPlatformImpl::new
+            );
         }
 
         // Register packets
@@ -272,15 +290,6 @@ public class SkyBlockVelocity {
         // Setup GameManager
         GameManager.loopServers(server);
 
-        // Setup PacketEvents
-        PacketEvents.setAPI(VelocityPacketEventsBuilder.build(server, this.pluginContainer, this.logger, this.dataDirectory));
-        PacketEvents.getAPI().getSettings().checkForUpdates(false);
-        PacketEvents.getAPI().load();
-
-        EventManager events = PacketEvents.getAPI().getEventManager();
-        events.registerListener(new PlayerMovementListener(), PacketListenerPriority.NORMAL);
-
-        PacketEvents.getAPI().init();
     }
 
     private boolean checkPunished(Player player) {
