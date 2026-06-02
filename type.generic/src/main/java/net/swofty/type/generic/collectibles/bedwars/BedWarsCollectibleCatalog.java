@@ -119,7 +119,6 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
         Logger.info("Loaded {} BedWars collectibles from {}", getAll().size(), CATALOG_FILE.getAbsolutePath());
     }
 
-    @SuppressWarnings("unchecked")
     private void parseCategories(Object categoriesRaw) {
         if (!(categoriesRaw instanceof Map<?, ?> categories)) {
             return;

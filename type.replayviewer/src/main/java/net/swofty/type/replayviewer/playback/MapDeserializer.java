@@ -3,6 +3,7 @@ package net.swofty.type.replayviewer.playback;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.batch.AbsoluteBlockBatch;
 import net.minestom.server.instance.block.Block;
+import net.swofty.commons.replay.protocol.ReplayCompression;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayInputStream;
@@ -10,7 +11,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.InflaterInputStream;
 
 public final class MapDeserializer {
 
@@ -26,11 +26,7 @@ public final class MapDeserializer {
      * @throws IOException If deserialization fails
      */
     public static void loadMap(Instance instance, byte[] compressedData) throws IOException {
-        // Decompress
-        ByteArrayInputStream bais = new ByteArrayInputStream(compressedData);
-        InflaterInputStream iis = new InflaterInputStream(bais);
-        byte[] decompressed = iis.readAllBytes();
-        iis.close();
+        byte[] decompressed = ReplayCompression.decompress(compressedData);
 
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(decompressed));
 

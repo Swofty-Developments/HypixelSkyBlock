@@ -1,13 +1,13 @@
 package net.swofty.type.replayviewer.playback;
 
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
+import net.swofty.commons.replay.protocol.ReplayCompression;
 import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.type.game.replay.recordable.Recordable;
 import net.swofty.type.game.replay.recordable.RecordableBlockChange;
 import net.swofty.type.game.replay.recordable.RecordableType;
 import org.tinylog.Logger;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.zip.InflaterInputStream;
 
 public class ReplayData {
     // Tick -> List of recordables at that tick
@@ -30,7 +29,7 @@ public class ReplayData {
 
     public void loadFromChunks(List<byte[]> compressedChunks) throws IOException {
         for (byte[] compressedData : compressedChunks) {
-            byte[] decompressed = decompress(compressedData);
+            byte[] decompressed = ReplayCompression.decompress(compressedData);
             loadRecordables(decompressed);
         }
     }
@@ -50,7 +49,7 @@ public class ReplayData {
         int previousChunkIndex = sortedChunks.getFirst().chunkIndex();
         int previousEndTick = sortedChunks.getFirst().endTick();
 
-        byte[] firstDecompressed = decompress(sortedChunks.getFirst().data());
+        byte[] firstDecompressed = ReplayCompression.decompress(sortedChunks.getFirst().compressedData());
         loadRecordables(firstDecompressed);
 
         for (int i = 1; i < sortedChunks.size(); i++) {
@@ -66,7 +65,7 @@ public class ReplayData {
                 tickRangeOverlaps++;
             }
 
-            byte[] decompressed = decompress(chunk.data());
+            byte[] decompressed = ReplayCompression.decompress(chunk.compressedData());
             loadRecordables(decompressed);
 
             previousChunkIndex = chunk.chunkIndex();
@@ -100,12 +99,6 @@ public class ReplayData {
         }
 
         return report;
-    }
-
-    private byte[] decompress(byte[] compressed) throws IOException {
-        try (InflaterInputStream iis = new InflaterInputStream(new ByteArrayInputStream(compressed))) {
-            return iis.readAllBytes();
-        }
     }
 
     private void loadRecordables(byte[] data) throws IOException {

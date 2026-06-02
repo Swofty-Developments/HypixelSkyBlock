@@ -74,8 +74,8 @@ public class RecordingSession {
 		this.lastDataTime = System.currentTimeMillis();
 	}
 
-	public void addBatch(int index, int startTick, int endTick, int recordableCount, byte[] data) {
-		batches.put(index, new DataBatch(index, startTick, endTick, recordableCount, data));
+	public void addBatch(int index, int startTick, int endTick, int recordableCount, byte[] compressedData) {
+		batches.put(index, new DataBatch(index, startTick, endTick, recordableCount, compressedData));
 		lastDataTime = System.currentTimeMillis();
 		if (endTick > highestTick) {
 			highestTick = endTick;
@@ -88,7 +88,7 @@ public class RecordingSession {
 
 	public long getTotalBytesReceived() {
 		return batches.values().stream()
-			.mapToLong(b -> b.data.length)
+			.mapToLong(b -> b.compressedData.length)
 			.sum();
 	}
 
@@ -103,7 +103,7 @@ public class RecordingSession {
 		int startTick,
 		int endTick,
 		int recordableCount,
-		byte[] data
+		byte[] compressedData
 	) {
 	}
 }

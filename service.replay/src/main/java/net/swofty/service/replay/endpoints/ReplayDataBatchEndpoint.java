@@ -27,13 +27,13 @@ public class ReplayDataBatchEndpoint implements ServiceEndpoint<
                     msg.startTick(),
                     msg.endTick(),
                     msg.recordableCount(),
-                    msg.data()
+                    msg.compressedData()
             );
 
             Logger.debug("Received batch {} for replay {} ({} bytes, ticks {}-{})",
-                    msg.batchIndex(), msg.replayId(), msg.data().length, msg.startTick(), msg.endTick());
+                    msg.batchIndex(), msg.replayId(), msg.compressedData().length, msg.startTick(), msg.endTick());
 
-            return new ReplayDataBatchProtocolObject.BatchResponse(true, msg.data().length);
+            return new ReplayDataBatchProtocolObject.BatchResponse(true, msg.compressedData().length);
 
         } catch (Exception e) {
             Logger.error(e, "Failed to process replay batch");

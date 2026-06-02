@@ -18,7 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.Deflater;
 
 public class ReplaySessionManager {
 	private final ReplayDatabase database;
@@ -63,14 +62,14 @@ public class ReplaySessionManager {
 		return activeSessions.get(replayId);
 	}
 
-	public void receiveBatch(UUID replayId, int batchIndex, int startTick, int endTick, int recordableCount, byte[] data) {
+	public void receiveBatch(UUID replayId, int batchIndex, int startTick, int endTick, int recordableCount, byte[] compressedData) {
 		RecordingSession session = activeSessions.get(replayId);
 		if (session == null) {
 			Logger.warn("Received data for unknown session: {}", replayId);
 			return;
 		}
 
-		session.addBatch(batchIndex, startTick, endTick, recordableCount, data);
+		session.addBatch(batchIndex, startTick, endTick, recordableCount, compressedData);
 	}
 
 	public CompletableFuture<EndResult> endSession(UUID replayId, long endTime, int durationTicks) {
@@ -95,33 +94,29 @@ public class ReplaySessionManager {
 	private EndResult finalizeSession(RecordingSession session) {
 		Logger.info("Finalizing replay session {}", session.getReplayId());
 
-		long totalBytes = 0;
 		long compressedBytes = 0;
 
 		// Process and store each batch
 		List<RecordingSession.DataBatch> batches = session.getOrderedBatches();
 		for (RecordingSession.DataBatch batch : batches) {
-			byte[] compressed = compressData(batch.data());
 			database.saveReplayDataChunk(
 				session.getReplayId(),
 				batch.index(),
-				compressed,
+				batch.compressedData(),
 				batch.startTick(),
 				batch.endTick()
 			);
-			totalBytes += batch.data().length;
-			compressedBytes += compressed.length;
+			compressedBytes += batch.compressedData().length;
 		}
 
 		// Store metadata
 		Document metadata = createMetadataDocument(session, compressedBytes);
 		database.saveReplayMetadata(metadata);
 
-		Logger.info("Replay {} finalized: {} bytes -> {} bytes ({:.1f}% reduction)",
-			session.getReplayId(), totalBytes, compressedBytes,
-			(1 - (double) compressedBytes / totalBytes) * 100);
+		Logger.info("Replay {} finalized: {} compressed bytes",
+			session.getReplayId(), compressedBytes);
 
-		return new EndResult(true, totalBytes, compressedBytes);
+		return new EndResult(true, compressedBytes, compressedBytes);
 	}
 
 	private Document createMetadataDocument(RecordingSession session, long dataSize) {
@@ -177,22 +172,6 @@ public class ReplaySessionManager {
 		}
 
 		return doc;
-	}
-
-	private byte[] compressData(byte[] data) {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
-		deflater.setInput(data);
-		deflater.finish();
-
-		byte[] buffer = new byte[4096];
-		while (!deflater.finished()) {
-			int count = deflater.deflate(buffer);
-			out.write(buffer, 0, count);
-		}
-		deflater.end();
-
-		return out.toByteArray();
 	}
 
 	public void startCleanupTask() {

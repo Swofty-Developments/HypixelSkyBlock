@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.objects.replay.ReplayDataBatchProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayEndProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayMapUploadProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
+import net.swofty.commons.replay.protocol.ReplayCompression;
 import net.swofty.commons.replay.protocol.ReplayDataWriter;
 import net.swofty.type.game.replay.recordable.Recordable;
 import org.tinylog.Logger;
@@ -157,6 +158,7 @@ public class ReplayRecorder {
 
 		try {
 			byte[] data = serializeRecordables(toSend);
+			byte[] compressedData = ReplayCompression.compress(data);
 
 			var batchMessage = new ReplayDataBatchProtocolObject.BatchMessage(
 				replayId,
@@ -164,14 +166,14 @@ public class ReplayRecorder {
 				startTick,
 				endTick,
 				toSend.size(),
-				data
+				compressedData
 			);
 
 			serviceSender.accept(batchMessage);
 			lastBatchTick = currentTick;
 
-			Logger.debug("Sent batch {} with {} recordables ({} bytes)",
-				batchMessage.batchIndex(), toSend.size(), data.length);
+			Logger.debug("Sent batch {} with {} recordables ({} bytes -> {} bytes)",
+				batchMessage.batchIndex(), toSend.size(), data.length, compressedData.length);
 
 		} catch (IOException e) {
 			Logger.error(e, "Failed to serialize recordables");

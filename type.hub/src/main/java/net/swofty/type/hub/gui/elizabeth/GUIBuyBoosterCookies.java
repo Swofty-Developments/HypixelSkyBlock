@@ -5,9 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -55,7 +53,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (slot != 3) {
                         shopCategorys.gui.open(player);
                     }
@@ -88,7 +86,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
         for (int slot : categoriesItemsSlots) {
             set(new GUIItem(slot) {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (slot != 12) {
                         return ItemStackCreator.getStack("§8▲ §7Categories", Material.GRAY_STAINED_GLASS_PANE, 1, "§8▼ §7Items");
                     } else {
@@ -101,7 +99,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
         set(new GUIClickableItem(29) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (player.getGems() >= cookieCost) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE);
                     player.removeGems(cookieCost);
@@ -113,7 +111,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder itemStack = ItemStackCreator.enchant(ItemStackCreator.getStack("§6Single Cookie", Material.COOKIE, 1,
                         " ",
                         "§6Booster Cookie §8x1",
@@ -166,7 +164,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (player.getGems() >= totalCookiePrice) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE, boosterCookieAmount);
                     player.removeGems(totalCookiePrice);
@@ -178,7 +176,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder itemStack = ItemStackCreator.enchant(ItemStackCreator.getStack("§6Half-Dozen Cookies", Material.COOKIE, 1,
                         " ",
                         "§6Booster Cookie §8x6",
@@ -231,7 +229,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (player.getGems() >= totalCookiePrice) {
                     player.addAndUpdateItem(ItemType.BOOSTER_COOKIE, boosterCookieAmount);
                     player.removeGems(totalCookiePrice);
@@ -243,7 +241,7 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 ItemStack.Builder itemStack = ItemStackCreator.enchant(ItemStackCreator.getStack("§6A Dozen Cookies", Material.COOKIE, 1,
                         " ",
                         "§6Booster Cookie §8x12",
@@ -293,13 +291,13 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
         set(new GUIClickableItem(49) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.openBook(book);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.enchant(ItemStackCreator.getStack("§aCommunity Shop", Material.EMERALD, 1,
                         "§8Elizabeth",
                         " ",
@@ -320,14 +318,6 @@ public class GUIBuyBoosterCookies extends HypixelInventoryGUI {
     @Override
     public boolean allowHotkeying() {
         return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

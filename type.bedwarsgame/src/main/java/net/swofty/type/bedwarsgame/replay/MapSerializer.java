@@ -1,8 +1,11 @@
 package net.swofty.type.bedwarsgame.replay;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
+import net.swofty.commons.replay.protocol.ReplayCompression;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -15,24 +18,21 @@ import java.util.HashMap;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Deflater;
-import java.util.zip.DeflaterOutputStream;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MapSerializer {
 
     private static final int CHUNK_SECTION_SIZE = 16;
     private static final int MIN_Y = -64;
     private static final int MAX_Y = 320;
 
-    private MapSerializer() {}
-
     /**
      * Serializes a region of the instance around a center point.
      *
-     * @param instance The instance to serialize
+     * @param instance     The instance to serialize
      * @param centerChunkX Center chunk X coordinate
      * @param centerChunkZ Center chunk Z coordinate
-     * @param radius Number of chunks in each direction
+     * @param radius       Number of chunks in each direction
      * @return SerializedMap containing compressed data and metadata
      */
     public static SerializedMap serializeRegion(Instance instance, int centerChunkX, int centerChunkZ, int radius) throws IOException {
@@ -100,12 +100,9 @@ public final class MapSerializer {
         }
 
         dos.flush();
+
         byte[] uncompressed = baos.toByteArray();
-
-        // Compress
-        byte[] compressed = compress(uncompressed);
-
-        // Generate hash
+        byte[] compressed = ReplayCompression.compress(uncompressed);
         String hash = generateHash(compressed);
 
         Logger.debug("Serialized map: {} chunks, {} palette entries, {} -> {} bytes",
@@ -141,8 +138,8 @@ public final class MapSerializer {
 
         dos.writeInt(numLongs);
 
-        long currentLong = 0;
-        int bitPos = 0;
+        long currentLong;
+        int bitPos;
         int blockIndex = 0;
 
         for (int i = 0; i < numLongs; i++) {
@@ -158,15 +155,6 @@ public final class MapSerializer {
         }
     }
 
-    private static byte[] compress(byte[] data) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Deflater deflater = new Deflater(Deflater.BEST_COMPRESSION);
-        try (DeflaterOutputStream dos = new DeflaterOutputStream(baos, deflater)) {
-            dos.write(data);
-        }
-        return baos.toByteArray();
-    }
-
     private static String generateHash(byte[] data) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -177,7 +165,9 @@ public final class MapSerializer {
         }
     }
 
-    public record SerializedMap(String hash, byte[] compressedData, int uncompressedSize, int compressedSize) {}
+    public record SerializedMap(String hash, byte[] compressedData, int uncompressedSize, int compressedSize) {
+    }
 
-    private record ChunkData(int chunkX, int chunkZ, int[] blockStates) {}
+    private record ChunkData(int chunkX, int chunkZ, int[] blockStates) {
+    }
 }

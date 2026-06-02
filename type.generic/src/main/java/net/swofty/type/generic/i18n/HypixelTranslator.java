@@ -75,6 +75,7 @@ public class HypixelTranslator extends MiniMessageTranslator {
     public @Nullable String getMiniMessageString(@NotNull String key, @NotNull Locale locale) {
         LocaleKey lk = new LocaleKey(locale, key);
         Optional<String> cached = keyCache.getIfPresent(lk);
+        //noinspection OptionalAssignedToNull - we are doing this correctly.
         if (cached != null) {
             return cached.orElse(null);
         }

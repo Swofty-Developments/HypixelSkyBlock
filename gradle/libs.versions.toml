@@ -38,6 +38,7 @@ viaversion = "5.9.1"
 packetevents = "2.12.2"
 shadow = "9.4.1"
 examination = "1.3.0"
+zstd-jni = "1.5.7-4"
 
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
@@ -93,6 +94,7 @@ viabackwards-common = { module = "com.viaversion:viabackwards-common", version.r
 viarewind-common = { module = "com.viaversion:viarewind-common", version.ref = "viarewind" }
 viaversion = { module = "com.viaversion:viaversion", version.ref = "viaversion" }
 packetevents-velocity = { module = "com.github.retrooper:packetevents-velocity", version.ref = "packetevents" }
+zstd-jni = { module = "com.github.luben:zstd-jni", version.ref = "zstd-jni" }
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

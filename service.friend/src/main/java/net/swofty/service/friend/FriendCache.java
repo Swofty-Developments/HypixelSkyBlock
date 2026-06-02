@@ -5,6 +5,7 @@ import com.mongodb.client.model.Filters;
 import net.swofty.commons.friend.*;
 import net.swofty.commons.friend.events.*;
 import net.swofty.commons.friend.events.response.*;
+import net.swofty.commons.presence.PresenceInfo;
 import net.swofty.commons.protocol.objects.friend.FriendEventPushProtocol;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
@@ -294,7 +295,7 @@ public class FriendCache {
 
         int totalFriends = friends.size();
         int totalPages = Math.max(1, (int) Math.ceil((double) totalFriends / FRIENDS_PER_PAGE));
-        page = Math.max(1, Math.min(page, totalPages));
+        page = Math.clamp(page, 1, totalPages);
 
         int startIndex = (page - 1) * FRIENDS_PER_PAGE;
         int endIndex = Math.min(startIndex + FRIENDS_PER_PAGE, totalFriends);
@@ -341,7 +342,7 @@ public class FriendCache {
 
         int totalRequests = requests.size();
         int totalPages = Math.max(1, (int) Math.ceil((double) totalRequests / FRIENDS_PER_PAGE));
-        page = Math.max(1, Math.min(page, totalPages));
+        page = Math.clamp(page, 1, totalPages);
 
         int startIndex = (page - 1) * FRIENDS_PER_PAGE;
         int endIndex = Math.min(startIndex + FRIENDS_PER_PAGE, totalRequests);
@@ -376,7 +377,7 @@ public class FriendCache {
         FriendData playerData = getFriendData(playerUuid);
 
         for (Friend friend : playerData.getFriends()) {
-            net.swofty.commons.presence.PresenceInfo friendPresence = PresenceStorage.get(friend.getUuid());
+            PresenceInfo friendPresence = PresenceStorage.get(friend.getUuid());
             if (friendPresence == null || !friendPresence.isOnline()) continue;
 
             FriendData friendData = cachedFriendData.get(friend.getUuid());
@@ -392,7 +393,7 @@ public class FriendCache {
     }
 
     public static void handlePlayerLeave(UUID playerUuid, String playerName) {
-        PresenceStorage.upsertPreservingServer(new net.swofty.commons.presence.PresenceInfo(
+        PresenceStorage.upsertPreservingServer(new PresenceInfo(
                 playerUuid,
                 false,
                 null,
