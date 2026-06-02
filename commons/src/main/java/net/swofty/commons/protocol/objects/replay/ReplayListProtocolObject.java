@@ -1,6 +1,7 @@
 package net.swofty.commons.protocol.objects.replay;
 
 import net.swofty.commons.ServerType;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;
@@ -18,35 +19,7 @@ public class ReplayListProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<ListRequest> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(ListRequest value) {
-                JSONObject json = new JSONObject();
-                json.put("playerId", value.playerId.toString());
-                json.put("limit", value.limit);
-                if (value.filterType != null) {
-                    json.put("filterType", value.filterType.name());
-                }
-                return json.toString();
-            }
-
-            @Override
-            public ListRequest deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                ServerType filterType = obj.has("filterType") ?
-                        ServerType.valueOf(obj.getString("filterType")) : null;
-                return new ListRequest(
-                        UUID.fromString(obj.getString("playerId")),
-                        obj.getInt("limit"),
-                        filterType
-                );
-            }
-
-            @Override
-            public ListRequest clone(ListRequest value) {
-                return value;
-            }
-        };
+        return new JacksonSerializer<>(ListRequest.class);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.swofty.commons.protocol.objects.replay;
 
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
@@ -12,31 +13,7 @@ public class ReplayEndProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<EndMessage> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(EndMessage value) {
-                JSONObject json = new JSONObject();
-                json.put("replayId", value.replayId.toString());
-                json.put("endTime", value.endTime);
-                json.put("durationTicks", value.durationTicks);
-                return json.toString();
-            }
-
-            @Override
-            public EndMessage deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                return new EndMessage(
-                        UUID.fromString(obj.getString("replayId")),
-                        obj.getLong("endTime"),
-                        obj.getInt("durationTicks")
-                );
-            }
-
-            @Override
-            public EndMessage clone(EndMessage value) {
-                return value;
-            }
-        };
+        return new JacksonSerializer<>(EndMessage.class);
     }
 
     @Override

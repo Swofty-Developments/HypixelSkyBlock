@@ -22,7 +22,6 @@ public class ReplayDataBatchProtocolObject extends ProtocolObject<
                 json.put("startTick", value.startTick);
                 json.put("endTick", value.endTick);
                 json.put("recordableCount", value.recordableCount);
-                // Base64 encode binary data for JSON transport
                 json.put("data", Base64.getEncoder().encodeToString(value.data));
                 return json.toString();
             }
@@ -77,7 +76,7 @@ public class ReplayDataBatchProtocolObject extends ProtocolObject<
             int startTick,
             int endTick,
             int recordableCount,
-            byte[] data // Compressed recordable data
+            byte[] data
     ) {}
 
     public record BatchResponse(boolean success, long bytesReceived) {}

@@ -1,6 +1,7 @@
 package net.swofty.commons.protocol.objects.replay;
 
 import net.swofty.commons.ServerType;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.ProtocolObject;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;
@@ -19,27 +20,7 @@ public class ReplayLoadProtocolObject extends ProtocolObject<
 
     @Override
     public Serializer<LoadRequest> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(LoadRequest value) {
-                JSONObject json = new JSONObject();
-                json.put("replayId", value.replayId.toString());
-                return json.toString();
-            }
-
-            @Override
-            public LoadRequest deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                return new LoadRequest(
-                        UUID.fromString(obj.getString("replayId"))
-                );
-            }
-
-            @Override
-            public LoadRequest clone(LoadRequest value) {
-                return value;
-            }
-        };
+        return new JacksonSerializer<>(LoadRequest.class);
     }
 
     @Override
