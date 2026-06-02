@@ -8,6 +8,8 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.item.impl.LuckyBlockTrap;
+import net.swofty.type.bedwarsgame.item.impl.LuckyEquipmentEffects;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
@@ -42,7 +44,17 @@ public class ActionGameMove implements HypixelEventClass {
 			return;
 		}
 
+		LuckyEquipmentEffects.tick(player);
+
 		Point playerPos = player.getPosition();
+		Point trapPos = new Pos(playerPos.blockX(), playerPos.blockY(), playerPos.blockZ());
+		if (LuckyBlockTrap.trigger(player, trapPos, player.getInstance().getBlock(trapPos))) {
+			return;
+		}
+		Point belowTrapPos = new Pos(playerPos.blockX(), playerPos.blockY() - 1, playerPos.blockZ());
+		if (LuckyBlockTrap.trigger(player, belowTrapPos, player.getInstance().getBlock(belowTrapPos))) {
+			return;
+		}
 
 		// check what team this is
 		for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {

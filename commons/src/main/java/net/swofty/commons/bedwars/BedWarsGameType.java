@@ -53,7 +53,17 @@ public enum BedWarsGameType {
     ARMED_DOUBLES(12, "Armed", 2, 8, List.of(), true),
     ARMED_FOURS(12, "Armed", 4, 4, List.of(), true),
     CASTLE(9, "Castle", 40, 2, List.of(), true),
-    ONE_BLOCK(20, "One Block", 1, 8, List.of(), true);
+    ONE_BLOCK(20, "One Block", 1, 8, List.of(), true),
+    LUCKY_BLOCK_DOUBLES(21, "Lucky Blocks V2 Doubles", 2, 8, List.of(
+        "Find Lucky Blocks on your island",
+        "generator and open them for",
+        "chaotic rewards."
+    ), true),
+    LUCKY_BLOCK_FOURS(22, "Lucky Blocks V2 4v4v4v4", 4, 4, List.of(
+        "Find Lucky Blocks on your island",
+        "generator and open them for",
+        "chaotic rewards."
+    ), true);
 
     private final int id;
     private final String displayName;
@@ -115,7 +125,22 @@ public enum BedWarsGameType {
     }
 
     public boolean isDoublesSolo() {
-        return this == ONE_EIGHT || this == TWO_EIGHT || this == ULTIMATE_DOUBLES;
+        return this == ONE_EIGHT || this == TWO_EIGHT || this == ULTIMATE_DOUBLES || this == LUCKY_BLOCK_DOUBLES;
+    }
+
+    public boolean isLuckyBlock() {
+        return this == LUCKY_BLOCK_DOUBLES || this == LUCKY_BLOCK_FOURS;
+    }
+
+    public BedWarsGameType getMapCompatibilityType() {
+        if (!dream) return this;
+        return switch (teamSize) {
+            case 1 -> ONE_EIGHT;
+            case 2 -> TWO_EIGHT;
+            case 3 -> FOUR_THREE;
+            case 4 -> teams == 2 ? TWO_FOUR : FOUR_FOUR;
+            default -> this;
+        };
     }
 
     // if you would do the enum names correctly you could just use name() basically

@@ -192,6 +192,9 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         }
         return config.getTypes().stream()
             .filter(Objects::nonNull)
+            .flatMap(type -> Stream.concat(Stream.of(type), BedWarsGameType.getDreamTypes().stream()
+                .filter(dreamType -> dreamType.getMapCompatibilityType() == type)))
+            .distinct()
             .toList();
     }
 
@@ -266,6 +269,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
             }
         });
         HypixelGenericLoader.loopThroughPackage("net.swofty.type.bedwarsgame.item.impl", SimpleInteractableItem.class).forEach(itemHandler::add);
+        itemHandler.getShopBackedItems().forEach(shopManager::addInteractableItem);
         MinestomPvP.init();
 
         // heartbeat to orchestrator with supported maps and current load

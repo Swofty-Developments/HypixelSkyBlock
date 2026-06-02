@@ -22,11 +22,11 @@ public class NPCFourFour extends HypixelNPC {
                     BedWarsGameType.TWO_FOUR.name()
                 );
 
-                String commmaified = StringUtility.commaify(amountOnline);
+                String commaified = StringUtility.commaify(amountOnline);
                 return new String[]{
                     "§e§lCLICK TO PLAY",
                     "§b4v4 §7[v" + VersionConst.BED_WARS_VERSION + "]",
-                    "§e§l" + commmaified + " Players",
+                    "§e§l" + commaified + " Players",
                 };
             }
 

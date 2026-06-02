@@ -10,7 +10,9 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,7 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PopupTower extends SimpleInteractableItem {
 
 	public PopupTower() {
-		super("popup_tower");
+        super("popup_tower", new ShopData("Pop-Up Tower", "Place a pop-up defence!",
+            24, 1, Currency.IRON, DatapointBedWarsHotbar.HotbarItemType.UTILITY, 7));
 	}
 
 	@Override

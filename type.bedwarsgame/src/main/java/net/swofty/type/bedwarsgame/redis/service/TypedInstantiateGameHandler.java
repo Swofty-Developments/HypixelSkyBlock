@@ -30,7 +30,7 @@ public class TypedInstantiateGameHandler implements TypedServiceHandler<Request,
                     if (entry.getId().equals(request.map()) || entry.getName().equals(request.map())) {
                         if (entry.getConfiguration() != null &&
                                 entry.getConfiguration().getTypes() != null &&
-                                !entry.getConfiguration().getTypes().contains(gameType)) {
+                            !entry.getConfiguration().getTypes().contains(gameType.getMapCompatibilityType())) {
                             return Response.failure("Map does not support game type: " + gameType);
                         }
                         mapEntry = entry;

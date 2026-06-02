@@ -5,17 +5,22 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.VersionConst;
+import net.swofty.commons.bedwars.BedWarsDreamRotation;
 import net.swofty.proxyapi.ProxyInformation;
+import net.swofty.type.bedwarslobby.gui.GUIPlayDreamBedWars;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.utility.GameCountCache;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NPCDreams extends HypixelNPC {
-	private static List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
+	private static final List<UnderstandableProxyServer> cacheServers = new ArrayList<>();
 	private static long lastCacheTime = 0;
 
 	public NPCDreams() {
@@ -30,18 +35,25 @@ public class NPCDreams extends HypixelNPC {
 					lastCacheTime = System.currentTimeMillis();
 				}
 
-				int amountOnline = cacheServers.stream().map((server) -> {
-					if (!(server.type() == ServerType.BEDWARS_GAME))
-						return 0; // todo: actually check for bedwars players in dreams modes (there can be multiple)
-					return server.players().size();
-				}).reduce(0, Integer::sum);
+				BedWarsDreamRotation.RotationEntry current = BedWarsDreamRotation.current(LocalDate.now());
 
-				String commmaified = StringUtility.commaify(amountOnline);
+				int amountOnline = GameCountCache.getPlayerCount(
+					ServerType.BEDWARS_GAME,
+					current.mode().doublesType().name()
+				);
+
+				amountOnline += current.mode().foursType() != null ? GameCountCache.getPlayerCount(
+					ServerType.BEDWARS_GAME,
+					current.mode().foursType().name()
+				) : 0;
+
+				String commaified = StringUtility.commaify(amountOnline);
+				long days = Math.max(0, ChronoUnit.DAYS.between(LocalDate.now(), current.endsAt()));
 				return new String[]{
-					"§7Changes in ? days!", // days or hours or minutes
+					"§7Changes in " + days + " days!",
 						"§e§lCLICK TO PLAY",
-					"§bOne Block §7[v" + VersionConst.BED_WARS_VERSION + "]",
-					"§e§l" + commmaified + " Players",
+					"§b" + current.mode().displayName() + " §7[v" + VersionConst.BED_WARS_VERSION + "]",
+					"§e§l" + commaified + " Players",
 				};
 			}
 
@@ -65,7 +77,6 @@ public class NPCDreams extends HypixelNPC {
 
 	@Override
 	public void onClick(NPCInteractEvent event) {
-		event.player().sendMessage("§7You can dream about this :)");
-		event.player().notImplemented();
+		event.player().openView(new GUIPlayDreamBedWars());
 	}
 }

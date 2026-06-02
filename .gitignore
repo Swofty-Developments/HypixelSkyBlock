@@ -42,6 +42,7 @@ build/
 /configuration/hypixel_bedwars_lobby/
 /configuration/hypixel_murder_mystery_lobby/
 /configuration/hypixel_skywars_lobby/
+/configuration/skyblock/garden/
 *.polar
 
 ### Logs ###

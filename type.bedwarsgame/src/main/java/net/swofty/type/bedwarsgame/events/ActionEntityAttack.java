@@ -4,6 +4,7 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.event.entity.EntityDamageEvent;
 import net.swofty.pvp.events.PrepareAttackEvent;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.item.impl.LuckyCombatEffects;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -39,6 +40,8 @@ public class ActionEntityAttack implements HypixelEventClass {
 				event.setCancelled(true);
 				return;
 			}
+
+			LuckyCombatEffects.handle(player, event.getTarget());
 		}
 	}
 

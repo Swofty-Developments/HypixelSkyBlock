@@ -18,7 +18,10 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
+import net.swofty.type.bedwarsgame.item.impl.LuckyBlockItem;
+import net.swofty.type.bedwarsgame.item.impl.LuckyBlockTier;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.entity.FloatingBlockEntity;
 import org.tinylog.Logger;
@@ -63,6 +66,10 @@ public class BedWarsGeneratorManager {
             // Start gold generator
             startTeamGenerator(teamKey, BedWarsMapsConfig.GlobalGeneratorKey.GOLD, generatorSpeed.getGoldAmount(),
                 generatorSpeed.getGoldDelaySeconds(), spawnPosition);
+
+            if (game.getGameType().isLuckyBlock()) {
+                startLuckyBlockGenerator(teamKey, spawnPosition);
+            }
         });
     }
 
@@ -90,6 +97,38 @@ public class BedWarsGeneratorManager {
         }).delay(TaskSchedule.seconds(baseDelay)).repeat(TaskSchedule.seconds(baseDelay)).schedule();
 
         teamGeneratorTasks.computeIfAbsent(teamKey, _ -> new ArrayList<>()).add(task);
+    }
+
+    private void startLuckyBlockGenerator(TeamKey teamKey, Pos spawnPosition) {
+        Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
+            if (game.getState() != GameState.IN_PROGRESS) return;
+
+            long nearbyLuckyBlocks = game.getInstance().getNearbyEntities(spawnPosition, 2.0)
+                .stream()
+                .filter(ItemEntity.class::isInstance)
+                .map(ItemEntity.class::cast)
+                .filter(entity -> entity.getItemStack().get(net.minestom.server.component.DataComponents.CUSTOM_DATA) != null)
+                .filter(entity -> "lucky_block".equals(entity.getItemStack().get(net.minestom.server.component.DataComponents.CUSTOM_DATA).getTag(net.minestom.server.tag.Tag.String("item"))))
+                .count();
+            if (nearbyLuckyBlocks >= 2) {
+                return;
+            }
+
+            LuckyBlockTier tier = rollLuckyBlockTier();
+            LuckyBlockItem luckyBlock = (LuckyBlockItem) TypeBedWarsGameLoader.getItemHandler().getItem("lucky_block");
+            spawnItem(luckyBlock.getItemStack(tier), 1, spawnPosition, Duration.ofMillis(500));
+        }).delay(TaskSchedule.seconds(20)).repeat(TaskSchedule.seconds(20)).schedule();
+
+        teamGeneratorTasks.computeIfAbsent(teamKey, _ -> new ArrayList<>()).add(task);
+    }
+
+    private LuckyBlockTier rollLuckyBlockTier() {
+        int roll = java.util.concurrent.ThreadLocalRandom.current().nextInt(100);
+        if (roll < 58) return LuckyBlockTier.NORMAL;
+        if (roll < 78) return LuckyBlockTier.PROMISING;
+        if (roll < 91) return LuckyBlockTier.FORTUNATE;
+        if (roll < 98) return LuckyBlockTier.OFFENSIVE;
+        return LuckyBlockTier.MIRACLE;
     }
 
     public void startGlobalGenerators() {
@@ -320,7 +359,11 @@ public class BedWarsGeneratorManager {
     }
 
     private void spawnItem(Material material, int amount, Pos position, Duration pickupDelay) {
-        ItemStack item = ItemStack.of(material, amount);
+        spawnItem(ItemStack.of(material), amount, position, pickupDelay);
+    }
+
+    private void spawnItem(ItemStack stack, int amount, Pos position, Duration pickupDelay) {
+        ItemStack item = stack.withAmount(amount);
         ItemEntity entity = new ItemEntity(item);
         entity.setPickupDelay(pickupDelay);
         entity.setInstance(game.getInstance(), position);

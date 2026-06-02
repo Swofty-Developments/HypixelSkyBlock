@@ -475,8 +475,13 @@ public class OrchestratorCache {
         if (gameTypeName == null) {
             return true;
         }
+        String compatibleMode = gameTypeName;
+        BedWarsGameType parsed = BedWarsGameType.from(gameTypeName);
+        if (parsed != null) {
+            compatibleMode = parsed.getMapCompatibilityType().name();
+        }
         for (String mode : advertisement.supportedModes()) {
-            if (mode.equalsIgnoreCase(gameTypeName)) {
+            if (mode.equalsIgnoreCase(gameTypeName) || mode.equalsIgnoreCase(compatibleMode)) {
                 return true;
             }
         }

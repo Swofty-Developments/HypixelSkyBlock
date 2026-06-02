@@ -4,6 +4,10 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.EnchantmentList;
 import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.potion.PotionType;
+import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.item.impl.BridgeEgg;
+import net.swofty.type.bedwarsgame.item.impl.Fireball;
+import net.swofty.type.bedwarsgame.item.impl.GoldenApple;
 import net.swofty.type.bedwarsgame.shop.impl.*;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
@@ -43,15 +47,15 @@ public class ShopManager {
         DatapointBedWarsHotbar.HotbarItemType.UTILITY);
     private final ShopItem WATER_BUCKET = new BasicItem("water_bucket", "Water Bucket", "Great to slow down approaching\nenemies. Can also protect against\nTNT.", 6, 1, Currency.GOLD, Material.WATER_BUCKET,
         DatapointBedWarsHotbar.HotbarItemType.UTILITY);
-    private final ShopItem BRIDGE_EGG = new BridgeEggShopItem();
+    private final ShopItem BRIDGE_EGG = new InteractableShopItem(new BridgeEgg());
     private final ShopItem ARROW = new BasicItem("arrow", "Arrows", "", 3, 16, Currency.GOLD, Material.ARROW,
         DatapointBedWarsHotbar.HotbarItemType.RANGED);
     private final ShopItem BOW = new BowShopItem("bow_1", "Bow", "", 6, Currency.IRON, EnchantmentList.EMPTY.with(Enchantment.POWER, 1));
     private final ShopItem PICKAXE = new PickaxeShopItem();
     private final ShopItem AXE = new AxeShopItem();
-    private final ShopItem FIREBALL = new FireballShopItem();
+    private final ShopItem FIREBALL = new InteractableShopItem(new Fireball());
     private final ShopItem POPUP_TOWER = new PopupTowerItem();
-    private final ShopItem GOLDEN_APPLE = new GappleShopItem();
+    private final ShopItem GOLDEN_APPLE = new InteractableShopItem(new GoldenApple());
     private final ShopItem INVISIBILITY_POTION = new PotionShopItem("invisibility_potion", "Invisibility Potion (30 seconds)", "§9Complete invisibility (0:30).", 2, 1, Currency.EMERALD, PotionType.INVISIBILITY);
     private final ShopItem SPEED_POTION = new PotionShopItem("speed_potion", "Speed II Potion (45 seconds)", "§9Speed II (0:45).", 2, 1, Currency.EMERALD, PotionType.SWIFTNESS);
     private final ShopItem JUMP_POTION = new PotionShopItem("jump_potion", "Jump V Potion (45 seconds)", "§9Jump Boost V (0:45).", 2, 1, Currency.EMERALD, PotionType.LEAPING);
@@ -101,6 +105,17 @@ public class ShopManager {
         for (int categoryId : categoryIds) {
             addItemToCategory(categoryId, item);
         }
+    }
+
+    public void addInteractableItem(SimpleInteractableItem item) {
+        if (!item.isShopBacked()) {
+            return;
+        }
+        ShopItem shopItem = new InteractableShopItem(item);
+        for (List<ShopItem> items : categorizedShopItems.values()) {
+            items.removeIf(existing -> existing.getId().equalsIgnoreCase(item.getId()));
+        }
+        addItemToCategories(shopItem, item.getShopData().categories());
     }
 
     public ShopItem getShopItem(int categoryId, int itemIndex) {

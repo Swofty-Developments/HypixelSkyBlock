@@ -28,6 +28,12 @@ public class SimpleInteractableItemHandler {
                 .orElseThrow(() -> new IllegalArgumentException("Item not found: " + name));
     }
 
+    public List<SimpleInteractableItem> getShopBackedItems() {
+        return items.stream()
+            .filter(SimpleInteractableItem::isShopBacked)
+            .toList();
+    }
+
     public void onItemFinishUse(PlayerFinishItemUseEvent event) {
         for (SimpleInteractableItem item : items) {
             ItemStack itemStack = event.getItemStack();

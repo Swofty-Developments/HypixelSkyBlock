@@ -13,6 +13,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.item.impl.LuckyBlockItem;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
@@ -66,6 +67,11 @@ public class ActionGameBreak implements HypixelEventClass {
         boolean isTeamBedPart = false;
         TeamKey playerTeamKey = player.getTeamKey();
         Point brokenBlockPosition = event.getBlockPosition();
+
+        if (LuckyBlockItem.handleBreak(player, brokenBlockPosition, blockBeingBroken)) {
+            event.setCancelled(true);
+            return;
+        }
 
         // Check if it's a part of any team's bed first
         for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {

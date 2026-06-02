@@ -22,11 +22,11 @@ public class NPCSolo extends HypixelNPC {
                     BedWarsGameType.ONE_EIGHT.name()
                 );
 
-                String commmaified = StringUtility.commaify(amountOnline);
+                String commaified = StringUtility.commaify(amountOnline);
                 return new String[]{
                     "§e§lCLICK TO PLAY",
                     "§bSolo §7[v" + VersionConst.BED_WARS_VERSION + "]",
-                    "§e§l" + commmaified + " Players",
+                    "§e§l" + commaified + " Players",
                 };
             }
 
