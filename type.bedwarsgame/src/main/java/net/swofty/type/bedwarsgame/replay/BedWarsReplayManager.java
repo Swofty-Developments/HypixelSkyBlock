@@ -21,6 +21,7 @@ import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.protocol.objects.replay.ReplayMapUploadProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
 import net.swofty.commons.scoreboard.ScoreboardData;
 import net.swofty.proxyapi.ProxyService;
@@ -47,11 +48,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BedWarsReplayManager {
     private final BedWarsGame game;
     private final ProxyService replayService;
+    private final ExecutorService replayExecutor;
 
     @Getter
     private final ReplayRecorder recorder;
@@ -69,6 +72,11 @@ public class BedWarsReplayManager {
     public BedWarsReplayManager(BedWarsGame game, ProxyService replayService) {
         this.game = game;
         this.replayService = replayService;
+        this.replayExecutor = Executors.newSingleThreadExecutor(r -> {
+            Thread thread = new Thread(r, "bedwars-replay-send");
+            thread.setDaemon(true);
+            return thread;
+        });
         this.recorder = new ReplayRecorder(game.getGameId(), ServerType.BEDWARS_GAME, this::sendToService);
         this.dispatchers = new DispatcherManager(recorder);
     }
@@ -82,7 +90,7 @@ public class BedWarsReplayManager {
             return;
         }
 
-        CompletableFuture.runAsync(() -> {
+        replayExecutor.execute(() -> {
             try {
                 replayService.handleRequest(data).exceptionally(e -> {
                     Logger.error(e, "Failed to send replay data to service");
@@ -271,6 +279,7 @@ public class BedWarsReplayManager {
 
         dispatchers.cleanup();
         recorder.finish();
+        replayExecutor.shutdown();
 
         Logger.info("Stopped replay recording for game {}", game.getGameId());
     }
@@ -547,20 +556,14 @@ public class BedWarsReplayManager {
 
             String mapHash = serializedMap.hash();
 
-            CompletableFuture.runAsync(() -> {
-                try {
-                    var uploadMsg = new net.swofty.commons.protocol.objects.replay.ReplayMapUploadProtocolObject.MapUploadMessage(
-                        mapHash, mapName, serializedMap.compressedData()
-                    );
-                    sendToService(uploadMsg);
+            var uploadMsg = new ReplayMapUploadProtocolObject.MapUploadMessage(
+                mapHash, mapName, serializedMap.compressedData()
+            );
+            sendToService(uploadMsg);
 
-                    Logger.info("Map {} uploaded: {} -> {} bytes ({}% compression)",
-                        mapName, serializedMap.uncompressedSize(), serializedMap.compressedSize(),
-                        100 - (serializedMap.compressedSize() * 100 / Math.max(1, serializedMap.uncompressedSize())));
-                } catch (Exception e) {
-                    Logger.error(e, "Failed to upload map {}", mapName);
-                }
-            });
+            Logger.info("Map {} uploaded: {} -> {} bytes ({}% compression)",
+                mapName, serializedMap.uncompressedSize(), serializedMap.compressedSize(),
+                100 - (serializedMap.compressedSize() * 100 / Math.max(1, serializedMap.uncompressedSize())));
 
             return mapHash;
 
