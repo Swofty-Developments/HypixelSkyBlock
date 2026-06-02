@@ -2,9 +2,11 @@ package net.swofty.commons.bedwars.map;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minestom.server.item.Material;
 import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.mc.Vec3i;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -69,32 +71,41 @@ public class BedWarsMapsConfig {
     }
 
     public enum TeamKey {
-        RED("Red", "§c", 0xFF5555),
-        BLUE("Blue", "§9", 0x5555FF),
-        GREEN("Green", "§a", 0x55FF55),
-        YELLOW("Yellow", "§e", 0xFFFF55),
-        AQUA("Aqua", "§b", 0x00AAAA),
-        WHITE("White", "§f", 0xFFFFFF),
-        PINK("Pink", "§d", 0xFF55FF),
-        GRAY("Gray", "§7", 0xAAAAAA);
+        RED("Red", "§c", 0xFF5555, Material.RED_BED),
+        BLUE("Blue", "§9", 0x5555FF, Material.BLUE_BED),
+        GREEN("Green", "§a", 0x55FF55, Material.GREEN_BED),
+        YELLOW("Yellow", "§e", 0xFFFF55, Material.YELLOW_BED),
+        AQUA("Aqua", "§b", 0x00AAAA, Material.LIGHT_BLUE_BED),
+        WHITE("White", "§f", 0xFFFFFF, Material.WHITE_BED),
+        PINK("Pink", "§d", 0xFF55FF, Material.PINK_BED),
+        GRAY("Gray", "§7", 0xAAAAAA, Material.GRAY_BED);
 
         @Getter
         private final String name;
         private final String chatColor;
         private final int rgb;
+        @NotNull
+        private final Material bedMaterial;
 
-        TeamKey(String name, String chatColor, int rgb) {
+        TeamKey(@NotNull String name, @NotNull String chatColor, int rgb, @NotNull Material bedMaterial) {
             this.name = name;
             this.chatColor = chatColor;
             this.rgb = rgb;
+            this.bedMaterial = bedMaterial;
+        }
+
+        @NotNull
+        public String chatColor() {
+            return chatColor;
         }
 
         public int rgb() {
             return rgb;
         }
 
-        public String chatColor() {
-            return chatColor;
+        @NotNull
+        public Material bedMaterial() {
+            return bedMaterial;
         }
     }
 

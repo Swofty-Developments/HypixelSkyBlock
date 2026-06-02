@@ -21,19 +21,6 @@ public class PopupTower extends SimpleInteractableItem {
 		super("popup_tower");
 	}
 
-	private static Block mapTeamToBlock(BedWarsMapsConfig.TeamKey teamKey) {
-		return switch (teamKey) {
-			case RED -> Block.RED_WOOL;
-			case BLUE -> Block.BLUE_WOOL;
-			case GREEN -> Block.LIME_WOOL;
-			case YELLOW -> Block.YELLOW_WOOL;
-			case AQUA -> Block.LIGHT_BLUE_WOOL;
-			case PINK -> Block.PINK_WOOL;
-			case WHITE -> Block.WHITE_WOOL;
-			case GRAY -> Block.GRAY_WOOL;
-		};
-	}
-
 	@Override
 	public ItemStack getBlandItem() {
 		return ItemStackCreator.createNamedItemStack(Material.CHEST, "§aPop-Up Tower").build();
@@ -48,7 +35,7 @@ public class PopupTower extends SimpleInteractableItem {
 
 		try {
 			instance.loadChunk(basePos).join();
-		} catch (Exception ignored) {
+		} catch (Exception _) {
 		}
 
 		final int LAYERS = 4;
@@ -71,6 +58,7 @@ public class PopupTower extends SimpleInteractableItem {
 		AtomicInteger layerCounter = new AtomicInteger(0);
 
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
+		BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
 		Pos playerPos = player.getPosition();
 		double dx = playerPos.x() - basePos.x();
 		double dz = playerPos.z() - basePos.z();
@@ -131,20 +119,20 @@ public class PopupTower extends SimpleInteractableItem {
 					try {
 						if (val == 1) {
 							if (instance.getBlock(target).isAir()) {
-								instance.setBlock(target, mapTeamToBlock(player.getTeamKey()));
+								instance.setBlock(target, teamKey.bedMaterial().block());
 							}
 						} else if (val == 5) {
 							try {
 								instance.setBlock(target, Block.LADDER.withProperty("facing", ladderFacing));
-							} catch (IllegalArgumentException ignored) {
+							} catch (IllegalArgumentException _) {
 								instance.setBlock(target, Block.LADDER);
 							}
 						}
-					} catch (IllegalArgumentException e) {
+					} catch (IllegalArgumentException _) {
 						if (val == 1) {
 							instance.setBlock(target, Block.WHITE_WOOL);
 						}
-					} catch (Exception ignored) {
+					} catch (Exception _) {
 					}
 				}
 			}

@@ -30,7 +30,7 @@ public class GUISelectAnOption extends StatelessView {
     private final Function<ViewContext, List<Option>> optionSupplier;
 
     public GUISelectAnOption() {
-        this("Select an option:", ignored -> buildResourceOptions("I'm collecting"));
+        this("Select an option:", _ -> buildResourceOptions("I'm collecting"));
     }
 
     private GUISelectAnOption(String title, Function<ViewContext, List<Option>> optionSupplier) {
@@ -39,7 +39,7 @@ public class GUISelectAnOption extends StatelessView {
     }
 
     public static GUISelectAnOption forResourceCommunication(String prefix) {
-        return new GUISelectAnOption("Select an option:", ignored -> buildResourceOptions(prefix));
+        return new GUISelectAnOption("Select an option:", _ -> buildResourceOptions(prefix));
     }
 
     public static GUISelectAnOption forTeamCommunication(String prefix) {
@@ -64,7 +64,7 @@ public class GUISelectAnOption extends StatelessView {
             ));
         } else {
             for (Option option : options) {
-                layout.slot(option.slot(), buildOptionItem(option), (click, context) -> {
+                layout.slot(option.slot(), buildOptionItem(option), (click, _) -> {
                     if (!(click.player() instanceof BedWarsPlayer player)) {
                         return;
                     }
@@ -147,25 +147,12 @@ public class GUISelectAnOption extends StatelessView {
             options.add(new Option(
                 TEAM_SLOTS[i],
                 message,
-                getWool(team),
+                team.bedMaterial(),
                 message
             ));
         }
 
         return options;
-    }
-
-    private static Material getWool(TeamKey teamKey) {
-        return switch (teamKey) {
-            case RED -> Material.RED_WOOL;
-            case BLUE -> Material.BLUE_WOOL;
-            case GREEN -> Material.GREEN_WOOL;
-            case YELLOW -> Material.YELLOW_WOOL;
-            case AQUA -> Material.LIGHT_BLUE_WOOL;
-            case WHITE -> Material.WHITE_WOOL;
-            case PINK -> Material.PINK_WOOL;
-            case GRAY -> Material.GRAY_WOOL;
-        };
     }
 
     private record Option(int slot, String displayName, Material icon, String message) {

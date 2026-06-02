@@ -109,7 +109,7 @@ public class GUIPurchaseEnemyTracker extends StatelessView {
 
         return ItemStackCreator.getStack(
             nameColor + "Track Team " + teamName,
-            getWool(targetTeam),
+            targetTeam.bedMaterial(),
             1,
             lore
         );
@@ -165,18 +165,4 @@ public class GUIPurchaseEnemyTracker extends StatelessView {
             .toList();
     }
 
-    // there's a better way to do this
-    @Deprecated(forRemoval = true)
-    private Material getWool(TeamKey teamKey) {
-        return switch (teamKey) {
-            case RED -> Material.RED_WOOL;
-            case BLUE -> Material.BLUE_WOOL;
-            case GREEN -> Material.GREEN_WOOL;
-            case YELLOW -> Material.YELLOW_WOOL;
-            case AQUA -> Material.LIGHT_BLUE_WOOL;
-            case WHITE -> Material.WHITE_WOOL;
-            case PINK -> Material.PINK_WOOL;
-            case GRAY -> Material.GRAY_WOOL;
-        };
-    }
 }

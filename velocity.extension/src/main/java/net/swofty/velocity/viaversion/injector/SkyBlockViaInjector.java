@@ -84,7 +84,7 @@ public class SkyBlockViaInjector implements ViaInjector {
                     .name().equals("MODERN")) {
                 return ProtocolVersion.v1_13.getVersion();
             }
-        } catch (IllegalAccessException | InvocationTargetException ignored) {
+        } catch (IllegalAccessException | InvocationTargetException _) {
         }
         return com.velocitypowered.api.network.ProtocolVersion.MINIMUM_VERSION.getProtocol();
     }

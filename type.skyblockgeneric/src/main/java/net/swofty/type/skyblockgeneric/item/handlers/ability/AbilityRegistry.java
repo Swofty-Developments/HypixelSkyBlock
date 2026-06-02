@@ -1,7 +1,5 @@
 package net.swofty.type.skyblockgeneric.item.handlers.ability;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -28,7 +26,7 @@ public class AbilityRegistry {
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				50,
 				new RegisteredAbility.AbilityManaCost(25),
-				(player, item, ignored, ignored2) -> {
+			(player, _, _, _) -> {
 					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(10)).asBlockVec();
 					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false;
 					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
@@ -44,7 +42,7 @@ public class AbilityRegistry {
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				5,
 				new RegisteredAbility.AbilityManaCost(50),
-				(player, item, ignored, ignored2) -> {
+			(player, _, _, _) -> {
 					BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(8)).asBlockVec();
 					if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir()) return false; // TODO: Make it so you can't go through walls
 					player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
@@ -58,11 +56,11 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"ETHER_TRANSMISSION",
 				"Ether Transmission",
-				(player, item) -> "§7Teleport to your targeted block up to §a57 §7blocks away.",
+			(_, _) -> "§7Teleport to your targeted block up to §a57 §7blocks away.",
 				RegisteredAbility.AbilityActivation.SNEAK_RIGHT_CLICK,
 				5,
 				new RegisteredAbility.AbilityManaSoulflowCost(180, 1),
-				(player, item, ignored, ignored2) -> {
+			(player, _, _, _) -> {
 					Point targetedBlock = player.getTargetBlockPosition(57);
 					if (targetedBlock == null) return false;
 					BlockVec tpPos = targetedBlock.asBlockVec();
@@ -75,11 +73,11 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"TRUE_DWARTH",
 						"True Dwarth",
-				(player, item) -> "§7Shows the way towards the nearest §6Emissary §7while in the §2Dwarven Mines§7.",
+			(_, _) -> "§7Shows the way towards the nearest §6Emissary §7while in the §2Dwarven Mines§7.",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				20 * 3,
 				new RegisteredAbility.NoAbilityCost(),
-				(player, item, targetedBlock, blockFace) -> {
+			(player, _, _, _) -> {
 					player.notImplemented();
 					return false;
 				}
@@ -88,11 +86,11 @@ public class AbilityRegistry {
 		register(new RegisteredAbility(
 				"SPEED_BOOST",
 				"Speed Boost",
-				(player, item) -> "§7Grants §7+100 Speed",
+			(_, _) -> "§7Grants §7+100 Speed",
 				RegisteredAbility.AbilityActivation.RIGHT_CLICK,
 				20 * 5,
 				new RegisteredAbility.AbilityManaCost(50),
-				(player, item, ignored, ignored2) -> {
+			(player, _, _, _) -> {
 					ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 100.0).build();
 					TemporaryStatistic speedBoost = TemporaryStatistic.builder().withStatistics(speedStats).withExpirationInMs(30000).withDisplayName("Speed Boost").build();
 					player.getStatistics().boostStatistic(speedBoost);
@@ -103,7 +101,7 @@ public class AbilityRegistry {
 		register(new RegisteredPassiveAbility(
 				"STORED_POTENTIAL",
 				"Stored Potential",
-				(player, item) -> {
+			(_, item) -> {
 					StringBuilder description = new StringBuilder();
 					description.append("§7Grants §6+10⸕ Mining Speed §7for every\n100 blocks mined.\n§8(Max +250⸕ Mining Speed)\n\n");
 					description.append("§7Blocks Mined: §a").append(item.getAttributeHandler().getStoredPotential()).append("\n");
