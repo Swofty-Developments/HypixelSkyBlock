@@ -1,31 +1,41 @@
 package net.swofty.type.replayviewer.event;
 
-import net.minestom.server.event.player.PlayerStartSneakingEvent;
+import net.minestom.server.event.player.PlayerInputEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 
-public class PlayerIndicateLeaveSpectate implements HypixelEventClass {
+public final class PlayerIndicateLeaveSpectate implements HypixelEventClass {
 
     @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
-    public void run(PlayerStartSneakingEvent event) {
-        final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
+    public void run(PlayerInputEvent event) {
+        if (!(event.getPlayer() instanceof HypixelPlayer player)) {
+            return;
+        }
 
-        if (!player.isSpectating()) return;
+        if (!shouldLeaveSpectate(player, event)) {
+            return;
+        }
 
         TypeReplayViewerLoader.getSession(player.getUuid()).ifPresent(session -> {
-            int id;
-            try {
-                id = session.getViewerSpectating().get(player.getUuid());
-            } catch (Exception e) {
+            Integer followedEntityId = session.getViewerSpectating().get(player.getUuid());
+            if (followedEntityId == null) {
+                return;
+            }
+
+            var followedEntity = session.getEntityManager().getEntity(followedEntityId);
+            if (followedEntity == null) {
                 return;
             }
 
             session.stopFollowing(player);
-            player.teleport(session.getEntityManager().getEntity(id).getPosition());
+            player.teleport(followedEntity.getPosition());
         });
     }
 
+    private static boolean shouldLeaveSpectate(HypixelPlayer player, PlayerInputEvent event) {
+        return player.isSpectating() && (event.hasPressedShiftKey() || event.hasPressedJumpKey());
+    }
 }

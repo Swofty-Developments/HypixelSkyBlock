@@ -3,13 +3,13 @@ package net.swofty.velocity.viaversion.provider;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.protocol.version.VersionProvider;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.stream.IntStream;
-
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
 import org.jetbrains.annotations.Nullable;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class SkyBlockVersionProvider implements VersionProvider {
     private static final Method GET_ASSOCIATION = getAssociationMethod();
@@ -29,7 +29,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
     }
 
     private ProtocolVersion getBackProtocol(UserConnection user) {
-        return ProtocolVersion.v1_21_11; // backend server version
+        return ProtocolVersion.v26_1; // backend server version
     }
 
     private ProtocolVersion getFrontProtocol(UserConnection user) throws Exception {

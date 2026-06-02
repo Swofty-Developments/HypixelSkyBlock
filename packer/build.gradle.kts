@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     `java-library`
     application
-    id("com.gradleup.shadow") version "9.3.2"
+    alias(libs.plugins.shadow)
 }
 
 group = "net.swofty"
@@ -21,6 +21,7 @@ dependencies {
     api(libs.creative.api)
     api(libs.creative.serializer.minecraft)
     api(libs.creative.server)
+    api(libs.examination.api) // kind of a legacy API
 }
 
 application {

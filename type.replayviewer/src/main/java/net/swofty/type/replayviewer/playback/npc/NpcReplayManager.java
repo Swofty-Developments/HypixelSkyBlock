@@ -3,6 +3,7 @@ package net.swofty.type.replayviewer.playback.npc;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.InstanceContainer;
@@ -18,7 +19,6 @@ import java.util.Set;
 
 public class NpcReplayManager {
 
-    private final ReplaySession session;
     private final InstanceContainer instance;
     private final ReplayEntityManager entityManager;
     private final Map<Integer, NpcReplayData> npcData = new HashMap<>();
@@ -26,7 +26,6 @@ public class NpcReplayManager {
     private int nextTextEntityId = -10000; // Use negative IDs to avoid conflicts
 
     public NpcReplayManager(ReplaySession session) {
-        this.session = session;
         this.instance = session.getInstance();
         this.entityManager = session.getEntityManager();
     }
@@ -77,7 +76,7 @@ public class NpcReplayManager {
                 if (nameColor >= 0) {
                     nameComponent = nameComponent.color(TextColor.color(nameColor));
                 }
-                entity.setCustomName(nameComponent);
+                entity.set(DataComponents.CUSTOM_NAME, nameComponent);
                 entity.setCustomNameVisible(true);
             } else {
                 entity.setCustomNameVisible(false);

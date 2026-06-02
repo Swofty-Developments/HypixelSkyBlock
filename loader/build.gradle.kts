@@ -4,7 +4,7 @@ import java.util.*
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "9.3.2"
+    alias(libs.plugins.shadow)
 }
 
 group = "net.swofty"
@@ -221,7 +221,7 @@ tasks.register("runWithTestFlow") {
                                 println("[$serverName] $line")
                             }
                         }
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         // Process was terminated, exit gracefully
                     }
                 }.apply {
@@ -246,7 +246,7 @@ tasks.register("runWithTestFlow") {
                 try {
                     process.destroyForcibly()
                     process.waitFor(5, TimeUnit.SECONDS)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     // Ignore errors during shutdown
                 }
             }
@@ -265,7 +265,7 @@ tasks.register("runWithTestFlow") {
                         serverProcesses.forEach { process ->
                             try {
                                 process.destroyForcibly()
-                            } catch (e: Exception) {
+                            } catch (_: Exception) {
                                 // Ignore errors
                             }
                         }
@@ -273,7 +273,7 @@ tasks.register("runWithTestFlow") {
                     } else {
                         println("Type 'exit' to stop all servers")
                     }
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     // Input was interrupted, likely due to shut down
                     break
                 }
@@ -288,14 +288,14 @@ tasks.register("runWithTestFlow") {
             serverProcesses.forEach { process ->
                 process.waitFor()
             }
-        } catch (e: InterruptedException) {
+        } catch (_: InterruptedException) {
             println("\nReceived interrupt signal, shutting down...")
             // The shutdown hook will handle cleanup
         } finally {
             // Remove shutdown hook if we're exiting normally
             try {
                 Runtime.getRuntime().removeShutdownHook(shutdownHook)
-            } catch (e: IllegalStateException) {
+            } catch (_: IllegalStateException) {
                 // Shutdown already in progress, ignore
             }
         }

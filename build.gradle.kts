@@ -1,7 +1,3 @@
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.getByType
-
 plugins {
     base
     java
@@ -29,6 +25,7 @@ subprojects {
         maven("https://repo.viaversion.com")
         maven("https://jitpack.io")
         maven("https://repo.lucko.me/")
+        maven("https://repo.nexomc.com/releases")
     }
 
     java {

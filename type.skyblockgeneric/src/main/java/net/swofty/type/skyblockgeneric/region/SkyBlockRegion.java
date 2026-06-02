@@ -133,7 +133,7 @@ public class SkyBlockRegion {
     }
 
     public static SkyBlockRegion getRegionOfPosition(Point point) {
-        return getRegionOfPosition(Pos.fromPoint(point));
+        return getRegionOfPosition(point.asPos());
     }
 
     public static SkyBlockRegion getRandomRegionOfType(RegionType type) {

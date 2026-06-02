@@ -56,6 +56,8 @@ public enum MinecraftVersion {
     MINECRAFT_1_21_9(773, new String[]{"1.21.9"}),
     MINECRAFT_1_21_10(773, new String[]{"1.21.10"}),
     MINECRAFT_1_21_11(774, new String[]{"1.21.11"}),
+    MINERAFT_26_1(775, new String[]{"26.1", "26.1.1", "26.1.2"}),
+
     ;
 
     private final int protocol;

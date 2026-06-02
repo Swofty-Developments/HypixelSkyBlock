@@ -26,16 +26,13 @@ dependencies {
     implementation(project(":service.generic"))
     implementation(project(":type.game"))
     implementation(project(":commons"))
-    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
-    implementation("org.tinylog:tinylog-api:2.7.0")
-    implementation("org.tinylog:tinylog-impl:2.7.0")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.mongodb:bson:5.6.2")
-    implementation("org.mongodb:mongodb-driver-sync:5.6.2")
+    implementation(libs.caffeine)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
+    implementation(libs.gson)
+    implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
 
-    // Compression libraries
-    implementation("at.yawk.lz4:lz4-java:1.10.3")
-    implementation("com.github.luben:zstd-jni:1.5.7-3")
 }
 
 application {
