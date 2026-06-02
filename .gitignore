@@ -52,7 +52,6 @@ build/
 .gradle/
 /server/proxy/logs/
 /server/proxy/lang/
-/server/proxy/ViaLoader/
 /server/proxy/plugins/
 /server/proxy/forwarding.secret
 /server/proxy/velocity.toml
