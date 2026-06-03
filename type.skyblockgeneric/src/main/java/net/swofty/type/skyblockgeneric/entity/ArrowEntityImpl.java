@@ -63,7 +63,7 @@ public class ArrowEntityImpl extends LivingEntity {
         super.tick(time);
         final Pos posNow = getPosition();
 
-        Vec diff = Vec.fromPoint(posNow.sub(posBefore));
+        Vec diff = posNow.sub(posBefore).asVec();
         PhysicsResult result = CollisionUtils.handlePhysics(
                 instance, this.getChunk(),
                 this.getBoundingBox(),
@@ -90,7 +90,7 @@ public class ArrowEntityImpl extends LivingEntity {
 
                 var e = new ProjectileCollideWithEntityEvent(
                         this,
-                        Pos.fromPoint(collisionResult.collisionPoint()),
+                    collisionResult.collisionPoint().asPos(),
                         entity
                 );
                 MinecraftServer.getGlobalEventHandler().call(e);
@@ -114,7 +114,7 @@ public class ArrowEntityImpl extends LivingEntity {
 
                 if (!hitBlock.isAir()) {
                     // Fire arrow hit block event
-                    ArrowHitBlockEvent arrowHitBlockEvent = new ArrowHitBlockEvent(shooter, arrowItem, hitBlock, Pos.fromPoint(hitPosition));
+                    ArrowHitBlockEvent arrowHitBlockEvent = new ArrowHitBlockEvent(shooter, arrowItem, hitBlock, hitPosition);
                     HypixelEventHandler.callCustomEvent(arrowHitBlockEvent);
                     hasHit = true;
                 }

@@ -3,6 +3,7 @@ package net.swofty.type.bedwarsconfigurator.commands;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.number.ArgumentDouble;
@@ -48,7 +49,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
     @Override
     public void registerUsage(MinestomCommand command) {
-        command.setDefaultExecutor((sender, context) -> {
+        command.setDefaultExecutor((sender, _) -> {
             sendHelp(sender);
         });
 
@@ -66,7 +67,7 @@ public class AutoSetupCommand extends HypixelCommand {
         registerMapInfoCommand(command);
     }
 
-    private void sendHelp(net.minestom.server.command.CommandSender sender) {
+    private void sendHelp(CommandSender sender) {
         sender.sendMessage(Component.text("§6§l=== BedWars Auto Setup ==="));
         sender.sendMessage(Component.text("§e/autosetup scan §7- Scan world for beds, generators, etc."));
         sender.sendMessage(Component.text("§e/autosetup bounds <min|max> [x y z] §7- Set map bounds"));
@@ -79,12 +80,12 @@ public class AutoSetupCommand extends HypixelCommand {
         sender.sendMessage(Component.text("§e/autosetup hide §7- Hide debug markers"));
         sender.sendMessage(Component.text("§e/autosetup status §7- Show current configuration status"));
         sender.sendMessage(Component.text("§e/autosetup name <name> §7- Set map display name"));
-        sender.sendMessage(Component.text("§e/autosetup generator <slow|medium|fast|very_fast> §7- Configure generator settings"));
+        sender.sendMessage(Component.text("§e/autosetup generator <slow|medium|fast|very_fast> §7- Configure generator speed"));
         sender.sendMessage(Component.text("§e/autosetup save §7- Save configuration to maps.json"));
     }
 
     private void registerScanCommand(MinestomCommand command) {
-        command.addSyntax((sender, context) -> {
+        command.addSyntax((sender, _) -> {
             if (!(sender instanceof Player player)) return;
             if (!permissionCheck(sender)) return;
 
@@ -129,7 +130,7 @@ public class AutoSetupCommand extends HypixelCommand {
 
     private void registerBoundsCommand(MinestomCommand command) {
         var cornerArg = ArgumentType.String("corner");
-        cornerArg.setSuggestionCallback((sender, ctx, suggestion) -> {
+        cornerArg.setSuggestionCallback((_, _, suggestion) -> {
             suggestion.addEntry(new SuggestionEntry("min"));
             suggestion.addEntry(new SuggestionEntry("max"));
         });
@@ -345,9 +346,7 @@ public class AutoSetupCommand extends HypixelCommand {
                     teamConfig.setBedFeet(feet);
                     teamConfig.setBedHead(head);
                     player.sendMessage(Component.text("§aSet team bed (feet: " + formatPosition(feet) + ", head: " + formatPosition(head) + ")"));
-                }, () -> {
-                    player.sendMessage(Component.text("§cYou must be looking at a bed block to set the bed position."));
-                });
+                }, () -> player.sendMessage(Component.text("§cYou must be looking at a bed block to set the bed position.")));
             }
             case "generator" -> {
                 teamConfig.setGenerator(new HypixelPosition(pos.x(), pos.y(), pos.z()));
@@ -691,46 +690,6 @@ public class AutoSetupCommand extends HypixelCommand {
             }
 
         }, ArgumentType.Literal("generator"), ArgumentType.Literal("speed"), speedArg);
-
-        // Diamond/Emerald settings (unchanged)
-        var genTypeArg = ArgumentType.String("gentype");
-        genTypeArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            suggestion.addEntry(new SuggestionEntry("diamond"));
-            suggestion.addEntry(new SuggestionEntry("emerald"));
-        });
-
-        var settingArg = ArgumentType.String("setting");
-        settingArg.setSuggestionCallback((sender, ctx, suggestion) -> {
-            suggestion.addEntry(new SuggestionEntry("amount"));
-            suggestion.addEntry(new SuggestionEntry("max"));
-        });
-
-        ArgumentDouble valueArg = ArgumentType.Double("value");
-
-        command.addSyntax((sender, context) -> {
-            if (!(sender instanceof Player player)) return;
-            if (!permissionCheck(sender)) return;
-
-            String genType = context.get(genTypeArg);
-            String setting = context.get(settingArg);
-            int value = context.get(valueArg).intValue();
-
-            AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
-
-            switch (genType.toLowerCase()) {
-                case "diamond" -> {
-                    if (setting.equals("amount")) session.setDiamondAmount(value);
-                    else if (setting.equals("max")) session.setDiamondMax(value);
-                }
-                case "emerald" -> {
-                    if (setting.equals("amount")) session.setEmeraldAmount(value);
-                    else if (setting.equals("max")) session.setEmeraldMax(value);
-                }
-            }
-
-            player.sendMessage(Component.text("§aSet " + genType + " " + setting + " to " + value));
-
-        }, ArgumentType.Literal("generator"), genTypeArg, settingArg, valueArg);
     }
 
     private void registerSaveCommand(MinestomCommand command) {

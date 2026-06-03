@@ -60,7 +60,7 @@ public class TypeBedWarsConfiguratorLoader implements HypixelTypeLoader {
 	}
 
 	/**
-	 * Reloads the maps configuration from file
+	 * Reloads the map configuration from the file
 	 */
 	public static void reloadMapsConfig() {
 		if (gson == null) {
