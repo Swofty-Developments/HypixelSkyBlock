@@ -13,7 +13,6 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
@@ -123,7 +122,6 @@ public final class PlayerInventoryCrafting {
         if (existingLore != null) {
             existingLore.stream().map(line -> "§7" + StringUtility.getTextFromComponent(line)).forEach(lore::add);
         }
-        lore.addAll(Arrays.asList(I18n.iterable("gui_sbmenu.crafting.crafting_item.lore")));
         builder.set(DataComponents.LORE, ItemStackCreator.literalLoreComponents(lore).stream()
             .map(line -> line.decoration(TextDecoration.ITALIC, false))
             .collect(Collectors.toList()));
