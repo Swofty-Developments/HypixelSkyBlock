@@ -35,8 +35,8 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class BedWarsWorldManager {
     private final BedWarsGame game;
-    private final List<RecordedShopNpc> recordedShopNpcs = new ArrayList<>();
-    private boolean shopNpcsRecorded = false;
+    private final List<RecordedShopNpc> recordedShopNPCs = new ArrayList<>();
+    private boolean shopNPCsRecorded = false;
 
     public void clearExistingBeds() {
         InstanceContainer instance = game.getInstance();
@@ -53,17 +53,17 @@ public class BedWarsWorldManager {
     private void clearBedBlocks(InstanceContainer instance, BedWarsMapsConfig.TwoBlockPosition bedPos) {
         if (bedPos.feet() != null) {
             instance.setBlock(
-                (int) bedPos.feet().x(),
-                (int) bedPos.feet().y(),
-                (int) bedPos.feet().z(),
+                bedPos.feet().x(),
+                bedPos.feet().y(),
+                bedPos.feet().z(),
                 Block.AIR
             );
         }
         if (bedPos.head() != null) {
             instance.setBlock(
-                (int) bedPos.head().x(),
-                (int) bedPos.head().y(),
-                (int) bedPos.head().z(),
+                bedPos.head().x(),
+                bedPos.head().y(),
+                bedPos.head().z(),
                 Block.AIR
             );
         }
@@ -88,7 +88,7 @@ public class BedWarsWorldManager {
         Vec3i headPos = bedPos.head();
 
         try {
-            Material bedMaterial = getBedMaterial(teamKey);
+            Material bedMaterial = teamKey.bedMaterial();
             String facing = calculateBedFacing(feetPos, headPos);
 
             Block footBlock = bedMaterial.block()
@@ -98,8 +98,8 @@ public class BedWarsWorldManager {
                 .withProperty("part", "head")
                 .withProperty("facing", facing);
 
-            instance.setBlock((int) feetPos.x(), (int) feetPos.y(), (int) feetPos.z(), footBlock);
-            instance.setBlock((int) headPos.x(), (int) headPos.y(), (int) headPos.z(), headBlock);
+            instance.setBlock(feetPos.x(), feetPos.y(), feetPos.z(), footBlock);
+            instance.setBlock(headPos.x(), headPos.y(), headPos.z(), headBlock);
 
             // Mark bed as alive in team
             game.getTeam(teamKey.name()).ifPresent(t -> t.setBedAlive(true));
@@ -107,19 +107,6 @@ public class BedWarsWorldManager {
         } catch (Exception e) {
             Logger.error("Error placing bed for team {}: {}", teamKey.getName(), e.getMessage());
         }
-    }
-
-    private Material getBedMaterial(TeamKey teamKey) {
-        return switch (teamKey) {
-            case RED -> Material.RED_BED;
-            case BLUE -> Material.BLUE_BED;
-            case GREEN -> Material.LIME_BED;
-            case YELLOW -> Material.YELLOW_BED;
-            case AQUA -> Material.CYAN_BED;
-            case WHITE -> Material.WHITE_BED;
-            case PINK -> Material.PINK_BED;
-            case GRAY -> Material.GRAY_BED;
-        };
     }
 
     private String calculateBedFacing(Vec3i feet, Vec3i head) {
@@ -157,7 +144,7 @@ public class BedWarsWorldManager {
                 shopNpc.register();
 
                 int npcEntityId = 10000 + teamKey.ordinal() * 2; // Generate unique entity ID
-                recordedShopNpcs.add(new RecordedShopNpc(
+                recordedShopNPCs.add(new RecordedShopNpc(
                     npcEntityId,
                     npcPos,
                     holograms,
@@ -183,7 +170,7 @@ public class BedWarsWorldManager {
                 teamNpc.register();
 
                 int npcEntityId = 10000 + teamKey.ordinal() * 2 + 1; // Generate unique entity ID
-                recordedShopNpcs.add(new RecordedShopNpc(
+                recordedShopNPCs.add(new RecordedShopNpc(
                     npcEntityId,
                     npcPos,
                     holograms,
@@ -327,10 +314,10 @@ public class BedWarsWorldManager {
     }
 
     public void recordShopNpcsForReplay() {
-        if (shopNpcsRecorded || !game.getReplayManager().isRecording()) {
+        if (shopNPCsRecorded || !game.getReplayManager().isRecording()) {
             return;
         }
-        for (RecordedShopNpc npc : recordedShopNpcs) {
+        for (RecordedShopNpc npc : recordedShopNPCs) {
             game.getReplayManager().recordShopNpc(
                 npc.entityId(),
                 npc.position(),
@@ -341,7 +328,7 @@ public class BedWarsWorldManager {
                 npc.replayTextureSignature()
             );
         }
-        shopNpcsRecorded = true;
+        shopNPCsRecorded = true;
     }
 
     private record ShopkeeperSources(BedWarsPlayer itemShopPlayer, BedWarsPlayer teamShopPlayer) {
