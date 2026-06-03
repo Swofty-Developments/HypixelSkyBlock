@@ -2,9 +2,11 @@ package net.swofty.type.theend;
 
 import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -44,10 +46,10 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> switch (type) {
-                    default -> new Pos(-503, 101, -275, 90, 0);
-                }, // Spawn position
-                true // Announce death messages
+            (type) -> switch (type) {
+                default -> new Pos(-503, 101, -275, 90, 0);
+            }, // Spawn position
+            true // Announce death messages
         );
     }
 
@@ -56,10 +58,10 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return new ArrayList<>(List.of(
-                        new SkyBlockPlayersOnlineModule(1),
-                        new SkyBlockPlayersOnlineModule(2),
-                        new TheEndServerModule(),
-                        new AccountInformationModule()
+                    new SkyBlockPlayersOnlineModule(1),
+                    new SkyBlockPlayersOnlineModule(2),
+                    new TheEndServerModule(),
+                    new AccountInformationModule()
                 ));
             }
         };
@@ -68,8 +70,8 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.theend.events",
-                HypixelEventClass.class
+            "net.swofty.type.theend.events",
+            HypixelEventClass.class
         ).collect(Collectors.toList());
     }
 
@@ -81,19 +83,21 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelNPC> getNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.theend.npcs",
-                HypixelNPC.class
+            "net.swofty.type.theend.npcs",
+            HypixelNPC.class
         ).toList());
     }
 
     @Override
     public @Nullable RegistryKey<DimensionType> getDimensionType() {
         return MinecraftServer.getDimensionTypeRegistry().register(
-                Key.key("skyblock:the_end"),
-                DimensionType.builder()
-                        .skybox(DimensionType.Skybox.END)
-                        .ambientLight(1f)
-                        .build());
+            Key.key("skyblock:the_end"),
+            DimensionType.builder()
+                .skybox(DimensionType.Skybox.END)
+                .ambientLight(1f)
+                // this is probably not the right colour for the end, and other attributes are missing for the end.
+                .setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE)
+                .build());
     }
 
 

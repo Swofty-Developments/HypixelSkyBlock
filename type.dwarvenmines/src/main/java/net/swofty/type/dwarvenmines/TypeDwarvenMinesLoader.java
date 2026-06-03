@@ -5,10 +5,12 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
@@ -49,33 +51,35 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
         Point gemstoneGrinderPos = new Pos(85.5, 199, -116.5);
 
         InteractionEntity gemstoneGrinder = new InteractionEntity(1.1f, 1.1f, (p, event) -> {
-           new GUIGemstoneGrinder().open(p);
+            new GUIGemstoneGrinder().open(p);
         });
-        TextDisplayEntity gemstoneGrinderText = new TextDisplayEntity(Component.text("Gemstone Grinder", NamedTextColor.LIGHT_PURPLE), meta -> {});
-        TextDisplayEntity gemstoneGrinderClick = new TextDisplayEntity(Component.text("CLICK").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD), meta -> {});
+        TextDisplayEntity gemstoneGrinderText = new TextDisplayEntity(Component.text("Gemstone Grinder", NamedTextColor.LIGHT_PURPLE), meta -> {
+        });
+        TextDisplayEntity gemstoneGrinderClick = new TextDisplayEntity(Component.text("CLICK").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD), meta -> {
+        });
 
         gemstoneGrinder.setInstance(HypixelConst.getInstanceContainer(), gemstoneGrinderPos);
         gemstoneGrinderText.setInstance(HypixelConst.getInstanceContainer(), gemstoneGrinderPos.add(0, 1.3, 0));
         gemstoneGrinderClick.setInstance(HypixelConst.getInstanceContainer(), gemstoneGrinderPos.add(0, 0.9, 0));
     }
 
-	@Override
-	public LoaderValues getLoaderValues() {
-		return new LoaderValues(
-				(_) -> new Pos(-48.5, 200, -121.5, -90, 0),
-				true
-		);
-	}
+    @Override
+    public LoaderValues getLoaderValues() {
+        return new LoaderValues(
+            (_) -> new Pos(-48.5, 200, -121.5, -90, 0),
+            true
+        );
+    }
 
     public TablistManager getTablistManager() {
         return new TablistManager() {
             @Override
             public List<TablistModule> getModules() {
                 return new ArrayList<>(List.of(
-                        new SkyBlockPlayersOnlineModule(1),
-                        new SkyBlockPlayersOnlineModule(2),
-                        new DwarvenMinesServerModule(),
-                        new AccountInformationModule()
+                    new SkyBlockPlayersOnlineModule(1),
+                    new SkyBlockPlayersOnlineModule(2),
+                    new DwarvenMinesServerModule(),
+                    new AccountInformationModule()
                 ));
             }
         };
@@ -84,8 +88,8 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
         return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.dwarvenmines.events",
-                HypixelEventClass.class
+            "net.swofty.type.dwarvenmines.events",
+            HypixelEventClass.class
         ).collect(Collectors.toList());
     }
 
@@ -97,8 +101,8 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
     @Override
     public List<HypixelNPC> getNPCs() {
         return new ArrayList<>(SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.dwarvenmines.npcs",
-                HypixelNPC.class
+            "net.swofty.type.dwarvenmines.npcs",
+            HypixelNPC.class
         ).toList());
     }
 
@@ -118,13 +122,14 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
         return CustomWorlds.SKYBLOCK_DWARVEN_MINES;
     }
 
-	@Override
-	public @Nullable RegistryKey<DimensionType> getDimensionType() {
-		return MinecraftServer.getDimensionTypeRegistry().register(
-				Key.key("skyblock:dwarven_mines"),
-				DimensionType.builder()
-						.ambientLight(1f)
-						.build());
-	}
+    @Override
+    public @Nullable RegistryKey<DimensionType> getDimensionType() {
+        return MinecraftServer.getDimensionTypeRegistry().register(
+            Key.key("skyblock:dwarven_mines"),
+            DimensionType.builder()
+                .ambientLight(1f)
+                .setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE)
+                .build());
+    }
 
 }

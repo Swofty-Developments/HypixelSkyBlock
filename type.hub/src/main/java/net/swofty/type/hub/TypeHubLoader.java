@@ -2,7 +2,6 @@ package net.swofty.type.hub;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.BlockVec;
@@ -226,6 +225,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 				.setAttribute(EnvironmentAttribute.FOG_END_DISTANCE, 1000f)
 				.setAttribute(EnvironmentAttribute.FOG_COLOR, new Color(0xc0d8ff))
 				.setAttribute(EnvironmentAttribute.SKY_COLOR, new Color(0x78a7ff))
+				.setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE)
 				.timelines(MinecraftServer.getTimelineRegistry().getTag(TagKey.ofHash("#minecraft:in_overworld")))
 				.skylight(true)
 				.build());
