@@ -1,6 +1,8 @@
 package net.swofty.commons.mc;
 
 
+import net.minestom.server.coordinate.BlockVec;
+
 public record Vec3i(int x, int y, int z) {
 
     public static Vec3i ZERO = new Vec3i(0, 0, 0);
@@ -31,6 +33,10 @@ public record Vec3i(int x, int y, int z) {
 
     public HypixelPosition asHypixelPosition() {
         return new HypixelPosition(x, y, z);
+    }
+
+    public BlockVec asBlockVec() {
+        return new BlockVec(x, y, z);
     }
 
 }

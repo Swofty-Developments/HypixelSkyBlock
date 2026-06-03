@@ -6,7 +6,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.GameMode;
@@ -44,7 +43,6 @@ import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.party.PartyManager;
-import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.*;
@@ -163,14 +161,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         return getTeam(teamKey.name())
             .map(team -> team.getUpgradeLevel(upgradeName))
             .orElse(0);
-    }
-
-    @Nullable
-    public String canAcceptPartyWarp() {
-        if (state != GameState.WAITING) {
-            return "Cannot warp as the game has already started";
-        }
-        return null;
     }
 
     public void onPlayerRejoin(BedWarsPlayer player, DisconnectedPlayerData data) {
@@ -316,10 +306,8 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 return;
             }
 
-            Point feetPoint = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
-            Point headPoint = new Pos(bedPos.head().x(), bedPos.head().y(), bedPos.head().z());
-            destroyer.getInstance().setBlock(feetPoint, Block.AIR);
-            destroyer.getInstance().setBlock(headPoint, Block.AIR);
+            destroyer.getInstance().setBlock(bedPos.feet().asBlockVec(), Block.AIR);
+            destroyer.getInstance().setBlock(bedPos.head().asBlockVec(), Block.AIR);
 
             // Record to replay
             if (replayManager.isRecording()) {
