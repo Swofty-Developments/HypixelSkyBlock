@@ -261,7 +261,7 @@ public class ItemStackCreator {
 	 *
 	 * @param name    the name of the item stack
 	 * @param texture the texture URL of the player skin
-	 * @param amount  the amount of items in the stack
+	 * @param amount  the number of items in the stack
 	 * @param lore    the lore of the item stack
 	 * @return an {@link ItemStack.Builder} for a player head with the specified properties
 	 */

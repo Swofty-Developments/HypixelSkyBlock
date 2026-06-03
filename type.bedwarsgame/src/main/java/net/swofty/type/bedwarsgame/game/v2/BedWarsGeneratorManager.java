@@ -32,7 +32,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BedWarsGeneratorManager {
     private final BedWarsGame game;
@@ -67,10 +67,6 @@ public class BedWarsGeneratorManager {
             // Start gold generator
             startTeamGenerator(teamKey, BedWarsMapsConfig.GlobalGeneratorKey.GOLD, generatorSpeed.getGoldAmount(),
                 generatorSpeed.getGoldDelaySeconds(), spawnPosition);
-
-            if (game.getGameType().isLuckyBlock()) {
-                startLuckyBlockGenerator(teamKey, spawnPosition);
-            }
         });
     }
 
@@ -83,6 +79,7 @@ public class BedWarsGeneratorManager {
             return;
         }
 
+        AtomicInteger spawnRound = new AtomicInteger();
         Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (game.getState() != GameState.IN_PROGRESS) return;
 
@@ -93,47 +90,24 @@ public class BedWarsGeneratorManager {
             if (finalAmount == 0 && baseAmount > 0 && multiplier > 1.0) finalAmount = 1;
 
             if (finalAmount > 0) {
-                spawnItem(itemMaterial, finalAmount, spawnPosition, Duration.ofMillis(500));
+                if (game.getGameType().isLuckyBlock()) {
+                    LuckyBlockTier tier = switch (spawnRound.getAndIncrement()) {
+                        case 4 -> LuckyBlockTier.NORMAL; // not official timing
+                        case 5 -> LuckyBlockTier.PROMISING;
+                        default -> null;
+                    };
+                    if (tier == null) return;
+
+                    LuckyBlockItem luckyBlock = (LuckyBlockItem) TypeBedWarsGameLoader.getItemHandler().getItem("lucky_block");
+                    spawnItem(luckyBlock.getItemStack(tier), 1, spawnPosition);
+                }
+                spawnItem(itemMaterial, finalAmount, spawnPosition);
             }
+
+            if (spawnRound.get() > 7) spawnRound.set(0); // not official timing
         }).delay(TaskSchedule.seconds(baseDelay)).repeat(TaskSchedule.seconds(baseDelay)).schedule();
 
         teamGeneratorTasks.computeIfAbsent(teamKey, _ -> new ArrayList<>()).add(task);
-    }
-
-    private void startLuckyBlockGenerator(TeamKey teamKey, Pos spawnPosition) {
-        Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
-            if (game.getState() != GameState.IN_PROGRESS) return;
-
-            long nearbyLuckyBlocks = game.getInstance().getNearbyEntities(spawnPosition, 2.0)
-                .stream()
-                .filter(ItemEntity.class::isInstance)
-                .map(ItemEntity.class::cast)
-                .filter(entity -> entity.getItemStack().get(net.minestom.server.component.DataComponents.CUSTOM_DATA) != null)
-                .filter(entity -> "lucky_block".equals(entity.getItemStack().get(net.minestom.server.component.DataComponents.CUSTOM_DATA).getTag(net.minestom.server.tag.Tag.String("item"))))
-                .count();
-            if (nearbyLuckyBlocks >= 2) {
-                return;
-            }
-
-            LuckyBlockTier tier = rollLuckyBlockTier();
-            LuckyBlockItem luckyBlock = (LuckyBlockItem) TypeBedWarsGameLoader.getItemHandler().getItem("lucky_block");
-            spawnItem(luckyBlock.getItemStack(tier), 1, spawnPosition, Duration.ofMillis(500));
-        }).delay(TaskSchedule.seconds(20)).repeat(TaskSchedule.seconds(20)).schedule();
-
-        teamGeneratorTasks.computeIfAbsent(teamKey, _ -> new ArrayList<>()).add(task);
-    }
-
-    // TODO: it's not like this, it's NORMAL and PROMISING on team generator
-    //  fortunate and offensive on diamond gen
-    //  miracle on emerald gen
-    //  and it's timed, not random whether it'll spawn. like every 4th normal spawn.
-    private LuckyBlockTier rollLuckyBlockTier() {
-        int roll = ThreadLocalRandom.current().nextInt(100);
-        if (roll < 58) return LuckyBlockTier.NORMAL;
-        if (roll < 78) return LuckyBlockTier.PROMISING;
-        if (roll < 91) return LuckyBlockTier.FORTUNATE;
-        if (roll < 98) return LuckyBlockTier.OFFENSIVE;
-        return LuckyBlockTier.MIRACLE;
     }
 
     public void startGlobalGenerators() {
@@ -189,14 +163,17 @@ public class BedWarsGeneratorManager {
         List<HypixelPosition> locations = config.getLocations();
         if (locations == null || locations.isEmpty()) return;
 
-        int delaySeconds = generatorType.equals(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND)
+        boolean isDiamond = generatorType.equals(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND);
+        int delaySeconds = isDiamond
             ? game.getGameEventManager().getCurrentPhase().getDiamondSpawnSeconds()
             : game.getGameEventManager().getCurrentPhase().getEmeraldSpawnSeconds();
+        int maxAmount = isDiamond
+            ? game.getMapEntry().getConfiguration().getGeneratorSpeed().diamondMax
+            : game.getMapEntry().getConfiguration().getGeneratorSpeed().emeraldMax;
 
         setupGlobalGeneratorDisplays(generatorType, locations, delaySeconds);
         generatorLimits.put(generatorType, new GeneratorLimits(
-            itemMaterial, config.getAmount(), config.getMax(), locations));
-
+            itemMaterial, 1, maxAmount, locations));
     }
 
     private void setupGlobalGeneratorDisplays(BedWarsMapsConfig.GlobalGeneratorKey generatorType, List<HypixelPosition> locations, int delaySeconds) {
@@ -277,9 +254,28 @@ public class BedWarsGeneratorManager {
                         .mapToLong(entity -> entity.getItemStack().amount())
                         .sum();
 
-                    if (currentItemCount < limits.maxAmount) {
-                        spawnItem(limits.material, limits.amount, spawnPos, Duration.ofSeconds(2));
+                    if (game.getGameType().isLuckyBlock()) {
+                        display.round++;
+
+                        if (display.round % 4 != 0) continue; // not official timing
+
+                        boolean isDiamond = type.equals(BedWarsMapsConfig.GlobalGeneratorKey.DIAMOND);
+                        boolean isEmerald = type.equals(BedWarsMapsConfig.GlobalGeneratorKey.EMERALD);
+
+                        LuckyBlockItem luckyBlock = (LuckyBlockItem) TypeBedWarsGameLoader.getItemHandler().getItem("lucky_block");
+                        if (isDiamond) {
+                            spawnItem(luckyBlock.getItemStack(LuckyBlockTier.FORTUNATE), 1, spawnPos);
+                            spawnItem(luckyBlock.getItemStack(LuckyBlockTier.OFFENSIVE), 1, spawnPos);
+                        }
+                        if (isEmerald) {
+                            spawnItem(luckyBlock.getItemStack(LuckyBlockTier.MIRACLE), 1, spawnPos);
+                        }
                     }
+
+                    if (currentItemCount < limits.maxAmount) {
+                        spawnItem(limits.material, limits.amount, spawnPos);
+                    }
+
                     display.countdown = display.maxCountdown;
                 }
             }
@@ -363,19 +359,16 @@ public class BedWarsGeneratorManager {
         }
     }
 
-    private void spawnItem(Material material, int amount, Pos position, Duration pickupDelay) {
-        spawnItem(ItemStack.of(material), amount, position, pickupDelay);
+    private void spawnItem(Material material, int amount, Pos position) {
+        spawnItem(ItemStack.of(material), amount, position);
     }
 
-    private void spawnItem(ItemStack stack, int amount, Pos position, Duration pickupDelay) {
+    private void spawnItem(ItemStack stack, int amount, Pos position) {
         ItemStack item = stack.withAmount(amount);
         ItemEntity entity = new ItemEntity(item);
-        entity.setPickupDelay(pickupDelay);
+        entity.setPickupDelay(Duration.ofMillis(500));
         entity.setInstance(game.getInstance(), position);
-
-        if (pickupDelay.equals(Duration.ofSeconds(2))) {
-            entity.setVelocity(new Vec(0, 0.1, 0));
-        }
+        entity.setVelocity(new Vec(0, 0.1, 0));
     }
 
     private Material getMaterialFromType(BedWarsMapsConfig.GlobalGeneratorKey type) {
@@ -418,6 +411,7 @@ public class BedWarsGeneratorManager {
         private final FloatingBlockEntity blockDisplay;
         private int maxCountdown;
         private int countdown;
+        private int round = 0;
 
         public GeneratorDisplay(TextDisplayEntity tierDisplay, TextDisplayEntity titleDisplay,
                                 TextDisplayEntity spawnDisplay, FloatingBlockEntity blockDisplay, int delay) {

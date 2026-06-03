@@ -3,6 +3,7 @@ package net.swofty.type.bedwarsgame.item.impl;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
+import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -28,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LuckyBlockItem extends SimpleInteractableItem {
     private static final Tag<String> TIER_TAG = Tag.String("lucky_tier");
     private static final Tag<Boolean> PLACED_LUCKY_BLOCK_TAG = Tag.Boolean("placed_lucky_block");
-    private static final Map<Instance, Map<BlockPoint, PlacedLuckyBlock>> PLACED_BLOCKS = new ConcurrentHashMap<>();
+    private static final Map<Instance, Map<BlockVec, PlacedLuckyBlock>> PLACED_BLOCKS = new ConcurrentHashMap<>();
 
     public LuckyBlockItem() {
         super("lucky_block");
@@ -41,7 +42,7 @@ public class LuckyBlockItem extends SimpleInteractableItem {
 
     public ItemStack getItemStack(LuckyBlockTier tier) {
         return stackForTier(tier, "§7Place, then break to open.")
-            .with(DataComponents.CUSTOM_NAME, Component.text("§e" + tier.displayName()))
+            .with(DataComponents.CUSTOM_NAME, Component.text(tier.displayName()))
             .with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder()
                 .putString("item", getId())
                 .putString("lucky_tier", tier.name())
@@ -66,7 +67,7 @@ public class LuckyBlockItem extends SimpleInteractableItem {
 
         Entity display = spawnHeadDisplay(player.getInstance(), position, tier);
         PLACED_BLOCKS.computeIfAbsent(player.getInstance(), _ -> new ConcurrentHashMap<>())
-            .put(BlockPoint.of(position), new PlacedLuckyBlock(tier, display));
+            .put(position.asBlockVec(), new PlacedLuckyBlock(tier, display));
 
         player.setItemInHand(PlayerHand.MAIN, stack.consume(1));
     }
@@ -75,8 +76,8 @@ public class LuckyBlockItem extends SimpleInteractableItem {
         if (!Boolean.TRUE.equals(block.getTag(PLACED_LUCKY_BLOCK_TAG))) {
             return false;
         }
-        BlockPoint key = BlockPoint.of(point);
-        Map<BlockPoint, PlacedLuckyBlock> placedBlocks = PLACED_BLOCKS.get(player.getInstance());
+        BlockVec key = point.asBlockVec();
+        Map<BlockVec, PlacedLuckyBlock> placedBlocks = PLACED_BLOCKS.get(player.getInstance());
         PlacedLuckyBlock placed = placedBlocks == null ? null : placedBlocks.remove(key);
         LuckyBlockTier tier = placed != null ? placed.tier() : readTier(block);
         if (placed != null && placed.display() != null) {
@@ -89,11 +90,7 @@ public class LuckyBlockItem extends SimpleInteractableItem {
     }
 
     private boolean canUse(BedWarsPlayer player) {
-        if (player.getGame() == null || !player.getGame().getGameType().isLuckyBlock()) {
-            player.sendMessage("§cLucky Blocks can only be opened in Lucky Block Bed Wars.");
-            return false;
-        }
-        return true;
+        return player.getGame() != null && player.getGame().getGameType().isLuckyBlock();
     }
 
     private static LuckyBlockTier readTier(ItemStack stack) {
@@ -133,11 +130,5 @@ public class LuckyBlockItem extends SimpleInteractableItem {
     }
 
     private record PlacedLuckyBlock(LuckyBlockTier tier, Entity display) {
-    }
-
-    private record BlockPoint(int x, int y, int z) {
-        static BlockPoint of(Point point) {
-            return new BlockPoint(point.blockX(), point.blockY(), point.blockZ());
-        }
     }
 }

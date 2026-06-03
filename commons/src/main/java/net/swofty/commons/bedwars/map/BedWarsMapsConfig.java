@@ -52,8 +52,6 @@ public class BedWarsMapsConfig {
             @Getter
             @Setter
             public static class GlobalGenerator {
-                private int amount;
-                private int max;
                 private List<HypixelPosition> locations; // maybe Vec3i
             }
 

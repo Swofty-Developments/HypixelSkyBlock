@@ -395,8 +395,6 @@
         },
         "globalGenerator": {
           "DIAMOND": {
-            "amount": 1,
-            "max": 4,
             "locations": [
               {
                 "x": -39.5,
@@ -429,8 +427,6 @@
             ]
           },
           "EMERALD": {
-            "amount": 1,
-            "max": 2,
             "locations": [
               {
                 "x": -11.5,
@@ -861,8 +857,6 @@
         },
         "globalGenerator": {
           "DIAMOND": {
-            "amount": 1,
-            "max": 4,
             "locations": [
               {
                 "x": -31.5,
@@ -895,8 +889,6 @@
             ]
           },
           "EMERALD": {
-            "amount": 1,
-            "max": 2,
             "locations": [
               {
                 "x": -11.5,
@@ -1327,8 +1319,6 @@
         },
         "globalGenerator": {
           "DIAMOND": {
-            "amount": 1,
-            "max": 4,
             "locations": [
               {
                 "x": -38.5,
@@ -1361,8 +1351,6 @@
             ]
           },
           "EMERALD": {
-            "amount": 1,
-            "max": 2,
             "locations": [
               {
                 "x": -10.5,
@@ -1793,8 +1781,6 @@
         },
         "globalGenerator": {
           "DIAMOND": {
-            "amount": 1,
-            "max": 4,
             "locations": [
               {
                 "x": -48.5,
@@ -1827,8 +1813,6 @@
             ]
           },
           "EMERALD": {
-            "amount": 1,
-            "max": 2,
             "locations": [
               {
                 "x": -6.5,
@@ -2083,8 +2067,6 @@
         },
         "globalGenerator": {
           "EMERALD": {
-            "amount": 1,
-            "max": 2,
             "locations": [
               {
                 "x": 0.5,
@@ -2103,8 +2085,6 @@
             ]
           },
           "DIAMOND": {
-            "amount": 1,
-            "max": 4,
             "locations": [
               {
                 "x": -42.5,

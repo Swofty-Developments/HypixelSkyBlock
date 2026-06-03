@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame.item.impl.lucky;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
@@ -35,7 +36,7 @@ public class MobLuckyReward extends LuckyReward {
     public void apply(BedWarsPlayer player, Pos openedAt) {
         for (int i = 0; i < count; i++) {
             EntityCreature mob = new EntityCreature(type);
-            mob.setCustomName(Component.text("§e" + name()));
+            mob.set(DataComponents.CUSTOM_NAME, Component.text("§e" + name()));
             mob.setCustomNameVisible(true);
             if (type == EntityType.ZOMBIE && name().contains("Baby") && mob.getEntityMeta() instanceof ZombieMeta meta) {
                 meta.setBaby(true);
