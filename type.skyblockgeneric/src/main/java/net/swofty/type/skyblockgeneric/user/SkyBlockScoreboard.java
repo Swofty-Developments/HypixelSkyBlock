@@ -97,8 +97,11 @@ public class SkyBlockScoreboard {
                 } else {
                     lines.add(I18n.t("scoreboard.skyblock.purse_line",
                         Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()))));
-                    lines.add(I18n.t("scoreboard.skyblock.bits_line",
-                        Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()))));
+                    Integer bits = dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue();
+                    if (bits != null && bits > 0) {
+                        lines.add(I18n.t("scoreboard.skyblock.bits_line",
+                            Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()))));
+                    }
 
                     if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())
                         && DarkAuctionHandler.getLocalState() != null

@@ -163,6 +163,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 		Furniture.load("hexatorum");
 		Furniture.load("rune_table");
 		Furniture.load("pufferfish", new Pos(115.5, 70, -30.5));
+		Furniture.load("hub_swords", new Pos(-52.5, 69.25, -85.5));
 
 		new InteractionEntity(1.1f, 1.1f, (player, _) -> {
 			final SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;

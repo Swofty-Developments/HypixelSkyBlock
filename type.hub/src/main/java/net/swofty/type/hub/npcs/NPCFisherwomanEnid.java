@@ -1,10 +1,16 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.jspecify.annotations.NonNull;
+
+import java.util.Map;
 
 public class NPCFisherwomanEnid extends HypixelNPC {
 
@@ -33,6 +39,13 @@ public class NPCFisherwomanEnid extends HypixelNPC {
             @Override
             public boolean looking(HypixelPlayer player) {
                 return true;
+            }
+
+            @Override
+            public @NonNull Map<EquipmentSlot, ItemStack> equipment(HypixelPlayer player) {
+                return Map.of(
+                    EquipmentSlot.MAIN_HAND, ItemStack.of(Material.FISHING_ROD)
+                );
             }
         });
     }
