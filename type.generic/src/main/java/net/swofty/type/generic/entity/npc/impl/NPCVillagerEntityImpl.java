@@ -4,19 +4,24 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.VillagerProfession;
 import net.minestom.server.entity.VillagerType;
 import net.minestom.server.entity.metadata.villager.VillagerMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable {
@@ -60,6 +65,18 @@ public class NPCVillagerEntityImpl extends EntityCreature implements NPCViewable
     public void remove() {
         super.remove();
         PlayerHolograms.removeExternalPlayerHologram(holo);
+    }
+
+    @Override
+    public void updateNewViewer(@NonNull Player player) {
+        super.updateNewViewer(player);
+
+        Map<EquipmentSlot, ItemStack> equipment = config.equipment((HypixelPlayer) player);
+        if (equipment != null) {
+            for (Map.Entry<EquipmentSlot, ItemStack> entry : equipment.entrySet()) {
+                syncEntityEquipment(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     /**

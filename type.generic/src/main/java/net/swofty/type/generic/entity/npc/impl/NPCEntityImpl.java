@@ -4,12 +4,14 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.Metadata;
 import net.minestom.server.entity.MetadataDef;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.avatar.MannequinMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -97,6 +99,13 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
 
         if (player.getUuid() != viewer.getUuid()) {
             Logger.warn("Player {} is viewing NPC {} but is not the intended viewer", player.getUsername(), getUuid());
+        }
+
+        Map<EquipmentSlot, ItemStack> equipment = config.equipment((HypixelPlayer) player);
+        if (equipment != null) {
+            for (Map.Entry<EquipmentSlot, ItemStack> entry : equipment.entrySet()) {
+                syncEntityEquipment(entry.getKey(), entry.getValue());
+            }
         }
     }
 

@@ -2,10 +2,14 @@ package net.swofty.type.generic.entity.npc.configuration;
 
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityPose;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 public interface NPCConfiguration {
 
@@ -36,5 +40,10 @@ public interface NPCConfiguration {
 
     default boolean shouldDisplayHolograms(HypixelPlayer player) {
         return true;
+    }
+
+    @Nullable
+    default Map<EquipmentSlot, ItemStack> equipment(HypixelPlayer player) {
+        return null;
     }
 }
