@@ -89,7 +89,7 @@ public class VanillaFallFeature implements FallFeature, RegistrableFeature {
 
     public void handleFallDamage(LivingEntity entity, Pos currPos, Pos newPos, boolean onGround) {
         double dy = newPos.y() - currPos.y();
-        double fallDistance = getFallDistance(entity);
+        double newFallDistance = getFallDistance(entity) - dy;
 
         if ((entity instanceof Player player && player.isFlying())
             || entity.hasEffect(PotionEffect.LEVITATION)
@@ -104,16 +104,16 @@ public class VanillaFallFeature implements FallFeature, RegistrableFeature {
         }
 
         if (!onGround) {
-            if (dy < 0) entity.setTag(FALL_DISTANCE, fallDistance - dy);
+            if (dy < 0) entity.setTag(FALL_DISTANCE, newFallDistance);
             return;
         }
 
         Point landingPos = getLandingPos(entity, newPos);
         Block block = entity.getInstance().getBlock(landingPos);
 
-        if (entity.hasTag(EXTRA_FALL_PARTICLES) && entity.getTag(EXTRA_FALL_PARTICLES) && fallDistance > 0.0) {
+        if (entity.hasTag(EXTRA_FALL_PARTICLES) && entity.getTag(EXTRA_FALL_PARTICLES) && newFallDistance > 0.0) {
             Vec position = landingPos.asVec().apply(Vec.Operator.FLOOR).add(0.5, 1, 0.5);
-            int particleCount = (int) Math.clamp(50 * fallDistance, 0, 200);
+            int particleCount = (int) Math.clamp(50 * newFallDistance, 0, 200);
 
             packetProvider.sendPacket(
                 entity,
@@ -129,9 +129,9 @@ public class VanillaFallFeature implements FallFeature, RegistrableFeature {
         }
 
         double safeFallDistance = entity.getAttributeValue(Attribute.SAFE_FALL_DISTANCE);
-        if (fallDistance > safeFallDistance) {
+        if (newFallDistance > safeFallDistance) {
             if (!block.isAir()) {
-                double damageDistance = Math.ceil(fallDistance - safeFallDistance);
+                double damageDistance = Math.ceil(newFallDistance - safeFallDistance);
                 double particleMultiplier = Math.min(0.2 + damageDistance / 15.0, 2.5);
                 int particleCount = (int) (150 * particleMultiplier);
 
@@ -151,7 +151,7 @@ public class VanillaFallFeature implements FallFeature, RegistrableFeature {
         entity.setTag(FALL_DISTANCE, 0.0);
 
         if (entity instanceof Player player && player.getGameMode().invulnerable()) return;
-        int damage = getFallDamage(entity, fallDistance);
+        int damage = getFallDamage(entity, newFallDistance);
         if (damage > 0) {
             playFallSound(entity, damage);
             entity.damage(DamageType.FALL, damage);
@@ -177,7 +177,7 @@ public class VanillaFallFeature implements FallFeature, RegistrableFeature {
     @Override
     public int getFallDamage(LivingEntity entity, double fallDistance) {
         double safeFallDistance = entity.getAttributeValue(Attribute.SAFE_FALL_DISTANCE);
-        return (int) Math.ceil((fallDistance - safeFallDistance) * entity.getAttributeValue(Attribute.FALL_DAMAGE_MULTIPLIER));
+        return (int) Math.floor((fallDistance + 1.0e-6 - safeFallDistance) * entity.getAttributeValue(Attribute.FALL_DAMAGE_MULTIPLIER));
     }
 
     @Override

@@ -144,7 +144,7 @@ public class VanillaBlockFeature implements BlockFeature {
 	}
 
 	protected void disableShield(Player player) {
-		itemCooldownFeature.setCooldown(player, Material.SHIELD, 100);
+		itemCooldownFeature.setCooldown(player, Material.SHIELD.name(), 100);
 
 		// Shield disable status
 		player.triggerStatus((byte) 30);

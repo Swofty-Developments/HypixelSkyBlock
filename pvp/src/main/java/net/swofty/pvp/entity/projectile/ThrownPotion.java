@@ -3,13 +3,19 @@ package net.swofty.pvp.entity.projectile;
 import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.*;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.LivingEntity;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.metadata.item.LingeringPotionMeta;
 import net.minestom.server.entity.metadata.item.SplashPotionMeta;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.PotionContents;
+import net.minestom.server.particle.Particle;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.worldevent.WorldEvent;
+import net.swofty.pvp.entity.AreaEffectCloud;
 import net.swofty.pvp.feature.effect.EffectFeature;
 import net.swofty.pvp.utils.EffectUtil;
 import org.jetbrains.annotations.NotNull;
@@ -50,15 +56,16 @@ public class ThrownPotion extends CustomEntityProjectile implements ItemHoldingP
 		PotionContents potionContents = item.get(DataComponents.POTION_CONTENTS);
 		List<Potion> potions = effectFeature.getAllPotions(potionContents);
 
+		Pos position = getPosition();
 		if (!potions.isEmpty()) {
 			if (lingering) {
-				//TODO lingering
+				AreaEffectCloud areaEffectCloud = new AreaEffectCloud(600, 3.0f, Particle.ENTITY_EFFECT, -0.005f, -0.5f,
+					20, 0, 10, potionContents, null, effectFeature);
+				areaEffectCloud.setInstance(getInstance(), position);
 			} else {
 				applySplash(potionContents, entity);
 			}
 		}
-
-		Pos position = getPosition();
 
 		boolean instantEffect = false;
 		for (Potion potion : potions) {

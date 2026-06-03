@@ -131,7 +131,7 @@ public class VanillaPotionFeature implements PotionFeature, RegistrableFeature {
                 position.x(), position.y(), position.z()
             );
 
-            throwPotion(event.getPlayer(), event.getItemStack(), event.getHand());
+            throwPotion(event.getPlayer(), event.getItemStack(), event.getHand(), false);
         });
 
         node.addListener(PlayerUseItemEvent.class, event -> {
@@ -147,16 +147,16 @@ public class VanillaPotionFeature implements PotionFeature, RegistrableFeature {
                 event.getPlayer().getPosition().x(), event.getPlayer().getPosition().y(), event.getPlayer().getPosition().z()
             );
 
-            throwPotion(event.getPlayer(), event.getItemStack(), event.getHand());
+            throwPotion(event.getPlayer(), event.getItemStack(), event.getHand(), true);
         });
     }
 
-    protected void throwPotion(Player player, ItemStack stack, PlayerHand hand) {
-        ThrownPotion thrownPotion = new ThrownPotion(player, effectFeature, false);
+    protected void throwPotion(Player player, ItemStack stack, PlayerHand hand, boolean lingering) {
+        ThrownPotion thrownPotion = new ThrownPotion(player, effectFeature, lingering);
         thrownPotion.setItem(stack);
 
         Pos position = player.getPosition().add(0, player.getEyeHeight(), 0);
-        thrownPotion.shootFromRotation(position.pitch(), position.yaw(), -20, 0.5, 1.0);
+        thrownPotion.shootFromRotation(position.pitch(), position.yaw(), -20, 0.5, 1.0, 0.0);
         thrownPotion.setInstance(Objects.requireNonNull(player.getInstance()), position.withView(thrownPotion.getPosition()));
 
         Vec playerVel = player.getVelocity();
