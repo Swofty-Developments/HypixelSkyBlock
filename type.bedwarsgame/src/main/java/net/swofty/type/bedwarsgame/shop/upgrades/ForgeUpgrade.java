@@ -12,6 +12,7 @@ import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 import net.swofty.type.game.game.GameState;
 import org.tinylog.Logger;
@@ -22,7 +23,7 @@ import java.util.List;
 public class ForgeUpgrade extends TeamUpgrade {
 	public ForgeUpgrade() {
 		super(
-				"forge",
+			TeamUpgradeId.FORGE,
 				"Forge Upgrade",
 				"Upgrade resource spawning on your island.",
 				ItemStack.of(Material.FURNACE),
@@ -62,7 +63,7 @@ public class ForgeUpgrade extends TeamUpgrade {
 		var emeraldTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
 			if (game.getState() != GameState.IN_PROGRESS) return;
 
-			int currentForgeLevel = game.getTeamUpgradeLevel(teamKey, "forge");
+			int currentForgeLevel = game.getTeamUpgradeLevel(teamKey, TeamUpgradeId.FORGE);
 			double multiplier = 1.0;
 			if (currentForgeLevel >= 4) {
 				multiplier = 3.0; // +200%

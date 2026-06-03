@@ -10,13 +10,14 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 public class MinerFatigueTrap extends Trap {
 
 	public MinerFatigueTrap() {
 		super(
-				"miner_fatigue_trap",
+			TrapId.MINER_FATIGUE,
 				"Miner Fatigue Trap",
 				ItemStack.of(Material.IRON_PICKAXE),
 				"Inflicts Mining Fatigue II for 10s.",
@@ -29,4 +30,3 @@ public class MinerFatigueTrap extends Trap {
 		triggerer.getAttribute(Attribute.MINING_EFFICIENCY).addModifier(new AttributeModifier(Key.key("bw:miner_fatigue"), -0.6, AttributeOperation.ADD_MULTIPLIED_TOTAL));
 	}
 }
-

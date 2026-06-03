@@ -1,7 +1,6 @@
 package net.swofty.type.bedwarsgame.item.impl.lucky;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.tag.Tag;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -26,10 +25,10 @@ public class RandomTeamUpgradeLuckyReward extends LuckyReward {
         }
         TeamUpgrade upgrade = upgrades.get(ThreadLocalRandom.current().nextInt(upgrades.size()));
         int nextLevel = Objects.requireNonNull(upgrade.getNextTier(player.getGame(), player.getTeamKey())).getLevel();
-        player.getGame().getTeam(player.getTeamKey().name()).ifPresent(team -> team.setUpgradeLevel(upgrade.getKey(), nextLevel));
+        player.getGame().getTeam(player.getTeamKey().name()).ifPresent(team -> team.setUpgradeLevel(upgrade.getId(), nextLevel));
         upgrade.applyEffect(player.getGame(), player.getTeamKey(), nextLevel);
         player.getGame().getPlayersOnTeam(player.getTeamKey()).forEach(teammate -> {
-            teammate.setTag(Tag.Integer("upgrade_" + upgrade.getKey()), nextLevel);
+            teammate.setTag(upgrade.getId().levelTag(), nextLevel);
             teammate.sendMessage("§aLucky Block upgraded §6" + upgrade.getName() + " " + nextLevel + "§a!");
         });
     }

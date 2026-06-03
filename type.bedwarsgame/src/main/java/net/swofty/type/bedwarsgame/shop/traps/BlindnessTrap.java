@@ -8,13 +8,14 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 public class BlindnessTrap extends Trap {
 
 	public BlindnessTrap() {
 		super(
-				"blindness_trap",
+			TrapId.BLINDNESS,
 				"Blindness Trap",
 				ItemStack.of(Material.TRIPWIRE_HOOK),
 				"Blinds intruders for 10 seconds.",
@@ -27,4 +28,3 @@ public class BlindnessTrap extends Trap {
 		triggerer.addEffect(new Potion(PotionEffect.BLINDNESS, (byte) 1, 200));
 	}
 }
-

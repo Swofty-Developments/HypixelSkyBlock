@@ -30,6 +30,8 @@ import net.swofty.type.bedwarsgame.BedWarsGameScoreboard;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.custom.BedDestroyedEvent;
 import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.shop.impl.AxeShopItem;
 import net.swofty.type.bedwarsgame.shop.impl.PickaxeShopItem;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -143,7 +145,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     /**
      * Gets team traps for a team.
      */
-    public List<String> getTeamTraps(TeamKey teamKey) {
+    public List<TrapId> getTeamTraps(TeamKey teamKey) {
         return getTeam(teamKey.name())
             .map(BedWarsTeam::getTraps)
             .orElse(List.of());
@@ -153,13 +155,13 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         respawnHandler.equipTeamArmor(player, teamKey);
     }
 
-    public void addTeamTrap(TeamKey teamKey, String trapKey) {
-        getTeam(teamKey.name()).ifPresent(team -> team.addTrap(trapKey));
+    public void addTeamTrap(TeamKey teamKey, TrapId trapId) {
+        getTeam(teamKey.name()).ifPresent(team -> team.addTrap(trapId));
     }
 
-    public int getTeamUpgradeLevel(TeamKey teamKey, String upgradeName) {
+    public int getTeamUpgradeLevel(TeamKey teamKey, TeamUpgradeId upgradeId) {
         return getTeam(teamKey.name())
-            .map(team -> team.getUpgradeLevel(upgradeName))
+            .map(team -> team.getUpgradeLevel(upgradeId))
             .orElse(0);
     }
 
@@ -238,19 +240,19 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         // equip the player with team armor
         equipTeamArmor(player, teamKey);
 
-        Integer protectionLevel = player.getTag(Tag.Integer("upgrade_reinforced_armor"));
+        Integer protectionLevel = player.getTag(TeamUpgradeId.REINFORCED_ARMOR.levelTag());
         if (protectionLevel != null) {
-            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("reinforced_armor").applyEffect(this, teamKey, protectionLevel);
+            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade(TeamUpgradeId.REINFORCED_ARMOR).applyEffect(this, teamKey, protectionLevel);
         }
 
-        Integer cushionedBootsLevel = player.getTag(Tag.Integer("upgrade_cushioned_boots"));
+        Integer cushionedBootsLevel = player.getTag(TeamUpgradeId.CUSHIONED_BOOTS.levelTag());
         if (cushionedBootsLevel != null) {
-            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("cushioned_boots").applyEffect(this, teamKey, cushionedBootsLevel);
+            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade(TeamUpgradeId.CUSHIONED_BOOTS).applyEffect(this, teamKey, cushionedBootsLevel);
         }
 
-        Integer sharpnessLevel = player.getTag(Tag.Integer("upgrade_sharpness"));
+        Integer sharpnessLevel = player.getTag(TeamUpgradeId.SHARPNESS.levelTag());
         if (sharpnessLevel != null) {
-            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(this, teamKey, sharpnessLevel);
+            TypeBedWarsGameLoader.getTeamShopManager().getUpgrade(TeamUpgradeId.SHARPNESS).applyEffect(this, teamKey, sharpnessLevel);
         }
     }
 

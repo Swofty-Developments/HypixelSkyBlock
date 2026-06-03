@@ -16,6 +16,7 @@ import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 import net.swofty.type.bedwarsgame.shop.Trap;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
@@ -185,8 +186,9 @@ public class GUITeamShop extends StatelessView {
 
         int trapSize = game.getTeamTraps(teamKey).size();
         if (trapSize >= 3) {
-            player.sendMessage("§cYou can't have more traps than 3");
+            player.sendMessage("§cYou can't have more traps than 3!");
             playClickSound(player);
+            return;
         }
 
         Trap trap = traps.get(index);
@@ -202,7 +204,7 @@ public class GUITeamShop extends StatelessView {
         }
 
         BedWarsInventoryManipulator.removeItems(player, trap.getCurrency().getMaterial(), price);
-        game.addTeamTrap(teamKey, trap.getKey());
+        game.addTeamTrap(teamKey, trap.getId());
         broadcastTeamPurchase(game, teamKey, player, trap.getName());
         playBuySound(player);
         ctx.session(DefaultState.class).refresh();
@@ -256,12 +258,9 @@ public class GUITeamShop extends StatelessView {
                 .customName(noItalic(Component.text("No Game").color(NamedTextColor.RED)));
         }
 
-        List<String> queued = game.getTeamTraps(teamKey);
+        List<TrapId> queued = game.getTeamTraps(teamKey);
         if (index < queued.size()) {
-            Trap trap = traps.stream()
-                .filter(tr -> tr.getKey().equals(queued.get(index)))
-                .findFirst()
-                .orElse(null);
+            Trap trap = trapManager.getTrap(queued.get(index));
             if (trap != null) {
                 return ItemStack.builder(Material.GRAY_STAINED_GLASS_PANE)
                     .customName(noItalic(Component.text("Trap #" + (index + 1) + ": " + trap.getName())

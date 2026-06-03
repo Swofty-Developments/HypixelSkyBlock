@@ -10,6 +10,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class SharpenedSwordUpgrade extends TeamUpgrade {
 
 	public SharpenedSwordUpgrade() {
 		super(
-				"sharpness",
+			TeamUpgradeId.SHARPNESS,
 				"Sharpened Swords",
 				"Your team permanently gains Sharpness on all swords and axes!",
 				ItemStack.of(Material.IRON_SWORD),
@@ -44,4 +45,3 @@ public class SharpenedSwordUpgrade extends TeamUpgrade {
 				.forEach(player -> enchantItems(player, level));
 	}
 }
-

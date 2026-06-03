@@ -18,14 +18,14 @@ import java.util.Set;
 
 @Getter
 public abstract class Trap {
-	private final String key;
+	private final TrapId id;
 	private final String name;
 	private final ItemStack displayItem;
 	private final String description;
 	private final Currency currency;
 
-	public Trap(String key, String name, ItemStack displayItem, String description, Currency currency) {
-		this.key = key;
+	public Trap(TrapId id, String name, ItemStack displayItem, String description, Currency currency) {
+		this.id = id;
 		this.name = name;
 		this.displayItem = displayItem;
 		this.description = description;
@@ -40,7 +40,7 @@ public abstract class Trap {
 	 * @param triggerer the player who triggered the trap
 	 */
 	public void trigger(BedWarsGame game, BedWarsMapsConfig.TeamKey teamKey, BedWarsPlayer triggerer) {
-		game.getTeam(teamKey.name()).ifPresent(team -> team.removeTrap(getKey()));
+		game.getTeam(teamKey.name()).ifPresent(team -> team.removeTrap(id));
 
 		// Notify all team members
 		game.getPlayers().stream()
@@ -80,4 +80,3 @@ public abstract class Trap {
 		return displayItem.with(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, Set.of()));
 	}
 }
-

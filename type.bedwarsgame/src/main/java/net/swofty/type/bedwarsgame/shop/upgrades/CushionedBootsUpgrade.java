@@ -12,6 +12,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class CushionedBootsUpgrade extends TeamUpgrade {
 	public CushionedBootsUpgrade() {
 		super(
-				"cushioned_boots",
+			TeamUpgradeId.CUSHIONED_BOOTS,
 				"Cushioned Boots",
 				"Your team permanently gains Feather Falling enchantment on boots.",
 				ItemStack.of(Material.IRON_BOOTS),

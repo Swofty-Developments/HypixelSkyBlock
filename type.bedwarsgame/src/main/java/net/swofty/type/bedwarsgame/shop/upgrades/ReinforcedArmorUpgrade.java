@@ -10,6 +10,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ReinforcedArmorUpgrade extends TeamUpgrade {
 
 	public ReinforcedArmorUpgrade() {
 		super(
-				"reinforced_armor",
+			TeamUpgradeId.REINFORCED_ARMOR,
 				"Reinforced Armor",
 				"Your team permanently gains Protection on all armor pieces!",
 				ItemStack.of(Material.IRON_CHESTPLATE),
@@ -45,4 +46,3 @@ public class ReinforcedArmorUpgrade extends TeamUpgrade {
 				.forEach(player -> enchantArmor(player, level));
 	}
 }
-

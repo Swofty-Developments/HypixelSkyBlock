@@ -8,13 +8,14 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.Trap;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 
 public class CounterOffensiveTrap extends Trap {
 
 	public CounterOffensiveTrap() {
 		super(
-				"counter_offensive_trap",
+			TrapId.COUNTER_OFFENSIVE,
 				"Counter-Offensive Trap",
 				ItemStack.of(Material.FEATHER),
 				"Grants Speed II to your team for 10s when onTrigger.",
@@ -29,4 +30,3 @@ public class CounterOffensiveTrap extends Trap {
 				.forEach(p -> p.addEffect(new Potion(PotionEffect.SPEED, (byte) 1, 200)));
 	}
 }
-

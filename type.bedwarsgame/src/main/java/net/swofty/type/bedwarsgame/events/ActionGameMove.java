@@ -10,6 +10,7 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.item.impl.LuckyBlockTrap;
 import net.swofty.type.bedwarsgame.item.impl.LuckyEquipmentEffects;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
@@ -73,7 +74,7 @@ public class ActionGameMove implements HypixelEventClass {
 
 			Point bedLocation = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
 			if (playerPos.distance(bedLocation) <= 10) {
-				List<String> teamTraps = game.getTeamTraps(teamKey);
+				List<TrapId> teamTraps = game.getTeamTraps(teamKey);
 				if (teamTraps.isEmpty()) {
 					continue;
 				}

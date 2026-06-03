@@ -7,25 +7,30 @@ import net.swofty.type.bedwarsgame.shop.traps.MinerFatigueTrap;
 import net.swofty.type.bedwarsgame.shop.traps.RevealTrap;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class TrapManager {
 
 	@Getter
 	private final List<Trap> traps = new ArrayList<>();
+	private final Map<TrapId, Trap> trapsById = new EnumMap<>(TrapId.class);
 
 	public TrapManager() {
-		traps.add(new BlindnessTrap());
-		traps.add(new CounterOffensiveTrap());
-		traps.add(new RevealTrap());
-		traps.add(new MinerFatigueTrap());
+		register(new BlindnessTrap());
+		register(new CounterOffensiveTrap());
+		register(new RevealTrap());
+		register(new MinerFatigueTrap());
 	}
 
-	public Trap getTrap(String key) {
-		return traps.stream()
-				.filter(trap -> trap.getKey().equalsIgnoreCase(key))
-				.findFirst()
-				.orElse(null);
+	public Trap getTrap(TrapId id) {
+		return trapsById.get(id);
+	}
+
+	private void register(Trap trap) {
+		traps.add(trap);
+		trapsById.put(trap.getId(), trap);
 	}
 
 }

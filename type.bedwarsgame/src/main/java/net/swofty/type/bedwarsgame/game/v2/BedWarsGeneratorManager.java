@@ -22,6 +22,7 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.entity.TextDisplayEntity;
 import net.swofty.type.bedwarsgame.item.impl.LuckyBlockItem;
 import net.swofty.type.bedwarsgame.item.impl.LuckyBlockTier;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.entity.FloatingBlockEntity;
 import org.tinylog.Logger;
@@ -83,7 +84,7 @@ public class BedWarsGeneratorManager {
         Task task = MinecraftServer.getSchedulerManager().buildTask(() -> {
             if (game.getState() != GameState.IN_PROGRESS) return;
 
-            int forgeLevel = game.getTeamUpgradeLevel(teamKey, "forge");
+            int forgeLevel = game.getTeamUpgradeLevel(teamKey, TeamUpgradeId.FORGE);
             double multiplier = calculateForgeMultiplier(itemMaterial, forgeLevel);
 
             int finalAmount = (int) Math.round(baseAmount * multiplier);

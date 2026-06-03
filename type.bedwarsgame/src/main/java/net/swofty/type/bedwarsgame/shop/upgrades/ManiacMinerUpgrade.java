@@ -12,6 +12,7 @@ import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class ManiacMinerUpgrade extends TeamUpgrade {
 
 	public ManiacMinerUpgrade() {
 		super(
-				"maniac_miner",
+			TeamUpgradeId.MANIAC_MINER,
 				"Maniac Miner",
 				"All players on your team permanently gain Haste.",
 				ItemStack.of(Material.GOLDEN_PICKAXE),
@@ -43,4 +44,3 @@ public class ManiacMinerUpgrade extends TeamUpgrade {
 				.forEach(player -> giveHaste(player, level));
 	}
 }
-

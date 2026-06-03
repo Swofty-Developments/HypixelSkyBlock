@@ -3,10 +3,12 @@ package net.swofty.type.bedwarsgame.game.v2;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.game.game.team.SimpleGameTeam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +18,9 @@ public class BedWarsTeam extends SimpleGameTeam {
     @Setter
     private boolean bedAlive = false;
 
-    // TODO: enum?
-    private final Map<String, Integer> upgrades = new HashMap<>();
+    private final Map<TeamUpgradeId, Integer> upgrades = new EnumMap<>(TeamUpgradeId.class);
 
-    // TODO: enum?
-    private final List<String> traps = new ArrayList<>();
+    private final List<TrapId> traps = new ArrayList<>();
 
     public BedWarsTeam(TeamKey teamKey) {
         super(teamKey.name(), teamKey.getName(), teamKey.chatColor());
@@ -40,28 +40,28 @@ public class BedWarsTeam extends SimpleGameTeam {
      *
      * @return The upgrade level, or 0 if not purchased
      */
-    public int getUpgradeLevel(String upgradeName) {
-        return upgrades.getOrDefault(upgradeName, 0);
+    public int getUpgradeLevel(TeamUpgradeId upgradeId) {
+        return upgrades.getOrDefault(upgradeId, 0);
     }
 
-    public void setUpgradeLevel(String upgradeName, int level) {
-        upgrades.put(upgradeName, level);
+    public void setUpgradeLevel(TeamUpgradeId upgradeId, int level) {
+        upgrades.put(upgradeId, level);
     }
 
     public void destroyBed() {
         this.bedAlive = false;
     }
 
-    public void addTrap(String trapKey) {
-        traps.add(trapKey);
+    public void addTrap(TrapId trapId) {
+        traps.add(trapId);
     }
 
-    public void removeTrap(String trapKey) {
-        traps.remove(trapKey);
+    public void removeTrap(TrapId trapId) {
+        traps.remove(trapId);
     }
 
-    public boolean hasTrap(String trapKey) {
-        return traps.contains(trapKey);
+    public boolean hasTrap(TrapId trapId) {
+        return traps.contains(trapId);
     }
 
     public int getTrapCount() {

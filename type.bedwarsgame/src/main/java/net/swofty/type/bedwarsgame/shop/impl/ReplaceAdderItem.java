@@ -1,12 +1,12 @@
 package net.swofty.type.bedwarsgame.shop.impl;
 
 import net.minestom.server.item.Material;
-import net.minestom.server.tag.Tag;
 import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.ShopItem;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import org.jetbrains.annotations.Nullable;
@@ -62,9 +62,9 @@ public class ReplaceAdderItem extends ShopItem {
 		}
 
 		giveItem(player, getDisplay());
-		if (player.hasTag(Tag.Integer("upgrade_sharpness"))) {
+		if (player.hasTag(TeamUpgradeId.SHARPNESS.levelTag())) {
 			BedWarsGame game = player.getGame();
-			TypeBedWarsGameLoader.getTeamShopManager().getUpgrade("sharpness").applyEffect(game, player.getTeamKey(), player.getTag(Tag.Integer("upgrade_sharpness")));
+			TypeBedWarsGameLoader.getTeamShopManager().getUpgrade(TeamUpgradeId.SHARPNESS).applyEffect(game, player.getTeamKey(), player.getTag(TeamUpgradeId.SHARPNESS.levelTag()));
 		}
 	}
 

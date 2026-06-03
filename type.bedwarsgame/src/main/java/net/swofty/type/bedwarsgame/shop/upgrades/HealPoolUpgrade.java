@@ -12,6 +12,7 @@ import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
@@ -22,7 +23,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 
 	public HealPoolUpgrade() {
 		super(
-				"heal_pool",
+			TeamUpgradeId.HEAL_POOL,
 				"Heal Pool",
 				"Your team permanently gains a heal pool at your base.",
 				ItemStack.of(Material.BEACON),
