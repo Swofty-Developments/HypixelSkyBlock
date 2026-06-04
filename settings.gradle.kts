@@ -40,6 +40,7 @@ include(":type.skywarsgame")
 include(":type.skywarsconfigurator")
 include(":type.ravengardgeneric")
 include(":type.ravengardlobby")
+include(":type.mainlobby")
 
 include(":service.auctionhouse")
 include(":service.bazaar")
