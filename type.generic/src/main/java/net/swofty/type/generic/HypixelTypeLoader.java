@@ -39,7 +39,11 @@ public interface HypixelTypeLoader {
 
     List<TypedProxyHandler<?, ?>> getTypedProxyHandlers();
 
-    record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) {}
+    record LoaderValues(Function<ServerType, Pos> spawnPosition, boolean announceDeathMessages) {
+        public LoaderValues(Pos spawnPosition, boolean announceDeathMessages) {
+            this(_ -> spawnPosition, announceDeathMessages);
+        }
+    }
 
     @Nullable CustomWorlds getMainInstance();
 

@@ -23,7 +23,7 @@ public class MainLobbyParkour implements Parkour {
     @Override
     public List<Point> getCheckpoints() {
         return List.of(
-            new BlockVec(-82, 90, -3),
+            new BlockVec(-82, 90, -33),
             new BlockVec(-188, 79, -39),
             new BlockVec(-161, 89, -30),
             new BlockVec(-143, 102, -10),

@@ -26,12 +26,17 @@ public enum LobbyDestination {
     SKYBLOCK(
         ServerType.SKYBLOCK_HUB,
         Set.of("sb", "skyblock", "hub"),
-        Set.of()
+        Set.of(ServerType.PROTOTYPE_LOBBY)
     ),
     PROTOTYPE(
         ServerType.PROTOTYPE_LOBBY,
         Set.of("prototype", "proto", "ptl"),
         Set.of(ServerType.PROTOTYPE_LOBBY, ServerType.REPLAY_VIEWER)
+    ),
+    MAIN_LOBBY(
+        ServerType.MAIN_LOBBY,
+        Set.of("main"),
+        Set.of(ServerType.MAIN_LOBBY)
     ),
     RAVENGARD(
         ServerType.RAVENGARD_LOBBY,
