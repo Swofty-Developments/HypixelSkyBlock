@@ -10,10 +10,10 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.BedWarsModeStats;
 import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
 import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
-import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeRenderer;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
@@ -77,7 +77,7 @@ public class BedWarsLobbyScoreboard {
 				lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
 				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.level_line",
-					Component.text(BedwarsLevelColor.constructLevelString(BedwarsLevelUtil.calculateLevel(experience)))));
+                    Component.text(BedWarsPrestigeRenderer.renderString(player, BedwarsLevelUtil.calculateLevel(experience)))));
 				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.progress_line",
 					Component.text(suffix(progress)),

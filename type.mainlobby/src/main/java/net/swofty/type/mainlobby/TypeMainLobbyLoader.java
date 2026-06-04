@@ -39,7 +39,7 @@ import net.swofty.type.lobby.parkour.LobbyParkourManager;
 import net.swofty.type.lobby.parkour.Parkour;
 import net.swofty.type.mainlobby.item.impl.Collectibles;
 import net.swofty.type.mainlobby.parkour.MainLobbyParkour;
-import net.swofty.type.mainlobby.tab.BedWarsPlayersOnlineModule;
+import net.swofty.type.mainlobby.tab.MainLobbyPlayersOnlineModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -129,10 +129,10 @@ public class TypeMainLobbyLoader implements LobbyTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                    new BedWarsPlayersOnlineModule(1),
-                    new BedWarsPlayersOnlineModule(2),
-                    new BedWarsPlayersOnlineModule(3),
-                    new BedWarsPlayersOnlineModule(4)
+                    new MainLobbyPlayersOnlineModule(1),
+                    new MainLobbyPlayersOnlineModule(2),
+                    new MainLobbyPlayersOnlineModule(3),
+                    new MainLobbyPlayersOnlineModule(4)
                 );
             }
         };

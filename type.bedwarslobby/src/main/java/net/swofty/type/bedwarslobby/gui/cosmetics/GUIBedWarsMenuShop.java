@@ -14,7 +14,7 @@ public class GUIBedWarsMenuShop extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("Bed Wars Menu & Shop", InventoryType.CHEST_4_ROW);
+        return new ViewConfiguration<>("Bed Wars Menu", InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -22,27 +22,32 @@ public class GUIBedWarsMenuShop extends StatelessView {
         Components.close(layout, 31);
 
         layout.slot(11, ItemStackCreator.getStack(
-            "§aBed Wars Cosmetics",
+            "§3The Slumber Hotel",
+            Material.SAND,
+            1,
+            "§7Progress through the hotel to earn",
+            "§7more §drewards§7, §bxp§7, and new §acosmetics§7!",
+            "",
+            "§eClick to open!"
+        ), (_, c) -> c.player().notImplemented());
+        layout.slot(13, ItemStackCreator.getStack(
+            "§aMy Cosmetics",
             Material.ARMOR_STAND,
             1,
-            "§7Browse your unlocked Bed Wars",
-            "§7cosmetics, or buy them directly with",
-            "§7Tokens."
+            "§7Browse and equip all the available",
+            "§7in-game Bed Wars cosmetics.",
+            "",
+            "§eClick to browse!"
         ), (_, c) -> {
             c.push(new GUIMyCosmetics());
         });
-        layout.slot(13, ItemStackCreator.getStack(
-            "§aSlumber Inventory",
-            Material.CHEST,
-            1,
-            "§7Click to view your Slumber Hotel",
-            "§7progress & quest log."
-        ), (_, c) -> c.player().notImplemented());
         layout.slot(15, ItemStackCreator.getStack(
-            "§aBed Wars Settings",
+            "§aGame Settings",
             Material.COMPARATOR,
             1,
-            "§7Adjust game settings for Bed Wars."
+            "§7Adjust game settings for Bed Wars.",
+            "",
+            "§eClick to open!"
         ), (_, c) -> c.player().notImplemented());
     }
 }

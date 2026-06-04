@@ -1,14 +1,9 @@
 package net.swofty.type.mainlobby.tab;
 
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.StringUtility;
-import net.swofty.commons.bedwars.BedwarsLevelColor;
-import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
@@ -19,10 +14,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class BedWarsPlayersOnlineModule extends TablistModule {
+public class MainLobbyPlayersOnlineModule extends TablistModule {
     public int page;
 
-    public BedWarsPlayersOnlineModule(int page) {
+    public MainLobbyPlayersOnlineModule(int page) {
         this.page = page;
     }
 
@@ -57,24 +52,9 @@ public class BedWarsPlayersOnlineModule extends TablistModule {
             }
 
             HypixelPlayer tablistPlayer = toShow.get(x);
-            String displayName = getFullDisplayName(tablistPlayer);
-
-            entries.add(new TablistEntry(displayName, TablistSkinRegistry.GRAY));
+            entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
         }
 
         return entries;
-    }
-
-    private String getFullDisplayName(HypixelPlayer player) {
-        BedWarsDataHandler bedWarsDataHandler = BedWarsDataHandler.getUser(player);
-        if (bedWarsDataHandler == null) {
-            return player.getRank().getPrefix() + StringUtility.getTextFromComponent(player.getName());
-        }
-
-        long experience = bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue();
-        int level = BedwarsLevelUtil.calculateLevel(experience);
-
-        String levelPrefix = BedwarsLevelColor.constructLevelBrackets(level) + " ";
-        return levelPrefix + player.getRank().getPrefix() + StringUtility.getTextFromComponent(player.getName());
     }
 }

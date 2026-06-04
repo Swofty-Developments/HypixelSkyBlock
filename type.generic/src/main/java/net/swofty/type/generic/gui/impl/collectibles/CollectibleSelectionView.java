@@ -113,6 +113,12 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
             lore.addAll(descriptionLore);
         }
 
+        List<Component> previewLore = previewLore(player, item);
+        if (!previewLore.isEmpty()) {
+            lore.add(Component.empty());
+            lore.addAll(previewLore);
+        }
+
         if (isPreviewSupported(player, item)) {
             lore.add(Component.empty());
             lore.add(legacy("§eRight-Click to preview!"));
@@ -147,7 +153,7 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
             }
 
             String reason = check.reason() != null ? check.reason() : "§cLocked.";
-            lore.add(legacy(reason));
+            lore.addAll(legacyLines(reason));
 
             if (showInsufficientTokens) {
                 lore.add(Component.empty());
@@ -272,6 +278,10 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         return false;
     }
 
+    protected List<Component> previewLore(HypixelPlayer player, CollectibleDefinition definition) {
+        return List.of();
+    }
+
     protected boolean isFavorite(HypixelPlayer player, CollectibleDefinition definition) {
         return false;
     }
@@ -295,7 +305,28 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
         boolean ownedFirst,
         HypixelPlayer player
     ) {
-        Comparator<CollectibleDefinition> baseComparator = switch (sortMode) {
+        Comparator<CollectibleDefinition> baseComparator = baseComparator(sortMode);
+        Map<String, Boolean> selectableById = new HashMap<>();
+        Map<String, Boolean> pinnedById = new HashMap<>();
+        for (CollectibleDefinition definition : items) {
+            selectableById.put(definition.id(), selectionCheck(player, definition).selectable());
+            pinnedById.put(definition.id(), isPinnedDefault(player, definition));
+        }
+
+        Comparator<CollectibleDefinition> comparator = Comparator
+            .comparing((CollectibleDefinition definition) -> !pinnedById.getOrDefault(definition.id(), false));
+
+        if (ownedFirst && shouldGroupOwnedFirst(sortMode)) {
+            comparator = comparator.thenComparing((CollectibleDefinition definition) -> !selectableById.getOrDefault(definition.id(), false));
+        }
+
+        comparator = comparator.thenComparing(baseComparator);
+
+        return items.stream().sorted(comparator).toList();
+    }
+
+    protected Comparator<CollectibleDefinition> baseComparator(SortMode sortMode) {
+        return switch (sortMode) {
             case HIGHEST_RARITY_FIRST -> Comparator
                 .comparingInt((CollectibleDefinition definition) -> rarityWeight(definition.rarity()))
                 .reversed()
@@ -309,24 +340,10 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
                 .comparing(CollectibleDefinition::name, String.CASE_INSENSITIVE_ORDER)
                 .thenComparingInt(CollectibleDefinition::sortIndex);
         };
+    }
 
-        Map<String, Boolean> selectableById = new HashMap<>();
-        Map<String, Boolean> pinnedById = new HashMap<>();
-        for (CollectibleDefinition definition : items) {
-            selectableById.put(definition.id(), selectionCheck(player, definition).selectable());
-            pinnedById.put(definition.id(), isPinnedDefault(player, definition));
-        }
-
-        Comparator<CollectibleDefinition> comparator = Comparator
-            .comparing((CollectibleDefinition definition) -> !pinnedById.getOrDefault(definition.id(), false));
-
-        if (ownedFirst) {
-            comparator = comparator.thenComparing((CollectibleDefinition definition) -> !selectableById.getOrDefault(definition.id(), false));
-        }
-
-        comparator = comparator.thenComparing(baseComparator);
-
-        return items.stream().sorted(comparator).toList();
+    protected boolean shouldGroupOwnedFirst(SortMode sortMode) {
+        return true;
     }
 
     protected boolean isPinnedDefault(HypixelPlayer player, CollectibleDefinition definition) {
@@ -339,6 +356,18 @@ public abstract class CollectibleSelectionView extends StatefulPaginatedView<Col
 
     private Component legacy(String text) {
         return LEGACY.deserialize(text);
+    }
+
+    protected List<Component> legacyLines(String text) {
+        if (text == null || text.isBlank()) {
+            return List.of();
+        }
+        String[] lines = text.replace("\r\n", "\n").replace('\r', '\n').split("\n", -1);
+        List<Component> components = new ArrayList<>();
+        for (String line : lines) {
+            components.add(legacy(line));
+        }
+        return components;
     }
 
     private boolean isCostReason(String reason) {

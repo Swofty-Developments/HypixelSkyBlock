@@ -2,6 +2,9 @@ package net.swofty.type.generic.collectibles;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
+import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
+import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
@@ -51,7 +54,24 @@ public final class CollectibleEvaluator {
                 }
                 yield CollectibleSelectionCheck.blocked(defaultReason(requirement, "Locked."));
             }
+            case BEDWARS_LEVEL -> {
+                int requiredLevel = requirement.cost() == null ? 0 : requirement.cost().intValue();
+                if (bedWarsLevel(player) >= requiredLevel) {
+                    yield CollectibleSelectionCheck.allowed();
+                }
+                yield CollectibleSelectionCheck.blocked(defaultReason(requirement, "§c§l!! §r§cYou must be level "
+                    + NUMBER_FORMAT.format(requiredLevel) + " to use this\n§cprestige!"));
+            }
         };
+    }
+
+    private static int bedWarsLevel(HypixelPlayer player) {
+        BedWarsDataHandler handler = BedWarsDataHandler.getUser(player);
+        if (handler == null) {
+            return 0;
+        }
+        long experience = handler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue();
+        return BedwarsLevelUtil.calculateLevel(experience);
     }
 
     private static String defaultReason(CollectibleUnlockRequirement requirement, String fallback) {

@@ -12,6 +12,8 @@ import net.swofty.type.generic.collectibles.CollectibleGamemode;
 import net.swofty.type.generic.collectibles.CollectibleRarity;
 import net.swofty.type.generic.collectibles.CollectibleUnlockMethod;
 import net.swofty.type.generic.collectibles.CollectibleUnlockRequirement;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeDefinitions;
+import net.swofty.type.generic.collectibles.bedwars.prestige.PrestigeCollectibleFactory;
 import net.swofty.type.generic.user.categories.Rank;
 import org.tinylog.Logger;
 
@@ -97,6 +99,12 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
             registerCategory(category);
             categorySettings.put(category, CategorySettings.DEFAULT);
         }
+        categorySettings.put(CollectibleCategory.PRESTIGE_SCHEMES, new CategorySettings(
+            true, true, BedWarsPrestigeDefinitions.DEFAULT_SCHEME_ID, null));
+        categorySettings.put(CollectibleCategory.PRESTIGE_STARS, new CategorySettings(
+            true, true, BedWarsPrestigeDefinitions.DEFAULT_STAR_ID, null));
+        categorySettings.put(CollectibleCategory.PRESTIGE_BRACKETS, new CategorySettings(
+            true, true, BedWarsPrestigeDefinitions.DEFAULT_BRACKET_ID, null));
 
         if (!CATALOG_FILE.exists()) {
             Logger.warn("BedWars collectibles configuration not found: {}", CATALOG_FILE.getAbsolutePath());
@@ -115,8 +123,19 @@ public final class BedWarsCollectibleCatalog extends CollectibleCatalog {
             Logger.error(exception, "Failed parsing BedWars collectibles from {}", CATALOG_FILE.getAbsolutePath());
         }
 
+        registerPrestigeDefinitions();
         sortAll();
         Logger.info("Loaded {} BedWars collectibles from {}", getAll().size(), CATALOG_FILE.getAbsolutePath());
+    }
+
+    private void registerPrestigeDefinitions() {
+        for (CollectibleDefinition definition : PrestigeCollectibleFactory.definitions()) {
+            try {
+                register(definition);
+            } catch (IllegalArgumentException exception) {
+                Logger.warn(exception, "Skipping duplicate BedWars prestige collectible '{}'", definition.id());
+            }
+        }
     }
 
     private void parseCategories(Object categoriesRaw) {

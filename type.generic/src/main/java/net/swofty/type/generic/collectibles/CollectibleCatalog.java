@@ -20,12 +20,9 @@ public abstract class CollectibleCatalog {
     }
 
     protected void register(CollectibleDefinition definition) {
-        if (byId.containsKey(definition.id())) {
-            throw new IllegalArgumentException("Duplicate collectible id: " + definition.id());
-        }
-
         registerCategory(definition.category());
-        byId.put(definition.id(), definition);
+        byId.put(scopedId(definition.category(), definition.id()), definition);
+        byId.putIfAbsent(definition.id(), definition);
         byCategory.get(definition.category()).add(definition);
     }
 
@@ -43,15 +40,23 @@ public abstract class CollectibleCatalog {
         return Optional.ofNullable(byId.get(id));
     }
 
+    public Optional<CollectibleDefinition> findById(CollectibleCategory category, String id) {
+        return Optional.ofNullable(byId.get(scopedId(category, id))).or(() -> findById(id));
+    }
+
     public List<CollectibleDefinition> getByCategory(CollectibleCategory category) {
         return List.copyOf(byCategory.getOrDefault(category, List.of()));
     }
 
     public Collection<CollectibleDefinition> getAll() {
-        return List.copyOf(byId.values());
+        return byCategory.values().stream().flatMap(List::stream).toList();
     }
 
     public Set<CollectibleCategory> getKnownCategories() {
         return EnumSet.copyOf(knownCategories);
+    }
+
+    private String scopedId(CollectibleCategory category, String id) {
+        return category.name() + ":" + id;
     }
 }

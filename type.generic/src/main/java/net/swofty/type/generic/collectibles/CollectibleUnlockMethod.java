@@ -7,7 +7,8 @@ public enum CollectibleUnlockMethod {
     RANK,
     MANUAL,
     CURRENCY,
-    CUSTOM;
+    CUSTOM,
+    BEDWARS_LEVEL;
 
     public static CollectibleUnlockMethod fromString(String value, CollectibleUnlockMethod fallback) {
         if (value == null || value.isBlank()) {

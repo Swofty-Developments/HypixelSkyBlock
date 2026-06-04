@@ -3,10 +3,12 @@ package net.swofty.type.bedwarslobby.gui.cosmetics;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.generic.collectibles.CollectibleCategory;
 import net.swofty.type.generic.collectibles.CollectibleDefinition;
 import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
 import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleStateService;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeRenderer;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -31,7 +33,7 @@ public class GUIMyCosmetics extends StatelessView {
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         BedWarsCollectibleCatalog.initialize();
 
-        layout.slot(10, ItemStackCreator.getStack(
+        layout.slot(26, ItemStackCreator.getStack(
             "§aProjectile Trails ",
             Material.ARROW,
             1,
@@ -44,7 +46,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(12, ItemStackCreator.getStackHead(
+        layout.slot(32, ItemStackCreator.getStackHead(
             "§aVictory Dances ",
             "73480592266dd7f53681efeee3188af531eea53da4af583a67617deeb4f473",
             1,
@@ -58,7 +60,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(14, ItemStackCreator.getStack(
+        layout.slot(16, ItemStackCreator.getStack(
             "§aFinal Kill Effects ",
             Material.IRON_SWORD,
             1,
@@ -72,7 +74,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(16, ItemStackCreator.getStack(
+        layout.slot(30, ItemStackCreator.getStack(
             "§aSprays ",
             Material.FILLED_MAP,
             1,
@@ -87,7 +89,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(19, ItemStackCreator.getStackHead(
+        layout.slot(20, ItemStackCreator.getStackHead(
             "§aIsland Toppers ",
             "d55b1aa95fdb777179a4bb9c92f116d787eddc97b9b8c1666256eedf2d6b35",
             1,
@@ -102,7 +104,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(21, ItemStackCreator.getStackHead(
+        layout.slot(12, ItemStackCreator.getStackHead(
             "§aDeath Cries ",
             "b371e4e1cf6a1a36fdae27137fd9b8748e6169299925f9af2be301e54298c73",
             1,
@@ -116,7 +118,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(23, (_, c) -> {
+        layout.slot(28, (_, c) -> {
             CosmeticSummary summary = summarize(c.player(), CollectibleCategory.SHOPKEEPER_SKINS);
             return ItemStackCreator.getStackHead(
                 "§aShopkeeper Skins ",
@@ -136,7 +138,7 @@ public class GUIMyCosmetics extends StatelessView {
                 "§eClick to view!"
             );
         }, (_, context) -> context.push(new GUIShopkeeperSkins()));
-        layout.slot(25, ItemStackCreator.getStack(
+        layout.slot(22, ItemStackCreator.getStack(
             "§aKill Messages ",
             Material.OAK_SIGN,
             1,
@@ -150,7 +152,26 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(28, ItemStackCreator.getStack(
+        layout.slot(24, (_, c) -> {
+            BedWarsDataHandler dataHandler = BedWarsDataHandler.getUser(c.player());
+            int level = dataHandler == null
+                ? 0
+                : BedwarsLevelUtil.calculateLevel(
+                dataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue());
+            return ItemStackCreator.getStack(
+                "§aPrestige Customizer",
+                Material.NAME_TAG,
+                1,
+                "§7Choose the colors, star, and",
+                "§7brackets of your prestige!",
+                "",
+                "§7Currently Selected:",
+                BedWarsPrestigeRenderer.renderBrackets(c.player(), level),
+                "",
+                "§eClick to view!"
+            );
+        }, (_, context) -> context.push(new GUIPrestigeCustomizer()));
+        layout.slot(18, ItemStackCreator.getStack(
             "§aGlyphs ",
             Material.DIAMOND,
             1,
@@ -164,7 +185,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(30, ItemStackCreator.getStack(
+        layout.slot(10, ItemStackCreator.getStack(
             "§aBed Destroys ",
             Material.RED_BED,
             1,
@@ -178,7 +199,7 @@ public class GUIMyCosmetics extends StatelessView {
             "",
             "§eClick to view!"
         ));
-        layout.slot(32, (_, c) -> {
+        layout.slot(34, (_, c) -> {
             CosmeticSummary summary = summarize(c.player(), CollectibleCategory.WOOD_SKINS);
             return ItemStackCreator.getStack(
                 "§aWood Skins ",
@@ -193,7 +214,7 @@ public class GUIMyCosmetics extends StatelessView {
                 "§eClick to view!"
             );
         }, (_, context) -> context.push(new GUIWoodSkins()));
-        layout.slot(34, ItemStackCreator.getStack(
+        layout.slot(14, ItemStackCreator.getStack(
             "§aFigurines ",
             Material.ARMOR_STAND,
             1,

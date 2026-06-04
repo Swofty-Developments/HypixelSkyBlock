@@ -4,19 +4,18 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.bedwars.BedWarsModeStats;
 import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
 import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
-import net.swofty.commons.bedwars.BedwarsLevelColor;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.bedwarslobby.gui.GUIBedWarsStatistics;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeRenderer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsModeStats;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import static net.swofty.commons.bedwars.BedwarsLevelUtil.suffix;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCStats extends HypixelNPC {
 
@@ -42,7 +41,7 @@ public class NPCStats extends HypixelNPC {
 				}
 				return new String[]{
 						"§6§lBed Wars Profile",
-						"§fYour Level: " + BedwarsLevelColor.constructLevelBrackets(level),
+					"§fYour Level: " + BedWarsPrestigeRenderer.renderBrackets(player, level),
 						"§fProgress: §b" + suffix(progress) + "§7/§a" + suffix(maxExperience),
 						"§fAchievements: §e" + 0 + "§a/" + 0,
 						"§fTotal Wins: §a" + suffix(totalWins),

@@ -1,10 +1,13 @@
 package net.swofty.type.generic.collectibles;
 
+import lombok.Getter;
+
 import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
+@Getter
 public enum CollectibleCategory {
     PROJECTILE_TRAILS("Projectile Trails"),
     VICTORY_DANCES("Victory Dances"),
@@ -17,7 +20,10 @@ public enum CollectibleCategory {
     GLYPHS("Glyphs"),
     BED_DESTROYS("Bed Destroys"),
     WOOD_SKINS("Wood Skins"),
-    FIGURINES("Figurines");
+    FIGURINES("Figurines"),
+    PRESTIGE_SCHEMES("Prestige Schemes"),
+    PRESTIGE_STARS("Prestige Stars"),
+    PRESTIGE_BRACKETS("Prestige Brackets");
 
     private static final EnumSet<CollectibleCategory> BEDWARS_CATEGORIES = EnumSet.of(
         PROJECTILE_TRAILS,
@@ -31,17 +37,16 @@ public enum CollectibleCategory {
         GLYPHS,
         BED_DESTROYS,
         WOOD_SKINS,
-        FIGURINES
+        FIGURINES,
+        PRESTIGE_SCHEMES,
+        PRESTIGE_STARS,
+        PRESTIGE_BRACKETS
     );
 
     private final String displayName;
 
     CollectibleCategory(String displayName) {
         this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     public static Optional<CollectibleCategory> fromKey(String key) {

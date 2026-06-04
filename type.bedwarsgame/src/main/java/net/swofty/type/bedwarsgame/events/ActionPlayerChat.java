@@ -2,13 +2,11 @@ package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.bedwars.BedWarsGameType;
-import net.swofty.commons.bedwars.BedwarsLevelColor;
-import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.chat.StaffChat;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeRenderer;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
-import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
@@ -78,20 +76,15 @@ public class ActionPlayerChat implements HypixelEventClass {
 		}
 
 		List<BedWarsPlayer> receivers;
-		if (game.getGameType() == BedWarsGameType.ONE_EIGHT) {
+		if (game.getGameType() == BedWarsGameType.ONE_EIGHT || game.getGameType() == BedWarsGameType.ONE_BLOCK) {
 			receivers = new ArrayList<>(game.getPlayers());
 		} else {
 			receivers = game.getPlayersOnTeam(player.getTeamKey());
 		}
 
-		String levelPrefix = BedwarsLevelColor.constructLevelBrackets(
-				BedwarsLevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue())
-		) + " ";
+		String levelPrefix = BedWarsPrestigeRenderer.renderBrackets(player) + " ";
 		String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
-		receivers.forEach(onlinePlayer -> {
-			onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage);
-		});
+		receivers.forEach(onlinePlayer -> onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage));
 	}
 }
-

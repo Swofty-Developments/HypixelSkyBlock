@@ -124,6 +124,9 @@ public class DatapointCollectibles extends Datapoint<DatapointCollectibles.Colle
             Map<String, String> selectedByCategory = new HashMap<>();
             selectedByCategory.put(CollectibleCategory.WOOD_SKINS.name(), "oak_plank");
             selectedByCategory.put(CollectibleCategory.SHOPKEEPER_SKINS.name(), "blacksmith");
+            selectedByCategory.put(CollectibleCategory.PRESTIGE_SCHEMES.name(), "prestige_scheme_diamond");
+            selectedByCategory.put(CollectibleCategory.PRESTIGE_STARS.name(), "prestige_star_default");
+            selectedByCategory.put(CollectibleCategory.PRESTIGE_BRACKETS.name(), "prestige_bracket_none");
 
             return new CollectiblesState(
                 unlockedByCategory,
