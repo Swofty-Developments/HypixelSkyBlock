@@ -40,7 +40,6 @@ import com.viaversion.viaversion.commands.ViaCommandHandler;
 import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoop;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -563,10 +562,12 @@ public class SkyBlockVelocity {
         final ConnectedPlayer connectedPlayer = (ConnectedPlayer) player;
         final Channel channel = connectedPlayer.getConnection().getChannel();
 
-        try (EventLoop loop = channel.eventLoop()) {
-            loop.submit(() -> {
+        // do not listen to the IDE and close the event loop; that will, indeed, close the event loop.
+        // noinspection resource
+        channel.eventLoop().submit(() -> {
+            if (channel.pipeline().get("PACKET") != null) {
                 channel.pipeline().remove("PACKET");
-            });
-        }
+            }
+        });
     }
 }
