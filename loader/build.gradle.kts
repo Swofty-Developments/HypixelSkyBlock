@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":type.skywarsconfigurator"))
     implementation(project(":type.ravengardgeneric"))
     implementation(project(":type.ravengardlobby"))
+    implementation(project(":type.mainlobby"))
 
     implementation(project(":type.replayviewer"))
 

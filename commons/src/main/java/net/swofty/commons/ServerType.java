@@ -21,6 +21,7 @@ public enum ServerType {
 	PROTOTYPE_LOBBY(false),
 	BEDWARS_LOBBY(false),
 	BEDWARS_GAME(false),
+	MAIN_LOBBY(false),
 	BEDWARS_CONFIGURATOR(false),
 	MURDER_MYSTERY_LOBBY(false),
 	MURDER_MYSTERY_GAME(false),

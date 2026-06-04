@@ -41,6 +41,7 @@ include(":type.skywarsgame")
 include(":type.skywarsconfigurator")
 include(":type.ravengardgeneric")
 include(":type.ravengardlobby")
+include(":type.mainlobby")
 
 include(":type.replayviewer")
 include(":service.auctionhouse")

@@ -87,6 +87,9 @@ public class BalanceConfigurations {
         Map.entry(ServerType.BEDWARS_CONFIGURATOR, List.of(
             new LowestPlayerCount()
         )),
+        Map.entry(ServerType.MAIN_LOBBY, List.of(
+            new LowestPlayerCount()
+        )),
         Map.entry(ServerType.MURDER_MYSTERY_CONFIGURATOR, List.of(
             new LowestPlayerCount()
         )),

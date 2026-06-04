@@ -28,6 +28,7 @@ public class DatapointParkourData extends Datapoint<Map<DatapointParkourData.Par
         PROTOTYPE_LOBBY,
         MURDER_MYSTERY_LOBBY,
         SKYWARS_LOBBY,
-        BED_WARS_LOBBY
+        BED_WARS_LOBBY,
+        MAIN_LOBBY,
     }
 }
