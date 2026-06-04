@@ -44,6 +44,7 @@ build/
 /configuration/hypixel_skywars_lobby/
 /configuration/skyblock/garden/
 *.polar
+/configuration/*.schem
 
 ### Logs ###
 /configuration/logs/

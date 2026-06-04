@@ -83,7 +83,7 @@ PicoLimbo handles the limbo state:
 2. Edit the `server.toml` which you can find in the repository configuration folder:
    - Set `method="MODERN"`
    - Set `secret="YOUR_SECRET"` (or FORWARDING_SECRET environment variable by default)
-3. Move the `limbo.polar` file to the same directory, or set polar_file to empty: `polar_file=""`
+3. Move the `limbo.schem` file to the same directory, or set schematic_file to empty: `schematic_file=""`
 4. Keep it running in the background
 
 ### 6. Start a Game Server
