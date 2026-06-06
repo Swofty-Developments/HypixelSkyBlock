@@ -91,7 +91,9 @@ public class ActionGamePlace implements HypixelEventClass {
 			}
 		}
 		event.setBlock(placedBlock);
-		player.getAchievementHandler().addProgressByTrigger("bedwars.blocks_placed", 1);
+        if (player.allowsPersistentProgress()) {
+            player.getAchievementHandler().addProgressByTrigger("bedwars.blocks_placed", 1);
+        }
 	}
 
 }

@@ -67,4 +67,22 @@ public class BedWarsTeam extends SimpleGameTeam {
     public int getTrapCount() {
         return traps.size();
     }
+
+    public void swapState(BedWarsTeam other) {
+        boolean previousBedAlive = bedAlive;
+        bedAlive = other.bedAlive;
+        other.bedAlive = previousBedAlive;
+
+        Map<TeamUpgradeId, Integer> previousUpgrades = new EnumMap<>(upgrades);
+        upgrades.clear();
+        upgrades.putAll(other.upgrades);
+        other.upgrades.clear();
+        other.upgrades.putAll(previousUpgrades);
+
+        List<TrapId> previousTraps = new ArrayList<>(traps);
+        traps.clear();
+        traps.addAll(other.traps);
+        other.traps.clear();
+        other.traps.addAll(previousTraps);
+    }
 }

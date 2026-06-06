@@ -42,8 +42,10 @@ public class GameEndListener implements HypixelEventClass {
             // Record win
             event.team().ifPresent(team -> {
                 if (team.hasPlayer(player.getUuid())) {
-                    BedWarsStatsRecorder.recordWin(player, game.getGameType());
-                    player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
+                    if (player.allowsPersistentProgress()) {
+                        BedWarsStatsRecorder.recordWin(player, game.getGameType());
+                        player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
+                    }
                 }
             });
 
@@ -55,6 +57,7 @@ public class GameEndListener implements HypixelEventClass {
 
         game.getGeneratorManager().stopAllGenerators();
         game.getGameEventManager().stop();
+        game.getSwappageManager().stop();
 
         Logger.info("Ending game " + gameId);
         game.end();

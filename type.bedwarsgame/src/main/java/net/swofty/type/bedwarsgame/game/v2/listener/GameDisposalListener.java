@@ -18,6 +18,7 @@ public class GameDisposalListener implements HypixelEventClass {
         TypeBedWarsGameLoader.getGames().removeIf(game -> game.getGameId().equals(event.gameId()));
 
         if (disposedGame != null) {
+            disposedGame.getSwappageManager().stop();
             unregisterInstanceWhenEmpty(disposedGame, 0);
         }
     }

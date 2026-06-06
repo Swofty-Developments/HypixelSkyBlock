@@ -44,6 +44,7 @@ import net.swofty.type.game.game.GameState;
 import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.party.PartyManager;
 import org.tinylog.Logger;
 
@@ -61,6 +62,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     private final BedWarsRespawnHandler respawnHandler;
     private final BedWarsGameEventManager gameEventManager;
     private final BedWarsReplayManager replayManager;
+    private final SwappageManager swappageManager;
 
     private final Map<TeamKey, Map<Integer, ItemStack>> teamChests = new EnumMap<>(TeamKey.class);
     private final Map<UUID, Map<Integer, ItemStack>> enderChests = new HashMap<>();
@@ -90,6 +92,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         this.worldManager = new BedWarsWorldManager(this);
         this.respawnHandler = new BedWarsRespawnHandler(this);
         this.gameEventManager = new BedWarsGameEventManager(this);
+        this.swappageManager = new SwappageManager(this);
 
         // Initialize replay with service connection
         ProxyService replayService = new ProxyService(ServiceType.REPLAY);
@@ -157,6 +160,14 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     public void addTeamTrap(TeamKey teamKey, TrapId trapId) {
         getTeam(teamKey.name()).ifPresent(team -> team.addTrap(trapId));
+    }
+
+    public void swapTeamState(BedWarsTeam first, BedWarsTeam second) {
+        first.swapState(second);
+        Map<Integer, ItemStack> firstChest = teamChests.remove(first.getTeamKey());
+        Map<Integer, ItemStack> secondChest = teamChests.remove(second.getTeamKey());
+        if (secondChest != null) teamChests.put(first.getTeamKey(), secondChest);
+        if (firstChest != null) teamChests.put(second.getTeamKey(), firstChest);
     }
 
     public int getTeamUpgradeLevel(TeamKey teamKey, TeamUpgradeId upgradeId) {
@@ -436,18 +447,14 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     // this is per game type, dreams modes have different looks
     public void sendGameStartMessage() {
         String line = "■".repeat(50);
-        Component[] messages = {
-            Component.text(line, NamedTextColor.GREEN),
-            Component.text(ChatUtility.FontInfo.center("§lBed Wars"), NamedTextColor.WHITE),
-            Component.space(),
-            Component.text(ChatUtility.FontInfo.center("Protect your bed and destroy the enemy beds."), NamedTextColor.YELLOW),
-            Component.text(ChatUtility.FontInfo.center("Upgrade yourself and your team by collecting"), NamedTextColor.YELLOW),
-            Component.text(ChatUtility.FontInfo.center("Iron, Gold, Emerald and Diamond from generators"), NamedTextColor.YELLOW),
-            Component.text(ChatUtility.FontInfo.center("to access powerful upgrades."), NamedTextColor.YELLOW),
-            Component.space(),
-            Component.text(line, NamedTextColor.GREEN)
-        };
-
+        List<Component> messages = new ArrayList<>();
+        messages.add(Component.text(line, NamedTextColor.GREEN));
+        messages.add(Component.text(ChatUtility.FontInfo.center("§l" + I18n.string(gameType.getGameStartTitleKey())), NamedTextColor.WHITE));
+        messages.add(Component.space());
+        ChatUtility.FontInfo.wrap(I18n.string(gameType.getGameStartDescriptionKey()))
+            .forEach(message -> messages.add(Component.text(ChatUtility.FontInfo.center(message), NamedTextColor.YELLOW)));
+        messages.add(Component.space());
+        messages.add(Component.text(line, NamedTextColor.GREEN));
         Audience audience = Audience.audience(getPlayers());
         for (Component msg : messages) {
             audience.sendMessage(msg);
@@ -546,14 +553,16 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     private void assignPlayerToTeam(BedWarsPlayer player, BedWarsTeam team) {
-        removeFromTeam(player);
-        team.addPlayer(player.getUuid());
-        playerTeams.put(player.getUuid(), team.getId());
-        eventDispatcher.accept(new PlayerAssignedTeamEvent<>(
-            gameId,
-            player.getServerPlayer(),
-            team
-        ));
+        reassignPlayer(player.getUuid(), team);
+    }
+
+    public void reassignPlayer(UUID playerId, BedWarsTeam team) {
+        getPlayerTeam(playerId).ifPresent(current -> current.removePlayer(playerId));
+        team.addPlayer(playerId);
+        playerTeams.put(playerId, team.getId());
+        getPlayer(playerId).ifPresent(player -> eventDispatcher.accept(new PlayerAssignedTeamEvent<>(
+            gameId, player.getServerPlayer(), team
+        )));
     }
 
     // widens access modifier

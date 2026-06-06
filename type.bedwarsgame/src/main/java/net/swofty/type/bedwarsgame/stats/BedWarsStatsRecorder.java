@@ -17,6 +17,7 @@ import java.util.UUID;
 public class BedWarsStatsRecorder {
 
 	public static void recordWin(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		UUID uuid = player.getUuid();
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
@@ -38,6 +39,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordFinalKill(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		UUID uuid = player.getUuid();
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
@@ -59,6 +61,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordBedBroken(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		UUID uuid = player.getUuid();
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
@@ -80,6 +83,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordLoss(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -92,6 +96,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordKill(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -104,6 +109,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordDeath(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -116,6 +122,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordFinalDeath(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -128,6 +135,7 @@ public class BedWarsStatsRecorder {
 	}
 
 	public static void recordBedLost(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();

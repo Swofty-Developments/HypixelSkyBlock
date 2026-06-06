@@ -1,6 +1,7 @@
 package net.swofty.commons.bedwars;
 
 import lombok.Getter;
+import net.minestom.server.item.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,15 +48,15 @@ public enum BedWarsGameType {
     ULTIMATE_FOURS(6, "Ultimate V2 4v4v4v4", 4, 4, List.of(), true),
     SWAPPAGE_DOUBLES(7, "Swappage Doubles", 2, 8, List.of("Use the Swap to change ownership", "between beds! Chaos ensues."), true),
     SWAPPAGE_FOURS(8, "Swappage 4v4v4v4", 4, 4, List.of("Use the Swap to change ownership", "between beds! Chaos ensues."), true),
-    RUSH_DOUBLES(9, "Rush V2", 2, 8, List.of(), true),
-    RUSH_FOURS(10, "Rush V2", 4, 4, List.of(), true),
+    RUSH_DOUBLES(9, "Rush V2 Doubles", 2, 8, List.of(), true),
+    RUSH_FOURS(10, "Rush V2 4v4v4v4", 4, 4, List.of(), true),
     VOIDLESS_DOUBLES(11, "Voidless", 2, 8, List.of(), true),
     VOIDLESS_FOURS(12, "Voidless", 4, 4, List.of(), true),
     ARMED_DOUBLES(12, "Armed", 2, 8, List.of(), true),
     ARMED_FOURS(12, "Armed", 4, 4, List.of(), true),
     CASTLE(9, "Castle", 40, 2, List.of(), true),
     ONE_BLOCK(20, "One Block", 1, 8, List.of(), true),
-    LUCKY_BLOCK_DOUBLES(21, "Lucky Blocks V2 Doubles", 2, 8, List.of(
+    LUCKY_BLOCK_DOUBLES(21, "Lucky V2 Doubles", 2, 8, List.of(
         "Find Lucky Blocks on your island",
         "generator and open them for",
         "chaotic rewards."
@@ -72,6 +73,7 @@ public enum BedWarsGameType {
     private final int teams;
     private final List<String> description;
     private final boolean dream;
+    private final Material icon;
 
     BedWarsGameType(int id, String displayName, int teamSize, int teams, List<String> description) {
         this.id = id;
@@ -80,6 +82,7 @@ public enum BedWarsGameType {
         this.teams = teams;
         this.description = description;
         this.dream = false;
+        this.icon = Material.RED_BED;
     }
 
     BedWarsGameType(int id, String displayName, int teamSize, int teams, List<String> description, boolean dream) {
@@ -89,6 +92,15 @@ public enum BedWarsGameType {
         this.teams = teams;
         this.description = description;
         this.dream = dream;
+        this.icon = switch (this) {
+            case RUSH_DOUBLES, RUSH_FOURS -> Material.ENDER_EYE;
+            case ULTIMATE_DOUBLES, ULTIMATE_FOURS -> Material.NETHER_STAR;
+            case CASTLE -> Material.STONE_BRICKS;
+            case VOIDLESS_DOUBLES, VOIDLESS_FOURS -> Material.BEDROCK;
+            case ARMED_DOUBLES, ARMED_FOURS -> Material.DIAMOND_HOE;
+            case SWAPPAGE_DOUBLES, SWAPPAGE_FOURS -> Material.END_PORTAL_FRAME;
+            default -> Material.RED_BED;
+        };
     }
 
     public int maxPlayers() {
@@ -139,6 +151,22 @@ public enum BedWarsGameType {
 
     public boolean isLuckyBlock() {
         return this == LUCKY_BLOCK_DOUBLES || this == LUCKY_BLOCK_FOURS;
+    }
+
+    public boolean isSwappage() {
+        return this == SWAPPAGE_DOUBLES || this == SWAPPAGE_FOURS;
+    }
+
+    public boolean allowsPersistentProgress() {
+        return !dream;
+    }
+
+    public String getGameStartTitleKey() {
+        return isSwappage() ? "bedwars.game_start.swappage_title" : "bedwars.game_start.title";
+    }
+
+    public String getGameStartDescriptionKey() {
+        return isSwappage() ? "bedwars.game_start.swappage_description" : "bedwars.game_start.normal_description";
     }
 
     public BedWarsGameType getMapCompatibilityType() {

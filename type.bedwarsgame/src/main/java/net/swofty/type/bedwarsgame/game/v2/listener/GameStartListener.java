@@ -31,6 +31,7 @@ public class GameStartListener implements HypixelEventClass {
 
         // Assign players to teams
         game.autoAssignTeams();
+        game.getActiveTeams().forEach(team -> team.setBedAlive(true));
 
         // Get active teams and set up their areas
         Map<BedWarsMapsConfig.TeamKey, BedWarsMapsConfig.MapTeam> activeTeamConfigs = game.getActiveTeamConfigs();
@@ -56,6 +57,7 @@ public class GameStartListener implements HypixelEventClass {
 
         // Send game start message
         game.sendGameStartMessage();
+        game.getSwappageManager().start();
 
         // just correct in case
         MinecraftServer.getSchedulerManager().scheduleTask(() -> {

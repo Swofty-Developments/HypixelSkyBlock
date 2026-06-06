@@ -82,13 +82,12 @@ public class GUIPlayDreamBedWars extends StatelessView {
     }
 
     private ItemStack.Builder dreamItem(BedWarsDreamRotation.DreamMode dreamMode, BedWarsGameType type) {
-        String modeName = dreamMode.displayName();
         String queueName = queueDisplay(type);
         List<String> lore = new ArrayList<>();
-        lore.add("§7Play a game of Bed Wars " + shortName(modeName));
+        lore.add("§7Play a game of Bed Wars " + type.getDisplayName());
         lore.add("§7" + queueName + ".");
         lore.add("");
-        lore.addAll(description(modeName));
+        lore.addAll(type.getDescription());
         lore.add("");
         lore.add("§cOverall stats, achievements and");
         lore.add("§cquests will NOT be earned in this");
@@ -99,10 +98,10 @@ public class GUIPlayDreamBedWars extends StatelessView {
         lore.add("");
         lore.add("§eClick to play!");
 
-        if (modeName.contains("Lucky")) {
-            return ItemStackCreator.getStackHead("§a" + shortName(modeName) + " " + queueName, LUCKY_HEAD, amount(type), lore);
+        if (type.getDisplayName().contains("Lucky")) {
+            return ItemStackCreator.getStackHead("§a" + type.getDisplayName() + " " + queueName, LUCKY_HEAD, amount(type), lore);
         }
-        return ItemStackCreator.getStack("§a" + shortName(modeName) + " " + queueName, icon(modeName), amount(type), lore);
+        return ItemStackCreator.getStack("§a" + type.getDisplayName() + " " + queueName, type.getIcon(), amount(type), lore);
     }
 
     private void queue(ViewContext ctx, BedWarsGameType type) {
@@ -149,10 +148,6 @@ public class GUIPlayDreamBedWars extends StatelessView {
         });
     }
 
-    private String shortName(String modeName) {
-        return modeName.replace("Lucky Blocks", "Lucky");
-    }
-
     private String queueDisplay(BedWarsGameType type) {
         if (type == BedWarsGameType.CASTLE) return "40v40";
         if (type.getTeamSize() == 4 && type.getTeams() == 4) return "4v4v4v4";
@@ -161,29 +156,8 @@ public class GUIPlayDreamBedWars extends StatelessView {
         return type.getDisplayName();
     }
 
-    private Material icon(String name) {
-        if (name.contains("Rush")) return Material.ENDER_EYE;
-        if (name.contains("Ultimate")) return Material.NETHER_STAR;
-        if (name.contains("Castle")) return Material.STONE_BRICKS;
-        if (name.contains("Voidless")) return Material.BEDROCK;
-        if (name.contains("Armed")) return Material.DIAMOND_HOE;
-        return Material.RED_BED;
-    }
-
     private int amount(BedWarsGameType type) {
         return Math.max(1, type.getTeamSize());
     }
 
-    private List<String> description(String name) {
-        if (name.contains("Lucky"))
-            return List.of("§7Find the Lucky Blocks to earn a", "§7variety of events and effects,", "§7leading to total mayhem!");
-        if (name.contains("Rush"))
-            return List.of("§7Everything is upgraded at the start!", "§7Fight to the death right away!");
-        if (name.contains("Ultimate"))
-            return List.of("§7Pick an Ultimate Ability to use any", "§7time during the battle!");
-        if (name.contains("Castle")) return List.of("§7Massive 40 versus 40 all out war on", "§7a unique Castle map!");
-        if (name.contains("Voidless")) return List.of("§7No longer can you be a victim of the", "§7Void!");
-        if (name.contains("Armed")) return List.of("§7Utilize a new arsenal of ranged", "§7weapons to win the game!");
-        return List.of("§7Every few seconds brings a new", "§7surprise!");
-    }
 }

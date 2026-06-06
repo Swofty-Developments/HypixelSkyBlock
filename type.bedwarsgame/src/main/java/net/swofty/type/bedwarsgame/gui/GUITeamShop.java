@@ -211,7 +211,9 @@ public class GUITeamShop extends StatelessView {
 
         if (trapSize == 2) {
             for (BedWarsPlayer teamPlayer : game.getPlayersOnTeam(player.getTeamKey())) {
-                teamPlayer.getAchievementHandler().completeAchievement("bedwars.minefield");
+                if (teamPlayer.allowsPersistentProgress()) {
+                    teamPlayer.getAchievementHandler().completeAchievement("bedwars.minefield");
+                }
             }
         }
     }

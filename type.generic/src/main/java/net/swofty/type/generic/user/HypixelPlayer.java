@@ -2,6 +2,8 @@ package net.swofty.type.generic.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -31,6 +33,7 @@ import net.swofty.type.generic.gui.v2.ViewSession;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
@@ -38,6 +41,7 @@ import org.jspecify.annotations.NonNull;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HypixelPlayer extends Player {
 	public long joined;
@@ -203,6 +207,13 @@ public class HypixelPlayer extends Player {
 		String texture = getDataHandler().get(HypixelDataHandler.Data.SKIN_TEXTURE, DatapointString.class).getValue();
 		String signature = getDataHandler().get(HypixelDataHandler.Data.SKIN_SIGNATURE, DatapointString.class).getValue();
 		return new PlayerSkin(texture, signature);
+	}
+
+	public void playTeleportSound() {
+		playSound(Sound.sound().type(Key.key("entity.ender_pearl.throw")).volume(0.5f).pitch(
+			ThreadLocalRandom.current().nextFloat((float) (1.0 / 3.0), 0.5f)
+		).build());
+		ScheduleUtility.nextTick(() -> playSound(Sound.sound().type(Key.key("entity.player.teleport")).volume(0.5f).pitch(1).build()));
 	}
 
 	public void sendTo(ServerType type) {

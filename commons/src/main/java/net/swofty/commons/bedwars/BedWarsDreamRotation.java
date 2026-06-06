@@ -19,10 +19,11 @@ public final class BedWarsDreamRotation {
         new DreamMode("One Block", BedWarsGameType.ONE_BLOCK, BedWarsGameType.ONE_BLOCK),
         new DreamMode("Rush V2", BedWarsGameType.RUSH_DOUBLES, BedWarsGameType.RUSH_FOURS),
         new DreamMode("Ultimate V2", BedWarsGameType.ULTIMATE_DOUBLES, BedWarsGameType.ULTIMATE_FOURS),
+        new DreamMode("Swappage", BedWarsGameType.SWAPPAGE_DOUBLES, BedWarsGameType.SWAPPAGE_FOURS),
         new DreamMode("Castle V2", BedWarsGameType.CASTLE, BedWarsGameType.CASTLE),
         new DreamMode("Voidless", BedWarsGameType.VOIDLESS_DOUBLES, BedWarsGameType.VOIDLESS_FOURS),
         new DreamMode("Armed", BedWarsGameType.ARMED_DOUBLES, BedWarsGameType.ARMED_FOURS),
-        new DreamMode("Lucky Blocks V2", BedWarsGameType.LUCKY_BLOCK_DOUBLES, BedWarsGameType.LUCKY_BLOCK_FOURS)
+        new DreamMode("Lucky V2", BedWarsGameType.LUCKY_BLOCK_DOUBLES, BedWarsGameType.LUCKY_BLOCK_FOURS)
     );
 
     public static RotationEntry current(LocalDate date) {

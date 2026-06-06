@@ -75,7 +75,8 @@ public class ActionGameDeath implements HypixelEventClass {
 
         BedWarsDeathResult deathResult = BedWarsDeathHandler.calculateDeath(player, game, voidDeath);
         if (deathResult.deathType() == BedWarsDeathType.VOID) {
-            player.getAchievementHandler().completeAchievement("bedwars.its_dark_down_there");
+            if (player.allowsPersistentProgress())
+                player.getAchievementHandler().completeAchievement("bedwars.its_dark_down_there");
         }
         if (deathResult.isFinalKill()) {
             BedWarsStatsRecorder.recordFinalDeath(player, game.getGameType());
@@ -144,14 +145,17 @@ public class ActionGameDeath implements HypixelEventClass {
         }
 
         if (result.isFinalKill() && creditPlayer != null) {
-            creditPlayer.getAchievementHandler().addProgress("bedwars.bed_wars_killer", 1);
+            if (creditPlayer.allowsPersistentProgress())
+                creditPlayer.getAchievementHandler().addProgress("bedwars.bed_wars_killer", 1);
         }
 
         if (creditPlayer != null && result.weaponUsed() != null) {
             if (result.weaponUsed() == Material.SHEARS) {
-                creditPlayer.getAchievementHandler().completeAchievement("bedwars.shear_luck");
+                if (creditPlayer.allowsPersistentProgress())
+                    creditPlayer.getAchievementHandler().completeAchievement("bedwars.shear_luck");
             } else if (result.weaponUsed() == Material.STICK) {
-                creditPlayer.getAchievementHandler().addProgressByTrigger("bedwars.knockback_void_kill", 1);
+                if (creditPlayer.allowsPersistentProgress())
+                    creditPlayer.getAchievementHandler().addProgressByTrigger("bedwars.knockback_void_kill", 1);
             }
         }
     }

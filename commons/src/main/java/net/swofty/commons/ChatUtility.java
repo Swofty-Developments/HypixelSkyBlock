@@ -2,6 +2,7 @@ package net.swofty.commons;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatUtility {
@@ -150,6 +151,41 @@ public class ChatUtility {
 				compensated += spaceLength;
 			}
 			return sb.toString();
+		}
+
+		public static List<String> wrap(String message) {
+			return wrap(message, 240);
+		}
+
+		public static List<String> wrap(String message, int maxPxWidth) {
+			List<String> lines = new ArrayList<>();
+
+			if (message == null || message.isEmpty()) {
+				return lines;
+			}
+
+			StringBuilder currentLine = new StringBuilder();
+
+			for (String word : message.split(" ")) {
+				String candidate = currentLine.isEmpty()
+					? word
+					: currentLine + " " + word;
+
+				if (getLength(candidate) <= maxPxWidth) {
+					currentLine = new StringBuilder(candidate);
+				} else {
+					if (!currentLine.isEmpty()) {
+						lines.add(currentLine.toString());
+					}
+					currentLine = new StringBuilder(word);
+				}
+			}
+
+			if (!currentLine.isEmpty()) {
+				lines.add(currentLine.toString());
+			}
+
+			return lines;
 		}
 
 		public static String stripTokens(String input) {

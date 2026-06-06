@@ -86,7 +86,8 @@ public class ActionGameBreak implements HypixelEventClass {
             if (brokenBlockPosition.sameBlock(feetPoint) || brokenBlockPosition.sameBlock(headPoint)) {
                 // This is team X's bed
                 if (teamKey.equals(playerTeamKey)) {
-                    player.getAchievementHandler().completeAchievement("bedwars.you_cant_do_that");
+                    if (player.allowsPersistentProgress())
+                        player.getAchievementHandler().completeAchievement("bedwars.you_cant_do_that");
                     player.sendMessage("§cYou can't destroy your own bed!");
                     event.setCancelled(true);
                     return;
@@ -99,7 +100,8 @@ public class ActionGameBreak implements HypixelEventClass {
                 BedWarsStatsRecorder.recordBedBroken(player, game.getGameType());
 
                 if (player.hasEffect(PotionEffect.INVISIBILITY) && player.isInvisible()) {
-                    player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
+                    if (player.allowsPersistentProgress())
+                        player.getAchievementHandler().completeAchievement("bedwars.sneaky_rusher"); // break an bed while invisible
                 }
                 event.setCancelled(true); // handled the bed destruction and block removal
                 return;

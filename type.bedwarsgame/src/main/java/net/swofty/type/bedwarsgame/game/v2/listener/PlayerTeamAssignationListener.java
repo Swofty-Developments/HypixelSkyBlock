@@ -27,7 +27,6 @@ public class PlayerTeamAssignationListener implements HypixelEventClass {
             .teamColor(color)
             .build());
         player.getTeam().sendUpdatePacket();
-        event.team().setBedAlive(true); // when adding Swappage gamemode, this might need to be rethought
     }
 
 }

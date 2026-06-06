@@ -186,7 +186,8 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
                 if (itemAdded) {
                     player.setItemInMainHand(ItemStack.AIR);
                     player.sendMessage(depositMessage(itemInHand, true));
-                    player.getAchievementHandler().addProgressByTrigger("bedwars.chest_deposit", 1);
+                    if (player.allowsPersistentProgress())
+                        player.getAchievementHandler().addProgressByTrigger("bedwars.chest_deposit", 1);
                 } else {
                     player.sendMessage("§cYour ender chest is full!");
                 }
@@ -252,7 +253,8 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
                 if (itemAdded) {
                     player.sendMessage(depositMessage(itemInHand, false));
                     player.setItemInMainHand(ItemStack.AIR);
-                    player.getAchievementHandler().addProgressByTrigger("bedwars.chest_deposit", 1);
+                    if (player.allowsPersistentProgress())
+                        player.getAchievementHandler().addProgressByTrigger("bedwars.chest_deposit", 1);
                 } else {
                     player.sendMessage("§cThe team chest is full!");
                 }

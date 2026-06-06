@@ -193,6 +193,11 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		return TypeBedWarsGameLoader.getGameById(gameId);
 	}
 
+	public boolean allowsPersistentProgress() {
+		BedWarsGame game = getGame();
+		return game != null && game.getGameType().allowsPersistentProgress();
+	}
+
 	public void xp(ExperienceCause cause) {
 		xpThisGame += cause.getExperience();
 
