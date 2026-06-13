@@ -1,23 +1,27 @@
 package net.swofty.commons.guild;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.EnumSet;
 import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class GuildRank implements Comparable<GuildRank> {
     private String name;
     private int priority;
     private boolean isDefault;
     private Set<GuildPermission> permissions;
 
-    public GuildRank(String name, int priority, boolean isDefault, Set<GuildPermission> permissions) {
+    @JsonCreator
+    public GuildRank(@JsonProperty("name") String name, @JsonProperty("priority") int priority, @JsonProperty("default") boolean isDefault, @JsonProperty("permissions") Set<GuildPermission> permissions) {
         this.name = name;
         this.priority = priority;
         this.isDefault = isDefault;
@@ -58,42 +62,6 @@ public class GuildRank implements Comparable<GuildRank> {
     }
 
     public static Serializer<GuildRank> serializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(GuildRank value) {
-                JSONObject json = new JSONObject();
-                json.put("name", value.name);
-                json.put("priority", value.priority);
-                json.put("isDefault", value.isDefault);
-                JSONArray perms = new JSONArray();
-                for (GuildPermission perm : value.permissions) {
-                    perms.put(perm.name());
-                }
-                json.put("permissions", perms);
-                return json.toString();
-            }
-
-            @Override
-            public GuildRank deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                Set<GuildPermission> perms = EnumSet.noneOf(GuildPermission.class);
-                JSONArray permsArray = obj.getJSONArray("permissions");
-                for (int i = 0; i < permsArray.length(); i++) {
-                    perms.add(GuildPermission.valueOf(permsArray.getString(i)));
-                }
-                return new GuildRank(
-                    obj.getString("name"),
-                    obj.getInt("priority"),
-                    obj.getBoolean("isDefault"),
-                    perms
-                );
-            }
-
-            @Override
-            public GuildRank clone(GuildRank value) {
-                return new GuildRank(value.name, value.priority, value.isDefault,
-                    EnumSet.copyOf(value.permissions));
-            }
-        };
+        return new JacksonSerializer<>(GuildRank.class);
     }
 }

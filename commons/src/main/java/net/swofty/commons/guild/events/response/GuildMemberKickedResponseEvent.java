@@ -1,15 +1,15 @@
 package net.swofty.commons.guild.events.response;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.commons.guild.GuildResponseEvent;
-import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
+@NoArgsConstructor(force = true)
 public class GuildMemberKickedResponseEvent extends GuildResponseEvent {
     private final UUID kicker;
     private final UUID kicked;
@@ -29,33 +29,4 @@ public class GuildMemberKickedResponseEvent extends GuildResponseEvent {
         return participants;
     }
 
-    @Override
-    public Serializer<GuildMemberKickedResponseEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(GuildMemberKickedResponseEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("guild", GuildData.getStaticSerializer().serialize(value.getGuild()));
-                json.put("kicker", value.kicker.toString());
-                json.put("kicked", value.kicked.toString());
-                json.put("reason", value.reason);
-                return json.toString();
-            }
-
-            @Override
-            public GuildMemberKickedResponseEvent deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
-                return new GuildMemberKickedResponseEvent(guild,
-                    UUID.fromString(obj.getString("kicker")),
-                    UUID.fromString(obj.getString("kicked")),
-                    obj.getString("reason"));
-            }
-
-            @Override
-            public GuildMemberKickedResponseEvent clone(GuildMemberKickedResponseEvent value) {
-                return new GuildMemberKickedResponseEvent(value.getGuild(), value.kicker, value.kicked, value.reason);
-            }
-        };
-    }
 }

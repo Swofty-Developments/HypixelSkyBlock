@@ -9,9 +9,9 @@ import net.swofty.commons.guild.GuildPermission;
 import net.swofty.commons.guild.GuildRank;
 import net.swofty.commons.guild.events.*;
 import net.swofty.commons.guild.events.response.*;
-import net.swofty.commons.service.FromServiceChannels;
+import net.swofty.commons.protocol.objects.guild.GuildEventPushProtocol;
+import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
-import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.UUID;
@@ -612,12 +612,15 @@ public class GuildCache {
     }
 
     private static void sendEvent(GuildEvent event) {
-        JSONObject message = new JSONObject();
-        message.put("eventType", event.getClass().getSimpleName());
-        message.put("eventData", event.getSerializer().serialize(event));
-        message.put("participants", event.getParticipants());
-
-        ServiceToServerManager.sendToAllServers(FromServiceChannels.PROPAGATE_GUILD_EVENT, message);
+        ServiceToServerManager.sendToAllServers(
+            new GuildEventPushProtocol(),
+            new GuildEventPushProtocol.Request(
+                event.getClass().getSimpleName(),
+                event.getSerializer().serialize(event),
+                event.getParticipants()
+            ),
+            300
+        );
     }
 
     private static void sendErrorToPlayer(UUID playerUUID, String message) {
@@ -625,11 +628,11 @@ public class GuildCache {
     }
 
     private static void sendMessageToPlayer(UUID playerUUID, String message) {
-        JSONObject messageData = new JSONObject();
-        messageData.put("playerUUID", playerUUID.toString());
-        messageData.put("message", message);
-
-        ServiceToServerManager.sendToAllServers(FromServiceChannels.SEND_MESSAGE, messageData);
+        ServiceToServerManager.sendToAllServers(
+            new SendMessagePushProtocol(),
+            new SendMessagePushProtocol.Request(playerUUID, message),
+            300
+        );
     }
 
     private static void scheduleInviteExpiration(UUID guildId, UUID inviter, UUID invitee, long delayMs) {

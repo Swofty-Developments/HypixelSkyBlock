@@ -6,57 +6,40 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.guild.GuildEvent;
 import net.swofty.commons.guild.events.response.*;
-import net.swofty.commons.service.FromServiceChannels;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.objects.guild.GuildEventPushProtocol;
+import net.swofty.proxyapi.redis.TypedServiceHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class RedisPropagateGuildEvent implements ServiceToClient {
+public class RedisPropagateGuildEvent implements TypedServiceHandler<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> {
+    private static final GuildEventPushProtocol PROTOCOL = new GuildEventPushProtocol();
 
     @Override
-    public FromServiceChannels getChannel() {
-        return FromServiceChannels.PROPAGATE_GUILD_EVENT;
+    public ServicePushProtocol<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> getProtocol() {
+        return PROTOCOL;
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
+    public GuildEventPushProtocol.Response onMessage(GuildEventPushProtocol.Request message) {
         try {
-            String eventType = message.getString("eventType");
-            String eventData = message.getString("eventData");
-            JSONArray participantsArray = message.getJSONArray("participants");
-
-            List<UUID> participants = participantsArray.toList().stream()
-                .map(obj -> UUID.fromString(obj.toString()))
-                .toList();
-
-            GuildEvent event = parseEvent(eventType, eventData);
-            if (event == null) {
-                return createFailureResponse("Failed to parse event of type: " + eventType);
-            }
-
-            List<UUID> playersHandled = handleEventForPlayers(event, participants);
-            return createSuccessResponse(playersHandled.size(), playersHandled);
+            GuildEvent event = parseEvent(message.eventType(), message.eventData());
+            List<UUID> playersHandled = handleEventForPlayers(event, message.participants());
+            return GuildEventPushProtocol.Response.success(playersHandled);
         } catch (Exception e) {
-            Logger.error("Failed to handle guild event: " + e.getMessage());
-            return createFailureResponse("Exception occurred: " + e.getMessage());
+            Logger.error(e, "Failed to handle guild event");
+            return GuildEventPushProtocol.Response.failure(e.getMessage());
         }
     }
 
     private GuildEvent parseEvent(String eventType, String eventData) {
-        try {
-            GuildEvent templateEvent = GuildEvent.findFromType(eventType);
-            return (GuildEvent) templateEvent.getSerializer().deserialize(eventData);
-        } catch (Exception e) {
-            Logger.error(e, "Failed to parse guild event of type: {}", eventType);
-            return null;
-        }
+        GuildEvent template = GuildEvent.findFromType(eventType);
+        return (GuildEvent) template.getSerializer().deserialize(eventData);
     }
 
     private List<UUID> handleEventForPlayers(GuildEvent event, List<UUID> participants) {
@@ -225,22 +208,4 @@ public class RedisPropagateGuildEvent implements ServiceToClient {
         player.sendMessage("§9§m-----------------------------------------------------");
     }
 
-    private JSONObject createSuccessResponse(int playersHandled, List<UUID> playersHandledUuids) {
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("playersHandled", playersHandled);
-        JSONArray participantsArray = new JSONArray();
-        for (UUID uuid : playersHandledUuids) {
-            participantsArray.put(uuid.toString());
-        }
-        response.put("playersHandledUUIDs", participantsArray);
-        return response;
-    }
-
-    private JSONObject createFailureResponse(String reason) {
-        JSONObject response = new JSONObject();
-        response.put("success", false);
-        response.put("error", reason);
-        return response;
-    }
 }

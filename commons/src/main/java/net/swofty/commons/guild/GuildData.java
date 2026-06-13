@@ -1,10 +1,14 @@
 package net.swofty.commons.guild;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,6 +17,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor(force = true)
 public class GuildData {
     private final UUID guildId;
     private String name;
@@ -69,11 +74,12 @@ public class GuildData {
         this.members.add(new GuildMember(masterUuid, "Guild Master", System.currentTimeMillis()));
     }
 
-    private GuildData(UUID guildId, String name, String tag, String tagColor,
-                      List<GuildMember> members, List<GuildRank> ranks,
-                      long totalGexp, int level, String motd, String description,
-                      String discordLink, boolean listedInFinder, boolean slowChat,
-                      boolean everyoneMuted, long everyoneMutedExpiry, long createdAt) {
+    @JsonCreator
+    private GuildData(@JsonProperty("guildId") UUID guildId, @JsonProperty("name") String name, @JsonProperty("tag") String tag, @JsonProperty("tagColor") String tagColor,
+                      @JsonProperty("members") List<GuildMember> members, @JsonProperty("ranks") List<GuildRank> ranks,
+                      @JsonProperty("totalGexp") long totalGexp, @JsonProperty("level") int level, @JsonProperty("motd") String motd, @JsonProperty("description") String description,
+                      @JsonProperty("discordLink") String discordLink, @JsonProperty("listedInFinder") boolean listedInFinder, @JsonProperty("slowChat") boolean slowChat,
+                      @JsonProperty("everyoneMuted") boolean everyoneMuted, @JsonProperty("everyoneMutedExpiry") long everyoneMutedExpiry, @JsonProperty("createdAt") long createdAt) {
         this.guildId = guildId;
         this.name = name;
         this.tag = tag;
@@ -92,6 +98,7 @@ public class GuildData {
         this.createdAt = createdAt;
     }
 
+    @JsonIgnore
     public UUID getMasterUuid() {
         return members.stream()
             .filter(m -> m.getRankName().equals("Guild Master"))
@@ -120,28 +127,34 @@ public class GuildData {
         return getRank(member.getRankName());
     }
 
+    @JsonIgnore
     public boolean isFull() {
         return members.size() >= MAX_MEMBERS;
     }
 
+    @JsonIgnore
     public boolean canAddCustomRank() {
         long customCount = ranks.stream().filter(r -> !r.isDefault()).count();
         return customCount < MAX_CUSTOM_RANKS;
     }
 
+    @JsonIgnore
     public boolean canSetTag() {
         return level >= TAG_UNLOCK_LEVEL;
     }
 
+    @JsonIgnore
     public int getMaxTagLength() {
         if (level >= 50) return 7;
         return 5;
     }
 
+    @JsonIgnore
     public boolean canUseSpecialTagChars() {
         return level >= 65;
     }
 
+    @JsonIgnore
     public List<UUID> getAllMemberUuids() {
         return members.stream().map(GuildMember::getUuid).toList();
     }
@@ -186,89 +199,12 @@ public class GuildData {
             .orElse(null);
     }
 
+    @JsonIgnore
     public Serializer<GuildData> getSerializer() {
         return getStaticSerializer();
     }
 
     public static Serializer<GuildData> getStaticSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(GuildData value) {
-                JSONObject json = new JSONObject();
-                json.put("guildId", value.guildId.toString());
-                json.put("name", value.name);
-                json.put("tag", value.tag);
-                json.put("tagColor", value.tagColor);
-                json.put("totalGexp", value.totalGexp);
-                json.put("level", value.level);
-                json.put("motd", value.motd);
-                json.put("description", value.description);
-                json.put("discordLink", value.discordLink);
-                json.put("listedInFinder", value.listedInFinder);
-                json.put("slowChat", value.slowChat);
-                json.put("everyoneMuted", value.everyoneMuted);
-                json.put("everyoneMutedExpiry", value.everyoneMutedExpiry);
-                json.put("createdAt", value.createdAt);
-
-                JSONArray membersArr = new JSONArray();
-                Serializer<GuildMember> memberSerializer = GuildMember.serializer();
-                for (GuildMember m : value.members) {
-                    membersArr.put(new JSONObject(memberSerializer.serialize(m)));
-                }
-                json.put("members", membersArr);
-
-                JSONArray ranksArr = new JSONArray();
-                Serializer<GuildRank> rankSerializer = GuildRank.serializer();
-                for (GuildRank r : value.ranks) {
-                    ranksArr.put(new JSONObject(rankSerializer.serialize(r)));
-                }
-                json.put("ranks", ranksArr);
-
-                return json.toString();
-            }
-
-            @Override
-            public GuildData deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                Serializer<GuildMember> memberSerializer = GuildMember.serializer();
-                Serializer<GuildRank> rankSerializer = GuildRank.serializer();
-
-                List<GuildMember> members = new ArrayList<>();
-                JSONArray membersArr = obj.getJSONArray("members");
-                for (int i = 0; i < membersArr.length(); i++) {
-                    members.add(memberSerializer.deserialize(membersArr.getJSONObject(i).toString()));
-                }
-
-                List<GuildRank> ranks = new ArrayList<>();
-                JSONArray ranksArr = obj.getJSONArray("ranks");
-                for (int i = 0; i < ranksArr.length(); i++) {
-                    ranks.add(rankSerializer.deserialize(ranksArr.getJSONObject(i).toString()));
-                }
-
-                return new GuildData(
-                    UUID.fromString(obj.getString("guildId")),
-                    obj.getString("name"),
-                    obj.getString("tag"),
-                    obj.getString("tagColor"),
-                    members,
-                    ranks,
-                    obj.getLong("totalGexp"),
-                    obj.getInt("level"),
-                    obj.getString("motd"),
-                    obj.getString("description"),
-                    obj.getString("discordLink"),
-                    obj.getBoolean("listedInFinder"),
-                    obj.getBoolean("slowChat"),
-                    obj.getBoolean("everyoneMuted"),
-                    obj.getLong("everyoneMutedExpiry"),
-                    obj.getLong("createdAt")
-                );
-            }
-
-            @Override
-            public GuildData clone(GuildData value) {
-                return deserialize(serialize(value));
-            }
-        };
+        return new JacksonSerializer<>(GuildData.class);
     }
 }

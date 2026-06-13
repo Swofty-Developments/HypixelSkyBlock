@@ -121,12 +121,16 @@ public class GuildManager {
     }
 
     public static void mutePlayer(HypixelPlayer muter, String target, long duration) {
-        GuildMuteRequestEvent event = new GuildMuteRequestEvent(muter.getUuid(), target, duration);
+        String resolvedTarget = resolveTarget(muter, target);
+        if (resolvedTarget == null) return;
+        GuildMuteRequestEvent event = new GuildMuteRequestEvent(muter.getUuid(), resolvedTarget, duration);
         sendEventToService(event);
     }
 
     public static void unmutePlayer(HypixelPlayer unmuter, String target) {
-        GuildUnmuteRequestEvent event = new GuildUnmuteRequestEvent(unmuter.getUuid(), target);
+        String resolvedTarget = resolveTarget(unmuter, target);
+        if (resolvedTarget == null) return;
+        GuildUnmuteRequestEvent event = new GuildUnmuteRequestEvent(unmuter.getUuid(), resolvedTarget);
         sendEventToService(event);
     }
 
@@ -141,7 +145,10 @@ public class GuildManager {
     }
 
     private static void sendEventToService(GuildEvent event) {
-        var message = new SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage(event);
+        var message = new SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage(
+            event.getClass().getSimpleName(),
+            event.getSerializer().serialize(event)
+        );
         guildService.handleRequest(message);
     }
 
@@ -149,5 +156,15 @@ public class GuildManager {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage(message);
         player.sendMessage("§9§m-----------------------------------------------------");
+    }
+
+    private static @Nullable String resolveTarget(HypixelPlayer player, String target) {
+        if (target.equalsIgnoreCase("everyone")) return "everyone";
+        UUID targetUUID = HypixelDataHandler.getPotentialUUIDFromName(target);
+        if (targetUUID == null) {
+            sendError(player, "§cCouldn't find a player with that name!");
+            return null;
+        }
+        return targetUUID.toString();
     }
 }

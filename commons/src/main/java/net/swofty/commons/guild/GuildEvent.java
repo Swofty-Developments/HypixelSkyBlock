@@ -1,7 +1,10 @@
 package net.swofty.commons.guild;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.Arrays;
@@ -9,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
+@NoArgsConstructor(force = true)
 public abstract class GuildEvent {
     private final GuildData guild;
 
@@ -16,8 +20,13 @@ public abstract class GuildEvent {
         this.guild = guild;
     }
 
-    public abstract Serializer getSerializer();
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @JsonIgnore
+    public Serializer<GuildEvent> getSerializer() {
+        return (Serializer) new JacksonSerializer<>(getClass());
+    }
 
+    @JsonIgnore
     public List<UUID> getParticipants() {
         return guild != null ? guild.getAllMemberUuids() : List.of();
     }

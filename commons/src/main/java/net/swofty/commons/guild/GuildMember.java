@@ -1,14 +1,20 @@
 package net.swofty.commons.guild;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor(force = true)
 public class GuildMember {
     private final UUID uuid;
     private String rankName;
@@ -30,8 +36,9 @@ public class GuildMember {
         this.mutedUntil = 0;
     }
 
-    public GuildMember(UUID uuid, String rankName, long joinedAt, long weeklyGexp,
-                       long totalGexp, long lastLogin, boolean notificationsEnabled, long mutedUntil) {
+    @JsonCreator
+    public GuildMember(@JsonProperty("uuid") UUID uuid, @JsonProperty("rankName") String rankName, @JsonProperty("joinedAt") long joinedAt, @JsonProperty("weeklyGexp") long weeklyGexp,
+                       @JsonProperty("totalGexp") long totalGexp, @JsonProperty("lastLogin") long lastLogin, @JsonProperty("notificationsEnabled") boolean notificationsEnabled, @JsonProperty("mutedUntil") long mutedUntil) {
         this.uuid = uuid;
         this.rankName = rankName;
         this.joinedAt = joinedAt;
@@ -42,47 +49,12 @@ public class GuildMember {
         this.mutedUntil = mutedUntil;
     }
 
+    @JsonIgnore
     public boolean isMuted() {
         return mutedUntil > System.currentTimeMillis();
     }
 
     public static Serializer<GuildMember> serializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(GuildMember value) {
-                JSONObject json = new JSONObject();
-                json.put("uuid", value.uuid.toString());
-                json.put("rankName", value.rankName);
-                json.put("joinedAt", value.joinedAt);
-                json.put("weeklyGexp", value.weeklyGexp);
-                json.put("totalGexp", value.totalGexp);
-                json.put("lastLogin", value.lastLogin);
-                json.put("notificationsEnabled", value.notificationsEnabled);
-                json.put("mutedUntil", value.mutedUntil);
-                return json.toString();
-            }
-
-            @Override
-            public GuildMember deserialize(String json) {
-                JSONObject obj = new JSONObject(json);
-                return new GuildMember(
-                    UUID.fromString(obj.getString("uuid")),
-                    obj.getString("rankName"),
-                    obj.getLong("joinedAt"),
-                    obj.getLong("weeklyGexp"),
-                    obj.getLong("totalGexp"),
-                    obj.getLong("lastLogin"),
-                    obj.getBoolean("notificationsEnabled"),
-                    obj.getLong("mutedUntil")
-                );
-            }
-
-            @Override
-            public GuildMember clone(GuildMember value) {
-                return new GuildMember(value.uuid, value.rankName, value.joinedAt,
-                    value.weeklyGexp, value.totalGexp, value.lastLogin,
-                    value.notificationsEnabled, value.mutedUntil);
-            }
-        };
+        return new JacksonSerializer<>(GuildMember.class);
     }
 }
