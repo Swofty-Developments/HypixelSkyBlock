@@ -85,9 +85,9 @@ public class GuildData {
                       @JsonProperty("totalGexp") long totalGexp, @JsonProperty("level") int level, @JsonProperty("motd") String motd, @JsonProperty("description") String description,
                       @JsonProperty("discordLink") String discordLink, @JsonProperty("listedInFinder") boolean listedInFinder, @JsonProperty("slowChat") boolean slowChat,
                       @JsonProperty("everyoneMuted") boolean everyoneMuted, @JsonProperty("everyoneMutedExpiry") long everyoneMutedExpiry, @JsonProperty("createdAt") long createdAt,
-                      @JsonProperty("auditLog") List<String> auditLog, @JsonProperty("dailyGexp") long dailyGexp,
-                      @JsonProperty("dailyWins") int dailyWins, @JsonProperty("dailyProgressDate") String dailyProgressDate,
-                      @JsonProperty("onlineMode") boolean onlineMode) {
+                      @JsonProperty("auditLog") List<String> auditLog, @JsonProperty("dailyGexp") Long dailyGexp,
+                      @JsonProperty("dailyWins") Integer dailyWins, @JsonProperty("dailyProgressDate") String dailyProgressDate,
+                      @JsonProperty("onlineMode") Boolean onlineMode) {
         this.guildId = guildId;
         this.name = name;
         this.tag = tag;
@@ -105,10 +105,10 @@ public class GuildData {
         this.everyoneMutedExpiry = everyoneMutedExpiry;
         this.createdAt = createdAt;
         this.auditLog = auditLog != null ? auditLog : new ArrayList<>();
-        this.dailyGexp = dailyGexp;
-        this.dailyWins = dailyWins;
+        this.dailyGexp = dailyGexp != null ? dailyGexp : 0;
+        this.dailyWins = dailyWins != null ? dailyWins : 0;
         this.dailyProgressDate = dailyProgressDate != null ? dailyProgressDate : LocalDate.now().toString();
-        this.onlineMode = onlineMode;
+        this.onlineMode = onlineMode != null && onlineMode;
     }
 
     @JsonIgnore
