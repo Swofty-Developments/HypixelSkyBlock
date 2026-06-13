@@ -32,11 +32,6 @@ public abstract class TablistModule {
         }
 
         int spaces = (30 - text.length()) / 2;
-        StringBuilder builder = new StringBuilder();
-        builder.append(" ".repeat(spaces));
-
-        builder.append(text);
-
-        return builder.toString();
+        return " ".repeat(spaces) + text;
     }
 }

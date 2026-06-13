@@ -60,7 +60,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
         // Normal chat
         for (MurderMysteryPlayer gamePlayer : game.getPlayers()) {
-            gamePlayer.sendMessage(Component.text(rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + ": ", NamedTextColor.WHITE)
+            gamePlayer.sendMessage(Component.text(player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + ": ", NamedTextColor.WHITE)
                     .append(Component.text(finalMessage, NamedTextColor.WHITE)));
         }
     }

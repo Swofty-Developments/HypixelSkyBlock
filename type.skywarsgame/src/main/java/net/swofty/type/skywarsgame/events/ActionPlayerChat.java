@@ -79,9 +79,9 @@ public class ActionPlayerChat implements HypixelEventClass {
 
         for (SkywarsPlayer gamePlayer : game.getPlayers()) {
             if (rank.equals(Rank.DEFAULT))
-                gamePlayer.sendMessage(levelPrefix + rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
+                gamePlayer.sendMessage(levelPrefix + player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
             else
-                gamePlayer.sendMessage(levelPrefix + rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
+                gamePlayer.sendMessage(levelPrefix + player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
         }
     }
 }

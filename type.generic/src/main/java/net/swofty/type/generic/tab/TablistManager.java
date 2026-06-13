@@ -24,12 +24,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public abstract class TablistManager {
     private static final Map<HypixelPlayer, PlayerTabCache> tablistEntries = new ConcurrentHashMap<>();
@@ -103,7 +97,7 @@ public abstract class TablistManager {
                             player.sendPacket(teamPacket);
                         }
 
-                        UUID uuid = UUID.nameUUIDFromBytes((player.getUuid().toString() + "#tab#" + slotIndex)
+                        UUID uuid = UUID.nameUUIDFromBytes((player.getUuid() + "#tab#" + slotIndex)
                             .getBytes(StandardCharsets.UTF_8));
                         cache.tabEntries.add(uuid);
 

@@ -158,7 +158,7 @@ public class GUIMyProfile extends HypixelInventoryGUI {
                     "§aCharacter Information",
                     player.getSkin(),
                     1,
-                    "§7Rank: " + player.getRank().getPrefix().trim(),
+                    "§7Rank: " + player.getLegacyRankPrefix().trim(),
                     "§7Level: §6" + level,
                     "§7Experience until next Level: §6" + StringUtility.commaify(xpNeeded),
                     "§7Achievement Points: §e" + StringUtility.commaify(achievementPoints),

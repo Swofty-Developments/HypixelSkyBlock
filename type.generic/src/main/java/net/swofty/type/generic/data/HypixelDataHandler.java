@@ -2,7 +2,6 @@ package net.swofty.type.generic.data;
 
 import io.sentry.Sentry;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
@@ -181,7 +180,7 @@ public class HypixelDataHandler extends DataHandler {
 
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
                 Team team = new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
-                        .prefix(Component.text(rank.getPrefix()))
+                    .prefix(((HypixelPlayer) player).getRankPrefix())
                         .teamColor(rank.getTextColor())
                         .build();
                 player.setTeam(team);
@@ -195,7 +194,7 @@ public class HypixelDataHandler extends DataHandler {
             Rank rank = (Rank) datapoint.getValue();
             String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
             player.setTeam(new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
-                    .prefix(Component.text(rank.getPrefix()))
+                .prefix(((HypixelPlayer) player).getRankPrefix())
                     .teamColor(rank.getTextColor())
                     .build());
             player.getTeam().sendUpdatePacket();
@@ -251,6 +250,10 @@ public class HypixelDataHandler extends DataHandler {
 
         HYPIXEL_EXPERIENCE("hypixel_experience",
                 DatapointHypixelExperience.class, new DatapointHypixelExperience("hypixel_experience", 0L)),
+
+        RANK_COLOR("rank_color", DatapointString.class, new DatapointString("rank_color", "RED")),
+        MVP_PLUS_PLUS_AQUA("mvp_plus_plus_aqua", DatapointBoolean.class, new DatapointBoolean("mvp_plus_plus_aqua", false)),
+        RANKS_GIFTED("ranks_gifted", DatapointInteger.class, new DatapointInteger("ranks_gifted", 0)),
 
         ACHIEVEMENT_DATA("achievement_data",
                 DatapointAchievementData.class, new DatapointAchievementData("achievement_data")),
