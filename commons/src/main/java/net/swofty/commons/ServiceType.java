@@ -13,5 +13,6 @@ public enum ServiceType {
     REPLAY,
     PUNISHMENT,
     ELECTION,
+    GUILD,
     ;
 }
