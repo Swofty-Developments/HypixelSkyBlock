@@ -57,6 +57,15 @@ public class BedWarsGameEventManager {
         if (ticker != null) return;
 
         currentPhase = GamePhase.NONE;
+        if (game.getGameType().isOneBlock()) {
+            currentPhase = GamePhase.SUDDEN_DEATH;
+            secondsUntilNextPhase = 5 * 60;
+            ticker = MinecraftServer.getSchedulerManager().buildTask(this::tick)
+                .delay(TaskSchedule.seconds(1))
+                .repeat(TaskSchedule.seconds(1))
+                .schedule();
+            return;
+        }
         secondsUntilNextPhase =
             currentPhase.next().getTriggerTimeSeconds()
                 - currentPhase.getTriggerTimeSeconds();
@@ -82,9 +91,16 @@ public class BedWarsGameEventManager {
 
         secondsUntilNextPhase--;
 
+        if (game.getGameType().isOneBlock()) return;
         if (secondsUntilNextPhase <= 0) {
             advancePhase();
         }
+    }
+
+    public void endOneBlockGame() {
+        currentPhase = GamePhase.GAME_END;
+        secondsUntilNextPhase = 0;
+        game.forceGameEnd();
     }
 
     private void advancePhase() {

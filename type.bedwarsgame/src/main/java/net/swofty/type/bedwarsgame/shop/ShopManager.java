@@ -17,6 +17,7 @@ import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -136,6 +137,13 @@ public class ShopManager {
             }
         }
         return null;
+    }
+
+    public List<ShopItem> getAllItems() {
+        Map<String, ShopItem> uniqueItems = new LinkedHashMap<>();
+        categorizedShopItems.values().forEach(items ->
+            items.forEach(item -> uniqueItems.putIfAbsent(item.getId(), item)));
+        return List.copyOf(uniqueItems.values());
     }
 
     public Map<Integer, ShopItem> getQuickBuy(BedWarsPlayer player) {

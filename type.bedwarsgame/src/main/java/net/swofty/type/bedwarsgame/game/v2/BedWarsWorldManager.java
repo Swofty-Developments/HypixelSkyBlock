@@ -313,6 +313,26 @@ public class BedWarsWorldManager {
         };
     }
 
+    public void spawnTemporaryItemShop(Pos position) {
+        BedWarsShopkeeperAppearanceService.ShopkeeperAppearance appearance =
+            BedWarsShopkeeperAppearanceService.defaultAppearance();
+        HypixelNPC shopNpc = createShopNpc(
+            position,
+            new String[]{"§bITEM SHOP", "§e§lRIGHT CLICK", "§7Disappears in 30 seconds"},
+            appearance,
+            event -> {
+                BedWarsPlayer player = (BedWarsPlayer) event.player();
+                if (player.getGame() == game && game.getState() == net.swofty.type.game.game.GameState.IN_PROGRESS) {
+                    player.openView(new GUIItemShop(game));
+                }
+            }
+        );
+        shopNpc.register();
+        net.minestom.server.MinecraftServer.getSchedulerManager().buildTask(shopNpc::unregister)
+            .delay(net.minestom.server.timer.TaskSchedule.seconds(30))
+            .schedule();
+    }
+
     public void recordShopNpcsForReplay() {
         if (shopNPCsRecorded || !game.getReplayManager().isRecording()) {
             return;

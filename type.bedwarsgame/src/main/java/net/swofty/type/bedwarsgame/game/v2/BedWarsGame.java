@@ -41,6 +41,7 @@ import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.game.game.AbstractTeamGame;
 import net.swofty.type.game.game.CountdownConfig;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.event.HypixelEventHandler;
@@ -63,6 +64,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     private final BedWarsGameEventManager gameEventManager;
     private final BedWarsReplayManager replayManager;
     private final SwappageManager swappageManager;
+    private final OneBlockManager oneBlockManager;
 
     private final Map<TeamKey, Map<Integer, ItemStack>> teamChests = new EnumMap<>(TeamKey.class);
     private final Map<UUID, Map<Integer, ItemStack>> enderChests = new HashMap<>();
@@ -93,6 +95,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         this.respawnHandler = new BedWarsRespawnHandler(this);
         this.gameEventManager = new BedWarsGameEventManager(this);
         this.swappageManager = new SwappageManager(this);
+        this.oneBlockManager = new OneBlockManager(this);
 
         // Initialize replay with service connection
         ProxyService replayService = new ProxyService(ServiceType.REPLAY);
@@ -569,5 +572,9 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     @Override
     public void checkWinConditions() {
         super.checkWinConditions();
+    }
+
+    public void forceGameEnd() {
+        HypixelEventHandler.callCustomEvent(new GameTeamWinConditionEvent<BedWarsTeam>(gameId, Optional.empty()));
     }
 }

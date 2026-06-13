@@ -157,6 +157,10 @@ public enum BedWarsGameType {
         return this == LUCKY_BLOCK_DOUBLES || this == LUCKY_BLOCK_FOURS;
     }
 
+    public boolean isOneBlock() {
+        return this == ONE_BLOCK;
+    }
+
     public boolean isSwappage() {
         return this == SWAPPAGE_DOUBLES || this == SWAPPAGE_FOURS;
     }
@@ -174,6 +178,7 @@ public enum BedWarsGameType {
     }
 
     public BedWarsGameType getMapCompatibilityType() {
+        if (this == ONE_BLOCK) return this;
         if (!dream) return this;
         return switch (teamSize) {
             case 1 -> ONE_EIGHT;

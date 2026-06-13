@@ -13,6 +13,8 @@ import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
@@ -110,6 +112,17 @@ public class ActionGameCustomItems implements HypixelEventClass {
 
 	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(PlayerUseItemEvent event) {
+		if (event.getPlayer() instanceof BedWarsPlayer player
+			&& player.getGame() != null
+			&& player.getGame().getGameType().isOneBlock()
+			&& player.getGame().getState() == GameState.IN_PROGRESS
+			&& event.getItemStack().material() == Material.VILLAGER_SPAWN_EGG) {
+			event.setCancelled(true);
+			ItemStack held = event.getItemStack();
+			player.setItemInMainHand(held.amount() > 1 ? held.withAmount(held.amount() - 1) : ItemStack.AIR);
+			player.getGame().getWorldManager().spawnTemporaryItemShop(player.getPosition());
+			return;
+		}
 		TypeBedWarsGameLoader.getItemHandler().onItemUse(event);
 	}
 

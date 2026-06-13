@@ -37,14 +37,19 @@ public class GameStartListener implements HypixelEventClass {
         Map<BedWarsMapsConfig.TeamKey, BedWarsMapsConfig.MapTeam> activeTeamConfigs = game.getActiveTeamConfigs();
 
         game.getWorldManager().placeBeds(activeTeamConfigs);
-        game.getWorldManager().spawnShopNPCs(activeTeamConfigs);
+        if (!game.getGameType().isOneBlock()) {
+            game.getWorldManager().spawnShopNPCs(activeTeamConfigs);
+        }
 
         // Start generators
-        game.getGeneratorManager().startTeamGenerators(activeTeamConfigs);
-        game.getGeneratorManager().startGlobalGenerators();
+        if (!game.getGameType().isOneBlock()) {
+            game.getGeneratorManager().startTeamGenerators(activeTeamConfigs);
+            game.getGeneratorManager().startGlobalGenerators();
+        }
 
         // Start game event progression
         game.getGameEventManager().start();
+        game.getOneBlockManager().start();
 
         // Teleport players to their spawn points
         game.teleportPlayersToSpawns();

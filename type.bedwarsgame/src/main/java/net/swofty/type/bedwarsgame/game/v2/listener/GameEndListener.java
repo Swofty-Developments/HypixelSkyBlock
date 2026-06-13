@@ -58,6 +58,7 @@ public class GameEndListener implements HypixelEventClass {
         game.getGeneratorManager().stopAllGenerators();
         game.getGameEventManager().stop();
         game.getSwappageManager().stop();
+        game.getOneBlockManager().stop();
 
         Logger.info("Ending game " + gameId);
         game.end();

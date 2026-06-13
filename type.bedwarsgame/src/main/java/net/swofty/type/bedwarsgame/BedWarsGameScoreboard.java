@@ -80,7 +80,9 @@ public class BedWarsGameScoreboard {
                     lines.add(I18n.t("scoreboard.bedwars_game.mode_line", Component.text(game.getGameType().getDisplayName())));
                     lines.add(Component.text("§fVersion: §7v" + VersionConst.BED_WARS_VERSION));
                 } else {
-                    BedWarsGameEventManager.GamePhase nextGamePhase = game.getGameEventManager().getCurrentPhase().next();
+                    BedWarsGameEventManager.GamePhase nextGamePhase = game.getGameType().isOneBlock()
+                        ? BedWarsGameEventManager.GamePhase.GAME_END
+                        : game.getGameEventManager().getCurrentPhase().next();
                     String eventName = nextGamePhase != null
                         ? nextGamePhase.getDisplayName()
                         : game.getGameEventManager().getCurrentEvent().getDisplayName();
