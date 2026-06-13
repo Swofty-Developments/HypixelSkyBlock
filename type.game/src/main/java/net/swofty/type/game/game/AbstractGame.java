@@ -61,6 +61,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
             getCountdownConfig(),
             eventDispatcher,
             this::onCountdownComplete,
+            this::onCountdownCancelled,
             this::hasMinimumPlayers
         );
     }
@@ -77,6 +78,12 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
      */
     protected void onCountdownComplete() {
         start();
+    }
+
+    protected void onCountdownCancelled() {
+        if (state == GameState.COUNTDOWN) {
+            setState(GameState.WAITING);
+        }
     }
 
     @Override
@@ -111,6 +118,10 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
     @Override
     public JoinResult join(P player) {
+        if (players.containsKey(player.getUuid())) {
+            return new JoinResult.Denied("Player is already in this game");
+        }
+
         PlayerPreJoinGameEvent event = new PlayerPreJoinGameEvent(gameId, player.getServerPlayer());
         eventDispatcher.accept(event);
 
@@ -118,7 +129,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
             return new JoinResult.Denied(event.getCancelReason() != null ? event.getCancelReason() : "Join cancelled");
         }
 
-        // Check basic conditions
         if (state != GameState.WAITING && state != GameState.COUNTDOWN) {
             return new JoinResult.Denied("Game already in progress");
         }
@@ -127,11 +137,9 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
             return new JoinResult.Denied("Game is full");
         }
 
-        // Add player
         players.put(player.getUuid(), player);
         player.setGameId(gameId);
 
-        // Fire joined event
         eventDispatcher.accept(new PlayerPostJoinGameEvent(
             gameId,
             player.getServerPlayer(),
@@ -139,7 +147,6 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
             getMaxPlayers()
         ));
 
-        // Check if we should start countdown
         if (hasMinimumPlayers() && !countdown.isActive()) {
             setState(GameState.COUNTDOWN);
             countdown.start();
@@ -182,13 +189,14 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         UUID uuid = player.getUuid();
         boolean canRejoin = canPlayerRejoin(player);
 
-        // Store disconnect data
-        disconnectedPlayers.put(uuid, new DisconnectedPlayerData(
-            uuid,
-            player.getServerPlayer().getUsername(),
-            System.currentTimeMillis(),
-            savePlayerData(player)
-        ));
+        if (canRejoin) {
+            disconnectedPlayers.put(uuid, new DisconnectedPlayerData(
+                uuid,
+                player.getServerPlayer().getUsername(),
+                System.currentTimeMillis(),
+                savePlayerData(player)
+            ));
+        }
 
         players.remove(uuid);
 
@@ -228,7 +236,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
     @Override
     public void start() {
-        if (state == GameState.IN_PROGRESS) return;
+        if (state != GameState.WAITING && state != GameState.COUNTDOWN) return;
         if (countdown.isActive()) {
             countdown.terminate();
         }

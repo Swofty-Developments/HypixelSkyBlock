@@ -13,6 +13,7 @@ public class DefaultGameCountdown implements GameCountdownController {
 	private final CountdownConfig config;
 	private final Consumer<Object> eventDispatcher;
 	private final Runnable onComplete;
+	private final Runnable onCancelled;
 	private final CanStartCheck canStartCheck;
 
 	private int remainingSeconds;
@@ -30,7 +31,7 @@ public class DefaultGameCountdown implements GameCountdownController {
 	 *
 	 * @param gameId          The game ID for events
 	 * @param config          Countdown configuration
-	 * @param eventDispatcher Consumer that dispatches events (use HypixelEventHandler::callCustomEvent)
+	 * @param eventDispatcher event consumer, such as HypixelEventHandler::callCustomEvent
 	 * @param onComplete      Called when countdown completes
 	 * @param canStartCheck   Check if countdown should continue (e.g., has minimum players)
 	 */
@@ -41,10 +42,23 @@ public class DefaultGameCountdown implements GameCountdownController {
 		Runnable onComplete,
 		CanStartCheck canStartCheck
 	) {
+		this(gameId, config, eventDispatcher, onComplete, () -> {
+		}, canStartCheck);
+	}
+
+	public DefaultGameCountdown(
+		String gameId,
+		CountdownConfig config,
+		Consumer<Object> eventDispatcher,
+		Runnable onComplete,
+		Runnable onCancelled,
+		CanStartCheck canStartCheck
+	) {
 		this.gameId = gameId;
 		this.config = config;
 		this.eventDispatcher = eventDispatcher;
 		this.onComplete = onComplete;
+		this.onCancelled = onCancelled;
 		this.canStartCheck = canStartCheck;
 		this.remainingSeconds = config.durationSeconds();
 	}
@@ -59,7 +73,6 @@ public class DefaultGameCountdown implements GameCountdownController {
 		paused = false;
 		remainingSeconds = config.durationSeconds();
 
-		// Fire initial tick event
 		dispatchTickEvent();
 
 		countdownTask = MinecraftServer.getSchedulerManager()
@@ -138,6 +151,7 @@ public class DefaultGameCountdown implements GameCountdownController {
 
 		if (!canStartCheck.canContinue()) {
 			terminate();
+			onCancelled.run();
 			eventDispatcher.accept(new CountdownCancelledEvent(gameId, "§cWe don't have enough players! Start cancelled."));
 			return;
 		}
@@ -167,9 +181,4 @@ public class DefaultGameCountdown implements GameCountdownController {
 		}
 	}
 
-	public void checkConditions() {
-		if (active && !canStartCheck.canContinue()) {
-			terminate();
-		}
-	}
 }

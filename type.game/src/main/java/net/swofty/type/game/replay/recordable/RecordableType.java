@@ -103,8 +103,4 @@ public enum RecordableType {
 		return BY_ID.get(id);
 	}
 
-	public static void registerFactory(RecordableType type, Supplier<Recordable> factory) {
-		// This allows game modules to register their own recordable implementations
-		// For types like BED_DESTRUCTION that are game-specific
-	}
 }

@@ -1,8 +1,10 @@
 package net.swofty.type.game.game;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
- * Configuration for game countdown behavior.
- * Immutable record for clean configuration passing.
+ * Controls countdown timing and announcements.
  */
 public record CountdownConfig(
         int durationSeconds,
@@ -14,8 +16,26 @@ public record CountdownConfig(
             30,
             new int[]{30, 20, 15, 10, 5, 4, 3, 2, 1},
             10,
-            -1 // No acceleration by default
+        -1 // no accel
     );
+
+    public CountdownConfig {
+        if (durationSeconds < 0) {
+            throw new IllegalArgumentException("durationSeconds must not be negative");
+        }
+        if (acceleratedDurationSeconds < 0) {
+            throw new IllegalArgumentException("acceleratedDurationSeconds must not be negative");
+        }
+        announcementTimes = Arrays.copyOf(
+            Objects.requireNonNull(announcementTimes, "announcementTimes"),
+            announcementTimes.length
+        );
+    }
+
+    @Override
+    public int[] announcementTimes() {
+        return Arrays.copyOf(announcementTimes, announcementTimes.length);
+    }
 
     public static CountdownConfig simple(int durationSeconds) {
         return new CountdownConfig(durationSeconds, new int[]{10, 5, 4, 3, 2, 1}, durationSeconds, -1);
@@ -31,8 +51,10 @@ public record CountdownConfig(
     }
 
     public boolean shouldAnnounce(int seconds) {
-        for (int time : announcementTimes) {
-            if (seconds == time) return true;
+        for (int announcementTime : announcementTimes) {
+            if (announcementTime == seconds) {
+                return true;
+            }
         }
         return false;
     }

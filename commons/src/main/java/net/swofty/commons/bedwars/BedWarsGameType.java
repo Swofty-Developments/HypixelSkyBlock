@@ -55,7 +55,11 @@ public enum BedWarsGameType {
     ARMED_DOUBLES(12, "Armed", 2, 8, List.of(), true),
     ARMED_FOURS(12, "Armed", 4, 4, List.of(), true),
     CASTLE(9, "Castle", 40, 2, List.of(), true),
-    ONE_BLOCK(20, "One Block", 1, 8, List.of(), true),
+    ONE_BLOCK(20, "One Block", 1, 8, List.of(
+        "Every few seconds brings a new",
+        "surprise! Use these items to defend",
+        "your bed or destroy enemy beds."
+    ), true),
     LUCKY_BLOCK_DOUBLES(21, "Lucky V2 Doubles", 2, 8, List.of(
         "Find Lucky Blocks on your island",
         "generator and open them for",
@@ -180,7 +184,7 @@ public enum BedWarsGameType {
         };
     }
 
-    // if you would do the enum names correctly you could just use name() basically
+    // if you would do the enum names correctly, you could just use name() basically
     public String getQueueModeDisplayName() {
         return switch (this) {
             case ONE_EIGHT -> "Eight One";

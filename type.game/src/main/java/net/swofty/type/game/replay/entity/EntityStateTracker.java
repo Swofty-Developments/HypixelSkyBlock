@@ -13,12 +13,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-// this is slightly dumb but whatever - ARI
 public class EntityStateTracker {
     private final Map<Integer, Map<StateType, TreeMap<Integer, Recordable>>> states = new HashMap<>();
     private final Map<StateType, Recordable> defaultStates = new EnumMap<>(StateType.class);
 
-    // I don't know if I like this - ARI
     public enum StateType {
         LOCATION(RecordableType.ENTITY_LOCATIONS),
         EQUIPMENT_HELMET(RecordableType.ENTITY_EQUIPMENT),
@@ -67,7 +65,6 @@ public class EntityStateTracker {
             return defaultStates.get(stateType);
         }
 
-        // Get the floor entry (most recent at or before tick)
         Map.Entry<Integer, Recordable> entry = stateHistory.floorEntry(tick);
         if (entry == null) {
             return defaultStates.get(stateType);
@@ -98,7 +95,6 @@ public class EntityStateTracker {
 
         Map<StateType, TreeMap<Integer, Recordable>> entityStates = states.get(entityId);
         if (entityStates == null) {
-            // Return defaults
             for (StateType type : StateType.values()) {
                 Recordable def = defaultStates.get(type);
                 if (def != null) result.put(type, def);

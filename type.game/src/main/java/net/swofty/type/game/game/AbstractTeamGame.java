@@ -23,8 +23,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * Abstract base class for team-based games.
- * Extends AbstractGame with team management capabilities.
+ * Base game implementation with team assignment and team-based win conditions.
  *
  * @param <P> The player type
  * @param <T> The team type
@@ -49,9 +48,6 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
     @Override
     public Collection<T> getTeams() {
-        if (teams == null) {
-            return Collections.emptyList();
-        }
         return Collections.unmodifiableCollection(teams.values());
     }
 
@@ -143,7 +139,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
         for (P player : unassignedPlayers) {
             T targetTeam = teams.values().stream()
                 .filter(team -> team.getPlayerCount() < teamSize)
-                .max((left, right) -> {
+                .min((left, right) -> {
                     int byCount = Integer.compare(left.getPlayerCount(), right.getPlayerCount());
                     if (byCount != 0) {
                         return byCount;
@@ -151,15 +147,12 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
                     int leftPriority = teamPriority.getOrDefault(left.getId(), Integer.MAX_VALUE);
                     int rightPriority = teamPriority.getOrDefault(right.getId(), Integer.MAX_VALUE);
-                    return Integer.compare(rightPriority, leftPriority);
+                    return Integer.compare(leftPriority, rightPriority);
                 })
                 .orElse(null);
 
             if (targetTeam != null) {
-                // Remove from current team if any
                 removeFromTeam(player);
-
-                // Add to new team
                 targetTeam.addPlayer(player.getUuid());
                 playerTeams.put(player.getUuid(), targetTeam.getId());
 
