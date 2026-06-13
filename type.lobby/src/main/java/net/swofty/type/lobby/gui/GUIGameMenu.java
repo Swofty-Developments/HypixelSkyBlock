@@ -44,8 +44,7 @@ public class GUIGameMenu extends HypixelInventoryGUI implements RefreshingGUI {
         set(new GUIClickableItem(4) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
-                player.notImplemented();
-                player.sendTo(ServerType.PROTOTYPE_LOBBY); // for now
+                player.sendTo(ServerType.MAIN_LOBBY);
             }
 
             @Override
