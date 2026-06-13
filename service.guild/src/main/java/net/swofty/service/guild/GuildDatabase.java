@@ -13,6 +13,9 @@ import com.mongodb.client.model.Updates;
 import net.swofty.commons.guild.GuildData;
 import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.UUID;
 
@@ -23,7 +26,7 @@ public record GuildDatabase(String id) implements MongoDB {
     public static MongoCollection<Document> playerGuildCollection;
 
     @Override
-    public MongoDB connect(String connectionString) {
+    public @NonNull MongoDB connect(@NotNull String connectionString) {
         ConnectionString cs = new ConnectionString(connectionString);
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         client = MongoClients.create(settings);
@@ -37,13 +40,13 @@ public record GuildDatabase(String id) implements MongoDB {
         return this;
     }
 
-    public static GuildData getGuild(UUID guildId) {
+    public static GuildData getGuild(final @NotNull UUID guildId) {
         Document doc = guildCollection.find(Filters.eq("_id", guildId.toString())).first();
         if (doc == null) return null;
         return GuildData.getStaticSerializer().deserialize(doc.getString("data"));
     }
 
-    public static void saveGuild(GuildData guild) {
+    public static void saveGuild(final @NotNull GuildData guild) {
         String serialized = guild.getSerializer().serialize(guild);
         String guildId = guild.getGuildId().toString();
 
@@ -64,12 +67,12 @@ public record GuildDatabase(String id) implements MongoDB {
         }
     }
 
-    public static void deleteGuild(UUID guildId) {
+    public static void deleteGuild(@NotNull UUID guildId) {
         guildCollection.deleteOne(Filters.eq("_id", guildId.toString()));
         playerGuildCollection.deleteMany(Filters.eq("guildId", guildId.toString()));
     }
 
-    public static void mapPlayerToGuild(UUID playerUuid, UUID guildId) {
+    public static void mapPlayerToGuild(@NotNull UUID playerUuid, @NotNull UUID guildId) {
         String playerId = playerUuid.toString();
         Document query = new Document("_id", playerId);
         Document existing = playerGuildCollection.find(query).first();
@@ -83,35 +86,35 @@ public record GuildDatabase(String id) implements MongoDB {
         }
     }
 
-    public static void removePlayerMapping(UUID playerUuid) {
+    public static void removePlayerMapping(@NotNull UUID playerUuid) {
         playerGuildCollection.deleteOne(Filters.eq("_id", playerUuid.toString()));
     }
 
-    public static UUID getPlayerGuildId(UUID playerUuid) {
+    public static UUID getPlayerGuildId(@NotNull UUID playerUuid) {
         Document doc = playerGuildCollection.find(Filters.eq("_id", playerUuid.toString())).first();
         if (doc == null) return null;
         String guildId = doc.getString("guildId");
         return guildId != null ? UUID.fromString(guildId) : null;
     }
 
-    public static boolean guildNameExists(String name) {
+    public static boolean guildNameExists(@NotNull String name) {
         return guildCollection.find(Filters.eq("name", name.toLowerCase())).first() != null;
     }
 
     @Override
-    public void set(String key, Object value) {
+    public void set(@NotNull String key, @Nullable Object value) {
         insertOrUpdate(key, value);
     }
 
     @Override
-    public Object get(String key, Object def) {
+    public Object get(@NotNull String key, @Nullable Object def) {
         Document doc = guildCollection.find(Filters.eq("_id", id)).first();
         if (doc == null) return def;
         return doc.get(key);
     }
 
     @Override
-    public void insertOrUpdate(String key, Object value) {
+    public void insertOrUpdate(@NonNull String key, Object value) {
         if (exists()) {
             Document query = new Document("_id", id);
             Document found = guildCollection.find(query).first();
@@ -125,7 +128,7 @@ public record GuildDatabase(String id) implements MongoDB {
     }
 
     @Override
-    public boolean remove(String id) {
+    public boolean remove(@NonNull String id) {
         Document query = new Document("_id", id);
         Document found = guildCollection.find(query).first();
         if (found == null) return false;

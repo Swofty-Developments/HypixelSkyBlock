@@ -21,7 +21,7 @@ public class GuildEventToServiceEndpoint implements ServiceEndpoint<
         ServiceProxyRequest message,
         SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage messageObject) {
         GuildEvent template = GuildEvent.findFromType(messageObject.eventType());
-        GuildEvent event = (GuildEvent) template.getSerializer().deserialize(messageObject.eventData());
+        GuildEvent event = template.getSerializer().deserialize(messageObject.eventData());
 
         switch (event) {
             case GuildCreateRequestEvent e -> GuildCache.handleCreateRequest(e);
