@@ -209,7 +209,44 @@ public class HypixelDataHandler extends DataHandler {
         CHAT_TYPE("chat_type", DatapointChatType.class,
                 new DatapointChatType("chat_type", new DatapointChatType.ChatType(DatapointChatType.Chats.ALL))),
 
-        LOCALE("locale", DatapointLocale.class, new DatapointLocale("locale", new DatapointLocale.LocaleType(DatapointLocale.SupportedLocale.ENGLISH))),
+        LOCALE("locale",
+            DatapointLocale.class,
+            new DatapointLocale(
+                "locale",
+                new DatapointLocale.LocaleType(DatapointLocale.SupportedLocale.UNSET)
+            ),
+            (player, datapoint) -> {
+                DatapointLocale localeDatapoint = (DatapointLocale) datapoint;
+                DatapointLocale.LocaleType localeType = localeDatapoint.getValue();
+
+                if (localeType.getCurrentLocale() == DatapointLocale.SupportedLocale.UNSET) {
+                    return;
+                }
+
+                player.setLocale(localeType.getCurrentLocale().getLocale());
+            },
+            (player, datapoint) -> {
+                DatapointLocale localeDatapoint = (DatapointLocale) datapoint;
+                DatapointLocale.LocaleType localeType = localeDatapoint.getValue();
+
+                if (localeType.getCurrentLocale() == DatapointLocale.SupportedLocale.UNSET) {
+                    localeDatapoint.setValue(
+                        new DatapointLocale.LocaleType(
+                            DatapointLocale.SupportedLocale.fromLocale(player.getLocale())
+                        )
+                    );
+                    return;
+                }
+
+                player.setLocale(localeType.getCurrentLocale().getLocale());
+            },
+            player -> new DatapointLocale(
+                "locale",
+                new DatapointLocale.LocaleType(
+                    DatapointLocale.SupportedLocale.fromLocale(player.getLocale())
+                )
+            )
+        ),
 
         TOGGLES("toggles", DatapointToggles.class, new DatapointToggles("toggles")),
 

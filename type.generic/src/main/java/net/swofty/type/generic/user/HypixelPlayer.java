@@ -6,7 +6,6 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.entity.Entity;
@@ -78,8 +77,7 @@ public class HypixelPlayer extends Player {
 	}
 
 	public void notImplemented() {
-		sendMessage(Component.text("§cThis feature hasn't been implemented yet. §aOpen a Pull Request HERE to get it added quickly!")
-			.clickEvent(ClickEvent.openUrl("https://github.com/Swofty-Developments/HypixelSkyBlock")));
+		sendMessage(I18n.t("general.not_iplemented"));
 	}
 
 	public static String getDisplayName(UUID uuid) {
