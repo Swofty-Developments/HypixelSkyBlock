@@ -44,8 +44,8 @@ public class GuildInviteSentResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildInviteSentResponseEvent(guild,
-                        UUID.fromString(obj.getString("inviter")),
-                        UUID.fromString(obj.getString("invitee")));
+                    UUID.fromString(obj.getString("inviter")),
+                    UUID.fromString(obj.getString("invitee")));
             }
 
             @Override

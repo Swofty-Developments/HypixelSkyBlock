@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import java.util.UUID;
 
 public class GetGuildProtocolObject extends ProtocolObject
-        <GetGuildProtocolObject.GetGuildMessage,
-                GetGuildProtocolObject.GetGuildResponse> {
+    <GetGuildProtocolObject.GetGuildMessage,
+        GetGuildProtocolObject.GetGuildResponse> {
 
     @Override
     public Serializer<GetGuildMessage> getSerializer() {
@@ -61,6 +61,9 @@ public class GetGuildProtocolObject extends ProtocolObject
         };
     }
 
-    public record GetGuildMessage(UUID memberUUID) { }
-    public record GetGuildResponse(GuildData guild) { }
+    public record GetGuildMessage(UUID memberUUID) {
+    }
+
+    public record GetGuildResponse(GuildData guild) {
+    }
 }

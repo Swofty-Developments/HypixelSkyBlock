@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import java.util.UUID;
 
 public class IsPlayerInGuildProtocolObject extends ProtocolObject
-        <IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage,
-                IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse> {
+    <IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage,
+        IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse> {
 
     @Override
     public Serializer<IsPlayerInGuildMessage> getSerializer() {
@@ -50,6 +50,9 @@ public class IsPlayerInGuildProtocolObject extends ProtocolObject
         };
     }
 
-    public record IsPlayerInGuildMessage(UUID playerUUID) { }
-    public record IsPlayerInGuildResponse(boolean isInGuild) { }
+    public record IsPlayerInGuildMessage(UUID playerUUID) {
+    }
+
+    public record IsPlayerInGuildResponse(boolean isInGuild) {
+    }
 }

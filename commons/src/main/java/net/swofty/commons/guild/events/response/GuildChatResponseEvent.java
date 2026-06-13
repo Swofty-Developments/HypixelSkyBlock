@@ -39,9 +39,9 @@ public class GuildChatResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildChatResponseEvent(guild,
-                        UUID.fromString(obj.getString("sender")),
-                        obj.getString("message"),
-                        obj.getBoolean("officerChat"));
+                    UUID.fromString(obj.getString("sender")),
+                    obj.getString("message"),
+                    obj.getBoolean("officerChat"));
             }
 
             @Override

@@ -36,8 +36,8 @@ public class GuildTransferredResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildTransferredResponseEvent(guild,
-                        UUID.fromString(obj.getString("oldOwner")),
-                        UUID.fromString(obj.getString("newOwner")));
+                    UUID.fromString(obj.getString("oldOwner")),
+                    UUID.fromString(obj.getString("newOwner")));
             }
 
             @Override

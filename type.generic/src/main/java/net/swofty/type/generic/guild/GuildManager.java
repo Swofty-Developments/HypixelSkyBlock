@@ -20,19 +20,19 @@ public class GuildManager {
     public static boolean isInGuild(HypixelPlayer player) {
         if (!guildService.isOnline().join()) return false;
         return guildService.<IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage,
-                        IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse>handleRequest(
-                        new IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage(player.getUuid()))
-                .thenApply(IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse::isInGuild)
-                .join();
+                IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse>handleRequest(
+                new IsPlayerInGuildProtocolObject.IsPlayerInGuildMessage(player.getUuid()))
+            .thenApply(IsPlayerInGuildProtocolObject.IsPlayerInGuildResponse::isInGuild)
+            .join();
     }
 
     public static @Nullable GuildData getGuildFromPlayer(HypixelPlayer player) {
         if (!guildService.isOnline().join()) return null;
         return guildService.<GetGuildProtocolObject.GetGuildMessage,
-                        GetGuildProtocolObject.GetGuildResponse>handleRequest(
-                        new GetGuildProtocolObject.GetGuildMessage(player.getUuid()))
-                .thenApply(GetGuildProtocolObject.GetGuildResponse::guild)
-                .join();
+                GetGuildProtocolObject.GetGuildResponse>handleRequest(
+                new GetGuildProtocolObject.GetGuildMessage(player.getUuid()))
+            .thenApply(GetGuildProtocolObject.GetGuildResponse::guild)
+            .join();
     }
 
     public static void createGuild(HypixelPlayer creator, String guildName) {

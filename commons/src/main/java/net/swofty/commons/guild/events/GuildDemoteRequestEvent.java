@@ -39,8 +39,8 @@ public class GuildDemoteRequestEvent extends GuildEvent {
             public GuildDemoteRequestEvent deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GuildDemoteRequestEvent(
-                        UUID.fromString(obj.getString("demoter")),
-                        UUID.fromString(obj.getString("target"))
+                    UUID.fromString(obj.getString("demoter")),
+                    UUID.fromString(obj.getString("target"))
                 );
             }
 

@@ -39,8 +39,8 @@ public class GuildAcceptInviteRequestEvent extends GuildEvent {
             public GuildAcceptInviteRequestEvent deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GuildAcceptInviteRequestEvent(
-                        UUID.fromString(obj.getString("accepter")),
-                        UUID.fromString(obj.getString("inviter"))
+                    UUID.fromString(obj.getString("accepter")),
+                    UUID.fromString(obj.getString("inviter"))
                 );
             }
 

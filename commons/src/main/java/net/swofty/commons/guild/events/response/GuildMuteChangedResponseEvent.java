@@ -42,10 +42,10 @@ public class GuildMuteChangedResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildMuteChangedResponseEvent(guild,
-                        UUID.fromString(obj.getString("muter")),
-                        obj.getString("target"),
-                        obj.getLong("duration"),
-                        obj.getBoolean("unmute"));
+                    UUID.fromString(obj.getString("muter")),
+                    obj.getString("target"),
+                    obj.getLong("duration"),
+                    obj.getBoolean("unmute"));
             }
 
             @Override

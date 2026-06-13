@@ -19,9 +19,17 @@ public class GuildKickRequestEvent extends GuildEvent {
         this.reason = reason;
     }
 
-    public UUID getKicker() { return kicker; }
-    public UUID getTarget() { return target; }
-    public String getReason() { return reason; }
+    public UUID getKicker() {
+        return kicker;
+    }
+
+    public UUID getTarget() {
+        return target;
+    }
+
+    public String getReason() {
+        return reason;
+    }
 
     @Override
     public List<UUID> getParticipants() {
@@ -44,9 +52,9 @@ public class GuildKickRequestEvent extends GuildEvent {
             public GuildKickRequestEvent deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GuildKickRequestEvent(
-                        UUID.fromString(obj.getString("kicker")),
-                        UUID.fromString(obj.getString("target")),
-                        obj.getString("reason")
+                    UUID.fromString(obj.getString("kicker")),
+                    UUID.fromString(obj.getString("target")),
+                    obj.getString("reason")
                 );
             }
 

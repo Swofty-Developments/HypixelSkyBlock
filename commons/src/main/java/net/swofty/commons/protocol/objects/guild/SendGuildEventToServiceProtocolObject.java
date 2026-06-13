@@ -6,7 +6,7 @@ import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
 
 public class SendGuildEventToServiceProtocolObject extends ProtocolObject
-        <SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage,
+    <SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage,
         SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse> {
 
     @Override
@@ -56,6 +56,9 @@ public class SendGuildEventToServiceProtocolObject extends ProtocolObject
         };
     }
 
-    public record SendGuildEventToServiceMessage(GuildEvent event) { }
-    public record SendGuildEventToServiceResponse(boolean success) { }
+    public record SendGuildEventToServiceMessage(GuildEvent event) {
+    }
+
+    public record SendGuildEventToServiceResponse(boolean success) {
+    }
 }

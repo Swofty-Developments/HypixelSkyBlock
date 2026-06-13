@@ -42,8 +42,8 @@ public class GuildInviteExpiredResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildInviteExpiredResponseEvent(guild,
-                        UUID.fromString(obj.getString("inviter")),
-                        UUID.fromString(obj.getString("invitee")));
+                    UUID.fromString(obj.getString("inviter")),
+                    UUID.fromString(obj.getString("invitee")));
             }
 
             @Override

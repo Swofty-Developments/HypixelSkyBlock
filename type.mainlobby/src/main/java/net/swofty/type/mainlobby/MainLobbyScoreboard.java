@@ -49,10 +49,10 @@ public class MainLobbyScoreboard {
                 lines.add(I18n.t("scoreboard.main_lobby.level", Argument.tagResolver(Formatter.number("level", player.getLevel()))));
                 lines.add(Component.space());
                 lines.add(I18n.t("scoreboard.main_lobby.lobby", Argument.tagResolver(Formatter.number("no", 0)))); // TODO: what lobby is this?
-                lines.add(I18n.t("scoreboard.main_lobby.online_players", Argument.tagResolver(Formatter.number("players", HypixelGenericLoader.getLoadedPlayers().size()))));
+                lines.add(I18n.t("scoreboard.main_lobby.online_players", Argument.tagResolver(Formatter.number("players", HypixelGenericLoader.getLoadedPlayers().size())))); // TODO: whole network
                 lines.add(Component.space());
-                lines.add(I18n.t("scoreboard.main_lobby.friends_online", Argument.tagResolver(Formatter.number("friends", 0))));
-                lines.add(I18n.t("scoreboard.main_lobby.guild_online", Argument.tagResolver(Formatter.number("guilds", 0))));
+                lines.add(I18n.t("scoreboard.main_lobby.friends_online", Argument.tagResolver(Formatter.number("friends", 0)))); // TODO: friends
+                lines.add(I18n.t("scoreboard.main_lobby.guild_online", Argument.tagResolver(Formatter.number("guilds", 0)))); // TODO: guilds
                 lines.add(I18n.t("scoreboard.common.footer"));
 
                 if (!scoreboard.hasScoreboard(player)) {

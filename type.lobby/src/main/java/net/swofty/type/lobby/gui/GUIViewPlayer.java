@@ -27,11 +27,11 @@ public class GUIViewPlayer extends StatelessView {
             "§7Guild: §bNONE"
         ));
         layout.slot(22, ItemStackCreator.getStackHead(
-                "§aSocial Media",
-                "3685a0be743e9067de95cd8c6d1ba21ab21d37371b3d597211bb75e43279",
-                1,
-                "§7Click to view Player's Social Media",
-                "§7links."
+            "§aSocial Media",
+            "3685a0be743e9067de95cd8c6d1ba21ab21d37371b3d597211bb75e43279",
+            1,
+            "§7Click to view Player's Social Media",
+            "§7links."
         ));
         layout.slot(23, ItemStackCreator.getStack(
             "§aReport " + ctx.player().getUsername(),

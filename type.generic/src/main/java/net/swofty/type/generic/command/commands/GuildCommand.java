@@ -19,10 +19,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @CommandParameters(aliases = "g",
-        description = "Guild management commands",
-        usage = "/guild <subcommand>",
-        permission = Rank.DEFAULT,
-        allowsConsole = false)
+    description = "Guild management commands",
+    usage = "/guild <subcommand>",
+    permission = Rank.DEFAULT,
+    allowsConsole = false)
 public class GuildCommand extends HypixelCommand {
     private final List<UUID> pendingCommands = new ArrayList<>();
 
@@ -189,8 +189,8 @@ public class GuildCommand extends HypixelCommand {
         player.sendMessage("§9§m-----------------------------------------------------");
         player.sendMessage("§6Guild Members - §a" + guild.getMembers().size());
         String memberList = guild.getMembers().stream()
-                .map(m -> HypixelPlayer.getDisplayName(m.getUuid()))
-                .collect(Collectors.joining("§7, "));
+            .map(m -> HypixelPlayer.getDisplayName(m.getUuid()))
+            .collect(Collectors.joining("§7, "));
         player.sendMessage(memberList);
         player.sendMessage("§9§m-----------------------------------------------------");
     }

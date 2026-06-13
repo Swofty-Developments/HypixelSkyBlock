@@ -17,8 +17,13 @@ public class GuildCreateRequestEvent extends GuildEvent {
         this.guildName = guildName;
     }
 
-    public UUID getCreator() { return creator; }
-    public String getGuildName() { return guildName; }
+    public UUID getCreator() {
+        return creator;
+    }
+
+    public String getGuildName() {
+        return guildName;
+    }
 
     @Override
     public List<UUID> getParticipants() {
@@ -40,8 +45,8 @@ public class GuildCreateRequestEvent extends GuildEvent {
             public GuildCreateRequestEvent deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GuildCreateRequestEvent(
-                        UUID.fromString(obj.getString("creator")),
-                        obj.getString("guildName")
+                    UUID.fromString(obj.getString("creator")),
+                    obj.getString("guildName")
                 );
             }
 

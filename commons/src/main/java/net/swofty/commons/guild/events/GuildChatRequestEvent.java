@@ -42,9 +42,9 @@ public class GuildChatRequestEvent extends GuildEvent {
             public GuildChatRequestEvent deserialize(String json) {
                 JSONObject obj = new JSONObject(json);
                 return new GuildChatRequestEvent(
-                        UUID.fromString(obj.getString("sender")),
-                        obj.getString("message"),
-                        obj.getBoolean("officerChat")
+                    UUID.fromString(obj.getString("sender")),
+                    obj.getString("message"),
+                    obj.getBoolean("officerChat")
                 );
             }
 

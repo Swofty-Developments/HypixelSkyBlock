@@ -47,9 +47,9 @@ public class GuildMemberKickedResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildMemberKickedResponseEvent(guild,
-                        UUID.fromString(obj.getString("kicker")),
-                        UUID.fromString(obj.getString("kicked")),
-                        obj.getString("reason"));
+                    UUID.fromString(obj.getString("kicker")),
+                    UUID.fromString(obj.getString("kicked")),
+                    obj.getString("reason"));
             }
 
             @Override

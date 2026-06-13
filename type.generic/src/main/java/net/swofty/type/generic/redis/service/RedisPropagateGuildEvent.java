@@ -33,8 +33,8 @@ public class RedisPropagateGuildEvent implements ServiceToClient {
             JSONArray participantsArray = message.getJSONArray("participants");
 
             List<UUID> participants = participantsArray.toList().stream()
-                    .map(obj -> UUID.fromString(obj.toString()))
-                    .toList();
+                .map(obj -> UUID.fromString(obj.toString()))
+                .toList();
 
             GuildEvent event = parseEvent(eventType, eventData);
             if (event == null) {
@@ -64,9 +64,9 @@ public class RedisPropagateGuildEvent implements ServiceToClient {
 
         for (UUID participantUUID : participants) {
             HypixelPlayer player = HypixelGenericLoader.getLoadedPlayers().stream()
-                    .filter(p -> p.getUuid().equals(participantUUID))
-                    .findFirst()
-                    .orElse(null);
+                .filter(p -> p.getUuid().equals(participantUUID))
+                .findFirst()
+                .orElse(null);
 
             if (player != null) {
                 try {
@@ -134,7 +134,7 @@ public class RedisPropagateGuildEvent implements ServiceToClient {
     private void handleMemberKicked(HypixelPlayer player, GuildMemberKickedResponseEvent event) {
         if (event.getKicked().equals(player.getUuid())) {
             String reason = event.getReason() != null && !event.getReason().isEmpty()
-                    ? " §7Reason: §f" + event.getReason() : "";
+                ? " §7Reason: §f" + event.getReason() : "";
             sendMessage(player, "§cYou have been kicked from the guild!" + reason);
         } else {
             sendMessage(player, HypixelPlayer.getDisplayName(event.getKicker()) + " §ekicked " + HypixelPlayer.getDisplayName(event.getKicked()) + " §efrom the guild!");

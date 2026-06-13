@@ -39,9 +39,9 @@ public class GuildSettingChangedResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildSettingChangedResponseEvent(guild,
-                        UUID.fromString(obj.getString("changer")),
-                        obj.getString("setting"),
-                        obj.getString("value"));
+                    UUID.fromString(obj.getString("changer")),
+                    obj.getString("setting"),
+                    obj.getString("value"));
             }
 
             @Override

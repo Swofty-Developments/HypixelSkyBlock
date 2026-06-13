@@ -42,10 +42,10 @@ public class GuildRankChangedResponseEvent extends GuildResponseEvent {
                 JSONObject obj = new JSONObject(json);
                 GuildData guild = GuildData.getStaticSerializer().deserialize(obj.getString("guild"));
                 return new GuildRankChangedResponseEvent(guild,
-                        UUID.fromString(obj.getString("changer")),
-                        UUID.fromString(obj.getString("target")),
-                        obj.getString("fromRank"),
-                        obj.getString("toRank"));
+                    UUID.fromString(obj.getString("changer")),
+                    UUID.fromString(obj.getString("target")),
+                    obj.getString("fromRank"),
+                    obj.getString("toRank"));
             }
 
             @Override
