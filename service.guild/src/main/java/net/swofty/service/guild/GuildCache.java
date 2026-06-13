@@ -528,18 +528,18 @@ public class GuildCache {
     }
 
     public static void handleUnmuteRequest(GuildUnmuteRequestEvent event) {
-        UUID unmuter = event.getUnmuter();
+        UUID actor = event.getActor();
         String target = event.getTarget();
 
-        GuildData guild = getGuildFromPlayer(unmuter);
+        GuildData guild = getGuildFromPlayer(actor);
         if (guild == null) {
-            sendErrorToPlayer(unmuter, "§cYou are not in a guild!");
+            sendErrorToPlayer(actor, "§cYou are not in a guild!");
             return;
         }
 
-        GuildRank unmuterRank = guild.getMemberRank(unmuter);
-        if (unmuterRank == null || !unmuterRank.hasPermission(GuildPermission.MUTE_MEMBERS)) {
-            sendErrorToPlayer(unmuter, "§cYou do not have permission to unmute guild members!");
+        GuildRank actorRank = guild.getMemberRank(actor);
+        if (actorRank == null || !actorRank.hasPermission(GuildPermission.MUTE_MEMBERS)) {
+            sendErrorToPlayer(actor, "§cYou do not have permission to unmute guild members!");
             return;
         }
 
@@ -550,7 +550,7 @@ public class GuildCache {
             UUID targetUUID = UUID.fromString(target);
             GuildMember member = guild.getMember(targetUUID);
             if (member == null) {
-                sendErrorToPlayer(unmuter, "§cThat player is not in your guild!");
+                sendErrorToPlayer(actor, "§cThat player is not in your guild!");
                 return;
             }
             member.setMutedUntil(0);
@@ -558,7 +558,7 @@ public class GuildCache {
 
         persistGuild(guild);
 
-        GuildMuteChangedResponseEvent response = new GuildMuteChangedResponseEvent(guild, unmuter, target, 0, true);
+        GuildMuteChangedResponseEvent response = new GuildMuteChangedResponseEvent(guild, actor, target, 0, true);
         sendEvent(response);
     }
 

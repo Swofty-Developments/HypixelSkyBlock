@@ -3,6 +3,7 @@ package net.swofty.commons.guild.events;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.swofty.commons.guild.GuildEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,10 +11,10 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor(force = true)
 public class GuildInviteRequestEvent extends GuildEvent {
-    private final UUID inviter;
-    private final UUID invitee;
+    private final @NotNull UUID inviter;
+    private final @NotNull UUID invitee;
 
-    public GuildInviteRequestEvent(UUID inviter, UUID invitee) {
+    public GuildInviteRequestEvent(@NotNull UUID inviter, @NotNull UUID invitee) {
         super(null);
         this.inviter = inviter;
         this.invitee = invitee;
