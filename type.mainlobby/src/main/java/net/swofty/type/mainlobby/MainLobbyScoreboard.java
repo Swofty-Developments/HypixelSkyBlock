@@ -44,15 +44,15 @@ public class MainLobbyScoreboard {
                 List<Component> lines = new ArrayList<>();
                 lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
                 lines.add(Component.space());
-                lines.add(I18n.t("scoreboard.main_lobby.rank", player.getRank().getPrefixComponent()));
+                lines.add(I18n.t("scoreboard.main_lobby.rank", player.getRankTitle()));
                 lines.add(I18n.t("scoreboard.main_lobby.achievements", Argument.tagResolver(Formatter.number("no", player.getAchievementHandler().getTotalUnlockedCount()))));
                 lines.add(I18n.t("scoreboard.main_lobby.level", Argument.tagResolver(Formatter.number("level", player.getLevel()))));
                 lines.add(Component.space());
                 lines.add(I18n.t("scoreboard.main_lobby.lobby", Argument.tagResolver(Formatter.number("no", 0)))); // TODO: what lobby is this?
-                lines.add(I18n.t("scoreboard.main_lobby.online_players", Argument.tagResolver(Formatter.number("players", HypixelGenericLoader.getLoadedPlayers().size()))));
+                lines.add(I18n.t("scoreboard.main_lobby.online_players", Argument.tagResolver(Formatter.number("players", HypixelGenericLoader.getLoadedPlayers().size())))); // TODO: whole network
                 lines.add(Component.space());
-                lines.add(I18n.t("scoreboard.main_lobby.friends_online", Argument.tagResolver(Formatter.number("friends", 0))));
-                lines.add(I18n.t("scoreboard.main_lobby.guild_online", Argument.tagResolver(Formatter.number("guilds", 0))));
+                lines.add(I18n.t("scoreboard.main_lobby.friends_online", Argument.tagResolver(Formatter.number("friends", 0)))); // TODO: friends
+                lines.add(I18n.t("scoreboard.main_lobby.guild_online", Argument.tagResolver(Formatter.number("guilds", 0)))); // TODO: guilds
                 lines.add(I18n.t("scoreboard.common.footer"));
 
                 if (!scoreboard.hasScoreboard(player)) {

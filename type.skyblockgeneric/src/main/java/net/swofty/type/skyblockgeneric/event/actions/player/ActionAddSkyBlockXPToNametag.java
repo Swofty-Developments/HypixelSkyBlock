@@ -34,10 +34,8 @@ public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
 
         String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
         Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
-                .prefix(Component.text(
-                        "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
-                                rank.getPrefix()
-                ))
+            .prefix(Component.text("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] ")
+                .append(player.getRankPrefix()))
                 .teamColor(rank.getTextColor())
                 .build();
         player.setTeam(team);

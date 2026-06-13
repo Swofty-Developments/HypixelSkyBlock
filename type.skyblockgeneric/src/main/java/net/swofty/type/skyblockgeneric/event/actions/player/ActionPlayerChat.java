@@ -76,9 +76,9 @@ public class ActionPlayerChat implements HypixelEventClass {
                     onlinePlayer.sendMessage(player.getFullDisplayName() + "§f: " + finalMessage);
             else
                 if (rank.equals(Rank.DEFAULT))
-                    onlinePlayer.sendMessage(rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
+                    onlinePlayer.sendMessage(player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
                 else
-                    onlinePlayer.sendMessage(rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
+                    onlinePlayer.sendMessage(player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
         });
     }
 }

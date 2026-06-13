@@ -37,6 +37,6 @@ public class NPCAllGames extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
-        new GUIGameMenu().open(event.player());
+        event.player().openView(new GUIGameMenu());
     }
 }

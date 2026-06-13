@@ -67,7 +67,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 		if (game.getState().isWaiting()) {
 			String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
-			game.getPlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage));
+			game.getPlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(player.getLegacyRankPrefix() + player.getUsername() + textColor + ": " + finalMessage));
 			return;
 		}
 
@@ -85,6 +85,6 @@ public class ActionPlayerChat implements HypixelEventClass {
 		String levelPrefix = BedWarsPrestigeRenderer.renderBrackets(player) + " ";
 		String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
-		receivers.forEach(onlinePlayer -> onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage));
+		receivers.forEach(onlinePlayer -> onlinePlayer.sendMessage(levelPrefix + player.getLegacyRankPrefix() + player.getUsername() + textColor + ": " + finalMessage));
 	}
 }
