@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildSetRankRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID setter;
+    private UUID setter;
     @NotNull
-    private final UUID target;
+    private UUID target;
     @NotNull
-    private final String rankName;
+    private String rankName;
 
     public GuildSetRankRequestEvent(@NotNull UUID setter, @NotNull UUID target, @NotNull String rankName) {
         super(null);

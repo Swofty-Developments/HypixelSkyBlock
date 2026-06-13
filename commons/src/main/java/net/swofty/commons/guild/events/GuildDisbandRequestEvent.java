@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildDisbandRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID disbander;
+    private UUID disbander;
 
     public GuildDisbandRequestEvent(@NotNull UUID disbander) {
         super(null);

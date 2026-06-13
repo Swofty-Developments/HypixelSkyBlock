@@ -8,10 +8,10 @@ import net.swofty.commons.guild.GuildResponseEvent;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildTransferredResponseEvent extends GuildResponseEvent {
-    private final UUID oldOwner;
-    private final UUID newOwner;
+    private UUID oldOwner;
+    private UUID newOwner;
 
     public GuildTransferredResponseEvent(GuildData guild, UUID oldOwner, UUID newOwner) {
         super(guild);

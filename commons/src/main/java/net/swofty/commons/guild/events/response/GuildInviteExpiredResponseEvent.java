@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildInviteExpiredResponseEvent extends GuildResponseEvent {
-    private final UUID inviter;
-    private final UUID invitee;
+    private UUID inviter;
+    private UUID invitee;
 
     public GuildInviteExpiredResponseEvent(GuildData guild, UUID inviter, UUID invitee) {
         super(guild);

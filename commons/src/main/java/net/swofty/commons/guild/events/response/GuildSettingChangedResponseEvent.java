@@ -8,11 +8,11 @@ import net.swofty.commons.guild.GuildResponseEvent;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildSettingChangedResponseEvent extends GuildResponseEvent {
-    private final UUID changer;
-    private final String setting;
-    private final String value;
+    private UUID changer;
+    private String setting;
+    private String value;
 
     public GuildSettingChangedResponseEvent(GuildData guild, UUID changer, String setting, String value) {
         super(guild);

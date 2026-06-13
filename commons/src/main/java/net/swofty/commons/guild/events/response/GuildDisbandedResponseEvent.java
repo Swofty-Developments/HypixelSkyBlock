@@ -8,9 +8,9 @@ import net.swofty.commons.guild.GuildResponseEvent;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildDisbandedResponseEvent extends GuildResponseEvent {
-    private final UUID disbander;
+    private UUID disbander;
 
     public GuildDisbandedResponseEvent(GuildData guild, UUID disbander) {
         super(guild);

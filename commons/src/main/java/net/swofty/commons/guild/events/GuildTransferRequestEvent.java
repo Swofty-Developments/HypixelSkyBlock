@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildTransferRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID currentOwner;
+    private UUID currentOwner;
     @NotNull
-    private final UUID newOwner;
+    private UUID newOwner;
 
     public GuildTransferRequestEvent(@NotNull UUID currentOwner, @NotNull UUID newOwner) {
         super(null);

@@ -1,25 +1,30 @@
 package net.swofty.commons.guild.events;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import net.swofty.commons.guild.GuildEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
 public class GuildCreateRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID creator;
+    private UUID creator;
     @NotNull
-    private final String guildName;
+    private String guildName;
 
-    public GuildCreateRequestEvent(final @NotNull UUID creator, final @NotNull String guildName) {
+    @JsonCreator
+    public GuildCreateRequestEvent(
+        @JsonProperty("creator") final @NotNull UUID creator,
+        @JsonProperty("guildName") final @NotNull String guildName
+    ) {
         super(null);
-        this.creator = creator;
-        this.guildName = guildName;
+        this.creator = Objects.requireNonNull(creator, "creator");
+        this.guildName = Objects.requireNonNull(guildName, "guildName");
     }
 
     @Override

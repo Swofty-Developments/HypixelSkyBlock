@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildDemoteRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID demoter;
+    private UUID demoter;
     @NotNull
-    private final UUID target;
+    private UUID target;
 
     public GuildDemoteRequestEvent(@NotNull UUID demoter, @NotNull UUID target) {
         super(null);

@@ -8,12 +8,12 @@ import net.swofty.commons.guild.GuildResponseEvent;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildMuteChangedResponseEvent extends GuildResponseEvent {
-    private final UUID muter;
-    private final String target;
-    private final long duration;
-    private final boolean unmute;
+    private UUID muter;
+    private String target;
+    private long duration;
+    private boolean unmute;
 
     public GuildMuteChangedResponseEvent(GuildData guild, UUID muter, String target, long duration, boolean unmute) {
         super(guild);

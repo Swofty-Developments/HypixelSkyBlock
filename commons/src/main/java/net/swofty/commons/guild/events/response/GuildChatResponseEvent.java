@@ -8,11 +8,11 @@ import net.swofty.commons.guild.GuildResponseEvent;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildChatResponseEvent extends GuildResponseEvent {
-    private final UUID sender;
-    private final String message;
-    private final boolean officerChat;
+    private UUID sender;
+    private String message;
+    private boolean officerChat;
 
     public GuildChatResponseEvent(GuildData guild, UUID sender, String message, boolean officerChat) {
         super(guild);

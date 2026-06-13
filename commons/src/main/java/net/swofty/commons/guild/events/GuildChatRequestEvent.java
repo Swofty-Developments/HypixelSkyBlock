@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildChatRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID sender;
+    private UUID sender;
     @NotNull
-    private final String message;
-    private final boolean officerChat;
+    private String message;
+    private boolean officerChat;
 
     public GuildChatRequestEvent(@NotNull UUID sender, @NotNull String message, boolean officerChat) {
         super(null);

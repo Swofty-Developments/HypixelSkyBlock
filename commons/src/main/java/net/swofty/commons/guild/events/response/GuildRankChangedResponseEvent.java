@@ -8,12 +8,12 @@ import net.swofty.commons.guild.GuildResponseEvent;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildRankChangedResponseEvent extends GuildResponseEvent {
-    private final UUID changer;
-    private final UUID target;
-    private final String fromRank;
-    private final String toRank;
+    private UUID changer;
+    private UUID target;
+    private String fromRank;
+    private String toRank;
 
     public GuildRankChangedResponseEvent(GuildData guild, UUID changer, UUID target, String fromRank, String toRank) {
         super(guild);

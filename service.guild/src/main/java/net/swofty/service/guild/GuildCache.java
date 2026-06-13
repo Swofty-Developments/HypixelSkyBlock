@@ -15,6 +15,7 @@ import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,13 +31,21 @@ public class GuildCache {
     private static final Map<UUID, Long> lastChatTimestamps = new ConcurrentHashMap<>();
 
     public static boolean isInGuild(final @NotNull UUID playerUUID) {
-        return GuildDatabase.getPlayerGuildId(playerUUID) != null;
+        Objects.requireNonNull(playerUUID, "playerUUID cannot be null");
+
+        return getGuildFromPlayer(playerUUID) != null;
     }
 
     public static GuildData getGuildFromPlayer(final @NotNull UUID playerUUID) {
+        Objects.requireNonNull(playerUUID, "playerUUID cannot be null");
+
         UUID guildId = GuildDatabase.getPlayerGuildId(playerUUID);
         if (guildId == null) return null;
-        return getGuild(guildId);
+        GuildData guild = getGuild(guildId);
+        if (guild == null) {
+            GuildDatabase.removePlayerMapping(playerUUID);
+        }
+        return guild;
     }
 
     public static GuildData getGuild(final @NotNull UUID guildId) {

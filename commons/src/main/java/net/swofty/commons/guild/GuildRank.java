@@ -1,5 +1,6 @@
 package net.swofty.commons.guild;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -21,7 +22,9 @@ public class GuildRank implements Comparable<GuildRank> {
     private Set<GuildPermission> permissions;
 
     @JsonCreator
-    public GuildRank(@JsonProperty("name") String name, @JsonProperty("priority") int priority, @JsonProperty("default") boolean isDefault, @JsonProperty("permissions") Set<GuildPermission> permissions) {
+    public GuildRank(@JsonProperty("name") String name, @JsonProperty("priority") int priority,
+                     @JsonProperty("default") @JsonAlias("isDefault") boolean isDefault,
+                     @JsonProperty("permissions") Set<GuildPermission> permissions) {
         this.name = name;
         this.priority = priority;
         this.isDefault = isDefault;

@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildInviteRequestEvent extends GuildEvent {
-    private final @NotNull UUID inviter;
-    private final @NotNull UUID invitee;
+    private @NotNull UUID inviter;
+    private @NotNull UUID invitee;
 
     public GuildInviteRequestEvent(@NotNull UUID inviter, @NotNull UUID invitee) {
         super(null);

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildMemberKickedResponseEvent extends GuildResponseEvent {
-    private final UUID kicker;
-    private final UUID kicked;
-    private final String reason;
+    private UUID kicker;
+    private UUID kicked;
+    private String reason;
 
     public GuildMemberKickedResponseEvent(GuildData guild, UUID kicker, UUID kicked, String reason) {
         super(guild);

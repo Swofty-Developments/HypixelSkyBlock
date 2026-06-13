@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildUnmuteRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID actor;
+    private UUID actor;
     @NotNull
-    private final String target; // TODO: UUID
+    private String target; // TODO: UUID
 
     public GuildUnmuteRequestEvent(@NotNull UUID actor, @NotNull String target) {
         super(null);

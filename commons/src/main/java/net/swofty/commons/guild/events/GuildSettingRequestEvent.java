@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildSettingRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID changer;
-    private final String setting;
-    private final String value;
+    private UUID changer;
+    private String setting;
+    private String value;
 
     public GuildSettingRequestEvent(@NotNull UUID changer, String setting, String value) {
         super(null);

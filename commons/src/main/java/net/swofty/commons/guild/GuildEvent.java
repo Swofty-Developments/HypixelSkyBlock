@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public abstract class GuildEvent {
-    private final GuildData guild;
+    private GuildData guild;
 
     public GuildEvent(GuildData guild) {
         this.guild = guild;

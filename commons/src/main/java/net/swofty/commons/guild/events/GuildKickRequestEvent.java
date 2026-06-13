@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class GuildKickRequestEvent extends GuildEvent {
     @NotNull
-    private final UUID kicker;
+    private UUID kicker;
     @NotNull
-    private final UUID target;
+    private UUID target;
     @NotNull
-    private final String reason;
+    private String reason;
 
     public GuildKickRequestEvent(@NotNull UUID kicker, @NotNull UUID target, @NotNull String reason) {
         super(null);
