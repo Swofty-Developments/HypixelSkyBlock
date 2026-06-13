@@ -39,7 +39,7 @@ public enum Rank {
         return StringUtility.ALPHABET[ordinal()];
     }
 
-    public Component getPrefixComponent() {
-        return LegacyComponentSerializer.legacySection().deserialize(prefix);
+    public Component getTitleComponent() {
+        return LegacyComponentSerializer.legacySection().deserialize(title);
     }
 }

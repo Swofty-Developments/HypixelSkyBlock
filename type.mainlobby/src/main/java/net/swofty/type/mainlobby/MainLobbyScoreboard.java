@@ -44,7 +44,7 @@ public class MainLobbyScoreboard {
                 List<Component> lines = new ArrayList<>();
                 lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
                 lines.add(Component.space());
-                lines.add(I18n.t("scoreboard.main_lobby.rank", player.getRank().getPrefixComponent()));
+                lines.add(I18n.t("scoreboard.main_lobby.rank", player.getRank().getTitleComponent()));
                 lines.add(I18n.t("scoreboard.main_lobby.achievements", Argument.tagResolver(Formatter.number("no", player.getAchievementHandler().getTotalUnlockedCount()))));
                 lines.add(I18n.t("scoreboard.main_lobby.level", Argument.tagResolver(Formatter.number("level", player.getLevel()))));
                 lines.add(Component.space());
