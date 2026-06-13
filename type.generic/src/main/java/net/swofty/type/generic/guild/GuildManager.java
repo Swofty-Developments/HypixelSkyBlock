@@ -144,6 +144,11 @@ public class GuildManager {
         sendEventToService(event);
     }
 
+    // TODO: make less stupid
+    public static void recordProgress(HypixelPlayer player, long gexp, boolean win) {
+        sendEventToService(new GuildProgressRequestEvent(player.getUuid(), gexp, win));
+    }
+
     private static void sendEventToService(GuildEvent event) {
         var message = new SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage(
             event.getClass().getSimpleName(),

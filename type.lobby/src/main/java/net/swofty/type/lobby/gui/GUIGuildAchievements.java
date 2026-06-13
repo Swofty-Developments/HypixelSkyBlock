@@ -18,6 +18,8 @@ public class GUIGuildAchievements implements View<GUIGuildAchievements.GuildAchi
 
     private static final int[][] EXP_KING_TIERS = {{50000}, {100000}, {150000}, {200000}, {250000}, {275000}, {300000}};
     private static final int[] EXP_KING_SLOTS = {9, 10, 11, 12, 13, 14, 15};
+    private static final int[] WINNER_TIERS = {100, 200, 300, 400, 500, 750, 1000};
+    private static final int[] WINNER_SLOTS = {18, 19, 20, 21, 22, 23, 24};
 
     private static final int[][] FAMILY_TIERS = {{5}, {15}, {30}, {40}, {50}, {60}, {70}};
     private static final int[] FAMILY_SLOTS = {27, 28, 29, 30, 31, 32, 33};
@@ -43,7 +45,7 @@ public class GUIGuildAchievements implements View<GUIGuildAchievements.GuildAchi
                 "§7Reach Guild level " + required, "", progress));
         }
 
-        long gexp = guild.getTotalGexp();
+        long gexp = guild.getDailyGexp();
         for (int i = 0; i < EXP_KING_TIERS.length; i++) {
             int required = EXP_KING_TIERS[i][0];
             boolean achieved = gexp >= required;
@@ -52,6 +54,17 @@ public class GUIGuildAchievements implements View<GUIGuildAchievements.GuildAchi
             String progress = "§7Progress: §e" + nf.format(gexp) + "§7/" + nf.format(required) + (achieved ? " §aACHIEVED" : "");
             layout.slot(EXP_KING_SLOTS[i], ItemStackCreator.getStack(name, mat, 1,
                 "§7Get " + nf.format(required) + " Guild Exp in one day", "", progress));
+        }
+
+        for (int i = 0; i < WINNER_TIERS.length; i++) {
+            int required = WINNER_TIERS[i];
+            boolean achieved = guild.getDailyWins() >= required;
+            layout.slot(WINNER_SLOTS[i], ItemStackCreator.getStack(
+                (achieved ? "§a" : "§7") + "Winners " + toRoman(i + 1),
+                achieved ? Material.GOLD_INGOT : Material.GRAY_DYE, 1,
+                "§7Win " + nf.format(required) + " games as a Guild in a", "§7day", "",
+                "§7Progress: §e" + nf.format(guild.getDailyWins()) + "§7/" + nf.format(required)
+                    + (achieved ? " §aACHIEVED" : "")));
         }
 
         int memberCount = guild.getMembers().size();

@@ -24,6 +24,7 @@ public class GuildMember {
     private long lastLogin;
     private boolean notificationsEnabled;
     private long mutedUntil;
+    private boolean guildChatEnabled = true;
 
     public GuildMember(UUID uuid, String rankName, long joinedAt) {
         this.uuid = uuid;
@@ -38,7 +39,8 @@ public class GuildMember {
 
     @JsonCreator
     public GuildMember(@JsonProperty("uuid") UUID uuid, @JsonProperty("rankName") String rankName, @JsonProperty("joinedAt") long joinedAt, @JsonProperty("weeklyGexp") long weeklyGexp,
-                       @JsonProperty("totalGexp") long totalGexp, @JsonProperty("lastLogin") long lastLogin, @JsonProperty("notificationsEnabled") boolean notificationsEnabled, @JsonProperty("mutedUntil") long mutedUntil) {
+                       @JsonProperty("totalGexp") long totalGexp, @JsonProperty("lastLogin") long lastLogin, @JsonProperty("notificationsEnabled") boolean notificationsEnabled,
+                       @JsonProperty("mutedUntil") long mutedUntil, @JsonProperty("guildChatEnabled") Boolean guildChatEnabled) {
         this.uuid = uuid;
         this.rankName = rankName;
         this.joinedAt = joinedAt;
@@ -47,6 +49,7 @@ public class GuildMember {
         this.lastLogin = lastLogin;
         this.notificationsEnabled = notificationsEnabled;
         this.mutedUntil = mutedUntil;
+        this.guildChatEnabled = guildChatEnabled == null || guildChatEnabled;
     }
 
     @JsonIgnore

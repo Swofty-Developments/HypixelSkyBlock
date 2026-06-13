@@ -3,13 +3,13 @@ package net.swofty.commons.guild;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,6 +35,11 @@ public class GuildData {
     private boolean everyoneMuted;
     private long everyoneMutedExpiry;
     private long createdAt;
+    private List<String> auditLog = new ArrayList<>();
+    private long dailyGexp;
+    private int dailyWins;
+    private String dailyProgressDate = LocalDate.now().toString();
+    private boolean onlineMode;
 
     public static final int MAX_MEMBERS = 125;
     private static final int MAX_CUSTOM_RANKS = 3;
@@ -79,7 +84,10 @@ public class GuildData {
                       @JsonProperty("members") List<GuildMember> members, @JsonProperty("ranks") List<GuildRank> ranks,
                       @JsonProperty("totalGexp") long totalGexp, @JsonProperty("level") int level, @JsonProperty("motd") String motd, @JsonProperty("description") String description,
                       @JsonProperty("discordLink") String discordLink, @JsonProperty("listedInFinder") boolean listedInFinder, @JsonProperty("slowChat") boolean slowChat,
-                      @JsonProperty("everyoneMuted") boolean everyoneMuted, @JsonProperty("everyoneMutedExpiry") long everyoneMutedExpiry, @JsonProperty("createdAt") long createdAt) {
+                      @JsonProperty("everyoneMuted") boolean everyoneMuted, @JsonProperty("everyoneMutedExpiry") long everyoneMutedExpiry, @JsonProperty("createdAt") long createdAt,
+                      @JsonProperty("auditLog") List<String> auditLog, @JsonProperty("dailyGexp") long dailyGexp,
+                      @JsonProperty("dailyWins") int dailyWins, @JsonProperty("dailyProgressDate") String dailyProgressDate,
+                      @JsonProperty("onlineMode") boolean onlineMode) {
         this.guildId = guildId;
         this.name = name;
         this.tag = tag;
@@ -96,6 +104,11 @@ public class GuildData {
         this.everyoneMuted = everyoneMuted;
         this.everyoneMutedExpiry = everyoneMutedExpiry;
         this.createdAt = createdAt;
+        this.auditLog = auditLog != null ? auditLog : new ArrayList<>();
+        this.dailyGexp = dailyGexp;
+        this.dailyWins = dailyWins;
+        this.dailyProgressDate = dailyProgressDate != null ? dailyProgressDate : LocalDate.now().toString();
+        this.onlineMode = onlineMode;
     }
 
     @JsonIgnore
@@ -162,6 +175,30 @@ public class GuildData {
     public void addGexp(long amount) {
         this.totalGexp += amount;
         recalculateLevel();
+    }
+
+    public void resetDailyProgressIfNeeded() {
+        String today = LocalDate.now().toString();
+        if (!today.equals(dailyProgressDate)) {
+            dailyProgressDate = today;
+            dailyGexp = 0;
+            dailyWins = 0;
+        }
+    }
+
+    public void addDailyGexp(long amount) {
+        resetDailyProgressIfNeeded();
+        dailyGexp += amount;
+    }
+
+    public void addDailyWin() {
+        resetDailyProgressIfNeeded();
+        dailyWins++;
+    }
+
+    public void addAuditLog(String entry) {
+        auditLog.addFirst(entry);
+        if (auditLog.size() > 500) auditLog.subList(500, auditLog.size()).clear();
     }
 
     public long getGexpForLevel(int targetLevel) {

@@ -38,6 +38,7 @@ public class GuildEventToServiceEndpoint implements ServiceEndpoint<
             case GuildMuteRequestEvent e -> GuildCache.handleMuteRequest(e);
             case GuildUnmuteRequestEvent e -> GuildCache.handleUnmuteRequest(e);
             case GuildSetRankRequestEvent e -> GuildCache.handleSetRankRequest(e);
+            case GuildProgressRequestEvent e -> GuildCache.handleProgressRequest(e);
             default ->
                 throw new IllegalArgumentException("Unknown guild event type: " + event.getClass().getSimpleName());
         }

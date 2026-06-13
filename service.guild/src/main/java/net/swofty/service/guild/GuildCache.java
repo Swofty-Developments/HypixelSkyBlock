@@ -14,6 +14,8 @@ import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -22,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class GuildCache {
+    private static final DateTimeFormatter LOG_DATE = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm z");
     private static final Cache<UUID, GuildData> guildCache = Caffeine.newBuilder()
         .maximumSize(10_000)
         .expireAfterAccess(30, TimeUnit.MINUTES)
@@ -113,6 +116,8 @@ public class GuildCache {
         PendingGuildInvite invite = new PendingGuildInvite(guild.getGuildId(), inviter, invitee);
         pendingInvites.put(invitee, invite);
         scheduleInviteExpiration(guild.getGuildId(), inviter, invitee, 60000);
+        log(guild, "§a" + inviter + "§7 invited §e" + invitee);
+        persistGuild(guild);
 
         GuildInviteSentResponseEvent response = new GuildInviteSentResponseEvent(guild, inviter, invitee);
         sendEvent(response);
@@ -148,6 +153,7 @@ public class GuildCache {
 
         GuildMember newMember = new GuildMember(accepter, "Member", System.currentTimeMillis());
         guild.getMembers().add(newMember);
+        log(guild, "§a" + accepter + "§7 joined");
         pendingInvites.remove(accepter);
 
         persistGuild(guild);
@@ -173,6 +179,7 @@ public class GuildCache {
 
         GuildMember member = guild.getMember(leaver);
         guild.getMembers().remove(member);
+        log(guild, "§a" + leaver + "§7 left");
 
         persistGuild(guild);
         GuildDatabase.removePlayerMapping(leaver);
@@ -211,6 +218,7 @@ public class GuildCache {
         }
 
         guild.getMembers().remove(targetMember);
+        log(guild, "§a" + kicker + "§7 kicked §e" + target + (reason.isBlank() ? "" : " §7for §e" + reason));
 
         persistGuild(guild);
         GuildDatabase.removePlayerMapping(target);
@@ -274,6 +282,7 @@ public class GuildCache {
 
         String oldRank = targetMember.getRankName();
         targetMember.setRankName(nextRank.getName());
+        log(guild, "§a" + promoter + "§7 set rank of §e" + target + " §7to §e" + nextRank.getName());
         persistGuild(guild);
 
         GuildRankChangedResponseEvent response = new GuildRankChangedResponseEvent(guild, promoter, target, oldRank, nextRank.getName());
@@ -318,6 +327,7 @@ public class GuildCache {
 
         String oldRank = targetMember.getRankName();
         targetMember.setRankName(nextRank.getName());
+        log(guild, "§a" + demoter + "§7 set rank of §e" + target + " §7to §e" + nextRank.getName());
         persistGuild(guild);
 
         GuildRankChangedResponseEvent response = new GuildRankChangedResponseEvent(guild, demoter, target, oldRank, nextRank.getName());
@@ -348,10 +358,27 @@ public class GuildCache {
         GuildMember currentOwnerMember = guild.getMember(currentOwner);
         currentOwnerMember.setRankName("Officer");
         newOwnerMember.setRankName("Guild Master");
+        log(guild, "§a" + currentOwner + "§7 transferred the guild to §e" + newOwner);
         persistGuild(guild);
 
         GuildTransferredResponseEvent response = new GuildTransferredResponseEvent(guild, currentOwner, newOwner);
         sendEvent(response);
+    }
+
+    public static void handleProgressRequest(GuildProgressRequestEvent event) {
+        GuildData guild = getGuildFromPlayer(event.getPlayer());
+        if (guild == null) return;
+        guild.resetDailyProgressIfNeeded();
+        GuildMember member = guild.getMember(event.getPlayer());
+        if (member == null) return;
+        if (event.getGexp() > 0) {
+            guild.addGexp(event.getGexp());
+            guild.addDailyGexp(event.getGexp());
+            member.setWeeklyGexp(member.getWeeklyGexp() + event.getGexp());
+            member.setTotalGexp(member.getTotalGexp() + event.getGexp());
+        }
+        if (event.isWin()) guild.addDailyWin();
+        persistGuild(guild);
     }
 
     public static void handleChatRequest(GuildChatRequestEvent event) {
@@ -435,6 +462,16 @@ public class GuildCache {
                     sendErrorToPlayer(changer, "§cYou do not have permission to change the tag color!");
                     return;
                 }
+                int requiredLevel = switch (value) {
+                    case "§7" -> 5;
+                    case "§3" -> 15;
+                    case "§2" -> 25;
+                    default -> Integer.MAX_VALUE;
+                };
+                if (guild.getLevel() < requiredLevel) {
+                    sendErrorToPlayer(changer, "§cThat guild tag color has not been unlocked!");
+                    return;
+                }
                 guild.setTagColor(value);
             }
             case "motd" -> {
@@ -489,12 +526,27 @@ public class GuildCache {
                 guild.setListedInFinder(!guild.isListedInFinder());
                 value = guild.isListedInFinder() ? "visible" : "hidden";
             }
+            case "notifications" -> {
+                GuildMember member = guild.getMember(changer);
+                member.setNotificationsEnabled(!member.isNotificationsEnabled());
+                value = member.isNotificationsEnabled() ? "enabled" : "disabled";
+            }
+            case "toggle" -> {
+                GuildMember member = guild.getMember(changer);
+                member.setGuildChatEnabled(!member.isGuildChatEnabled());
+                value = member.isGuildChatEnabled() ? "enabled" : "disabled";
+            }
+            case "onlinemode" -> {
+                guild.setOnlineMode(!guild.isOnlineMode());
+                value = guild.isOnlineMode() ? "enabled" : "disabled";
+            }
             default -> {
                 sendErrorToPlayer(changer, "§cUnknown setting: " + setting);
                 return;
             }
         }
 
+        log(guild, "§a" + changer + "§7 changed guild setting §e" + setting);
         persistGuild(guild);
 
         GuildSettingChangedResponseEvent response = new GuildSettingChangedResponseEvent(guild, changer, setting, value);
@@ -531,6 +583,7 @@ public class GuildCache {
             member.setMutedUntil(System.currentTimeMillis() + duration);
         }
 
+        log(guild, "§a" + muter + "§7 muted §e" + target + " §7for §e" + duration + "ms");
         persistGuild(guild);
 
         GuildMuteChangedResponseEvent response = new GuildMuteChangedResponseEvent(guild, muter, target, duration, false);
@@ -566,6 +619,7 @@ public class GuildCache {
             member.setMutedUntil(0);
         }
 
+        log(guild, "§a" + actor + "§7 unmuted §e" + target);
         persistGuild(guild);
 
         GuildMuteChangedResponseEvent response = new GuildMuteChangedResponseEvent(guild, actor, target, 0, true);
@@ -607,6 +661,7 @@ public class GuildCache {
 
         String oldRank = targetMember.getRankName();
         targetMember.setRankName(newRank.getName());
+        log(guild, "§a" + setter + "§7 set rank of §e" + target + " §7to §e" + newRank.getName());
         persistGuild(guild);
 
         GuildRankChangedResponseEvent response = new GuildRankChangedResponseEvent(guild, setter, target, oldRank, newRank.getName());
@@ -661,6 +716,10 @@ public class GuildCache {
     private static void persistGuild(final @NotNull GuildData guild) {
         guildCache.put(guild.getGuildId(), guild);
         GuildDatabase.saveGuild(guild);
+    }
+
+    private static void log(GuildData guild, String message) {
+        guild.addAuditLog("§7" + LOG_DATE.format(ZonedDateTime.now()) + ": " + message);
     }
 
     public record PendingGuildInvite(@NotNull UUID guildId, @NotNull UUID inviter, @NotNull UUID invitee) {

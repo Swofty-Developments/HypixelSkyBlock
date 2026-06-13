@@ -11,8 +11,6 @@ import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.guild.GuildManager;
 
-import java.util.List;
-
 public class GUIGuildSettings implements View<GUIGuildSettings.GuildSettingsState> {
 
     @Override
@@ -43,20 +41,15 @@ public class GUIGuildSettings implements View<GUIGuildSettings.GuildSettingsStat
                 GuildManager.changeSetting(viewCtx.player(), "tag", value.trim());
             }));
 
-        String tagColor = guild.getTagColor() != null ? guild.getTagColor() : "§7";
-        List<String> colors = List.of("§7", "§f", "§a", "§b", "§3", "§6", "§d", "§c", "§e");
-        int colorIndex = Math.max(0, colors.indexOf(tagColor));
-        String nextColor = colors.get((colorIndex + 1) % colors.size());
         layout.slot(11, ItemStackCreator.getStack(
             "§aGuild Tag Color",
             Material.RED_DYE,
             1,
-            "§7Current: " + tagColor + "Sample",
             "§7Changes the color of the tag next to",
             "§7your guild members' names.",
             "",
-            "§eClick to cycle colors!"
-        ), (click, viewCtx) -> GuildManager.changeSetting(viewCtx.player(), "tagcolor", nextColor));
+            "§eClick to view available colors!"
+        ), (click, viewCtx) -> viewCtx.push(new GUIGuildTagColor()));
 
         layout.slot(12, ItemStackCreator.getStack(
             "§aGuild Permissions",

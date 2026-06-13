@@ -21,6 +21,7 @@ import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.guild.GuildManager;
 import org.tinylog.Logger;
 
 import java.util.Optional;
@@ -45,11 +46,13 @@ public class GameEndListener implements HypixelEventClass {
                     if (player.allowsPersistentProgress()) {
                         BedWarsStatsRecorder.recordWin(player, game.getGameType());
                         player.getAchievementHandler().addProgressByTrigger("bedwars.wins", 1);
+                        GuildManager.recordProgress(player, 0, true);
                     }
                 }
             });
 
             player.setGameMode(GameMode.ADVENTURE);
+            if (player.allowsPersistentProgress()) GuildManager.recordProgress(player, 20, false);
         }
 
         boolean isRecording = game.getReplayManager().isRecording();

@@ -110,6 +110,10 @@ public abstract class GuildEvent {
                 var c = clazz.getDeclaredConstructor(UUID.class, UUID.class, String.class);
                 return (GuildEvent) c.newInstance(UUID.randomUUID(), UUID.randomUUID(), "");
             }
+            case "GuildProgressRequestEvent" -> {
+                var c = clazz.getDeclaredConstructor(UUID.class, long.class, boolean.class);
+                return (GuildEvent) c.newInstance(UUID.randomUUID(), 0L, false);
+            }
             case "GuildCreatedResponseEvent" -> {
                 var dummy = new GuildData(UUID.randomUUID(), "dummy", UUID.randomUUID());
                 var c = clazz.getDeclaredConstructor(GuildData.class, UUID.class);
