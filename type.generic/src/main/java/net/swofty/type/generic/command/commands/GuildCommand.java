@@ -1,6 +1,5 @@
 package net.swofty.type.generic.command.commands;
 
-import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentStringArray;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.commons.ServiceType;
@@ -13,7 +12,6 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,8 +26,7 @@ public class GuildCommand extends HypixelCommand {
 
     @Override
     public void registerUsage(MinestomCommand command) {
-        ArgumentString subcommand = ArgumentType.String("subcommand");
-        ArgumentString argument = ArgumentType.String("argument");
+        ArgumentStringArray arguments = ArgumentType.StringArray("arguments");
         ProxyService guildService = new ProxyService(ServiceType.GUILD);
 
         command.addSyntax((sender, context) -> {
@@ -49,109 +46,73 @@ public class GuildCommand extends HypixelCommand {
                         return;
                     }
 
-                    String sub = context.get(subcommand);
+                    String[] args = context.get(arguments);
+                    String sub = args[0].toLowerCase();
+                    String argument = args.length > 1 ? args[1] : null;
+                    String message = args.length > 1
+                        ? String.join(" ", java.util.Arrays.copyOfRange(args, 1, args.length))
+                        : "";
 
-                    switch (sub.toLowerCase()) {
-                        case "leave" -> GuildManager.leaveGuild(player);
-                        case "disband" -> GuildManager.disbandGuild(player);
-                        case "list", "info" -> showGuildInfo(player);
-                        case "online" -> showOnlineMembers(player);
-                        case "notifications" -> GuildManager.changeSetting(player, "notifications", "toggle");
-                        case "mute" -> GuildManager.mutePlayer(player, "everyone", 3600000);
-                        case "unmute" -> GuildManager.unmutePlayer(player, "everyone");
-                        default -> GuildManager.invitePlayer(player, sub);
-                    }
+                    dispatch(player, sub, argument, message, args);
                 } finally {
                     pendingCommands.remove(player.getUuid());
                 }
             });
-        }, subcommand);
+        }, arguments);
+    }
 
-        command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender)) return;
-            HypixelPlayer player = (HypixelPlayer) sender;
-            if (pendingCommands.contains(player.getUuid())) return;
-            pendingCommands.add(player.getUuid());
-
-            Thread.startVirtualThread(() -> {
-                try {
-                    if (!guildService.isOnline().join()) {
-                        player.sendMessage("§cGuild service is currently offline!");
-                        return;
-                    }
-
-                    String sub = context.get(subcommand);
-                    String arg = context.get(argument);
-
-                    switch (sub.toLowerCase()) {
-                        case "create" -> GuildManager.createGuild(player, arg);
-                        case "invite" -> GuildManager.invitePlayer(player, arg);
-                        case "accept" -> GuildManager.acceptInvite(player, arg);
-                        case "kick" -> GuildManager.kickPlayer(player, arg, "");
-                        case "promote" -> GuildManager.promotePlayer(player, arg);
-                        case "demote" -> GuildManager.demotePlayer(player, arg);
-                        case "transfer" -> GuildManager.transferOwnership(player, arg);
-                        case "tag" -> GuildManager.changeSetting(player, "tag", arg);
-                        case "tagcolor" -> GuildManager.changeSetting(player, "tagcolor", arg);
-                        case "rename" -> GuildManager.changeSetting(player, "rename", arg);
-                        case "slow" -> GuildManager.changeSetting(player, "slow", arg);
-                        case "finder" -> GuildManager.changeSetting(player, "finder", arg);
-                        case "chat" -> GuildManager.sendChat(player, arg, false);
-                        case "officerchat", "oc" -> GuildManager.sendChat(player, arg, true);
-                        case "mute" -> GuildManager.mutePlayer(player, arg, 3600000);
-                        case "unmute" -> GuildManager.unmutePlayer(player, arg);
-                        default -> player.sendMessage("§cUnknown guild command. Use /guild for help.");
-                    }
-                } finally {
-                    pendingCommands.remove(player.getUuid());
-                }
+    private void dispatch(HypixelPlayer player, String sub, String argument, String message, String[] args) {
+        switch (sub) {
+            case "leave" -> GuildManager.leaveGuild(player);
+            case "disband" -> GuildManager.disbandGuild(player);
+            case "list", "info" -> showGuildInfo(player);
+            case "online" -> showOnlineMembers(player);
+            case "notifications" -> GuildManager.changeSetting(player, "notifications", "toggle");
+            case "create" ->
+                withArgument(player, argument, "/guild create <name>", value -> GuildManager.createGuild(player, value));
+            case "invite" ->
+                withArgument(player, argument, "/guild invite <player>", value -> GuildManager.invitePlayer(player, value));
+            case "accept" ->
+                withArgument(player, argument, "/guild accept <player>", value -> GuildManager.acceptInvite(player, value));
+            case "promote" ->
+                withArgument(player, argument, "/guild promote <player>", value -> GuildManager.promotePlayer(player, value));
+            case "demote" ->
+                withArgument(player, argument, "/guild demote <player>", value -> GuildManager.demotePlayer(player, value));
+            case "transfer" ->
+                withArgument(player, argument, "/guild transfer <player>", value -> GuildManager.transferOwnership(player, value));
+            case "tag", "tagcolor", "rename", "slow", "finder" ->
+                withArgument(player, argument, "/guild " + sub + " <value>", value -> GuildManager.changeSetting(player, sub, value));
+            case "chat" ->
+                withArgument(player, argument, "/guild chat <message>", value -> GuildManager.sendChat(player, message, false));
+            case "officerchat", "oc" ->
+                withArgument(player, argument, "/guild officerchat <message>", value -> GuildManager.sendChat(player, message, true));
+            case "motd", "description", "discord" ->
+                withArgument(player, argument, "/guild " + sub + " <message>", value -> GuildManager.changeSetting(player, sub, message));
+            case "mute" -> GuildManager.mutePlayer(player, argument == null ? "everyone" : argument, 3600000);
+            case "unmute" -> GuildManager.unmutePlayer(player, argument == null ? "everyone" : argument);
+            case "kick" -> withArgument(player, argument, "/guild kick <player> [reason]", value -> {
+                String reason = args.length > 2
+                    ? String.join(" ", java.util.Arrays.copyOfRange(args, 2, args.length))
+                    : "";
+                GuildManager.kickPlayer(player, value, reason);
             });
-        }, subcommand, argument);
+            case "setrank" -> {
+                if (args.length < 3) player.sendMessage("§cUsage: /guild setrank <player> <rank>");
+                else GuildManager.setRank(player, args[1], args[2]);
+            }
+            default -> {
+                if (args.length == 1) GuildManager.invitePlayer(player, args[0]);
+                else player.sendMessage("§cUnknown guild command. Use /guild for help.");
+            }
+        }
+    }
 
-        command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender)) return;
-            HypixelPlayer player = (HypixelPlayer) sender;
-            if (pendingCommands.contains(player.getUuid())) return;
-            pendingCommands.add(player.getUuid());
-
-            Thread.startVirtualThread(() -> {
-                try {
-                    if (!guildService.isOnline().join()) {
-                        player.sendMessage("§cGuild service is currently offline!");
-                        return;
-                    }
-
-                    String sub = context.get(subcommand);
-                    String[] args = context.get(new ArgumentStringArray("args"));
-                    String message = String.join(" ", args);
-
-                    switch (sub.toLowerCase()) {
-                        case "chat" -> GuildManager.sendChat(player, message, false);
-                        case "officerchat", "oc" -> GuildManager.sendChat(player, message, true);
-                        case "motd" -> GuildManager.changeSetting(player, "motd", message);
-                        case "description" -> GuildManager.changeSetting(player, "description", message);
-                        case "discord" -> GuildManager.changeSetting(player, "discord", message);
-                        case "kick" -> {
-                            if (args.length >= 1) {
-                                String targetName = args[0];
-                                String reason = args.length > 1 ? String.join(" ", Arrays.copyOfRange(args, 1, args.length)) : "";
-                                GuildManager.kickPlayer(player, targetName, reason);
-                            }
-                        }
-                        case "setrank" -> {
-                            if (args.length >= 2) {
-                                GuildManager.setRank(player, args[0], args[1]);
-                            } else {
-                                player.sendMessage("§cUsage: /guild setrank <player> <rank>");
-                            }
-                        }
-                        default -> player.sendMessage("§cUnknown guild command. Use /guild for help.");
-                    }
-                } finally {
-                    pendingCommands.remove(player.getUuid());
-                }
-            });
-        }, subcommand, new ArgumentStringArray("args"));
+    private void withArgument(HypixelPlayer player, String argument, String usage, java.util.function.Consumer<String> action) {
+        if (argument == null) {
+            player.sendMessage("§cUsage: " + usage);
+            return;
+        }
+        action.accept(argument);
     }
 
     private void showGuildInfo(HypixelPlayer player) {

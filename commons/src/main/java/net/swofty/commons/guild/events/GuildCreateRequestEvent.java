@@ -13,9 +13,10 @@ import java.util.UUID;
 public class GuildCreateRequestEvent extends GuildEvent {
     @NotNull
     private final UUID creator;
+    @NotNull
     private final String guildName;
 
-    public GuildCreateRequestEvent(@NotNull UUID creator, @NotNull String guildName) {
+    public GuildCreateRequestEvent(final @NotNull UUID creator, final @NotNull String guildName) {
         super(null);
         this.creator = creator;
         this.guildName = guildName;

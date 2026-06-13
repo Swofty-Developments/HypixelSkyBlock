@@ -12,6 +12,7 @@ import net.swofty.commons.guild.events.response.*;
 import net.swofty.commons.protocol.objects.guild.GuildEventPushProtocol;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.service.generic.redis.ServiceToServerManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.UUID;
@@ -28,23 +29,23 @@ public class GuildCache {
     private static final Map<UUID, PendingGuildInvite> pendingInvites = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> lastChatTimestamps = new ConcurrentHashMap<>();
 
-    public static boolean isInGuild(UUID playerUUID) {
+    public static boolean isInGuild(final @NotNull UUID playerUUID) {
         return GuildDatabase.getPlayerGuildId(playerUUID) != null;
     }
 
-    public static GuildData getGuildFromPlayer(UUID playerUUID) {
+    public static GuildData getGuildFromPlayer(final @NotNull UUID playerUUID) {
         UUID guildId = GuildDatabase.getPlayerGuildId(playerUUID);
         if (guildId == null) return null;
         return getGuild(guildId);
     }
 
-    public static GuildData getGuild(UUID guildId) {
+    public static GuildData getGuild(final @NotNull UUID guildId) {
         return guildCache.get(guildId, GuildDatabase::getGuild);
     }
 
-    public static void handleCreateRequest(GuildCreateRequestEvent event) {
-        UUID creator = event.getCreator();
-        String guildName = event.getGuildName();
+    public static void handleCreateRequest(final GuildCreateRequestEvent event) {
+        final UUID creator = event.getCreator();
+        final String guildName = event.getGuildName();
 
         if (isInGuild(creator)) {
             sendErrorToPlayer(creator, "§cYou are already in a guild! Leave your current guild to create a new one.");
@@ -61,7 +62,7 @@ public class GuildCache {
             return;
         }
 
-        GuildData guild = new GuildData(UUID.randomUUID(), guildName, creator);
+        final GuildData guild = new GuildData(UUID.randomUUID(), guildName, creator);
         persistGuild(guild);
         GuildDatabase.mapPlayerToGuild(creator, guild.getGuildId());
 
@@ -611,7 +612,7 @@ public class GuildCache {
         GuildDatabase.deleteGuild(guild.getGuildId());
     }
 
-    private static void sendEvent(GuildEvent event) {
+    private static void sendEvent(final @NotNull GuildEvent event) {
         ServiceToServerManager.sendToAllServers(
             new GuildEventPushProtocol(),
             new GuildEventPushProtocol.Request(
@@ -627,7 +628,7 @@ public class GuildCache {
         sendMessageToPlayer(playerUUID, "§9§m-----------------------------------------------------\n" + message + "\n§9§m-----------------------------------------------------");
     }
 
-    private static void sendMessageToPlayer(UUID playerUUID, String message) {
+    private static void sendMessageToPlayer(final @NotNull UUID playerUUID, final @NotNull String message) {
         ServiceToServerManager.sendToAllServers(
             new SendMessagePushProtocol(),
             new SendMessagePushProtocol.Request(playerUUID, message),
@@ -648,11 +649,11 @@ public class GuildCache {
         });
     }
 
-    private static void persistGuild(GuildData guild) {
+    private static void persistGuild(final @NotNull GuildData guild) {
         guildCache.put(guild.getGuildId(), guild);
         GuildDatabase.saveGuild(guild);
     }
 
-    public record PendingGuildInvite(UUID guildId, UUID inviter, UUID invitee) {
+    public record PendingGuildInvite(@NotNull UUID guildId, @NotNull UUID inviter, @NotNull UUID invitee) {
     }
 }
