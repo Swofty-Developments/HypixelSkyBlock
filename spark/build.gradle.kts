@@ -21,6 +21,7 @@ dependencies {
     }
     implementation(project(":type.generic"))
     implementation(libs.guava)
+    implementation(libs.protobuf.javalite)
     api(libs.spark.common)
 }
 

@@ -38,6 +38,7 @@ viaversion = "5.9.1"
 packetevents = "2.12.2"
 shadow = "9.4.2"
 examination = "1.3.0"
+protobuf = "4.31.1"
 zstd-jni = "1.5.7-4"
 
 [libraries]
@@ -62,6 +63,7 @@ jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations
 jackson-bom = { module = "tools.jackson:jackson-bom", version.ref = "jackson-bom" }
 jackson-core = { module = "tools.jackson.core:jackson-core" }
 jackson-databind = { module = "tools.jackson.core:jackson-databind" }
+protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
 javapoet = { module = "com.palantir.javapoet:javapoet", version.ref = "javapoet" }
 jedis = { module = "redis.clients:jedis", version.ref = "jedis" }
 json = { module = "org.json:json", version.ref = "json" }
