@@ -191,6 +191,7 @@ public class Hypixel {
         // Start spark if enabled
         if (ENABLE_SPARK) {
             Spark.enable(Files.createTempDirectory("spark"));
+            Logger.info("Spark has been enabled");
         }
 
         // Ensure all services are running
