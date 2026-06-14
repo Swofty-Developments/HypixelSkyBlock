@@ -2,6 +2,7 @@ package net.swofty.commons.skyblock.statistics;
 
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -43,7 +44,11 @@ public final class ItemStatistics {
     }
 
     public Map<ItemStatistic, Double> getStatisticsMultiplicative() {
-        return asMap(statisticsMultiplicative);
+        Map<ItemStatistic, Double> result = new EnumMap<>(ItemStatistic.class);
+        for (int i = 0; i < statisticsMultiplicative.length; i++) {
+            if (statisticsMultiplicative[i] != 0D) result.put(STATISTICS[i], statisticsMultiplicative[i] + 1);
+        }
+        return result;
     }
 
     @Override
@@ -52,10 +57,10 @@ public final class ItemStatistics {
         for (ItemStatistic stat : STATISTICS) {
             double baseValue = get(statisticsBase, stat);
             double additiveValue = get(statisticsAdditive, stat);
-            double multiplicativeValue = get(statisticsMultiplicative, stat);
+            double multiplicativeValue = getMultiplicative(stat);
             boolean hasBase = Math.abs(baseValue) > 1e-9;
             boolean hasAdditive = Math.abs(additiveValue) > 1e-9;
-            boolean hasMultiplicative = Math.abs(multiplicativeValue - 1.0) > 1e-9 && Math.abs(multiplicativeValue) > 1e-9;
+            boolean hasMultiplicative = Math.abs(multiplicativeValue - 1.0) > 1e-9;
 
             if (hasBase || hasAdditive || hasMultiplicative) {
                 builder.append(stat.name()).append(":");
@@ -80,17 +85,34 @@ public final class ItemStatistics {
     }
 
     public static ItemStatistics fromString(String string) {
+        if (string == null || string.isBlank()) return empty();
+
         Builder builder = builder();
         for (String statPair : string.split(";")) {
             if (statPair.isEmpty()) continue;
             String[] parts = statPair.split(":");
             if (parts.length != 2) continue;
-            ItemStatistic stat = ItemStatistic.valueOf(parts[0]);
+            ItemStatistic stat;
+            try {
+                stat = ItemStatistic.valueOf(parts[0]);
+            } catch (IllegalArgumentException ignored) {
+                continue;
+            }
+
             for (String value : parts[1].split(",")) {
-                double parsed = Double.parseDouble(value.substring(1));
-                if (value.startsWith("B")) builder.withBase(stat, parsed);
-                else if (value.startsWith("A")) builder.withAdditive(stat, parsed);
-                else if (value.startsWith("M")) builder.withMultiplicative(stat, parsed);
+                if (value.length() < 2) continue;
+                char type = value.charAt(0);
+                if (type != 'B' && type != 'A' && type != 'M') continue;
+
+                try {
+                    double parsed = Double.parseDouble(value.substring(1));
+                    if (!Double.isFinite(parsed)) continue;
+                    if (type == 'B') builder.withBase(stat, parsed);
+                    else if (type == 'A') builder.withAdditive(stat, parsed);
+                    else builder.withMultiplicative(stat, parsed);
+                } catch (NumberFormatException _) {
+                    Logger.warn("Could not parse number");
+                }
             }
         }
         return builder.build();
@@ -107,22 +129,22 @@ public final class ItemStatistics {
         }
 
         public Builder withAdditive(ItemStatistic stat, Double value) {
-            statisticsAdditive[stat.ordinal()] = value < 0 ? 0.01D : value;
+            statisticsAdditive[stat.ordinal()] = value;
             return this;
         }
 
         public Builder withAdditivePercentage(ItemStatistic stat, Double valuePercentage) {
-            statisticsAdditive[stat.ordinal()] = 1 + ((valuePercentage < 0 ? 1D : valuePercentage) / 100);
+            statisticsAdditive[stat.ordinal()] = valuePercentage / 100;
             return this;
         }
 
         public Builder withMultiplicative(ItemStatistic stat, Double multiplicationValue) {
-            statisticsMultiplicative[stat.ordinal()] = multiplicationValue < 0 ? 0.01D : multiplicationValue;
+            statisticsMultiplicative[stat.ordinal()] = multiplicationValue - 1;
             return this;
         }
 
         public Builder withMultiplicativePercentage(ItemStatistic stat, Double multiplicationValuePercentage) {
-            statisticsMultiplicative[stat.ordinal()] = 1 + ((multiplicationValuePercentage < 0 ? 1D : multiplicationValuePercentage) / 100);
+            statisticsMultiplicative[stat.ordinal()] = multiplicationValuePercentage / 100;
             return this;
         }
 
@@ -139,13 +161,13 @@ public final class ItemStatistics {
 
     public ItemStatistics addAdditive(ItemStatistic stat, Double value) {
         double[] additive = expandedCopy(statisticsAdditive);
-        additive[stat.ordinal()] = getAdditive(stat) + value;
+        additive[stat.ordinal()] += value;
         return create(statisticsBase, additive, statisticsMultiplicative);
     }
 
     public ItemStatistics addMultiplicative(ItemStatistic stat, Double value) {
         double[] multiplicative = expandedCopy(statisticsMultiplicative);
-        multiplicative[stat.ordinal()] = getMultiplicative(stat) + value;
+        multiplicative[stat.ordinal()] += value;
         return create(statisticsBase, statisticsAdditive, multiplicative);
     }
 
@@ -156,7 +178,7 @@ public final class ItemStatistics {
     }
 
     public @NonNull Double getOverall(@Nullable ItemStatistic stat) {
-        return stat == null ? 0D : getBase(stat) * getAdditive(stat);
+        return stat == null ? 0D : getBase(stat) * getAdditive(stat) * getMultiplicative(stat);
     }
 
     public @NonNull Double getBase(@Nullable ItemStatistic stat) {
@@ -183,7 +205,7 @@ public final class ItemStatistics {
             int i = stat.ordinal();
             base[i] = first.getBase(stat) + other.getBase(stat);
             additive[i] = get(first.statisticsAdditive, stat) + get(other.statisticsAdditive, stat);
-            multiplicative[i] = rawMultiplicative(first, stat) * rawMultiplicative(other, stat);
+            multiplicative[i] = first.getMultiplicative(stat) * other.getMultiplicative(stat) - 1;
         }
         return create(base, additive, multiplicative);
     }
@@ -208,8 +230,8 @@ public final class ItemStatistics {
         for (ItemStatistic stat : STATISTICS) {
             int i = stat.ordinal();
             base[i] = getBase(stat) - other.getBase(stat);
-            additive[i] = getAdditive(stat) - other.getAdditive(stat) + 1;
-            multiplicative[i] = getMultiplicative(stat) / other.getMultiplicative(stat);
+            additive[i] = get(statisticsAdditive, stat) - get(other.statisticsAdditive, stat);
+            multiplicative[i] = getMultiplicative(stat) / other.getMultiplicative(stat) - 1;
         }
         return create(base, additive, multiplicative);
     }
@@ -217,12 +239,6 @@ public final class ItemStatistics {
     private static ItemStatistics create(double[] base, double[] additive, double[] multiplicative) {
         if (lastNonZero(base) == 0 && lastNonZero(additive) == 0 && lastNonZero(multiplicative) == 0) return EMPTY;
         return new ItemStatistics(base, additive, multiplicative);
-    }
-
-    private static double rawMultiplicative(ItemStatistics statistics, ItemStatistic stat) {
-        return stat.ordinal() < statistics.statisticsMultiplicative.length
-            ? statistics.statisticsMultiplicative[stat.ordinal()]
-            : 1D;
     }
 
     private static double get(double[] values, ItemStatistic stat) {
