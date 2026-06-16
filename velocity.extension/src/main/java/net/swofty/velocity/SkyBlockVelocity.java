@@ -40,7 +40,14 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.config.Settings;
 import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.proxy.from.*;
+import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.TeleportProtocol;
 import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
@@ -66,7 +73,6 @@ import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.presence.PresencePublisher;
-import net.swofty.velocity.redis.ChannelListener;
 import net.swofty.velocity.redis.RedisListener;
 import net.swofty.velocity.redis.RedisMessage;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
@@ -243,6 +249,7 @@ public class SkyBlockVelocity {
             RedisMessage.registerProxyToServer(protocol);
         }
         loopThroughPackage("net.swofty.commons.protocol.objects", ProtocolObject.class)
+            .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
             .forEach(ServerOutboundMessage::registerFromProtocolObject);
         RedisAPI.getInstance().startListeners();
 
