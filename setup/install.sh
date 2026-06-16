@@ -1,166 +1,66 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
-# ─── curl | bash safety ──────────────────────────────────────────────────────
-if [ ! -t 0 ]; then
-    TMPDIR=$(mktemp -d /tmp/hypixel-install-XXXXXX)
-    cat > "$TMPDIR/install.sh"
-    chmod +x "$TMPDIR/install.sh"
-
-    REPO_RAW="https://raw.githubusercontent.com/Swofty-Developments/HypixelSkyBlock/master/setup/lib"
-    mkdir -p "$TMPDIR/lib"
-    for mod in ui.sh deps.sh config.sh setup.sh docker.sh; do
-        curl -fsSL "$REPO_RAW/$mod" -o "$TMPDIR/lib/$mod" 2>/dev/null || true
-    done
-
-    exec bash "$TMPDIR/install.sh" "$@" </dev/tty
+if [[ ! -t 0 && -z "${SKYBLOCK_INSTALLER_REEXEC:-}" ]]; then
+  tmpdir="$(mktemp -d /tmp/skyblock-installer-XXXXXX)"
+  {
+    echo '#!/usr/bin/env bash'
+    echo 'set -euo pipefail'
+    cat
+  } > "$tmpdir/install.sh"
+  chmod +x "$tmpdir/install.sh"
+  if { : </dev/tty; } 2>/dev/null; then
+    exec env SKYBLOCK_INSTALLER_REEXEC=1 bash "$tmpdir/install.sh" "$@" </dev/tty
+  fi
+  exec env SKYBLOCK_INSTALLER_REEXEC=1 bash "$tmpdir/install.sh" "$@"
 fi
 
-# ─── Resolve script directory ────────────────────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="${SKYBLOCK_INSTALLER_REPO:-Swofty-Developments/HypixelSkyBlock}"
+VERSION="${SKYBLOCK_INSTALLER_VERSION:-latest}"
+INSTALLER_NAME="skyblock-installer"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/skyblock-installer"
 
-# ─── Constants ────────────────────────────────────────────────────────────────
-readonly VERSION="1.0.0"
-readonly GITHUB_REPO="Swofty-Developments/HypixelSkyBlock"
-readonly GITHUB_API="https://api.github.com/repos/${GITHUB_REPO}"
-readonly DEFAULT_INSTALL_DIR="$HOME/.hypixel-skyblock"
-readonly STATE_FILE=".state.json"
-readonly GUM_VERSION="0.14.5"
+if [[ -n "${SKYBLOCK_INSTALLER_BIN:-}" && -x "${SKYBLOCK_INSTALLER_BIN}" ]]; then
+  exec "${SKYBLOCK_INSTALLER_BIN}" "$@"
+fi
 
-# ─── Source library modules ──────────────────────────────────────────────────
-for lib in ui deps config setup docker; do
-    source "${SCRIPT_DIR}/lib/${lib}.sh"
-done
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
+if [[ -n "$script_dir" && -x "$script_dir/.bin/$INSTALLER_NAME" ]]; then
+  exec "$script_dir/.bin/$INSTALLER_NAME" "$@"
+fi
 
-# ─── Global error trap (safety net for uncaught errors) ──────────────────────
-trap 'on_error ${LINENO}' ERR
+os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+arch="$(uname -m)"
+case "$arch" in
+  x86_64|amd64) arch="amd64" ;;
+  aarch64|arm64) arch="arm64" ;;
+  *) echo "Unsupported architecture: $arch" >&2; exit 1 ;;
+esac
 
-generate_forwarding_secret() {
-    if command -v openssl >/dev/null 2>&1; then
-        openssl rand -hex 24
-    else
-        cat /proc/sys/kernel/random/uuid | tr -d '-'
-    fi
-}
+case "$os" in
+  linux|darwin) ;;
+  *) echo "Unsupported OS: $os" >&2; exit 1 ;;
+esac
 
-setup_forwarding_secret() {
-    local env_file="${INSTALL_DIR}/.env"
-    local secret=""
+asset="${INSTALLER_NAME}_${os}_${arch}.tar.gz"
+mkdir -p "$CACHE_DIR"
+bin="$CACHE_DIR/${INSTALLER_NAME}-${VERSION}-${os}-${arch}"
 
-    if [[ -f "$env_file" ]]; then
-        secret=$(grep -E '^FORWARDING_SECRET=' "$env_file" | tail -n1 | cut -d'=' -f2- || true)
-    fi
+if [[ ! -x "$bin" ]]; then
+  tmp="$(mktemp -d)"
+  trap 'rm -rf "$tmp"' EXIT
 
-    if [[ -z "$secret" && -f "${INSTALL_DIR}/configuration/forwarding.secret" ]]; then
-        secret=$(cat "${INSTALL_DIR}/configuration/forwarding.secret")
-    fi
+  if [[ "$VERSION" == "latest" ]]; then
+    url="https://github.com/${REPO}/releases/latest/download/${asset}"
+  else
+    url="https://github.com/${REPO}/releases/download/${VERSION}/${asset}"
+  fi
 
-    if [[ -z "$secret" ]]; then
-        secret=$(generate_forwarding_secret)
-    fi
+  echo "Downloading ${INSTALLER_NAME} (${os}/${arch})..." >&2
+  curl -fsSL "$url" -o "$tmp/$asset"
+  tar -xzf "$tmp/$asset" -C "$tmp"
+  chmod +x "$tmp/$INSTALLER_NAME"
+  mv "$tmp/$INSTALLER_NAME" "$bin"
+fi
 
-    mkdir -p "$INSTALL_DIR" "${INSTALL_DIR}/configuration"
-
-    {
-        [[ -f "$env_file" ]] && grep -vE '^FORWARDING_SECRET=' "$env_file" || true
-        echo "FORWARDING_SECRET=${secret}"
-    } > "${env_file}.tmp"
-    mv "${env_file}.tmp" "$env_file"
-
-    printf '%s' "$secret" > "${INSTALL_DIR}/configuration/forwarding.secret"
-    export FORWARDING_SECRET="$secret"
-    log_ok "Forwarding secret configured"
-}
-
-# ─── Re-run detection ────────────────────────────────────────────────────────
-handle_existing_install() {
-    local state_file="${1}/${STATE_FILE}"
-    if [[ -f "$state_file" ]]; then
-        echo ""
-        log_warn "Existing installation detected at $1"
-        echo ""
-        log_info "Performing clean reinstall..."
-        cd "$1"
-        docker compose down --rmi all --volumes 2>&1 || true
-        cd "$HOME"
-        rm -rf "$1"
-        log_ok "Previous installation removed"
-    fi
-}
-
-# ─── Main flows ──────────────────────────────────────────────────────────────
-main_install() {
-    set_stage "Welcome"
-    show_splash
-    system_check
-
-    set_stage "Configuration"
-    configure_install
-
-    set_stage "Cleanup"
-    handle_existing_install "$INSTALL_DIR"
-
-    set_stage "Secrets"
-    setup_forwarding_secret
-
-    set_stage "Setup"
-    do_setup
-
-    set_stage "Launch"
-    do_launch
-}
-
-main() {
-    local manage=false
-    local watch=false
-    local install_dir_override=""
-
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-            --manage|-m)   manage=true ;;
-            --watch|-w)    watch=true ;;
-            --dir)         shift; install_dir_override="$1" ;;
-            --help|-h)
-                echo "Usage: install.sh [OPTIONS]"
-                echo ""
-                echo "Options:"
-                echo "  --manage, -m    Open management dashboard"
-                echo "  --watch, -w     Start health monitoring mode"
-                echo "  --dir PATH      Specify install directory"
-                echo "  --help, -h      Show this help"
-                exit 0
-                ;;
-            *) ;;
-        esac
-        shift
-    done
-
-    set_stage "Dependency Check"
-    check_dependencies
-    install_gum
-    install_figlet
-
-    if [[ -n "$install_dir_override" ]]; then
-        INSTALL_DIR="$install_dir_override"
-    else
-        INSTALL_DIR="$DEFAULT_INSTALL_DIR"
-    fi
-
-    if $watch; then
-        local sf="${INSTALL_DIR}/${STATE_FILE}"
-        [[ -f "$sf" ]] && INSTALL_DIR=$(jq -r '.install_dir' "$sf")
-        cd "$INSTALL_DIR"
-        do_watch
-        exit 0
-    fi
-
-    if $manage; then
-        set_stage "Management"
-        management_dashboard
-        exit 0
-    fi
-
-    main_install
-}
-
-main "$@"
+exec "$bin" "$@"

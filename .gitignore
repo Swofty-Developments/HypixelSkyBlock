@@ -43,6 +43,8 @@ build/
 /configuration/hypixel_murder_mystery_lobby/
 /configuration/hypixel_skywars_lobby/
 *.polar
+*.schem
+/setup/skyblock-installer
 
 ### Logs ###
 /configuration/logs/
