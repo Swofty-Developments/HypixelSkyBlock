@@ -6,6 +6,7 @@ import org.tinylog.Logger;
 
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public final class ItemStatistics {
@@ -28,6 +29,59 @@ public final class ItemStatistics {
 
     public static ItemStatistics empty() {
         return EMPTY;
+    }
+
+    public static List<String> getDescription(ItemStatistic statistic) {
+        return switch (statistic) {
+            case HEALTH -> List.of("§7Your Health stat increases your", "§7maximum health.");
+            case DEFENSE -> List.of("§7Your Defense stat reduces the", "§7damage that you take from enemies.");
+            case TRUE_DEFENSE ->
+                List.of("§7Your True Defense stat reduces the", "§7true damage that you take from enemies.");
+            case STRENGTH -> List.of("§7Strength increases the damage you", "§7deal.");
+            case INTELLIGENCE ->
+                List.of("§7Intelligence increases the damage of", "§7your magical items and your mana pool.");
+            case CRITICAL_CHANCE ->
+                List.of("§7Critical Chance is the percent chance", "§7that you land a Critical Hit.");
+            case CRITICAL_DAMAGE ->
+                List.of("§7Critical Damage multiplies the damage", "§7that you deal with a Critical Hit.");
+            case BONUS_ATTACK_SPEED -> List.of("§7Attack Speed decreases the time", "§7between hits on your opponent.");
+            case ABILITY_DAMAGE -> List.of("§7Ability Damage increases damage from", "§7spells and item abilities.");
+            case FEROCITY -> List.of("§7Ferocity grants a chance to strike", "§7enemies additional times.");
+            case HEALTH_REGENERATION ->
+                List.of("§7Health Regen increases the health", "§7you naturally regenerate over time.");
+            case VITALITY -> List.of("§7Vitality increases your incoming", "§7healing, including health regen.");
+            case MENDING -> List.of("§7Mending increases your outgoing", "§7healing.");
+            case SWING_RANGE -> List.of("§7Increases your melee hit range.");
+            case BREAKING_POWER -> List.of("§7Breaking Power allows you to mine", "§7stronger blocks.");
+            case MINING_SPEED -> List.of("§7Increases the speed of breaking", "§7mining blocks.");
+            case MINING_SPREAD ->
+                List.of("§7Chance to automatically mine adjacent", "§7Blocks, Ores, and Dwarven Metals.");
+            case GEMSTONE_SPREAD -> List.of("§7Chance to automatically mine adjacent", "§7Gemstones.");
+            case PRISTINE -> List.of("§7Chance to increase the quality of a", "§7Gemstone when it is dropped.");
+            case SWEEP -> List.of("§7Sweep is the ability to cut multiple", "§7logs at once.");
+            case PULL -> List.of("§7Pull controls which fish you can grab", "§7and how quickly fishing nets work.");
+            case FISHING_SPEED -> List.of("§7Fishing Speed decreases the delay", "§7before a fish appears.");
+            case SEA_CREATURE_CHANCE -> List.of("§7Your chance to catch Sea Creatures", "§7while fishing.");
+            case DOUBLE_HOOK_CHANCE -> List.of("§7Chance to catch two Sea Creatures", "§7at once.");
+            case TROPHY_FISH_CHANCE -> List.of("§7Increases your chance to catch", "§6Trophy Fish§7.");
+            case TREASURE_CHANCE -> List.of("§7Increases your chance to catch", "§6Treasure §7while fishing.");
+            case BONUS_PEST_CHANCE -> List.of("§7Chance to spawn bonus §2ൠ Pests", "§7while on §aThe Garden§7.");
+            case OVERBLOOM -> List.of("§7Increases your chance of dropping", "§6§lRARE CROPS §7while farming.");
+            case SPEED -> List.of("§7Your Speed stat increases how fast", "§7you can walk.");
+            case MAGIC_FIND -> List.of("§7Magic Find increases how many rare", "§7items you find.");
+            case PET_LUCK -> List.of("§7Pet Luck improves pet drops and", "§7the quality of crafted pets.");
+            case HEAT_RESISTANCE -> List.of("§7Increases time spent safely in hot", "§7environments.");
+            case COLD_RESISTANCE -> List.of("§7Increases time spent safely in cold", "§7environments.");
+            case FEAR -> List.of("§7Makes Primal Fears spawn more often", "§7and reduces their damage.");
+            case RESPIRATION -> List.of("§7Extends underwater breathing time.");
+            case PRESSURE_RESISTANCE -> List.of("§7Reduces the effects of Pressure", "§7when diving.");
+            case TRACKING -> List.of("§7Increases your chance of finding", "§d❃ Elusive §7mobs.");
+            default -> statistic.name().endsWith("_WISDOM")
+                ? List.of("§7Increases the Skill XP that you gain.")
+                : statistic.name().endsWith("_FORTUNE")
+                  ? List.of("§7Increases your chance to gain", "§7multiple relevant drops.")
+                  : List.of("§7Augments this part of your gameplay.");
+        };
     }
 
     @Override

@@ -22,6 +22,14 @@ public class SkyBlockInventory {
     private UnderstandableSkyBlockItem leggings = new SkyBlockItem(Material.AIR).toUnderstandable();
     @Setter
     private UnderstandableSkyBlockItem boots = new SkyBlockItem(Material.AIR).toUnderstandable();
+    @Setter
+    private UnderstandableSkyBlockItem necklace = new SkyBlockItem(Material.AIR).toUnderstandable();
+    @Setter
+    private UnderstandableSkyBlockItem cloak = new SkyBlockItem(Material.AIR).toUnderstandable();
+    @Setter
+    private UnderstandableSkyBlockItem belt = new SkyBlockItem(Material.AIR).toUnderstandable();
+    @Setter
+    private UnderstandableSkyBlockItem gloves = new SkyBlockItem(Material.AIR).toUnderstandable();
 
     public SkyBlockInventory() {
     }

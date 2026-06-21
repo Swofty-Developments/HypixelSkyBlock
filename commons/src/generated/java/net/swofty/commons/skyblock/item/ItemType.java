@@ -1,8 +1,6 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
 package net.swofty.commons.skyblock.item;
 
-import java.lang.Exception;
-import java.lang.String;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -2344,9 +2342,15 @@ public enum ItemType {
 
   MITHRIL(Material.PRISMARINE_CRYSTALS, Rarity.COMMON),
 
+  MITHRIL_BELT(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
+  MITHRIL_GAUNTLET(Material.PLAYER_HEAD, Rarity.UNCOMMON),
+
   MITHRIL_INFUSION(Material.PLAYER_HEAD, Rarity.COMMON),
 
   MITHRIL_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  MITHRIL_NECKLACE(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   MOLE_HAT(Material.PLAYER_HEAD, Rarity.COMMON),
 

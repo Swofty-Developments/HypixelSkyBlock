@@ -11,9 +11,11 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.PotatoType;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeHotPotatoBookData;
@@ -24,6 +26,7 @@ import net.swofty.type.generic.data.datapoints.DatapointStringList;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.bestiary.BestiaryData;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointInventory;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkills;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.enchantment.EnchantmentType;
@@ -233,6 +236,7 @@ public class PlayerStatistics {
         ItemStatistics total = ItemStatistics.builder().build();
         if (enemy instanceof BestiaryMob bestiaryMob) total = ItemStatistics.add(total, getBestiaryStatistics(causer, bestiaryMob));
         total = ItemStatistics.add(total, allArmorStatistics(causer, enemy));
+        total = ItemStatistics.add(total, equipmentStatistics(causer, enemy));
         total = ItemStatistics.add(total, mainHandStatistics(causer, enemy));
         total = ItemStatistics.add(total, spareStatistics());
         total = ItemStatistics.add(total, getTemporaryStatistics());
@@ -240,6 +244,44 @@ public class PlayerStatistics {
         total = ItemStatistics.add(total, accessoryStatistics);
         total = ItemStatistics.add(total, ItemStatistic.getOfAllBaseValues());
 
+        return total;
+    }
+
+    public List<StatisticSource> statisticSources() {
+        return List.of(
+            new StatisticSource("Armor", Material.IRON_CHESTPLATE, allArmorStatistics(null, null)),
+            new StatisticSource("Equipment", Material.CHEST, equipmentStatistics(null, null)),
+            new StatisticSource("Held Item", Material.DIAMOND_SWORD, mainHandStatistics(null, null)),
+            new StatisticSource("Skills & Progress", Material.EXPERIENCE_BOTTLE, spareStatistics()),
+            new StatisticSource("Temporary Buffs", Material.POTION, getTemporaryStatistics()),
+            new StatisticSource("Pet", Material.BONE, petStatistics()),
+            new StatisticSource("Accessory Bag", Material.REDSTONE, accessoryStatistics),
+            new StatisticSource("Base Value", Material.NETHER_STAR, ItemStatistic.getOfAllBaseValues())
+        );
+    }
+
+    public record StatisticSource(String name, Material material, ItemStatistics statistics) {
+    }
+
+    private ItemStatistics equipmentStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
+        DatapointInventory inventory = player.getSkyblockDataHandler()
+            .get(SkyBlockDataHandler.Data.INVENTORY, DatapointInventory.class);
+        List<net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem> equipment = List.of(
+            inventory.getValue().getNecklace(),
+            inventory.getValue().getCloak(),
+            inventory.getValue().getBelt(),
+            inventory.getValue().getGloves()
+        );
+
+        ItemStatistics total = ItemStatistics.empty();
+        for (net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem serialized : equipment) {
+            SkyBlockItem item = new SkyBlockItem(serialized);
+            if (item.isAir()) continue;
+            total = ItemStatistics.add(total, ItemStatistics.add(
+                item.getAttributeHandler().getStatistics(),
+                calculateExtraItemStatisticsToAdd(item, causer, enemy)
+            ));
+        }
         return total;
     }
 
@@ -463,8 +505,7 @@ public class PlayerStatistics {
                     for (ItemStatistic statistic : ItemStatistic.values()) {
                         if (experiencedStatistics.contains(statistic.name())) continue;
 
-                        @Nullable StatisticDescription description = StatisticDescription.fromStatistic(statistic);
-                        if (description == null) continue;
+                        List<String> description = ItemStatistics.getDescription(statistic);
 
                         double experiencedValue = statistics.getOverall(statistic);
                         if (experiencedValue <= 0) continue;
@@ -477,11 +518,12 @@ public class PlayerStatistics {
                         player.sendMessage("§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                         player.sendMessage("§6§lNEW STAT DISCOVERED! §r" + statistic.getFullDisplayName());
                         player.sendMessage(" ");
-                        player.sendMessage(description.getDescription());
+                        player.sendMessage(String.join(" ", description).replace("§7", ""));
                         player.sendMessage(" ");
                         player.sendMessage(Component.text("§e§lCLICK HERE §r§eto learn more on the Official SkyBlock Wiki!")
                                 .hoverEvent(Component.text("§eClick to view the " + statistic.getDisplayName() + " §eWiki page!"))
-                                .clickEvent(ClickEvent.openUrl("https://wiki.hypixel.net/" + description.getWikiName()))
+                            .clickEvent(ClickEvent.openUrl("https://wiki.hypixel.net/" +
+                                StringUtility.toNormalCase(statistic.name()).replace(" ", "_")))
                         );
                         player.sendMessage("§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                     }
@@ -629,5 +671,3 @@ public class PlayerStatistics {
         }, ExecutionType.TICK_END);
     }
 }
-
-

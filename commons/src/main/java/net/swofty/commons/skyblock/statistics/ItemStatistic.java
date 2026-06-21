@@ -2,6 +2,7 @@ package net.swofty.commons.skyblock.statistics;
 
 import lombok.Getter;
 import lombok.NonNull;
+import net.minestom.server.item.Material;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -56,6 +57,9 @@ public enum ItemStatistic {
     COCOA_BEANS_FORTUNE("Cocoa Beans Fortune", "§a", "§6", false, "☘"),
     MUSHROOM_FORTUNE("Mushroom Fortune", "§a", "§6", false, "☘"),
     SUGAR_CANE_FORTUNE("Sugar Cane Fortune", "§a", "§6", false, "☘"),
+    SUNFLOWER_FORTUNE("Sunflower Fortune", "§a", "§6", false, "☘"),
+    MOONFLOWER_FORTUNE("Moonflower Fortune", "§a", "§6", false, "☘"),
+    WILD_ROSE_FORTUNE("Wild Rose Fortune", "§a", "§6", false, "☘"),
 
     FIG_FORTUNE("Fig Fortune", "§a", "§6", false, "☘"),
     MANGROVE_FORTUNE("Mangrove Fortune", "§a", "§6", false, "☘"),
@@ -84,12 +88,14 @@ public enum ItemStatistic {
     TROPHY_FISH_CHANCE("Trophy Fish Chance", "§a", "§6", true, "♔"),
     DOUBLE_HOOK_CHANCE("Double Hook Chance", "§a", "§3", true, "⚓"),
     BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
+    OVERBLOOM("Overbloom", "§a", "§e", false, "☀"),
     HEAT_RESISTANCE("Heat Resistance","§a","§c",false,"♨"),
     COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
     FEAR("Fear","§a","§5",false,"☠"),
     PULL("Pull","§a","§b",false,"ᛷ"),
     RESPIRATION("Respiration","§a","§3",false,"⚶"),
     PRESSURE_RESISTANCE("Pressure Resistance","§a","§9",false,"❍"),
+    TRACKING("Tracking", "§a", "§d", false, "❃"),
     BREWER("Brewer", "§a", "§d", true, "☕"),
 
     // Other Stats
@@ -136,6 +142,78 @@ public enum ItemStatistic {
 
     public String getFullDisplayName() {
         return displayColor + symbol + " " + displayName;
+    }
+
+    // it's a method cuz it's in common, so it doesn't require minestom to be imported.
+    // or that's how I think that works
+    public Material getIconMaterial() {
+        return switch (this) {
+            case HEALTH -> Material.GOLDEN_APPLE;
+            case DEFENSE -> Material.IRON_CHESTPLATE;
+            case STRENGTH -> Material.BLAZE_POWDER;
+            case INTELLIGENCE -> Material.ENCHANTED_BOOK;
+            case BONUS_ATTACK_SPEED -> Material.GOLDEN_AXE;
+            case ABILITY_DAMAGE -> Material.BEACON;
+            case TRUE_DEFENSE -> Material.BONE_MEAL;
+            case FEROCITY -> Material.RED_DYE;
+            case HEALTH_REGENERATION -> Material.POTION;
+            case VITALITY -> Material.GLISTERING_MELON_SLICE;
+            case MENDING -> Material.GHAST_TEAR;
+            case SWING_RANGE -> Material.STONE_SWORD;
+            case BREAKING_POWER -> Material.EMERALD;
+            case MINING_SPEED -> Material.DIAMOND_PICKAXE;
+            case MINING_SPREAD, GEMSTONE_SPREAD -> Material.GOLDEN_PICKAXE;
+            case SWEEP -> Material.DIAMOND_AXE;
+            case WHEAT_FORTUNE -> Material.WHEAT;
+            case CARROT_FORTUNE -> Material.CARROT;
+            case POTATO_FORTUNE -> Material.POTATO;
+            case PUMPKIN_FORTUNE -> Material.CARVED_PUMPKIN;
+            case MELON_FORTUNE -> Material.MELON_SLICE;
+            case MUSHROOM_FORTUNE -> Material.RED_MUSHROOM;
+            case CACTUS_FORTUNE -> Material.CACTUS;
+            case SUGAR_CANE_FORTUNE -> Material.SUGAR_CANE;
+            case NETHER_WART_FORTUNE -> Material.NETHER_WART;
+            case COCOA_BEANS_FORTUNE -> Material.COCOA_BEANS;
+            case SUNFLOWER_FORTUNE -> Material.SUNFLOWER;
+            case MOONFLOWER_FORTUNE -> Material.BLUE_ORCHID;
+            case WILD_ROSE_FORTUNE -> Material.ROSE_BUSH;
+            case FIG_FORTUNE, MANGROVE_FORTUNE -> Material.PAPER;
+            case HUNTER_FORTUNE -> Material.PRISMARINE_SHARD;
+            case PULL -> Material.COBWEB;
+            case FISHING_SPEED -> Material.FISHING_ROD;
+            case SEA_CREATURE_CHANCE -> Material.PRISMARINE_CRYSTALS;
+            case DOUBLE_HOOK_CHANCE -> Material.COOKED_COD;
+            case TREASURE_CHANCE -> Material.CHEST;
+            case BONUS_PEST_CHANCE -> Material.DIRT;
+            case OVERBLOOM -> Material.CACTUS_FLOWER;
+            case SPEED -> Material.SUGAR;
+            case MAGIC_FIND -> Material.STICK;
+            case HEAT_RESISTANCE -> Material.LAVA_BUCKET;
+            case COLD_RESISTANCE -> Material.ICE;
+            case FEAR -> Material.CAULDRON;
+            case RESPIRATION, PRESSURE_RESISTANCE -> Material.GLASS_BOTTLE;
+            case TRACKING -> Material.COMPASS;
+            case ALCHEMY_WISDOM, CARPENTRY_WISDOM, COMBAT_WISDOM, ENCHANTING_WISDOM,
+                 FARMING_WISDOM, FISHING_WISDOM, FORAGING_WISDOM, MINING_WISDOM,
+                 RUNE_CRAFTING_WISDOM, SOCIAL_WISDOM, TAMING_WISDOM, HUNTING_WISDOM -> Material.WRITABLE_BOOK;
+            default -> Material.PAPER;
+        };
+    }
+
+    // same case here than above
+    public String getIconTexture() {
+        return switch (this) {
+            case CRITICAL_CHANCE -> "3e4f49535a276aacc4dc84133bfe81be5f2a4799a4c04d9a4ddb72d819ec2b2b";
+            case CRITICAL_DAMAGE -> "ddafb23efc57f251878e5328d11cb0eef87b79c87b254a7ec72296f9363ef7c";
+            case PRISTINE -> "d886e0f41185b18a3afd89488d2ee4caa0735009247cccf039ced6aed752ff1a";
+            case MINING_FORTUNE, ORE_FORTUNE, BLOCK_FORTUNE, DWARVEN_METAL_FORTUNE, GEMSTONE_FORTUNE ->
+                "b73579575ca88b3a8afe1ed18907b3125fe0987b02a88ef0e8a01087c3d024c4";
+            case FORAGING_FORTUNE -> "4e44e2a8dff90f5b005e76e6f5db7c12ae59cbbc56d8bc8050f3e3dbf0c3b734";
+            case FARMING_FORTUNE -> "220ee7741ff1b958dbb9fa7cddad9c3cce93373f470f9b834da02da67c8202a4";
+            case TROPHY_FISH_CHANCE -> "afe7bfb403d9c8c0cdc539c147035869a23e8810a0f3c74a767140180abd00a7";
+            case PET_LUCK -> "bc78314255d8864a753fe95622564046f0dee2a82c6e4e2e7f452fcb95af318c";
+            default -> null;
+        };
     }
 
     public static ItemStatistics getOfAllBaseValues() {
