@@ -46,7 +46,7 @@ public class ActionEntityAttack implements HypixelEventClass {
 		}
 	}
 
-	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
 	public void run(EntityDamageEvent event) {
 		if (event.getEntity() instanceof BedWarsPlayer player) {
 			BedWarsGame game = player.getGame();

@@ -6,7 +6,6 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
-import net.swofty.type.generic.packet.packets.client.anticheat.PacketListenerAirJump;
 import net.swofty.type.skyblockgeneric.event.actions.player.ActionPlayerStrayTooFar;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
@@ -24,7 +23,6 @@ public class ActionPlayerClearSkyBlockCache implements HypixelEventClass {
         SkyBlockScoreboard.removeCache(player);
         player.getPetData().updatePetEntityImpl(null);
         PlayerItemOrigin.clearCache(player.getUuid());
-        PacketListenerAirJump.playerData.remove(player);
         ActionPlayerStrayTooFar.startedStray.remove(player.getUuid());
         CustomEventCaller.clearCache(player);
     }

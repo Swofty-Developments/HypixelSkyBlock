@@ -9,12 +9,12 @@ import net.swofty.type.bedwarsgame.events.custom.BedDestroyedEvent;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 public class BedBrokenListener implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onBedDestroyed(BedDestroyedEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
         BedWarsMapsConfig.TeamKey teamKey = event.teamKey();

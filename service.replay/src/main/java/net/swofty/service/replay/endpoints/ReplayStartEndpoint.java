@@ -1,8 +1,8 @@
 package net.swofty.service.replay.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import net.swofty.type.game.replay.ReplayMetadata;
 import org.tinylog.Logger;
@@ -10,19 +10,17 @@ import org.tinylog.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReplayStartEndpoint implements ServiceEndpoint<
+public class ReplayStartEndpoint implements RedisMessageHandler<
         ReplayStartProtocolObject.StartMessage,
         ReplayStartProtocolObject.StartResponse> {
 
     @Override
-    public ReplayStartProtocolObject associatedProtocolObject() {
+    public ReplayStartProtocolObject protocol() {
         return new ReplayStartProtocolObject();
     }
 
     @Override
-    public ReplayStartProtocolObject.StartResponse onMessage(
-            ServiceProxyRequest message,
-            ReplayStartProtocolObject.StartMessage msg) {
+    public ReplayStartProtocolObject.StartResponse handle(ReplayStartProtocolObject.StartMessage msg, RedisMessageContext context) {
 
         try {
             Map<String, ReplayMetadata.TeamInfo> teamInfo = new HashMap<>();

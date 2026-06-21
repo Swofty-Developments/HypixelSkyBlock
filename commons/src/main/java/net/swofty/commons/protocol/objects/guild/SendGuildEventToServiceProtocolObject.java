@@ -1,10 +1,10 @@
 package net.swofty.commons.protocol.objects.guild;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
-public class SendGuildEventToServiceProtocolObject extends ProtocolObject<SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage, SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse> {
+public class SendGuildEventToServiceProtocolObject extends RedisProtocol<SendGuildEventToServiceProtocolObject.SendGuildEventToServiceMessage, SendGuildEventToServiceProtocolObject.SendGuildEventToServiceResponse> {
     @Override
     public Serializer<SendGuildEventToServiceMessage> getSerializer() {
         return new JacksonSerializer<>(SendGuildEventToServiceMessage.class);

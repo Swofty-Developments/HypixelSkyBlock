@@ -1,12 +1,12 @@
 package net.swofty.commons.protocol.objects.guild;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 import java.util.List;
 import java.util.UUID;
 
 public class GuildEventPushProtocol
-    extends ServicePushProtocol<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> {
+    extends RedisProtocol<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> {
 
     public GuildEventPushProtocol() {
         super(Request.class, Response.class);

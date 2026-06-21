@@ -1,12 +1,12 @@
 package net.swofty.commons.protocol.objects.game;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 public class ViewReplayPushProtocol
-        extends ServicePushProtocol<ViewReplayPushProtocol.Request, ViewReplayPushProtocol.Response> {
+        extends RedisProtocol<ViewReplayPushProtocol.Request, ViewReplayPushProtocol.Response> {
 
     public ViewReplayPushProtocol() {
         super(Request.class, Response.class);

@@ -1,27 +1,25 @@
 package net.swofty.service.replay.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayEndProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import net.swofty.service.replay.session.ReplaySessionManager;
 import org.tinylog.Logger;
 
 import java.util.concurrent.TimeUnit;
 
-public class ReplayEndEndpoint implements ServiceEndpoint<
+public class ReplayEndEndpoint implements RedisMessageHandler<
         ReplayEndProtocolObject.EndMessage,
         ReplayEndProtocolObject.EndResponse> {
 
     @Override
-    public ReplayEndProtocolObject associatedProtocolObject() {
+    public ReplayEndProtocolObject protocol() {
         return new ReplayEndProtocolObject();
     }
 
     @Override
-    public ReplayEndProtocolObject.EndResponse onMessage(
-            ServiceProxyRequest message,
-            ReplayEndProtocolObject.EndMessage msg) {
+    public ReplayEndProtocolObject.EndResponse handle(ReplayEndProtocolObject.EndMessage msg, RedisMessageContext context) {
 
         try {
             Logger.info("Ending replay session {} (duration: {} ticks)", msg.replayId(), msg.durationTicks());

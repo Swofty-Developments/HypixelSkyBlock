@@ -11,7 +11,7 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.game.game.event.GameStartEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.i18n.I18n;
 import org.tinylog.Logger;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class GameStartListener implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameStart(GameStartEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.getGameId());
         Logger.info("Starting BedWars game {}", event.gameId());

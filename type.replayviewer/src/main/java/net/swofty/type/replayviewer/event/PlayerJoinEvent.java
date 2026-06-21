@@ -16,7 +16,7 @@ import net.swofty.type.game.replay.ReplayError;
 import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.ScheduleUtility;
@@ -36,7 +36,7 @@ import java.util.concurrent.CompletableFuture;
 public class PlayerJoinEvent implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false)
     public void run(AsyncPlayerConfigurationEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

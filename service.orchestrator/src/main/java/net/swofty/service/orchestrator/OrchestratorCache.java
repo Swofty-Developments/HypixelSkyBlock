@@ -2,7 +2,7 @@ package net.swofty.service.orchestrator;
 
 import net.swofty.commons.ServerType;
 import net.swofty.commons.bedwars.BedWarsGameType;
-import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocol;
 import net.swofty.type.game.game.GameObject;
 
 import java.time.Instant;
@@ -40,7 +40,7 @@ public class OrchestratorCache {
                                        int maxPlayers,
                                        int onlinePlayers,
                                        List<GameObject> games,
-                                       List<GameHeartbeatProtocolObject.MapAdvertisement> mapAdvertisements,
+                                       List<GameHeartbeatProtocol.MapAdvertisement> mapAdvertisements,
                                        Integer remainingGameSlots) {
         GameServerState state = new GameServerState(
             uuid,
@@ -353,7 +353,7 @@ public class OrchestratorCache {
                                   int maxPlayers,
                                   int onlinePlayers,
                                   long lastHeartbeat,
-                                  List<GameHeartbeatProtocolObject.MapAdvertisement> mapAdvertisements,
+                                  List<GameHeartbeatProtocol.MapAdvertisement> mapAdvertisements,
                                   Integer remainingGameSlots) {
 
         public GameServerState {
@@ -435,7 +435,7 @@ public class OrchestratorCache {
             if (server.type() != ServerType.BEDWARS_GAME || server.mapAdvertisements().isEmpty()) {
                 continue;
             }
-            for (GameHeartbeatProtocolObject.MapAdvertisement advertisement : server.mapAdvertisements()) {
+            for (GameHeartbeatProtocol.MapAdvertisement advertisement : server.mapAdvertisements()) {
                 if (supportsMode(advertisement, gameTypeName)) {
                     maps.add(advertisement.mapName());
                 }
@@ -450,7 +450,7 @@ public class OrchestratorCache {
         }
 
         if (map == null) {
-            for (GameHeartbeatProtocolObject.MapAdvertisement advertisement : server.mapAdvertisements()) {
+            for (GameHeartbeatProtocol.MapAdvertisement advertisement : server.mapAdvertisements()) {
                 if (supportsMode(advertisement, gameTypeName)) {
                     return true;
                 }
@@ -458,7 +458,7 @@ public class OrchestratorCache {
             return false;
         }
 
-        for (GameHeartbeatProtocolObject.MapAdvertisement advertisement : server.mapAdvertisements()) {
+        for (GameHeartbeatProtocol.MapAdvertisement advertisement : server.mapAdvertisements()) {
             if (matchesMap(advertisement, map) && supportsMode(advertisement, gameTypeName)) {
                 return true;
             }
@@ -466,12 +466,12 @@ public class OrchestratorCache {
         return false;
     }
 
-    private static boolean matchesMap(GameHeartbeatProtocolObject.MapAdvertisement advertisement, String requestedMap) {
+    private static boolean matchesMap(GameHeartbeatProtocol.MapAdvertisement advertisement, String requestedMap) {
         return advertisement.mapId().equalsIgnoreCase(requestedMap)
             || advertisement.mapName().equalsIgnoreCase(requestedMap);
     }
 
-    private static boolean supportsMode(GameHeartbeatProtocolObject.MapAdvertisement advertisement, String gameTypeName) {
+    private static boolean supportsMode(GameHeartbeatProtocol.MapAdvertisement advertisement, String gameTypeName) {
         if (gameTypeName == null) {
             return true;
         }

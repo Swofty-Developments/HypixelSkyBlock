@@ -1,23 +1,21 @@
 package net.swofty.service.guild.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.guild.GetGuildProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.guild.GuildCache;
 
-public class GetGuildEndpoint implements ServiceEndpoint<
+public class GetGuildEndpoint implements RedisMessageHandler<
     GetGuildProtocolObject.GetGuildMessage,
     GetGuildProtocolObject.GetGuildResponse> {
 
     @Override
-    public GetGuildProtocolObject associatedProtocolObject() {
+    public GetGuildProtocolObject protocol() {
         return new GetGuildProtocolObject();
     }
 
     @Override
-    public GetGuildProtocolObject.GetGuildResponse onMessage(
-        ServiceProxyRequest message,
-        GetGuildProtocolObject.GetGuildMessage messageObject) {
+    public GetGuildProtocolObject.GetGuildResponse handle(GetGuildProtocolObject.GetGuildMessage messageObject, RedisMessageContext context) {
         return new GetGuildProtocolObject.GetGuildResponse(
             GuildCache.getGuildFromPlayer(messageObject.memberUUID())
         );

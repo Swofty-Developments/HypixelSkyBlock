@@ -14,7 +14,7 @@ public class LobbyWorldEvent implements HypixelEventClass {
         event.setCancelled(true);
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onBlockPlace(PlayerBlockPlaceEvent event) {
         event.setCancelled(true);
     }

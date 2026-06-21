@@ -4,7 +4,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.lobby.LobbyTypeLoader;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class LobbyPlayerSpawnEvents implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerSpawnEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

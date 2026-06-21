@@ -42,8 +42,8 @@ dependencies {
 
     implementation(project(":type.prototypelobby"))
 
-    implementation(project(":type.bedwarslobby"))
-    implementation(project(":type.bedwarsgame"))
+    // implementation(project(":type.bedwarslobby")) // TEMP: excluded pending bedwars reconciliation
+    // implementation(project(":type.bedwarsgame"))
     implementation(project(":type.bedwarsconfigurator"))
 
     implementation(project(":type.murdermysterylobby"))

@@ -1,23 +1,21 @@
 package net.swofty.service.replay.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayMapLoadProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import org.tinylog.Logger;
 
-public class ReplayMapLoadEndpoint implements ServiceEndpoint<
+public class ReplayMapLoadEndpoint implements RedisMessageHandler<
     ReplayMapLoadProtocolObject.MapLoadRequest,
     ReplayMapLoadProtocolObject.MapLoadResponse> {
     @Override
-    public ReplayMapLoadProtocolObject associatedProtocolObject() {
+    public ReplayMapLoadProtocolObject protocol() {
         return new ReplayMapLoadProtocolObject();
     }
 
     @Override
-    public ReplayMapLoadProtocolObject.MapLoadResponse onMessage(
-        ServiceProxyRequest message,
-        ReplayMapLoadProtocolObject.MapLoadRequest msg) {
+    public ReplayMapLoadProtocolObject.MapLoadResponse handle(ReplayMapLoadProtocolObject.MapLoadRequest msg, RedisMessageContext context) {
         try {
             String mapHash = msg.mapHash();
             if (!ReplayService.getDatabase().hasMap(mapHash)) {

@@ -110,9 +110,8 @@ public class ProxyPlayer {
             data.put("origin-type", originType.name());
         }
 
-        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, data),
-                response -> {});
+        RedisClient.requestProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, data));
     }
 
     public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {

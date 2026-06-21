@@ -4,14 +4,14 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.game.game.event.GameStateChangeEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import org.tinylog.Logger;
 
 // todo: move functionality here
 public class BedWarsGameStateListener implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameStateChange(GameStateChangeEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
         if (game == null) return;

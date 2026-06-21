@@ -1,24 +1,22 @@
 package net.swofty.service.replay.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayMapUploadProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import org.tinylog.Logger;
 
-public class ReplayMapUploadEndpoint implements ServiceEndpoint<
+public class ReplayMapUploadEndpoint implements RedisMessageHandler<
         ReplayMapUploadProtocolObject.MapUploadMessage,
         ReplayMapUploadProtocolObject.MapUploadResponse> {
 
     @Override
-    public ReplayMapUploadProtocolObject associatedProtocolObject() {
+    public ReplayMapUploadProtocolObject protocol() {
         return new ReplayMapUploadProtocolObject();
     }
 
     @Override
-    public ReplayMapUploadProtocolObject.MapUploadResponse onMessage(
-            ServiceProxyRequest message,
-            ReplayMapUploadProtocolObject.MapUploadMessage msg) {
+    public ReplayMapUploadProtocolObject.MapUploadResponse handle(ReplayMapUploadProtocolObject.MapUploadMessage msg, RedisMessageContext context) {
 
         try {
             // Check if map already exists

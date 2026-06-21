@@ -19,7 +19,7 @@ import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.guild.GuildManager;
 import org.tinylog.Logger;
@@ -30,7 +30,7 @@ public class GameEndListener implements HypixelEventClass {
 
     private static final String THICK_BAR = "§a§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameEnd(GameTeamWinConditionEvent<BedWarsTeam> event) {
         String gameId = event.gameId();
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(gameId);

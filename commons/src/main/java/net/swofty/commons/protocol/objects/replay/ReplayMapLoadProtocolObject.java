@@ -1,10 +1,10 @@
 package net.swofty.commons.protocol.objects.replay;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
-public class ReplayMapLoadProtocolObject extends ProtocolObject<
+public class ReplayMapLoadProtocolObject extends RedisProtocol<
     ReplayMapLoadProtocolObject.MapLoadRequest,
     ReplayMapLoadProtocolObject.MapLoadResponse> {
     @Override

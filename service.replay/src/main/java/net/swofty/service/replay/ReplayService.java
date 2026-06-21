@@ -4,7 +4,7 @@ import lombok.Getter;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.replay.session.ReplaySessionManager;
 import net.swofty.service.replay.storage.ReplayDatabase;
 import org.tinylog.Logger;
@@ -39,7 +39,7 @@ public class ReplayService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.replay.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.replay.endpoints", RedisMessageHandler.class).toList();
     }
 }

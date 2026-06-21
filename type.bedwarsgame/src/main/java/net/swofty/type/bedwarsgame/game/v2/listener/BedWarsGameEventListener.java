@@ -4,12 +4,12 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.events.custom.BedWarsGameEventAdvanceEvent;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 public class BedWarsGameEventListener implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameEventAdvance(BedWarsGameEventAdvanceEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
         if (game == null) return;

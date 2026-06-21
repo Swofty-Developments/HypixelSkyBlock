@@ -9,12 +9,12 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.CountdownCancelledEvent;
 import net.swofty.type.game.game.event.CountdownTickEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 public class BedWarsCountdownListener implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onCountdownTick(CountdownTickEvent event) {
         // Find the game for this event
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
@@ -39,7 +39,7 @@ public class BedWarsCountdownListener implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onCountdownCancelled(CountdownCancelledEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
         if (game == null) return;

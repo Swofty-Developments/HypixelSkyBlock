@@ -8,8 +8,7 @@ import net.minestom.server.instance.InstanceManager;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -87,9 +86,12 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Override
     public TablistManager getTablistManager() {
-        return TablistManager.create(
-            List.of(new ReplayTablistModule())
-        );
+        return new TablistManager() {
+            @Override
+            public List<net.swofty.type.generic.tab.TablistModule> getModules() {
+                return List.of(new ReplayTablistModule());
+            }
+        };
     }
 
     @Override
@@ -125,15 +127,15 @@ public class TypeReplayViewerLoader implements HypixelTypeLoader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
         return (List) HypixelGenericLoader.loopThroughPackage(
             "net.swofty.type.replayviewer.redis.service",
-            TypedServiceHandler.class
+            RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

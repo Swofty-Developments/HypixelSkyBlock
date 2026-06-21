@@ -1,9 +1,9 @@
 package net.swofty.service.replay.endpoints;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayListProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import org.bson.Document;
 import org.tinylog.Logger;
@@ -14,19 +14,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class ReplayListEndpoint implements ServiceEndpoint<
+public class ReplayListEndpoint implements RedisMessageHandler<
         ReplayListProtocolObject.ListRequest,
         ReplayListProtocolObject.ListResponse> {
 
     @Override
-    public ReplayListProtocolObject associatedProtocolObject() {
+    public ReplayListProtocolObject protocol() {
         return new ReplayListProtocolObject();
     }
 
     @Override
-    public ReplayListProtocolObject.ListResponse onMessage(
-            ServiceProxyRequest message,
-            ReplayListProtocolObject.ListRequest msg) {
+    public ReplayListProtocolObject.ListResponse handle(ReplayListProtocolObject.ListRequest msg, RedisMessageContext context) {
 
         try {
             List<Document> docs = ReplayService.getDatabase().getReplaysByPlayer(msg.playerId(), msg.limit());

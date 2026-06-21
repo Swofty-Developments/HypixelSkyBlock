@@ -1,13 +1,13 @@
 package net.swofty.commons.protocol.objects.replay;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class ChooseReplayProtocolObject extends ProtocolObject
+public class ChooseReplayProtocolObject extends RedisProtocol
         <ChooseReplayProtocolObject.ChooseReplayMessage,
             ChooseReplayProtocolObject.ChooseReplayResponse> {
 

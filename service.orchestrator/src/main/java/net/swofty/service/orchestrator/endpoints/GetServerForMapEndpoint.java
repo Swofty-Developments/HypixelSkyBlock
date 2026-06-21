@@ -5,7 +5,7 @@ import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.orchestrator.GetServerForMapProtocol;
 import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.commons.redis.RedisClient;
@@ -39,7 +39,7 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 	private GetServerForMapProtocol.GetServerForMapResponse handleBedwars(
 			GetServerForMapProtocol.GetServerForMapMessage body) {
 		try {
-			BedwarsGameType gameType = parseBedwarsGameType(body.mode());
+			BedWarsGameType gameType = parseBedWarsGameType(body.mode());
 			if (gameType == null) {
 				return new GetServerForMapProtocol.GetServerForMapResponse(null, null, true, null);
 			}
@@ -164,18 +164,18 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 		}
 	}
 
-	private BedwarsGameType parseBedwarsGameType(String mode) {
+	private BedWarsGameType parseBedWarsGameType(String mode) {
 		if (mode == null) return null;
 
 		try {
-			return BedwarsGameType.valueOf(mode.toUpperCase());
+			return BedWarsGameType.valueOf(mode.toUpperCase());
 		} catch (IllegalArgumentException e) {
 			switch (mode.toLowerCase()) {
-				case "solo", "1v1v1v1v1v1v1v1" -> { return BedwarsGameType.SOLO; }
-				case "doubles", "2v2v2v2" -> { return BedwarsGameType.DOUBLES; }
-				case "triples", "3v3v3v3" -> { return BedwarsGameType.THREE_THREE_THREE_THREE; }
-				case "quads", "4v4v4v4" -> { return BedwarsGameType.FOUR_FOUR_FOUR_FOUR; }
-				case "4v4" -> { return BedwarsGameType.FOUR_FOUR; }
+				case "solo", "1v1v1v1v1v1v1v1" -> { return BedWarsGameType.ONE_EIGHT; }
+				case "doubles", "2v2v2v2" -> { return BedWarsGameType.TWO_EIGHT; }
+				case "triples", "3v3v3v3" -> { return BedWarsGameType.FOUR_THREE; }
+				case "quads", "4v4v4v4" -> { return BedWarsGameType.FOUR_FOUR; }
+				case "4v4" -> { return BedWarsGameType.TWO_FOUR; }
 				default -> { return null; }
 			}
 		}

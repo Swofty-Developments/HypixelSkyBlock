@@ -28,9 +28,6 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
-import com.viaversion.vialoader.ViaLoader;
-import com.viaversion.vialoader.impl.platform.ViaBackwardsPlatformImpl;
-import com.viaversion.vialoader.impl.platform.ViaRewindPlatformImpl;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
@@ -71,8 +68,6 @@ import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.RedisHandlerRegistry;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
-import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
-import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -125,12 +120,10 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
-        supportCrossVersion = ConfigProvider.settings().getIntegrations().isViaVersion();
-
-        // Initialize ViaVersion for cross-version support
-        if (supportCrossVersion) {
-            ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
-        }
+        // Cross-version (ViaVersion) bootstrap is disabled in this merged build: the
+        // 26.1.2 platform dropped the deprecated ViaLoader, so clients must match the
+        // server protocol version. Re-enable via the packetevents-based loader if needed.
+        supportCrossVersion = false;
 
         // Register packets
         server.getEventManager().register(this, PostLoginEvent.class,

@@ -8,14 +8,14 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 public class ActionPlayerDataSpawn implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
     public void run(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
         if (!(HypixelConst.getTypeLoader().getType() == ServerType.BEDWARS_LOBBY)) return;

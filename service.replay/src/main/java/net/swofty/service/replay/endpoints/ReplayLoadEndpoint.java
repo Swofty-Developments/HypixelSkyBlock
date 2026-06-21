@@ -1,9 +1,9 @@
 package net.swofty.service.replay.endpoints;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import org.bson.Document;
 import org.tinylog.Logger;
@@ -14,19 +14,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class ReplayLoadEndpoint implements ServiceEndpoint<
+public class ReplayLoadEndpoint implements RedisMessageHandler<
     ReplayLoadProtocolObject.LoadRequest,
     ReplayLoadProtocolObject.LoadResponse> {
 
     @Override
-    public ReplayLoadProtocolObject associatedProtocolObject() {
+    public ReplayLoadProtocolObject protocol() {
         return new ReplayLoadProtocolObject();
     }
 
     @Override
-    public ReplayLoadProtocolObject.LoadResponse onMessage(
-        ServiceProxyRequest message,
-        ReplayLoadProtocolObject.LoadRequest msg) {
+    public ReplayLoadProtocolObject.LoadResponse handle(ReplayLoadProtocolObject.LoadRequest msg, RedisMessageContext context) {
 
         try {
             UUID replayId = msg.replayId();

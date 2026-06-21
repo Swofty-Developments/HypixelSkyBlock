@@ -8,12 +8,12 @@ import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 public class ActionPlayerInventory implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void changeHeldSlot(PlayerChangeHeldSlotEvent event) {
         BedWarsGame game = TypeBedWarsGameLoader.getGameByInstance(event.getInstance());
         if (game == null || game.getReplayManager() == null) {
@@ -29,7 +29,7 @@ public class ActionPlayerInventory implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void changeEquipment(InventoryItemChangeEvent event) {
         if (!(event.getInventory() instanceof PlayerInventory)) {
             return;

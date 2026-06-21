@@ -7,12 +7,12 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 public class ActionBlockBreakAnimation implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, isAsync = true) // should it be async? - ARI
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, isAsync = true) // should it be async? - ARI
     public void run(PlayerPacketOutEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
         BedWarsGame game = TypeBedWarsGameLoader.getGameById(player.getGameId());

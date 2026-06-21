@@ -13,7 +13,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.user.HypixelPlayer;
 
@@ -33,24 +33,24 @@ public class LobbyAFKEvents implements HypixelEventClass {
         startSchedulerIfNeeded();
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         markPlayerActive(event.getPlayer().getUuid());
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         UUID uuid = event.getPlayer().getUuid();
         lastActivityAt.remove(uuid);
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onPlayerMove(PlayerMoveEvent event) {
         UUID uuid = event.getPlayer().getUuid();
         markPlayerActive(uuid);
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onPlayerPacket(PlayerPacketEvent event) {
         ClientPacket packet = event.getPacket();
         if (packet instanceof ClientPlayerRotationPacket

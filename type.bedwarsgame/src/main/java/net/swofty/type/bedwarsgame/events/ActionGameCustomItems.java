@@ -133,7 +133,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
 	}
 
 	// InventoryClickItem
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = true)
 	public void run(InventoryPreClickEvent event) {
 		TypeBedWarsGameLoader.getItemHandler().onInventoryClick(event);
 	}

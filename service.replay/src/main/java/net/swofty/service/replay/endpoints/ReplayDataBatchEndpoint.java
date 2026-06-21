@@ -1,24 +1,22 @@
 package net.swofty.service.replay.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.replay.ReplayDataBatchProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.service.replay.ReplayService;
 import org.tinylog.Logger;
 
-public class ReplayDataBatchEndpoint implements ServiceEndpoint<
+public class ReplayDataBatchEndpoint implements RedisMessageHandler<
         ReplayDataBatchProtocolObject.BatchMessage,
         ReplayDataBatchProtocolObject.BatchResponse> {
 
     @Override
-    public ReplayDataBatchProtocolObject associatedProtocolObject() {
+    public ReplayDataBatchProtocolObject protocol() {
         return new ReplayDataBatchProtocolObject();
     }
 
     @Override
-    public ReplayDataBatchProtocolObject.BatchResponse onMessage(
-            ServiceProxyRequest message,
-            ReplayDataBatchProtocolObject.BatchMessage msg) {
+    public ReplayDataBatchProtocolObject.BatchResponse handle(ReplayDataBatchProtocolObject.BatchMessage msg, RedisMessageContext context) {
 
         try {
             ReplayService.getSessionManager().receiveBatch(

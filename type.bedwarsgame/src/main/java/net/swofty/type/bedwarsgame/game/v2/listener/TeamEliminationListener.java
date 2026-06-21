@@ -7,14 +7,14 @@ import net.swofty.type.bedwarsgame.replay.BedWarsReplayManager;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.game.game.event.TeamEliminatedEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 
 import java.util.Optional;
 
 public class TeamEliminationListener implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void run(TeamEliminatedEvent<BedWarsTeam> event) {
         BedWarsTeam team = event.team();
         String teamColor = team.getColorCode();

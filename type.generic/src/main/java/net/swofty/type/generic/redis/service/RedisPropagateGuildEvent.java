@@ -6,9 +6,10 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.guild.GuildEvent;
 import net.swofty.commons.guild.events.response.*;
-import net.swofty.commons.protocol.ServicePushProtocol;
 import net.swofty.commons.protocol.objects.guild.GuildEventPushProtocol;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
@@ -17,16 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class RedisPropagateGuildEvent implements TypedServiceHandler<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> {
+public class RedisPropagateGuildEvent implements RedisMessageHandler<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> {
     private static final GuildEventPushProtocol PROTOCOL = new GuildEventPushProtocol();
 
     @Override
-    public ServicePushProtocol<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> getProtocol() {
+    public RedisProtocol<GuildEventPushProtocol.Request, GuildEventPushProtocol.Response> protocol() {
         return PROTOCOL;
     }
 
     @Override
-    public GuildEventPushProtocol.Response onMessage(GuildEventPushProtocol.Request message) {
+    public GuildEventPushProtocol.Response handle(GuildEventPushProtocol.Request message, RedisMessageContext context) {
         try {
             GuildEvent event = parseEvent(message.eventType(), message.eventData());
             List<UUID> playersHandled = handleEventForPlayers(event, message.participants());
