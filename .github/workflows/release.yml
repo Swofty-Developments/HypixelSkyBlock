@@ -39,15 +39,16 @@ jobs:
         working-directory: setup
 
       - name: Build setup TUI release assets
+        working-directory: setup
         run: |
-          mkdir -p setup/dist
+          mkdir -p dist
           for goos in linux darwin; do
             for goarch in amd64 arm64; do
               name="skyblock-installer_${goos}_${goarch}"
               CGO_ENABLED=0 GOOS="$goos" GOARCH="$goarch" \
-                go build -trimpath -ldflags="-s -w" -o "setup/dist/skyblock-installer" ./setup/cmd/skyblock-installer
-              tar -C setup/dist -czf "setup/dist/${name}.tar.gz" skyblock-installer
-              rm setup/dist/skyblock-installer
+                go build -trimpath -ldflags="-s -w" -o "dist/skyblock-installer" ./cmd/skyblock-installer
+              tar -C dist -czf "dist/${name}.tar.gz" skyblock-installer
+              rm dist/skyblock-installer
             done
           done
 
