@@ -1,5 +1,8 @@
 package net.swofty.velocity;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.EventManager;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
@@ -19,6 +22,7 @@ import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.permission.PermissionFunction;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -28,6 +32,11 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
+import com.viaversion.viabackwards.ViaBackwardsPlatformImpl;
+import com.viaversion.viarewind.ViaRewindPlatformImpl;
+import com.viaversion.viaversion.ViaManagerImpl;
+import com.viaversion.viaversion.commands.ViaCommandHandler;
+import io.github.retrooper.packetevents.velocity.factory.VelocityPacketEventsBuilder;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
@@ -37,16 +46,23 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.config.Settings;
 import net.swofty.commons.protocol.RedisProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.*;
+import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.TeleportProtocol;
 import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
-import net.swofty.commons.redis.RedisClient;
-import net.swofty.commons.redis.RedisEndpoint;
-import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
+import net.swofty.commons.redis.RedisClient;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.LimboCommand;
@@ -64,10 +80,14 @@ import net.swofty.velocity.gamemanager.BalanceConfigurations;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
+import net.swofty.velocity.packet.listener.PlayerMovementListener;
 import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.RedisHandlerRegistry;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
+import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
+import net.swofty.velocity.viaversion.loader.SkyBlockPlatformLoader;
+import net.swofty.velocity.viaversion.platform.SkyBlockPlatform;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -99,6 +119,12 @@ public class SkyBlockVelocity {
     @Getter
     private static SkyBlockVelocity plugin;
     @Getter
+    private final PluginContainer pluginContainer;
+    @Getter
+    private final org.slf4j.Logger logger;
+    @Getter
+    private final Path dataDirectory;
+    @Getter
     private static RegisteredServer limboServer;
     @Getter
     private static boolean supportCrossVersion = false;
@@ -109,9 +135,12 @@ public class SkyBlockVelocity {
     private static final Set<UUID> unauthenticated = ConcurrentHashMap.newKeySet();
 
     @Inject
-    public SkyBlockVelocity(ProxyServer tempServer, Logger tempLogger, @DataDirectory Path dataDirectory) {
+    public SkyBlockVelocity(ProxyServer tempServer, org.slf4j.Logger logger, PluginContainer pluginContainer, @DataDirectory Path dataDirectory) {
         plugin = this;
         server = tempServer;
+        this.logger = logger;
+        this.pluginContainer = pluginContainer;
+        this.dataDirectory = dataDirectory;
 
         Settings.LimboSettings limbo = ConfigProvider.settings().getLimbo();
         limboServer = server.registerServer(new ServerInfo("limbo", new InetSocketAddress(limbo.getHostName(), limbo.getPort())));
@@ -120,10 +149,27 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
-        // Cross-version (ViaVersion) bootstrap is disabled in this merged build: the
-        // 26.1.2 platform dropped the deprecated ViaLoader, so clients must match the
-        // server protocol version. Re-enable via the packetevents-based loader if needed.
-        supportCrossVersion = false;
+        supportCrossVersion = ConfigProvider.settings().getIntegrations().isViaVersion();
+
+        PacketEvents.setAPI(VelocityPacketEventsBuilder.build(server, this.pluginContainer, this.logger, this.dataDirectory));
+        PacketEvents.getAPI().getSettings().checkForUpdates(false);
+        PacketEvents.getAPI().load();
+
+        EventManager events = PacketEvents.getAPI().getEventManager();
+        events.registerListener(new PlayerMovementListener(), PacketListenerPriority.NORMAL);
+
+        PacketEvents.getAPI().init();
+
+        if (supportCrossVersion) {
+            ViaManagerImpl.initAndLoad(
+                new SkyBlockPlatform(dataDirectory.toFile()),
+                new SkyBlockViaInjector(),
+                new ViaCommandHandler(false),
+                new SkyBlockPlatformLoader(),
+                ViaBackwardsPlatformImpl::new,
+                ViaRewindPlatformImpl::new
+            );
+        }
 
         // Register packets
         server.getEventManager().register(this, PostLoginEvent.class,
