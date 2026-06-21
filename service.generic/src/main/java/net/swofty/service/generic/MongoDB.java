@@ -1,15 +1,20 @@
 package net.swofty.service.generic;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public interface MongoDB {
-    MongoDB connect(String connectionString);
+    @NotNull
+    MongoDB connect(@NotNull String connectionString);
 
-    void set(String key, Object value);
+    void set(@NotNull String key, @Nullable Object value);
 
-    Object get(String key, Object def);
+    @Nullable
+    Object get(@NotNull String key, @Nullable Object def);
 
-    void insertOrUpdate(String key, Object value);
+    void insertOrUpdate(@NotNull String key, @Nullable Object value);
 
-    boolean remove(String id);
+    boolean remove(@NotNull String id);
 
     boolean exists();
 }

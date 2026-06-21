@@ -2,6 +2,7 @@ package net.swofty.commons.skywars.map;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.skywars.SkywarsGameType;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class SkywarsMapsConfig {
         @Setter
         public static class MapConfiguration {
             private List<SkywarsGameType> types;
-            private PitchYawPosition center;
+            private HypixelPosition center;
             private List<IslandSpawn> islands;
             private int voidY;
             private MapBounds bounds;
@@ -34,16 +35,10 @@ public class SkywarsMapsConfig {
     @Setter
     public static class IslandSpawn {
         private int teamId;
-        private PitchYawPosition cageCenter;
+        private HypixelPosition cageCenter;
     }
 
-    public record Position(double x, double y, double z) {
-    }
-
-    public record PitchYawPosition(double x, double y, double z, float pitch, float yaw) {
-    }
-
-    public record MapBounds(Position min, Position max) {
+    public record MapBounds(HypixelPosition min, HypixelPosition max) {
         public boolean isWithinBounds(double x, double y, double z) {
             if (min == null || max == null) return true;
             double minX = Math.min(min.x(), max.x());

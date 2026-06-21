@@ -140,7 +140,7 @@ public class MagicToyStick implements LuckyBlockWeapon {
                 double distance = entity.getPosition().distance(impactPos);
                 if (distance > EXPLOSION_RADIUS) continue;
 
-                Vec direction = Vec.fromPoint(entity.getPosition().sub(impactPos)).normalize();
+                Vec direction = entity.getPosition().sub(impactPos).asVec().normalize();
                 double power = KNOCKBACK_POWER * (1 - (distance / EXPLOSION_RADIUS));
 
                 Vec knockback = new Vec(

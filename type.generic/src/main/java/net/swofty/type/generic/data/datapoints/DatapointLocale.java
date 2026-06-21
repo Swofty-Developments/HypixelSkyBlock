@@ -47,6 +47,7 @@ public class DatapointLocale extends Datapoint<DatapointLocale.LocaleType> {
 
     @Getter
     public enum SupportedLocale {
+        UNSET(null, Locale.US, null),
         ENGLISH("English", Locale.US, "4cac9774da1217248532ce147f7831f67a12fdcca1cf0cb4b3848de6bc94b4"),
         FINNISH("Suomi", Locale.forLanguageTag("fi-FI"), "59f2349729a7ec8d4b1478adfe5ca8af96479e983fbad238ccbd81409b4ed");
 

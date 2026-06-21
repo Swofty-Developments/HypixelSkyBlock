@@ -2,17 +2,17 @@ package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
+import net.swofty.type.bedwarsgame.item.impl.LuckyBlockTrap;
+import net.swofty.type.bedwarsgame.item.impl.LuckyEquipmentEffects;
+import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
@@ -31,18 +31,13 @@ public class ActionGameMove implements HypixelEventClass {
 			return;
 		}
 
-		Game game = player.getGame();
-		if (game == null || game.getGameStatus() != GameStatus.IN_PROGRESS) {
+		BedWarsGame game = player.getGame();
+		if (game == null || game.getState() != GameState.IN_PROGRESS) {
 			return;
 		}
 
 		if (player.getPosition().y() <= 0) {
-			if (player.getLastDamageSource() != null && player.getLastDamageSource().getSource() instanceof Player p) {
-				player.damage(Damage.fromPlayer(p, 1.0f));
-			} else {
-				player.damage(Damage.fromPosition(DamageType.OUT_OF_WORLD, player.getPosition(), 1.0f));
-			}
-			player.kill();
+			ActionGameDeath.death(player, game, game::broadcastMessage, true);
 			return;
 		}
 
@@ -51,7 +46,17 @@ public class ActionGameMove implements HypixelEventClass {
 			return;
 		}
 
+		LuckyEquipmentEffects.tick(player);
+
 		Point playerPos = player.getPosition();
+		Point trapPos = new Pos(playerPos.blockX(), playerPos.blockY(), playerPos.blockZ());
+		if (LuckyBlockTrap.trigger(player, trapPos, player.getInstance().getBlock(trapPos))) {
+			return;
+		}
+		Point belowTrapPos = new Pos(playerPos.blockX(), playerPos.blockY() - 1, playerPos.blockZ());
+		if (LuckyBlockTrap.trigger(player, belowTrapPos, player.getInstance().getBlock(belowTrapPos))) {
+			return;
+		}
 
 		// check what team this is
 		for (Map.Entry<TeamKey, MapTeam> entry : game.getMapEntry().getConfiguration().getTeams().entrySet()) {
@@ -70,7 +75,7 @@ public class ActionGameMove implements HypixelEventClass {
 
 			Point bedLocation = new Pos(bedPos.feet().x(), bedPos.feet().y(), bedPos.feet().z());
 			if (playerPos.distance(bedLocation) <= 10) {
-				List<String> teamTraps = game.getTeamManager().getTeamTraps(teamKey);
+				List<TrapId> teamTraps = game.getTeamTraps(teamKey);
 				if (teamTraps.isEmpty()) {
 					continue;
 				}

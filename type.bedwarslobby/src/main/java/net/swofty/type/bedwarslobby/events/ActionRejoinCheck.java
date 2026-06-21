@@ -12,7 +12,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 public class ActionRejoinCheck implements HypixelEventClass {
     private static final ProxyService ORCHESTRATOR = new ProxyService(ServiceType.ORCHESTRATOR);
@@ -22,7 +22,7 @@ public class ActionRejoinCheck implements HypixelEventClass {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
         // Delay slightly to ensure player is fully spawned
-        MathUtility.delay(() -> {
+        ScheduleUtility.delay(() -> {
             // Check if player has an active game to rejoin
             RejoinGameProtocol.RejoinGameRequest request =
                     new RejoinGameProtocol.RejoinGameRequest(player.getUuid());

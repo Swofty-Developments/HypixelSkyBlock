@@ -3,10 +3,15 @@ package net.swofty.pvp.feature.projectile;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.*;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.entity.metadata.LivingEntityMeta;
 import net.minestom.server.event.EventNode;
-import net.minestom.server.event.item.PlayerFinishItemUseEvent;
+import net.minestom.server.event.item.PlayerBeginItemUseEvent;
+import net.minestom.server.event.item.PlayerCancelItemUseEvent;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.trait.EntityInstanceEvent;
@@ -17,17 +22,21 @@ import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.tag.Tag;
 import net.swofty.pvp.entity.projectile.AbstractArrow;
 import net.swofty.pvp.entity.projectile.Arrow;
+import net.swofty.pvp.entity.projectile.FireworkRocketEntity;
 import net.swofty.pvp.entity.projectile.SpectralArrow;
 import net.swofty.pvp.feature.FeatureType;
 import net.swofty.pvp.feature.RegistrableFeature;
+import net.swofty.pvp.feature.block.BlockFeature;
 import net.swofty.pvp.feature.config.DefinedFeature;
 import net.swofty.pvp.feature.config.FeatureConfiguration;
 import net.swofty.pvp.feature.effect.EffectFeature;
 import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
 import net.swofty.pvp.feature.item.ItemDamageFeature;
 import net.swofty.pvp.utils.ViewUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,299 +45,309 @@ import java.util.concurrent.ThreadLocalRandom;
  * Vanilla implementation of {@link CrossbowFeature}
  */
 public class VanillaCrossbowFeature implements CrossbowFeature, RegistrableFeature {
-	public static final DefinedFeature<VanillaCrossbowFeature> DEFINED = new DefinedFeature<>(
-			FeatureType.CROSSBOW, VanillaCrossbowFeature::new,
-			FeatureType.ITEM_DAMAGE, FeatureType.EFFECT, FeatureType.ENCHANTMENT, FeatureType.PROJECTILE_ITEM
-	);
+    public static final DefinedFeature<VanillaCrossbowFeature> DEFINED = new DefinedFeature<>(
+        FeatureType.CROSSBOW, VanillaCrossbowFeature::new,
+        FeatureType.ITEM_DAMAGE, FeatureType.EFFECT, FeatureType.ENCHANTMENT, FeatureType.PROJECTILE_ITEM, FeatureType.BLOCK
+    );
 
-	private static final Tag<Boolean> START_SOUND_PLAYED = Tag.Transient("StartSoundPlayed");
-	private static final Tag<Boolean> MID_LOAD_SOUND_PLAYED = Tag.Transient("MidLoadSoundPlayed");
+    private static final Tag<@NotNull Boolean> START_SOUND_PLAYED = Tag.Transient("StartSoundPlayed");
+    private static final Tag<@NotNull Boolean> MID_LOAD_SOUND_PLAYED = Tag.Transient("MidLoadSoundPlayed");
 
-	private final FeatureConfiguration configuration;
+    private static final double DEFAULT_POWER = 3.15;
+    private static final double FIREWORK_POWER = 1.6;
+    private static final float DEFAULT_SPREAD = 1.0f;
 
-	private ItemDamageFeature itemDamageFeature;
-	private EffectFeature effectFeature;
-	private EnchantmentFeature enchantmentFeature;
-	private ProjectileItemFeature projectileItemFeature;
+    private final FeatureConfiguration configuration;
 
-	public VanillaCrossbowFeature(FeatureConfiguration configuration) {
-		this.configuration = configuration;
-	}
+    private ItemDamageFeature itemDamageFeature;
+    private EffectFeature effectFeature;
+    private EnchantmentFeature enchantmentFeature;
+    private ProjectileItemFeature projectileItemFeature;
+    private BlockFeature blockFeature;
 
-	@Override
-	public void initDependencies() {
-		this.itemDamageFeature = configuration.get(FeatureType.ITEM_DAMAGE);
-		this.effectFeature = configuration.get(FeatureType.EFFECT);
-		this.enchantmentFeature = configuration.get(FeatureType.ENCHANTMENT);
-		this.projectileItemFeature = configuration.get(FeatureType.PROJECTILE_ITEM);
-	}
+    public VanillaCrossbowFeature(FeatureConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
-	@Override
-	public void init(EventNode<EntityInstanceEvent> node) {
-		node.addListener(PlayerUseItemEvent.class, event -> {
-			ItemStack stack = event.getItemStack();
-			if (stack.material() != Material.CROSSBOW) return;
-			Player player = event.getPlayer();
+    @Override
+    public void initDependencies() {
+        this.itemDamageFeature = configuration.get(FeatureType.ITEM_DAMAGE);
+        this.effectFeature = configuration.get(FeatureType.EFFECT);
+        this.enchantmentFeature = configuration.get(FeatureType.ENCHANTMENT);
+        this.projectileItemFeature = configuration.get(FeatureType.PROJECTILE_ITEM);
+        this.blockFeature = configuration.get(FeatureType.BLOCK);
+    }
 
-			if (isCrossbowCharged(stack)) {
-				// Make sure the animation event is not called, because this is not an animation
-				event.setCancelled(true);
+    @Override
+    public void init(EventNode<@NotNull EntityInstanceEvent> node) {
 
-				stack = performCrossbowShooting(player, event.getHand(), stack, getCrossbowPower(stack), 1.0);
-				player.setItemInHand(event.getHand(), setCrossbowProjectile(stack, null));
-			} else {
-				if (projectileItemFeature.getCrossbowProjectile(player) == null) {
-					event.setCancelled(true);
-				} else {
-					player.setTag(START_SOUND_PLAYED, false);
-					player.setTag(MID_LOAD_SOUND_PLAYED, false);
-				}
-			}
-		});
+        // Player Loading the crossbow
+        node.addListener(PlayerBeginItemUseEvent.class, event -> {
+            var itemStack = event.getPlayer().getItemInHand(event.getHand());
+            var player = event.getPlayer();
+            if (itemStack.material() != Material.CROSSBOW) return;
 
-		node.addListener(PlayerTickEvent.class, event -> {
-			Player player = event.getPlayer();
+            if (!isCrossbowCharged(itemStack) && projectileItemFeature.getCrossbowProjectile(player) == null && player.getGameMode() != GameMode.CREATIVE) {
+                event.setCancelled(true);
+            }
+        });
 
-			// If not charging crossbow, return
-			LivingEntityMeta meta = (LivingEntityMeta) player.getEntityMeta();
-			if (!meta.isHandActive() || player.getItemInHand(meta.getActiveHand()).material() != Material.CROSSBOW)
-				return;
+        node.addListener(PlayerTickEvent.class, event -> {
+            Player player = event.getPlayer();
+            var meta = (LivingEntityMeta) player.getEntityMeta();
 
-			PlayerHand hand = player.getPlayerMeta().getActiveHand();
-			ItemStack stack = player.getItemInHand(hand);
+            // Check if player is actively charging a crossbow
+            if (!meta.isHandActive()) return;
 
-			int quickCharge = stack.get(DataComponents.ENCHANTMENTS).level(Enchantment.QUICK_CHARGE);
+            PlayerHand hand = meta.getActiveHand();
+            ItemStack stack = player.getItemInHand(hand);
 
-			long useTicks = player.getCurrentItemUseTime();
-			double progress = (getCrossbowUseDuration(stack) - useTicks) / (double) getCrossbowChargeDuration(stack);
+            if (stack.material() != Material.CROSSBOW) return;
+            if (isCrossbowCharged(stack)) return; // Already loaded
 
-			Boolean startSoundPlayed = player.getTag(START_SOUND_PLAYED);
-			Boolean midLoadSoundPlayed = player.getTag(MID_LOAD_SOUND_PLAYED);
-			if (startSoundPlayed == null) startSoundPlayed = false;
-			if (midLoadSoundPlayed == null) midLoadSoundPlayed = false;
+            // Calculate progress based on use time
+            long useTicks = player.getCurrentItemUseTime();
+            int chargeDuration = getCrossbowChargeDuration(stack);
+            double progress = useTicks / (double) chargeDuration;
 
-			if (progress >= 0.2 && !startSoundPlayed) {
-				SoundEvent startSound = getCrossbowStartSound(quickCharge);
-				ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
-						startSound, Sound.Source.PLAYER,
-						0.5f, 1.0f
-				), player);
+            int quickCharge = Objects.requireNonNull(stack.get(DataComponents.ENCHANTMENTS)).level(Enchantment.QUICK_CHARGE);
 
-				player.setTag(START_SOUND_PLAYED, true);
-				player.setItemInHand(hand, stack);
-			}
+            Boolean startSoundPlayed = player.getTag(START_SOUND_PLAYED);
+            if (progress >= 0.2 && (startSoundPlayed == null || !startSoundPlayed)) {
+                SoundEvent startSound = getCrossbowStartSound(quickCharge);
+                ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
+                    startSound, Sound.Source.PLAYER,
+                    0.5f, 1.0f
+                ), player);
+                player.setTag(START_SOUND_PLAYED, true);
+            }
 
-			SoundEvent midLoadSound = quickCharge == 0 ? SoundEvent.ITEM_CROSSBOW_LOADING_MIDDLE : null;
-			if (progress >= 0.5F && midLoadSound != null && !midLoadSoundPlayed) {
-				ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
-						midLoadSound, Sound.Source.PLAYER,
-						0.5f, 1.0f
-				), player);
+            Boolean midLoadSoundPlayed = player.getTag(MID_LOAD_SOUND_PLAYED);
+            SoundEvent midLoadSound = quickCharge == 0 ? SoundEvent.ITEM_CROSSBOW_LOADING_MIDDLE : null;
+            if (progress >= 0.5 && midLoadSound != null && (midLoadSoundPlayed == null || !midLoadSoundPlayed)) {
+                ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
+                    midLoadSound, Sound.Source.PLAYER,
+                    0.5f, 1.0f
+                ), player);
+                player.setTag(MID_LOAD_SOUND_PLAYED, true);
+            }
 
-				player.setTag(MID_LOAD_SOUND_PLAYED, true);
-				player.setItemInHand(hand, stack);
-			}
-		});
+            if (progress >= 1) {
+                var chargedCrossbow = loadCrossbowProjectiles(player, stack);
+                player.setItemInHand(hand, chargedCrossbow);
+                event.getInstance().playSound(Sound.sound()
+                        .type(SoundEvent.ITEM_CROSSBOW_LOADING_END)
+                        .build(),
+                    event.getPlayer().getPosition());
+                player.removeTag(START_SOUND_PLAYED);
+                player.removeTag(MID_LOAD_SOUND_PLAYED);
+            }
+        });
 
-		node.addListener(PlayerFinishItemUseEvent.class, event -> {
-			Player player = event.getPlayer();
-			ItemStack stack = event.getItemStack();
-			if (stack.material() != Material.CROSSBOW) return;
+        node.addListener(PlayerCancelItemUseEvent.class, event -> {
+            var player = event.getPlayer();
 
-			int quickCharge = stack.get(DataComponents.ENCHANTMENTS).level(Enchantment.QUICK_CHARGE);
+            player.removeTag(START_SOUND_PLAYED);
+            player.removeTag(MID_LOAD_SOUND_PLAYED);
+        });
 
-			if (quickCharge < 6) {
-				long useTicks = player.getCurrentItemUseTime();
-				double power = getCrossbowPowerForTime(useTicks, stack);
-				if (!(power >= 1.0F) || isCrossbowCharged(stack))
-					return;
-			}
+        // Shooting projectile from crossbow
+        node.addListener(PlayerUseItemEvent.class, event -> {
+            var player = event.getPlayer();
+            var itemStack = event.getItemStack();
+            if (itemStack.material() != Material.CROSSBOW) return;
+            if (!isCrossbowCharged(itemStack)) return;
 
-			stack = loadCrossbowProjectiles(player, stack);
-			if (stack == null) return;
+            performCrossbowShooting(player, event.getHand(), itemStack);
+        });
+    }
 
-			ThreadLocalRandom random = ThreadLocalRandom.current();
-			ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
-					SoundEvent.ITEM_CROSSBOW_LOADING_END, Sound.Source.PLAYER,
-					1.0f, 1.0f / (random.nextFloat() * 0.5f + 1.0f) + 0.2f
-			), player);
+    protected AbstractArrow createArrow(ItemStack stack, @Nullable Entity shooter) {
+        if (stack.material() == Material.SPECTRAL_ARROW) {
+            return new SpectralArrow(shooter, enchantmentFeature);
+        } else {
+            Arrow arrow = new Arrow(shooter, effectFeature, enchantmentFeature);
+            arrow.setItemStack(stack);
+            return arrow;
+        }
+    }
 
-			player.setItemInHand(event.getHand(), stack);
-		});
-	}
+    protected boolean isCrossbowCharged(ItemStack stack) {
+        return stack.has(DataComponents.CHARGED_PROJECTILES) &&
+            !Objects.requireNonNull(stack.get(DataComponents.CHARGED_PROJECTILES)).isEmpty();
+    }
 
-	protected AbstractArrow createArrow(ItemStack stack, @Nullable Entity shooter) {
-		if (stack.material() == Material.SPECTRAL_ARROW) {
-			return new SpectralArrow(shooter, enchantmentFeature);
-		} else {
-			Arrow arrow = new Arrow(shooter, effectFeature, enchantmentFeature);
-			arrow.setItemStack(stack);
-			return arrow;
-		}
-	}
+    protected ItemStack setCrossbowProjectile(ItemStack stack, @NotNull List<ItemStack> projectiles) {
+        return stack.with(DataComponents.CHARGED_PROJECTILES, projectiles);
+    }
 
-	protected double getCrossbowPower(ItemStack stack) {
-		return crossbowContainsProjectile(stack, Material.FIREWORK_ROCKET) ? 1.6 : 3.15;
-	}
+    protected ItemStack setCrossbowProjectile(ItemStack stack, @NotNull ItemStack projectile) {
+        return stack.with(DataComponents.CHARGED_PROJECTILES, List.of(projectile));
+    }
 
-	protected double getCrossbowPowerForTime(long ticks, ItemStack stack) {
-		double power = ticks / (double) getCrossbowChargeDuration(stack);
-		if (power > 1) {
-			power = 1;
-		}
+    protected boolean crossbowContainsProjectile(ItemStack stack, Material projectile) {
+        List<ItemStack> projectiles = stack.get(DataComponents.CHARGED_PROJECTILES);
+        if (projectiles == null) return false;
 
-		return power;
-	}
+        for (ItemStack itemStack : projectiles) {
+            if (itemStack.material() == projectile) return true;
+        }
 
-	protected boolean isCrossbowCharged(ItemStack stack) {
-		return stack.has(DataComponents.CHARGED_PROJECTILES) &&
-				!Objects.requireNonNull(stack.get(DataComponents.CHARGED_PROJECTILES)).isEmpty();
-	}
+        return false;
+    }
 
-	protected ItemStack setCrossbowProjectile(ItemStack stack, @Nullable ItemStack projectile) {
-		return stack.with(DataComponents.CHARGED_PROJECTILES, projectile == null ? List.of() : List.of(projectile));
-	}
+    protected int getCrossbowChargeDuration(ItemStack stack) {
+        int quickCharge = Objects.requireNonNull(stack.get(DataComponents.ENCHANTMENTS)).level(Enchantment.QUICK_CHARGE);
+        return Math.max(0, quickCharge == 0 ? 25 : 25 - 5 * quickCharge);
+    }
 
-	protected ItemStack setCrossbowProjectiles(ItemStack stack, ItemStack projectile1,
-											   ItemStack projectile2, ItemStack projectile3) {
-		return stack.with(DataComponents.CHARGED_PROJECTILES, List.of(projectile1, projectile2, projectile3));
-	}
+    protected SoundEvent getCrossbowStartSound(int quickCharge) {
+        return switch (quickCharge) {
+            case 1 -> SoundEvent.ITEM_CROSSBOW_QUICK_CHARGE_1;
+            case 2 -> SoundEvent.ITEM_CROSSBOW_QUICK_CHARGE_2;
+            case 3 -> SoundEvent.ITEM_CROSSBOW_QUICK_CHARGE_3;
+            default -> SoundEvent.ITEM_CROSSBOW_LOADING_START;
+        };
+    }
 
-	protected boolean crossbowContainsProjectile(ItemStack stack, Material projectile) {
-		List<ItemStack> projectiles = stack.get(DataComponents.CHARGED_PROJECTILES);
-		if (projectiles == null) return false;
+    protected ItemStack loadCrossbowProjectiles(Player player, ItemStack stack) {
+        int multiShot = Objects.requireNonNull(stack.get(DataComponents.ENCHANTMENTS)).level(Enchantment.MULTISHOT);
 
-		for (ItemStack itemStack : projectiles) {
-			if (itemStack.material() == projectile) return true;
-		}
+        ItemStack projectileItem;
+        int projectileSlot;
 
-		return false;
-	}
+        ProjectileItemFeature.ProjectileItem projectile = projectileItemFeature.getCrossbowProjectile(player);
+        if (projectile == null && player.getGameMode() == GameMode.CREATIVE) {
+            projectileItem = Arrow.DEFAULT_ARROW;
+            projectileSlot = -1;
+        } else if (projectile != null) {
+            projectileItem = projectile.stack();
+            projectileSlot = projectile.slot();
+        } else {
+            // Should not happen
+            return ItemStack.AIR;
+        }
 
-	protected int getCrossbowUseDuration(ItemStack stack) {
-		return getCrossbowChargeDuration(stack) + 3;
-	}
+        ArrayList<ItemStack> projectiles = new ArrayList<>(List.of(projectileItem));
+        if (multiShot > 0) {
+            for (int i = 0; i < multiShot; i++) {
+                projectiles.add(projectileItem);
+                projectiles.add(projectileItem);
+            }
+        }
+        stack = setCrossbowProjectile(stack, projectiles);
 
-	protected int getCrossbowChargeDuration(ItemStack stack) {
-		int quickCharge = stack.get(DataComponents.ENCHANTMENTS).level(Enchantment.QUICK_CHARGE);
-		return quickCharge == 0 ? 25 : 25 - 5 * quickCharge;
-	}
+        if (player.getGameMode() != GameMode.CREATIVE && projectileSlot >= 0) {
+            player.getInventory().setItemStack(projectileSlot, projectileItem.withAmount(projectileItem.amount() - 1));
+        }
 
-	protected SoundEvent getCrossbowStartSound(int quickCharge) {
-		return switch (quickCharge) {
-			case 1 -> SoundEvent.ITEM_CROSSBOW_QUICK_CHARGE_1;
-			case 2 -> SoundEvent.ITEM_CROSSBOW_QUICK_CHARGE_2;
-			case 3 -> SoundEvent.ITEM_CROSSBOW_QUICK_CHARGE_3;
-			default -> SoundEvent.ITEM_CROSSBOW_LOADING_START;
-		};
-	}
+        return stack;
+    }
 
-	protected ItemStack loadCrossbowProjectiles(Player player, ItemStack stack) {
-		boolean multiShot = stack.get(DataComponents.ENCHANTMENTS).level(Enchantment.MULTISHOT) > 0;
+    protected void performCrossbowShooting(Player player, PlayerHand hand, ItemStack stack) {
+        List<ItemStack> projectiles = stack.get(DataComponents.CHARGED_PROJECTILES);
+        if (projectiles == null || projectiles.isEmpty()) return;
 
-		ItemStack projectileItem;
-		int projectileSlot;
+        var offsetYaw = 0.0f;
+        for (int turn = 0; turn < projectiles.size(); turn++) {
+            var projectile = projectiles.get(turn);
 
-		ProjectileItemFeature.ProjectileItem projectile = projectileItemFeature.getCrossbowProjectile(player);
-		if (projectile == null && player.getGameMode() == GameMode.CREATIVE) {
-			projectileItem = Arrow.DEFAULT_ARROW;
-			projectileSlot = -1;
-		} else if (projectile != null) {
-			projectileItem = projectile.stack();
-			projectileSlot = projectile.slot();
-		} else {
-			// Should not happen
-			return ItemStack.AIR;
-		}
+            var soundPitch = getSoundPitch(ThreadLocalRandom.current(), turn);
 
-		if (multiShot) {
-			stack = setCrossbowProjectiles(stack, projectileItem, projectileItem, projectileItem);
-		} else {
-			stack = setCrossbowProjectile(stack, projectileItem);
-		}
+            if (turn == 0) {
+                shootCrossbowProjectile(player, hand, stack, projectile, soundPitch, offsetYaw);
+                offsetYaw += 10.0f;
+            } else {
+                if (turn % 2 == 1) {
+                    shootCrossbowProjectile(player, hand, stack, projectile, soundPitch, offsetYaw);
+                }
+                if (turn % 2 == 0) {
+                    shootCrossbowProjectile(player, hand, stack, projectile, soundPitch, -offsetYaw);
+                    offsetYaw += 10.0f;
+                }
+            }
+        }
 
-		if (player.getGameMode() != GameMode.CREATIVE && projectileSlot >= 0) {
-			player.getInventory().setItemStack(projectileSlot, projectileItem.withAmount(projectileItem.amount() - 1));
-		}
+        player.setItemInHand(hand, setCrossbowProjectile(player.getItemInHand(hand), List.of()));
+    }
 
-		return stack;
-	}
+    protected void shootCrossbowProjectile(Player player, PlayerHand hand, ItemStack crossbowStack,
+                                           ItemStack projectile, float soundPitch,
+                                           float yaw) {
+        boolean isFirework = projectile.material() == Material.FIREWORK_ROCKET;
+        if (isFirework) {
+            FireworkRocketEntity firework = getFireworkRocket(player, projectile);
 
-	protected ItemStack performCrossbowShooting(Player player, PlayerHand hand, ItemStack stack,
-												double power, double spread) {
-		List<ItemStack> projectiles = stack.get(DataComponents.CHARGED_PROJECTILES);
-		if (projectiles == null || projectiles.isEmpty()) return ItemStack.AIR;
+            Pos position = player.getPosition().add(0, player.getEyeHeight() - 0.1, 0);
+            position = position.add(position.direction().normalize().mul(0.1));
 
-		ItemStack projectile = projectiles.getFirst();
-		if (!projectile.isAir()) {
-			shootCrossbowProjectile(player, hand, stack, projectile, 1.0F, power, spread, 0.0F);
-		}
+            firework.setInstance(Objects.requireNonNull(player.getInstance()), position);
 
-		if (projectiles.size() > 2) {
-			ThreadLocalRandom random = ThreadLocalRandom.current();
-			boolean firstHighPitch = random.nextBoolean();
-			float firstPitch = getRandomShotPitch(firstHighPitch, random);
-			float secondPitch = getRandomShotPitch(!firstHighPitch, random);
+            firework.shootFromRotation(position.pitch(), position.yaw(), 0, FIREWORK_POWER, DEFAULT_SPREAD, yaw);
+            firework.setVelocity(firework.getVelocity()
+                .add(getRandomOffset(), getRandomOffset(), getRandomOffset())
+            );
+        } else {
+            AbstractArrow arrow = getCrossbowArrow(player, crossbowStack, projectile);
+            if (player.getGameMode() == GameMode.CREATIVE || yaw != 0.0) {
+                arrow.setPickupMode(AbstractArrow.PickupMode.CREATIVE_ONLY);
+            }
 
-			projectile = projectiles.get(1);
-			if (!projectile.isAir()) {
-				shootCrossbowProjectile(player, hand, stack, projectile, firstPitch, power, spread, -10.0F);
-			}
-			projectile = projectiles.get(2);
-			if (!projectile.isAir()) {
-				shootCrossbowProjectile(player, hand, stack, projectile, secondPitch, power, spread, 10.0F);
-			}
-		}
+            Pos position = player.getPosition().add(0, player.getEyeHeight() - 0.1, 0);
 
-		return setCrossbowProjectile(stack, ItemStack.AIR);
-	}
+            arrow.setInstance(Objects.requireNonNull(player.getInstance()), position);
 
-	protected void shootCrossbowProjectile(Player player, PlayerHand hand, ItemStack crossbowStack,
-										   ItemStack projectile, float soundPitch,
-										   double power, double spread, float yaw) {
-		boolean firework = projectile.material() == Material.FIREWORK_ROCKET;
-		if (firework) return; //TODO firework
+            arrow.shootFromRotation(position.pitch(), position.yaw(), 0, DEFAULT_POWER, DEFAULT_SPREAD, yaw);
+            arrow.setVelocity(arrow.getVelocity()
+                .add(getRandomOffset(), getRandomOffset(), getRandomOffset())
+            );
 
-		AbstractArrow arrow = getCrossbowArrow(player, crossbowStack, projectile);
-		if (player.getGameMode() == GameMode.CREATIVE || yaw != 0.0) {
-			arrow.setPickupMode(AbstractArrow.PickupMode.CREATIVE_ONLY);
-		}
+            var direction = player.getPosition().direction().normalize();
+            arrow.setView(
+                (float) Math.toDegrees(Math.atan2(direction.x(), direction.z())),
+                (float) Math.toDegrees(Math.asin(direction.y()))
+            );
+        }
 
-		//TODO fix velocity and yaw
-		Pos position = player.getPosition().add(0, player.getEyeHeight() - 0.1, 0);
-		arrow.setInstance(Objects.requireNonNull(player.getInstance()), position);
+        itemDamageFeature.damageEquipment(player,
+            hand == PlayerHand.MAIN ? EquipmentSlot.MAIN_HAND : EquipmentSlot.OFF_HAND,
+            isFirework ? 3 : 1);
 
-		position = position.withYaw(position.yaw() + yaw);
-		//Vec direction = position.direction();
-		//position = position.add(direction).sub(0, 0.2, 0); //????????
+        ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
+            SoundEvent.ITEM_CROSSBOW_SHOOT, Sound.Source.PLAYER,
+            1.0f, soundPitch
+        ), player);
+    }
 
-		//TODO probably use shootFromRotation
-		arrow.shootFrom(position, power, spread);
+    protected double getRandomOffset() {
+        return ThreadLocalRandom.current().nextDouble(-0.4, 0.4);
+    }
 
-		itemDamageFeature.damageEquipment(player, hand == PlayerHand.MAIN ?
-				EquipmentSlot.MAIN_HAND : EquipmentSlot.OFF_HAND, firework ? 3 : 1);
+    // Multishot shoot sound being higher pitched or lower pitched randomly
+    private static float getSoundPitch(ThreadLocalRandom random, int index) {
+        return index == 0 ? 1.0F : getSoundPitch((index & 1) == 1, random);
+    }
 
-		ViewUtil.viewersAndSelf(player).playSound(Sound.sound(
-				SoundEvent.ITEM_CROSSBOW_SHOOT, Sound.Source.PLAYER,
-				1.0f, soundPitch
-		), player);
-	}
+    private static float getSoundPitch(boolean flag, ThreadLocalRandom random) {
+        float pitchOffset = flag ? 0.63F : 0.43F;
+        return 1.0F / (random.nextFloat() * 0.5F + 1.8F) + pitchOffset;
+    }
 
-	protected AbstractArrow getCrossbowArrow(Player player, ItemStack crossbowStack, ItemStack projectile) {
-		AbstractArrow arrow = createArrow(projectile.withAmount(1), player);
-		arrow.setCritical(true); // Player shooter is always critical
-		arrow.setSound(SoundEvent.ITEM_CROSSBOW_HIT);
+    protected AbstractArrow getCrossbowArrow(Player player, ItemStack crossbowStack, ItemStack projectile) {
+        AbstractArrow arrow = createArrow(projectile.withAmount(1), player);
+        arrow.setCritical(true); // Player shooter is always critical
+        arrow.setSound(SoundEvent.ITEM_CROSSBOW_HIT);
 
-		int piercing = crossbowStack.get(DataComponents.ENCHANTMENTS).level(Enchantment.PIERCING);
-		if (piercing > 0) {
-			arrow.setPiercingLevel((byte) piercing);
-		}
+        int piercing = Objects.requireNonNull(crossbowStack.get(DataComponents.ENCHANTMENTS)).level(Enchantment.PIERCING);
+        if (piercing > 0) {
+            arrow.setPiercingLevel((byte) piercing);
+        }
 
-		return arrow;
-	}
+        return arrow;
+    }
 
-	protected float getRandomShotPitch(boolean high, ThreadLocalRandom random) {
-		float base = high ? 0.63F : 0.43F;
-		return 1.0F / (random.nextFloat() * 0.5F + 1.8F) + base;
-	}
+    protected FireworkRocketEntity getFireworkRocket(Player player, ItemStack projectile) {
+        return new FireworkRocketEntity(player, projectile, true, blockFeature);
+    }
+
 }

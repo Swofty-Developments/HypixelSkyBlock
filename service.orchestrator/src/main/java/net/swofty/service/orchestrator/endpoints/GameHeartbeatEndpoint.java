@@ -18,12 +18,14 @@ public class GameHeartbeatEndpoint implements RedisMessageHandler
     @Override
     public GameHeartbeatProtocol.HeartbeatResponse handle(GameHeartbeatProtocol.HeartbeatMessage body, RedisMessageContext context) {
         OrchestratorCache.handleHeartbeat(
-                body.uuid(),
-                body.shortName(),
-                body.type(),
-                body.maxPlayers(),
-                body.onlinePlayers(),
-                body.games()
+            body.uuid(),
+            body.shortName(),
+            body.type(),
+            body.maxPlayers(),
+            body.onlinePlayers(),
+            body.games(),
+            body.mapAdvertisements(),
+            body.remainingGameSlots()
         );
         return new GameHeartbeatProtocol.HeartbeatResponse(true, null);
     }

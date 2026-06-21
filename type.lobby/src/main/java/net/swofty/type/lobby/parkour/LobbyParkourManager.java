@@ -62,7 +62,7 @@ public class LobbyParkourManager {
 						"§a§lStart"
 				};
 				PlayerHolograms.ExternalPlayerHologram startHolo = PlayerHolograms.ExternalPlayerHologram.builder()
-						.pos(start.asPos().add(0.5, 0, 0.5))
+					.pos(start.asPos().add(0.5, 1, 0.5))
 						.text(startHolograms)
 						.player(player)
 						.instance(instance)
@@ -77,7 +77,7 @@ public class LobbyParkourManager {
 							"§b§l#" + i
 					};
 					PlayerHolograms.ExternalPlayerHologram checkpointHolo = PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(checkpointPos.asPos().add(0.5, 0, 0.5))
+						.pos(checkpointPos.asPos().add(0.5, 1, 0.5))
 							.text(checkpointHolograms)
 							.player(player)
 							.instance(instance)
@@ -92,7 +92,7 @@ public class LobbyParkourManager {
 							"§c§lEnd"
 					};
 					PlayerHolograms.ExternalPlayerHologram endHolo = PlayerHolograms.ExternalPlayerHologram.builder()
-							.pos(end.asPos().add(0.5, 0, 0.5))
+						.pos(end.asPos().add(0.5, 1, 0.5))
 							.text(endHolograms)
 							.player(player)
 							.instance(instance)

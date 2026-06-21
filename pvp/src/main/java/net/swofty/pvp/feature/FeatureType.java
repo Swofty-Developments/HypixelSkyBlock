@@ -21,8 +21,16 @@ import net.swofty.pvp.feature.food.RegenerationFeature;
 import net.swofty.pvp.feature.item.ItemDamageFeature;
 import net.swofty.pvp.feature.knockback.KnockbackFeature;
 import net.swofty.pvp.feature.potion.PotionFeature;
-import net.swofty.pvp.feature.projectile.*;
+import net.swofty.pvp.feature.projectile.BowFeature;
+import net.swofty.pvp.feature.projectile.CrossbowFeature;
+import net.swofty.pvp.feature.projectile.FireworkRocketFeature;
+import net.swofty.pvp.feature.projectile.FishingRodFeature;
+import net.swofty.pvp.feature.projectile.MiscProjectileFeature;
+import net.swofty.pvp.feature.projectile.ProjectileItemFeature;
+import net.swofty.pvp.feature.projectile.TridentFeature;
 import net.swofty.pvp.feature.provider.DifficultyProvider;
+import net.swofty.pvp.feature.provider.PacketProvider;
+import net.swofty.pvp.feature.provider.SoundProvider;
 import net.swofty.pvp.feature.spectate.SpectateFeature;
 import net.swofty.pvp.feature.state.PlayerStateFeature;
 import net.swofty.pvp.feature.totem.TotemFeature;
@@ -66,11 +74,14 @@ public record FeatureType<F extends CombatFeature>(String name, F defaultFeature
 	public static final FeatureType<ProjectileItemFeature> PROJECTILE_ITEM = of("PROJECTILE_ITEM", ProjectileItemFeature.NO_OP);
 	public static final FeatureType<TridentFeature> TRIDENT = of("TRIDENT", TridentFeature.NO_OP);
 	public static final FeatureType<DifficultyProvider> DIFFICULTY = of("DIFFICULTY", DifficultyProvider.DEFAULT);
+	public static final FeatureType<PacketProvider> PACKET = of("PACKET", PacketProvider.DEFAULT);
+	public static final FeatureType<SoundProvider> SOUND = of("SOUND", SoundProvider.DEFAULT);
 	public static final FeatureType<SpectateFeature> SPECTATE = of("SPECTATE", SpectateFeature.NO_OP);
 	public static final FeatureType<PlayerStateFeature> PLAYER_STATE = of("PLAYER_STATE", PlayerStateFeature.NO_OP);
 	public static final FeatureType<TotemFeature> TOTEM = of("TOTEM", TotemFeature.NO_OP);
 	public static final FeatureType<TrackingFeature> TRACKING = of("TRACKING", TrackingFeature.NO_OP);
-	
+	public static final FeatureType<FireworkRocketFeature> FIREWORK = of("FIREWORK", FireworkRocketFeature.NO_OP);
+
 	public static <F extends CombatFeature> FeatureType<F> of(String name, F noopFeature) {
 		return new FeatureType<>(name, noopFeature);
 	}

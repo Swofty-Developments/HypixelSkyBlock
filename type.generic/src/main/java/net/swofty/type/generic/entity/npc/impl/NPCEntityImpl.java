@@ -4,12 +4,14 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.Metadata;
 import net.minestom.server.entity.MetadataDef;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.avatar.MannequinMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -40,7 +42,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     private final String skinSignature;
     private String[] holograms;
 
-    public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config, boolean overflowing) {
+    public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config) {
         super(EntityType.MANNEQUIN, UUID.randomUUID());
         this.username = bottomDisplay;
         this.viewer = viewer;
@@ -58,7 +60,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
         setAutoViewable(false);
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-            .pos(pos.add(0, getEyeHeight() + 0.1f, 0))
+            .pos(pos.add(0, getBoundingBox().height() - 0.1f, 0))
             .text(holograms)
             .player(viewer)
             .instance(config.instance())
@@ -98,6 +100,13 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
         if (player.getUuid() != viewer.getUuid()) {
             Logger.warn("Player {} is viewing NPC {} but is not the intended viewer", player.getUsername(), getUuid());
         }
+
+        Map<EquipmentSlot, ItemStack> equipment = config.equipment((HypixelPlayer) player);
+        if (equipment != null) {
+            for (Map.Entry<EquipmentSlot, ItemStack> entry : equipment.entrySet()) {
+                syncEntityEquipment(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     @Override
@@ -125,7 +134,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
         if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
-            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getEyeHeight() + 0.1f, 0));
+            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getBoundingBox().height() - 0.1f, 0));
         }
 
         if (!getPose().equals(config.pose(viewer))) {

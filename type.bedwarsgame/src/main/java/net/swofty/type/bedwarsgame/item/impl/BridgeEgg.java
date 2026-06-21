@@ -16,28 +16,18 @@ import net.swofty.pvp.entity.projectile.ItemHoldingProjectile;
 import net.swofty.pvp.utils.ViewUtil;
 import net.swofty.type.bedwarsgame.entity.ThrownBridgeEgg;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BridgeEgg extends SimpleInteractableItem {
 	public BridgeEgg() {
-		super("bridge_egg");
-	}
-
-	private static Block mapTeamToBlock(BedWarsMapsConfig.TeamKey teamKey) {
-		return switch (teamKey) {
-			case RED -> Block.RED_WOOL;
-			case BLUE -> Block.BLUE_WOOL;
-			case GREEN -> Block.LIME_WOOL;
-			case YELLOW -> Block.YELLOW_WOOL;
-			case AQUA -> Block.LIGHT_BLUE_WOOL;
-			case PINK -> Block.PINK_WOOL;
-			case WHITE -> Block.WHITE_WOOL;
-			case GRAY -> Block.GRAY_WOOL;
-		};
+		super("bridge_egg", new ShopData("Bridge Egg", "This egg creates a bridge in its trail\nafter being thrown.",
+			1, 1, Currency.EMERALD, DatapointBedWarsHotbar.HotbarItemType.UTILITY, 7));
 	}
 
 	@Override
@@ -48,14 +38,16 @@ public class BridgeEgg extends SimpleInteractableItem {
 	@Override
 	public void onItemUse(PlayerUseItemEvent event) {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
+		BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
+		if (teamKey == null) return;
+
 		ItemStack stack = event.getItemStack();
-		Block woolBlock = mapTeamToBlock(player.getTeamKey());
+		Block woolBlock = teamKey.bedMaterial().block();
 
 		SoundEvent soundEvent;
 		CustomEntityProjectile projectile;
 		soundEvent = SoundEvent.ENTITY_EGG_THROW;
 		projectile = new ThrownBridgeEgg(woolBlock, player);
-
 
 		((ItemHoldingProjectile) projectile).setItem(stack);
 
@@ -67,7 +59,7 @@ public class BridgeEgg extends SimpleInteractableItem {
 		), player);
 
 		Pos position = player.getPosition().add(0, player.getEyeHeight(), 0);
-		projectile.shootFromRotation(position.pitch(), position.yaw(), 0, 1.5, 1.0);
+		projectile.shootFromRotation(position.pitch(), position.yaw(), 0, 1.5, 1.0, 0.0);
 		projectile.setInstance(Objects.requireNonNull(player.getInstance()), position.withView(projectile.getPosition()));
 
 		Vec playerVel = player.getVelocity();
@@ -78,7 +70,7 @@ public class BridgeEgg extends SimpleInteractableItem {
 			player.setItemInHand(event.getHand(), stack.withAmount(stack.amount() - 1));
 		}
 
-		MathUtility.delay(
+		ScheduleUtility.delay(
 				() -> {
 					if (projectile.isActive() && !projectile.isRemoved()) {
 						projectile.remove();

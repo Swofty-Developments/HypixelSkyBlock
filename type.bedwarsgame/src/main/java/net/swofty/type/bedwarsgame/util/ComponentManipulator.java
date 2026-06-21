@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import java.util.List;
 import java.util.stream.Stream;
 
+// basically only used in a few files even though this behavior is extremely common in the bedwars modules
 public class ComponentManipulator {
 
 	public static Component noItalic(Component component) {

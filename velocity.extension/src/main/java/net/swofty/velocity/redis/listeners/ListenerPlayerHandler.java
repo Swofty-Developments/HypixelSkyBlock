@@ -114,7 +114,17 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
                 }
                 new TransferHandler(player).transferTo(type);
             }
-            case LIMBO -> new TransferHandler(player).sendToLimbo().join();
+            case LIMBO -> {
+                TransferHandler transferHandler = new TransferHandler(player);
+                String reason = data.containsKey("reason") ? (String) data.get("reason") : "";
+
+                if ("AFK".equalsIgnoreCase(reason)) {
+                    ServerType originType = resolveAfkOriginType(data, potentialServer);
+                    transferHandler.sendToLimboFromAfk(originType).join();
+                } else {
+                    transferHandler.sendToLimbo().join();
+                }
+            }
             case TELEPORT -> {
                 if (potentialServer.isEmpty()) {
                     return EMPTY;
@@ -158,6 +168,27 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
             }
         }
         return EMPTY;
+    }
+
+    private ServerType resolveAfkOriginType(Map<String, Object> data, Optional<ServerConnection> potentialServer) {
+        if (data.containsKey("origin-type")) {
+            String rawOriginType = (String) data.get("origin-type");
+            if (ServerType.isServerType(rawOriginType)) {
+                ServerType parsedType = ServerType.valueOf(rawOriginType.toUpperCase());
+                if (parsedType.name().endsWith("_LOBBY")) {
+                    return parsedType;
+                }
+            }
+        }
+
+        ServerType currentType = potentialServer
+            .map(connection -> GameManager.getTypeFromRegisteredServer(connection.getServer()))
+            .orElse(null);
+        if (currentType != null && currentType.name().endsWith("_LOBBY")) {
+            return currentType;
+        }
+
+        return ServerType.PROTOTYPE_LOBBY;
     }
 
     private void publishPresence(Player player, boolean online) {

@@ -8,6 +8,10 @@ plugins {
 group = "net.swofty"
 version = "1.0"
 
+repositories {
+    mavenCentral()
+}
+
 val libsCatalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 subprojects {
@@ -21,6 +25,7 @@ subprojects {
         maven("https://repo.viaversion.com")
         maven("https://jitpack.io")
         maven("https://repo.lucko.me/")
+        maven("https://repo.nexomc.com/releases")
     }
 
     java {

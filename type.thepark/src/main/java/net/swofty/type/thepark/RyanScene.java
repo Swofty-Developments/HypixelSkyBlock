@@ -11,7 +11,7 @@ import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket.MissionSneakUpOnRyan;
@@ -87,7 +87,7 @@ public class RyanScene {
 				entity.lookAt(player.getPosition().add(0, player.getEyeHeight(), 0));
 				return TaskSchedule.tick(1);
 			}, ExecutionType.TICK_END);
-			MathUtility.delay(() -> {
+			ScheduleUtility.delay(() -> {
 				player.addEffect(new Potion(PotionEffect.BLINDNESS, 1, 20));
 				player.teleport(new Pos(-380, 99, -45));
 				player.getAttribute(Attribute.GRAVITY).setBaseValue(previousGravity);

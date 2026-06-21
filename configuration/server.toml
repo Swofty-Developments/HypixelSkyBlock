@@ -16,9 +16,9 @@ secret = "${FORWARDING_SECRET}"
 
 [world]
 spawn_position = [
-    -22.5,
-    31.06250,
-    21.5,
+    16.5,
+    22.06250,
+    8.5,
 ]
 spawn_rotation = [
     -90.0,
@@ -29,8 +29,7 @@ time = "day"
 
 [world.experimental]
 view_distance = 4
-schematic_file = ""
-polar_file = "limbo.polar"
+schematic_file = "limbo.schem"
 lock_time = false
 
 [world.boundaries]

@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ToString
@@ -41,7 +44,7 @@ public final class ViewNavigator {
             currentSession.close(ViewSession.CloseReason.REPLACED);
         }
 
-        var session = ViewSession.open(view, player, state);
+        ViewSession<S> session = ViewSession.open(view, player, state);
         this.currentSession = session;
         registerCloseHandler(session);
         return session;

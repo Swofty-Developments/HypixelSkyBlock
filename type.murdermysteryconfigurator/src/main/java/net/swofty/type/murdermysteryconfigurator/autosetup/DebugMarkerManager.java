@@ -10,9 +10,13 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig.Position;
+import net.swofty.commons.mc.HypixelPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class DebugMarkerManager {
 
@@ -25,19 +29,19 @@ public class DebugMarkerManager {
 
         // Gold spawns
         int goldIndex = 1;
-        for (Position pos : session.getGoldSpawns()) {
+        for (HypixelPosition pos : session.getGoldSpawns()) {
             markers.add(createMarker(instance, pos, "§6Gold Spawn #" + goldIndex++, Material.GOLD_INGOT));
         }
 
         // Player spawns
         int spawnIndex = 1;
-        for (Position pos : session.getPlayerSpawns()) {
+        for (HypixelPosition pos : session.getPlayerSpawns()) {
             markers.add(createMarker(instance, pos, "§aPlayer Spawn #" + spawnIndex++, Material.PLAYER_HEAD));
         }
 
         // Waiting location
         if (session.getWaitingLocation() != null) {
-            Position pos = new Position(session.getWaitingLocation().x(), session.getWaitingLocation().y(), session.getWaitingLocation().z());
+            HypixelPosition pos = new HypixelPosition(session.getWaitingLocation().x(), session.getWaitingLocation().y(), session.getWaitingLocation().z());
             markers.add(createMarker(instance, pos, "§eWaiting Spawn", Material.CLOCK));
         }
 
@@ -65,7 +69,7 @@ public class DebugMarkerManager {
         }
     }
 
-    private static Entity createMarker(Instance instance, Position pos, String label, Material headItem) {
+    private static Entity createMarker(Instance instance, HypixelPosition pos, String label, Material headItem) {
         Entity armorStand = new Entity(EntityType.ARMOR_STAND);
 
         ArmorStandMeta meta = (ArmorStandMeta) armorStand.getEntityMeta();
@@ -95,7 +99,7 @@ public class DebugMarkerManager {
     }
 
     public static Entity createSingleMarker(Instance instance, double x, double y, double z, String label) {
-        return createMarker(instance, new Position(x, y, z), label, Material.ARMOR_STAND);
+        return createMarker(instance, new HypixelPosition(x, y, z), label, Material.ARMOR_STAND);
     }
 
     public static void refreshMarkers(UUID playerUuid, MurderMysterySetupSession session, Instance instance) {

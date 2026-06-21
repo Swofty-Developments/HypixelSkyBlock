@@ -28,7 +28,9 @@ import java.util.stream.Collectors;
  */
 public class ItemStackCreator {
 	private static final TooltipDisplay DEFAULT_TOOLTIP_DISPLAY = new TooltipDisplay(false, Set.of(
-			DataComponents.UNBREAKABLE
+			DataComponents.UNBREAKABLE,
+			DataComponents.POTION_CONTENTS,
+			DataComponents.POTION_DURATION_SCALE
 	));
 	private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacySection();
 
@@ -259,7 +261,7 @@ public class ItemStackCreator {
 	 *
 	 * @param name    the name of the item stack
 	 * @param texture the texture URL of the player skin
-	 * @param amount  the amount of items in the stack
+	 * @param amount  the number of items in the stack
 	 * @param lore    the lore of the item stack
 	 * @return an {@link ItemStack.Builder} for a player head with the specified properties
 	 */

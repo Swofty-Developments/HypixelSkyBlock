@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.event.actions.player;
 
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
@@ -21,7 +20,7 @@ public class ActionEnchantmentTableClick implements HypixelEventClass {
         }
 
         event.setBlockingItemUse(true);
-        new GUIEnchantmentTable(player.getInstance(), Pos.fromPoint(event.getBlockPosition())).open(player);
+        new GUIEnchantmentTable(player.getInstance(), event.getBlockPosition().asPos()).open(player);
     }
 }
 

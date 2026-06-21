@@ -16,6 +16,7 @@ public class TextDisplayEntity extends EntityCreature {
 		editEntityMeta(TextDisplayMeta.class, (meta) -> {
 			meta.setText(text);
 			meta.setBillboardRenderConstraints(AbstractDisplayMeta.BillboardConstraints.CENTER);
+			meta.setSeeThrough(true);
 		});
 	}
 

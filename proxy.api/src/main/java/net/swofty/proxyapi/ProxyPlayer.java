@@ -103,6 +103,18 @@ public class ProxyPlayer {
                 new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, Map.of()));
     }
 
+    public void transferToLimboFromAfk(ServerType originType) {
+        Map<String, Object> data = new java.util.HashMap<>();
+        data.put("reason", "AFK");
+        if (originType != null) {
+            data.put("origin-type", originType.name());
+        }
+
+        ServerOutboundMessage.sendToProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.LIMBO, data),
+                response -> {});
+    }
+
     public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {
         CompletableFuture<Void> future = new CompletableFuture<>();
         RedisClient.requestProxy(PLAYER_HANDLER,

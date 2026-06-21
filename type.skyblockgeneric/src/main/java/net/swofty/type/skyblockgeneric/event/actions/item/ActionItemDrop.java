@@ -52,7 +52,7 @@ public class ActionItemDrop implements HypixelEventClass {
         DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(new SkyBlockItem(
                 event.getItemStack()),
                 player);
-        Pos pos = Pos.fromPoint(player.getPosition().add(0, 1, 0));
+        Pos pos = player.getPosition().add(0, 1, 0);
 
         droppedItem.setVelocity(player.getPosition().direction()
                 .mul(5)

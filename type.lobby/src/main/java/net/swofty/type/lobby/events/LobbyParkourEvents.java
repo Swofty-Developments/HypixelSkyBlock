@@ -12,7 +12,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
 
@@ -64,7 +64,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 					.3f, 0.75f
 			));
 
-			MathUtility.delay(() -> player.playSound(Sound.sound(
+			ScheduleUtility.delay(() -> player.playSound(Sound.sound(
 					Key.key("block.metal_pressure_plate.click_off"), Sound.Source.NEUTRAL,
 					.3f, 0.65f
 			)), 30);
@@ -80,7 +80,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 						.3f, 0.75f
 				));
 
-				MathUtility.delay(() -> player.playSound(Sound.sound(
+				ScheduleUtility.delay(() -> player.playSound(Sound.sound(
 						Key.key("block.metal_pressure_plate.click_off"), Sound.Source.NEUTRAL,
 						.3f, 0.65f
 				)), 30);
@@ -97,7 +97,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 					.3f, 0.75f
 			));
 
-			MathUtility.delay(() -> player.playSound(Sound.sound(
+			ScheduleUtility.delay(() -> player.playSound(Sound.sound(
 					Key.key("block.metal_pressure_plate.click_off"), Sound.Source.NEUTRAL,
 					.3f, 0.65f
 			)), 30);

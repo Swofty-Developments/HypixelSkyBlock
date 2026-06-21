@@ -7,15 +7,15 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
-import org.tinylog.Logger;
+import net.swofty.type.generic.entity.hologram.ServerHolograms;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.commands.MinionGenerationCommand;
 import net.swofty.type.skyblockgeneric.entity.MinionEntityImpl;
-import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.skyblockgeneric.item.ItemQuantifiable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
 import net.swofty.type.skyblockgeneric.minion.extension.extensions.MinionShippingExtension;
-import net.swofty.type.generic.utility.MathUtility;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;

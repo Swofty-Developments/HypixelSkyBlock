@@ -1,6 +1,7 @@
 package net.swofty.type.bedwarsgame.item;
 
 import net.minestom.server.component.DataComponents;
+import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PlayerFinishItemUseEvent;
 import net.minestom.server.event.player.PlayerBlockPlaceEvent;
@@ -27,6 +28,12 @@ public class SimpleInteractableItemHandler {
                 .orElseThrow(() -> new IllegalArgumentException("Item not found: " + name));
     }
 
+    public List<SimpleInteractableItem> getShopBackedItems() {
+        return items.stream()
+            .filter(SimpleInteractableItem::isShopBacked)
+            .toList();
+    }
+
     public void onItemFinishUse(PlayerFinishItemUseEvent event) {
         for (SimpleInteractableItem item : items) {
             ItemStack itemStack = event.getItemStack();
@@ -51,6 +58,16 @@ public class SimpleInteractableItemHandler {
             ItemStack itemStack = event.getItemStack();
             if (isItem(item, itemStack)) {
                 item.onItemUse(event);
+                item.onItemInteract(event);
+            }
+        }
+    }
+
+    public void onInventoryClick(InventoryPreClickEvent event) {
+        for (SimpleInteractableItem item : items) {
+            ItemStack itemStack = event.getClickedItem();
+            if (isItem(item, itemStack)) {
+                event.setCancelled(true);
                 item.onItemInteract(event);
             }
         }

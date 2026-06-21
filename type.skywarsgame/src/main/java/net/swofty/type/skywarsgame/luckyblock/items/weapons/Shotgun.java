@@ -81,7 +81,7 @@ public class Shotgun implements LuckyBlockWeapon {
 
             Snowball snowball = new Snowball(holder);
             snowball.setInstance(instance, eyePos);
-            snowball.shootFromRotation(basePitch + pitchOffset, baseYaw + yawOffset, 0, POWER, 0);
+            snowball.shootFromRotation(basePitch + pitchOffset, baseYaw + yawOffset, 0, POWER, 0, 0.0);
         }
 
         return true;

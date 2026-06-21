@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public record ViewComponent<S>(
         UUID id,
@@ -16,16 +17,17 @@ public record ViewComponent<S>(
         BiConsumer<ClickContext<S>, ViewContext> onClick,
         SlotBehavior behavior,
         SlotChangeHandler<S> changeHandler,
-        Duration updateInterval
+        Duration updateInterval,
+        Consumer<ViewContext> update
 ) {
     public ViewComponent(int slot, BiFunction<S, ViewContext, ItemStack.Builder> render,
                          BiConsumer<ClickContext<S>, ViewContext> onClick) {
-        this(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, null);
+        this(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, null, null);
     }
 
     public static <S> ViewComponent<S> staticItem(int slot, ItemStack.Builder item) {
         return new ViewComponent<>(UUID.randomUUID(), slot, (_, _) -> item, (_, _) -> {
-        }, SlotBehavior.UI, null, null);
+        }, SlotBehavior.UI, null, null, null);
     }
 
     public static <S> ViewComponent<S> autoUpdating(
@@ -34,7 +36,7 @@ public record ViewComponent<S>(
             Duration updateInterval
     ) {
         return new ViewComponent<>(UUID.randomUUID(), slot, render, (_, _) -> {
-        }, SlotBehavior.UI, null, updateInterval);
+        }, SlotBehavior.UI, null, updateInterval, null);
     }
 
     public static <S> ViewComponent<S> autoUpdating(
@@ -43,7 +45,17 @@ public record ViewComponent<S>(
             BiConsumer<ClickContext<S>, ViewContext> onClick,
             Duration updateInterval
     ) {
-        return new ViewComponent<>(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, updateInterval);
+        return new ViewComponent<>(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, updateInterval, null);
+    }
+
+    public static <S> ViewComponent<S> autoUpdating(
+        int slot,
+        BiFunction<S, ViewContext, ItemStack.Builder> render,
+        BiConsumer<ClickContext<S>, ViewContext> onClick,
+        Duration updateInterval,
+        Consumer<ViewContext> update
+    ) {
+        return new ViewComponent<>(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, updateInterval, update);
     }
 
     public static <S> ViewComponent<S> clickable(
@@ -51,7 +63,7 @@ public record ViewComponent<S>(
             BiFunction<S, ViewContext, ItemStack.Builder> render,
             BiConsumer<ClickContext<S>, ViewContext> onClick
     ) {
-        return new ViewComponent<>(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, null);
+        return new ViewComponent<>(UUID.randomUUID(), slot, render, onClick, SlotBehavior.UI, null, null, null);
     }
 
     public static <S> ViewComponent<S> editable(
@@ -60,12 +72,12 @@ public record ViewComponent<S>(
             SlotChangeHandler<S> changeHandler
     ) {
         return new ViewComponent<>(UUID.randomUUID(), slot, initialRender, (_, _) -> {
-        }, SlotBehavior.EDITABLE, changeHandler, null);
+        }, SlotBehavior.EDITABLE, changeHandler, null, null);
     }
 
     public static <S> ViewComponent<S> editable(int slot, ItemStack.Builder initialItem, SlotChangeHandler<S> changeHandler) {
         return new ViewComponent<>(UUID.randomUUID(), slot, (_, _) -> initialItem, (_, _) -> {
-        }, SlotBehavior.EDITABLE, changeHandler, null);
+        }, SlotBehavior.EDITABLE, changeHandler, null, null);
     }
 
     public static <S> ViewComponent<S> editable(int slot, SlotChangeHandler<S> changeHandler) {

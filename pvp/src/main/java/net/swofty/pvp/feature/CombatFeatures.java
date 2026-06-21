@@ -25,7 +25,13 @@ import net.swofty.pvp.feature.item.VanillaItemDamageFeature;
 import net.swofty.pvp.feature.knockback.FairKnockbackFeature;
 import net.swofty.pvp.feature.knockback.VanillaKnockbackFeature;
 import net.swofty.pvp.feature.potion.VanillaPotionFeature;
-import net.swofty.pvp.feature.projectile.*;
+import net.swofty.pvp.feature.projectile.VanillaBowFeature;
+import net.swofty.pvp.feature.projectile.VanillaCrossbowFeature;
+import net.swofty.pvp.feature.projectile.VanillaFireworkRocketFeature;
+import net.swofty.pvp.feature.projectile.VanillaFishingRodFeature;
+import net.swofty.pvp.feature.projectile.VanillaMiscProjectileFeature;
+import net.swofty.pvp.feature.projectile.VanillaProjectileItemFeature;
+import net.swofty.pvp.feature.projectile.VanillaTridentFeature;
 import net.swofty.pvp.feature.provider.DifficultyProvider;
 import net.swofty.pvp.feature.spectate.VanillaSpectateFeature;
 import net.swofty.pvp.feature.state.VanillaPlayerStateFeature;
@@ -164,12 +170,12 @@ public class CombatFeatures {
 	 * @see VanillaDeathMessageFeature
 	 */
 	public static final DefinedFeature<VanillaDeathMessageFeature> VANILLA_DEATH_MESSAGE = VanillaDeathMessageFeature.DEFINED;
-	
+
 	/**
 	 * @see LegacyVanillaBlockFeature
 	 */
 	public static final DefinedFeature<LegacyVanillaBlockFeature> LEGACY_VANILLA_BLOCK = LegacyVanillaBlockFeature.SHIELD;
-	
+
 	/**
 	 * @see FairKnockbackFeature
 	 */
@@ -178,7 +184,11 @@ public class CombatFeatures {
 	 * @see FairKnockbackFeature
 	 */
 	public static final DefinedFeature<FairKnockbackFeature> FAIR_RISING_FALLING_KNOCKBACK = FairKnockbackFeature.RISING_AND_FALLING;
-	
+	/**
+	 * @see VanillaFireworkRocketFeature
+	 */
+	public static final DefinedFeature<VanillaFireworkRocketFeature> VANILLA_FIREWORK_ROCKET = VanillaFireworkRocketFeature.DEFINED;
+
 	private static final List<DefinedFeature<?>> VANILLA = List.of(
 			VANILLA_ARMOR, VANILLA_ATTACK, VANILLA_CRITICAL, VANILLA_SWEEPING,
 			VANILLA_EQUIPMENT, VANILLA_BLOCK, VANILLA_ATTACK_COOLDOWN, VANILLA_ITEM_COOLDOWN,
@@ -189,13 +199,13 @@ public class CombatFeatures {
 			VANILLA_PROJECTILE_ITEM, VANILLA_TRIDENT, VANILLA_SPECTATE, VANILLA_PLAYER_STATE,
 			VANILLA_TOTEM, VANILLA_DEATH_MESSAGE
 	);
-	
+
 	private static final CombatFeatureSet MODERN_VANILLA = getVanilla(CombatVersion.MODERN, DifficultyProvider.DEFAULT).build();
-	
+
 	private static final CombatFeatureSet LEGACY_VANILLA = getVanilla(CombatVersion.LEGACY, DifficultyProvider.DEFAULT)
 			.add(LEGACY_VANILLA_BLOCK)
 			.build();
-	
+
 	/**
 	 * Returns a feature set for the full modern vanilla experience. Use {@link CombatFeatureSet#createNode()} to get an event node.
 	 *
@@ -204,7 +214,7 @@ public class CombatFeatures {
 	public static CombatFeatureSet modernVanilla() {
 		return MODERN_VANILLA;
 	}
-	
+
 	/**
 	 * Returns a feature set for the full legacy (pre-1.9) vanilla experience. Use {@link CombatFeatureSet#createNode()} to get an event node.
 	 *
@@ -213,7 +223,7 @@ public class CombatFeatures {
 	public static CombatFeatureSet legacyVanilla() {
 		return LEGACY_VANILLA;
 	}
-	
+
 	/**
 	 * Returns a feature set with all features for the given combat version and difficulty provider.
 	 *
@@ -226,7 +236,7 @@ public class CombatFeatures {
 				.version(version).difficulty(difficultyProvider)
 				.addAll(VANILLA);
 	}
-	
+
 	/**
 	 * Utility method to get an empty {@link CombatConfiguration} to which features can be added.
 	 *
@@ -235,7 +245,7 @@ public class CombatFeatures {
 	public static CombatConfiguration empty() {
 		return new CombatConfiguration();
 	}
-	
+
 	/**
 	 * Utility method to construct a single feature without dependencies in a clean way.
 	 *

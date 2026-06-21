@@ -2,6 +2,7 @@ package net.swofty.anticheat.loader.minestom.packets;
 
 import net.minestom.server.network.packet.client.common.ClientPongPacket;
 import net.swofty.anticheat.engine.SwoftyPlayer;
+import net.swofty.anticheat.event.packet.PingResponsePacket;
 import net.swofty.anticheat.event.packet.RequestPingPacket;
 import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.loader.LoaderPacketHandler;
@@ -13,7 +14,7 @@ public class MinestomHandlerPingResponsePacket
 
     @Override
     public SwoftyPacket buildSwoftyPacket(UUID uuid, ClientPongPacket packet) {
-        return new net.swofty.anticheat.event.packet.PingResponsePacket(
+        return new PingResponsePacket(
                 SwoftyPlayer.players.get(uuid),
                 packet.id()
         );

@@ -36,13 +36,12 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
     @Override
     public void onInitialize(MinecraftServer server) {
         RegistryKey<DimensionType> fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register(
-                Key.key("ravengard:lobby_fullbright"),
+            Key.key("ravengard", "lobby_fullbright"),
                 DimensionType.builder().ambientLight(1.0f).build()
         );
 
         InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer(fullbrightDimension);
         instance.setTime(6000);
-        instance.setTimeRate(0);
 
         HypixelConst.setInstanceContainer(MinecraftServer.getInstanceManager().createSharedInstance(instance));
         int minimapRadiusChunks = 8;

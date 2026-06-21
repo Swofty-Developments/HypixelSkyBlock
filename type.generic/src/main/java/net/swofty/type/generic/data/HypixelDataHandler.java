@@ -2,12 +2,12 @@ package net.swofty.type.generic.data;
 
 import io.sentry.Sentry;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.*;
@@ -15,7 +15,7 @@ import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import org.bson.Document;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.Nullable;
@@ -182,13 +182,14 @@ public class HypixelDataHandler extends DataHandler {
             Rank rank = (Rank) datapoint.getValue();
 
             // Delay this as player needs to be loaded
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 if (!player.isOnline()) return;
                 if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
+                if (HypixelConst.getTypeLoader().getType() == ServerType.BEDWARS_GAME) return;
 
                 String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
                 Team team = new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
-                        .prefix(Component.text(rank.getPrefix()))
+                    .prefix(((HypixelPlayer) player).getRankPrefix())
                         .teamColor(rank.getTextColor())
                         .build();
                 player.setTeam(team);
@@ -197,11 +198,12 @@ public class HypixelDataHandler extends DataHandler {
         }, (player, datapoint) -> {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
             if (HypixelConst.getTypeLoader().getType().isSkyBlock()) return;
+            if (HypixelConst.getTypeLoader().getType() == ServerType.BEDWARS_GAME) return;
 
             Rank rank = (Rank) datapoint.getValue();
             String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
             player.setTeam(new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
-                    .prefix(Component.text(rank.getPrefix()))
+                .prefix(((HypixelPlayer) player).getRankPrefix())
                     .teamColor(rank.getTextColor())
                     .build());
             player.getTeam().sendUpdatePacket();
@@ -216,7 +218,44 @@ public class HypixelDataHandler extends DataHandler {
         CHAT_TYPE("chat_type", DatapointChatType.class,
                 new DatapointChatType("chat_type", new DatapointChatType.ChatType(DatapointChatType.Chats.ALL))),
 
-        LOCALE("locale", DatapointLocale.class, new DatapointLocale("locale", new DatapointLocale.LocaleType(DatapointLocale.SupportedLocale.ENGLISH))),
+        LOCALE("locale",
+            DatapointLocale.class,
+            new DatapointLocale(
+                "locale",
+                new DatapointLocale.LocaleType(DatapointLocale.SupportedLocale.UNSET)
+            ),
+            (player, datapoint) -> {
+                DatapointLocale localeDatapoint = (DatapointLocale) datapoint;
+                DatapointLocale.LocaleType localeType = localeDatapoint.getValue();
+
+                if (localeType.getCurrentLocale() == DatapointLocale.SupportedLocale.UNSET) {
+                    return;
+                }
+
+                player.setLocale(localeType.getCurrentLocale().getLocale());
+            },
+            (player, datapoint) -> {
+                DatapointLocale localeDatapoint = (DatapointLocale) datapoint;
+                DatapointLocale.LocaleType localeType = localeDatapoint.getValue();
+
+                if (localeType.getCurrentLocale() == DatapointLocale.SupportedLocale.UNSET) {
+                    localeDatapoint.setValue(
+                        new DatapointLocale.LocaleType(
+                            DatapointLocale.SupportedLocale.fromLocale(player.getLocale())
+                        )
+                    );
+                    return;
+                }
+
+                player.setLocale(localeType.getCurrentLocale().getLocale());
+            },
+            player -> new DatapointLocale(
+                "locale",
+                new DatapointLocale.LocaleType(
+                    DatapointLocale.SupportedLocale.fromLocale(player.getLocale())
+                )
+            )
+        ),
 
         TOGGLES("toggles", DatapointToggles.class, new DatapointToggles("toggles")),
 
@@ -257,6 +296,10 @@ public class HypixelDataHandler extends DataHandler {
 
         HYPIXEL_EXPERIENCE("hypixel_experience",
                 DatapointHypixelExperience.class, new DatapointHypixelExperience("hypixel_experience", 0L)),
+
+        RANK_COLOR("rank_color", DatapointString.class, new DatapointString("rank_color", "RED")),
+        MVP_PLUS_PLUS_AQUA("mvp_plus_plus_aqua", DatapointBoolean.class, new DatapointBoolean("mvp_plus_plus_aqua", false)),
+        RANKS_GIFTED("ranks_gifted", DatapointInteger.class, new DatapointInteger("ranks_gifted", 0)),
 
         ACHIEVEMENT_DATA("achievement_data",
                 DatapointAchievementData.class, new DatapointAchievementData("achievement_data")),

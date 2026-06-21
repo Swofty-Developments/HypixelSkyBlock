@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -63,6 +62,7 @@ public class Hypixel {
 
     @SneakyThrows
     static void main(String[] args) {
+        System.setProperty("minestom.automatic-component-translation", "true");
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
             Logger.error("Please specify a server type.");
             Arrays.stream(ServerType.values()).forEach(serverType -> Logger.error(serverType.name()));
@@ -84,7 +84,7 @@ public class Hypixel {
         long startTime = System.currentTimeMillis();
 
         Map<String, String> options = parseOptionalArgs(args);
-        Integer maxPlayers = options.containsKey("--max-players") ?
+        int maxPlayers = options.containsKey("--max-players") ?
                 Integer.parseInt(options.get("--max-players")) : 20;
 
         // Test flow configuration
@@ -190,6 +190,7 @@ public class Hypixel {
         // Start spark if enabled
         if (ENABLE_SPARK) {
             Spark.enable(Files.createTempDirectory("spark"));
+            Logger.info("Spark has been enabled");
         }
 
         // Ensure all services are running
@@ -206,7 +207,6 @@ public class Hypixel {
             skyblockLoader.afterInitialize();
         }
 
-        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
         HypixelTranslator translator = new HypixelTranslator();
         I18n.init(translator);
         GlobalTranslator.translator().addSource(translator);

@@ -53,7 +53,7 @@ public class MurderMysteryPlayersOnlineModule extends TablistModule {
             }
 
             HypixelPlayer tablistPlayer = toShow.get(x);
-            String displayName = tablistPlayer.getRank().getPrefix() + StringUtility.getTextFromComponent(tablistPlayer.getName());
+            String displayName = tablistPlayer.getLegacyRankPrefix() + StringUtility.getTextFromComponent(tablistPlayer.getName());
 
             entries.add(new TablistEntry(displayName, TablistSkinRegistry.GRAY));
         }

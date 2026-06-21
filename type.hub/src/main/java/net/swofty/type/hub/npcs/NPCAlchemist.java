@@ -20,11 +20,6 @@ public class NPCAlchemist extends HypixelNPC {
             }
 
             @Override
-            public float hologramYOffset() {
-                return 0.1f;
-            }
-
-            @Override
             public EntityType entityType() {
                 return EntityType.WITCH;
             }
