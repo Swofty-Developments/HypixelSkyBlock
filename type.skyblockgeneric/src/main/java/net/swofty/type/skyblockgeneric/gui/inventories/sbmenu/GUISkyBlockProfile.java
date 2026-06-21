@@ -55,7 +55,7 @@ public class GUISkyBlockProfile extends StatelessView {
             StandardItemComponent.StandardItemType.CLOAK);
         equipmentSlot(layout, 28, List.of("Belt"), SkyBlockInventory::getBelt, SkyBlockInventory::setBelt,
             StandardItemComponent.StandardItemType.BELT);
-        equipmentSlot(layout, 37, List.of("Gloves"), SkyBlockInventory::getGloves, SkyBlockInventory::setGloves,
+        equipmentSlot(layout, 37, List.of("Gloves", "Bracelet"), SkyBlockInventory::getGloves, SkyBlockInventory::setGloves,
             StandardItemComponent.StandardItemType.GLOVES, StandardItemComponent.StandardItemType.BRACELET);
 
         // Helmet
