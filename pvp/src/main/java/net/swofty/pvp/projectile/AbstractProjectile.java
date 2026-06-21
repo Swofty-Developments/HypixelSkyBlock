@@ -3,7 +3,12 @@ package net.swofty.pvp.projectile;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.ServerFlag;
-import net.minestom.server.collision.*;
+import net.minestom.server.collision.Aerodynamics;
+import net.minestom.server.collision.BoundingBox;
+import net.minestom.server.collision.CollisionUtils;
+import net.minestom.server.collision.EntityCollisionResult;
+import net.minestom.server.collision.PhysicsResult;
+import net.minestom.server.collision.ShapeImpl;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -164,7 +169,7 @@ public abstract class AbstractProjectile extends Entity implements Projectile {
         position = new Pos(hitPos.x(), hitPos.y(), hitPos.z(), posBefore.yaw(), posBefore.pitch());
         MinecraftServer.getSchedulerManager().scheduleNextTick(this::synchronizePosition); // required as in rare situations there will be a slight disagreement with the client and server on if it hit or not | also scheduling next tick so it doesn't jump to the hit position until it has actually hit
 
-        callBlockCollisionEvent(Pos.fromPoint(hitPos), hitBlock);
+        callBlockCollisionEvent(hitPos.asPos(), hitBlock);
 
         BlockHandler blockHandler = hitBlock.handler();
         if (blockHandler == null) return;
@@ -179,7 +184,7 @@ public abstract class AbstractProjectile extends Entity implements Projectile {
      * @return true if block collisions should be ignored (i.e. the entity was removed while handling entity collision during the same tick)
      */
     protected boolean handleEntityCollision(EntityCollisionResult result, Point hitPos, Pos posBefore) {
-        return callEntityCollisionEvent(Pos.fromPoint(hitPos), result.entity());
+        return callEntityCollisionEvent(hitPos.asPos(), result.entity());
     }
 
 	protected abstract @NotNull Vec updateVelocity(@NotNull Pos entityPosition, @NotNull Vec currentVelocity, @NotNull Block.@NotNull Getter blockGetter, @NotNull Aerodynamics aerodynamics, boolean positionChanged, boolean entityFlying, boolean entityOnGround, boolean entityNoGravity);

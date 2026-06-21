@@ -1,19 +1,13 @@
 package net.swofty.type.bedwarslobby;
 
 import lombok.Getter;
-import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
-import net.minestom.server.world.DimensionType;
-import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
@@ -221,17 +215,6 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
     @Override
     public @Nullable CustomWorlds getMainInstance() {
         return CustomWorlds.BEDWARS_LOBBY;
-    }
-
-    // TODO: official server doesn't do full bright but some maps seem to fail lighting on 26.1.2
-    @Override
-    public @Nullable RegistryKey<DimensionType> getDimensionType() {
-        return MinecraftServer.getDimensionTypeRegistry().register(
-            Key.key("bedwars:lobby"),
-            DimensionType.builder()
-                .ambientLight(1f)
-                .setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE)
-                .build());
     }
 
     @Override
