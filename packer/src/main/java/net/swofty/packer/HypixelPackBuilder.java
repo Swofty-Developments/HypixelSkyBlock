@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class HypixelPackBuilder {
-    private static final FormatVersion FORMAT_VERSION = FormatVersion.of(FormatVersion.FORMAT_1_21_11);
+    private static final FormatVersion FORMAT_VERSION = FormatVersion.of(FormatVersion.FORMAT_26_1);
 
     private final PackDefinition definition;
 

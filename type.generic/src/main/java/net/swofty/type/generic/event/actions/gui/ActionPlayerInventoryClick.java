@@ -19,6 +19,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.type.generic.user.HypixelPlayer;
+import org.tinylog.Logger;
 
 public class ActionPlayerInventoryClick implements HypixelEventClass {
 
@@ -31,6 +32,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
             event.setCancelled(true);
             player.closeInventory();
             player.sendMessage("§cSomething went wrong while handling your click!");
+            Logger.error(e);
         }
     }
 
@@ -44,12 +46,14 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
             return;
         }
 
-        Component displayNameCursor = cursorItem.get(DataComponents.CUSTOM_NAME);
-        Component displayNameClicked = clickedItem.get(DataComponents.CUSTOM_NAME);
-        if ((displayNameCursor != null && StringUtility.getTextFromComponent(displayNameCursor).contains("Switch your held"))
-            || (displayNameClicked != null && StringUtility.getTextFromComponent(displayNameClicked).contains("Switch your held"))) {
-            event.setCancelled(true);
-            return;
+        if (event.getInventory() instanceof PlayerInventory) {
+            Component displayNameCursor = cursorItem.get(DataComponents.CUSTOM_NAME);
+            Component displayNameClicked = clickedItem.get(DataComponents.CUSTOM_NAME);
+            if ((displayNameCursor != null && StringUtility.getTextFromComponent(displayNameCursor).contains("Switch your held"))
+                || (displayNameClicked != null && StringUtility.getTextFromComponent(displayNameClicked).contains("Switch your held"))) {
+                event.setCancelled(true);
+                return;
+            }
         }
 
         if (HypixelInventoryGUI.GUI_MAP.containsKey(player.getUuid())) {
