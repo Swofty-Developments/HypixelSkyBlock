@@ -6,7 +6,7 @@ hero:
   tagline: A 26.1.2 recreation of Hypixel SkyBlock with a properly abstracted, scalable codebase
   actions:
     - theme: brand
-      text: Quick Install (Linux)
+      text: Quick Install (Linux / macOS)
       link: /docs/docker/setup
     - theme: alt
       text: Get Started
