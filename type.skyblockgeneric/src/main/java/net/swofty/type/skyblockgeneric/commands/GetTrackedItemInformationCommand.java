@@ -3,7 +3,7 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -38,8 +38,8 @@ public class GetTrackedItemInformationCommand extends HypixelCommand {
             }
             long start = System.currentTimeMillis();
 
-            CompletableFuture<TrackedItemRetrieveProtocolObject.TrackedItemResponse> trackedItemFuture = service.handleRequest(
-                    new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+            CompletableFuture<TrackedItemRetrieveProtocol.TrackedItemResponse> trackedItemFuture = service.handleRequest(
+                    new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                             UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
             ));
 
@@ -51,9 +51,9 @@ public class GetTrackedItemInformationCommand extends HypixelCommand {
             player.sendMessage("§7- §eItem UUID: §7" + trackedItem.getItemUUID());
             player.sendMessage("§7- §eNumber Made: §7" + trackedItem.getNumberMade());
             player.sendMessage("§7- §eMade: §7" + StringUtility.formatTimeAsAgo(trackedItem.getCreated()));
-            player.sendMessage("§8Attached Players: §7" + trackedItem.attachedPlayers.size());
+            player.sendMessage("§8Attached Players: §7" + trackedItem.getAttachedPlayers().size());
 
-            trackedItem.attachedPlayers.forEach(log -> {
+            trackedItem.getAttachedPlayers().forEach(log -> {
                 player.sendMessage("§7- §ePlayer UUID: §7" + log.playerUUID());
                 player.sendMessage("§7- §eProfile UUID: §7" + log.playerProfileUUID());
                 player.sendMessage("§7- §eFirst Seen: §7" + StringUtility.formatTimeAsAgo(log.firstSeen()));

@@ -3,27 +3,27 @@ package net.swofty.service.auction.endpoints;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionsFilter;
 import net.swofty.commons.skyblock.auctions.AuctionsSorting;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocol;
 import net.swofty.service.auction.AuctionService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointFetchItems implements ServiceEndpoint<
-        AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage,
-        AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse> {
+public class EndpointFetchItems implements RedisMessageHandler<
+        AuctionFetchItemsProtocol.AuctionFetchItemsMessage,
+        AuctionFetchItemsProtocol.AuctionFetchItemsResponse> {
 
     @Override
-    public AuctionFetchItemsProtocolObject associatedProtocolObject() {
-        return new AuctionFetchItemsProtocolObject();
+    public AuctionFetchItemsProtocol protocol() {
+        return new AuctionFetchItemsProtocol();
     }
 
     @Override
-    public AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse onMessage(ServiceProxyRequest message, AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage messageObject) {
+    public AuctionFetchItemsProtocol.AuctionFetchItemsResponse handle(AuctionFetchItemsProtocol.AuctionFetchItemsMessage messageObject, RedisMessageContext context) {
         AuctionsSorting sorting = messageObject.sorting();
         AuctionsFilter filter = messageObject.filter();
         AuctionCategories category = messageObject.category();
@@ -31,7 +31,7 @@ public class EndpointFetchItems implements ServiceEndpoint<
         List<Document> results = AuctionService.cacheService.getAuctions(category.toString(), filter);
 
         if (results.isEmpty()) {
-            return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(new ArrayList<>(), true, null);
+            return new AuctionFetchItemsProtocol.AuctionFetchItemsResponse(new ArrayList<>(), true, null);
         }
 
         // Sort according to sorting
@@ -66,6 +66,6 @@ public class EndpointFetchItems implements ServiceEndpoint<
                 break;
         }
 
-        return new AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse(results.stream().map(AuctionItem::fromDocument).toList(), true, null);
+        return new AuctionFetchItemsProtocol.AuctionFetchItemsResponse(results.stream().map(AuctionItem::fromDocument).toList(), true, null);
     }
 }

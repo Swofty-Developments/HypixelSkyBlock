@@ -2,7 +2,7 @@ package net.swofty.type.generic.utility;
 
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.GetGameCountsProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.GetGameCountsProtocol;
 import net.swofty.proxyapi.ProxyService;
 
 import java.util.Map;
@@ -97,10 +97,10 @@ public class GameCountCache {
     }
 
     private static void refreshAsync(ServerType type, String gameTypeName, String mapName, String cacheKey) {
-        var message = new GetGameCountsProtocolObject.GetGameCountsMessage(type, gameTypeName, mapName);
+        var message = new GetGameCountsProtocol.GetGameCountsMessage(type, gameTypeName, mapName);
 
         new ProxyService(ServiceType.ORCHESTRATOR)
-                .<GetGameCountsProtocolObject.GetGameCountsMessage, GetGameCountsProtocolObject.GetGameCountsResponse>handleRequest(message)
+                .<GetGameCountsProtocol.GetGameCountsMessage, GetGameCountsProtocol.GetGameCountsResponse>handleRequest(message)
                 .thenAccept(response -> {
                     if (response != null) {
                         cache.put(cacheKey, new CachedCount(

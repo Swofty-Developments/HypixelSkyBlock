@@ -19,13 +19,13 @@ View all contributors on [GitHub](https://github.com/Swofty-Developments/Hypixel
 
 ## Technologies Used
 
-| Technology | Purpose |
-|------------|---------|
-| [Minestom](https://minestom.net) | High-performance Minecraft server library |
-| [Velocity](https://velocitypowered.com) | Modern Minecraft proxy |
-| [MongoDB](https://www.mongodb.com) | Document database |
-| [Redis](https://redis.io) | In-memory data store |
-| [Spark](https://sparkjava.com) | Micro web framework |
+| Technology                              | Purpose                                   |
+|-----------------------------------------|-------------------------------------------|
+| [Minestom](https://minestom.net)        | High-performance Minecraft server library |
+| [Velocity](https://velocitypowered.com) | Modern Minecraft proxy                    |
+| [MongoDB](https://www.mongodb.com)      | Document database                         |
+| [Redis](https://redis.io)               | In-memory data store                      |
+| [Spark](https://sparkjava.com)          | Micro web framework                       |
 
 ## Related Projects
 

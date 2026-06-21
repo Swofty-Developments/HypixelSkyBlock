@@ -12,9 +12,9 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.dwarvenmines.gui.GUIGemstoneGrinder;
-import net.swofty.type.dwarvenmines.tab.DwarvenMinesServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.InteractionEntity;
@@ -74,7 +74,7 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new DwarvenMinesServerModule(),
+                        new AreaServerModule("tablist.server_info.area.dwarven_mines"),
                         new AccountInformationModule()
                 ));
             }
@@ -104,7 +104,7 @@ public class TypeDwarvenMinesLoader implements SkyBlockTypeLoader {
 
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

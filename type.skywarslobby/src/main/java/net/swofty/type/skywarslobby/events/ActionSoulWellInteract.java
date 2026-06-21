@@ -4,8 +4,9 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarslobby.gui.GUISoulWell;
 
@@ -14,7 +15,7 @@ public class ActionSoulWellInteract implements HypixelEventClass {
     private static final int SOUL_WELL_Y = 67;
     private static final int SOUL_WELL_Z = 0;
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerBlockInteractEvent event) {
         if (!(event.getPlayer() instanceof HypixelPlayer player)) {
             return;

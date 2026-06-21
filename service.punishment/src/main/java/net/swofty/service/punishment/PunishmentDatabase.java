@@ -10,6 +10,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
+import org.jspecify.annotations.NonNull;
 
 public record PunishmentDatabase(String playerId) implements MongoDB {
     public static MongoClient client;
@@ -17,7 +18,7 @@ public record PunishmentDatabase(String playerId) implements MongoDB {
     public static MongoCollection<Document> punishmentCollection;
 
     @Override
-    public MongoDB connect(String connectionString) {
+    public @NonNull MongoDB connect(@NonNull String connectionString) {
         ConnectionString cs = new ConnectionString(connectionString);
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         client = MongoClients.create(settings);
@@ -28,7 +29,7 @@ public record PunishmentDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public void set(String key, Object value) {
+    public void set(@NonNull String key, Object value) {
         insertOrUpdate(key, value);
     }
 
@@ -40,7 +41,7 @@ public record PunishmentDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public Object get(String key, Object def) {
+    public Object get(@NonNull String key, Object def) {
         Document doc = punishmentCollection.find(Filters.eq("_id", playerId)).first();
         if (doc == null) {
             return def;
@@ -49,7 +50,7 @@ public record PunishmentDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public void insertOrUpdate(String key, Object value) {
+    public void insertOrUpdate(@NonNull String key, Object value) {
         if (exists()) {
             Document query = new Document("_id", playerId);
             Document found = punishmentCollection.find(query).first();
@@ -63,7 +64,7 @@ public record PunishmentDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public boolean remove(String id) {
+    public boolean remove(@NonNull String id) {
         Document query = new Document("_id", id);
         Document found = punishmentCollection.find(query).first();
         if (found == null) {

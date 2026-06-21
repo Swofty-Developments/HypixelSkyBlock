@@ -1,9 +1,9 @@
 package net.swofty.type.skyblockgeneric.redis;
 
 import net.minestom.server.event.Event;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -11,15 +11,16 @@ import org.tinylog.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisRunEvent implements TypedProxyHandler<RunEventProtocol.Request, RunEventProtocol.Response> {
+public class RedisRunEvent implements RedisMessageHandler<RunEventProtocol.Request, RunEventProtocol.Response> {
     @Override
-    public ProtocolObject<RunEventProtocol.Request, RunEventProtocol.Response> getProtocol() {
+    public RedisProtocol<RunEventProtocol.Request, RunEventProtocol.Response> protocol() {
         return new RunEventProtocol();
     }
 
     @Override
-    public RunEventProtocol.Response onMessage(RunEventProtocol.Request message) {
+    public RunEventProtocol.Response handle(RunEventProtocol.Request message, RedisMessageContext context) {
         UUID uuid = UUID.fromString(message.uuid());
         String eventClassName = message.event();
         String eventArgs = message.data();

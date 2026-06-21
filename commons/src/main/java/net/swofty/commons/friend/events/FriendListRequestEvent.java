@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendListRequestEvent extends FriendEvent {
+public final class FriendListRequestEvent extends FriendEvent {
+    private static final Serializer<FriendListRequestEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendListRequestEvent.class);
+
     private final UUID player;
     private final int page;
     private final boolean bestOnly;
@@ -31,30 +34,6 @@ public class FriendListRequestEvent extends FriendEvent {
 
     @Override
     public Serializer<FriendListRequestEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendListRequestEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player", value.player.toString());
-                json.put("page", value.page);
-                json.put("bestOnly", value.bestOnly);
-                return json.toString();
-            }
-
-            @Override
-            public FriendListRequestEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendListRequestEvent(
-                        UUID.fromString(jsonObject.getString("player")),
-                        jsonObject.getInt("page"),
-                        jsonObject.getBoolean("bestOnly")
-                );
-            }
-
-            @Override
-            public FriendListRequestEvent clone(FriendListRequestEvent value) {
-                return new FriendListRequestEvent(value.player, value.page, value.bestOnly);
-            }
-        };
+        return SERIALIZER;
     }
 }

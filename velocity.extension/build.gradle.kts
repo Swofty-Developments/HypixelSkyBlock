@@ -4,7 +4,7 @@ plugins {
     java
     application
     `maven-publish`
-    id("com.gradleup.shadow") version "9.3.2"
+    alias(libs.plugins.shadow)
     id("org.jetbrains.gradle.plugin.idea-ext") version "1.4.1"
 }
 
@@ -21,6 +21,9 @@ repositories {
     maven("https://jitpack.io")
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.viaversion.com")
+
+    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
+    maven { url = uri("https://repo.codemc.io/repository/maven-snapshots/") }
 }
 
 dependencies {
@@ -34,10 +37,11 @@ dependencies {
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driver.sync)
 
-    implementation(libs.vialoader)
     implementation(libs.viabackwards.common)
     implementation(libs.viarewind.common)
     implementation(libs.viaversion)
+
+    implementation(libs.packetevents.velocity)
 
     implementation(platform(libs.netty.bom))
     implementation(libs.netty.buffer)

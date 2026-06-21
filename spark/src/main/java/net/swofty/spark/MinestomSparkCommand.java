@@ -1,6 +1,8 @@
 package net.swofty.spark;
 
 import me.lucko.spark.common.SparkPlatform;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.CommandContext;
@@ -20,48 +22,52 @@ import java.util.Arrays;
 final class MinestomSparkCommand extends Command implements CommandExecutor, SuggestionCallback {
     private final SparkPlatform platform;
 
-    MinestomSparkCommand(SparkPlatform platform) {
+    public MinestomSparkCommand(SparkPlatform platform) {
         super("spark");
         this.platform = platform;
 
         ArgumentStringArray arrayArgument = ArgumentType.StringArray("args");
         arrayArgument.setSuggestionCallback(this);
 
-        addSyntax(this, arrayArgument);
-        setDefaultExecutor((sender, context) -> platform.executeCommand(new MinestomCommandSender(sender), new String[0]));
+        this.addSyntax(this, arrayArgument);
+        this.setDefaultExecutor((sender, _) -> execute(sender, new String[0]));
     }
 
     // execute
     @Override
     public void apply(@NotNull CommandSender sender, @NotNull CommandContext context) {
         String[] args = processArgs(context, false);
-        if (args == null) {
-            return;
-        }
+        if (args == null) return;
 
-        this.platform.executeCommand(new MinestomCommandSender(sender), args);
+        execute(sender, args);
     }
 
     // tab complete
     @Override
     public void apply(@NotNull CommandSender sender, @NotNull CommandContext context, @NotNull Suggestion suggestion) {
         String[] args = processArgs(context, true);
-        if (args == null) {
-            return;
-        }
+        if (args == null) return;
 
         Iterable<String> suggestionEntries = this.platform.tabCompleteCommand(new MinestomCommandSender(sender), args);
-        for (String suggestionEntry : suggestionEntries) {
-            suggestion.addEntry(new SuggestionEntry(suggestionEntry));
-        }
+        for (String suggestionEntry : suggestionEntries) suggestion.addEntry(new SuggestionEntry(suggestionEntry));
     }
 
+    private void execute(CommandSender sender, String[] args) {
+        MinestomCommandSender sparkSender = new MinestomCommandSender(sender);
+        this.platform.executeCommand(sparkSender, args).whenComplete((_, throwable) -> {
+            if (throwable == null) return;
 
-    private static String [] processArgs(CommandContext context, boolean tabComplete) {
+            throwable.printStackTrace();
+            sender.sendMessage(Component.text(
+                "An error occurred while executing the command.",
+                NamedTextColor.RED
+            ));
+        });
+    }
+
+    private static String[] processArgs(CommandContext context, boolean tabComplete) {
         String[] split = context.getInput().split(" ", tabComplete ? -1 : 0);
-        if (split.length == 0 || !split[0].equals("/spark") && !split[0].equals("spark")) {
-            return null;
-        }
+        if (split.length == 0 || !split[0].equals("/spark") && !split[0].equals("spark")) return null;
 
         return Arrays.copyOfRange(split, 1, split.length);
     }

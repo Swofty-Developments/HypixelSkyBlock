@@ -1,9 +1,14 @@
 package net.swofty.dungeons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.*;
 import java.util.stream.Stream;
 
-public class DungeonUtilities {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class DungeonUtilities {
+
     public static Stream<Map.Entry<Integer, Integer>> loopOverDungeonRooms(DungeonsData data) {
         return Stream.iterate(0, i -> i < data.getWidth() * data.getHeight(), i -> i + 1)
                 .map(i -> Map.entry(i % data.getWidth(), i / data.getHeight()));

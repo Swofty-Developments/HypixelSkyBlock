@@ -28,9 +28,6 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
-import com.viaversion.vialoader.ViaLoader;
-import com.viaversion.vialoader.impl.platform.ViaBackwardsPlatformImpl;
-import com.viaversion.vialoader.impl.platform.ViaRewindPlatformImpl;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import lombok.Getter;
@@ -39,23 +36,18 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.config.Settings;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.TeleportProtocol;
-import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.*;
+import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
+import net.swofty.commons.redis.RedisClient;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentMessages;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.velocity.command.LimboCommand;
 import net.swofty.velocity.command.LobbyCommand;
@@ -73,12 +65,9 @@ import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.packet.PlayerChannelHandler;
 import net.swofty.velocity.presence.PresencePublisher;
-import net.swofty.velocity.redis.RedisListener;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.velocity.redis.RedisHandlerRegistry;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
 import net.swofty.velocity.testflow.TestFlowManager;
-import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
-import net.swofty.velocity.viaversion.loader.SkyBlockVLLoader;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -131,12 +120,10 @@ public class SkyBlockVelocity {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         server = proxy;
-        supportCrossVersion = ConfigProvider.settings().getIntegrations().isViaVersion();
-
-        // Initialize ViaVersion for cross-version support
-        if (supportCrossVersion) {
-            ViaLoader.init(null, new SkyBlockVLLoader(), new SkyBlockViaInjector(), null, ViaBackwardsPlatformImpl::new, ViaRewindPlatformImpl::new);
-        }
+        // Cross-version (ViaVersion) bootstrap is disabled in this merged build: the
+        // 26.1.2 platform dropped the deprecated ViaLoader, so clients must match the
+        // server protocol version. Re-enable via the packetevents-based loader if needed.
+        supportCrossVersion = false;
 
         // Register packets
         server.getEventManager().register(this, PostLoginEvent.class,
@@ -231,26 +218,21 @@ public class SkyBlockVelocity {
         // Setup Redis
         RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());
         RedisAPI.getInstance().setFilterId("proxy");
-        loopThroughPackage("net.swofty.velocity.redis.listeners", RedisListener.class)
-            .forEach(listener -> {
-                RedisAPI.getInstance().registerChannel(
-                    listener.getChannelName(),
-                    (event2) -> {
-                        listener.onMessage(event2.channel, event2.message);
-                    });
-            });
-        ProtocolObject<?, ?>[] fromProxyProtocols = {
+        RedisClient.identify(RedisEndpoint.proxy());
+        loopThroughPackage("net.swofty.velocity.redis.listeners", RedisMessageHandler.class)
+            .forEach(RedisHandlerRegistry::register);
+        RedisProtocol<?, ?>[] fromProxyProtocols = {
             new TeleportProtocol(), new PlayerSwitchedProtocol(),
             new DoesServerHaveIslandProtocol(), new RefreshCoopDataProtocol(),
             new RunEventProtocol(), new PingServerProtocol(),
             new GivePlayersOriginTypeProtocol(), new BroadcastStaffChatProtocol()
         };
-        for (ProtocolObject<?, ?> protocol : fromProxyProtocols) {
-            RedisMessage.registerProxyToServer(protocol);
+        for (RedisProtocol<?, ?> protocol : fromProxyProtocols) {
+            RedisClient.registerResponseProtocol(protocol);
         }
-        loopThroughPackage("net.swofty.commons.protocol.objects", ProtocolObject.class)
+        loopThroughPackage("net.swofty.commons.protocol.objects", RedisProtocol.class)
             .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
-            .forEach(ServerOutboundMessage::registerFromProtocolObject);
+            .forEach(RedisClient::registerResponseProtocol);
         RedisAPI.getInstance().startListeners();
 
         // Setup GameManager
@@ -262,14 +244,14 @@ public class SkyBlockVelocity {
             ProxyService service = new ProxyService(ServiceType.PUNISHMENT);
 
             CompletableFuture<?> banFuture = service.handleRequest(
-                new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.BAN.name()));
+                new GetActivePunishmentProtocol.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.BAN.name()));
             CompletableFuture<?> muteFuture = service.handleRequest(
-                new GetActivePunishmentProtocolObject.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.MUTE.name()));
+                new GetActivePunishmentProtocol.GetActivePunishmentMessage(player.getUniqueId(), PunishmentType.MUTE.name()));
 
             CompletableFuture.allOf(banFuture, muteFuture).orTimeout(3, TimeUnit.SECONDS).join();
 
             Object banResult = banFuture.join();
-            if (banResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+            if (banResult instanceof GetActivePunishmentProtocol.GetActivePunishmentResponse(
                 boolean found1, String type1, String id, PunishmentReason reason1,
                 long at, List<PunishmentTag> tags1, boolean success1, String error1
             ) && found1) {
@@ -280,7 +262,7 @@ public class SkyBlockVelocity {
             }
 
             Object muteResult = muteFuture.join();
-            if (muteResult instanceof GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+            if (muteResult instanceof GetActivePunishmentProtocol.GetActivePunishmentResponse(
                 boolean found, String type, String banId, PunishmentReason reason,
                 long expiresAt, List<PunishmentTag> tags, boolean success, String error
             ) && found) {
@@ -366,7 +348,7 @@ public class SkyBlockVelocity {
                 return;
             }
 
-            List<BalanceConfiguration> configurations = BalanceConfigurations.configurations.get(ServerType.BEDWARS_LOBBY);
+            List<BalanceConfiguration> configurations = BalanceConfigurations.CONFIGURATIONS.get(ServerType.BEDWARS_LOBBY);
             GameManager.GameServer toSendTo = gameServers.getFirst();
 
             for (BalanceConfiguration configuration : configurations) {
@@ -410,18 +392,9 @@ public class SkyBlockVelocity {
 
         CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
             .execute(() -> {
-                // Determine if the registeredServer disconnect was due to a crash
-                // if it was, then we send the player back to another registeredServer
-                // of that type, otherwise we disconnect them for the same
-                // reason as the original
-
-                    /*boolean isOnline = GameManager.getFromRegisteredServer(originalServer) != null;
-                    if (isOnline) {
-                        transferHandler.forceRemoveFromLimbo();
-                        event.getPlayer().disconnect(reason);
-                        return;
-                    }*/
-
+                // Determine if the registeredServer disconnect was due to a crash —
+                // if it was, send the player to another server of that type;
+                // otherwise disconnect them with the original reason.
                 try {
                     ServerType serverTypeToTry = serverType;
                     if (!GameManager.hasType(serverTypeToTry) || !GameManager.isAnyEmpty(serverTypeToTry)) {

@@ -1,9 +1,14 @@
 package net.swofty.type.generic.utility;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
-public class BufferUtility {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class BufferUtility {
+
     public static int getUnsignedShort(ByteBuffer buffer) {
         byte[] bytes = new byte[2];
         buffer.get(bytes);

@@ -7,7 +7,7 @@ import net.swofty.velocity.data.ProfilesDatabase;
 import net.swofty.velocity.data.UserDatabase;
 import net.swofty.velocity.gamemanager.BalanceConfiguration;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.commons.redis.RedisClient;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +49,7 @@ public class IslandCheck extends BalanceConfiguration {
                 ArrayList<GameManager.GameServer> gameServers = entry.getValue();
 
                 gameServers.forEach(gameServer -> {
-                    DoesServerHaveIslandProtocol.Response response = RedisMessage.sendMessageToServer(
+                    DoesServerHaveIslandProtocol.Response response = RedisClient.requestServer(
                         gameServer.internalID(),
                         new DoesServerHaveIslandProtocol(),
                         new DoesServerHaveIslandProtocol.Request(islandUUID.toString())).join();

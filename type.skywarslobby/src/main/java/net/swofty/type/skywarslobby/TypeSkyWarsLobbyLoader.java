@@ -7,8 +7,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -20,11 +19,13 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.LobbyBlockBreak;
+import net.swofty.type.lobby.events.LobbyAFKEvents;
 import net.swofty.type.lobby.events.LobbyItemEvents;
 import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
 import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
 import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyPlayerSpawnEvents;
+import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
 import net.swofty.type.lobby.item.impl.HidePlayers;
@@ -172,10 +173,12 @@ public class TypeSkyWarsLobbyLoader implements LobbyTypeLoader {
                 HypixelEventClass.class
         ).toList());
         // Add lobby base events
+        events.add(new LobbyAFKEvents());
         events.add(new LobbyItemEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
-        events.add(new LobbyBlockBreak());
+        events.add(new LobbyPlayerSpawnEvents());
+        events.add(new LobbyWorldEvent());
         events.add(new LobbyPlayerMove(spawnPont));
         return events;
     }
@@ -199,15 +202,15 @@ public class TypeSkyWarsLobbyLoader implements LobbyTypeLoader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
         return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.skywarslobby.redis.service",
-                TypedServiceHandler.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

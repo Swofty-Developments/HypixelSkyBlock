@@ -2,6 +2,7 @@ package net.swofty.type.bedwarsgame.shop;
 
 import lombok.Getter;
 import net.minestom.server.item.Material;
+import org.jetbrains.annotations.Nullable;
 
 @Getter
 public enum Currency {
@@ -18,6 +19,16 @@ public enum Currency {
         this.name = name;
 		this.material = material;
 		this.color = color;
+    }
+
+    @Nullable
+    public static Currency byMaterial(Material material) {
+        for (Currency currency : values()) {
+            if (currency.getMaterial() == material) {
+                return currency;
+            }
+        }
+        return null;
     }
 
 }

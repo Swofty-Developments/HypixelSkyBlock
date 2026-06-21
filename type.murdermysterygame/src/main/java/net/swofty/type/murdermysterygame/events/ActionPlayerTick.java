@@ -8,12 +8,13 @@ import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionPlayerTick implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerTickEvent event) {
         if (!(event.getPlayer() instanceof MurderMysteryPlayer player)) return;
 

@@ -1,36 +1,49 @@
 package net.swofty.type.bedwarslobby;
 
 import lombok.Getter;
+import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
+import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager;
 import net.swofty.type.bedwarslobby.item.impl.BedWarsMenu;
-import net.swofty.type.bedwarslobby.item.impl.Collectibles;
 import net.swofty.type.bedwarslobby.launchpad.BedWarsLaunchPads;
 import net.swofty.type.bedwarslobby.parkour.BedWarsLobbyParkour;
 import net.swofty.type.bedwarslobby.util.BedWarsLobbyMap;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.collectibles.bedwars.BedWarsCollectibleCatalog;
+import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
-import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
+import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
-import net.swofty.type.bedwarslobby.tab.BedWarsPlayersOnlineModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.*;
+import net.swofty.type.lobby.events.LobbyAFKEvents;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyLaunchPadEvents;
+import net.swofty.type.lobby.events.LobbyParkourEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyPlayerSpawnEvents;
+import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
+import net.swofty.type.lobby.item.impl.Collectibles;
 import net.swofty.type.lobby.item.impl.HidePlayers;
 import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
@@ -71,6 +84,7 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        BedWarsCollectibleCatalog.initialize();
         BedWarsLobbyScoreboard.start();
         bedWarsLobbyMap.placeItemFrames(HypixelConst.getInstanceContainer());
 
@@ -138,10 +152,10 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                        new BedWarsPlayersOnlineModule(1),
-                        new BedWarsPlayersOnlineModule(2),
-                        new BedWarsPlayersOnlineModule(3),
-                        new BedWarsPlayersOnlineModule(4)
+                    new EmptyTabModule(),
+                    new EmptyTabModule(),
+                    new EmptyTabModule(),
+                    new EmptyTabModule()
                 );
             }
         };
@@ -162,11 +176,13 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
                 HypixelEventClass.class
         ).toList());
         // Add lobby base events
+        events.add(new LobbyAFKEvents());
         events.add(new LobbyItemEvents());
         events.add(new LobbyParkourEvents());
         events.add(new LobbyLaunchPadEvents());
         events.add(new LobbyPlayerJoinEvents());
-        events.add(new LobbyBlockBreak());
+        events.add(new LobbyPlayerSpawnEvents());
+        events.add(new LobbyWorldEvent());
         events.add(new LobbyPlayerMove(spawnPoint));
         return events;
     }
@@ -190,21 +206,32 @@ public class TypeBedWarsLobbyLoader implements LobbyTypeLoader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
         return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.bedwarslobby.redis.service",
-                TypedServiceHandler.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
         return CustomWorlds.BEDWARS_LOBBY;
+    }
+
+    // TODO: official server doesn't do full bright but some maps seem to fail lighting on 26.1.2
+    @Override
+    public @Nullable RegistryKey<DimensionType> getDimensionType() {
+        return MinecraftServer.getDimensionTypeRegistry().register(
+            Key.key("bedwars:lobby"),
+            DimensionType.builder()
+                .ambientLight(1f)
+                .setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE)
+                .build());
     }
 
     @Override

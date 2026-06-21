@@ -5,8 +5,9 @@ import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEv
 import net.swofty.pvp.projectile.AbstractProjectile;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
@@ -15,7 +16,7 @@ import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 
 public class ActionArrowHit implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(ProjectileCollideWithEntityEvent event) {
         Entity projectile = event.getEntity();
         Entity target = event.getTarget();

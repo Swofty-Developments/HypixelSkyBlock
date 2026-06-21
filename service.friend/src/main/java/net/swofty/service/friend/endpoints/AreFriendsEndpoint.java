@@ -1,25 +1,23 @@
 package net.swofty.service.friend.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.friend.AreFriendsProtocolObject;
+import net.swofty.commons.protocol.objects.friend.AreFriendsProtocol;
 import net.swofty.service.friend.FriendCache;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class AreFriendsEndpoint implements ServiceEndpoint<
-        AreFriendsProtocolObject.AreFriendsMessage,
-        AreFriendsProtocolObject.AreFriendsResponse> {
+public class AreFriendsEndpoint implements RedisMessageHandler<
+        AreFriendsProtocol.AreFriendsMessage,
+        AreFriendsProtocol.AreFriendsResponse> {
 
     @Override
-    public AreFriendsProtocolObject associatedProtocolObject() {
-        return new AreFriendsProtocolObject();
+    public AreFriendsProtocol protocol() {
+        return new AreFriendsProtocol();
     }
 
     @Override
-    public AreFriendsProtocolObject.AreFriendsResponse onMessage(
-            ServiceProxyRequest message,
-            AreFriendsProtocolObject.AreFriendsMessage messageObject) {
+    public AreFriendsProtocol.AreFriendsResponse handle(AreFriendsProtocol.AreFriendsMessage messageObject, RedisMessageContext context) {
 
         boolean areFriends = FriendCache.areFriends(messageObject.player(), messageObject.other());
-        return new AreFriendsProtocolObject.AreFriendsResponse(areFriends, true, null);
+        return new AreFriendsProtocol.AreFriendsResponse(areFriends, true, null);
     }
 }

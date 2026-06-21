@@ -3,8 +3,9 @@ package net.swofty.type.skyblockgeneric.event.actions.player.blocks;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
 import net.swofty.type.skyblockgeneric.block.impl.BlockInteractable;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -14,7 +15,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionBlockInteract implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void onInteract(PlayerBlockInteractEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         ItemStack stack = event.getPlayer().getItemInMainHand();

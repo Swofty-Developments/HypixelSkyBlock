@@ -1,16 +1,16 @@
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.getByType
-
 plugins {
     base
     java
-    id("io.freefair.lombok") version "9.1.0"
-    id("io.sentry.jvm.gradle") version "5.12.2"
+    id("io.freefair.lombok") version "9.1.0" apply false
+    id("io.sentry.jvm.gradle") version "6.4.0" apply false
 }
 
 group = "net.swofty"
 version = "1.0"
+
+repositories {
+    mavenCentral()
+}
 
 val libsCatalog: VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
@@ -25,6 +25,7 @@ subprojects {
         maven("https://repo.viaversion.com")
         maven("https://jitpack.io")
         maven("https://repo.lucko.me/")
+        maven("https://repo.nexomc.com/releases")
     }
 
     java {

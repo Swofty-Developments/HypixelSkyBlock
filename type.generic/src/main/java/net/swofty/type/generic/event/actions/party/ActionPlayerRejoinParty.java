@@ -5,15 +5,16 @@ import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.commons.ServiceType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerRejoinParty implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void run(AsyncPlayerConfigurationEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

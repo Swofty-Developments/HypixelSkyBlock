@@ -1,70 +1,68 @@
 package net.swofty.service.election.endpoints;
 
 import com.google.gson.Gson;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.election.GetCandidatesProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.election.GetCandidatesProtocol;
 import net.swofty.service.election.ElectionDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GetCandidatesEndpoint implements ServiceEndpoint
-        <GetCandidatesProtocolObject.GetCandidatesMessage,
-                GetCandidatesProtocolObject.GetCandidatesResponse> {
+public class GetCandidatesEndpoint implements RedisMessageHandler
+        <GetCandidatesProtocol.GetCandidatesMessage,
+                GetCandidatesProtocol.GetCandidatesResponse> {
 
     private static final Gson GSON = new Gson();
 
     @Override
-    public ProtocolObject<GetCandidatesProtocolObject.GetCandidatesMessage,
-            GetCandidatesProtocolObject.GetCandidatesResponse> associatedProtocolObject() {
-        return new GetCandidatesProtocolObject();
+    public RedisProtocol<GetCandidatesProtocol.GetCandidatesMessage,
+            GetCandidatesProtocol.GetCandidatesResponse> protocol() {
+        return new GetCandidatesProtocol();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public GetCandidatesProtocolObject.GetCandidatesResponse onMessage(
-            ServiceProxyRequest message,
-            GetCandidatesProtocolObject.GetCandidatesMessage messageObject) {
+    public GetCandidatesProtocol.GetCandidatesResponse handle(GetCandidatesProtocol.GetCandidatesMessage messageObject, RedisMessageContext context) {
         try {
             String rawData = ElectionDatabase.loadElectionData();
             if (rawData == null) {
-                return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of(), true, null);
+                return new GetCandidatesProtocol.GetCandidatesResponse(false, List.of(), true, null);
             }
 
             Map<String, Object> data = GSON.fromJson(rawData, Map.class);
             Boolean electionOpen = (Boolean) data.get("electionOpen");
             if (electionOpen == null || !electionOpen) {
-                return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of(), true, null);
+                return new GetCandidatesProtocol.GetCandidatesResponse(false, List.of(), true, null);
             }
 
             int electionYear = ((Number) data.get("electionYear")).intValue();
 
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) data.get("candidates");
             if (candidates == null || candidates.isEmpty()) {
-                return new GetCandidatesProtocolObject.GetCandidatesResponse(true, List.of(), true, null);
+                return new GetCandidatesProtocol.GetCandidatesResponse(true, List.of(), true, null);
             }
 
             Map<String, Long> tallies = ElectionDatabase.getTallies(electionYear);
             long totalVotes = tallies.values().stream().mapToLong(Long::longValue).sum();
 
-            List<GetCandidatesProtocolObject.CandidateInfo> infos = new ArrayList<>();
+            List<GetCandidatesProtocol.CandidateInfo> infos = new ArrayList<>();
             for (Map<String, Object> c : candidates) {
                 String name = (String) c.get("mayorName");
                 List<String> perks = (List<String>) c.get("activePerks");
                 if (perks == null) perks = List.of();
                 long voteCount = tallies.getOrDefault(name, 0L);
                 double pct = totalVotes > 0 ? (voteCount * 100.0) / totalVotes : 0;
-                infos.add(new GetCandidatesProtocolObject.CandidateInfo(name, perks, voteCount, pct));
+                infos.add(new GetCandidatesProtocol.CandidateInfo(name, perks, voteCount, pct));
             }
 
-            return new GetCandidatesProtocolObject.GetCandidatesResponse(true, infos, true, null);
+            return new GetCandidatesProtocol.GetCandidatesResponse(true, infos, true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to get candidates");
-            return new GetCandidatesProtocolObject.GetCandidatesResponse(false, List.of(), true, null);
+            return new GetCandidatesProtocol.GetCandidatesResponse(false, List.of(), true, null);
         }
     }
 }

@@ -9,8 +9,9 @@ import net.minestom.server.instance.block.Block;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionUseTeleporter;
@@ -25,7 +26,7 @@ import java.util.UUID;
 public class ActionPlayerTravel implements HypixelEventClass {
     public static List<UUID> delay = new ArrayList<>();
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

@@ -1,28 +1,26 @@
 package net.swofty.service.friend.endpoints;
 
 import net.swofty.commons.friend.PendingFriendRequest;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.friend.GetPendingFriendRequestsProtocolObject;
+import net.swofty.commons.protocol.objects.friend.GetPendingFriendRequestsProtocol;
 import net.swofty.service.friend.FriendCache;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GetPendingRequestsEndpoint implements ServiceEndpoint<
-        GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage,
-        GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse> {
+public class GetPendingRequestsEndpoint implements RedisMessageHandler<
+        GetPendingFriendRequestsProtocol.GetPendingRequestsMessage,
+        GetPendingFriendRequestsProtocol.GetPendingRequestsResponse> {
 
     @Override
-    public GetPendingFriendRequestsProtocolObject associatedProtocolObject() {
-        return new GetPendingFriendRequestsProtocolObject();
+    public GetPendingFriendRequestsProtocol protocol() {
+        return new GetPendingFriendRequestsProtocol();
     }
 
     @Override
-    public GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse onMessage(
-            ServiceProxyRequest message,
-            GetPendingFriendRequestsProtocolObject.GetPendingRequestsMessage messageObject) {
+    public GetPendingFriendRequestsProtocol.GetPendingRequestsResponse handle(GetPendingFriendRequestsProtocol.GetPendingRequestsMessage messageObject, RedisMessageContext context) {
 
         List<PendingFriendRequest> requests = FriendCache.getPendingRequestsFor(messageObject.playerUuid());
-        return new GetPendingFriendRequestsProtocolObject.GetPendingRequestsResponse(requests, true, null);
+        return new GetPendingFriendRequestsProtocol.GetPendingRequestsResponse(requests, true, null);
     }
 }

@@ -3,15 +3,14 @@ package net.swofty.type.deepcaverns.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.deepcaverns.gui.GUIShopWalter;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.entity.npc.trait.NPCAbiphoneTrait;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCWalter extends HypixelNPC implements NPCAbiphoneTrait {
 
@@ -50,7 +49,7 @@ public class NPCWalter extends HypixelNPC implements NPCAbiphoneTrait {
 		if (isInDialogue(player)) return;
 
 		setDialogue(player, "none").thenRun(() -> {
-			MathUtility.delay(() -> player.openView(new GUIShopWalter()), 20);
+			ScheduleUtility.delay(() -> player.openView(new GUIShopWalter()), 20);
 		});
 	}
 

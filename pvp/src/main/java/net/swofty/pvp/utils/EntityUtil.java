@@ -1,5 +1,8 @@
 package net.swofty.pvp.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -15,7 +18,9 @@ import net.minestom.server.utils.time.TimeUnit;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-public class EntityUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class EntityUtil {
+
 	public static void spawnItemAtLocation(Entity entity, ItemStack itemStack, double up) {
 		if (itemStack.isAir()) return;
 
@@ -46,7 +51,8 @@ public class EntityUtil {
 			field.setAccessible(true);
 			field.set(livingEntity, lastDamage);
 		} catch (NoSuchFieldException | IllegalAccessException e) {
-			e.printStackTrace();
+			java.util.logging.Logger.getLogger("PVP").log(java.util.logging.Level.SEVERE,
+				"Failed to set LivingEntity.lastDamage via reflection", e);
 			Sentry.captureException(e);
 		}
 	}

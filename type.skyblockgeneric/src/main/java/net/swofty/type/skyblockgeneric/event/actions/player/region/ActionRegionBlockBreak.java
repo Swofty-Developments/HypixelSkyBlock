@@ -10,8 +10,9 @@ import net.minestom.server.tag.Tag;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class ActionRegionBlockBreak implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerBlockBreakEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         final ItemStack stack = event.getPlayer().getItemInMainHand();

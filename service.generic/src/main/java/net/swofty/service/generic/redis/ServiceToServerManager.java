@@ -1,7 +1,7 @@
 package net.swofty.service.generic.redis;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
@@ -62,7 +62,7 @@ public class ServiceToServerManager {
 
     public static <T, R> CompletableFuture<R> sendToServer(
             UUID serverUUID,
-            ServicePushProtocol<T, R> protocol,
+            RedisProtocol<T, R> protocol,
             T message
     ) {
         UUID requestId = UUID.randomUUID();
@@ -102,7 +102,7 @@ public class ServiceToServerManager {
     }
 
     public static <T, R> CompletableFuture<Map<UUID, R>> sendToAllServers(
-            ServicePushProtocol<T, R> protocol,
+            RedisProtocol<T, R> protocol,
             T message,
             int timeoutMs
     ) {
@@ -144,7 +144,7 @@ public class ServiceToServerManager {
 
     public static <T, R> CompletableFuture<Map<UUID, R>> sendToServers(
             List<UUID> serverUUIDs,
-            ServicePushProtocol<T, R> protocol,
+            RedisProtocol<T, R> protocol,
             T message
     ) {
         Map<UUID, CompletableFuture<R>> futures = new ConcurrentHashMap<>();
@@ -203,5 +203,15 @@ public class ServiceToServerManager {
     public static CompletableFuture<Map<UUID, GameInformationPushProtocol.Response>> gameInformation(UUID serverUUID, UUID playerUUID, String gameId) {
         return sendToServers(List.of(serverUUID), GAME_INFORMATION_PROTOCOL,
                 new GameInformationPushProtocol.Request(playerUUID, gameId));
+    }
+
+    private static final net.swofty.commons.protocol.objects.game.ViewReplayPushProtocol VIEW_REPLAY_PROTOCOL = new net.swofty.commons.protocol.objects.game.ViewReplayPushProtocol();
+
+    public static CompletableFuture<Map<UUID, net.swofty.commons.protocol.objects.game.ViewReplayPushProtocol.Response>> viewReplay(UUID playerUUID, String gameId) {
+        return viewReplay(playerUUID, gameId, null);
+    }
+
+    public static CompletableFuture<Map<UUID, net.swofty.commons.protocol.objects.game.ViewReplayPushProtocol.Response>> viewReplay(UUID playerUUID, String gameId, String shareCode) {
+        return sendToAllServers(VIEW_REPLAY_PROTOCOL, new net.swofty.commons.protocol.objects.game.ViewReplayPushProtocol.Request(playerUUID, gameId, shareCode), 300);
     }
 }

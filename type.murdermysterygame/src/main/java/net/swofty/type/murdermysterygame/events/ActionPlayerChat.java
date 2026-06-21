@@ -7,8 +7,9 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.chat.StaffChat;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
@@ -17,7 +18,7 @@ import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 
 public class ActionPlayerChat implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerChatEvent event) {
         MurderMysteryPlayer player = (MurderMysteryPlayer) event.getPlayer();
         event.setCancelled(true);
@@ -60,7 +61,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
         // Normal chat
         for (MurderMysteryPlayer gamePlayer : game.getPlayers()) {
-            gamePlayer.sendMessage(Component.text(rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + ": ", NamedTextColor.WHITE)
+            gamePlayer.sendMessage(Component.text(player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + ": ", NamedTextColor.WHITE)
                     .append(Component.text(finalMessage, NamedTextColor.WHITE)));
         }
     }

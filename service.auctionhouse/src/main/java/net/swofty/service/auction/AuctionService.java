@@ -3,7 +3,7 @@ package net.swofty.service.auction;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class AuctionService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.auction.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.auction.endpoints", RedisMessageHandler.class).toList();
     }
 }

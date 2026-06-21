@@ -1,24 +1,25 @@
 package net.swofty.service.bazaar.endpoints;
 
 import com.mongodb.client.model.Filters;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.CancelMessage;
-import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocolObject.CancelResponse;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol.CancelMessage;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol.CancelResponse;
 import net.swofty.service.bazaar.BazaarMarket;
 import net.swofty.service.bazaar.OrderDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import org.tinylog.Logger;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointCancelBazaarOrder implements ServiceEndpoint<
+public class EndpointCancelBazaarOrder implements RedisMessageHandler<
         CancelMessage, CancelResponse> {
 
     @Override
-    public BazaarCancelProtocolObject associatedProtocolObject() {
-        return new BazaarCancelProtocolObject();
+    public BazaarCancelProtocol protocol() {
+        return new BazaarCancelProtocol();
     }
 
     @Override
-    public CancelResponse onMessage(ServiceProxyRequest _msg, CancelMessage msg) {
+    public CancelResponse handle(CancelMessage msg, RedisMessageContext context) {
         var result = OrderDatabase.ordersCollection.deleteOne(
                 Filters.and(
                         Filters.eq("_id", msg.orderId().toString()),
@@ -27,7 +28,8 @@ public class EndpointCancelBazaarOrder implements ServiceEndpoint<
                 )
         );
         BazaarMarket.get().submitDelete(msg.orderId(), msg.playerUuid(), msg.profileUuid());
-        System.out.println("Deleted order " + msg.orderId() + " for player " + msg.playerUuid() + " and profile " + msg.profileUuid());
+        Logger.info("Deleted order {} for player {} and profile {}",
+                msg.orderId(), msg.playerUuid(), msg.profileUuid());
 
         boolean success = result.getDeletedCount() > 0;
         return new CancelResponse(success, success ? null : "Cancel failed");

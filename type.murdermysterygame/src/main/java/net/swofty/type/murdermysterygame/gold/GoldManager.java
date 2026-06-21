@@ -1,5 +1,7 @@
 package net.swofty.type.murdermysterygame.gold;
 
+import net.swofty.commons.mc.HypixelPosition;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
@@ -27,6 +29,8 @@ public class GoldManager {
     private static final int SPAWN_INTERVAL_SECONDS = 5;
     private static final int MAX_GOLD_SPAWNED = 50;
     private static final double PICKUP_DISTANCE = 1.5;
+    /** Closer than this and we count a spawn point as 'already occupied' — see #673. */
+    private static final double SPAWN_POINT_OCCUPIED_DISTANCE = 1.0;
 
     private final Game game;
     private final List<Entity> spawnedGold = new ArrayList<>();
@@ -43,13 +47,20 @@ public class GoldManager {
             return;
         }
 
-        List<MurderMysteryMapsConfig.Position> spawnLocations = config.getGoldSpawns();
+        List<HypixelPosition> spawnLocations = config.getGoldSpawns();
 
         spawnTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
-            if (spawnedGold.size() < MAX_GOLD_SPAWNED && !spawnLocations.isEmpty()) {
-                MurderMysteryMapsConfig.Position randomSpawn = spawnLocations.get(new Random().nextInt(spawnLocations.size()));
-                spawnGoldCoin(new Pos(randomSpawn.x(), randomSpawn.y(), randomSpawn.z()));
+            if (spawnedGold.size() >= MAX_GOLD_SPAWNED || spawnLocations.isEmpty()) {
+                return;
             }
+            HypixelPosition randomSpawn = spawnLocations.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(spawnLocations.size()));
+            Pos spawnPos = new Pos(randomSpawn.x(), randomSpawn.y(), randomSpawn.z());
+            // Issue #673: cap each spawn point at one gold coin. The previous loop
+            // rolled the same point repeatedly and stacked up to five coins there.
+            if (isSpawnPointOccupied(spawnPos)) {
+                return;
+            }
+            spawnGoldCoin(spawnPos);
         }).delay(TaskSchedule.seconds(3)).repeat(TaskSchedule.seconds(SPAWN_INTERVAL_SECONDS)).schedule();
 
         pickupCheckTask = MinecraftServer.getSchedulerManager().buildTask(() -> {
@@ -111,6 +122,16 @@ public class GoldManager {
         meta.setItem(ItemStack.of(Material.GOLD_INGOT));
         goldEntity.setInstance(game.getInstanceContainer(), position);
         spawnedGold.add(goldEntity);
+    }
+
+    private boolean isSpawnPointOccupied(Pos position) {
+        for (Entity existing : spawnedGold) {
+            if (existing.isRemoved()) continue;
+            if (existing.getPosition().distance(position) <= SPAWN_POINT_OCCUPIED_DISTANCE) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean collectGold(MurderMysteryPlayer player, Entity goldEntity) {

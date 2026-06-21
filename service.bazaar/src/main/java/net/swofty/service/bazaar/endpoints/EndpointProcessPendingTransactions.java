@@ -1,43 +1,42 @@
 package net.swofty.service.bazaar.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage;
-import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsResponse;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsMessage;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsResponse;
 import net.swofty.service.bazaar.PendingTransactionsDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointProcessPendingTransactions implements ServiceEndpoint<
+public class EndpointProcessPendingTransactions implements RedisMessageHandler<
         BazaarProcessPendingTransactionsMessage,
         BazaarProcessPendingTransactionsResponse> {
 
     @Override
-    public BazaarProcessPendingTransactionsProtocolObject associatedProtocolObject() {
-        return new BazaarProcessPendingTransactionsProtocolObject();
+    public BazaarProcessPendingTransactionsProtocol protocol() {
+        return new BazaarProcessPendingTransactionsProtocol();
     }
 
     @Override
-    public BazaarProcessPendingTransactionsResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarProcessPendingTransactionsMessage msg) {
+    public BazaarProcessPendingTransactionsResponse handle(BazaarProcessPendingTransactionsMessage msg, RedisMessageContext context) {
 
         List<String> successfulIds = new ArrayList<>();
         List<String> failedIds = new ArrayList<>();
 
-        System.out.println("Processing " + msg.transactionIds().size() +
-                " pending transactions for player " + msg.playerUUID());
+        Logger.info("Processing {} pending transactions for player {}",
+                msg.transactionIds().size(), msg.playerUUID());
 
         for (String transactionId : msg.transactionIds()) {
             try {
                 PendingTransactionsDatabase.markTransactionProcessed(transactionId);
                 successfulIds.add(transactionId);
-                System.out.println("Successfully processed pending transaction: " + transactionId);
+                Logger.debug("Successfully processed pending transaction: {}", transactionId);
             } catch (Exception e) {
                 failedIds.add(transactionId);
-                System.err.println("Failed to process pending transaction " + transactionId + ": " + e.getMessage());
+                Logger.error(e, "Failed to process pending transaction {}", transactionId);
             }
         }
 
@@ -45,7 +44,7 @@ public class EndpointProcessPendingTransactions implements ServiceEndpoint<
             try {
                 PendingTransactionsDatabase.cleanupProcessedTransactions();
             } catch (Exception e) {
-                System.err.println("Failed to cleanup processed transactions: " + e.getMessage());
+                Logger.error(e, "Failed to cleanup processed transactions");
             }
         }
 

@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -20,13 +19,12 @@ import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.*;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -64,6 +62,7 @@ public class Hypixel {
 
     @SneakyThrows
     static void main(String[] args) {
+        System.setProperty("minestom.automatic-component-translation", "true");
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
             Logger.error("Please specify a server type.");
             Arrays.stream(ServerType.values()).forEach(serverType -> Logger.error(serverType.name()));
@@ -85,7 +84,7 @@ public class Hypixel {
         long startTime = System.currentTimeMillis();
 
         Map<String, String> options = parseOptionalArgs(args);
-        Integer maxPlayers = options.containsKey("--max-players") ?
+        int maxPlayers = options.containsKey("--max-players") ?
                 Integer.parseInt(options.get("--max-players")) : 20;
 
         // Test flow configuration
@@ -155,22 +154,22 @@ public class Hypixel {
 
         // Initialize proxy support
         ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", TypedProxyHandler.class)
-                .forEach(proxyAPI::registerTypedProxyHandler);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", TypedServiceHandler.class)
-                .forEach(proxyAPI::registerTypedServiceHandler);
-        typeLoader.getTypedProxyHandlers().forEach(proxyAPI::registerTypedProxyHandler);
-        typeLoader.getTypedServiceHandlers().forEach(proxyAPI::registerTypedServiceHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", RedisMessageHandler.class)
+                .forEach(proxyAPI::registerProxyHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", RedisMessageHandler.class)
+                .forEach(proxyAPI::registerServiceHandler);
+        typeLoader.getProxyHandlers().forEach(proxyAPI::registerProxyHandler);
+        typeLoader.getServiceHandlers().forEach(proxyAPI::registerServiceHandler);
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", TypedProxyHandler.class)
-                    .forEach(proxyAPI::registerTypedProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", TypedServiceHandler.class)
-                    .forEach(proxyAPI::registerTypedServiceHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerServiceHandler);
         } else if (typeLoader instanceof RavengardTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", TypedProxyHandler.class)
-                    .forEach(proxyAPI::registerTypedProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerProxyHandler);
         }
-        ProtocolObject<?, ?>[] toProxyProtocols = {
+        RedisProtocol<?, ?>[] toProxyProtocols = {
                 new RequestServerNameProtocol(), new PlayerCountProtocol(),
                 new PlayerHandlerProtocol(), new ProxyIsOnlineProtocol(),
                 new RegisterServerProtocol(), new FinishedWithPlayerProtocol(),
@@ -178,19 +177,20 @@ public class Hypixel {
                 new TestFlowServerReadyProtocol(), new StaffChatProtocol(),
                 new PunishPlayerProtocol()
         };
-        for (ProtocolObject<?, ?> protocol : toProxyProtocols) {
-            ServerOutboundMessage.registerToProxyProtocol(protocol);
+        for (RedisProtocol<?, ?> protocol : toProxyProtocols) {
+            RedisClient.registerResponseProtocol(protocol);
         }
-        List<ProtocolObject> protocolObjects = SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.commons.protocol.objects", ProtocolObject.class)
+        List<RedisProtocol> protocols = SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.commons.protocol.objects", RedisProtocol.class)
                 .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
                 .toList();
-        protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
+        protocols.forEach(RedisClient::registerResponseProtocol);
         proxyAPI.start();
 
         // Start spark if enabled
         if (ENABLE_SPARK) {
             Spark.enable(Files.createTempDirectory("spark"));
+            Logger.info("Spark has been enabled");
         }
 
         // Ensure all services are running
@@ -207,7 +207,6 @@ public class Hypixel {
             skyblockLoader.afterInitialize();
         }
 
-        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
         HypixelTranslator translator = new HypixelTranslator();
         I18n.init(translator);
         GlobalTranslator.translator().addSource(translator);
@@ -227,9 +226,9 @@ public class Hypixel {
             HypixelConst.setMaxPlayers(maxPlayers);
             HypixelConst.setServerUUID(serverUUID);
 
-            ServerOutboundMessage.sendToProxy(new RequestServerNameProtocol(),
-                    new RequestServerNameProtocol.Request(),
-                    (response) -> {
+            RedisClient.requestProxy(new RequestServerNameProtocol(),
+                    new RequestServerNameProtocol.Request())
+                    .thenAccept(response -> {
                         if (isTestFlow) {
                             String serverNameRaw = response.shortenedServerName().substring(1);
                             String serverName = "isolated" + serverNameRaw;
@@ -277,14 +276,14 @@ public class Hypixel {
                     System.exit(0);
                 });
 
-        ServerOutboundMessage.sendToProxy(new RegisterServerProtocol(),
+        RedisClient.requestProxy(new RegisterServerProtocol(),
                 new RegisterServerProtocol.Request(
                         serverType.name(), maxPlayers, InetAddress.getLocalHost().getHostName(), null,
                         isTestFlow ? true : null,
                         isTestFlow ? testFlowName : null,
                         isTestFlow ? testFlowIndex : null,
-                        isTestFlow ? testFlowTotal : null),
-                (response) -> startServer.complete(response.port()));
+                        isTestFlow ? testFlowTotal : null))
+                .thenAccept(response -> startServer.complete(response.port()));
     }
 
     private static void handleTestFlowRegistration(String testFlowName, String handler, String players,
@@ -311,9 +310,9 @@ public class Hypixel {
                 configList.add(Map.of("type", type, "count", count));
             }
 
-            ServerOutboundMessage.sendToProxy(new RegisterTestFlowProtocol(),
-                    new RegisterTestFlowProtocol.Request(testFlowName, handler, playerList, configList),
-                    (response) -> {
+            RedisClient.requestProxy(new RegisterTestFlowProtocol(),
+                    new RegisterTestFlowProtocol.Request(testFlowName, handler, playerList, configList))
+                    .thenAccept(response -> {
                         Logger.info("Test flow registered successfully with proxy");
                         notifyTestFlowServerReady(testFlowName, serverType, index);
                     });
@@ -324,9 +323,9 @@ public class Hypixel {
     }
 
     private static void notifyTestFlowServerReady(String testFlowName, ServerType serverType, String index) {
-        ServerOutboundMessage.sendToProxy(new TestFlowServerReadyProtocol(),
-                new TestFlowServerReadyProtocol.Request(testFlowName, serverType.name(), Integer.parseInt(index)),
-                (response) -> {
+        RedisClient.requestProxy(new TestFlowServerReadyProtocol(),
+                new TestFlowServerReadyProtocol.Request(testFlowName, serverType.name(), Integer.parseInt(index)))
+                .thenAccept(response -> {
                     Logger.info("Notified proxy that " + serverType.name() + " server " + index + " is ready for test flow: " + testFlowName);
                 });
     }
@@ -346,8 +345,8 @@ public class Hypixel {
             AtomicBoolean responded = new AtomicBoolean(false);
 
             try {
-                ServerOutboundMessage.sendToProxy(new ProxyIsOnlineProtocol(),
-                        new ProxyIsOnlineProtocol.Request(), (response) -> {
+                RedisClient.requestProxy(new ProxyIsOnlineProtocol(),
+                        new ProxyIsOnlineProtocol.Request()).thenAccept(response -> {
                             if (response.online()) {
                                 responded.set(true);
                             }

@@ -6,6 +6,7 @@ import net.swofty.commons.skyblock.bazaar.BazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
 import org.bson.Document;
+import org.tinylog.Logger;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class PendingTransactionsDatabase {
                 .append("processed", false);
 
         OrderDatabase.database.getCollection("pendingTransactions").insertOne(doc);
-        System.out.println("Stored pending transaction for player " + playerUuid + " on profile " + profileUuid);
+        Logger.info("Stored pending transaction for player {} on profile {}", playerUuid, profileUuid);
     }
 
     /**
@@ -63,7 +64,7 @@ public class PendingTransactionsDatabase {
                     ));
                 }
             } catch (Exception e) {
-                System.err.println("Failed to parse pending transaction: " + e.getMessage());
+                Logger.error(e, "Failed to parse pending transaction");
             }
         }
 
@@ -105,12 +106,12 @@ public class PendingTransactionsDatabase {
                         null, null, null, null, null, 0, 0, null
                 ).fromJSON(jsonData);
                 default -> {
-                    System.err.println("Unknown pending transaction type: " + type);
+                    Logger.warn("Unknown pending transaction type: {}", type);
                     yield null;
                 }
             };
         } catch (Exception e) {
-            System.err.println("Error parsing pending transaction: " + e.getMessage());
+            Logger.error(e, "Error parsing pending transaction");
             return null;
         }
     }

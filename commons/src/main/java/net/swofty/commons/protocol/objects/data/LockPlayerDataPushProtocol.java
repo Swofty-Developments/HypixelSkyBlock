@@ -1,11 +1,11 @@
 package net.swofty.commons.protocol.objects.data;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 import java.util.UUID;
 
 public class LockPlayerDataPushProtocol
-        extends ServicePushProtocol<LockPlayerDataPushProtocol.Request, LockPlayerDataPushProtocol.Response> {
+        extends RedisProtocol<LockPlayerDataPushProtocol.Request, LockPlayerDataPushProtocol.Response> {
 
     public LockPlayerDataPushProtocol() {
         super(Request.class, Response.class);

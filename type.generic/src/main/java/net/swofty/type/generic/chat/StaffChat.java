@@ -1,11 +1,14 @@
 package net.swofty.type.generic.chat;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.swofty.commons.protocol.objects.proxy.to.StaffChatProtocol;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StaffChat {
-    private StaffChat() {}
 
     private static final StaffChatProtocol PROTOCOL = new StaffChatProtocol();
 
@@ -20,8 +23,6 @@ public final class StaffChat {
     }
 
     private static void broadcastViaProxy(String formattedMessage) {
-        ServerOutboundMessage.sendToProxy(PROTOCOL,
-                new StaffChatProtocol.Request("message", formattedMessage, null),
-                response -> {});
+        RedisClient.requestProxy(PROTOCOL, new StaffChatProtocol.Request("message", formattedMessage, null));
     }
 }

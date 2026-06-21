@@ -4,8 +4,9 @@ import lombok.SneakyThrows;
 import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.ravengardgeneric.data.RavengardDataHandler;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 import org.tinylog.Logger;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public class ActionPlayerRavengardDataSave implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerDisconnectEvent event) {
         RavengardPlayer player = (RavengardPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();

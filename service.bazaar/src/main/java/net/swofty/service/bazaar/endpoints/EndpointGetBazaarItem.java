@@ -1,27 +1,25 @@
 package net.swofty.service.bazaar.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocolObject.OrderRecord;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocol.OrderRecord;
 import net.swofty.service.bazaar.BazaarMarket;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointGetBazaarItem implements ServiceEndpoint<
-        BazaarGetItemProtocolObject.BazaarGetItemMessage,
-        BazaarGetItemProtocolObject.BazaarGetItemResponse> {
+public class EndpointGetBazaarItem implements RedisMessageHandler<
+        BazaarGetItemProtocol.BazaarGetItemMessage,
+        BazaarGetItemProtocol.BazaarGetItemResponse> {
 
     @Override
-    public BazaarGetItemProtocolObject associatedProtocolObject() {
-        return new BazaarGetItemProtocolObject();
+    public BazaarGetItemProtocol protocol() {
+        return new BazaarGetItemProtocol();
     }
 
     @Override
-    public BazaarGetItemProtocolObject.BazaarGetItemResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarGetItemProtocolObject.BazaarGetItemMessage msg) {
+    public BazaarGetItemProtocol.BazaarGetItemResponse handle(BazaarGetItemProtocol.BazaarGetItemMessage msg, RedisMessageContext context) {
 
         String itemName = msg.itemName();
 
@@ -48,7 +46,7 @@ public class EndpointGetBazaarItem implements ServiceEndpoint<
                 ))
                 .collect(Collectors.toList());
 
-        return new BazaarGetItemProtocolObject.BazaarGetItemResponse(
+        return new BazaarGetItemProtocol.BazaarGetItemResponse(
                 itemName,
                 buyOrderRecords,
                 sellOrderRecords,

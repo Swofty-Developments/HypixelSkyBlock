@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendBestToggledResponseEvent extends FriendResponseEvent {
+public final class FriendBestToggledResponseEvent extends FriendResponseEvent {
+    private static final Serializer<FriendBestToggledResponseEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendBestToggledResponseEvent.class);
+
     private final UUID player;
     private final UUID target;
     private final String targetName;
@@ -33,32 +36,6 @@ public class FriendBestToggledResponseEvent extends FriendResponseEvent {
 
     @Override
     public Serializer<FriendBestToggledResponseEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendBestToggledResponseEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player", value.player.toString());
-                json.put("target", value.target.toString());
-                json.put("targetName", value.targetName);
-                json.put("isBest", value.isBest);
-                return json.toString();
-            }
-
-            @Override
-            public FriendBestToggledResponseEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendBestToggledResponseEvent(
-                        UUID.fromString(jsonObject.getString("player")),
-                        UUID.fromString(jsonObject.getString("target")),
-                        jsonObject.getString("targetName"),
-                        jsonObject.getBoolean("isBest")
-                );
-            }
-
-            @Override
-            public FriendBestToggledResponseEvent clone(FriendBestToggledResponseEvent value) {
-                return new FriendBestToggledResponseEvent(value.player, value.target, value.targetName, value.isBest);
-            }
-        };
+        return SERIALIZER;
     }
 }

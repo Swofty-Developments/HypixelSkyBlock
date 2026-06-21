@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendRemoveAllResponseEvent extends FriendResponseEvent {
+public final class FriendRemoveAllResponseEvent extends FriendResponseEvent {
+    private static final Serializer<FriendRemoveAllResponseEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendRemoveAllResponseEvent.class);
+
     private final UUID player;
     private final int removedCount;
 
@@ -29,28 +32,6 @@ public class FriendRemoveAllResponseEvent extends FriendResponseEvent {
 
     @Override
     public Serializer<FriendRemoveAllResponseEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendRemoveAllResponseEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player", value.player.toString());
-                json.put("removedCount", value.removedCount);
-                return json.toString();
-            }
-
-            @Override
-            public FriendRemoveAllResponseEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendRemoveAllResponseEvent(
-                        UUID.fromString(jsonObject.getString("player")),
-                        jsonObject.getInt("removedCount")
-                );
-            }
-
-            @Override
-            public FriendRemoveAllResponseEvent clone(FriendRemoveAllResponseEvent value) {
-                return new FriendRemoveAllResponseEvent(value.player, value.removedCount);
-            }
-        };
+        return SERIALIZER;
     }
 }

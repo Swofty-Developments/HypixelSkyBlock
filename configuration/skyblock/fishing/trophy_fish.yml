@@ -1,0 +1,171 @@
+trophyFish:
+  - id: SULPHUR_SKITTER
+    displayName: Sulphur Skitter
+    catchChance: 30
+    regions: [BLAZING_VOLCANO]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_SULPHUR_SKITTER
+    silverItemId: SILVER_SULPHUR_SKITTER
+    goldItemId: GOLD_SULPHUR_SKITTER
+    diamondItemId: DIAMOND_SULPHUR_SKITTER
+  - id: BLOBFISH
+    displayName: Blobfish
+    catchChance: 25
+    regions: [ ]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_BLOBFISH
+    silverItemId: SILVER_BLOBFISH
+    goldItemId: GOLD_BLOBFISH
+    diamondItemId: DIAMOND_BLOBFISH
+  - id: OBFUSCATED_1
+    displayName: Obfuscated 1
+    catchChance: 25
+    regions: [ ]
+    requiredFishingLevel: 0
+    requiredBaitId: CORRUPTED_BAIT
+    bronzeItemId: BRONZE_OBFUSCATED_1
+    silverItemId: SILVER_OBFUSCATED_1
+    goldItemId: GOLD_OBFUSCATED_1
+    diamondItemId: DIAMOND_OBFUSCATED_1
+  - id: STEAMING_HOT_FLOUNDER
+    displayName: Steaming-Hot Flounder
+    catchChance: 20
+    regions: [BLAZING_VOLCANO]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_STEAMING_HOT_FLOUNDER
+    silverItemId: SILVER_STEAMING_HOT_FLOUNDER
+    goldItemId: GOLD_STEAMING_HOT_FLOUNDER
+    diamondItemId: DIAMOND_STEAMING_HOT_FLOUNDER
+  - id: GUSHER
+    displayName: Gusher
+    catchChance: 20
+    regions: [BLAZING_VOLCANO]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_GUSHER
+    silverItemId: SILVER_GUSHER
+    goldItemId: GOLD_GUSHER
+    diamondItemId: DIAMOND_GUSHER
+  - id: OBFUSCATED_2
+    displayName: Obfuscated 2
+    catchChance: 20
+    regions: [ ]
+    requiredFishingLevel: 0
+    requiredBaitId: BRONZE_OBFUSCATED_1
+    bronzeItemId: BRONZE_OBFUSCATED_2
+    silverItemId: SILVER_OBFUSCATED_2
+    goldItemId: GOLD_OBFUSCATED_2
+    diamondItemId: DIAMOND_OBFUSCATED_2
+  - id: SLUGFISH
+    displayName: Slugfish
+    catchChance: 15
+    regions: [ ]
+    requiredFishingLevel: 0
+    minimumCastTimeMs: 20000
+    bronzeItemId: BRONZE_SLUGFISH
+    silverItemId: SILVER_SLUGFISH
+    goldItemId: GOLD_SLUGFISH
+    diamondItemId: DIAMOND_SLUGFISH
+  - id: OBFUSCATED_3
+    displayName: Obfuscated 3
+    catchChance: 10
+    regions: [ ]
+    requiredFishingLevel: 0
+    requiredBaitId: BRONZE_OBFUSCATED_2
+    bronzeItemId: BRONZE_OBFUSCATED_3
+    silverItemId: SILVER_OBFUSCATED_3
+    goldItemId: GOLD_OBFUSCATED_3
+    diamondItemId: DIAMOND_OBFUSCATED_3
+  - id: FLYFISH
+    displayName: Flyfish
+    catchChance: 8
+    regions: [BLAZING_VOLCANO]
+    requiredFishingLevel: 0
+    minimumBobberDepth: 8
+    bronzeItemId: BRONZE_FLYFISH
+    silverItemId: SILVER_FLYFISH
+    goldItemId: GOLD_FLYFISH
+    diamondItemId: DIAMOND_FLYFISH
+  - id: VANILLE
+    displayName: Vanille
+    catchChance: 8
+    regions: [ ]
+    requiredFishingLevel: 0
+    requiresStarterRodWithoutEnchantments: true
+    bronzeItemId: BRONZE_VANILLE
+    silverItemId: SILVER_VANILLE
+    goldItemId: GOLD_VANILLE
+    diamondItemId: DIAMOND_VANILLE
+  - id: LAVAHORSE
+    displayName: Lavahorse
+    catchChance: 4
+    regions: [ ]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_LAVAHORSE
+    silverItemId: SILVER_LAVAHORSE
+    goldItemId: GOLD_LAVAHORSE
+    diamondItemId: DIAMOND_LAVAHORSE
+  - id: MANA_RAY
+    displayName: Mana Ray
+    catchChance: 0
+    regions: [ ]
+    requiredFishingLevel: 0
+    minimumMana: 1200
+    bronzeItemId: BRONZE_MANA_RAY
+    silverItemId: SILVER_MANA_RAY
+    goldItemId: GOLD_MANA_RAY
+    diamondItemId: DIAMOND_MANA_RAY
+  - id: VOLCANIC_STONEFISH
+    displayName: Volcanic Stonefish
+    catchChance: 3
+    regions: [BLAZING_VOLCANO]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_VOLCANIC_STONEFISH
+    silverItemId: SILVER_VOLCANIC_STONEFISH
+    goldItemId: GOLD_VOLCANIC_STONEFISH
+    diamondItemId: DIAMOND_VOLCANIC_STONEFISH
+  - id: SKELETON_FISH
+    displayName: Skeleton Fish
+    catchChance: 2
+    regions: [BURNING_DESERT]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_SKELETON_FISH
+    silverItemId: SILVER_SKELETON_FISH
+    goldItemId: GOLD_SKELETON_FISH
+    diamondItemId: DIAMOND_SKELETON_FISH
+  - id: MOLDFIN
+    displayName: Moldfin
+    catchChance: 2
+    regions: [MYSTIC_MARSH]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_MOLDFIN
+    silverItemId: SILVER_MOLDFIN
+    goldItemId: GOLD_MOLDFIN
+    diamondItemId: DIAMOND_MOLDFIN
+  - id: SOUL_FISH
+    displayName: Soul Fish
+    catchChance: 2
+    regions: [STRONGHOLD]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_SOUL_FISH
+    silverItemId: SILVER_SOUL_FISH
+    goldItemId: GOLD_SOUL_FISH
+    diamondItemId: DIAMOND_SOUL_FISH
+  - id: KARATE_FISH
+    displayName: Karate Fish
+    catchChance: 2
+    regions: [DOJO]
+    requiredFishingLevel: 0
+    bronzeItemId: BRONZE_KARATE_FISH
+    silverItemId: SILVER_KARATE_FISH
+    goldItemId: GOLD_KARATE_FISH
+    diamondItemId: DIAMOND_KARATE_FISH
+  - id: GOLDEN_FISH
+    displayName: Golden Fish
+    catchChance: 0
+    regions: [ ]
+    requiredFishingLevel: 0
+    specialGoldenFish: true
+    bronzeItemId: BRONZE_GOLDEN_FISH
+    silverItemId: SILVER_GOLDEN_FISH
+    goldItemId: GOLD_GOLDEN_FISH
+    diamondItemId: DIAMOND_GOLDEN_FISH

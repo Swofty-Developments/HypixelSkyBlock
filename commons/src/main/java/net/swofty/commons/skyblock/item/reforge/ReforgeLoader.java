@@ -52,7 +52,7 @@ public class ReforgeLoader {
 
             File[] reforgeFiles = REFORGES_DIR.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
             if (reforgeFiles == null) {
-                System.out.println("No reforge files found in " + REFORGES_DIR.getPath());
+                Logger.info("No reforge files found in {}", REFORGES_DIR.getPath());
                 return;
             }
 
@@ -77,7 +77,7 @@ public class ReforgeLoader {
             ReforgeConfig config = yaml.loadAs(new FileReader(file), ReforgeConfig.class);
 
             if (config == null) {
-                System.err.println("Failed to parse reforge config from: " + file.getName());
+                Logger.error("Failed to parse reforge config from: {}", file.getName());
                 return null;
             }
 
@@ -97,7 +97,7 @@ public class ReforgeLoader {
                     ReforgeType type = ReforgeType.valueOf(typeStr.toUpperCase());
                     applicableTypes.add(type);
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Unknown reforge type: " + typeStr + " for reforge: " + config.name);
+                    Logger.warn("Unknown reforge type: {} for reforge: {}", typeStr, config.name);
                 }
             }
         }
@@ -123,7 +123,7 @@ public class ReforgeLoader {
                         double value = calculateStatisticValue(data, level);
                         result = result.addBase(statistic, value);
                     } catch (IllegalArgumentException e) {
-                        System.err.println("Unknown statistic: " + entry.getKey());
+                        Logger.warn("Unknown statistic: {}", entry.getKey());
                     }
                 }
             }
@@ -227,7 +227,7 @@ public class ReforgeLoader {
 
     // Utility method to reload all reforges
     public static void reloadReforges() {
-        System.out.println("Reloading all reforges...");
+        Logger.info("Reloading all reforges...");
         loadAllReforges();
     }
 }

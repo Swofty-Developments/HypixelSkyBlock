@@ -1,24 +1,28 @@
 package net.swofty.commons.protocol.objects.proxy.to;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerHandlerProtocol extends ProtocolObject<
+public class PlayerHandlerProtocol extends RedisProtocol<
         PlayerHandlerProtocol.Request,
         PlayerHandlerProtocol.Response> {
+    private static final Serializer<Request> SERIALIZER =
+            new JacksonSerializer<>(Request.class);
+    private static final Serializer<Response> RETURN_SERIALIZER =
+            new JacksonSerializer<>(Response.class);
 
     @Override
     public Serializer<Request> getSerializer() {
-        return new JacksonSerializer<>(Request.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<Response> getReturnSerializer() {
-        return new JacksonSerializer<>(Response.class);
+        return RETURN_SERIALIZER;
     }
 
     public enum Action {

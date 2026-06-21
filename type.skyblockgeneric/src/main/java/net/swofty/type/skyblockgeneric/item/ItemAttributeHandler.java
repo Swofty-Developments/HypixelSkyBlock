@@ -2,7 +2,7 @@ package net.swofty.type.skyblockgeneric.item;
 
 import net.minestom.server.color.Color;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocol;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.*;
@@ -83,6 +83,41 @@ public class ItemAttributeHandler {
 
     public void setRuneData(ItemAttributeRuneInfusedWith.RuneData data) {
         ((ItemAttributeRuneInfusedWith) item.getAttribute("rune_infused_with")).setValue(data);
+    }
+
+    public @Nullable String getFishingHook() {
+        String value = ((ItemAttributeFishingHook) item.getAttribute("fishing_hook")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setFishingHook(@Nullable String hookId) {
+        item.getAttribute("fishing_hook").setValue(hookId == null ? "none" : hookId);
+    }
+
+    public @Nullable String getFishingLine() {
+        String value = ((ItemAttributeFishingLine) item.getAttribute("fishing_line")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setFishingLine(@Nullable String lineId) {
+        item.getAttribute("fishing_line").setValue(lineId == null ? "none" : lineId);
+    }
+
+    public @Nullable String getFishingSinker() {
+        String value = ((ItemAttributeFishingSinker) item.getAttribute("fishing_sinker")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setFishingSinker(@Nullable String sinkerId) {
+        item.getAttribute("fishing_sinker").setValue(sinkerId == null ? "none" : sinkerId);
+    }
+
+    public long getFishingExpertiseKills() {
+        return ((ItemAttributeFishingExpertiseKills) item.getAttribute("fishing_expertise_kills")).getValue();
+    }
+
+    public void setFishingExpertiseKills(long kills) {
+        item.getAttribute("fishing_expertise_kills").setValue(kills);
     }
 
     public boolean isPet() {
@@ -208,15 +243,15 @@ public class ItemAttributeHandler {
             ProxyService itemTracker = new ProxyService(ServiceType.ITEM_TRACKER);
             if (!itemTracker.isOnline().join()) return;
 
-            TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage message =
-                    new TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage(
+            TrackedItemUpdateProtocol.TrackedItemUpdateMessage message =
+                    new TrackedItemUpdateProtocol.TrackedItemUpdateMessage(
                             UUID.fromString(uniqueTrackedID),
                             player.getUuid(),
                             player.getProfiles().getCurrentlySelected(),
                             item.getAttributeHandler().getTypeAsString()
             );
 
-            CompletableFuture<TrackedItemUpdateProtocolObject.TrackedItemUpdateResponse> future
+            CompletableFuture<TrackedItemUpdateProtocol.TrackedItemUpdateResponse> future
                     = itemTracker.handleRequest(message);
         });
     }

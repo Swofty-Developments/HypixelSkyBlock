@@ -34,7 +34,7 @@ public class ReforgeExpressionEvaluator {
             if (value != null) {
                 matcher.appendReplacement(result, value.toString());
             } else {
-                System.err.println("Variable not found: " + varName);
+                Logger.warn("Variable not found: {}", varName);
                 matcher.appendReplacement(result, "0");
             }
         }

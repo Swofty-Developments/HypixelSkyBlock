@@ -7,21 +7,22 @@ import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerSpawnEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;
 
-        MathUtility.delay(() -> {
+        ScheduleUtility.delay(() -> {
             updatePlayerNametag(player);
         }, 15);
     }
@@ -34,10 +35,8 @@ public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
 
         String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
         Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
-                .prefix(Component.text(
-                        "§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] " +
-                                rank.getPrefix()
-                ))
+            .prefix(Component.text("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] ")
+                .append(player.getRankPrefix()))
                 .teamColor(rank.getTextColor())
                 .build();
         player.setTeam(team);

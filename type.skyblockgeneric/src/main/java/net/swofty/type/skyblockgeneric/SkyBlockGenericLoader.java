@@ -42,6 +42,7 @@ import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.categories.CustomGroups;
 import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
 import net.swofty.type.skyblockgeneric.block.attribute.BlockAttribute;
@@ -61,6 +62,7 @@ import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
+import net.swofty.type.skyblockgeneric.fishing.registry.FishingRegistry;
 import net.swofty.type.skyblockgeneric.item.ItemConfigParser;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
@@ -72,6 +74,7 @@ import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredPassiveAb
 import net.swofty.type.skyblockgeneric.item.set.impl.SetRepeatable;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
+import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
@@ -85,7 +88,7 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
-import net.swofty.type.skyblockgeneric.user.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
@@ -176,6 +179,8 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         } catch (IOException e) {
             Logger.error("Failed to scan for YAML files", e);
         }
+        FishingRegistry.loadAll();
+        SlayerRegistry.loadAll();
 
         /**
          * Register commands
@@ -196,7 +201,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         loopThroughPackage("net.swofty.type.skyblockgeneric.entity.mob.mobs", SkyBlockMob.class)
             .forEach(mob -> MobRegistry.registerExtraMob(mob.getClass()));
 
-        MathUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
+        ScheduleUtility.delay(() -> SkyBlockMob.runRegionPopulators(MinecraftServer.getSchedulerManager()), 50);
 
         /**
          * Start generic SkyBlock tablist

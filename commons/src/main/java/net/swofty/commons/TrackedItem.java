@@ -1,7 +1,6 @@
 package net.swofty.commons;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.bson.Document;
 import org.json.JSONObject;
 
@@ -11,13 +10,12 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-@Setter
 public class TrackedItem {
-    public final UUID itemUUID;
-    public final long created;
-    public final ArrayList<PlayerOwnershipLog> attachedPlayers;
-    public final String itemType;
-    public final Integer numberMade;
+    private final UUID itemUUID;
+    private final long created;
+    private final ArrayList<PlayerOwnershipLog> attachedPlayers;
+    private final String itemType;
+    private final Integer numberMade;
 
     public TrackedItem(UUID itemUUID, long created, ArrayList<PlayerOwnershipLog> attachedPlayers, String itemType, Integer numberMade) {
         this.itemUUID = itemUUID;

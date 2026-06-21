@@ -1,32 +1,30 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
-import net.swofty.commons.bedwars.BedwarsGameType;
-import net.swofty.commons.bedwars.BedwarsLevelColor;
-import net.swofty.commons.bedwars.BedwarsLevelUtil;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.chat.StaffChat;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeRenderer;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
-import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.categories.Rank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionPlayerChat implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerChatEvent event) {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		event.setCancelled(true);
 
-		Game game = player.getGame();
+		BedWarsGame game = player.getGame();
 		if (game == null) return;
 
 		BedWarsDataHandler bedWarsDataHandler = BedWarsDataHandler.getUser(player);
@@ -66,30 +64,27 @@ public class ActionPlayerChat implements HypixelEventClass {
 			return;
 		}
 
-		if (game.getGameStatus() == GameStatus.WAITING) {
+		if (game.getState().isWaiting()) {
 			String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
-			game.getPlayers().forEach(onlinePlayer -> {
-				onlinePlayer.sendMessage(rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage);
-			});
+			game.getPlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(player.getLegacyRankPrefix() + player.getUsername() + textColor + ": " + finalMessage));
 			return;
 		}
 
-		List<BedWarsPlayer> receivers;
-		if (game.getBedwarsGameType() == BedwarsGameType.SOLO) {
-			receivers = game.getPlayers();
-		} else {
-			receivers = game.getTeamManager().getPlayersOnTeam(player.getTeamKey()).stream().map(p -> (BedWarsPlayer) p).toList();
+		if (game.getReplayManager().isRecording()) {
+			game.getReplayManager().recordPlayerChat(player, finalMessage, false);
 		}
 
-		String levelPrefix = BedwarsLevelColor.constructLevelBrackets(
-				BedwarsLevelUtil.calculateLevel(bedWarsDataHandler.get(BedWarsDataHandler.Data.EXPERIENCE, DatapointLeaderboardLong.class).getValue())
-		) + " ";
+		List<BedWarsPlayer> receivers;
+		if (game.getGameType() == BedWarsGameType.ONE_EIGHT || game.getGameType() == BedWarsGameType.ONE_BLOCK) {
+			receivers = new ArrayList<>(game.getPlayers());
+		} else {
+			receivers = game.getPlayersOnTeam(player.getTeamKey());
+		}
+
+		String levelPrefix = BedWarsPrestigeRenderer.renderBrackets(player) + " ";
 		String textColor = rank.equals(Rank.DEFAULT) ? "§7" : "§f";
 
-		receivers.forEach(onlinePlayer -> {
-			onlinePlayer.sendMessage(levelPrefix + rank.getPrefix() + player.getUsername() + textColor + ": " + finalMessage);
-		});
+		receivers.forEach(onlinePlayer -> onlinePlayer.sendMessage(levelPrefix + player.getLegacyRankPrefix() + player.getUsername() + textColor + ": " + finalMessage));
 	}
 }
-

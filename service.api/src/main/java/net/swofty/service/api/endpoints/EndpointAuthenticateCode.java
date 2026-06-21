@@ -1,29 +1,27 @@
 package net.swofty.service.api.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocolObject;
+import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocol;
 import net.swofty.service.api.APIAdminDatabase;
 import net.swofty.service.api.APIAdminDatabaseObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.jetbrains.annotations.Nullable;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointAuthenticateCode implements ServiceEndpoint<
-        APIAuthenticateCodeProtocolObject.AuthenticateCodeMessage,
-        APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse> {
+public class EndpointAuthenticateCode implements RedisMessageHandler<
+        APIAuthenticateCodeProtocol.AuthenticateCodeMessage,
+        APIAuthenticateCodeProtocol.AuthenticateCodeResponse> {
 
     @Override
-    public APIAuthenticateCodeProtocolObject associatedProtocolObject() {
-        return new APIAuthenticateCodeProtocolObject();
+    public APIAuthenticateCodeProtocol protocol() {
+        return new APIAuthenticateCodeProtocol();
     }
 
     @Override
-    public APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse onMessage(
-            ServiceProxyRequest message,
-            APIAuthenticateCodeProtocolObject.AuthenticateCodeMessage messageObject) {
+    public APIAuthenticateCodeProtocol.AuthenticateCodeResponse handle(APIAuthenticateCodeProtocol.AuthenticateCodeMessage messageObject, RedisMessageContext context) {
         @Nullable APIAdminDatabaseObject document = APIAdminDatabase.getFromCode(messageObject.authCode());
 
         if (document == null) {
-            return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(false, "Authentication failed");
+            return new APIAuthenticateCodeProtocol.AuthenticateCodeResponse(false, "Authentication failed");
         }
 
         document.setAuthenticatorName(messageObject.playerName());
@@ -31,6 +29,6 @@ public class EndpointAuthenticateCode implements ServiceEndpoint<
 
         APIAdminDatabase.replaceOrInsert(document);
 
-        return new APIAuthenticateCodeProtocolObject.AuthenticateCodeResponse(true, null);
+        return new APIAuthenticateCodeProtocol.AuthenticateCodeResponse(true, null);
     }
 }

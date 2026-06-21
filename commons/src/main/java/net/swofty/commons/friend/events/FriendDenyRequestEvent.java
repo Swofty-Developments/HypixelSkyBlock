@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendDenyRequestEvent extends FriendEvent {
+public final class FriendDenyRequestEvent extends FriendEvent {
+    private static final Serializer<FriendDenyRequestEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendDenyRequestEvent.class);
+
     private final UUID denier;
     private final UUID requester;
 
@@ -29,28 +32,6 @@ public class FriendDenyRequestEvent extends FriendEvent {
 
     @Override
     public Serializer<FriendDenyRequestEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendDenyRequestEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("denier", value.denier.toString());
-                json.put("requester", value.requester.toString());
-                return json.toString();
-            }
-
-            @Override
-            public FriendDenyRequestEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendDenyRequestEvent(
-                        UUID.fromString(jsonObject.getString("denier")),
-                        UUID.fromString(jsonObject.getString("requester"))
-                );
-            }
-
-            @Override
-            public FriendDenyRequestEvent clone(FriendDenyRequestEvent value) {
-                return new FriendDenyRequestEvent(value.denier, value.requester);
-            }
-        };
+        return SERIALIZER;
     }
 }

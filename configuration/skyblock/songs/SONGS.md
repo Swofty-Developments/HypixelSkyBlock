@@ -5,3 +5,15 @@
 https://noteblock.world/song/L0PqKZeKpk
 
 Originally composed by ShinkoNet for the Hypixel Network
+
+# Abstract Ringing
+
+Best-effort capture of the song Abstract Ringing.
+
+Originally composed by ShinkoNet for the Hypixel Network
+
+# Ambient Caves
+
+Best-effort capture of the song Ambient Caves.
+
+Originally composed by ShinkoNet for the Hypixel Network

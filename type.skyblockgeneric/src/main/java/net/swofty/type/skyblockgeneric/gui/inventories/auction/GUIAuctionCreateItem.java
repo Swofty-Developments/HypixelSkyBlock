@@ -10,7 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionAddItemProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyService;
@@ -167,9 +167,9 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
                     player.sendMessage(I18n.t("gui_auction.create.setup_message"));
 
-                    AuctionAddItemProtocolObject.AuctionAddItemMessage message =
-                            new AuctionAddItemProtocolObject.AuctionAddItemMessage(item, category);
-                    CompletableFuture<AuctionAddItemProtocolObject.AuctionAddItemResponse> future =
+                    AuctionAddItemProtocol.AuctionAddItemMessage message =
+                            new AuctionAddItemProtocol.AuctionAddItemMessage(item, category);
+                    CompletableFuture<AuctionAddItemProtocol.AuctionAddItemResponse> future =
                             auctionService.handleRequest(message);
                     UUID auctionUUID = future.join().uuid();
 

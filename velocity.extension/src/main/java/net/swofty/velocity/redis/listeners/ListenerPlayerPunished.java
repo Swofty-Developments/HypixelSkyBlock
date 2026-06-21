@@ -3,7 +3,7 @@ package net.swofty.velocity.redis.listeners;
 import com.google.gson.Gson;
 import io.sentry.Sentry;
 import net.kyori.adventure.text.Component;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
@@ -13,25 +13,24 @@ import net.swofty.commons.punishment.PunishmentType;
 import net.swofty.commons.punishment.template.BanType;
 import net.swofty.commons.punishment.template.MuteType;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerPlayerPunished extends RedisListener<
+public class ListenerPlayerPunished implements RedisMessageHandler<
         PunishPlayerProtocol.Request,
         PunishPlayerProtocol.Response> {
 
     @Override
-    public ProtocolObject<PunishPlayerProtocol.Request, PunishPlayerProtocol.Response> getProtocol() {
+    public RedisProtocol<PunishPlayerProtocol.Request, PunishPlayerProtocol.Response> protocol() {
         return new PunishPlayerProtocol();
     }
 
     @Override
-    public PunishPlayerProtocol.Response receivedMessage(PunishPlayerProtocol.Request message, UUID serverUUID) {
+    public PunishPlayerProtocol.Response handle(PunishPlayerProtocol.Request message, RedisMessageContext context) {
         UUID target = UUID.fromString(message.target());
         String type = message.type();
         String id = message.id();

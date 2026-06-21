@@ -1,36 +1,34 @@
 package net.swofty.service.election.endpoints;
 
 import com.google.gson.Gson;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.election.GetElectionDataProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.election.GetElectionDataProtocol;
 import net.swofty.service.election.ElectionDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.Map;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GetElectionDataEndpoint implements ServiceEndpoint
-        <GetElectionDataProtocolObject.GetElectionDataMessage,
-                GetElectionDataProtocolObject.GetElectionDataResponse> {
+public class GetElectionDataEndpoint implements RedisMessageHandler
+        <GetElectionDataProtocol.GetElectionDataMessage,
+                GetElectionDataProtocol.GetElectionDataResponse> {
 
     private static final Gson GSON = new Gson();
 
     @Override
-    public ProtocolObject<GetElectionDataProtocolObject.GetElectionDataMessage,
-            GetElectionDataProtocolObject.GetElectionDataResponse> associatedProtocolObject() {
-        return new GetElectionDataProtocolObject();
+    public RedisProtocol<GetElectionDataProtocol.GetElectionDataMessage,
+            GetElectionDataProtocol.GetElectionDataResponse> protocol() {
+        return new GetElectionDataProtocol();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public GetElectionDataProtocolObject.GetElectionDataResponse onMessage(
-            ServiceProxyRequest message,
-            GetElectionDataProtocolObject.GetElectionDataMessage messageObject) {
+    public GetElectionDataProtocol.GetElectionDataResponse handle(GetElectionDataProtocol.GetElectionDataMessage messageObject, RedisMessageContext context) {
         String data = ElectionDatabase.loadElectionData();
         if (data == null) {
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null, true, null);
+            return new GetElectionDataProtocol.GetElectionDataResponse(false, null, true, null);
         }
 
         try {
@@ -45,10 +43,10 @@ public class GetElectionDataEndpoint implements ServiceEndpoint
                 parsed.put("voteTallies", tallies);
             }
 
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(true, GSON.toJson(parsed), true, null);
+            return new GetElectionDataProtocol.GetElectionDataResponse(true, GSON.toJson(parsed), true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to parse election data");
-            return new GetElectionDataProtocolObject.GetElectionDataResponse(false, null, true, null);
+            return new GetElectionDataProtocol.GetElectionDataResponse(false, null, true, null);
         }
     }
 }

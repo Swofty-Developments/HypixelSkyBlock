@@ -2,7 +2,7 @@ package net.swofty.service.darkauction;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class DarkAuctionService implements SkyBlockService {
     private static DarkAuctionState currentAuction = null;
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         SkyBlockService.init(new DarkAuctionService());
 
         // Start the scheduler that checks SkyBlock time
@@ -24,8 +24,8 @@ public class DarkAuctionService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.darkauction.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.darkauction.endpoints", RedisMessageHandler.class).toList();
     }
 
     public static DarkAuctionState getCurrentAuction() {

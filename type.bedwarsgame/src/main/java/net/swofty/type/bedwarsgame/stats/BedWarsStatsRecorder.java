@@ -1,7 +1,7 @@
 package net.swofty.type.bedwarsgame.stats;
 
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.BedWarsModeStats;
-import net.swofty.commons.bedwars.BedwarsGameType;
 import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
 import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
 import net.swofty.commons.bedwars.BedwarsStatType;
@@ -16,7 +16,8 @@ import java.util.UUID;
 
 public class BedWarsStatsRecorder {
 
-	public static void recordWin(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordWin(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		UUID uuid = player.getUuid();
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
@@ -37,7 +38,8 @@ public class BedWarsStatsRecorder {
 		updateLeaderboards(uuid, BedwarsStatType.WINS, mode, modeStats, newTotal);
 	}
 
-	public static void recordFinalKill(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordFinalKill(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		UUID uuid = player.getUuid();
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
@@ -58,7 +60,8 @@ public class BedWarsStatsRecorder {
 		updateLeaderboards(uuid, BedwarsStatType.FINAL_KILLS, mode, modeStats, newTotal);
 	}
 
-	public static void recordBedBroken(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordBedBroken(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		UUID uuid = player.getUuid();
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
@@ -79,7 +82,8 @@ public class BedWarsStatsRecorder {
 		updateLeaderboards(uuid, BedwarsStatType.BEDS_BROKEN, mode, modeStats, newTotal);
 	}
 
-	public static void recordLoss(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordLoss(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -91,7 +95,8 @@ public class BedWarsStatsRecorder {
 		}
 	}
 
-	public static void recordKill(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordKill(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -103,7 +108,8 @@ public class BedWarsStatsRecorder {
 		}
 	}
 
-	public static void recordDeath(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordDeath(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -115,7 +121,8 @@ public class BedWarsStatsRecorder {
 		}
 	}
 
-	public static void recordFinalDeath(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordFinalDeath(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();
@@ -127,7 +134,8 @@ public class BedWarsStatsRecorder {
 		}
 	}
 
-	public static void recordBedLost(BedWarsPlayer player, BedwarsGameType gameType) {
+	public static void recordBedLost(BedWarsPlayer player, BedWarsGameType gameType) {
+		if (!gameType.allowsPersistentProgress()) return;
 		BedWarsDataHandler handler = player.getBedWarsDataHandler();
 
 		BedWarsModeStats modeStats = handler.get(BedWarsDataHandler.Data.MODE_STATS, DatapointBedWarsModeStats.class).getValue();

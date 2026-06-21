@@ -4,9 +4,9 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.party.FullParty;
 import net.swofty.commons.party.PartyAction;
 import net.swofty.commons.party.PendingParty;
-import net.swofty.commons.protocol.objects.party.GetPartyProtocolObject;
-import net.swofty.commons.protocol.objects.party.IsPlayerInPartyProtocolObject;
-import net.swofty.commons.protocol.objects.party.SendPartyActionProtocolObject;
+import net.swofty.commons.protocol.objects.party.GetPartyProtocol;
+import net.swofty.commons.protocol.objects.party.IsPlayerInPartyProtocol;
+import net.swofty.commons.protocol.objects.party.SendPartyActionProtocol;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.data.HypixelDataHandler;
@@ -21,19 +21,19 @@ public class PartyManager {
 
     public static boolean isInParty(HypixelPlayer player) {
         if (!partyService.isOnline().join()) return false;
-        return partyService.<IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage,
-                        IsPlayerInPartyProtocolObject.IsPlayerInPartyResponse>handleRequest(
-                        new IsPlayerInPartyProtocolObject.IsPlayerInPartyMessage(player.getUuid()))
-                .thenApply(IsPlayerInPartyProtocolObject.IsPlayerInPartyResponse::isInParty)
+        return partyService.<IsPlayerInPartyProtocol.IsPlayerInPartyMessage,
+                        IsPlayerInPartyProtocol.IsPlayerInPartyResponse>handleRequest(
+                        new IsPlayerInPartyProtocol.IsPlayerInPartyMessage(player.getUuid()))
+                .thenApply(IsPlayerInPartyProtocol.IsPlayerInPartyResponse::isInParty)
                 .join();
     }
 
     public static @Nullable FullParty getPartyFromPlayer(HypixelPlayer player) {
         if (!partyService.isOnline().join()) return null;
-        return (FullParty) partyService.<GetPartyProtocolObject.GetPartyMessage,
-                        GetPartyProtocolObject.GetPartyResponse>handleRequest(
-                        new GetPartyProtocolObject.GetPartyMessage(player.getUuid()))
-                .thenApply(GetPartyProtocolObject.GetPartyResponse::party)
+        return (FullParty) partyService.<GetPartyProtocol.GetPartyMessage,
+                        GetPartyProtocol.GetPartyResponse>handleRequest(
+                        new GetPartyProtocol.GetPartyMessage(player.getUuid()))
+                .thenApply(GetPartyProtocol.GetPartyResponse::party)
                 .join();
     }
 
@@ -155,7 +155,7 @@ public class PartyManager {
     }
 
     private static void send(PartyAction action) {
-        partyService.handleRequest(new SendPartyActionProtocolObject.Request(action));
+        partyService.handleRequest(new SendPartyActionProtocol.Request(action));
     }
 
     private static void sendError(HypixelPlayer player, String message) {

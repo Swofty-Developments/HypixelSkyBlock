@@ -3,7 +3,7 @@ package net.swofty.service.election;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ElectionService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.election.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.election.endpoints", RedisMessageHandler.class).toList();
     }
 }

@@ -1,0 +1,223 @@
+items:
+  - id: BRONZE_SULPHUR_SKITTER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_SULPHUR_SKITTER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_SULPHUR_SKITTER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_SULPHUR_SKITTER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_BLOBFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_BLOBFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_BLOBFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_BLOBFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_OBFUSCATED_1
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: FISHING_BAIT
+        mediums: [LAVA]
+  - id: SILVER_OBFUSCATED_1
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_OBFUSCATED_1
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_OBFUSCATED_1
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_STEAMING_HOT_FLOUNDER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_STEAMING_HOT_FLOUNDER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_STEAMING_HOT_FLOUNDER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_STEAMING_HOT_FLOUNDER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_GUSHER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_GUSHER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_GUSHER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_GUSHER
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_OBFUSCATED_2
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: FISHING_BAIT
+        mediums: [LAVA]
+  - id: SILVER_OBFUSCATED_2
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_OBFUSCATED_2
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_OBFUSCATED_2
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_SLUGFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_SLUGFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_SLUGFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_SLUGFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_OBFUSCATED_3
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_OBFUSCATED_3
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_OBFUSCATED_3
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_OBFUSCATED_3
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_FLYFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_FLYFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_FLYFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_FLYFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_VANILLE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_VANILLE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_VANILLE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_VANILLE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_LAVAHORSE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_LAVAHORSE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_LAVAHORSE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_LAVAHORSE
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_MANA_RAY
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_MANA_RAY
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_MANA_RAY
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_MANA_RAY
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_VOLCANIC_STONEFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_VOLCANIC_STONEFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_VOLCANIC_STONEFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_VOLCANIC_STONEFISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_SKELETON_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_SKELETON_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_SKELETON_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_SKELETON_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_MOLDFIN
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_MOLDFIN
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_MOLDFIN
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_MOLDFIN
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_SOUL_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_SOUL_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_SOUL_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_SOUL_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_KARATE_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_KARATE_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_KARATE_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_KARATE_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: BRONZE_GOLDEN_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: SILVER_GOLDEN_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: GOLD_GOLDEN_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON
+  - id: DIAMOND_GOLDEN_FISH
+    material: PLAYER_HEAD
+    rarity: COMMON

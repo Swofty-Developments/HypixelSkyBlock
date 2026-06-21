@@ -1,7 +1,7 @@
 package net.swofty.service.generic;
 
 import net.swofty.commons.ServiceType;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public interface SkyBlockService {
     ServiceType getType();
 
-    List<ServiceEndpoint> getEndpoints();
+    List<RedisMessageHandler> getEndpoints();
 
     static void init(SkyBlockService service) {
         new ServiceInitializer(service).init();

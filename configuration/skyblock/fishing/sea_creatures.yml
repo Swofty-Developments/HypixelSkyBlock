@@ -1,0 +1,88 @@
+seaCreatures:
+  # ---------- water ----------
+  - id: SQUID
+    requiredFishingLevel: 1
+    skillXp: 20
+    tags: [WATER, COMMON]
+  - id: SEA_WALKER
+    requiredFishingLevel: 4
+    skillXp: 40
+    tags: [WATER, COMMON]
+  - id: NIGHT_SQUID
+    requiredFishingLevel: 6
+    skillXp: 80
+    tags: [WATER, NIGHT, UNCOMMON]
+  - id: SEA_GUARDIAN
+    requiredFishingLevel: 8
+    skillXp: 120
+    tags: [WATER, UNCOMMON]
+  - id: SEA_WITCH
+    requiredFishingLevel: 10
+    skillXp: 150
+    tags: [WATER, UNCOMMON]
+  - id: SEA_ARCHER
+    requiredFishingLevel: 15
+    skillXp: 200
+    tags: [WATER, RARE]
+  - id: MONSTER_OF_THE_DEEP
+    requiredFishingLevel: 20
+    skillXp: 300
+    tags: [WATER, RARE]
+  - id: CATFISH
+    requiredFishingLevel: 24
+    skillXp: 400
+    tags: [WATER, RAINING, RARE]
+  - id: CARROT_KING
+    requiredFishingLevel: 26
+    skillXp: 500
+    tags: [WATER, RARE]
+  - id: SEA_LEECH
+    requiredFishingLevel: 30
+    skillXp: 650
+    tags: [WATER, EPIC]
+  - id: GUARDIAN_DEFENDER
+    requiredFishingLevel: 35
+    skillXp: 900
+    tags: [WATER, EPIC]
+  - id: WATER_HYDRA
+    requiredFishingLevel: 60
+    skillXp: 7500
+    tags: [WATER, LEGENDARY]
+  - id: THE_SEA_EMPEROR
+    requiredFishingLevel: 80
+    skillXp: 20000
+    tags: [WATER, MYTHIC]
+
+  # ---------- lava (Crimson Isle) ----------
+  - id: MAGMA_SLUG
+    requiredFishingLevel: 21
+    skillXp: 450
+    tags: [LAVA, CRIMSON, COMMON]
+  - id: MOOGMA
+    requiredFishingLevel: 22
+    skillXp: 500
+    tags: [LAVA, CRIMSON, COMMON]
+  - id: LAVA_LEECH
+    requiredFishingLevel: 24
+    skillXp: 550
+    tags: [LAVA, CRIMSON, COMMON]
+  - id: PYROCLASTIC_WORM
+    requiredFishingLevel: 28
+    skillXp: 800
+    tags: [LAVA, CRIMSON, UNCOMMON]
+  - id: FIRE_EEL
+    requiredFishingLevel: 28
+    skillXp: 800
+    tags: [LAVA, CRIMSON, UNCOMMON]
+  - id: LAVA_BLAZE
+    requiredFishingLevel: 30
+    skillXp: 1000
+    tags: [LAVA, CRIMSON, RARE]
+  - id: TAURUS
+    requiredFishingLevel: 36
+    skillXp: 2500
+    tags: [LAVA, CRIMSON, EPIC]
+  - id: LORD_JAWBUS
+    requiredFishingLevel: 45
+    skillXp: 15000
+    tags: [LAVA, CRIMSON, LEGENDARY]

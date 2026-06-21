@@ -1,0 +1,24 @@
+package net.swofty.type.game.replay;
+
+import lombok.Getter;
+
+@Getter
+public enum ReplayError {
+    UNSUPPORTED_CODEC(3, "UNSUPPORTED CODEC {}"),
+    REPLAY_NOT_FOUND(404, "REPLAY NOT FOUND"),
+    JAVA_EXCEPTION(500, "UNKNOWN EXCEPTION"),
+    REPLAY_INCOMPLETE(501, "REPLAY INCOMPLETE"),
+    ;
+
+    private final int code;
+    private final String message;
+
+    ReplayError(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public String format() {
+        return "ERROR-" + this.code + " - " + this.message;
+    }
+}

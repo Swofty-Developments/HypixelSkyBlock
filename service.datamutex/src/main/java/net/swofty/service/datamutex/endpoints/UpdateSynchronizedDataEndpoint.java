@@ -1,104 +1,83 @@
-// Replace your UpdateSynchronizedDataEndpoint with this debug version
 package net.swofty.service.datamutex.endpoints;
 
 import org.tinylog.Logger;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
-import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocolObject;
+import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
-import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisClient;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class UpdateSynchronizedDataEndpoint implements ServiceEndpoint<
-        UpdateSynchronizedDataProtocolObject.UpdateDataRequest,
-        UpdateSynchronizedDataProtocolObject.UpdateDataResponse> {
+public class UpdateSynchronizedDataEndpoint implements RedisMessageHandler<
+        UpdateSynchronizedDataProtocol.UpdateDataRequest,
+        UpdateSynchronizedDataProtocol.UpdateDataResponse> {
 
     @Override
-    public UpdateSynchronizedDataProtocolObject associatedProtocolObject() {
-        return new UpdateSynchronizedDataProtocolObject();
+    public UpdateSynchronizedDataProtocol protocol() {
+        return new UpdateSynchronizedDataProtocol();
     }
 
     @Override
-    public UpdateSynchronizedDataProtocolObject.UpdateDataResponse onMessage(
-            ServiceProxyRequest request,
-            UpdateSynchronizedDataProtocolObject.UpdateDataRequest messageObject) {
-
-        System.out.println("=== UPDATE ENDPOINT DEBUG ===");
-        System.out.println("Received update request from: " + request.getRequestServer());
-        System.out.println("Player UUID: " + messageObject.playerUUID());
-        System.out.println("Data Key: " + messageObject.dataKey());
-        System.out.println("Server UUIDs: " + messageObject.serverUUIDs());
-        System.out.println("New Data Length: " + messageObject.newData().length() + " chars");
+    public UpdateSynchronizedDataProtocol.UpdateDataResponse handle(UpdateSynchronizedDataProtocol.UpdateDataRequest messageObject, RedisMessageContext context) {
 
         List<UUID> serverUUIDs = messageObject.serverUUIDs();
         UUID playerUUID = messageObject.playerUUID();
         String dataKey = messageObject.dataKey();
         String newData = messageObject.newData();
-        String requesterId = request.getRequestServer();
-
+        String requesterId = context.origin().id();
         String lockKey = playerUUID + ":" + dataKey;
-        System.out.println("Lock key: " + lockKey);
+
+        Logger.debug("update: requester={} player={} key={} servers={} bytes={} lockKey={}",
+                requesterId, playerUUID, dataKey, serverUUIDs, newData.length(), lockKey);
 
         try {
-            // Verify we still hold the lock
-            System.out.println("Verifying service lock...");
             DataLockManager.LockInfo lockInfo = DataLockManager.getLockInfo(lockKey);
-            if (lockInfo == null || !lockInfo.requesterId.equals(requesterId)) {
-                System.out.println("Lock verification failed - lockInfo: " + lockInfo + ", requesterId: " + requesterId);
-                return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
+            if (lockInfo == null || !lockInfo.requesterId().equals(requesterId)) {
+                Logger.debug("update: lock check failed (held by {})",
+                        lockInfo == null ? "<none>" : lockInfo.requesterId());
+                return new UpdateSynchronizedDataProtocol.UpdateDataResponse(
                         false, "Lock has expired or is held by another requester");
             }
-            System.out.println("Service lock verified successfully");
 
-            System.out.println("Updating data on servers: " + serverUUIDs);
-            Map<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> updateFutures = new java.util.HashMap<>();
+            Map<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> updateFutures = new HashMap<>();
             for (UUID serverUUID : serverUUIDs) {
-                System.out.println("Sending update to server " + serverUUID);
-
                 updateFutures.put(serverUUID,
-                        ServiceToServerManager.updatePlayerData(serverUUID, playerUUID, dataKey, newData));
+                        RedisClient.requestServerFromService(serverUUID, new UpdatePlayerDataPushProtocol(),
+                                new UpdatePlayerDataPushProtocol.Request(playerUUID, dataKey, newData)));
             }
 
-            System.out.println("Waiting for update responses...");
-            Map<UUID, UpdatePlayerDataPushProtocol.Response> updateResults = new java.util.HashMap<>();
+            Map<UUID, UpdatePlayerDataPushProtocol.Response> updateResults = new HashMap<>();
             for (Map.Entry<UUID, CompletableFuture<UpdatePlayerDataPushProtocol.Response>> entry : updateFutures.entrySet()) {
-                UpdatePlayerDataPushProtocol.Response result = entry.getValue().get();
-                updateResults.put(entry.getKey(), result);
-                System.out.println("Update result from " + entry.getKey() + ": " + result);
+                updateResults.put(entry.getKey(), entry.getValue().get());
             }
 
             boolean allUpdated = updateResults.values().stream()
                     .allMatch(UpdatePlayerDataPushProtocol.Response::success);
 
-            System.out.println("All servers updated successfully: " + allUpdated);
-
             if (!allUpdated) {
-                System.out.println("Some updates failed, returning error");
-                return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
+                Logger.warn("update: partial failure (results={})", updateResults);
+                return new UpdateSynchronizedDataProtocol.UpdateDataResponse(
                         false, "Failed to update data on all servers");
             }
 
-            System.out.println("All updates successful!");
-            return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
-                    true, null);
+            return new UpdateSynchronizedDataProtocol.UpdateDataResponse(true, null);
 
         } catch (Exception e) {
-            System.out.println("Exception in update endpoint: " + e.getMessage());
-            Logger.error(e, "Error occurred in data mutex endpoint");
-
-            return new UpdateSynchronizedDataProtocolObject.UpdateDataResponse(
+            Logger.error(e, "Error occurred in data mutex update endpoint (lockKey={})", lockKey);
+            return new UpdateSynchronizedDataProtocol.UpdateDataResponse(
                     false, "Error during data update: " + e.getMessage());
         } finally {
-            // Always release locks when done
-            System.out.println("Releasing locks in finally block...");
             DataLockManager.releaseLock(lockKey, requesterId);
-            ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey);
+            RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                    new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
         }
     }
 }

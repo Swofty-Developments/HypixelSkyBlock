@@ -1,23 +1,23 @@
 package net.swofty.service.party.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
 import net.swofty.commons.party.PartyAction;
-import net.swofty.commons.protocol.objects.party.SendPartyActionProtocolObject;
-import net.swofty.commons.protocol.objects.party.SendPartyActionProtocolObject.Request;
-import net.swofty.commons.protocol.objects.party.SendPartyActionProtocolObject.Response;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.protocol.objects.party.SendPartyActionProtocol;
+import net.swofty.commons.protocol.objects.party.SendPartyActionProtocol.Request;
+import net.swofty.commons.protocol.objects.party.SendPartyActionProtocol.Response;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.party.PartyCache;
 import org.tinylog.Logger;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class PartyActionEndpoint implements ServiceEndpoint<Request, Response> {
+public class PartyActionEndpoint implements RedisMessageHandler<Request, Response> {
 
     @Override
-    public SendPartyActionProtocolObject associatedProtocolObject() {
-        return new SendPartyActionProtocolObject();
+    public SendPartyActionProtocol protocol() {
+        return new SendPartyActionProtocol();
     }
 
     @Override
-    public Response onMessage(ServiceProxyRequest message, Request request) {
+    public Response handle(Request request, RedisMessageContext context) {
         try {
             PartyAction action = request.action();
             switch (action) {

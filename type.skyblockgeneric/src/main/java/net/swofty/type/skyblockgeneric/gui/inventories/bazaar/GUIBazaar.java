@@ -16,10 +16,11 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarItemSet;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,8 +159,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                             ));
                         })
                         .exceptionally(throwable -> {
-                            System.err.println("Failed to fetch bazaar data for " + type.name() + ": " + throwable.getMessage());
-                            // Store empty data on failure
+                            Logger.error(throwable, "Failed to fetch bazaar data for {}", type.name());
                             setDataMap.get(set).put(type, new PriceData(type, 0, 0));
                             return null;
                         });
@@ -202,15 +202,15 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                     CACHE.put(category, new CacheEntry(System.currentTimeMillis(), slotData));
 
                     // Schedule UI update on main thread
-                    MathUtility.delay(() -> {
+                    ScheduleUtility.delay(() -> {
                         renderSlots(slotData);
                     }, 1);
                 })
                 .exceptionally(throwable -> {
-                    System.err.println("Failed to rebuild bazaar cache: " + throwable.getMessage());
+                    Logger.error(throwable, "Failed to rebuild bazaar cache");
 
                     // Fallback: render with "Error loading" placeholders
-                    MathUtility.delay(() -> {
+                    ScheduleUtility.delay(() -> {
                         for (int slot : SLOTS) {
                             set(new GUIItem(slot) {
                                 @Override

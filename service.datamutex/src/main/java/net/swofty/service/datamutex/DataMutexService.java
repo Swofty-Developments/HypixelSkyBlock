@@ -5,7 +5,7 @@ import net.swofty.service.datamutex.endpoints.SynchronizeDataEndpoint;
 import net.swofty.service.datamutex.endpoints.UnlockDataEndpoint;
 import net.swofty.service.datamutex.endpoints.UpdateSynchronizedDataEndpoint;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class DataMutexService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
+    public List<RedisMessageHandler> getEndpoints() {
         return List.of(
                 new SynchronizeDataEndpoint(),
                 new UpdateSynchronizedDataEndpoint(),

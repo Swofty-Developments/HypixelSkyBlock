@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "9.3.2"
+    alias(libs.plugins.shadow)
 }
 
 group = "net.swofty"
@@ -28,6 +28,8 @@ dependencies {
     implementation(libs.caffeine)
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driver.sync)
+    implementation(libs.tinylog.api)
+    implementation(libs.tinylog.impl)
 }
 
 application {

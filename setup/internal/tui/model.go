@@ -908,11 +908,23 @@ func installSummary(cfg installer.Config) string {
 	var b strings.Builder
 	fmt.Fprintf(&b, "%-16s %s\n", "Directory", cfg.InstallDir)
 	fmt.Fprintf(&b, "%-16s %s\n", "Bind IP", cfg.BindIP)
+	fmt.Fprintf(&b, "%-16s %s\n", "Connect", okStyle.Render(connectAddress(cfg)))
 	fmt.Fprintf(&b, "%-16s %s\n", "Online mode", enabledLabel(cfg.OnlineMode))
 	fmt.Fprintf(&b, "%-16s %d selected\n", "Servers", len(cfg.Servers))
 	fmt.Fprintf(&b, "%-16s %d selected\n", "Services", len(cfg.Services))
 	fmt.Fprintf(&b, "%-16s %s\n", "DB ports", enabledLabel(cfg.ExposePorts))
 	return b.String()
+}
+
+// connectAddress is the address players use to join the proxy. A wildcard bind
+// (0.0.0.0/::) is not itself connectable, so surface localhost in that case.
+func connectAddress(cfg installer.Config) string {
+	host := cfg.BindIP
+	switch host {
+	case "", "0.0.0.0", "::", "[::]":
+		host = "localhost"
+	}
+	return host + ":25565"
 }
 
 func enabledLabel(value bool) string {

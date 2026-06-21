@@ -5,15 +5,16 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionItemDrop implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(ItemDropEvent event) {
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 
@@ -23,6 +24,11 @@ public class ActionItemDrop implements HypixelEventClass {
         }
 
         if (player.getOpenInventory() != null) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (player.isInLaunchpad()) {
             event.setCancelled(true);
             return;
         }
@@ -46,7 +52,7 @@ public class ActionItemDrop implements HypixelEventClass {
         DroppedItemEntityImpl droppedItem = new DroppedItemEntityImpl(new SkyBlockItem(
                 event.getItemStack()),
                 player);
-        Pos pos = Pos.fromPoint(player.getPosition().add(0, 1, 0));
+        Pos pos = player.getPosition().add(0, 1, 0);
 
         droppedItem.setVelocity(player.getPosition().direction()
                 .mul(5)

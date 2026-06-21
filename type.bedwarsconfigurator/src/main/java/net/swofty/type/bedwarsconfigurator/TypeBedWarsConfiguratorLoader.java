@@ -9,7 +9,7 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -60,7 +60,7 @@ public class TypeBedWarsConfiguratorLoader implements HypixelTypeLoader {
 	}
 
 	/**
-	 * Reloads the maps configuration from file
+	 * Reloads the map configuration from the file
 	 */
 	public static void reloadMapsConfig() {
 		if (gson == null) {
@@ -135,7 +135,7 @@ public class TypeBedWarsConfiguratorLoader implements HypixelTypeLoader {
 
 
 	@Override
-	public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+	public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
 		return List.of();
 	}
 

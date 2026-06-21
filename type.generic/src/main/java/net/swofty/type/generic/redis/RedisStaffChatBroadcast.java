@@ -1,8 +1,8 @@
 package net.swofty.type.generic.redis;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.command.commands.ChatCommand;
 import net.swofty.type.generic.data.HypixelDataHandler;
@@ -11,15 +11,16 @@ import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisStaffChatBroadcast implements TypedProxyHandler<BroadcastStaffChatProtocol.Request, BroadcastStaffChatProtocol.Response> {
+public class RedisStaffChatBroadcast implements RedisMessageHandler<BroadcastStaffChatProtocol.Request, BroadcastStaffChatProtocol.Response> {
     @Override
-    public ProtocolObject<BroadcastStaffChatProtocol.Request, BroadcastStaffChatProtocol.Response> getProtocol() {
+    public RedisProtocol<BroadcastStaffChatProtocol.Request, BroadcastStaffChatProtocol.Response> protocol() {
         return new BroadcastStaffChatProtocol();
     }
 
     @Override
-    public BroadcastStaffChatProtocol.Response onMessage(BroadcastStaffChatProtocol.Request message) {
+    public BroadcastStaffChatProtocol.Response handle(BroadcastStaffChatProtocol.Request message, RedisMessageContext context) {
         String type = message.type();
 
         switch (type) {

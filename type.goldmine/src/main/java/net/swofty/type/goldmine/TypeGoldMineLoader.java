@@ -8,7 +8,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 
@@ -18,7 +18,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.goldmine.entity.EntityLostPickaxe;
-import net.swofty.type.goldmine.tab.GoldMineServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
@@ -76,7 +76,7 @@ public class TypeGoldMineLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new GoldMineServerModule(),
+                        new AreaServerModule("tablist.server_info.area.gold_mine"),
                         new AccountInformationModule()
                 ));
             }
@@ -106,7 +106,7 @@ public class TypeGoldMineLoader implements SkyBlockTypeLoader {
 
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

@@ -1,11 +1,10 @@
 package net.swofty.service.election.endpoints;
 
 import com.google.gson.Gson;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.election.ResolveElectionProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.election.ResolveElectionProtocol;
 import net.swofty.service.election.ElectionDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -13,30 +12,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class ResolveElectionEndpoint implements ServiceEndpoint
-        <ResolveElectionProtocolObject.ResolveElectionMessage,
-                ResolveElectionProtocolObject.ResolveElectionResponse> {
+public class ResolveElectionEndpoint implements RedisMessageHandler
+        <ResolveElectionProtocol.ResolveElectionMessage,
+                ResolveElectionProtocol.ResolveElectionResponse> {
 
     private static final Gson GSON = new Gson();
 
     private static final List<String> SPECIAL_MAYORS = List.of("SCORPIUS", "DERPY", "JERRY");
 
     @Override
-    public ProtocolObject<ResolveElectionProtocolObject.ResolveElectionMessage,
-            ResolveElectionProtocolObject.ResolveElectionResponse> associatedProtocolObject() {
-        return new ResolveElectionProtocolObject();
+    public RedisProtocol<ResolveElectionProtocol.ResolveElectionMessage,
+            ResolveElectionProtocol.ResolveElectionResponse> protocol() {
+        return new ResolveElectionProtocol();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public ResolveElectionProtocolObject.ResolveElectionResponse onMessage(
-            ServiceProxyRequest message,
-            ResolveElectionProtocolObject.ResolveElectionMessage messageObject) {
+    public ResolveElectionProtocol.ResolveElectionResponse handle(ResolveElectionProtocol.ResolveElectionMessage messageObject, RedisMessageContext context) {
         try {
             String rawData = ElectionDatabase.loadElectionData();
             if (rawData == null) {
-                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, null, true, null);
+                return new ResolveElectionProtocol.ResolveElectionResponse(false, null, true, null);
             }
 
             Map<String, Object> data = GSON.fromJson(rawData, Map.class);
@@ -44,7 +42,7 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
 
             if (electionOpen == null || !electionOpen) {
                 data.remove("votes");
-                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, GSON.toJson(data), true, null);
+                return new ResolveElectionProtocol.ResolveElectionResponse(false, GSON.toJson(data), true, null);
             }
 
             int electionYear = messageObject.year();
@@ -62,7 +60,7 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
             sorted.sort((a, b) -> Long.compare(b.getValue(), a.getValue()));
 
             if (sorted.isEmpty()) {
-                return new ResolveElectionProtocolObject.ResolveElectionResponse(false, GSON.toJson(data), true, null);
+                return new ResolveElectionProtocol.ResolveElectionResponse(false, GSON.toJson(data), true, null);
             }
 
             long topVotes = sorted.getFirst().getValue();
@@ -154,10 +152,10 @@ public class ResolveElectionEndpoint implements ServiceEndpoint
 
             ElectionDatabase.saveElectionData(GSON.toJson(data));
 
-            return new ResolveElectionProtocolObject.ResolveElectionResponse(true, GSON.toJson(data), true, null);
+            return new ResolveElectionProtocol.ResolveElectionResponse(true, GSON.toJson(data), true, null);
         } catch (Exception e) {
             Logger.error(e, "Failed to resolve election");
-            return new ResolveElectionProtocolObject.ResolveElectionResponse(false, null, true, null);
+            return new ResolveElectionProtocol.ResolveElectionResponse(false, null, true, null);
         }
     }
 

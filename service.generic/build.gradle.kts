@@ -23,4 +23,5 @@ dependencies {
     implementation(libs.atlas.redis)
     implementation(libs.adventure.api)
     implementation(libs.adventure.text.serializer.gson)
+    implementation(libs.tinylog.api)
 }

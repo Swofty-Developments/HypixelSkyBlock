@@ -11,6 +11,7 @@ import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.Updates;
 import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,7 @@ public record ElectionDatabase(String key) implements MongoDB {
     public static MongoCollection<Document> talliesCollection;
 
     @Override
-    public MongoDB connect(String connectionString) {
+    public @NonNull MongoDB connect(@NonNull String connectionString) {
         ConnectionString cs = new ConnectionString(connectionString);
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         client = MongoClients.create(settings);
@@ -37,7 +38,7 @@ public record ElectionDatabase(String key) implements MongoDB {
     }
 
     @Override
-    public void set(String key, Object value) {
+    public void set(@NonNull String key, Object value) {
         insertOrUpdate(key, value);
     }
 
@@ -49,14 +50,14 @@ public record ElectionDatabase(String key) implements MongoDB {
     }
 
     @Override
-    public Object get(String key, Object def) {
+    public Object get(@NonNull String key, Object def) {
         Document doc = electionCollection.find(Filters.eq("_id", this.key)).first();
         if (doc == null) return def;
         return doc.get(key);
     }
 
     @Override
-    public void insertOrUpdate(String key, Object value) {
+    public void insertOrUpdate(@NonNull String key, Object value) {
         Document doc = new Document("_id", this.key).append(key, value);
         electionCollection.replaceOne(
                 Filters.eq("_id", this.key),
@@ -66,7 +67,7 @@ public record ElectionDatabase(String key) implements MongoDB {
     }
 
     @Override
-    public boolean remove(String id) {
+    public boolean remove(@NonNull String id) {
         Document query = new Document("_id", id);
         Document found = electionCollection.find(query).first();
         if (found == null) return false;

@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.mission.missions.sheperd;
 
 import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerKilledSkyBlockMobEvent;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -12,10 +11,12 @@ import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.*;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionShearSheep extends SkyBlockProgressMission {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onKilledSheep(PlayerKilledSkyBlockMobEvent event) {
         if (event.getKilledMob().getEntityType() != EntityType.SHEEP) return;
 

@@ -1,8 +1,12 @@
 package net.swofty.commons.skywars;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.text.DecimalFormat;
 
-public class SkywarsLevelUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SkywarsLevelUtil {
 
     private static final DecimalFormat FORMAT = new DecimalFormat("#,###.#");
 

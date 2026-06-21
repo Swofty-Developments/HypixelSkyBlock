@@ -1,26 +1,26 @@
 package net.swofty.service.auction.endpoints;
 
 import net.swofty.commons.skyblock.auctions.AuctionItem;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocol;
 import net.swofty.service.auction.AuctionActiveDatabase;
 import net.swofty.service.auction.AuctionInactiveDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.bson.Document;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointFetchItem implements ServiceEndpoint<
-        AuctionFetchItemProtocolObject.AuctionFetchItemMessage,
-        AuctionFetchItemProtocolObject.AuctionFetchItemResponse> {
+public class EndpointFetchItem implements RedisMessageHandler<
+        AuctionFetchItemProtocol.AuctionFetchItemMessage,
+        AuctionFetchItemProtocol.AuctionFetchItemResponse> {
 
     @Override
-    public AuctionFetchItemProtocolObject associatedProtocolObject() {
-        return new AuctionFetchItemProtocolObject();
+    public AuctionFetchItemProtocol protocol() {
+        return new AuctionFetchItemProtocol();
     }
 
     @Override
-    public AuctionFetchItemProtocolObject.AuctionFetchItemResponse onMessage(ServiceProxyRequest message, AuctionFetchItemProtocolObject.AuctionFetchItemMessage messageObject) {
+    public AuctionFetchItemProtocol.AuctionFetchItemResponse handle(AuctionFetchItemProtocol.AuctionFetchItemMessage messageObject, RedisMessageContext context) {
         UUID uuidToFetch = messageObject.uuid();
 
         AuctionItem toReturn = new AuctionItem();
@@ -35,6 +35,6 @@ public class EndpointFetchItem implements ServiceEndpoint<
             toReturn = AuctionItem.fromDocument(inactiveItem);
         }
 
-        return new AuctionFetchItemProtocolObject.AuctionFetchItemResponse(toReturn, true, null);
+        return new AuctionFetchItemProtocol.AuctionFetchItemResponse(toReturn, true, null);
     }
 }

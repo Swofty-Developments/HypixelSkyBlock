@@ -1,26 +1,24 @@
 package net.swofty.service.friend.endpoints;
 
 import net.swofty.commons.friend.FriendData;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.friend.GetFriendDataProtocolObject;
+import net.swofty.commons.protocol.objects.friend.GetFriendDataProtocol;
 import net.swofty.service.friend.FriendCache;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GetFriendDataEndpoint implements ServiceEndpoint<
-        GetFriendDataProtocolObject.GetFriendDataMessage,
-        GetFriendDataProtocolObject.GetFriendDataResponse> {
+public class GetFriendDataEndpoint implements RedisMessageHandler<
+        GetFriendDataProtocol.GetFriendDataMessage,
+        GetFriendDataProtocol.GetFriendDataResponse> {
 
     @Override
-    public GetFriendDataProtocolObject associatedProtocolObject() {
-        return new GetFriendDataProtocolObject();
+    public GetFriendDataProtocol protocol() {
+        return new GetFriendDataProtocol();
     }
 
     @Override
-    public GetFriendDataProtocolObject.GetFriendDataResponse onMessage(
-            ServiceProxyRequest message,
-            GetFriendDataProtocolObject.GetFriendDataMessage messageObject) {
+    public GetFriendDataProtocol.GetFriendDataResponse handle(GetFriendDataProtocol.GetFriendDataMessage messageObject, RedisMessageContext context) {
 
         FriendData data = FriendCache.getFriendData(messageObject.playerUuid());
-        return new GetFriendDataProtocolObject.GetFriendDataResponse(data, true, null);
+        return new GetFriendDataProtocol.GetFriendDataResponse(data, true, null);
     }
 }

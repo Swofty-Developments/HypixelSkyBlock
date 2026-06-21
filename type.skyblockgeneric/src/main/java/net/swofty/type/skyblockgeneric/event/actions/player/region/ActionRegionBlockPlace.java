@@ -5,8 +5,9 @@ import net.minestom.server.event.player.PlayerBlockPlaceEvent;
 import net.minestom.server.tag.Tag;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.utility.MathUtility;
 
@@ -14,7 +15,7 @@ public class ActionRegionBlockPlace implements HypixelEventClass {
     private static final int ISLAND_SIZE = 161;
     private static final Tag<Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerBlockPlaceEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 

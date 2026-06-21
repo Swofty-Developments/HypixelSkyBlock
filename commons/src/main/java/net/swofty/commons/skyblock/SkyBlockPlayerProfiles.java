@@ -6,7 +6,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -62,7 +61,7 @@ public class SkyBlockPlayerProfiles {
     }
 
     public static String getRandomName() {
-        return PROFILE_NAMES[new Random().nextInt(PROFILE_NAMES.length)];
+        return PROFILE_NAMES[java.util.concurrent.ThreadLocalRandom.current().nextInt(PROFILE_NAMES.length)];
     }
 
     public static SkyBlockPlayerProfiles get(UUID uuid) {

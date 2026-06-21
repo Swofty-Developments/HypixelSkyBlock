@@ -7,7 +7,7 @@ import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
@@ -17,28 +17,27 @@ import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.presence.PresencePublisher;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerPlayerHandler extends RedisListener<
+public class ListenerPlayerHandler implements RedisMessageHandler<
         PlayerHandlerProtocol.Request,
         PlayerHandlerProtocol.Response> {
 
     private static final PlayerHandlerProtocol.Response EMPTY = new PlayerHandlerProtocol.Response(Map.of(), true, null);
 
     @Override
-    public ProtocolObject<PlayerHandlerProtocol.Request, PlayerHandlerProtocol.Response> getProtocol() {
+    public RedisProtocol<PlayerHandlerProtocol.Request, PlayerHandlerProtocol.Response> protocol() {
         return new PlayerHandlerProtocol();
     }
 
     @Override
-    public PlayerHandlerProtocol.Response receivedMessage(PlayerHandlerProtocol.Request message, UUID serverUUID) {
+    public PlayerHandlerProtocol.Response handle(PlayerHandlerProtocol.Request message, RedisMessageContext context) {
         UUID uuid = UUID.fromString(message.uuid());
         PlayerHandlerProtocol.Action action = message.action();
         Map<String, Object> data = message.data() != null ? message.data() : Map.of();
@@ -115,7 +114,17 @@ public class ListenerPlayerHandler extends RedisListener<
                 }
                 new TransferHandler(player).transferTo(type);
             }
-            case LIMBO -> new TransferHandler(player).sendToLimbo().join();
+            case LIMBO -> {
+                TransferHandler transferHandler = new TransferHandler(player);
+                String reason = data.containsKey("reason") ? (String) data.get("reason") : "";
+
+                if ("AFK".equalsIgnoreCase(reason)) {
+                    ServerType originType = resolveAfkOriginType(data, potentialServer);
+                    transferHandler.sendToLimboFromAfk(originType).join();
+                } else {
+                    transferHandler.sendToLimbo().join();
+                }
+            }
             case TELEPORT -> {
                 if (potentialServer.isEmpty()) {
                     return EMPTY;
@@ -126,7 +135,7 @@ public class ListenerPlayerHandler extends RedisListener<
                 Number z = (Number) data.get("z");
                 Number yaw = (Number) data.get("yaw");
                 Number pitch = (Number) data.get("pitch");
-                RedisMessage.sendMessageToServer(server,
+                RedisClient.requestServer(server,
                     new TeleportProtocol(),
                     new TeleportProtocol.Request(uuid.toString(),
                         x.doubleValue(), y.doubleValue(), z.doubleValue(),
@@ -137,7 +146,7 @@ public class ListenerPlayerHandler extends RedisListener<
                     return EMPTY;
                 }
                 UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisMessage.sendMessageToServer(server,
+                RedisClient.requestServer(server,
                     new RunEventProtocol(),
                     new RunEventProtocol.Request(uuid.toString(),
                         (String) data.get("event"),
@@ -148,7 +157,7 @@ public class ListenerPlayerHandler extends RedisListener<
                     return EMPTY;
                 }
                 UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisMessage.sendMessageToServer(server,
+                RedisClient.requestServer(server,
                     new RefreshCoopDataProtocol(),
                     new RefreshCoopDataProtocol.Request(uuid.toString(),
                         (String) data.get("datapoint"))).join();
@@ -159,6 +168,27 @@ public class ListenerPlayerHandler extends RedisListener<
             }
         }
         return EMPTY;
+    }
+
+    private ServerType resolveAfkOriginType(Map<String, Object> data, Optional<ServerConnection> potentialServer) {
+        if (data.containsKey("origin-type")) {
+            String rawOriginType = (String) data.get("origin-type");
+            if (ServerType.isServerType(rawOriginType)) {
+                ServerType parsedType = ServerType.valueOf(rawOriginType.toUpperCase());
+                if (parsedType.name().endsWith("_LOBBY")) {
+                    return parsedType;
+                }
+            }
+        }
+
+        ServerType currentType = potentialServer
+            .map(connection -> GameManager.getTypeFromRegisteredServer(connection.getServer()))
+            .orElse(null);
+        if (currentType != null && currentType.name().endsWith("_LOBBY")) {
+            return currentType;
+        }
+
+        return ServerType.PROTOTYPE_LOBBY;
     }
 
     private void publishPresence(Player player, boolean online) {

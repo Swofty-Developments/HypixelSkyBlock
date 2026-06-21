@@ -5,8 +5,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
@@ -15,7 +16,7 @@ import java.util.Collections;
 
 public class ActionPlayerNameColors implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerSpawnEvent event) {
         SkywarsPlayer player = (SkywarsPlayer) event.getPlayer();
 

@@ -42,9 +42,11 @@ build/
 /configuration/hypixel_bedwars_lobby/
 /configuration/hypixel_murder_mystery_lobby/
 /configuration/hypixel_skywars_lobby/
+/configuration/skyblock/garden/
 *.polar
 *.schem
 /setup/skyblock-installer
+/configuration/*.schem
 
 ### Logs ###
 /configuration/logs/
@@ -54,7 +56,6 @@ build/
 .gradle/
 /server/proxy/logs/
 /server/proxy/lang/
-/server/proxy/ViaLoader/
 /server/proxy/plugins/
 /server/proxy/forwarding.secret
 /server/proxy/velocity.toml

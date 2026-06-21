@@ -75,6 +75,7 @@ public class HypixelTranslator extends MiniMessageTranslator {
     public @Nullable String getMiniMessageString(@NotNull String key, @NotNull Locale locale) {
         LocaleKey lk = new LocaleKey(locale, key);
         Optional<String> cached = keyCache.getIfPresent(lk);
+        //noinspection OptionalAssignedToNull - we are doing this correctly.
         if (cached != null) {
             return cached.orElse(null);
         }
@@ -153,7 +154,7 @@ public class HypixelTranslator extends MiniMessageTranslator {
                         String subsystem = dot > 0 ? fileName.substring(0, dot) : fileName;
                         if (subsystem.isEmpty()) return;
 
-                        index.computeIfAbsent(locale, ignored -> new HashMap<>(16, 0.75f))
+                        index.computeIfAbsent(locale, _ -> new HashMap<>(16, 0.75f))
                                 .put(subsystem, p);
                     });
         } catch (IOException ignored) {
@@ -248,7 +249,7 @@ public class HypixelTranslator extends MiniMessageTranslator {
             }
 
             return out;
-        } catch (IOException ignored) {
+        } catch (IOException _) {
             return Map.of();
         }
     }

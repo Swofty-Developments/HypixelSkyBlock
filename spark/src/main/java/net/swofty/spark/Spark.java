@@ -11,13 +11,14 @@ import me.lucko.spark.minestom.MinestomPlayerPingProvider;
 import me.lucko.spark.minestom.MinestomTickHook;
 import me.lucko.spark.minestom.MinestomTickReporter;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.timer.ExecutionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
@@ -76,9 +77,11 @@ public final class Spark implements SparkPlugin {
         ).map(MinestomCommandSender::new);
     }
 
+    private final ExecutorService executor = Executors.newCachedThreadPool();
+
     @Override
     public void executeAsync(Runnable runnable) {
-        MinecraftServer.getSchedulerManager().scheduleNextTick(runnable, ExecutionType.TICK_END);
+        this.executor.execute(runnable);
     }
 
     @Override

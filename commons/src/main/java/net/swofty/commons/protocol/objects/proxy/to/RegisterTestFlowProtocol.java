@@ -1,24 +1,28 @@
 package net.swofty.commons.protocol.objects.proxy.to;
 
 import net.swofty.commons.protocol.JacksonSerializer;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 
 import java.util.List;
 import java.util.Map;
 
-public class RegisterTestFlowProtocol extends ProtocolObject<
+public class RegisterTestFlowProtocol extends RedisProtocol<
         RegisterTestFlowProtocol.Request,
         RegisterTestFlowProtocol.Response> {
+    private static final Serializer<Request> SERIALIZER =
+            new JacksonSerializer<>(Request.class);
+    private static final Serializer<Response> RETURN_SERIALIZER =
+            new JacksonSerializer<>(Response.class);
 
     @Override
     public Serializer<Request> getSerializer() {
-        return new JacksonSerializer<>(Request.class);
+        return SERIALIZER;
     }
 
     @Override
     public Serializer<Response> getReturnSerializer() {
-        return new JacksonSerializer<>(Response.class);
+        return RETURN_SERIALIZER;
     }
 
     public record Request(String testFlowName, String handler, List<String> players,

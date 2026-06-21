@@ -5,15 +5,16 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.inventory.AbstractInventory;
 import net.minestom.server.inventory.Inventory;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.game.SkywarsGameStatus;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 public class ActionChestClose implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onInventoryClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof SkywarsPlayer player)) return;
 

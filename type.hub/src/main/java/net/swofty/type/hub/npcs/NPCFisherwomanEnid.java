@@ -1,10 +1,14 @@
 package net.swofty.type.hub.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.stream.Stream;
 
 public class NPCFisherwomanEnid extends HypixelNPC {
 
@@ -39,6 +43,66 @@ public class NPCFisherwomanEnid extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
+        SkyBlockPlayer player = (SkyBlockPlayer) event.player();
+        if (isInDialogue(player)) {
+            return;
+        }
 
+        if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERWOMAN_ENID)) {
+            setDialogue(player, "first-interaction").thenRun(() ->
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_FISHERWOMAN_ENID, true));
+            return;
+        }
+
+        if (!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_CAUGHT_FIRST_FISH)) {
+            setDialogue(player, "first-interaction");
+            return;
+        }
+
+        if (player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_UNLOCKED_SHIP)) {
+            setDialogue(player, Math.random() < 0.5D ? "after-gerald" : "idle-" + (1 + (int) (Math.random() * 3)));
+            return;
+        }
+
+        setDialogue(player, "after-catching-fish");
+    }
+
+    @Override
+    protected DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+            DialogueSet.builder()
+                .key("first-interaction").lines(new String[]{
+                    "To fish, cast your rod into the water and wait for a fish to bite!"
+                }).build(),
+            DialogueSet.builder()
+                .key("after-catching-fish").lines(new String[]{
+                    "This part of the hub is a popular area for fishing because of the Fishing Outpost!",
+                    "If you follow the river that flows under the bridge downstream, you'll find your way to it.",
+                    "And tell Gerald I won't be home tonight! I'm tired of him making salmon."
+                }).build(),
+            DialogueSet.builder()
+                .key("after-gerald").lines(new String[]{
+                    "If you like fishin', you'll love the Backwater Bayou!",
+                    "You should go there sometime soon!"
+                }).build(),
+            DialogueSet.builder()
+                .key("idle-1").lines(new String[]{
+                    "Using Bait is important to get better results!",
+                    "My favorite kind of bait is Dark Bait because I prefer fishing at night.",
+                    "Angler Angus knows a lot more about Bait than I do. I think he's fishing somewhere along this river if you're interested in learning more."
+                }).build(),
+            DialogueSet.builder()
+                .key("idle-2").lines(new String[]{
+                    "I know that Gavin uses /scg instead of looking in his Fishing Skill menu.",
+                    "He thinks he's being sneaky, but everyone knows about it.",
+                    "Little does he know, I use it too!"
+                }).build(),
+            DialogueSet.builder()
+                .key("idle-3").lines(new String[]{
+                    "The Backwater Bayou has all sorts of wild Sea Creatures native to the area.",
+                    "I've heard stories of Frog Man, but I've never quite worked out if he's a frog or a man.",
+                    "Perhaps he is both, perhaps neither."
+                }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }

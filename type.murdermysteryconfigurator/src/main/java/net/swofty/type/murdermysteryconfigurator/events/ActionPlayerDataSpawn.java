@@ -3,13 +3,14 @@ package net.swofty.type.murdermysteryconfigurator.events;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerDataSpawn implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true, phase = EventPhase.POST_SPAWN)
     public void run(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
 

@@ -58,9 +58,10 @@ public class HypixelScoreboard {
 
         for (int i = oldCount; i < newCount; i++) {
             sidebar.createLine(new Sidebar.ScoreboardLine(
-                    lineId(i),
+                lineId(i),
                 lines.get(i),
-                    newCount - 1 - i
+                newCount - 1 - i,
+                Sidebar.NumberFormat.blank()
             ));
         }
 

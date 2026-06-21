@@ -5,9 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -45,14 +43,14 @@ public class GUICityProjects extends HypixelInventoryGUI {
             set(new GUIClickableItem(slot) {
                 @Override
                 public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (slot != 1) {
                         shopCategorys.gui.open(player);
                     }
                 }
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (slot != 1) {
                         ItemStack.Builder itemStack = shopCategorys.stack;
                         ArrayList<String> lore = new ArrayList<>(itemStack.build().get(DataComponents.LORE).stream().map(StringUtility::getTextFromComponent).toList());
@@ -82,7 +80,7 @@ public class GUICityProjects extends HypixelInventoryGUI {
         for (int slot : categoriesItemsSlots) {
             set(new GUIItem(slot) {
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                     if (slot != 10) {
                         return ItemStackCreator.getStack("§8▲ §7Categories", Material.GRAY_STAINED_GLASS_PANE, 1, "§8▼ §7Items");
                     } else {
@@ -94,7 +92,7 @@ public class GUICityProjects extends HypixelInventoryGUI {
         set(new GUIClickableItem(49) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 player.openBook(Book.builder()
                         .addPage(Component.text("Purchase ranks, gems and more on our webstore!")
                                 .appendNewline()
@@ -107,7 +105,7 @@ public class GUICityProjects extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.enchant(ItemStackCreator.getStack("§aCommunity Shop", Material.EMERALD, 1,
                         "§8Elizabeth",
                         " ",
@@ -126,13 +124,13 @@ public class GUICityProjects extends HypixelInventoryGUI {
         set(new GUIClickableItem(50) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIPreviousCityProjects().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStack("§aPrevious Projects", Material.BOOKSHELF, 1,
                         "§7The community completed §e7 §7projects",
                         "§7in the past.",
@@ -148,14 +146,6 @@ public class GUICityProjects extends HypixelInventoryGUI {
     @Override
     public boolean allowHotkeying() {
         return false;
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {
-    }
-
-    @Override
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
     }
 
     @Override

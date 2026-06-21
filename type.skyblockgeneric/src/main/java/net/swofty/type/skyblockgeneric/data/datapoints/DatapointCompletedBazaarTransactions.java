@@ -81,7 +81,7 @@ public class DatapointCompletedBazaarTransactions extends SkyBlockDatapoint<Data
                     transactions.add(transaction);
                 }
             } catch (Exception e) {
-                System.err.println("Failed to deserialize completed bazaar transactions: " + e.getMessage());
+                org.tinylog.Logger.error(e, "Failed to deserialize completed bazaar transactions");
                 return new PlayerCompletedBazaarTransactions(new ArrayList<>());
             }
 

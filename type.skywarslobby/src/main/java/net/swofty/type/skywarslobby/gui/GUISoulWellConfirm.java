@@ -3,6 +3,7 @@ package net.swofty.type.skywarslobby.gui;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.datapoints.DatapointSoulWellUpgrades;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
@@ -50,7 +51,7 @@ public class GUISoulWellConfirm extends StatelessView {
         layout.slot(13, (_, __) -> {
             String colorCode = upgrade.color();
             return ItemStackCreator.getStack(
-                    "§" + colorCode + upgrade.name() + " " + SoulWellMessages.toRoman(newLevel),
+                    "§" + colorCode + upgrade.name() + " " + StringUtility.getAsRomanNumeral(newLevel),
                     upgrade.material(),
                     1,
                     "§8Permanent Upgrade",

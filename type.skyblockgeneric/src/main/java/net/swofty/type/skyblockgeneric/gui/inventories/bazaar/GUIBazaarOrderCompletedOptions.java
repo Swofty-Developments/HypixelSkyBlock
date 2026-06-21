@@ -276,7 +276,7 @@ public class GUIBazaarOrderCompletedOptions extends HypixelInventoryGUI {
 
         } catch (Exception e) {
             player.sendMessage(I18n.string("gui_bazaar.order_completed.claim_failed", l, Component.text(e.getMessage())));
-            System.err.println("Failed to claim bazaar rewards: " + e.getMessage());
+            org.tinylog.Logger.error(e, "Failed to claim bazaar rewards");
         }
     }
 

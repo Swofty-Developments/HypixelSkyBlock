@@ -6,7 +6,7 @@ import net.swofty.commons.party.PartyBroadcast;
 import net.swofty.commons.party.PendingParty;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
 import net.swofty.commons.protocol.objects.party.PartyBroadcastPushProtocol;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -276,7 +276,7 @@ public class PartyCache {
                 .filter(uuid -> !uuid.equals(warperUUID))
                 .toList();
 
-        Map<UUID, PartyBroadcastPushProtocol.Response> responses = ServiceToServerManager.sendToAllServers(
+        Map<UUID, PartyBroadcastPushProtocol.Response> responses = RedisClient.requestAllServersFromService(
                 new PartyBroadcastPushProtocol(),
                 new PartyBroadcastPushProtocol.Request(new PartyBroadcast.Warp(party, warperUUID)),
                 WARP_BROADCAST_TIMEOUT_MS).join();
@@ -368,7 +368,7 @@ public class PartyCache {
     }
 
     private static void broadcast(PartyBroadcast broadcast) {
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
                 new PartyBroadcastPushProtocol(),
                 new PartyBroadcastPushProtocol.Request(broadcast),
                 BROADCAST_TIMEOUT_MS);
@@ -376,7 +376,7 @@ public class PartyCache {
 
     private static void sendErrorToPlayer(UUID playerUUID, String message) {
         String separator = "§9§m-----------------------------------------------------";
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
                 new SendMessagePushProtocol(),
                 new SendMessagePushProtocol.Request(playerUUID, separator + "\n" + message + "\n" + separator),
                 BROADCAST_TIMEOUT_MS);

@@ -58,16 +58,17 @@ int vid = gl_VertexID % 4;
 - Inline linear_fog: guard with `if (vertexDistance <= FogStart) return color;` then `smoothstep`
 
 ### Pack format versions
-| MC Version | Resource Pack Format |
-|------------|---------------------|
-| 1.21.0-1.21.1 | 34 |
-| 1.21.2 | 42 |
-| 1.21.4 | 46 |
-| 1.21.5 | 55 |
-| 1.21.6 | 63 |
-| 1.21.7-1.21.8 | 64 |
-| 1.21.9-1.21.10 | 69 |
-| 1.21.11 | 75 |
+
+| MC Version     | Resource Pack Format |
+|----------------|----------------------|
+| 1.21.0-1.21.1  | 34                   |
+| 1.21.2         | 42                   |
+| 1.21.4         | 46                   |
+| 1.21.5         | 55                   |
+| 1.21.6         | 63                   |
+| 1.21.7-1.21.8  | 64                   |
+| 1.21.9-1.21.10 | 69                   |
+| 1.21.11        | 75                   |
 
 ### pack.mcmeta schema change (important)
 - Vanilla changed `pack.mcmeta` for newer versions: `min_format`/`max_format` are used instead of `pack_format`.

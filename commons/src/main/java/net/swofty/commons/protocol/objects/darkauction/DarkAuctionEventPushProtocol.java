@@ -1,12 +1,12 @@
 package net.swofty.commons.protocol.objects.darkauction;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 import java.util.List;
 import java.util.UUID;
 
 public class DarkAuctionEventPushProtocol
-        extends ServicePushProtocol<DarkAuctionEventPushProtocol.Request, DarkAuctionEventPushProtocol.Response> {
+        extends RedisProtocol<DarkAuctionEventPushProtocol.Request, DarkAuctionEventPushProtocol.Response> {
 
     public DarkAuctionEventPushProtocol() {
         super(Request.class, Response.class);

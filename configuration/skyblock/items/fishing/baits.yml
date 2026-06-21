@@ -1,0 +1,171 @@
+items:
+  - id: MINNOW_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      FISHING_SPEED: 25
+    components:
+      - id: FISHING_BAIT
+        texture: b8e749ba141c054bb0c125320b17677bdcb3a7e9807a57527c0877b94548a2e
+
+  - id: FISH_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      FISHING_SPEED: 45
+    components:
+      - id: FISHING_BAIT
+        texture: 49e8dc9fdc9f00e1d17666a4787d34cca7cc6dc030f0dc686195546f81c6f22
+
+  - id: LIGHT_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: FISHING_BAIT
+        texture: e3bcc16f402342b4acd29aecac72d1d5a116e0abb478bb4960e734fd70686ba
+
+  - id: DARK_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: FISHING_BAIT
+        texture: 7281618a5c8239078fd43fef8eae14ea00665f635bd56d4451cccd5d0fa11821
+
+  - id: SPIKED_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      SEA_CREATURE_CHANCE: 6
+    components:
+      - id: FISHING_BAIT
+        texture: e42c436c6580fad217323b9f045daa23a9f88219ac26506637669eff20901f74
+
+  - id: SPOOKY_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    default_statistics:
+      FISHING_SPEED: 25
+    components:
+      - id: FISHING_BAIT
+        tag_bonuses:
+          SPOOKY: 15
+        texture: 977eab558e6a90f7cedd72c2416c891f47d71eb4e7bdcc299a6335286f5cba98
+
+  - id: CARROT_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: FISHING_BAIT
+        texture: 4d3a6bd98ac1833c664c4909ff8d2dc62ce887bdcf3cc5b3848651ae5af6b
+
+  - id: CORRUPTED_BAIT
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: FISHING_BAIT
+        texture: 4bbcddd45cd347865bceab3e3dc5d382723463963f85ecce81cdd61b53db14e4
+
+  - id: BLESSED_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: FISHING_BAIT
+        treasure_quality_bonus: 50
+        texture: c2b910b5897cdb86b21ebfcba544afa470ae6d228bee3494427c9c7e8f33502b
+
+  - id: ICE_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: FISHING_BAIT
+        tag_bonuses:
+          WINTER: 20
+        texture: 609e161bdc325c71572a548a79bb15481c924d63e4fb821379d5dd6c8929f39f
+
+  - id: SHARK_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: FISHING_BAIT
+        tag_bonuses:
+          SHARK: 20
+        texture: edff904124efe486b3a54261dbb8072b0a4e11615ad8d7394d814e0e8c8ef9eb
+
+  - id: GLOWY_CHUM_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      FISHING_SPEED: 25
+      SEA_CREATURE_CHANCE: 3
+    components:
+      - id: FISHING_BAIT
+        texture: dfdc1eed684dd805eae96d132e3da53d64267d7361388d5e2c67f5969871e71d
+
+  - id: HOT_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: FISHING_BAIT
+        trophy_fish_chance_bonus: 5
+        texture: 213c6899d97109c6cacbbcdd01e8900abaf46432f197595baa15ad137d5fb9ba
+
+  - id: WORM_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      FISHING_SPEED: 60
+    components:
+      - id: FISHING_BAIT
+        texture: df03ad96092f3f789902436709cdf69de6b727c121b3c2daef9ffa1ccaed186c
+
+  - id: FROZEN_BAIT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_BAIT
+        tag_bonuses:
+          WINTER: 35
+        texture: 38dc68a97cefe92c8cdaa7cb1a7a4de8f16c161da736edf54f79b74beecd6513
+
+  - id: GOLDEN_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: FISHING_BAIT
+        treasure_chance_bonus: 4
+        texture: 72e2908dbb112dcd0b367df43fafcc41a56d9cf803e90a367834b4911f84f391
+
+  - id: TREASURE_BAIT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      FISHING_SPEED: 10
+    components:
+      - id: FISHING_BAIT
+        treasure_chance_bonus: 2
+        texture: c1695c80854447b5db5a0ee6d57ef0a7d91d815bd7e6318c516a39d12fe0639e
+
+  - id: WOODEN_BAIT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    components:
+      - id: FISHING_BAIT
+        texture: 5b236a39e51a39dff9bced39333a73413984bc74db37c1318bfc4a4459f035d2
+
+  - id: HOTSPOT_BAIT
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_BAIT
+        tag_bonuses:
+          HOTSPOT: 50
+        texture: de9b17db5c4cadef737e2fefb42a0123c32cbeaa1ca8932579eb2f05018612cd
+
+  - id: WHALE_BAIT
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      FISHING_SPEED: 30
+    components:
+      - id: FISHING_BAIT
+        texture: 5b4fb49ae77cfcf0b8f62df9c69cc96b27096ad2737d6d0aa450b50664fb2303

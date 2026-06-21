@@ -373,6 +373,15 @@ public class SkyBlockDataHandler extends DataHandler {
         QUIVER("quiver", false, false, false,
                 DatapointQuiver.class, new DatapointQuiver("quiver")),
 
+        SHIP_STATE("ship_state", false, false, false,
+            DatapointShipState.class, new DatapointShipState("ship_state")),
+
+        TROPHY_FISH("trophy_fish", false, false, false,
+            DatapointTrophyFish.class, new DatapointTrophyFish("trophy_fish")),
+
+        SLAYER("slayer", false, false, false,
+            DatapointSlayer.class, new DatapointSlayer("slayer")),
+
         RACE_BEST_TIME("race_best_time", false, false, false, DatapointMapStringLong.class,
                 new DatapointMapStringLong("race_best_time")),
 

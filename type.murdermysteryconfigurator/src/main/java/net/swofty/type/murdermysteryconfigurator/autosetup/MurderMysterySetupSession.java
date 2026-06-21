@@ -3,11 +3,19 @@ package net.swofty.type.murdermysteryconfigurator.autosetup;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.instance.Instance;
+import net.swofty.commons.mc.HypixelPosition;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
-import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig.*;
+import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig.KillRegion;
+import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig.MapEntry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,17 +29,17 @@ public class MurderMysterySetupSession {
     private String mapName;
     private final List<MurderMysteryGameType> gameTypes = new ArrayList<>();
 
-    private PitchYawPosition waitingLocation;
-    private final List<Position> goldSpawns = new ArrayList<>();
-    private final List<Position> playerSpawns = new ArrayList<>();
+    private HypixelPosition waitingLocation;
+    private final List<HypixelPosition> goldSpawns = new ArrayList<>();
+    private final List<HypixelPosition> playerSpawns = new ArrayList<>();
     private final Map<String, EditableKillRegion> killRegions = new LinkedHashMap<>();
 
     @Getter
     @Setter
     public static class EditableKillRegion {
         private String name;
-        private Position minPos;
-        private Position maxPos;
+        private HypixelPosition minPos;
+        private HypixelPosition maxPos;
 
         public EditableKillRegion(String name) {
             this.name = name;

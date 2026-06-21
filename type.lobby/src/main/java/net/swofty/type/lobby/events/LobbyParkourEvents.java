@@ -8,10 +8,11 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
 
@@ -22,7 +23,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 
 	private final HashMap<UUID, Long> lastClickedTimes = new HashMap<>();
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void onPlayerJoin(PlayerSpawnEvent event) {
 		HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 		LobbyTypeLoader loader = (LobbyTypeLoader) HypixelConst.getTypeLoader();
@@ -33,7 +34,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 		parkourManager.updateForPlayer(HypixelConst.getInstanceContainer(), player);
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void onPlayerDisconnect(PlayerDisconnectEvent event) {
 		HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 		lastClickedTimes.remove(player.getUuid());
@@ -45,7 +46,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 		parkourManager.cancelParkour(player);
 	}
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerMoveEvent event) {
 		LobbyTypeLoader loader = (LobbyTypeLoader) HypixelConst.getTypeLoader();
 		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
@@ -63,7 +64,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 					.3f, 0.75f
 			));
 
-			MathUtility.delay(() -> player.playSound(Sound.sound(
+			ScheduleUtility.delay(() -> player.playSound(Sound.sound(
 					Key.key("block.metal_pressure_plate.click_off"), Sound.Source.NEUTRAL,
 					.3f, 0.65f
 			)), 30);
@@ -79,7 +80,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 						.3f, 0.75f
 				));
 
-				MathUtility.delay(() -> player.playSound(Sound.sound(
+				ScheduleUtility.delay(() -> player.playSound(Sound.sound(
 						Key.key("block.metal_pressure_plate.click_off"), Sound.Source.NEUTRAL,
 						.3f, 0.65f
 				)), 30);
@@ -96,7 +97,7 @@ public class LobbyParkourEvents implements HypixelEventClass {
 					.3f, 0.75f
 			));
 
-			MathUtility.delay(() -> player.playSound(Sound.sound(
+			ScheduleUtility.delay(() -> player.playSound(Sound.sound(
 					Key.key("block.metal_pressure_plate.click_off"), Sound.Source.NEUTRAL,
 					.3f, 0.65f
 			)), 30);

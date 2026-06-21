@@ -51,7 +51,12 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerStatistics {
     private static final Map<Player, BossBar> barCache = new HashMap<>();

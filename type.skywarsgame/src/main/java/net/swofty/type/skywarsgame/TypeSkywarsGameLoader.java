@@ -8,6 +8,7 @@ import net.hollowcube.polar.PolarLoader;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
@@ -17,16 +18,17 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocol;
 import net.swofty.commons.skywars.SkywarsGameType;
 import net.swofty.commons.skywars.map.SkywarsMapsConfig;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.pvp.MinestomPvP;
+import net.swofty.type.game.game.GameObject;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -127,7 +129,7 @@ public class TypeSkywarsGameLoader implements HypixelTypeLoader {
         instanceManager = MinecraftServer.getInstanceManager();
         fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register(
                 "fullbright_skywars",
-                DimensionType.builder().ambientLight(0.9f).build()
+            DimensionType.builder().ambientLight(1f).setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE).build()
         );
 
         Path skywarsDir = Path.of("./configuration/skywars");
@@ -204,9 +206,9 @@ public class TypeSkywarsGameLoader implements HypixelTypeLoader {
             int maxPlayers = HypixelConst.getMaxPlayers();
             int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
 
-            List<net.swofty.commons.game.Game> commonsGames = new ArrayList<>();
+            List<GameObject> commonsGames = new ArrayList<>();
             for (SkywarsGame internalGame : TypeSkywarsGameLoader.getGames()) {
-                net.swofty.commons.game.Game commonsGame = new net.swofty.commons.game.Game();
+                GameObject commonsGame = new GameObject();
                 commonsGame.setGameId(UUID.fromString(internalGame.getGameId()));
                 commonsGame.setType(ServerType.SKYWARS_GAME);
                 commonsGame.setMap(internalGame.getMapEntry().getName());
@@ -222,7 +224,7 @@ public class TypeSkywarsGameLoader implements HypixelTypeLoader {
                 commonsGames.add(commonsGame);
             }
 
-            var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
+            var heartbeat = new GameHeartbeatProtocol.HeartbeatMessage(
                     uuid,
                     shortName,
                     getType(),
@@ -294,15 +296,15 @@ public class TypeSkywarsGameLoader implements HypixelTypeLoader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<TypedServiceHandler<?, ?>> getTypedServiceHandlers() {
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
         return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.skywarsgame.redis.service",
-                TypedServiceHandler.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

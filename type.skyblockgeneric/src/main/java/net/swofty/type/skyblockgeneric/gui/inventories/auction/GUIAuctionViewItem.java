@@ -7,7 +7,7 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -50,9 +50,9 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     }
 
     public void updateItems() {
-        AuctionFetchItemProtocolObject.AuctionFetchItemMessage message =
-                new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(auctionID);
-        CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future =
+        AuctionFetchItemProtocol.AuctionFetchItemMessage message =
+                new AuctionFetchItemProtocol.AuctionFetchItemMessage(auctionID);
+        CompletableFuture<AuctionFetchItemProtocol.AuctionFetchItemResponse> future =
                 new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message);
         AuctionItem item = future.join().item();
 

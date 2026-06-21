@@ -3,6 +3,7 @@ package net.swofty.type.skywarslobby.kit;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +153,7 @@ public class SkywarsKit {
             if (enchantments != null && !enchantments.enchantments().isEmpty()) {
                 for (var entry : enchantments.enchantments().entrySet()) {
                     String enchantName = formatEnchantmentName(entry.getKey().name());
-                    lore.add("§7   §8∙ " + enchantName + " " + toRoman(entry.getValue()));
+                    lore.add("§7   §8∙ " + enchantName + " " + StringUtility.getAsRomanNumeral(entry.getValue()));
                 }
             }
         }
@@ -202,10 +203,4 @@ public class SkywarsKit {
         return result.toString();
     }
 
-    private String toRoman(int number) {
-        if (number <= 0 || number > 255) return String.valueOf(number);
-        String[] romanNumerals = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        if (number <= 10) return romanNumerals[number];
-        return String.valueOf(number);
-    }
 }

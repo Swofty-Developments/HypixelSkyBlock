@@ -2,7 +2,6 @@ package net.swofty.type.hub;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.BlockVec;
@@ -20,7 +19,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.InteractionEntity;
@@ -30,7 +29,7 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
-import net.swofty.type.hub.tab.HubServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.hub.util.HubMap;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
@@ -163,6 +162,8 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 		Furniture.load("hexatorum");
 		Furniture.load("rune_table");
+		Furniture.load("pufferfish", new Pos(115.5, 70, -30.5));
+		Furniture.load("hub_swords", new Pos(-52.5, 69.25, -85.5));
 
 		new InteractionEntity(1.1f, 1.1f, (player, _) -> {
 			final SkyBlockPlayer skyBlockPlayer = (SkyBlockPlayer) player;
@@ -207,7 +208,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 				return new ArrayList<>(List.of(
 						new SkyBlockPlayersOnlineModule(1),
 						new SkyBlockPlayersOnlineModule(2),
-						new HubServerModule(),
+						new AreaServerModule("tablist.server_info.area.hub"),
 						new AccountInformationModule()
 				));
 			}
@@ -226,6 +227,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 				.setAttribute(EnvironmentAttribute.FOG_END_DISTANCE, 1000f)
 				.setAttribute(EnvironmentAttribute.FOG_COLOR, new Color(0xc0d8ff))
 				.setAttribute(EnvironmentAttribute.SKY_COLOR, new Color(0x78a7ff))
+				.setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE)
 				.timelines(MinecraftServer.getTimelineRegistry().getTag(TagKey.ofHash("#minecraft:in_overworld")))
 				.skylight(true)
 				.build());
@@ -254,7 +256,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 
 	@Override
-	public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+	public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
 		return List.of();
 	}
 

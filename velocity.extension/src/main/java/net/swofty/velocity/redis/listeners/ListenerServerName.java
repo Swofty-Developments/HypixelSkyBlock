@@ -1,26 +1,25 @@
 package net.swofty.velocity.redis.listeners;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.RequestServerNameProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.UUID;
 
-@ChannelListener
-public class ListenerServerName extends RedisListener<
+public class ListenerServerName implements RedisMessageHandler<
         RequestServerNameProtocol.Request,
         RequestServerNameProtocol.Response> {
 
     @Override
-    public ProtocolObject<RequestServerNameProtocol.Request, RequestServerNameProtocol.Response> getProtocol() {
+    public RedisProtocol<RequestServerNameProtocol.Request, RequestServerNameProtocol.Response> protocol() {
         return new RequestServerNameProtocol();
     }
 
     @Override
-    public RequestServerNameProtocol.Response receivedMessage(RequestServerNameProtocol.Request message, UUID serverUUID) {
-        GameManager.GameServer server = GameManager.getFromUUID(serverUUID);
+    public RequestServerNameProtocol.Response handle(RequestServerNameProtocol.Request message, RedisMessageContext context) {
+        GameManager.GameServer server = GameManager.getFromUUID(UUID.fromString(context.origin().id()));
         return new RequestServerNameProtocol.Response(server.displayName(), server.shortDisplayName(), true, null);
     }
 }

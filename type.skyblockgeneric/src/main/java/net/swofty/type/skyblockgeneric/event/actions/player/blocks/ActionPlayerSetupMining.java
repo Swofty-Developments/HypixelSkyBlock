@@ -4,12 +4,13 @@ import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionPlayerSetupMining implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void onSpawn(PlayerSpawnEvent event) {
         var player = event.getPlayer();
 

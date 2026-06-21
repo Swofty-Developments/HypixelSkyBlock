@@ -9,7 +9,7 @@ public abstract class TablistModule {
     public abstract List<TablistEntry> getEntries(HypixelPlayer player);
 
     // TODO: use Components
-    public record TablistEntry(String content, TablistSkinRegistry registry) {}
+    public record TablistEntry(String content, TablistSkin registry) {}
 
     public TablistEntry getGrayEntry() {
         return new TablistEntry(" ", TablistSkinRegistry.GRAY);
@@ -32,11 +32,6 @@ public abstract class TablistModule {
         }
 
         int spaces = (30 - text.length()) / 2;
-        StringBuilder builder = new StringBuilder();
-        builder.append(" ".repeat(spaces));
-
-        builder.append(text);
-
-        return builder.toString();
+        return " ".repeat(spaces) + text;
     }
 }

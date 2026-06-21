@@ -6,15 +6,16 @@ import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.MapTeam;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
-import net.swofty.type.bedwarsgame.game.Game;
-import net.swofty.type.bedwarsgame.game.GameStatus;
+import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.game.game.GameState;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 
 	public HealPoolUpgrade() {
 		super(
-				"heal_pool",
+			TeamUpgradeId.HEAL_POOL,
 				"Heal Pool",
 				"Your team permanently gains a heal pool at your base.",
 				ItemStack.of(Material.BEACON),
@@ -33,7 +34,7 @@ public class HealPoolUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, TeamKey teamKey, int level) {
+	public void applyEffect(BedWarsGame game, TeamKey teamKey, int level) {
 		MapTeam team = teamKey != null
 				? game.getMapEntry().getConfiguration().getTeams().get(teamKey)
 				: null;
@@ -42,11 +43,11 @@ public class HealPoolUpgrade extends TeamUpgrade {
 			return;
 		}
 
-		BedWarsMapsConfig.PitchYawPosition spawnPos = team.getSpawn();
+		HypixelPosition spawnPos = team.getSpawn();
 		Pos teamSpawn = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
 
 		MinecraftServer.getSchedulerManager().buildTask(() -> {
-			if (game.getGameStatus() != GameStatus.IN_PROGRESS) {
+			if (game.getState() != GameState.IN_PROGRESS) {
 				return;
 			}
 

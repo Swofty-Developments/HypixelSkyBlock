@@ -4,13 +4,14 @@ import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerClickedInteractionEntity implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerEntityInteractEvent event) {
 		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 		if (event.getHand() != PlayerHand.MAIN) return;

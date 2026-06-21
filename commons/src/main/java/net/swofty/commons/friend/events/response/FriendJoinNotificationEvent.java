@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendJoinNotificationEvent extends FriendResponseEvent {
+public final class FriendJoinNotificationEvent extends FriendResponseEvent {
+    private static final Serializer<FriendJoinNotificationEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendJoinNotificationEvent.class);
+
     private final UUID player;
     private final UUID friend;
     private final String friendName;
@@ -31,30 +34,6 @@ public class FriendJoinNotificationEvent extends FriendResponseEvent {
 
     @Override
     public Serializer<FriendJoinNotificationEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendJoinNotificationEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("player", value.player.toString());
-                json.put("friend", value.friend.toString());
-                json.put("friendName", value.friendName);
-                return json.toString();
-            }
-
-            @Override
-            public FriendJoinNotificationEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendJoinNotificationEvent(
-                        UUID.fromString(jsonObject.getString("player")),
-                        UUID.fromString(jsonObject.getString("friend")),
-                        jsonObject.getString("friendName")
-                );
-            }
-
-            @Override
-            public FriendJoinNotificationEvent clone(FriendJoinNotificationEvent value) {
-                return new FriendJoinNotificationEvent(value.player, value.friend, value.friendName);
-            }
-        };
+        return SERIALIZER;
     }
 }

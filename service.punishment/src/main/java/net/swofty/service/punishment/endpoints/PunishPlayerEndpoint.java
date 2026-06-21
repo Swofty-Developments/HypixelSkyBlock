@@ -1,47 +1,48 @@
 package net.swofty.service.punishment.endpoints;
 
 import com.google.gson.Gson;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.punishment.PunishPlayerServiceProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PunishPlayerProtocol;
-import net.swofty.commons.protocol.objects.punishment.PunishPlayerProtocolObject;
 import net.swofty.commons.punishment.*;
-import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.service.punishment.ProxyRedis;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageBus;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.time.Instant;
 import java.util.Optional;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class PunishPlayerEndpoint implements ServiceEndpoint
-        <PunishPlayerProtocolObject.PunishPlayerMessage,
-                PunishPlayerProtocolObject.PunishPlayerResponse> {
+public class PunishPlayerEndpoint implements RedisMessageHandler
+        <PunishPlayerServiceProtocol.PunishPlayerMessage,
+                PunishPlayerServiceProtocol.PunishPlayerResponse> {
 
     @Override
-    public ProtocolObject<PunishPlayerProtocolObject.PunishPlayerMessage, PunishPlayerProtocolObject.PunishPlayerResponse> associatedProtocolObject() {
-        return new PunishPlayerProtocolObject();
+    public RedisProtocol<PunishPlayerServiceProtocol.PunishPlayerMessage, PunishPlayerServiceProtocol.PunishPlayerResponse> protocol() {
+        return new PunishPlayerServiceProtocol();
     }
 
     @Override
-    public PunishPlayerProtocolObject.PunishPlayerResponse onMessage(ServiceProxyRequest message, PunishPlayerProtocolObject.PunishPlayerMessage messageObject) {
+    public PunishPlayerServiceProtocol.PunishPlayerResponse handle(PunishPlayerServiceProtocol.PunishPlayerMessage messageObject, RedisMessageContext context) {
         PunishmentType punishmentType;
         try {
             punishmentType = PunishmentType.valueOf(messageObject.type());
         } catch (IllegalArgumentException e) {
-            return new PunishPlayerProtocolObject.PunishPlayerResponse(false, null, PunishPlayerProtocolObject.ErrorCode.INVALID_TYPE, "The punishment type provided is invalid.");
+            return new PunishPlayerServiceProtocol.PunishPlayerResponse(false, null, PunishPlayerServiceProtocol.ErrorCode.INVALID_TYPE, "The punishment type provided is invalid.");
         }
 
         Instant now = Instant.now();
         if (messageObject.expiresAt() > 0 && Instant.ofEpochMilli(messageObject.expiresAt()).isBefore(now)) {
-            return new PunishPlayerProtocolObject.PunishPlayerResponse(false, null, PunishPlayerProtocolObject.ErrorCode.INVALID_EXPIRY, "The expiration time provided is invalid.");
+            return new PunishPlayerServiceProtocol.PunishPlayerResponse(false, null, PunishPlayerServiceProtocol.ErrorCode.INVALID_EXPIRY, "The expiration time provided is invalid.");
         }
 
         boolean hasOverwriteTag = messageObject.tags() != null && messageObject.tags().contains(PunishmentTag.OVERWRITE);
         if (!hasOverwriteTag) {
             Optional<ActivePunishment> existing = PunishmentRedis.getActive(messageObject.target(), messageObject.type());
             if (existing.isPresent()) {
-                return new PunishPlayerProtocolObject.PunishPlayerResponse(false, null,
-                        PunishPlayerProtocolObject.ErrorCode.ALREADY_PUNISHED, existing.get().banId());
+                return new PunishPlayerServiceProtocol.PunishPlayerResponse(false, null,
+                        PunishPlayerServiceProtocol.ErrorCode.ALREADY_PUNISHED, existing.get().banId());
             }
         }
 
@@ -59,12 +60,16 @@ public class PunishPlayerEndpoint implements ServiceEndpoint
             );
         } catch (Exception e) {
             Logger.error("Failed to save punishment to Redis", e);
-            return new PunishPlayerProtocolObject.PunishPlayerResponse(false, null,
-                    PunishPlayerProtocolObject.ErrorCode.DATABASE_ERROR, "Failed to save punishment.");
+            return new PunishPlayerServiceProtocol.PunishPlayerResponse(false, null,
+                    PunishPlayerServiceProtocol.ErrorCode.DATABASE_ERROR, "Failed to save punishment.");
         }
 
         Gson gson = new Gson();
-        ProxyRedis.publishToProxy(new PunishPlayerProtocol(),
+        RedisMessageBus.publish(
+                RedisEndpoint.service(context.destination().id()),
+                RedisEndpoint.proxy().id(),
+                new PunishPlayerProtocol().channel(),
+                new PunishPlayerProtocol(),
                 new PunishPlayerProtocol.Request(
                         messageObject.target().toString(),
                         messageObject.type(),
@@ -73,13 +78,14 @@ public class PunishPlayerEndpoint implements ServiceEndpoint
                         reason.getBanType() != null ? reason.getBanType().name() : null,
                         reason.getMuteType() != null ? reason.getMuteType().name() : null,
                         messageObject.tags() != null ? gson.toJson(messageObject.tags()) : null
-                ));
+                )
+        );
         Logger.info("Issued {} punishment to {} for reason '{}' (expires at: {})",
                 messageObject.type(),
                 messageObject.target(),
                 reason.getReasonString(),
                 messageObject.expiresAt()
         );
-        return new PunishPlayerProtocolObject.PunishPlayerResponse(true, id.id(), null, null);
+        return new PunishPlayerServiceProtocol.PunishPlayerResponse(true, id.id(), null, null);
     }
 }

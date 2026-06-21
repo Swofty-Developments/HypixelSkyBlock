@@ -1,31 +1,32 @@
 package net.swofty.service.orchestrator.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocol;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.orchestrator.OrchestratorCache;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GameHeartbeatEndpoint implements ServiceEndpoint
-        <GameHeartbeatProtocolObject.HeartbeatMessage,
-                GameHeartbeatProtocolObject.HeartbeatResponse> {
+public class GameHeartbeatEndpoint implements RedisMessageHandler
+        <GameHeartbeatProtocol.HeartbeatMessage,
+                GameHeartbeatProtocol.HeartbeatResponse> {
 
     @Override
-    public ProtocolObject<GameHeartbeatProtocolObject.HeartbeatMessage, GameHeartbeatProtocolObject.HeartbeatResponse> associatedProtocolObject() {
-        return new GameHeartbeatProtocolObject();
+    public RedisProtocol<GameHeartbeatProtocol.HeartbeatMessage, GameHeartbeatProtocol.HeartbeatResponse> protocol() {
+        return new GameHeartbeatProtocol();
     }
 
     @Override
-    public GameHeartbeatProtocolObject.HeartbeatResponse onMessage(ServiceProxyRequest message,
-                                                                   GameHeartbeatProtocolObject.HeartbeatMessage body) {
+    public GameHeartbeatProtocol.HeartbeatResponse handle(GameHeartbeatProtocol.HeartbeatMessage body, RedisMessageContext context) {
         OrchestratorCache.handleHeartbeat(
-                body.uuid(),
-                body.shortName(),
-                body.type(),
-                body.maxPlayers(),
-                body.onlinePlayers(),
-                body.games()
+            body.uuid(),
+            body.shortName(),
+            body.type(),
+            body.maxPlayers(),
+            body.onlinePlayers(),
+            body.games(),
+            body.mapAdvertisements(),
+            body.remainingGameSlots()
         );
-        return new GameHeartbeatProtocolObject.HeartbeatResponse(true, null);
+        return new GameHeartbeatProtocol.HeartbeatResponse(true, null);
     }
 }

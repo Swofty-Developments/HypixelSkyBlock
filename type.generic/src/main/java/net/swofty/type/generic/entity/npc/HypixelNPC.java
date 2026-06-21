@@ -100,12 +100,8 @@ public abstract class HypixelNPC {
                     Pos position = config.position(player);
 
                     String username = holograms[holograms.length - 1];
-                    boolean overflowing = username.length() > 16;
-                    if (overflowing) {
-                        username = " ";
-                    }
-
                     Entity entity;
+
                     switch (config) {
                         case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
                             player,
@@ -114,18 +110,14 @@ public abstract class HypixelNPC {
                             humanConfig.texture(player),
                             humanConfig.signature(player),
                             holograms,
-                            humanConfig,
-                            overflowing);
-                        case VillagerConfiguration villagerConfig -> {
-                            entity = new NPCVillagerEntityImpl(player,
-                                position, username, villagerConfig.profession(), villagerConfig, holograms, overflowing);
-                        }
-                        case AnimalConfiguration animalConfig -> {
-                            entity = new NPCAnimalEntityImpl(player,
-                                position,
-                                username,
-                                animalConfig.entityType(), animalConfig, holograms, overflowing);
-                        }
+                            humanConfig
+                        );
+                        case VillagerConfiguration villagerConfig -> entity = new NPCVillagerEntityImpl(player,
+                            position, username, villagerConfig.profession(), villagerConfig, holograms);
+                        case AnimalConfiguration animalConfig -> entity = new NPCAnimalEntityImpl(player,
+                            position,
+                            username,
+                            animalConfig.entityType(), animalConfig, holograms);
                         default ->
                             throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
                     }

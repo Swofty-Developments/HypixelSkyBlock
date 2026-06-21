@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.mission.missions.sheperd;
 
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -11,9 +10,11 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionTalkToShepherd extends SkyBlockMission {
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onVillagerSpokenTo(NPCInteractEvent event) {
         MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();
 

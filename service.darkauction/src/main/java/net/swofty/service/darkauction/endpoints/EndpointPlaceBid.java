@@ -1,30 +1,28 @@
 package net.swofty.service.darkauction.endpoints;
 
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.darkauction.PlaceBidProtocol;
 import net.swofty.service.darkauction.DarkAuctionScheduler;
 import net.swofty.service.darkauction.DarkAuctionService;
 import net.swofty.service.darkauction.DarkAuctionState;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointPlaceBid implements ServiceEndpoint<
+public class EndpointPlaceBid implements RedisMessageHandler<
         PlaceBidProtocol.PlaceBidMessage,
         PlaceBidProtocol.PlaceBidResponse> {
 
     @Override
-    public ProtocolObject<PlaceBidProtocol.PlaceBidMessage, PlaceBidProtocol.PlaceBidResponse> associatedProtocolObject() {
+    public RedisProtocol<PlaceBidProtocol.PlaceBidMessage, PlaceBidProtocol.PlaceBidResponse> protocol() {
         return new PlaceBidProtocol();
     }
 
     @Override
-    public PlaceBidProtocol.PlaceBidResponse onMessage(
-            ServiceProxyRequest request,
-            PlaceBidProtocol.PlaceBidMessage msg) {
+    public PlaceBidProtocol.PlaceBidResponse handle(PlaceBidProtocol.PlaceBidMessage msg, RedisMessageContext context) {
 
         DarkAuctionState auction = DarkAuctionService.getCurrentAuction();
 

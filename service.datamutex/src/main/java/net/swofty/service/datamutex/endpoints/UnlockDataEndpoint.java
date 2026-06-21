@@ -1,32 +1,32 @@
 package net.swofty.service.datamutex.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocolObject;
+import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
+import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocol;
 import net.swofty.service.datamutex.DataLockManager;
-import net.swofty.service.generic.redis.ServiceEndpoint;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisClient;
+import org.tinylog.Logger;
 
 import java.util.List;
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class UnlockDataEndpoint implements ServiceEndpoint<
-        UnlockDataProtocolObject.UnlockDataRequest,
-        UnlockDataProtocolObject.UnlockDataResponse> {
+public class UnlockDataEndpoint implements RedisMessageHandler<
+        UnlockDataProtocol.UnlockDataRequest,
+        UnlockDataProtocol.UnlockDataResponse> {
 
     @Override
-    public UnlockDataProtocolObject associatedProtocolObject() {
-        return new UnlockDataProtocolObject();
+    public UnlockDataProtocol protocol() {
+        return new UnlockDataProtocol();
     }
 
     @Override
-    public UnlockDataProtocolObject.UnlockDataResponse onMessage(
-            ServiceProxyRequest request,
-            UnlockDataProtocolObject.UnlockDataRequest messageObject) {
+    public UnlockDataProtocol.UnlockDataResponse handle(UnlockDataProtocol.UnlockDataRequest messageObject, RedisMessageContext context) {
 
         List<UUID> serverUUIDs = messageObject.serverUUIDs();
         UUID playerUUID = messageObject.playerUUID();
         String dataKey = messageObject.dataKey();
-        String requesterId = request.getRequestServer();
+        String requesterId = context.origin().id();
 
         String lockKey = playerUUID + ":" + dataKey;
 
@@ -34,25 +34,24 @@ public class UnlockDataEndpoint implements ServiceEndpoint<
             // Release service-level lock
             DataLockManager.releaseLock(lockKey, requesterId);
 
-            ServiceToServerManager.unlockPlayerData(serverUUIDs, playerUUID, dataKey)
-                    .thenAccept(results -> {
-                        results.forEach((serverUUID, response) -> {
-                            if (!response.success()) {
-                                System.err.println("Failed to unlock data on server " + serverUUID +
-                                        " for player " + playerUUID + ", dataKey: " + dataKey);
-                            }
-                        });
-                    })
+            RedisClient.requestServersFromService(serverUUIDs, new UnlockPlayerDataPushProtocol(),
+                            new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey))
+                    .thenAccept(results -> results.forEach((serverUUID, response) -> {
+                        if (!response.success()) {
+                            Logger.warn("Failed to unlock data on server {} for player {}, dataKey: {}",
+                                    serverUUID, playerUUID, dataKey);
+                        }
+                    }))
                     .exceptionally(throwable -> {
-                        System.err.println("Error unlocking data on servers: " + throwable.getMessage());
+                        Logger.error(throwable, "Error unlocking data on servers");
                         return null;
                     });
 
-            return new UnlockDataProtocolObject.UnlockDataResponse(
+            return new UnlockDataProtocol.UnlockDataResponse(
                     true, null);
 
         } catch (Exception e) {
-            return new UnlockDataProtocolObject.UnlockDataResponse(
+            return new UnlockDataProtocol.UnlockDataResponse(
                     false, "Error during unlock: " + e.getMessage());
         }
     }

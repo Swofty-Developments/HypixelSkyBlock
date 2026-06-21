@@ -21,6 +21,7 @@ public enum ServerType {
 	PROTOTYPE_LOBBY(false),
 	BEDWARS_LOBBY(false),
 	BEDWARS_GAME(false),
+	MAIN_LOBBY(false),
 	BEDWARS_CONFIGURATOR(false),
 	MURDER_MYSTERY_LOBBY(false),
 	MURDER_MYSTERY_GAME(false),
@@ -28,7 +29,8 @@ public enum ServerType {
 	SKYWARS_LOBBY(false),
 	SKYWARS_GAME(false),
 	SKYWARS_CONFIGURATOR(false),
-	RAVENGARD_LOBBY(false)
+	RAVENGARD_LOBBY(false),
+	REPLAY_VIEWER(false)
 	;
 
 	private final boolean isSkyBlock;

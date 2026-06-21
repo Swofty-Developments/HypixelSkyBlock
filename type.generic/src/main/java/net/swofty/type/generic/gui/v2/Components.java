@@ -9,7 +9,11 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -61,23 +65,9 @@ public final class Components {
         return true;
     }
 
-    public static <S> void backAlways(ViewLayout<S> layout, int slot) {
-        layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
-            ViewNavigator navigator = ViewNavigator.get(ctx.player());
-            if (!navigator.pop()) {
-                ctx.player().closeInventory();
-            }
-        });
-    }
-
     public static <S> void backOrClose(ViewLayout<S> layout, int slot, ViewContext context) {
-        ViewNavigator navigator = ViewNavigator.get(context.player());
-        if (navigator.hasStack()) {
-            layout.slot(slot, (s, c) -> BACK_BUTTON, (click, ctx) -> {
-                ViewNavigator.get(ctx.player()).pop();
-            });
-        } else {
-            layout.slot(slot, (s, c) -> CLOSE_BUTTON, (click, ctx) -> ctx.player().closeInventory());
+        if (!back(layout, slot, context)) {
+            close(layout, slot);
         }
     }
 

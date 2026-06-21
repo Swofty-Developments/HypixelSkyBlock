@@ -1,11 +1,12 @@
 package net.swofty.proxyapi;
 
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.ServicePushProtocol;
-import net.swofty.commons.redis.RedisEnvelope;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
-import net.swofty.proxyapi.redis.TypedServiceHandler;
-import net.swofty.redisapi.api.ChannelRegistry;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.redis.RedisChannels;
+import net.swofty.commons.redis.RedisClient;
+import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisMessageBus;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.redisapi.api.RedisAPI;
 
 import java.util.UUID;
@@ -18,71 +19,57 @@ public class ProxyAPI {
 
         RedisAPI.generateInstance(URI);
         RedisAPI.getInstance().setFilterId(serverUUID.toString());
+        RedisClient.identify(RedisEndpoint.server(serverUUID));
     }
 
-    public <T, R> void registerTypedProxyHandler(TypedProxyHandler<T, R> handler) {
-        ProtocolObject<T, R> protocol = handler.getProtocol();
+    public <T, R> void registerProxyHandler(RedisMessageHandler<T, R> handler) {
+        RedisProtocol<T, R> protocol = handler.protocol();
 
-        RedisAPI.getInstance().registerChannel(protocol.channel(), (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            String rawMessage = envelope.payload();
-
-            T typedMessage = protocol.translateFromString(rawMessage);
-            R response = handler.onMessage(typedMessage);
-
-            String serializedResponse = protocol.translateReturnToString(response);
-
-            RedisAPI.getInstance().publishMessage(
-                    "proxy",
-                    ChannelRegistry.getFromName(protocol.channel()),
-                    new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
-        });
+        RedisMessageBus.registerHandler(
+                RedisEndpoint.server(serverUUID),
+                RedisChannels.protocol(protocol),
+                handler,
+                (envelope, channel) -> RedisMessageContext.between(
+                        UUID.fromString(envelope.id()),
+                        RedisEndpoint.proxy(),
+                        RedisEndpoint.server(serverUUID),
+                        protocol.channel()
+                ),
+                envelope -> RedisChannels.PROXY_RESPONSE,
+                envelope -> RedisChannels.protocol(protocol)
+        );
     }
 
-    public <T, R> void registerTypedServiceHandler(TypedServiceHandler<T, R> handler) {
-        ServicePushProtocol<T, R> protocol = handler.getProtocol();
-        String channelName = "service_" + protocol.channel();
+    public <T, R> void registerServiceHandler(RedisMessageHandler<T, R> handler) {
+        RedisProtocol<T, R> protocol = handler.protocol();
 
-        RedisAPI.getInstance().registerChannel(channelName, (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            String serviceId = envelope.from();
-            String rawMessage = envelope.payload();
+        RedisMessageBus.registerHandler(
+                RedisEndpoint.server(serverUUID),
+                RedisChannels.serviceRequest(protocol),
+                handler,
+                (envelope, channel) -> RedisMessageContext.between(
+                        UUID.fromString(envelope.id()),
+                        RedisEndpoint.service(envelope.from()),
+                        RedisEndpoint.server(serverUUID),
+                        protocol.channel()
+                ),
+                envelope -> envelope.from(),
+                envelope -> RedisChannels.SERVICE_RESPONSE
+        );
 
-            Thread.startVirtualThread(() -> {
-                T typedMessage = protocol.translateFromString(rawMessage);
-                R response = handler.onMessage(typedMessage);
-
-                String serializedResponse = protocol.translateReturnToString(response);
-
-                RedisAPI.getInstance().publishMessage(
-                        serviceId,
-                        ChannelRegistry.getFromName("service_response"),
-                        new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
-            });
-        });
-
-        RedisAPI.getInstance().registerChannel("service_broadcast_" + protocol.channel(), (event) -> {
-            String messageWithoutFilter = event.message.substring(event.message.indexOf(";") + 1);
-            RedisEnvelope envelope = RedisEnvelope.deserialize(messageWithoutFilter);
-            String serviceId = envelope.from();
-            String rawMessage = envelope.payload();
-
-            Thread.startVirtualThread(() -> {
-                T typedMessage = protocol.translateFromString(rawMessage);
-                R response = handler.onMessage(typedMessage);
-
-                if (response == null) return;
-
-                String serializedResponse = protocol.translateReturnToString(response);
-
-                RedisAPI.getInstance().publishMessage(
-                        serviceId,
-                        ChannelRegistry.getFromName("service_broadcast_response"),
-                        new RedisEnvelope(envelope.id(), serverUUID.toString(), serializedResponse).serialize());
-            });
-        });
+        RedisMessageBus.registerHandler(
+                RedisEndpoint.server(serverUUID),
+                RedisChannels.serviceBroadcast(protocol),
+                handler,
+                (envelope, channel) -> RedisMessageContext.between(
+                        UUID.fromString(envelope.id()),
+                        RedisEndpoint.service(envelope.from()),
+                        RedisEndpoint.server(serverUUID),
+                        protocol.channel()
+                ).asBroadcast(),
+                envelope -> envelope.from(),
+                envelope -> RedisChannels.SERVICE_BROADCAST_RESPONSE
+        );
     }
 
     public void start() {

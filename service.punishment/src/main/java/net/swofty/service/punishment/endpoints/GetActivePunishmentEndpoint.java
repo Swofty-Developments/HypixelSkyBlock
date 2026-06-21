@@ -1,33 +1,33 @@
 package net.swofty.service.punishment.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.punishment.GetActivePunishmentProtocol;
 import net.swofty.commons.punishment.ActivePunishment;
 import net.swofty.commons.punishment.PunishmentRedis;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 import java.util.Optional;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class GetActivePunishmentEndpoint implements ServiceEndpoint
-        <GetActivePunishmentProtocolObject.GetActivePunishmentMessage,
-                GetActivePunishmentProtocolObject.GetActivePunishmentResponse> {
+public class GetActivePunishmentEndpoint implements RedisMessageHandler
+        <GetActivePunishmentProtocol.GetActivePunishmentMessage,
+                GetActivePunishmentProtocol.GetActivePunishmentResponse> {
 
     @Override
-    public ProtocolObject<GetActivePunishmentProtocolObject.GetActivePunishmentMessage, GetActivePunishmentProtocolObject.GetActivePunishmentResponse> associatedProtocolObject() {
-        return new GetActivePunishmentProtocolObject();
+    public RedisProtocol<GetActivePunishmentProtocol.GetActivePunishmentMessage, GetActivePunishmentProtocol.GetActivePunishmentResponse> protocol() {
+        return new GetActivePunishmentProtocol();
     }
 
     @Override
-    public GetActivePunishmentProtocolObject.GetActivePunishmentResponse onMessage(ServiceProxyRequest message, GetActivePunishmentProtocolObject.GetActivePunishmentMessage messageObject) {
+    public GetActivePunishmentProtocol.GetActivePunishmentResponse handle(GetActivePunishmentProtocol.GetActivePunishmentMessage messageObject, RedisMessageContext context) {
         Optional<ActivePunishment> existing = PunishmentRedis.getActive(messageObject.target(), messageObject.type());
         if (existing.isEmpty()) {
-            return new GetActivePunishmentProtocolObject.GetActivePunishmentResponse(false, null, null, null, 0, List.of(), true, null);
+            return new GetActivePunishmentProtocol.GetActivePunishmentResponse(false, null, null, null, 0, List.of(), true, null);
         }
 
         ActivePunishment punishment = existing.get();
-        return new GetActivePunishmentProtocolObject.GetActivePunishmentResponse(
+        return new GetActivePunishmentProtocol.GetActivePunishmentResponse(
                 true,
                 punishment.type(),
                 punishment.banId(),

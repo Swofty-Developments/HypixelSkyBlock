@@ -1,14 +1,14 @@
 package net.swofty.commons.protocol.objects.party;
 
 import net.swofty.commons.party.PartyBroadcast;
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class PartyBroadcastPushProtocol
-        extends ServicePushProtocol<PartyBroadcastPushProtocol.Request, PartyBroadcastPushProtocol.Response> {
+        extends RedisProtocol<PartyBroadcastPushProtocol.Request, PartyBroadcastPushProtocol.Response> {
 
     public PartyBroadcastPushProtocol() {
         super(Request.class, Response.class);

@@ -1,24 +1,24 @@
 package net.swofty.service.itemtracker.endpoints;
 
 import net.swofty.commons.TrackedItem;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocolObject;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemUpdateProtocol;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.itemtracker.TrackedItemsDatabase;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointUpdateItem implements ServiceEndpoint<
-        TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage,
-        TrackedItemUpdateProtocolObject.TrackedItemUpdateResponse> {
+public class EndpointUpdateItem implements RedisMessageHandler<
+        TrackedItemUpdateProtocol.TrackedItemUpdateMessage,
+        TrackedItemUpdateProtocol.TrackedItemUpdateResponse> {
 
     @Override
-    public TrackedItemUpdateProtocolObject associatedProtocolObject() {
-        return new TrackedItemUpdateProtocolObject();
+    public TrackedItemUpdateProtocol protocol() {
+        return new TrackedItemUpdateProtocol();
     }
 
     @Override
-    public TrackedItemUpdateProtocolObject.TrackedItemUpdateResponse onMessage(ServiceProxyRequest message, TrackedItemUpdateProtocolObject.TrackedItemUpdateMessage messageObject) {
+    public TrackedItemUpdateProtocol.TrackedItemUpdateResponse handle(TrackedItemUpdateProtocol.TrackedItemUpdateMessage messageObject, RedisMessageContext context) {
         UUID itemUUID = messageObject.itemUUID();
         UUID attachedPlayerUUID = messageObject.attachedPlayerUUID();
         UUID attachedPlayerProfile = messageObject.attachedPlayerProfile();
@@ -41,6 +41,6 @@ public class EndpointUpdateItem implements ServiceEndpoint<
             }
         });
 
-        return new TrackedItemUpdateProtocolObject.TrackedItemUpdateResponse();
+        return new TrackedItemUpdateProtocol.TrackedItemUpdateResponse();
     }
 }

@@ -19,6 +19,7 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
+import net.swofty.commons.StringUtility;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.PlayerShopData;
@@ -65,6 +66,7 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
 import net.swofty.type.skyblockgeneric.region.mining.handler.SkyBlockMiningHandler;
 import net.swofty.type.skyblockgeneric.skill.skills.RunecraftingSkill;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
 import org.intellij.lang.annotations.MagicConstant;
@@ -551,6 +553,18 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
     }
 
+    public DatapointShipState.ShipState getShipState() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SHIP_STATE, DatapointShipState.class).getValue();
+    }
+
+    public DatapointTrophyFish.TrophyFishData getTrophyFishData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.TROPHY_FISH, DatapointTrophyFish.class).getValue();
+    }
+
+    public DatapointSlayer.SlayerData getSlayerData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SLAYER, DatapointSlayer.class).getValue();
+    }
+
     public DatapointAccessoryBag.PlayerAccessoryBag getAccessoryBag() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.ACCESSORY_BAG, DatapointAccessoryBag.class).getValue();
     }
@@ -669,7 +683,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         if (matcher.find()) {
             sackCategory = matcher.group(2);
         } else {
-            System.out.println("Invalid sack name: " + sack.name());
+            org.tinylog.Logger.warn("Invalid sack name: {}", sack.name());
             return 0;
         }
 

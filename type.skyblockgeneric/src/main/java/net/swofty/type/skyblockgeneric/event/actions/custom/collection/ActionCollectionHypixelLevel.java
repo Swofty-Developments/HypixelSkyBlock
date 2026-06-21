@@ -1,8 +1,9 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.collection;
 
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
@@ -11,7 +12,7 @@ import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 public class ActionCollectionHypixelLevel implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(CollectionUpdateEvent event) {
         if (CollectionCategories.getCategory(event.getItemType()) == null) return;
 

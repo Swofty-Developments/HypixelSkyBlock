@@ -1,9 +1,9 @@
 package net.swofty.commons.protocol.objects.game;
 
-import net.swofty.commons.protocol.ServicePushProtocol;
+import net.swofty.commons.protocol.RedisProtocol;
 
 public class InstantiateGamePushProtocol
-        extends ServicePushProtocol<InstantiateGamePushProtocol.Request, InstantiateGamePushProtocol.Response> {
+        extends RedisProtocol<InstantiateGamePushProtocol.Request, InstantiateGamePushProtocol.Response> {
 
     public InstantiateGamePushProtocol() {
         super(Request.class, Response.class);

@@ -186,6 +186,11 @@ items:
     material: FISHING_ROD
     rarity: COMMON
     components:
+      - id: FISHING_ROD
+      - id: FISHING_ROD_METADATA
+        display_name: Fishing Rod
+        medium: WATER
+        rod_parts_enabled: true
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -925,5 +930,4 @@ items:
             result:
               type: JUKEBOX
               amount: 1
-
 

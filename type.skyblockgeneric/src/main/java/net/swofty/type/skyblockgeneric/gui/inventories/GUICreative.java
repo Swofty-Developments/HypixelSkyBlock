@@ -74,8 +74,7 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
     @Override
     protected void layoutBackground(ViewLayout<CreativeState> layout, CreativeState state, ViewContext ctx) {
-        Components.fill(layout);
-        layout.filler(Layouts.border(0, 53), ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE, ""));
+        layout.filler(Layouts.border(0, 53), Components.FILLER);
     }
 
     @Override

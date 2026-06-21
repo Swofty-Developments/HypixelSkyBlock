@@ -5,8 +5,9 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.event.custom.CollectionUpdateEvent;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 public class ActionCollectionDisplay implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(CollectionUpdateEvent event) {
 
         if (event.getOldValue() == 0 && CollectionCategories.getCategory(event.getItemType()) != null) {

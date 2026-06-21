@@ -5,7 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.TypedProxyHandler;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -14,7 +14,7 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.spidersden.tab.SpidersDenServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -57,7 +57,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new SpidersDenServerModule(),
+                        new AreaServerModule("tablist.server_info.area.spiders_den"),
                         new AccountInformationModule()
                 ));
             }
@@ -87,7 +87,7 @@ public class TypeSpidersDenLoader implements SkyBlockTypeLoader {
 
 
     @Override
-    public List<TypedProxyHandler<?, ?>> getTypedProxyHandlers() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

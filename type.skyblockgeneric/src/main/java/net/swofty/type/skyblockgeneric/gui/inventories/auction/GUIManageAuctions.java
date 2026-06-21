@@ -9,7 +9,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -61,13 +61,13 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
 
     public void setItems() {
         List<UUID> auctions = ((SkyBlockPlayer) getPlayer()).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ACTIVE_OWNED, DatapointUUIDList.class).getValue();
-        List<CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse>> futures = new ArrayList<>(auctions.size());
+        List<CompletableFuture<AuctionFetchItemProtocol.AuctionFetchItemResponse>> futures = new ArrayList<>(auctions.size());
         PaginationList<AuctionItem> auctionItems = new PaginationList<>(7);
 
         auctions.forEach(uuid -> {
-            AuctionFetchItemProtocolObject.AuctionFetchItemMessage message =
-                    new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(uuid);
-            CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future =
+            AuctionFetchItemProtocol.AuctionFetchItemMessage message =
+                    new AuctionFetchItemProtocol.AuctionFetchItemMessage(uuid);
+            CompletableFuture<AuctionFetchItemProtocol.AuctionFetchItemResponse> future =
                     new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message);
 
             future.thenAccept(response -> {

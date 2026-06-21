@@ -5,7 +5,6 @@ import net.minestom.server.timer.SchedulerManager;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.JerryClickedEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -16,10 +15,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionTalkJerry extends SkyBlockMission {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onJerryClicked(JerryClickedEvent event) {
         MissionData data = event.getPlayer().getMissionData();
         SkyBlockPlayer player = event.getPlayer();

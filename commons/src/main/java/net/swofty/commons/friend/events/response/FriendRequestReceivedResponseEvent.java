@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import net.swofty.commons.friend.FriendResponseEvent;
+import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.Serializer;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class FriendRequestReceivedResponseEvent extends FriendResponseEvent {
+public final class FriendRequestReceivedResponseEvent extends FriendResponseEvent {
+    private static final Serializer<FriendRequestReceivedResponseEvent> SERIALIZER =
+            new JacksonSerializer<>(FriendRequestReceivedResponseEvent.class);
+
     private final UUID sender;
     private final UUID target;
     private final String senderName;
@@ -31,30 +34,6 @@ public class FriendRequestReceivedResponseEvent extends FriendResponseEvent {
 
     @Override
     public Serializer<FriendRequestReceivedResponseEvent> getSerializer() {
-        return new Serializer<>() {
-            @Override
-            public String serialize(FriendRequestReceivedResponseEvent value) {
-                JSONObject json = new JSONObject();
-                json.put("sender", value.sender.toString());
-                json.put("target", value.target.toString());
-                json.put("senderName", value.senderName);
-                return json.toString();
-            }
-
-            @Override
-            public FriendRequestReceivedResponseEvent deserialize(String json) {
-                JSONObject jsonObject = new JSONObject(json);
-                return new FriendRequestReceivedResponseEvent(
-                        UUID.fromString(jsonObject.getString("sender")),
-                        UUID.fromString(jsonObject.getString("target")),
-                        jsonObject.getString("senderName")
-                );
-            }
-
-            @Override
-            public FriendRequestReceivedResponseEvent clone(FriendRequestReceivedResponseEvent value) {
-                return new FriendRequestReceivedResponseEvent(value.sender, value.target, value.senderName);
-            }
-        };
+        return SERIALIZER;
     }
 }
