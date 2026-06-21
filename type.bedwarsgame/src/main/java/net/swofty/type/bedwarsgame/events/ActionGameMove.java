@@ -14,16 +14,15 @@ import net.swofty.type.bedwarsgame.shop.TrapId;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
 
 import java.util.List;
 import java.util.Map;
 
 public class ActionGameMove implements HypixelEventClass {
 
-	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true, phase = EventPhase.GAMEPLAY)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, isAsync = true)
 	public void run(PlayerMoveEvent event) {
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 

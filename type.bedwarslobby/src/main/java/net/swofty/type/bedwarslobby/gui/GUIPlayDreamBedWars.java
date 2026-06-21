@@ -7,8 +7,8 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bedwars.BedWarsDreamRotation;
 import net.swofty.commons.bedwars.BedWarsGameType;
-import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
@@ -121,11 +121,11 @@ public class GUIPlayDreamBedWars extends StatelessView {
         var player = ctx.player();
         player.closeInventory();
 
-        RejoinGameProtocolObject.RejoinGameRequest request =
-            new RejoinGameProtocolObject.RejoinGameRequest(player.getUuid());
+        RejoinGameProtocol.RejoinGameRequest request =
+            new RejoinGameProtocol.RejoinGameRequest(player.getUuid());
 
         ORCHESTRATOR.handleRequest(request).thenAccept(response -> {
-            if (!(response instanceof RejoinGameProtocolObject.RejoinGameResponse resp)) {
+            if (!(response instanceof RejoinGameProtocol.RejoinGameResponse resp)) {
                 player.sendMessage("§cFailed to check for active games. Please try again.");
                 return;
             }
@@ -136,8 +136,8 @@ public class GUIPlayDreamBedWars extends StatelessView {
             }
 
             player.sendMessage("§aRejoining your game...");
-            ChooseGameProtocolObject.ChooseGameMessage chooseMsg =
-                new ChooseGameProtocolObject.ChooseGameMessage(player.getUuid(), resp.server(), resp.gameId());
+            ChooseGameProtocol.ChooseGameMessage chooseMsg =
+                new ChooseGameProtocol.ChooseGameMessage(player.getUuid(), resp.server(), resp.gameId());
             ORCHESTRATOR.handleRequest(chooseMsg);
 
             player.asProxyPlayer().transferToWithIndication(resp.server().uuid());

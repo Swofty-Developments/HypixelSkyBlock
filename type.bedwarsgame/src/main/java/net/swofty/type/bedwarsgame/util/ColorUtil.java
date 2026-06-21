@@ -1,8 +1,5 @@
 package net.swofty.type.bedwarsgame.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.Nullable;
@@ -10,9 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.lang.reflect.Field;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ColorUtil {
-
+public class ColorUtil {
 
     @Nullable
     public static Color getColorByName(String name) {

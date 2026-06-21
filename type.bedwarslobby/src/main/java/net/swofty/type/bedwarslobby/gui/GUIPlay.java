@@ -5,8 +5,8 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.bedwars.BedWarsGameType;
-import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocolObject;
-import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocolObject;
+import net.swofty.commons.protocol.objects.orchestrator.ChooseGameProtocol;
+import net.swofty.commons.protocol.objects.orchestrator.RejoinGameProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
@@ -91,11 +91,11 @@ public class GUIPlay extends StatelessView {
                 var player = viewCtx.player();
                 player.closeInventory();
 
-                RejoinGameProtocolObject.RejoinGameRequest request =
-                    new RejoinGameProtocolObject.RejoinGameRequest(player.getUuid());
+                RejoinGameProtocol.RejoinGameRequest request =
+                    new RejoinGameProtocol.RejoinGameRequest(player.getUuid());
 
                 ORCHESTRATOR.handleRequest(request).thenAccept(response -> {
-                    if (!(response instanceof RejoinGameProtocolObject.RejoinGameResponse resp)) {
+                    if (!(response instanceof RejoinGameProtocol.RejoinGameResponse resp)) {
                         player.sendMessage("§cFailed to check for active games. Please try again.");
                         return;
                     }
@@ -107,8 +107,8 @@ public class GUIPlay extends StatelessView {
 
                     player.sendMessage("§aRejoining your game...");
 
-                    ChooseGameProtocolObject.ChooseGameMessage chooseMsg =
-                        new ChooseGameProtocolObject.ChooseGameMessage(
+                    ChooseGameProtocol.ChooseGameMessage chooseMsg =
+                        new ChooseGameProtocol.ChooseGameMessage(
                             player.getUuid(),
                             resp.server(),
                             resp.gameId()

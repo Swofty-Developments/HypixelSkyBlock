@@ -7,14 +7,13 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
+import net.swofty.type.generic.event.HypixelEventClass;
 
 public class ActionPlayerDisconnect implements HypixelEventClass {
 
 	@SneakyThrows
-	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.DISCONNECT)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
 	public void run(PlayerDisconnectEvent event) {
 		final BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
 		BedWarsGame game = player.getGame();

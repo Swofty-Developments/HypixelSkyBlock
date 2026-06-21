@@ -1,17 +1,17 @@
 package net.swofty.type.bedwarsgame.redis.service;
 
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol;
 import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol.Request;
 import net.swofty.commons.protocol.objects.game.InstantiateGamePushProtocol.Response;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
-import net.swofty.type.bedwarsgame.game.Game;
 import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 
-public class InstantiateGameHandler implements RedisMessageHandler<Request, Response> {
+public class TypedInstantiateGameHandler implements RedisMessageHandler<Request, Response> {
 
     private static final InstantiateGamePushProtocol PROTOCOL = new InstantiateGamePushProtocol();
 
@@ -23,7 +23,7 @@ public class InstantiateGameHandler implements RedisMessageHandler<Request, Resp
     @Override
     public Response handle(Request request, RedisMessageContext context) {
         try {
-            BedwarsGameType gameType = BedwarsGameType.valueOf(request.gameType().toUpperCase());
+            BedWarsGameType gameType = BedWarsGameType.valueOf(request.gameType().toUpperCase());
 
             BedWarsMapsConfig.MapEntry mapEntry = null;
             if (TypeBedWarsGameLoader.getMapsConfig() != null) {
@@ -31,7 +31,7 @@ public class InstantiateGameHandler implements RedisMessageHandler<Request, Resp
                     if (entry.getId().equals(request.map()) || entry.getName().equals(request.map())) {
                         if (entry.getConfiguration() != null &&
                                 entry.getConfiguration().getTypes() != null &&
-                                !entry.getConfiguration().getTypes().contains(gameType)) {
+                            !entry.getConfiguration().getTypes().contains(gameType.getMapCompatibilityType())) {
                             return Response.failure("Map does not support game type: " + gameType);
                         }
                         mapEntry = entry;
@@ -44,7 +44,7 @@ public class InstantiateGameHandler implements RedisMessageHandler<Request, Resp
                 return Response.failure("Map not found: " + request.map());
             }
 
-            Game game = TypeBedWarsGameLoader.createGame(mapEntry);
+            BedWarsGame game = TypeBedWarsGameLoader.createGame(mapEntry, gameType);
             if (game == null) {
                 return Response.failure("Server at capacity, cannot create new game");
             }
