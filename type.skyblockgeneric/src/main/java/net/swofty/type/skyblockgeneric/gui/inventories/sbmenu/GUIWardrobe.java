@@ -277,7 +277,7 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
                 "§7" + new SimpleDateFormat("MMM d, yyyy").format(new Date(set.getFirstWorn())), "", "§eClick to equip this armor set");
         }
         return ItemStackCreator.getStack("§7Slot " + (index + 1) + ": §aReady", Material.PINK_DYE, 1,
-            "§7This wardrobe slot is ready to be", "equipped.", "", "§eClick to equip this armor set");
+            "§7This wardrobe slot is ready to be", "§7equipped.", "", "§eClick to equip this armor set");
     }
 
     private DatapointWardrobe.WardrobeData data(SkyBlockPlayer player) {
