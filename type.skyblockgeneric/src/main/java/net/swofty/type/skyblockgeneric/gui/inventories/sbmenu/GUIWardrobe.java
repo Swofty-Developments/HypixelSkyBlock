@@ -54,7 +54,12 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
                 int guiSlot = piece * 9 + column;
                 if (!unlocked) {
                     layout.slot(guiSlot, ItemStackCreator.getStack("§7Slot " + (setIndex + 1) + ": §cLocked",
-                        Material.BLACK_STAINED_GLASS_PANE, 1, "§7Unlock more slots with your rank", "§7or Community Center upgrades."));
+                        Material.BLACK_STAINED_GLASS_PANE, 1, "",
+                        "§7Unlock more slots from:",
+                        "§8▶ §aAccount Upgrades §8- §69 Slots",
+                        "",
+                        "§cUnlock more slots from §dElizabeth §cat",
+                        "§cthe §bCommunity Center"));
                     continue;
                 }
                 SkyBlockItem item = set.getPieces()[piece];
@@ -68,7 +73,15 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
             int controlSlot = 36 + column;
             if (!unlocked) {
                 layout.slot(controlSlot, ItemStackCreator.getStack("§7Slot " + (setIndex + 1) + ": §cLocked",
-                    Material.BLACK_DYE, 1, "§7This wardrobe slot is locked."));
+                    Material.RED_DYE, 1,
+                    "§7This wardrobe slot is locked and",
+                    "§7cannot be used.",
+                    "",
+                    "§7Unlock more slots from:",
+                    "§8▶ §aAccount Upgrades §8- §69 Slots",
+                    "",
+                    "§cUnlock more slots from §dElizabeth §cat",
+                    "§cthe §bCommunity Center"));
             } else {
                 layout.slot(controlSlot, (s, c) -> control(setIndex, set, data), (_, c) -> {
                     savePage((SkyBlockPlayer) c.player(), c, state.page);
