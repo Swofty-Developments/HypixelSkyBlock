@@ -1,14 +1,17 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
 import net.kyori.adventure.text.minimessage.translation.Argument;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.DefaultState;
@@ -167,9 +170,10 @@ public class GUISkyBlockMenu extends StatelessView {
         layout.slot(32, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             boolean unlocked = player.getSkyBlockExperience().getLevel().getLevel() >= 5;
+            int color = 0x00f;
             return TranslatableItemStackCreator.getStack(unlocked ? "gui_sbmenu.main.wardrobe" : "gui_sbmenu.main.wardrobe.locked",
                 unlocked ? Material.LEATHER_CHESTPLATE : Material.GRAY_DYE, 1,
-                unlocked ? "gui_sbmenu.main.wardrobe.lore" : "gui_sbmenu.main.wardrobe.locked.lore");
+                unlocked ? "gui_sbmenu.main.wardrobe.lore" : "gui_sbmenu.main.wardrobe.locked.lore").set(DataComponents.DYED_COLOR, NamedTextColor.DARK_PURPLE);
         }, (_, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             if (player.getSkyBlockExperience().getLevel().getLevel() < 5) {
@@ -187,11 +191,26 @@ public class GUISkyBlockMenu extends StatelessView {
             String status = !unlocked ? "§cLocked" : remaining == 0 ? "§aAvailable"
                                                      : "§e" + StringUtility.formatTimeLeft(remaining);
             double projection = BankInterestCalculator.calculate(bank.getAmount(), bank.getAccountTier(), bank.getMuseumMilestone());
-            return TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.personal_bank",
+
+            return ItemStackCreator.getStackHeadSL(I18n.t("gui_sbmenu.main.personal_bank"),
                 "e36e94f6c34a35465fce4a90f2e25976389eb9709a12273574ff70fd4daa6852", 1,
-                "gui_sbmenu.main.personal_bank.lore", Component.text(status),
-                Component.text(StringUtility.commaify(projection)),
-                Component.text(StringUtility.commaify(bank.getLastInterest())));
+                List.of(
+                    "§7Contact your Banker from anywhere.",
+                    "§7Cooldown: §e5 minutes", // TODO: show actual cooldown from users data
+                    "",
+                    "§7Banker Status:",
+                    status,
+                    "",
+                    "§7Interest in: §b26 Hours",
+                    // TODO: Co-op
+                    // "§7Co-op Projection: §6452,400 coins §b(0.12%)",
+                    // "§7Last Co-op Interest: §6452,400 coins",
+                    "§7Solo Projection: §644,859.6 coins §b(1.805%)", // TODO: in Solo it probably doesn't say solo but only Projetion
+                    "§7Last Solo Interest: §644,415 coins",
+                    "",
+                    "§8Also accessible via /bank",
+                    "",
+                    "§eClick to open!"));
         }, (_, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             if (!PersonalBankService.isUnlocked(player) || PersonalBankService.remaining(player) > 0) {

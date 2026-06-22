@@ -371,7 +371,29 @@ public class ItemStackCreator {
 			.set(DataComponents.CUSTOM_NAME, name.decoration(TextDecoration.ITALIC, false))
 			.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
 			.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)))
-				.amount(amount);
+			.amount(amount);
+	}
+
+	public static ItemStack.Builder getStackHeadSL(Component name, String texture, int amount, List<String> lore) {
+		JSONObject json = new JSONObject();
+		json.put("isPublic", true);
+		json.put("signatureRequired", false);
+		json.put("textures", new JSONObject().put("SKIN",
+			new JSONObject().put("url", "http://textures.minecraft.net/texture/" + texture).put("metadata", new JSONObject().put("model", "slim"))));
+
+		String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
+
+		List<Component> copiedLore = new ArrayList<>();
+		for (String s : lore) {
+			copiedLore.add(Component.text(replaceColorCodes(s)).decoration(TextDecoration.ITALIC, false));
+		}
+
+		return ItemStack.builder(Material.PLAYER_HEAD)
+			.set(DataComponents.LORE, copiedLore)
+			.set(DataComponents.CUSTOM_NAME, name.decoration(TextDecoration.ITALIC, false))
+			.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY)
+			.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)))
+			.amount(amount);
 	}
 
 	/**

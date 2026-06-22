@@ -6,11 +6,11 @@ import net.minestom.server.command.builder.arguments.number.ArgumentInteger;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "i",
+@CommandParameters(aliases = "i item sbitem",
         description = "Gives an item to the player",
         usage = "/item <item> [amount]",
         permission = Rank.STAFF,

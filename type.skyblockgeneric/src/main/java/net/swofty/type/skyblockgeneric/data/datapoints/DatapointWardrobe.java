@@ -30,7 +30,7 @@ public class DatapointWardrobe extends SkyBlockDatapoint<DatapointWardrobe.Wardr
             JSONObject json = new JSONObject(serialized);
             WardrobeData data = new WardrobeData();
             data.equippedSlot = json.optInt("equippedSlot", -1);
-            data.communitySlots = Math.min(9, Math.max(0, json.optInt("communitySlots", 0)));
+            data.communitySlots = Math.clamp(json.optInt("communitySlots", 0), 0, 9);
             JSONArray sets = json.optJSONArray("sets");
             if (sets != null) {
                 for (int i = 0; i < Math.min(27, sets.length()); i++) {
