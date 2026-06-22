@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -134,7 +135,81 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
 
     @Override
     public boolean onBottomClick(ClickContext<WardrobeState> click, ViewContext ctx) {
-        return true;
+        if (!(click.click() instanceof Click.LeftShift) && !(click.click() instanceof Click.RightShift)) {
+            return true;
+        }
+
+        SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
+        ItemStack clickedStack = player.getInventory().getItemStack(click.slot());
+        SkyBlockItem clickedItem = new SkyBlockItem(clickedStack);
+
+        if (clickedItem.isNA()) {
+            return false;
+        }
+
+        int piece = armorPiece(clickedItem);
+        if (piece == -1) {
+            player.sendMessage("§cOnly armor can be placed in the Wardrobe!");
+            return false;
+        }
+
+        DatapointWardrobe.WardrobeData data = data(player);
+        int targetSet = findClosestAvailableSet(player, data, click.state().page, piece);
+
+        if (targetSet == -1) {
+            player.sendMessage("§cThere are no available Wardrobe slots for that item!");
+            return false;
+        }
+
+        ItemStack one = clickedStack.withAmount(1);
+        SkyBlockItem stored = new SkyBlockItem(one);
+
+        data.getSets()[targetSet].getPieces()[piece] = stored;
+
+        player.getInventory().setItemStack(click.slot(),
+            clickedStack.amount() == 1 ? ItemStack.AIR : clickedStack.withAmount(clickedStack.amount() - 1)
+        );
+
+        int pageStart = click.state().page * 9;
+        if (targetSet >= pageStart && targetSet < pageStart + 9) {
+            int column = targetSet - pageStart;
+            int guiSlot = piece * 9 + column;
+
+            ctx.inventory().setItemStack(guiSlot,
+                PlayerItemUpdater.playerUpdate(player, one).build()
+            );
+        }
+
+        save(player);
+        ctx.session(WardrobeState.class).refresh();
+        return false;
+    }
+
+    private int findClosestAvailableSet(SkyBlockPlayer player, DatapointWardrobe.WardrobeData data,
+                                        int page, int piece) {
+        int pageStart = page * 9;
+        for (int distance = 0; distance < data.getSets().length; distance++) {
+            int setIndex = (pageStart + distance) % data.getSets().length;
+            if (!WardrobeService.isUnlocked(setIndex, player.getRank(), data)
+                || data.getEquippedSlot() == setIndex) {
+                continue;
+            }
+
+            SkyBlockItem stored = data.getSets()[setIndex].getPieces()[piece];
+            if (stored == null || stored.isNA()) {
+                return setIndex;
+            }
+        }
+        return -1;
+    }
+
+    private int armorPiece(SkyBlockItem item) {
+        for (int piece = 0; piece < 4; piece++) {
+            if (WardrobeService.accepts(piece, item)) {
+                return piece;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -227,8 +302,22 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
             return;
         }
 
-        data(player).getSets()[setIndex].getPieces()[piece] = item;
-        player.getInventory().setCursorItem(ItemStack.AIR);
+        ItemStack one = cursor.withAmount(1);
+        SkyBlockItem stored = new SkyBlockItem(one);
+
+        data(player).getSets()[setIndex].getPieces()[piece] = stored;
+
+        int guiSlot = piece * 9 + (setIndex % 9);
+
+        ctx.inventory().setItemStack(guiSlot,
+            PlayerItemUpdater.playerUpdate(player, one).build()
+        );
+
+        int remaining = cursor.amount() - 1;
+        player.getInventory().setCursorItem(
+            remaining <= 0 ? ItemStack.AIR : cursor.withAmount(remaining)
+        );
+
         save(player);
         ctx.session(WardrobeState.class).refresh();
     }
