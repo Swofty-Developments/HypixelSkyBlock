@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class HypixelCommand {
-    public static final String COMMAND_SUFFIX = "Command";
-
     @Getter
     private final CommandParameters params;
     @Getter
@@ -24,12 +22,24 @@ public abstract class HypixelCommand {
 
     protected HypixelCommand() {
         this.params = this.getClass().getAnnotation(CommandParameters.class);
-        this.name = this.getClass().getSimpleName().replace(COMMAND_SUFFIX, "").toLowerCase(); // why? - ARI
+
+        if (params == null) {
+            throw new RuntimeException("Command " + this.getClass().getSimpleName() + " does not have a CommandParameters annotation!");
+        }
 
         List<String> aliases = new ArrayList<>();
         if (params.aliases() != null && !params.aliases().trim().isEmpty()) {
             aliases.addAll(Arrays.asList(params.aliases().split(" ")));
         }
+
+        this.name = aliases.getFirst();
+
+        if (this.name == null || this.name.isBlank()) {
+            throw new RuntimeException("Command " + this.getClass().getSimpleName() + " does not have a name!");
+        }
+
+        // remove first from aliases
+        aliases.removeFirst();
 
         if (aliases.isEmpty()) {
             this.command = new MinestomCommand(this);
