@@ -87,9 +87,10 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
                         (_, c) -> placeStoredPiece((SkyBlockPlayer) c.player(), setIndex, pieceIndex, c));
                 } else {
                     int pieceIndex = piece;
-                    layout.editable(guiSlot,
+                    layout.slot(guiSlot,
                         (s, c) -> PlayerItemUpdater.playerUpdate((SkyBlockPlayer) c.player(), item.getItemStack()),
-                        (_, oldItem, newItem, _) -> updateStoredPiece(player, setIndex, pieceIndex, oldItem, newItem, ctx));
+                        (click, c) -> handleStoredPiece(
+                            (SkyBlockPlayer) c.player(), setIndex, pieceIndex, click.click(), c));
                 }
             }
 
@@ -268,26 +269,49 @@ public class GUIWardrobe implements StatefulView<GUIWardrobe.WardrobeState> {
         player.setBoots(stack(pieces[3]));
     }
 
-    private void updateStoredPiece(SkyBlockPlayer player, int setIndex, int piece, ItemStack oldItem,
-                                   ItemStack newItem, ViewContext ctx) {
-        SkyBlockItem item = new SkyBlockItem(newItem);
-
+    private void handleStoredPiece(SkyBlockPlayer player, int setIndex, int piece, Click click, ViewContext ctx) {
         DatapointWardrobe.WardrobeData data = data(player);
+        SkyBlockItem stored = data.getSets()[setIndex].getPieces()[piece];
+        if (stored == null || stored.isNA()) {
+            ctx.session(WardrobeState.class).refresh();
+            return;
+        }
 
-        // Allow removing armor from stored wardrobe slot
-        if (item.isNA()) {
+        if (click instanceof Click.LeftShift || click instanceof Click.RightShift) {
+            player.addAndUpdateItem(stored);
             data.getSets()[setIndex].getPieces()[piece] = null;
             save(player);
             ctx.session(WardrobeState.class).refresh();
             return;
         }
 
-        if (!WardrobeService.accepts(piece, item)) {
-            ctx.inventory().setItemStack(piece * 9 + setIndex % 9, oldItem);
+        if (!(click instanceof Click.Left) && !(click instanceof Click.Right)) {
             return;
         }
 
-        data.getSets()[setIndex].getPieces()[piece] = item;
+        ItemStack cursor = player.getInventory().getCursorItem();
+        if (cursor.isAir()) {
+            player.getInventory().setCursorItem(stored.getItemStack());
+            data.getSets()[setIndex].getPieces()[piece] = null;
+            save(player);
+            ctx.session(WardrobeState.class).refresh();
+            return;
+        }
+
+        SkyBlockItem cursorItem = new SkyBlockItem(cursor);
+        if (!WardrobeService.accepts(piece, cursorItem)) {
+            player.sendMessage("§cThat item does not fit in this Wardrobe slot!");
+            return;
+        }
+
+        data.getSets()[setIndex].getPieces()[piece] = new SkyBlockItem(cursor.withAmount(1));
+        if (cursor.amount() == 1) {
+            player.getInventory().setCursorItem(stored.getItemStack());
+        } else {
+            player.getInventory().setCursorItem(cursor.withAmount(cursor.amount() - 1));
+            player.addAndUpdateItem(stored);
+        }
+
         save(player);
         ctx.session(WardrobeState.class).refresh();
     }
