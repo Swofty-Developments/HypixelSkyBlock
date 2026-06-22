@@ -17,19 +17,19 @@ import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.InteractionEntity;
 import net.swofty.type.generic.entity.hologram.ServerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.hub.darkauction.DarkAuctionDisplay;
-import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.hub.util.HubMap;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
@@ -162,6 +162,7 @@ public class TypeHubLoader implements SkyBlockTypeLoader {
 
 		Furniture.load("hexatorum");
 		Furniture.load("rune_table");
+		Furniture.load("big_arrows"); // the things above the house in Combat Settlement
 		Furniture.load("pufferfish", new Pos(115.5, 70, -30.5));
 		Furniture.load("hub_swords", new Pos(-52.5, 69.25, -85.5));
 

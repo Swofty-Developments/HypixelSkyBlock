@@ -1,0 +1,119 @@
+[
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": -1.699999988079071,
+      "y": -1.0625,
+      "z": 3.3174166309219686
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 7.000002,
+      "y": 6.9999986,
+      "z": 6.999999
+    },
+    "leftRotation": {
+      "x": 0.08763693,
+      "y": -0.23716067,
+      "z": 0.9658979,
+      "w": 0.055820268
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:arrow",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:arrow\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 1.675000011920929,
+      "y": 4.625,
+      "z": 1.3174166309219686
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 6.999999,
+      "y": 6.999999,
+      "z": 7.0
+    },
+    "leftRotation": {
+      "x": 0.23034623,
+      "y": -0.22883865,
+      "z": 0.9398055,
+      "w": -0.10648582
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:arrow",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:arrow\"}"
+    }
+  },
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": -4.824999988079071,
+      "y": 1.875,
+      "z": 1.8799166309219686
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 6.9999986,
+      "y": 6.9999957,
+      "z": 6.999997
+    },
+    "leftRotation": {
+      "x": -0.10568255,
+      "y": -0.22953123,
+      "z": 0.6434082,
+      "w": 0.7226151
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:arrow",
+      "count": 1,
+      "snbt": "{count:1,id:\"minecraft:arrow\"}"
+    }
+  }
+]
