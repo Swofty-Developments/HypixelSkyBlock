@@ -1,10 +1,11 @@
 package net.swofty.service.replay.endpoints;
 
 import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.game.ViewReplayPushProtocol;
 import net.swofty.commons.protocol.objects.replay.ChooseReplayProtocolObject;
-import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.commons.redis.RedisMessageContext;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 public class ReplayChooseEndpoint implements RedisMessageHandler
 		<ChooseReplayProtocolObject.ChooseReplayMessage,
@@ -17,7 +18,10 @@ public class ReplayChooseEndpoint implements RedisMessageHandler
 
 	@Override
 	public ChooseReplayProtocolObject.ChooseReplayResponse handle(ChooseReplayProtocolObject.ChooseReplayMessage body, RedisMessageContext context) {
-		ServiceToServerManager.viewReplay(body.player(), body.replayId(), body.shareCode());
+		RedisClient.requestAllServersFromService(
+			new ViewReplayPushProtocol(),
+			new ViewReplayPushProtocol.Request(body.player(), body.replayId(), body.shareCode()),
+			300);
 		return new ChooseReplayProtocolObject.ChooseReplayResponse(false);
 	}
 
