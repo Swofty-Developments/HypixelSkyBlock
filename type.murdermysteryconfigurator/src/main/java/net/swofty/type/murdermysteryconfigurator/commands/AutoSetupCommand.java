@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CommandParameters(
-        aliases = "setup mapsetup",
+    aliases = "setup mapsetup autosetup",
         description = "Murder Mystery map configuration tool",
         usage = "/mmsetup <subcommand>",
         permission = Rank.STAFF,

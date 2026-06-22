@@ -2,11 +2,11 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "missiondata",
+@CommandParameters(aliases = "missiondata mission",
         description = "Collects mission information",
         usage = "/mission",
         permission = Rank.STAFF,

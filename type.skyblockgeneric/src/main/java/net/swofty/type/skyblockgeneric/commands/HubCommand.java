@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.mission.MissionSet;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "h",
+@CommandParameters(aliases = "h hub",
         description = "Sends the player to their hub",
         usage = "/hub",
         permission = Rank.DEFAULT,

@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.UUID;
 
-@CommandParameters(aliases = "getnameformatted",
+@CommandParameters(aliases = "getnameformatted formatname",
         description = "Gets the format of a players name from their username",
         usage = "/formatname <name>",
         permission = Rank.STAFF,

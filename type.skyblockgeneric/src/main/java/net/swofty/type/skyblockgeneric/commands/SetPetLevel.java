@@ -5,11 +5,11 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "updatepetlevel",
+@CommandParameters(aliases = "updatepetlevel setpetlevel",
         description = "Sets the level of the pet",
         usage = "/setpetlevel <level>",
         permission = Rank.STAFF,

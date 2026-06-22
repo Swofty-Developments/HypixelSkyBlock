@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@CommandParameters(aliases = "cooperative",
+@CommandParameters(aliases = "cooperative coop",
         description = "Primary coop command",
         usage = "/coop",
         permission = Rank.DEFAULT,

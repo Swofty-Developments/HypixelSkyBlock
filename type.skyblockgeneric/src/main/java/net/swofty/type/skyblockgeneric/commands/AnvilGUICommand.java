@@ -5,10 +5,10 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.gui.HypixelAnvilGUI;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "anvilgraphicaluserinterface",
+@CommandParameters(aliases = "anvilgraphicaluserinterface anvilgui",
         description = "Opens a graphical user interface",
         usage = "/anvilgui <text>",
         permission = Rank.STAFF,

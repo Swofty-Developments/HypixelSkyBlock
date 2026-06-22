@@ -4,15 +4,15 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
 import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ServerOrbComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "spawncrystal",
+@CommandParameters(aliases = "spawncrystal addcrystal",
         description = "Spawns in a crystal at the player's location.",
         usage = "/addcrystal",
         permission = Rank.STAFF,

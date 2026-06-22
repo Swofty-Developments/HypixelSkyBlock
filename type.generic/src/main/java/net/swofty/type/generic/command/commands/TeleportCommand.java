@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "tp",
+@CommandParameters(aliases = "tp teleport",
         description = "teleports to a player",
         usage = "/teleport",
         permission = Rank.STAFF,

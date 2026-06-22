@@ -12,7 +12,7 @@ import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "setrank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.STAFF, allowsConsole = true)
+@CommandParameters(aliases = "setrank rank", description = "Rank command", usage = "/rank <player> <rank>", permission = Rank.STAFF, allowsConsole = true)
 public class RankCommand extends HypixelCommand {
 
     @Override

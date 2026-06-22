@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
     allowsConsole = false,
     description = "Skips the time in the current instance",
     permission = Rank.STAFF,
-    aliases = "worldtime",
+    aliases = "worldtime skipworldtime",
     usage = "/worldtime (tick)"
 )
 public class SkipWorldTimeCommand extends HypixelCommand {

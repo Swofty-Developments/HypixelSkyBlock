@@ -6,10 +6,10 @@ import net.swofty.commons.protocol.objects.api.APIAuthenticateCodeProtocol;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "allowaccessforapiauthentication",
+@CommandParameters(aliases = "allowaccessforapiauthentication verifyapi",
         description = "Allows access for API authentication for the given code",
         usage = "/allowaccessforapiauthentication <code>",
         permission = Rank.STAFF,

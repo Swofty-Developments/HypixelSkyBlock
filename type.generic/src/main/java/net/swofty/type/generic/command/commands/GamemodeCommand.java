@@ -8,7 +8,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "gm",
+@CommandParameters(aliases = "gm gamemode",
         description = "Sets a players gamemode",
         usage = "/gamemode <gamemode>",
         permission = Rank.STAFF,

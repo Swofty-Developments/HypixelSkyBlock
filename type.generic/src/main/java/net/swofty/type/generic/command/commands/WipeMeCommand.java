@@ -12,12 +12,12 @@ import net.swofty.type.generic.utility.ScheduleUtility;
 @CommandParameters(description = "Allows the player to wipe themselves",
         usage = "/wipeme",
         permission = Rank.STAFF,
-        aliases = "deletemyprofiles",
+    aliases = "deletemyprofiles wipeme",
         allowsConsole = false)
 public class WipeMeCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
-        command.addSyntax((sender, context) -> {
+        command.addSyntax((sender, _) -> {
             if (!permissionCheck(sender)) return;
 
             HypixelPlayer player = (HypixelPlayer) sender;

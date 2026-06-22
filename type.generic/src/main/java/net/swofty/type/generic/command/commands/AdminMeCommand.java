@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@CommandParameters(aliases = "forceadmin",
+@CommandParameters(aliases = "forceadmin adminme",
         description = "Literally just gives me admin",
         usage = "/adminme",
         permission = Rank.DEFAULT,

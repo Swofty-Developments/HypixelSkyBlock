@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@CommandParameters(aliases = "f",
+@CommandParameters(aliases = "f friend",
         description = "Friend management commands",
         usage = "/friend <subcommand>",
         permission = Rank.DEFAULT,

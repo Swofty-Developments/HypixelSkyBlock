@@ -5,15 +5,15 @@ import net.minestom.server.tag.Tag;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
-@CommandParameters(aliases = "iteminfo",
+@CommandParameters(aliases = "iteminfo nbt",
         description = "Returns the players held item info",
         usage = "/nbt",
         permission = Rank.STAFF,

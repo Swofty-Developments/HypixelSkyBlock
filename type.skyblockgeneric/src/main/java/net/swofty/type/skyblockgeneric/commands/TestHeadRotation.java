@@ -8,13 +8,13 @@ import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Tests the head rotation of ArmorStands",
         usage = "/testheadrotation",
         permission = Rank.STAFF,
-        aliases = "testheadrot",
+    aliases = "testheadrot testheadrotation",
         allowsConsole = false)
 public class TestHeadRotation extends HypixelCommand {
     @Override
