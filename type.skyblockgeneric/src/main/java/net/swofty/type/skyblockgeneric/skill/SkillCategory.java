@@ -147,7 +147,7 @@ public abstract class SkillCategory {
         public void onUnlock(SkyBlockPlayer player) {
             DatapointSkills.PlayerSkills skills = player.getSkills();
             ItemStatistics statistics = ItemStatistics.builder()
-                    .withMultiplicativePercentage(getStatistic(), amountAdded())
+                .withAdditive(getStatistic(), amountAdded())
                     .build();
             skills.setStatistics(ItemStatistics.add(skills.getSkillStatistics(), statistics));
         }

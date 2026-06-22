@@ -392,6 +392,7 @@ public class ItemLore {
 
 	private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
 										   Reforge reforge, Rarity rarity) {
+		if (!statistic.isRendered()) return false;
 		SkyBlockItem item = new SkyBlockItem(stack);
 		double reforgeValue = 0;
 		double gemstoneValue = Gemstone.getExtraStatisticFromGemstone(statistic, item);
