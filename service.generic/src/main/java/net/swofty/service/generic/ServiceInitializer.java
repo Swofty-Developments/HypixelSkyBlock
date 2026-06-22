@@ -6,6 +6,7 @@ import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisChannels;
 import net.swofty.commons.redis.RedisClient;
 import net.swofty.commons.redis.RedisEndpoint;
+import net.swofty.commons.redis.RedisEnvelope;
 import net.swofty.commons.redis.RedisMessageBus;
 import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.commons.redis.RedisMessageHandler;
@@ -13,6 +14,7 @@ import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.redisapi.api.RedisAPI;
 import net.swofty.service.generic.redis.PingEndpoint;
 import net.swofty.service.generic.redis.ServiceRedisManager;
+import net.swofty.service.generic.redis.ServiceToServerManager;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
@@ -29,28 +31,29 @@ public class ServiceInitializer {
         ItemAttribute.registerItemAttributes();
 
         ServiceRedisManager.connect(ConfigProvider.settings().getRedisUri(), service.getType());
+        ServiceToServerManager.initialize(service.getType());
         RedisClient.registerResponseChannel(RedisChannels.SERVICE_RESPONSE);
         RedisClient.registerResponseChannel(RedisChannels.SERVICE_BROADCAST_RESPONSE);
 
-        List<RedisMessageHandler> endpoints = new ArrayList<>(service.getEndpoints());
+        List<RedisMessageHandler<?, ?>> endpoints = new ArrayList<>(service.getEndpoints());
         endpoints.add(new PingEndpoint());
 
         endpoints.forEach(endpoint -> {
-            RedisProtocol protocolObject = endpoint.protocol();
+            RedisProtocol<?, ?> protocolObject = endpoint.protocol();
             Logger.debug("Registering channel {}", protocolObject.channel());
 
             RedisMessageBus.registerHandler(
+                RedisEndpoint.service(service.getType()),
+                RedisChannels.protocol(protocolObject),
+                endpoint,
+                (envelope, _) -> RedisMessageContext.between(
+                    UUID.fromString(envelope.id()),
+                    RedisEndpoint.server(envelope.from()),
                     RedisEndpoint.service(service.getType()),
-                    RedisChannels.protocol(protocolObject),
-                    endpoint,
-                    (envelope, channel) -> RedisMessageContext.between(
-                            UUID.fromString(envelope.id()),
-                            RedisEndpoint.server(envelope.from()),
-                            RedisEndpoint.service(service.getType()),
-                            protocolObject.channel()
-                    ),
-                    envelope -> envelope.from(),
-                    envelope -> RedisChannels.protocol(protocolObject)
+                    protocolObject.channel()
+                ),
+                RedisEnvelope::from,
+                _ -> RedisChannels.protocol(protocolObject)
             );
         });
 

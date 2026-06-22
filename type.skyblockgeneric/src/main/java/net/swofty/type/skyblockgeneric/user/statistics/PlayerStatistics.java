@@ -41,6 +41,7 @@ import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ConstantStatisticsComponent;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
+import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
@@ -49,6 +50,8 @@ import net.swofty.type.skyblockgeneric.levels.unlocks.SkyBlockLevelStatisticUnlo
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
+import net.swofty.type.skyblockgeneric.skill.SkillCategory;
 import net.swofty.type.skyblockgeneric.user.SkyBlockActionBar;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -58,8 +61,10 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class PlayerStatistics {
     private static final Map<Player, BossBar> barCache = new HashMap<>();
@@ -212,8 +217,10 @@ public class PlayerStatistics {
         spare = ItemStatistics.add(spare, skills.getSkillStatistics());
 
         DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
-        for (int i = 0; i < experience.getLevel().asInt(); i++) {
-            List<SkyBlockLevelStatisticUnlock> unlocks = experience.getLevel().getStatisticUnlocks();
+        for (int i = 1; i <= experience.getLevel().asInt(); i++) {
+            var requirement = net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement.getLevel(i);
+            if (requirement == null) continue;
+            List<SkyBlockLevelStatisticUnlock> unlocks = requirement.getStatisticUnlocks();
             for (SkyBlockLevelStatisticUnlock unlock : unlocks) {
                 spare = ItemStatistics.add(spare, unlock.getStatistics());
             }
@@ -248,19 +255,178 @@ public class PlayerStatistics {
     }
 
     public List<StatisticSource> statisticSources() {
-        return List.of(
-            new StatisticSource("Armor", Material.IRON_CHESTPLATE, allArmorStatistics(null, null)),
-            new StatisticSource("Equipment", Material.CHEST, equipmentStatistics(null, null)),
-            new StatisticSource("Held Item", Material.DIAMOND_SWORD, mainHandStatistics(null, null)),
-            new StatisticSource("Skills & Progress", Material.EXPERIENCE_BOTTLE, spareStatistics()),
-            new StatisticSource("Temporary Buffs", Material.POTION, getTemporaryStatistics()),
-            new StatisticSource("Pet", Material.BONE, petStatistics()),
-            new StatisticSource("Accessory Bag", Material.REDSTONE, accessoryStatistics),
-            new StatisticSource("Base Value", Material.NETHER_STAR, ItemStatistic.getOfAllBaseValues())
-        );
+        Map<String, List<StatisticModifier>> grouped = new java.util.LinkedHashMap<>();
+        for (StatisticModifier modifier : statisticModifiers()) {
+            String key = modifier.sourceType().name() + "\0" +
+                (modifier.parentName() == null ? modifier.name() : modifier.parentName());
+            grouped.computeIfAbsent(key, ignored -> new ArrayList<>()).add(modifier);
+        }
+
+        List<StatisticSource> sources = new ArrayList<>();
+        for (List<StatisticModifier> modifiers : grouped.values()) {
+            StatisticModifier first = modifiers.getFirst();
+            ItemStatistics total = ItemStatistics.empty();
+            for (StatisticModifier modifier : modifiers) total = ItemStatistics.add(total, modifier.statistics());
+            String name = first.parentName() == null ? first.name() : first.parentName();
+            sources.add(new StatisticSource(name, first.material(), first.texture(), total,
+                first.sourceType(), List.copyOf(modifiers)));
+        }
+        return sources;
     }
 
-    public record StatisticSource(String name, Material material, ItemStatistics statistics) {
+    public List<StatisticModifier> statisticModifiers() {
+        List<StatisticModifier> modifiers = new ArrayList<>();
+        PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
+        addItemModifiers(modifiers, cache.get(PlayerItemOrigin.HELMET), StatisticSourceType.ARMOR);
+        addItemModifiers(modifiers, cache.get(PlayerItemOrigin.CHESTPLATE), StatisticSourceType.ARMOR);
+        addItemModifiers(modifiers, cache.get(PlayerItemOrigin.LEGGINGS), StatisticSourceType.ARMOR);
+        addItemModifiers(modifiers, cache.get(PlayerItemOrigin.BOOTS), StatisticSourceType.ARMOR);
+        if (player.getArmorSet() != null) {
+            try {
+                ArmorSet armorSet = player.getArmorSet().getClazz().getConstructor().newInstance();
+                addModifier(modifiers, player.getArmorSet().getDisplayName() + " Set Bonus",
+                    armorSet.getStatistics(), StatisticSourceType.ARMOR,
+                    StatisticModifierType.ABILITY_PASSIVE, null, Material.IRON_CHESTPLATE, null);
+            } catch (ReflectiveOperationException ignored) {
+            }
+        }
+
+        DatapointInventory inventory = player.getSkyblockDataHandler()
+            .get(SkyBlockDataHandler.Data.INVENTORY, DatapointInventory.class);
+        for (net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem serialized : List.of(
+            inventory.getValue().getNecklace(), inventory.getValue().getCloak(),
+            inventory.getValue().getBelt(), inventory.getValue().getGloves())) {
+            addItemModifiers(modifiers, new SkyBlockItem(serialized), StatisticSourceType.EQUIPMENT);
+        }
+
+        addItemModifiers(modifiers, cache.get(PlayerItemOrigin.MAIN_HAND), StatisticSourceType.HELD_ITEM);
+        addProgressionModifiers(modifiers);
+        addTemporaryModifiers(modifiers);
+
+        SkyBlockItem pet = player.getPetData().getEnabledPet();
+        if (pet != null) modifiers.add(new StatisticModifier(pet.getDisplayName(), pet.getMaterial(),
+            texture(pet), petStatistics(), StatisticSourceType.PET, StatisticModifierType.BASIC, null));
+
+        Set<ItemType> usedAccessories = new HashSet<>();
+        for (ItemStack stack : player.getInventory().getItemStacks()) {
+            if (!SkyBlockItem.isSkyBlockItem(stack)) continue;
+            SkyBlockItem accessory = new SkyBlockItem(stack);
+            addAccessoryModifiers(modifiers, accessory, usedAccessories);
+        }
+        for (SkyBlockItem accessory : player.getAccessoryBag().getAllAccessories()) {
+            addAccessoryModifiers(modifiers, accessory, usedAccessories);
+        }
+        modifiers.add(new StatisticModifier("Base Value", Material.NETHER_STAR, null,
+            ItemStatistic.getOfAllBaseValues(), StatisticSourceType.INNATE, StatisticModifierType.INNATE, null));
+        return modifiers;
+    }
+
+    private void addAccessoryModifiers(List<StatisticModifier> modifiers, SkyBlockItem item, Set<ItemType> used) {
+        if (item == null || !item.hasComponent(ConstantStatisticsComponent.class)) return;
+        ItemType type = item.getAttributeHandler().getPotentialType();
+        if (type != null && !used.add(type)) return;
+        addItemModifiers(modifiers, item, StatisticSourceType.ACCESSORY_BAG);
+    }
+
+    private void addItemModifiers(List<StatisticModifier> modifiers, SkyBlockItem item, StatisticSourceType sourceType) {
+        if (item == null || item.isAir()
+            || (item.hasComponent(ConstantStatisticsComponent.class)
+            && sourceType != StatisticSourceType.ACCESSORY_BAG)) return;
+        String parent = item.getDisplayName();
+        Material material = item.getMaterial();
+        String texture = texture(item);
+        addModifier(modifiers, "Base Value", item.getAttributeHandler().getBaseStatistics(),
+            sourceType, StatisticModifierType.BASIC, parent, material, texture);
+        addModifier(modifiers, parent + " Passive", item.getAttributeHandler().getExtraDynamicStatistics(),
+            sourceType, StatisticModifierType.ABILITY_PASSIVE, parent, material, texture);
+
+        if (item.getAttributeHandler().getReforge() != null) {
+            addModifier(modifiers, item.getAttributeHandler().getReforge().getName() + " Reforge",
+                getReforgeStatistics(item, ItemStatistics.empty()), sourceType,
+                StatisticModifierType.REFORGE, parent, material, texture);
+        }
+        addModifier(modifiers, "Gemstones", getGemstoneStatistics(item, ItemStatistics.empty()),
+            sourceType, StatisticModifierType.GEMSTONE, parent, material, texture);
+        for (SkyBlockEnchantment enchantment : item.getAttributeHandler().getEnchantments().toList()) {
+            String name = enchantment.type().getName() + " " + StringUtility.getAsRomanNumeral(enchantment.level());
+            addModifier(modifiers, name, enchantment.type().getEnch().getStatistics(enchantment.level()),
+                sourceType, StatisticModifierType.ENCHANTMENT, parent, material, texture);
+        }
+        addModifier(modifiers, "Hot Potato Books", getHotPotatoBookStatistics(item, ItemStatistics.empty()),
+            sourceType, StatisticModifierType.HOT_POTATO_BOOK, parent, material, texture);
+    }
+
+    private void addProgressionModifiers(List<StatisticModifier> modifiers) {
+        DatapointSkills.PlayerSkills skills = player.getSkills();
+        ItemStatistics reconstructedSkills = ItemStatistics.empty();
+        for (SkillCategories category : SkillCategories.values()) {
+            ItemStatistics total = ItemStatistics.empty();
+            SkillCategory skill = category.asCategory();
+            int level = skills.getCurrentLevel(category);
+            for (int current = 1; current <= level; current++) {
+                for (SkillCategory.Reward reward : skill.getReward(current).unlocks()) {
+                    if (reward instanceof SkillCategory.BaseStatisticReward base) {
+                        total = total.addBase(base.getStatistic(), base.amountAdded());
+                    } else if (reward instanceof SkillCategory.AdditivePercentageStatisticReward additive) {
+                        total = total.addAdditive(additive.getStatistic(), additive.amountAdded());
+                    }
+                }
+            }
+            reconstructedSkills = ItemStatistics.add(reconstructedSkills, total);
+            addModifier(modifiers, category + " Skill", total, StatisticSourceType.SKILL,
+                StatisticModifierType.SKILL, null, skill.getDisplayIcon(), null);
+        }
+        addModifier(modifiers, "Skill Progression", skills.getSkillStatistics().sub(reconstructedSkills),
+            StatisticSourceType.SKILL, StatisticModifierType.SKILL, null, Material.CRAFTING_TABLE, null);
+
+        ItemStatistics levelStatistics = ItemStatistics.empty();
+        DatapointSkyBlockExperience.PlayerSkyBlockExperience experience = player.getSkyBlockExperience();
+        for (int level = 1; level <= experience.getLevel().asInt(); level++) {
+            var requirement = net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement.getLevel(level);
+            if (requirement == null) continue;
+            for (SkyBlockLevelStatisticUnlock unlock : requirement.getStatisticUnlocks()) {
+                levelStatistics = ItemStatistics.add(levelStatistics, unlock.getStatistics());
+            }
+        }
+        addModifier(modifiers, "SkyBlock Level", levelStatistics, StatisticSourceType.SKYBLOCK_LEVELS,
+            StatisticModifierType.PROGRESSION, null, Material.NETHER_STAR, null);
+
+        ItemStatistics fairySouls = ItemStatistics.builder().withBase(ItemStatistic.HEALTH,
+            (double) player.getFairySouls().getExchangedFairySouls().size() * 2D).build();
+        addModifier(modifiers, "Fairy Souls", fairySouls, StatisticSourceType.FAIRY_SOULS,
+            StatisticModifierType.PROGRESSION, null, Material.PLAYER_HEAD, null);
+    }
+
+    private void addTemporaryModifiers(List<StatisticModifier> modifiers) {
+        synchronized (temporaryStatistics) {
+            temporaryStatistics.removeIf(stat -> stat.getExpiration() < System.currentTimeMillis());
+            for (TemporaryStatistic temporary : temporaryStatistics) {
+                String name = temporary.getDisplayName() == null ? "Temporary Buff" : temporary.getDisplayName();
+                addModifier(modifiers, name, temporary.getStatistics(), StatisticSourceType.TEMPORARY_BUFF,
+                    StatisticModifierType.BUFF, null, Material.POTION, null);
+            }
+            temporaryConditionalStatistics.removeIf(temporary -> !temporary.getExpiry().apply(player));
+            for (TemporaryConditionalStatistic temporary : temporaryConditionalStatistics) {
+                addModifier(modifiers, "Conditional Buff", temporary.getStatistics().apply(player),
+                    StatisticSourceType.TEMPORARY_BUFF, StatisticModifierType.BUFF, null, Material.POTION, null);
+            }
+        }
+    }
+
+    private static void addModifier(List<StatisticModifier> modifiers, String name, ItemStatistics statistics,
+                                    StatisticSourceType sourceType, StatisticModifierType modifierType,
+                                    String parent, Material material, String texture) {
+        if (statistics.toString().isEmpty()) return;
+        modifiers.add(new StatisticModifier(name, material, texture, statistics, sourceType, modifierType, parent));
+    }
+
+    private static String texture(SkyBlockItem item) {
+        return item.hasComponent(SkullHeadComponent.class)
+            ? item.getComponent(SkullHeadComponent.class).getSkullTexture(item) : null;
+    }
+
+    public record StatisticSource(String name, Material material, String texture, ItemStatistics statistics,
+                                  StatisticSourceType sourceType, List<StatisticModifier> modifiers) {
     }
 
     private ItemStatistics equipmentStatistics(SkyBlockPlayer causer, LivingEntity enemy) {

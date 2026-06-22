@@ -17,9 +17,15 @@ import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
+import net.swofty.type.skyblockgeneric.user.statistics.StatisticModifier;
+import net.swofty.type.skyblockgeneric.user.statistics.StatisticModifierType;
+import net.swofty.type.skyblockgeneric.user.statistics.StatisticSourceType;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GUIGatheringCategoryStats extends StatelessView {
     private static final int[] DISPLAY_SLOTS = {
@@ -33,19 +39,24 @@ public class GUIGatheringCategoryStats extends StatelessView {
     private final boolean showAll;
     private final boolean groupByCategory;
     private final boolean flattened;
+    private final StatisticSourceType sourceFilter;
+    private final StatisticModifierType modifierFilter;
 
     public GUIGatheringCategoryStats(Category category) {
-        this(category, null, Mode.CATEGORY, true, false, false);
+        this(category, null, Mode.CATEGORY, true, false, false, null, null);
     }
 
     private GUIGatheringCategoryStats(Category category, ItemStatistic statistic, Mode mode,
-                                      boolean showAll, boolean groupByCategory, boolean flattened) {
+                                      boolean showAll, boolean groupByCategory, boolean flattened,
+                                      StatisticSourceType sourceFilter, StatisticModifierType modifierFilter) {
         this.category = category;
         this.statistic = statistic;
         this.mode = mode;
         this.showAll = showAll;
         this.groupByCategory = groupByCategory;
         this.flattened = flattened;
+        this.sourceFilter = sourceFilter;
+        this.modifierFilter = modifierFilter;
     }
 
     @Override
@@ -64,6 +75,8 @@ public class GUIGatheringCategoryStats extends StatelessView {
         layout.filler(Layouts.border(0, 53), Components.FILLER);
         Components.back(layout, 48, ctx);
         Components.close(layout, 49);
+
+        // dumb way but it works for now
         switch (mode) {
             case CATEGORY -> categoryLayout(layout);
             case DETAIL -> detailLayout(layout, ctx);
@@ -73,8 +86,10 @@ public class GUIGatheringCategoryStats extends StatelessView {
 
     private void categoryLayout(ViewLayout<DefaultState> layout) {
         layout.slot(4, (s, c) -> category.createSummary((SkyBlockPlayer) c.player(), false));
+
+        // TODO: using openView breaks back button
         layout.slot(50, toggleItem(), (_, c) -> c.player().openView(
-            new GUIGatheringCategoryStats(category, null, Mode.CATEGORY, !showAll, false, false)));
+            new GUIGatheringCategoryStats(category, null, Mode.CATEGORY, !showAll, false, false, null, null)));
 
         for (int index = 0; index < Math.min(category.statistics.size(), DISPLAY_SLOTS.length); index++) {
             int statisticIndex = index;
@@ -93,7 +108,7 @@ public class GUIGatheringCategoryStats extends StatelessView {
         ItemStatistics values = player.getStatistics().allStatistics();
         Mode target = values.getAdditive(stat) == 1D && values.getMultiplicative(stat) == 1D
             ? Mode.FLAT : Mode.DETAIL;
-        player.openView(new GUIGatheringCategoryStats(category, stat, target, showAll, false, false));
+        player.openView(new GUIGatheringCategoryStats(category, stat, target, showAll, false, false, null, null));
     }
 
     private void detailLayout(ViewLayout<DefaultState> layout, ViewContext ctx) {
@@ -102,37 +117,46 @@ public class GUIGatheringCategoryStats extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
             ItemStatistics values = player.getStatistics().allStatistics();
             boolean additive = values.getAdditive(statistic) != 1D;
-            boolean multiplicative = values.getMultiplicative(statistic) != 1D;
-            int[] slots = multiplicative ? new int[]{20, 22, 24} : new int[]{21, 23};
+            boolean capped = statistic.getCap() != null;
+            int flatSlot = capped ? 20 : 21;
+            int additiveSlot = capped ? 22 : 23;
 
-            layout.slot(slots[0], (s, c) -> summaryItem((SkyBlockPlayer) c.player(), Mode.FLAT),
+            layout.slot(flatSlot, (s, c) -> summaryItem((SkyBlockPlayer) c.player(), Mode.FLAT),
                 (_, c) -> c.player().openView(copy(Mode.FLAT)));
             if (additive) {
-                layout.slot(slots[1], arrow(statistic));
-                layout.slot(slots[1] + 1, (s, c) -> summaryItem((SkyBlockPlayer) c.player(), Mode.ADDITIVE),
+                layout.slot(additiveSlot - 1, StatisticArrow.create(statistic),
+                    (_, c) -> c.player().openView(copy(Mode.ADDITIVE)));
+                layout.slot(additiveSlot, (s, c) -> summaryItem((SkyBlockPlayer) c.player(), Mode.ADDITIVE),
                     (_, c) -> c.player().openView(copy(Mode.ADDITIVE)));
             }
-            if (multiplicative) {
-                layout.slot(23, arrow(statistic));
-                layout.slot(24, multiplierItem(player));
+            if (capped) {
+                layout.slot(23, StatisticArrow.create(statistic));
+                layout.slot(24, capItem());
             }
         }
     }
 
     private void breakdownLayout(ViewLayout<DefaultState> layout) {
-        for (int index = 0; index < 8; index++) {
+        for (int index = 0; index < DISPLAY_SLOTS.length; index++) {
             int sourceIndex = index;
             layout.slot(DISPLAY_SLOTS[index], (s, c) -> {
-                List<PlayerStatistics.StatisticSource> sources = visibleSources((SkyBlockPlayer) c.player());
-                if (sourceIndex >= sources.size()) return net.minestom.server.item.ItemStack.AIR.builder();
-                PlayerStatistics.StatisticSource source = sources.get(sourceIndex);
-                return sourceItem(source, sourceValue(source));
+                List<ViewEntry> entries = visibleEntries((SkyBlockPlayer) c.player());
+                if (sourceIndex >= entries.size()) return net.minestom.server.item.ItemStack.AIR.builder();
+                return sourceItem(entries.get(sourceIndex));
+            }, (_, c) -> {
+                List<ViewEntry> entries = visibleEntries((SkyBlockPlayer) c.player());
+                if (sourceIndex >= entries.size()) return;
+                ViewEntry entry = entries.get(sourceIndex);
+                if (!entry.grouped()) return;
+                c.player().openView(new GUIGatheringCategoryStats(category, statistic, mode, showAll,
+                    groupByCategory, flattened, entry.sourceFilter(), entry.modifierFilter()));
             });
         }
         layout.slot(50, optionItem("Group By Category", Material.NAME_TAG, groupByCategory),
-            (_, c) -> c.player().openView(copy(mode, !groupByCategory, flattened)));
-        layout.slot(51, optionItem("Flatten Stats Menu", Material.COBBLESTONE, flattened),
-            (_, c) -> c.player().openView(copy(mode, groupByCategory, !flattened)));
+            (_, c) -> c.player().openView(rootCopy(mode, !groupByCategory, flattened)));
+        layout.slot(51, optionItem("Flatten Stats Menu",
+                flattened ? Material.COBBLESTONE_SLAB : Material.COBBLESTONE, flattened),
+            (_, c) -> c.player().openView(rootCopy(mode, groupByCategory, !flattened)));
     }
 
     private GUIGatheringCategoryStats copy(Mode next) {
@@ -140,7 +164,12 @@ public class GUIGatheringCategoryStats extends StatelessView {
     }
 
     private GUIGatheringCategoryStats copy(Mode next, boolean grouped, boolean flat) {
-        return new GUIGatheringCategoryStats(category, statistic, next, showAll, grouped, flat);
+        return new GUIGatheringCategoryStats(category, statistic, next, showAll, grouped, flat,
+            sourceFilter, modifierFilter);
+    }
+
+    private GUIGatheringCategoryStats rootCopy(Mode next, boolean grouped, boolean flat) {
+        return new GUIGatheringCategoryStats(category, statistic, next, showAll, grouped, flat, null, null);
     }
 
     private List<ItemStatistic> visibleStatistics(SkyBlockPlayer player) {
@@ -159,14 +188,50 @@ public class GUIGatheringCategoryStats extends StatelessView {
         };
     }
 
-    private List<PlayerStatistics.StatisticSource> visibleSources(SkyBlockPlayer player) {
-        return player.getStatistics().statisticSources().stream()
-            .filter(source -> sourceValue(source) != 0D).toList();
+    private List<ViewEntry> visibleEntries(SkyBlockPlayer player) {
+        if (flattened) return flattenedEntries(player);
+        List<PlayerStatistics.StatisticSource> sources = player.getStatistics().statisticSources().stream()
+            .filter(source -> sourceValue(source.statistics()) != 0D)
+            .filter(source -> sourceFilter == null || source.sourceType() == sourceFilter)
+            .toList();
+        if (!groupByCategory || sourceFilter != null) {
+            return sources.stream().map(ViewEntry::fromSource)
+                .sorted(Comparator.comparingDouble(this::entryValue).reversed()).toList();
+        }
+
+        Map<StatisticSourceType, List<PlayerStatistics.StatisticSource>> grouped = new LinkedHashMap<>();
+        for (PlayerStatistics.StatisticSource source : sources) {
+            grouped.computeIfAbsent(source.sourceType(), ignored -> new ArrayList<>()).add(source);
+        }
+        return grouped.entrySet().stream().map(entry -> ViewEntry.fromSources(entry.getKey(), entry.getValue()))
+            .sorted(Comparator.comparingDouble(this::entryValue).reversed()).toList();
     }
 
-    private double sourceValue(PlayerStatistics.StatisticSource source) {
-        return mode == Mode.FLAT ? source.statistics().getBase(statistic)
-            : (source.statistics().getAdditive(statistic) - 1D) * 100D;
+    private List<ViewEntry> flattenedEntries(SkyBlockPlayer player) {
+        List<StatisticModifier> modifiers = player.getStatistics().statisticModifiers().stream()
+            .filter(modifier -> sourceValue(modifier.statistics()) != 0D)
+            .filter(modifier -> modifierFilter == null || modifier.modifierType() == modifierFilter)
+            .toList();
+        if (!groupByCategory || modifierFilter != null) {
+            return modifiers.stream().map(ViewEntry::fromModifier)
+                .sorted(Comparator.comparingDouble(this::entryValue).reversed()).toList();
+        }
+
+        Map<StatisticModifierType, List<StatisticModifier>> grouped = new LinkedHashMap<>();
+        for (StatisticModifier modifier : modifiers) {
+            grouped.computeIfAbsent(modifier.modifierType(), ignored -> new ArrayList<>()).add(modifier);
+        }
+        return grouped.entrySet().stream().map(entry -> ViewEntry.fromModifiers(entry.getKey(), entry.getValue()))
+            .sorted(Comparator.comparingDouble(this::entryValue).reversed()).toList();
+    }
+
+    private double sourceValue(ItemStatistics statistics) {
+        return mode == Mode.FLAT ? statistics.getBase(statistic)
+            : (statistics.getAdditive(statistic) - 1D) * 100D;
+    }
+
+    private double entryValue(ViewEntry entry) {
+        return sourceValue(entry.statistics());
     }
 
     private net.minestom.server.item.ItemStack.Builder summaryItem(SkyBlockPlayer player, Mode summaryMode) {
@@ -176,12 +241,17 @@ public class GUIGatheringCategoryStats extends StatelessView {
         List<String> lore = new ArrayList<>();
         lore.add("§8" + statistic.getDisplayName() + " Stat");
         lore.add(summaryMode == Mode.FLAT ? "§7All flat bonuses are summed into" : "§7These buffs are added and converted");
-        lore.add(summaryMode == Mode.FLAT ? "§7a base amount." : "§7into the additive multiplier.");
+        lore.add(summaryMode == Mode.FLAT ? "§7a base amount." : "§7and then converted into the");
+        if (summaryMode == Mode.ADDITIVE) lore.add("§7(additive) multiplier.");
         lore.add("");
         addSourcePreview(player, lore, summaryMode);
         lore.add("");
         lore.add("§7Adds up to: " + statistic.getDisplayColor() + "+" + format(value)
             + (summaryMode == Mode.FLAT ? statistic.getSymbol() + " " + statistic.getDisplayName() : "%"));
+        if (summaryMode == Mode.ADDITIVE) {
+            lore.add("§7As multiplier: " + statistic.getDisplayColor() + format(1D + value / 100D) + "x");
+            lore.add("§8Multiplied with flat!");
+        }
         lore.add("");
         lore.add("§eClick to dig deeper!");
         return ItemStackCreator.getStack(statistic.getFullDisplayName() +
@@ -204,38 +274,92 @@ public class GUIGatheringCategoryStats extends StatelessView {
         }
     }
 
-    private net.minestom.server.item.ItemStack.Builder sourceItem(PlayerStatistics.StatisticSource source, double value) {
+    private net.minestom.server.item.ItemStack.Builder sourceItem(ViewEntry source) {
+        double value = entryValue(source);
         List<String> lore = new ArrayList<>();
-        lore.add("§8" + source.name());
+        lore.add(source.grouped() ? "§8Grouped" : "§8" + source.categoryName());
         lore.add("");
         lore.add("§7Value: " + statistic.getDisplayColor() + "+" + format(value)
             + (mode == Mode.FLAT ? statistic.getSymbol() : "%"));
         lore.add("");
-        lore.add(groupByCategory ? "§8Grouped with modifiers from this category." :
-            flattened ? "§8Displayed as an individual modifier." : "§8A source of this statistic.");
-        return ItemStackCreator.getStack(statistic.getFullDisplayName() + " " + source.name(),
-            source.material(), 1, lore);
+        int shown = 0;
+        if (source.children().size() > 1) {
+            for (ViewEntry child : source.children()) {
+                double childValue = entryValue(child);
+                if (childValue == 0D) continue;
+                if (shown++ == 7) {
+                    lore.add("  §8And more...");
+                    break;
+                }
+                lore.add(" " + statistic.getDisplayColor() + "+" + format(childValue)
+                    + (mode == Mode.FLAT ? statistic.getSymbol() : "%") + " §f" + child.name());
+            }
+            lore.add("");
+        }
+        if (source.parentName() != null) {
+            lore.add("§7Modifier flattened from:");
+            lore.add("§9" + source.parentName());
+            lore.add("");
+        }
+        lore.addAll(source.description());
+        if (source.grouped()) {
+            lore.add("");
+            lore.add("§eClick to dig even deeper!");
+        }
+        String name = statistic.getFullDisplayName() + " " +
+            (source.grouped() ? "Category: " : "") + source.name();
+        GUIMaterial icon = source.texture() == null
+            ? new GUIMaterial(source.material()) : new GUIMaterial(source.texture());
+        return ItemStackCreator.getUsingGUIMaterial(name, icon, 1, lore);
     }
 
-    private net.minestom.server.item.ItemStack.Builder multiplierItem(SkyBlockPlayer player) {
-        double value = player.getStatistics().allStatistics().getMultiplicative(statistic);
-        return ItemStackCreator.getStack(statistic.getFullDisplayName() + " Multiplicative Buffs",
-            Material.ENCHANTED_BOOK, 1, "§8" + statistic.getDisplayName() + " Stat", "",
-            "§7Multiplier: " + statistic.getDisplayColor() + format(value) + "x");
+    private net.minestom.server.item.ItemStack.Builder capItem() {
+        return ItemStackCreator.getStack(statistic.getFullDisplayName() + " Cap",
+            Material.LEATHER_HELMET, 1, "§8" + statistic.getDisplayName() + " Stat",
+            "§7There is a " + statistic.getDisplayName().toLowerCase() + " limit in SkyBlock!",
+            "§7Some magic may let you change it!", "",
+            "§7Value: " + statistic.getDisplayColor() + format(statistic.getCap())
+                + statistic.getSymbol());
     }
 
-    private static net.minestom.server.item.ItemStack.Builder arrow(ItemStatistic statistic) {
-        String texture = switch (statistic.getDisplayColor()) {
-            case "§a" -> "8cd690ae9d4f09745fb9a55579df72b7a0aebc9653aa42ed490c6d036580f4ca";
-            case "§b" -> "9b02d8d0645d2f6e0caa8c3fa4facde0ecf8d5c4c92511be69577a12ad9ebe88";
-            case "§e" -> "17fa3bae5d8a844594c98ff87791a7c0d1b9e1370c21b6b04354e3ecf5b6a3a5";
-            case "§f" -> "33f4b333f1c6ff8d9a13747dfc5a047c77c079ab6480f9ef64d5c85ec740fce4";
-            case "§4" -> "580b4c9a1f7976da0d09b8394bb19f34257a5acd82906aaeba8ab020f825acbf";
-            case "§9" -> "add45dceae3989edff0f93c22da51884370ddf6096aa708a054c0515d62bf675";
-            default -> "e44736f86be74deae5886a323df59d995aa39bea76c17b45baf832f4448c021c";
-        };
-        return ItemStackCreator.getUsingGUIMaterial(statistic.getDisplayColor() + "➭",
-            new GUIMaterial(texture), 1, List.of());
+    private record ViewEntry(String name, Material material, String texture, ItemStatistics statistics,
+                             String categoryName, List<String> description, String parentName,
+                             List<ViewEntry> children, boolean grouped,
+                             StatisticSourceType sourceFilter, StatisticModifierType modifierFilter) {
+        private static ViewEntry fromSource(PlayerStatistics.StatisticSource source) {
+            List<ViewEntry> children = source.modifiers().stream().map(ViewEntry::fromModifier).toList();
+            return new ViewEntry(source.name(), source.material(), source.texture(), source.statistics(),
+                source.sourceType().getDisplayName(), source.sourceType().getDescription(), null,
+                children, false, null, null);
+        }
+
+        private static ViewEntry fromModifier(StatisticModifier modifier) {
+            return new ViewEntry(modifier.name(), modifier.material(), modifier.texture(), modifier.statistics(),
+                modifier.modifierType().getDisplayName(), modifier.modifierType().getDescription(),
+                modifier.parentName(), List.of(), false, null, null);
+        }
+
+        private static ViewEntry fromSources(StatisticSourceType type, List<PlayerStatistics.StatisticSource> sources) {
+            ItemStatistics total = ItemStatistics.empty();
+            List<ViewEntry> children = new ArrayList<>();
+            for (PlayerStatistics.StatisticSource source : sources) {
+                total = ItemStatistics.add(total, source.statistics());
+                children.add(fromSource(source));
+            }
+            return new ViewEntry(type.getDisplayName(), type.getMaterial(), null, total,
+                type.getDisplayName(), type.getDescription(), null, children, true, type, null);
+        }
+
+        private static ViewEntry fromModifiers(StatisticModifierType type, List<StatisticModifier> modifiers) {
+            ItemStatistics total = ItemStatistics.empty();
+            List<ViewEntry> children = new ArrayList<>();
+            for (StatisticModifier modifier : modifiers) {
+                total = ItemStatistics.add(total, modifier.statistics());
+                children.add(fromModifier(modifier));
+            }
+            return new ViewEntry(type.getDisplayName(), type.getMaterial(), null, total,
+                type.getDisplayName(), type.getDescription(), null, children, true, null, type);
+        }
     }
 
     private net.minestom.server.item.ItemStack.Builder toggleItem() {
@@ -263,6 +387,8 @@ public class GUIGatheringCategoryStats extends StatelessView {
         double additive = values.getAdditive(stat) - 1D;
         if (base != 0D) lore.add("§7Flat: " + stat.getDisplayColor() + "+" + format(base) + stat.getSymbol());
         if (additive != 0D) lore.add("§7Additive: " + stat.getDisplayColor() + "+" + format(additive * 100D) + "%");
+        if (stat.getCap() != null) lore.add("§7Stat Cap: " + stat.getDisplayColor()
+            + format(stat.getCap()) + stat.getSymbol() + " " + stat.getDisplayName());
         if (base != 0D || additive != 0D) lore.add("");
         if (stat.name().endsWith("_FORTUNE")) {
             lore.add("§7Bonus drops: " + stat.getDisplayColor() + "+" + (int) (value / 100D) + "!");

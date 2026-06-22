@@ -17,7 +17,7 @@ public enum ItemStatistic {
             true, "☣", 30D, 1D),
     CRITICAL_DAMAGE("Crit Damage", "§c", "§9",
             true, "☠", 50D, 1D),
-    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", true, "⚔"),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", true, "⚔", 100D),
     ABILITY_DAMAGE("Ability Damage", "§c", "§c", true, "๑"),
     TRUE_DEFENSE("True Defense", "§a", "§f", false, "❂"),
     FEROCITY("Ferocity", "§a", "§c", false, "⫽"),
@@ -27,7 +27,7 @@ public enum ItemStatistic {
             false, "♨", 100D, 1D),
     MENDING("Mending", "§a", "§a", false, "☄",
             100D, 1D),
-    SWING_RANGE("Swing Range", "§e", "§e", false, "Ⓢ", 3D, 1D),
+    SWING_RANGE("Swing Range", "§e", "§e", false, "Ⓢ", 3D, 1D, 15D),
 
     // Gathering Stats
     MINING_SPEED("Mining Speed", "§a", "§6", false, "⸕"),
@@ -36,7 +36,7 @@ public enum ItemStatistic {
     FORAGING_FORTUNE("Foraging Fortune", "§a", "§6", false, "☘"),
     BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
     PRISTINE("Pristine", "§a", "§5", false, "✧"),
-    MINING_SPREAD("Mining Spread", "§a", "§e", false, "▚"),
+    MINING_SPREAD("Mining Spread", "§a", "§e", false, "▚", 10_000D),
     GEMSTONE_SPREAD("Gemstone Spread", "§a", "§e", false, "▚"),
     HUNTER_FORTUNE("Hunter Fortune", "§a", "§d", false, "☘"),
     SWEEP("Sweep", "§a", "§2", false, "∮"),
@@ -79,12 +79,12 @@ public enum ItemStatistic {
     HUNTING_WISDOM("Hunting Wisdom", "§a", "§3", false, "☯"),
 
     // Misc Stats
-    SPEED("Speed", "§a", "§f", false, "✦", 100D, 1D),
-    MAGIC_FIND("Magic Find", "§a", "§b", false, "✯"),
+    SPEED("Speed", "§a", "§f", false, "✦", 100D, 1D, 400D),
+    MAGIC_FIND("Magic Find", "§a", "§b", false, "✯", 900D),
     PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
     SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 1D),
-    FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂"),
-    TREASURE_CHANCE("Treasure Chance", "§a", "§6", true, "⛃"),
+    FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂", 300D),
+    TREASURE_CHANCE("Treasure Chance", "§a", "§6", true, "⛃", 100D),
     TROPHY_FISH_CHANCE("Trophy Fish Chance", "§a", "§6", true, "♔"),
     DOUBLE_HOOK_CHANCE("Double Hook Chance", "§a", "§3", true, "⚓"),
     BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
@@ -110,10 +110,18 @@ public enum ItemStatistic {
     private final @NonNull String symbol;
     private Double baseAdditiveValue = 0D;
     private Double baseMultiplicativeValue = 1D;
+    private final Double cap;
 
     ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
                   @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
                   @NotNull Double baseMultiplicativeValue) {
+        this(displayName, loreColor, displayColor, isPercentage, symbol,
+            baseAdditiveValue, baseMultiplicativeValue, null);
+    }
+
+    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
+                  @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
+                  @NotNull Double baseMultiplicativeValue, Double cap) {
         this.displayName = displayName;
         this.loreColor = loreColor;
         this.displayColor = displayColor;
@@ -121,15 +129,17 @@ public enum ItemStatistic {
         this.symbol = symbol;
         this.baseAdditiveValue = baseAdditiveValue;
         this.baseMultiplicativeValue = baseMultiplicativeValue;
+        this.cap = cap;
     }
 
     ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
                   @NonNull Boolean isPercentage, @NotNull String symbol) {
-        this.displayName = displayName;
-        this.loreColor = loreColor;
-        this.displayColor = displayColor;
-        this.isPercentage = isPercentage;
-        this.symbol = symbol;
+        this(displayName, loreColor, displayColor, isPercentage, symbol, 0D, 1D, null);
+    }
+
+    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
+                  @NonNull Boolean isPercentage, @NotNull String symbol, Double cap) {
+        this(displayName, loreColor, displayColor, isPercentage, symbol, 0D, 1D, cap);
     }
 
     public String getSuffix() {

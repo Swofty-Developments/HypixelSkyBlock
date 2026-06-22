@@ -232,7 +232,10 @@ public final class ItemStatistics {
     }
 
     public @NonNull Double getOverall(@Nullable ItemStatistic stat) {
-        return stat == null ? 0D : getBase(stat) * getAdditive(stat) * getMultiplicative(stat);
+        if (stat == null) return 0D;
+        double value = getBase(stat) * getAdditive(stat) * getMultiplicative(stat);
+        Double cap = stat.getCap();
+        return cap == null ? value : Math.min(value, cap);
     }
 
     public @NonNull Double getBase(@Nullable ItemStatistic stat) {
