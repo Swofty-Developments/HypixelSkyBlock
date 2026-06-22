@@ -336,6 +336,9 @@ public class SkyBlockDataHandler extends DataHandler {
         STORAGE("storage", false, false, false,
                 DatapointStorage.class, new DatapointStorage("storage")),
 
+        WARDROBE("wardrobe", false, false, false,
+            DatapointWardrobe.class, new DatapointWardrobe("wardrobe")),
+
         BACKPACKS("backpacks", false, false, false,
                 DatapointBackpacks.class, new DatapointBackpacks("backpacks")),
 

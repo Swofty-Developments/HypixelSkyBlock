@@ -7,6 +7,7 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
+import net.swofty.type.skyblockgeneric.bank.BankInterestCalculator;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
@@ -32,18 +33,22 @@ public class ActionPlayerBankAddInterest implements HypixelEventClass {
         }
 
         int times = (int) Math.min(difference / SkyBlockCalendar.INTEREST_INTERVAL, 2);
-        double totalToGive = bankData.getAmount() * SkyBlockCalendar.INTEREST_RATE * times;
-
-        double totalEarnt = bankData.getAmount() + totalToGive;
-        if (totalEarnt > bankData.getBalanceLimit()) {
-            totalToGive = bankData.getBalanceLimit() - bankData.getAmount();
-            totalEarnt = bankData.getBalanceLimit();
+        double balance = bankData.getAmount();
+        double totalToGive = 0;
+        for (int i = 0; i < times; i++) {
+            double interest = BankInterestCalculator.calculate(balance, bankData.getAccountTier(), bankData.getMuseumMilestone());
+            double awarded = Math.clamp(interest, 0, bankData.getBalanceLimit() - balance);
+            balance += awarded;
+            totalToGive += awarded;
         }
 
-        if (totalToGive == 0) return;
-
-        bankData.setAmount(bankData.getAmount() + totalEarnt);
         bankData.setLastClaimedInterest(SkyBlockCalendar.getElapsed());
+        bankData.setLastInterest(totalToGive);
+        bankData.setAmount(balance);
+        if (totalToGive == 0) {
+            player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bankData);
+            return;
+        }
         bankData.addTransaction(new DatapointBankData.Transaction(
                 System.currentTimeMillis(),
                 totalToGive,

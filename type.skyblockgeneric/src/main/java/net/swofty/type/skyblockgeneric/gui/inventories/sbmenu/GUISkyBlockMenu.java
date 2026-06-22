@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
 import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
@@ -17,8 +18,13 @@ import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.bank.BankInterestCalculator;
+import net.swofty.type.skyblockgeneric.bank.PersonalBankService;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
+import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIYourBags;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.calendar.GUICalendar;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection.GUICollections;
@@ -31,6 +37,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkills;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import org.jspecify.annotations.NonNull;
@@ -131,9 +138,15 @@ public class GUISkyBlockMenu extends StatelessView {
         layout.autoUpdating(24, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.calendar", Material.CLOCK, 1, getCalendarLore(ctx)),
             (click, c) -> c.push(new GUICalendar()), Duration.ofSeconds(1));
 
-        layout.slot(19, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.skills", Material.DIAMOND_SWORD, 1,
-            "gui_sbmenu.main.skills.lore"
-        ), (click, c) -> c.push(new GUISkills()));
+        layout.slot(19, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            double average = java.util.Arrays.stream(SkillCategories.values())
+                .filter(category -> category != SkillCategories.RUNECRAFTING && category != SkillCategories.CARPENTRY)
+                .mapToInt(category -> player.getSkills().getCurrentLevel(category))
+                .average().orElse(0);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.skills", Material.DIAMOND_SWORD, 1,
+                "gui_sbmenu.main.skills.lore", Argument.tagResolver(Formatter.number("avg", average)));
+        }, (click, c) -> c.push(new GUISkills()));
 
         layout.slot(20, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -151,8 +164,48 @@ public class GUISkyBlockMenu extends StatelessView {
             "gui_sbmenu.main.crafting_table.lore"
         ), (_, c) -> c.push(new GUICrafting()));
 
+        layout.slot(32, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            boolean unlocked = player.getSkyBlockExperience().getLevel().getLevel() >= 5;
+            return TranslatableItemStackCreator.getStack(unlocked ? "gui_sbmenu.main.wardrobe" : "gui_sbmenu.main.wardrobe.locked",
+                unlocked ? Material.LEATHER_CHESTPLATE : Material.GRAY_DYE, 1,
+                unlocked ? "gui_sbmenu.main.wardrobe.lore" : "gui_sbmenu.main.wardrobe.locked.lore");
+        }, (_, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            if (player.getSkyBlockExperience().getLevel().getLevel() < 5) {
+                player.sendMessage("§cYou must be SkyBlock Level 5 to use the Wardrobe!");
+                return;
+            }
+            c.push(new GUIWardrobe());
+        });
+
+        layout.autoUpdating(33, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            DatapointBankData.BankData bank = PersonalBankService.data(player);
+            boolean unlocked = PersonalBankService.isUnlocked(player);
+            long remaining = PersonalBankService.remaining(player);
+            String status = !unlocked ? "§cLocked" : remaining == 0 ? "§aAvailable"
+                                                     : "§e" + StringUtility.formatTimeLeft(remaining);
+            double projection = BankInterestCalculator.calculate(bank.getAmount(), bank.getAccountTier(), bank.getMuseumMilestone());
+            return TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.personal_bank",
+                "e36e94f6c34a35465fce4a90f2e25976389eb9709a12273574ff70fd4daa6852", 1,
+                "gui_sbmenu.main.personal_bank.lore", Component.text(status),
+                Component.text(StringUtility.commaify(projection)),
+                Component.text(StringUtility.commaify(bank.getLastInterest())));
+        }, (_, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            if (!PersonalBankService.isUnlocked(player) || PersonalBankService.remaining(player) > 0) {
+                player.sendMessage("§cYour Personal Bank is locked or still on cooldown!");
+                return;
+            }
+            new GUIBanker().open(player);
+            DatapointBankData.BankData bank = PersonalBankService.data(player);
+            bank.setLastRemoteBankUse(System.currentTimeMillis());
+            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bank);
+        }, Duration.ofSeconds(1));
+
         layout.slot(47, (s, c) -> TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.fast_travel",
-            "f151cffdaf303673531a7651b36637cad912ba485643158e548d59b2ead5011", 1,
+            "35f4b40cef9e017cd4112d26b62557f8c1d5b189da2e99534222bc8cec7d9196", 1,
             "gui_sbmenu.main.fast_travel.lore"
         ), (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
@@ -171,6 +224,16 @@ public class GUISkyBlockMenu extends StatelessView {
                 Component.text(String.valueOf(((SkyBlockPlayer) player).getProfiles().getProfiles().size()))
             );
         }, (_, c) -> c.push(new GUIProfileManagement()));
+
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.settings", Material.REDSTONE_TORCH, 1,
+            "gui_sbmenu.main.settings.lore"), (_, c) -> c.player().sendMessage("§cSkyBlock Settings are not available yet."));
+
+        layout.slot(51, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            String status = player.isBoosterCookieActive() ? "§aActive" : "§cNot active!";
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.booster_cookie", Material.COOKIE, 1,
+                "gui_sbmenu.main.booster_cookie.lore", Component.text(status));
+        }, (_, c) -> c.push(new GUIBoosterCookie()));
     }
 
     private static @NonNull List<Component> getCalendarLore(ViewContext ctx) {

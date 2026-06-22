@@ -5,6 +5,8 @@ items:
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: §cAbiphone Contacts Trio
   - id: AUTOPET_RULES_2_PACK
     material: player_head
     rarity: SPECIAL

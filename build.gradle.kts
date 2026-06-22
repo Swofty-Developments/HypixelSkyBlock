@@ -36,6 +36,7 @@ subprojects {
 
     dependencies {
         testImplementation(libsCatalog.findLibrary("junit-jupiter").get())
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
         implementation(libsCatalog.findLibrary("reflections").get())
         implementation(libsCatalog.findLibrary("json").get())
