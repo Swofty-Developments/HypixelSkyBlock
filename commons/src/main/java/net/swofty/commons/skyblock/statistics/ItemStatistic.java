@@ -18,7 +18,7 @@ public enum ItemStatistic {
     CRITICAL_DAMAGE("Crit Damage", "§c", "§9",
             true, "☠", 50D, 1D),
     BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", true, "⚔", 100D),
-    ABILITY_DAMAGE("Ability Damage", "§c", "§c", true, "๑"),
+    ABILITY_DAMAGE("Ability Damage", "§c", "§c", true, "๑", 0D, 1D, null, false),
     TRUE_DEFENSE("True Defense", "§a", "§f", false, "❂"),
     FEROCITY("Ferocity", "§a", "§c", false, "⫽"),
     HEALTH_REGENERATION("Health Regen", "§a", "§c",
@@ -108,9 +108,10 @@ public enum ItemStatistic {
     private final @NonNull String displayColor;
     private final @NonNull Boolean isPercentage;
     private final @NonNull String symbol;
-    private Double baseAdditiveValue = 0D;
-    private Double baseMultiplicativeValue = 1D;
+    private final Double baseAdditiveValue;
+    private final Double baseMultiplicativeValue;
     private final Double cap;
+    private final boolean isRendered;
 
     ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
                   @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
@@ -122,6 +123,13 @@ public enum ItemStatistic {
     ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
                   @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
                   @NotNull Double baseMultiplicativeValue, Double cap) {
+        this(displayName, loreColor, displayColor, isPercentage, symbol,
+            baseAdditiveValue, baseMultiplicativeValue, cap, true);
+    }
+
+    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
+                  @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
+                  @NotNull Double baseMultiplicativeValue, Double cap, boolean isRendered) {
         this.displayName = displayName;
         this.loreColor = loreColor;
         this.displayColor = displayColor;
@@ -130,6 +138,7 @@ public enum ItemStatistic {
         this.baseAdditiveValue = baseAdditiveValue;
         this.baseMultiplicativeValue = baseMultiplicativeValue;
         this.cap = cap;
+        this.isRendered = isRendered;
     }
 
     ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,

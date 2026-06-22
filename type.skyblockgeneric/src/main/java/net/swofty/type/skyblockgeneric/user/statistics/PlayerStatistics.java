@@ -104,7 +104,7 @@ public class PlayerStatistics {
         ArrayList<SkyBlockItem> piecesToCheck = new ArrayList<>();
         PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
 
-        piecesToCheck.add(cache.get(PlayerItemOrigin.MAIN_HAND));
+        piecesToCheck.add(getMainHandItem());
         piecesToCheck.add(cache.get(PlayerItemOrigin.HELMET));
         piecesToCheck.add(cache.get(PlayerItemOrigin.CHESTPLATE));
         piecesToCheck.add(cache.get(PlayerItemOrigin.LEGGINGS));
@@ -151,7 +151,7 @@ public class PlayerStatistics {
         List<SkyBlockItem> toCheck = new ArrayList<>();
         PlayerItemOrigin.OriginCache cache = PlayerItemOrigin.getFromCache(player.getUuid());
 
-        toCheck.add(cache.get(PlayerItemOrigin.MAIN_HAND));
+        toCheck.add(getMainHandItem());
         toCheck.add(cache.get(PlayerItemOrigin.HELMET));
         toCheck.add(cache.get(PlayerItemOrigin.CHESTPLATE));
         toCheck.add(cache.get(PlayerItemOrigin.LEGGINGS));
@@ -178,7 +178,7 @@ public class PlayerStatistics {
     }
 
     public ItemStatistics mainHandStatistics(SkyBlockPlayer causer, LivingEntity enemy) {
-        SkyBlockItem item = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
+        SkyBlockItem item = getMainHandItem();
 
         if (item.hasComponent(ConstantStatisticsComponent.class))
             return ItemStatistics.empty();
@@ -299,7 +299,7 @@ public class PlayerStatistics {
             addItemModifiers(modifiers, new SkyBlockItem(serialized), StatisticSourceType.EQUIPMENT);
         }
 
-        addItemModifiers(modifiers, cache.get(PlayerItemOrigin.MAIN_HAND), StatisticSourceType.HELD_ITEM);
+        addItemModifiers(modifiers, getMainHandItem(), StatisticSourceType.HELD_ITEM);
         addProgressionModifiers(modifiers);
         addTemporaryModifiers(modifiers);
 
@@ -319,6 +319,14 @@ public class PlayerStatistics {
         modifiers.add(new StatisticModifier("Base Value", Material.NETHER_STAR, null,
             ItemStatistic.getOfAllBaseValues(), StatisticSourceType.INNATE, StatisticModifierType.INNATE, null));
         return modifiers;
+    }
+
+    /**
+     * the updater skips the main hand while a menu is open, which causes
+     * stat menus displaying wrong stats.
+     */
+    private SkyBlockItem getMainHandItem() {
+        return new SkyBlockItem(player.getInventory().getItemStack(player.getHeldSlot()));
     }
 
     private void addAccessoryModifiers(List<StatisticModifier> modifiers, SkyBlockItem item, Set<ItemType> used) {
