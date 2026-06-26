@@ -11,6 +11,9 @@ import net.swofty.commons.redis.RedisMessageContext;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class TypedInstantiateGameHandler implements RedisMessageHandler<Request, Response> {
 
     private static final InstantiateGamePushProtocol PROTOCOL = new InstantiateGamePushProtocol();
@@ -25,23 +28,40 @@ public class TypedInstantiateGameHandler implements RedisMessageHandler<Request,
         try {
             BedWarsGameType gameType = BedWarsGameType.valueOf(request.gameType().toUpperCase());
 
+            boolean hasRequestedMap = request.map() != null && !request.map().isEmpty();
+
             BedWarsMapsConfig.MapEntry mapEntry = null;
             if (TypeBedWarsGameLoader.getMapsConfig() != null) {
-                for (BedWarsMapsConfig.MapEntry entry : TypeBedWarsGameLoader.getMapsConfig().getMaps()) {
-                    if (entry.getId().equals(request.map()) || entry.getName().equals(request.map())) {
-                        if (entry.getConfiguration() != null &&
-                                entry.getConfiguration().getTypes() != null &&
-                            !entry.getConfiguration().getTypes().contains(gameType.getMapCompatibilityType())) {
-                            return Response.failure("Map does not support game type: " + gameType);
+                List<BedWarsMapsConfig.MapEntry> maps = TypeBedWarsGameLoader.getMapsConfig().getMaps();
+                if (hasRequestedMap) {
+                    for (BedWarsMapsConfig.MapEntry entry : maps) {
+                        if (entry.getId().equals(request.map()) || entry.getName().equals(request.map())) {
+                            if (entry.getConfiguration() != null &&
+                                    entry.getConfiguration().getTypes() != null &&
+                                !entry.getConfiguration().getTypes().contains(gameType.getMapCompatibilityType())) {
+                                return Response.failure("Map does not support game type: " + gameType);
+                            }
+                            mapEntry = entry;
+                            break;
                         }
-                        mapEntry = entry;
-                        break;
+                    }
+                } else {
+                    // No specific map requested (queueing a mode): pick a random map that supports it.
+                    List<BedWarsMapsConfig.MapEntry> compatible = maps.stream()
+                            .filter(e -> e.getConfiguration() != null
+                                    && e.getConfiguration().getTypes() != null
+                                    && e.getConfiguration().getTypes().contains(gameType.getMapCompatibilityType()))
+                            .toList();
+                    if (!compatible.isEmpty()) {
+                        mapEntry = compatible.get(ThreadLocalRandom.current().nextInt(compatible.size()));
                     }
                 }
             }
 
             if (mapEntry == null) {
-                return Response.failure("Map not found: " + request.map());
+                return Response.failure(hasRequestedMap
+                        ? "Map not found: " + request.map()
+                        : "No compatible maps available for " + gameType);
             }
 
             BedWarsGame game = TypeBedWarsGameLoader.createGame(mapEntry, gameType);
