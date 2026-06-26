@@ -7,6 +7,13 @@ on:
 permissions:
   contents: write
 
+# Only one release run may publish at a time. The release action deletes and
+# recreates the "latest" tag/release on every push, so concurrent runs race and
+# fail mid-upload with "Not Found". Queue runs and let the newest commit win.
+concurrency:
+  group: add-to-github-releases
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
