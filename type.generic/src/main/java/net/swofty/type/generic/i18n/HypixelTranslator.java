@@ -17,8 +17,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +32,10 @@ public class HypixelTranslator extends MiniMessageTranslator {
     public static final Locale defaultLocale = Locale.US;
     private static final Path I18N_ROOT = Path.of("./configuration/i18n");
 
-    private final Map<Locale, Map<String, Path>> fileIndexByLocale;
+    // Subsystem -> all files that contribute to it. Multiple files can map to the
+    // same subsystem (e.g. en_US/general.properties and en_US/official/general.properties);
+    // they must be merged, not overwritten, or keys from one file silently disappear.
+    private final Map<Locale, Map<String, List<Path>>> fileIndexByLocale;
     private final Set<String> defaultLocaleKeys;
     private final Cache<LocaleSubsystem, Map<String, String>> bundleCache;
     private final Cache<LocaleKey, Optional<String>> keyCache;
@@ -61,12 +66,14 @@ public class HypixelTranslator extends MiniMessageTranslator {
     }
 
     private Set<String> loadAllKeysForLocale(Locale locale) {
-        Map<String, Path> localeIndex = fileIndexByLocale.get(locale);
+        Map<String, List<Path>> localeIndex = fileIndexByLocale.get(locale);
         if (localeIndex == null) return Set.of();
 
         Set<String> keys = new HashSet<>();
-        for (Path file : localeIndex.values()) {
-            keys.addAll(loadPropertiesFileFlat(file).keySet());
+        for (List<Path> files : localeIndex.values()) {
+            for (Path file : files) {
+                keys.addAll(loadPropertiesFileFlat(file).keySet());
+            }
         }
         return Set.copyOf(keys);
     }
@@ -115,26 +122,29 @@ public class HypixelTranslator extends MiniMessageTranslator {
             return existing;
         }
 
-        Map<String, Path> localeIndex = fileIndexByLocale.get(locale);
+        Map<String, List<Path>> localeIndex = fileIndexByLocale.get(locale);
         if (localeIndex == null) {
             bundleCache.put(ls, Map.of());
             return Map.of();
         }
 
-        Path file = localeIndex.get(subsystem);
-        if (file == null) {
+        List<Path> files = localeIndex.get(subsystem);
+        if (files == null || files.isEmpty()) {
             bundleCache.put(ls, Map.of());
             return Map.of();
         }
 
-        Map<String, String> loaded = loadPropertiesFileFlat(file);
+        Map<String, String> loaded = new HashMap<>();
+        for (Path file : files) {
+            loaded.putAll(loadPropertiesFileFlat(file));
+        }
         Map<String, String> unmodifiable = loaded.isEmpty() ? Map.of() : Map.copyOf(loaded);
         bundleCache.put(ls, unmodifiable);
         return unmodifiable;
     }
 
-    private static Map<Locale, Map<String, Path>> buildFileIndex(Path root) {
-        Map<Locale, Map<String, Path>> index = new HashMap<>(16, 0.75f);
+    private static Map<Locale, Map<String, List<Path>>> buildFileIndex(Path root) {
+        Map<Locale, Map<String, List<Path>>> index = new HashMap<>(16, 0.75f);
         if (!Files.isDirectory(root)) {
             return Map.of();
         }
@@ -155,7 +165,8 @@ public class HypixelTranslator extends MiniMessageTranslator {
                         if (subsystem.isEmpty()) return;
 
                         index.computeIfAbsent(locale, _ -> new HashMap<>(16, 0.75f))
-                                .put(subsystem, p);
+                                .computeIfAbsent(subsystem, _ -> new ArrayList<>())
+                                .add(p);
                     });
         } catch (IOException ignored) {
             // Best-effort.
