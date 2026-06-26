@@ -9,9 +9,11 @@ import java.util.List;
 
 public class ItemTrackerService implements SkyBlockService {
     static void main(String[] args) {
-        SkyBlockService.init(new ItemTrackerService());
-
+        // Connect the DB before the service starts handling Redis requests,
+        // otherwise early messages hit a null collection and NPE.
         TrackedItemsDatabase.connect(ConfigProvider.settings().getMongodb());
+
+        SkyBlockService.init(new ItemTrackerService());
     }
 
     @Override

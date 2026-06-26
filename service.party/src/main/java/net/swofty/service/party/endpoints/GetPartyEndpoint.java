@@ -21,7 +21,9 @@ public class GetPartyEndpoint implements RedisMessageHandler
     public GetPartyProtocol.GetPartyResponse handle(GetPartyProtocol.GetPartyMessage messageObject, RedisMessageContext context) {
         UUID memberUUID = messageObject.memberUuid();
         FullParty party = PartyCache.getPartyFromPlayer(memberUUID);
-        if (party == null) throw new RuntimeException("Player is not in a party");
+        // A solo player simply has no party — return an empty response instead of throwing,
+        // otherwise the request never resolves and the caller times out (breaking game joins).
+        if (party == null) return new GetPartyProtocol.GetPartyResponse(null, false, "Player is not in a party");
         return new GetPartyProtocol.GetPartyResponse(party, true, null);
     }
 }

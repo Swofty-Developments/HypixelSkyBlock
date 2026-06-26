@@ -6,7 +6,7 @@ Game servers run the actual gameplay using Minestom. Each server runs as a speci
 
 1. Download `HypixelCore.jar` from the [releases page](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Download [`config.yml`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
-3. Download [world files](https://files.catbox.moe/of7snu.zip)
+3. Download [world files](https://files.catbox.moe/oybade.zip) (all server worlds + `limbo.schem`; extract into `configuration/`)
 4. Download [`PicoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
 
 ## Directory Structure

@@ -77,7 +77,7 @@ public class HypixelPlayer extends Player {
 	}
 
 	public void notImplemented() {
-		sendMessage(I18n.t("general.not_iplemented"));
+		sendMessage(I18n.t("general.not_implemented"));
 	}
 
 	public static String getDisplayName(UUID uuid) {

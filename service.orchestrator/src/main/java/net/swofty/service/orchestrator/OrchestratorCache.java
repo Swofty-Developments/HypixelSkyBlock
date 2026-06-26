@@ -149,21 +149,27 @@ public class OrchestratorCache {
         cleanup();
 
         List<GameServerState> candidates = new ArrayList<>();
+        int bedwarsSeen = 0;
         for (GameServerState server : serversByShortName.values()) {
             if (server.type() != ServerType.BEDWARS_GAME) {
                 continue;
             }
+            bedwarsSeen++;
             if (server.availableSlots() < gameType.maxPlayers()) {
+                org.tinylog.Logger.info("[matchmaking]   reject {}: availableSlots {} < needed {}", server.shortName(), server.availableSlots(), gameType.maxPlayers());
                 continue;
             }
             if (server.remainingGameSlots() != null && server.remainingGameSlots() <= 0) {
+                org.tinylog.Logger.info("[matchmaking]   reject {}: no remaining game slots", server.shortName());
                 continue;
             }
             if (!supportsBedwarsRequest(server, map, gameType.name())) {
+                org.tinylog.Logger.info("[matchmaking]   reject {}: does not support mode {} (map {}); advertised={}", server.shortName(), gameType.name(), map, server.mapAdvertisements());
                 continue;
             }
             candidates.add(server);
         }
+        org.tinylog.Logger.info("[matchmaking] BEDWARS instantiateServer: {} bedwars servers known, {} candidates after filters", bedwarsSeen, candidates.size());
 
         if (candidates.isEmpty()) {
             return null;
@@ -475,13 +481,20 @@ public class OrchestratorCache {
         if (gameTypeName == null) {
             return true;
         }
-        String compatibleMode = gameTypeName;
         BedWarsGameType parsed = BedWarsGameType.from(gameTypeName);
-        if (parsed != null) {
-            compatibleMode = parsed.getMapCompatibilityType().name();
-        }
+        String compatibleMode = parsed != null ? parsed.getMapCompatibilityType().name() : gameTypeName;
+        BedWarsGameType requestedCompat = parsed != null ? parsed.getMapCompatibilityType() : null;
         for (String mode : advertisement.supportedModes()) {
+            // Direct name match (handles enum-name advertisements like ULTIMATE_DOUBLES, ONE_BLOCK).
             if (mode.equalsIgnoreCase(gameTypeName) || mode.equalsIgnoreCase(compatibleMode)) {
+                return true;
+            }
+            // Normalize the advertised mode too: maps.json uses friendly names ("SOLO",
+            // "DOUBLES", "FOUR_FOUR_FOUR_FOUR") while the queue sends enum names
+            // (ONE_EIGHT, TWO_EIGHT, FOUR_FOUR). Compare via map-compatibility type.
+            BedWarsGameType advertised = BedWarsGameType.from(mode);
+            if (advertised != null && requestedCompat != null
+                    && advertised.getMapCompatibilityType() == requestedCompat) {
                 return true;
             }
         }
