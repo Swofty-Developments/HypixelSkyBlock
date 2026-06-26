@@ -3,9 +3,6 @@ package net.swofty.type.skyblockgeneric.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
-import net.swofty.type.skyblockgeneric.region.biome.BirchParkBiome;
-import net.swofty.type.skyblockgeneric.region.biome.DarkThicketBiome;
-import net.swofty.type.skyblockgeneric.region.biome.SpruceWoodsBiome;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.BarnConfiguration;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.DwarvenMinesConfiguration;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.GlacialCaveConfiguration;
@@ -70,12 +67,12 @@ public enum RegionType {
 	FOREST("Forest", "§2", MineLogsConfiguration.class),
 	FORAGING_CAMP("Foraging Camp", "§2", MineLogsConfiguration.class), // TODO: you can't break everything here though
 
-	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class, BirchParkBiome.class),
-	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),
-	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
-	VIKING_LONGHOUSE("Viking Longhouse", "§b", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
-	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class, DarkThicketBiome.class),
-	TRIALS_OF_FIRE("Trials of Fire", "§c", null, DarkThicketBiome.class),
+	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class),
+	HOWLING_CAVE("Howling Cave"),
+	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class),
+	VIKING_LONGHOUSE("Viking Longhouse", "§b", SpruceWoodsConfiguration.class),
+	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class),
+	TRIALS_OF_FIRE("Trials of Fire", "§c"),
 	SAVANNA_WOODLAND("Savanna Woodland", "§a", SavannaWoodlandConfiguration.class),
 	MELODY_PLATEAU("Melody's Plateau", "§d", SavannaWoodlandConfiguration.class),
 	JUNGLE_ISLAND("Jungle Island", "§a", JungleIslandConfiguration.class),
