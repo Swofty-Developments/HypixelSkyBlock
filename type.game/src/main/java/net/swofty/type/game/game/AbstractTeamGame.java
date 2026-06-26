@@ -48,6 +48,11 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
     @Override
     public Collection<T> getTeams() {
+        // teams can be null if an overridable method (e.g. getMaxPlayers) is invoked
+        // from a super-constructor before this field's initializer runs.
+        if (teams == null) {
+            return java.util.List.of();
+        }
         return Collections.unmodifiableCollection(teams.values());
     }
 

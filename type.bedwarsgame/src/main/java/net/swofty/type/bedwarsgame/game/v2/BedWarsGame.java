@@ -112,7 +112,10 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
 
     @Override
     public int getMaxPlayers() {
-        return getTeams().size() * getTeamSize();
+        // During construction (before teams are registered) getTeams() is empty; fall
+        // back to the game type's team count so the countdown gets a sane max-player value.
+        int teamCount = getTeams().isEmpty() ? gameType.getTeams() : getTeams().size();
+        return teamCount * getTeamSize();
     }
 
     @Override
