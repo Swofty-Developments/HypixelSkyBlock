@@ -1,7 +1,6 @@
 package net.swofty.commons.bedwars;
 
 import lombok.Getter;
-import net.minestom.server.item.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -77,7 +76,9 @@ public enum BedWarsGameType {
     private final int teams;
     private final List<String> description;
     private final boolean dream;
-    private final Material icon;
+    // Material name (e.g. "RED_BED"); kept as a String so this commons enum has no
+    // Minestom dependency and can be loaded by services without Minestom on the classpath.
+    private final String iconName;
 
     BedWarsGameType(int id, String displayName, int teamSize, int teams, List<String> description) {
         this.id = id;
@@ -86,7 +87,7 @@ public enum BedWarsGameType {
         this.teams = teams;
         this.description = description;
         this.dream = false;
-        this.icon = Material.RED_BED;
+        this.iconName = "RED_BED";
     }
 
     BedWarsGameType(int id, String displayName, int teamSize, int teams, List<String> description, boolean dream) {
@@ -96,14 +97,14 @@ public enum BedWarsGameType {
         this.teams = teams;
         this.description = description;
         this.dream = dream;
-        this.icon = switch (this) {
-            case RUSH_DOUBLES, RUSH_FOURS -> Material.ENDER_EYE;
-            case ULTIMATE_DOUBLES, ULTIMATE_FOURS -> Material.NETHER_STAR;
-            case CASTLE -> Material.STONE_BRICKS;
-            case VOIDLESS_DOUBLES, VOIDLESS_FOURS -> Material.BEDROCK;
-            case ARMED_DOUBLES, ARMED_FOURS -> Material.DIAMOND_HOE;
-            case SWAPPAGE_DOUBLES, SWAPPAGE_FOURS -> Material.END_PORTAL_FRAME;
-            default -> Material.RED_BED;
+        this.iconName = switch (this) {
+            case RUSH_DOUBLES, RUSH_FOURS -> "ENDER_EYE";
+            case ULTIMATE_DOUBLES, ULTIMATE_FOURS -> "NETHER_STAR";
+            case CASTLE -> "STONE_BRICKS";
+            case VOIDLESS_DOUBLES, VOIDLESS_FOURS -> "BEDROCK";
+            case ARMED_DOUBLES, ARMED_FOURS -> "DIAMOND_HOE";
+            case SWAPPAGE_DOUBLES, SWAPPAGE_FOURS -> "END_PORTAL_FRAME";
+            default -> "RED_BED";
         };
     }
 
