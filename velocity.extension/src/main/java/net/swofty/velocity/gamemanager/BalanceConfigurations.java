@@ -60,7 +60,7 @@ public final class BalanceConfigurations {
         }
 
         try {
-            for (BalanceConfiguration configuration : CONFIGURATIONS.get(type)) {
+            for (BalanceConfiguration configuration : CONFIGURATIONS.getOrDefault(type, DEFAULT_CHAIN)) {
                 List<GameManager.GameServer> serversToConsider = GameManager.getFromType(type);
                 if (inTestFlow) {
                     serversToConsider.removeIf(server -> !isEligibleForTestFlowPlayer(server, player));

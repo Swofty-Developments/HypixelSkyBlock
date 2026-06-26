@@ -40,7 +40,10 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 			GetServerForMapProtocol.GetServerForMapMessage body) {
 		try {
 			BedWarsGameType gameType = parseBedWarsGameType(body.mode());
+			Logger.info("[matchmaking] BEDWARS request mode='{}' -> parsed={} map={} neededSlots={}",
+					body.mode(), gameType, body.map(), body.neededSlots());
 			if (gameType == null) {
+				Logger.warn("[matchmaking] BEDWARS: could not parse mode '{}'", body.mode());
 				return new GetServerForMapProtocol.GetServerForMapResponse(null, null, true, null);
 			}
 
@@ -66,6 +69,8 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 
 			// If no existing game found, find a server that can instantiate a new one
 			OrchestratorCache.GameServerState availableServer = OrchestratorCache.instantiateServer(gameType, body.map());
+			Logger.info("[matchmaking] BEDWARS instantiateServer -> {}",
+					availableServer == null ? "NO CANDIDATE SERVER" : availableServer.shortName());
 			if (availableServer != null) {
 				try {
 					CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = RedisClient.requestServerFromService(
@@ -74,7 +79,12 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 							new InstantiateGamePushProtocol.Request(gameType.toString(), body.map())
 					);
 
-					InstantiateGamePushProtocol.Response response = responseFuture.get();
+					InstantiateGamePushProtocol.Response response = responseFuture.get(8, java.util.concurrent.TimeUnit.SECONDS);
+					Logger.info("[matchmaking] BEDWARS instantiate response from {}: success={} error='{}' gameId={}",
+							availableServer.shortName(),
+							response != null && response.success(),
+							response == null ? "NULL RESPONSE" : response.error(),
+							response == null ? null : response.gameId());
 
 					if (response != null && response.success()) {
 						UnderstandableProxyServer proxy = new UnderstandableProxyServer(

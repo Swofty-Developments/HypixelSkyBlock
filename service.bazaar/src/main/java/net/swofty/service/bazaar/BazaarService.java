@@ -10,15 +10,16 @@ import java.util.List;
 public class BazaarService implements SkyBlockService {
 
     static void main(String[] args) {
-        SkyBlockService.init(new BazaarService());
-
-        // Connect to MongoDB for orders
+        // Connect to MongoDB for orders BEFORE the service starts handling Redis
+        // requests, otherwise early messages hit a null OrderDatabase and NPE.
         OrderDatabase.connect(ConfigProvider.settings().getMongodb());
 
         // Initialize the bazaar market (loads existing orders)
         BazaarMarket.get();
         // load persisted orders
         OrderRepository.loadAll();
+
+        SkyBlockService.init(new BazaarService());
     }
 
     @Override

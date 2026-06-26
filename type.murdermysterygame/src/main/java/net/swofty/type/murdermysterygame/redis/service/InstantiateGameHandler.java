@@ -11,6 +11,9 @@ import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.commons.redis.RedisMessageContext;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class InstantiateGameHandler implements RedisMessageHandler<Request, Response> {
 
     private static final InstantiateGamePushProtocol PROTOCOL = new InstantiateGamePushProtocol();
@@ -25,23 +28,40 @@ public class InstantiateGameHandler implements RedisMessageHandler<Request, Resp
         try {
             MurderMysteryGameType gameType = MurderMysteryGameType.valueOf(request.gameType().toUpperCase());
 
+            boolean hasRequestedMap = request.map() != null && !request.map().isEmpty();
+
             MurderMysteryMapsConfig.MapEntry mapEntry = null;
             if (TypeMurderMysteryGameLoader.getMapsConfig() != null) {
-                for (MurderMysteryMapsConfig.MapEntry entry : TypeMurderMysteryGameLoader.getMapsConfig().getMaps()) {
-                    if (entry.getId().equals(request.map()) || entry.getName().equals(request.map())) {
-                        if (entry.getConfiguration() != null &&
-                                entry.getConfiguration().getTypes() != null &&
-                                !entry.getConfiguration().getTypes().contains(gameType)) {
-                            return Response.failure("Map does not support game type: " + gameType);
+                List<MurderMysteryMapsConfig.MapEntry> maps = TypeMurderMysteryGameLoader.getMapsConfig().getMaps();
+                if (hasRequestedMap) {
+                    for (MurderMysteryMapsConfig.MapEntry entry : maps) {
+                        if (entry.getId().equals(request.map()) || entry.getName().equals(request.map())) {
+                            if (entry.getConfiguration() != null &&
+                                    entry.getConfiguration().getTypes() != null &&
+                                    !entry.getConfiguration().getTypes().contains(gameType)) {
+                                return Response.failure("Map does not support game type: " + gameType);
+                            }
+                            mapEntry = entry;
+                            break;
                         }
-                        mapEntry = entry;
-                        break;
+                    }
+                } else {
+                    // No specific map requested (queueing a mode): pick a random compatible map.
+                    List<MurderMysteryMapsConfig.MapEntry> compatible = maps.stream()
+                            .filter(e -> e.getConfiguration() != null
+                                    && e.getConfiguration().getTypes() != null
+                                    && e.getConfiguration().getTypes().contains(gameType))
+                            .toList();
+                    if (!compatible.isEmpty()) {
+                        mapEntry = compatible.get(ThreadLocalRandom.current().nextInt(compatible.size()));
                     }
                 }
             }
 
             if (mapEntry == null) {
-                return Response.failure("Map not found: " + request.map());
+                return Response.failure(hasRequestedMap
+                        ? "Map not found: " + request.map()
+                        : "No compatible maps available for " + gameType);
             }
 
             Game game = TypeMurderMysteryGameLoader.createGame(mapEntry, gameType);

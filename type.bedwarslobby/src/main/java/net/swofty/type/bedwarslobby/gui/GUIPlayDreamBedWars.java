@@ -101,7 +101,9 @@ public class GUIPlayDreamBedWars extends StatelessView {
         if (type.getDisplayName().contains("Lucky")) {
             return ItemStackCreator.getStackHead("§a" + type.getDisplayName() + " " + queueName, LUCKY_HEAD, amount(type), lore);
         }
-        return ItemStackCreator.getStack("§a" + type.getDisplayName() + " " + queueName, type.getIcon(), amount(type), lore);
+        Material icon = Material.fromKey(type.getIconName().toLowerCase());
+        if (icon == null) icon = Material.RED_BED;
+        return ItemStackCreator.getStack("§a" + type.getDisplayName() + " " + queueName, icon, amount(type), lore);
     }
 
     private void queue(ViewContext ctx, BedWarsGameType type) {

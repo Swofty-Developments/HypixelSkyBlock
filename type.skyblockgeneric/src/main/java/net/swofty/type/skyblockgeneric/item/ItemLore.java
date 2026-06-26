@@ -346,7 +346,8 @@ public class ItemLore {
 					}
 				}
 			}
-			int totalPieces = ArmorSetRegistry.getPieceCount(ArmorSetRegistry.getArmorSet(armorSet.getClass()));
+			ArmorSetRegistry setRegistry = ArmorSetRegistry.getArmorSet(armorSet.getClass());
+			int totalPieces = setRegistry == null ? 4 : ArmorSetRegistry.getPieceCount(setRegistry);
 			addLoreLine(I18n.string("items.lore.full_set_bonus", l, Component.text(armorSet.getName()), Component.text(String.valueOf(wearingAmount)), Component.text(String.valueOf(totalPieces))));
 			armorSet.getDescription().forEach(line -> addLoreLine("§7" + line));
 			addLoreLine(null);

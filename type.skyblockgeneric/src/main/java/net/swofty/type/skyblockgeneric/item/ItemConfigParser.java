@@ -17,6 +17,7 @@ import net.swofty.type.skyblockgeneric.fishing.rod.FishingShipPartSlot;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.components.*;
+import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.minion.MinionIngredient;
@@ -303,10 +304,14 @@ public class ItemConfigParser {
 				}
 				case "INTERACTABLE" -> {
 					String handlerId = safeConfig.getString("handler_id");
+					if (InteractableRegistry.getHandler(handlerId) == null) {
+						Logger.warn("No interactable handler registered for '" + handlerId + "' on item " + itemId + "; interaction disabled");
+						yield null;
+					}
 					try {
 						yield new InteractableComponent(handlerId);
 					} catch (Exception e) {
-						Logger.error("Failed to parse InteractableComponent for " + handlerId);
+						Logger.warn("Failed to build InteractableComponent for " + handlerId + ": " + e.getMessage());
 						yield null;
 					}
 				}

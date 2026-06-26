@@ -9,19 +9,25 @@ import net.kyori.adventure.translation.GlobalTranslator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class I18n {
 
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
+    private static final Set<String> WARNED_MISSING_KEYS = ConcurrentHashMap.newKeySet();
     private static HypixelTranslator translator;
 
     public static void init(HypixelTranslator instance) {
         translator = instance;
     }
 
+    // A missing translation key should not crash whatever is rendering text (item lore,
+    // GUIs, chat). Log each missing key once and let Adventure fall back to rendering the
+    // key itself, so missing content is visible without breaking the feature.
     public static void requireKey(String key) {
-        if (translator != null && !translator.hasKey(key)) {
-            throw new IllegalStateException("Missing translation key in en_US: " + key);
+        if (translator != null && !translator.hasKey(key) && WARNED_MISSING_KEYS.add(key)) {
+            org.tinylog.Logger.warn("Missing translation key in en_US: " + key);
         }
     }
 
