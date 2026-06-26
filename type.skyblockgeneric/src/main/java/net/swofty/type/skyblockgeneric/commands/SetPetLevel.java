@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "updatepetlevel setpetlevel",
+@CommandParameters(labels = "updatepetlevel setpetlevel",
         description = "Sets the level of the pet",
         usage = "/setpetlevel <level>",
         permission = Rank.STAFF,

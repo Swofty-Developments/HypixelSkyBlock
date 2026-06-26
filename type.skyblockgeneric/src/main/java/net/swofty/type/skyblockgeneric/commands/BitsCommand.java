@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Sets your bits balance",
-    aliases = "bit bits",
+    labels = "bit bits",
         usage = "/bits <amount>",
         permission = Rank.STAFF,
         allowsConsole = false)

@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.GUIWardrobe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Open your Wardrobe", usage = "/wardrobe", permission = Rank.DEFAULT,
-    aliases = "wd wardrobe", allowsConsole = false)
+    labels = "wd wardrobe", allowsConsole = false)
 public class WardrobeCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {

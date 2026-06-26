@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(description = "Changes chat mode",
         usage = "/chat <type>",
         permission = Rank.DEFAULT,
-    aliases = "chatmode chat",
+    labels = "chatmode chat",
         allowsConsole = false)
 public class ChatCommand extends HypixelCommand {
     private static final java.util.concurrent.ConcurrentHashMap<java.util.UUID, Boolean> staffView = new java.util.concurrent.ConcurrentHashMap<>();

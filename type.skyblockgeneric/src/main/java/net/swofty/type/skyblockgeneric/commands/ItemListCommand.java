@@ -7,7 +7,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUICreative;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "itemlist e",
+@CommandParameters(labels = "itemlist e",
         description = "Open the E menu",
         usage = "/e",
         permission = Rank.STAFF,

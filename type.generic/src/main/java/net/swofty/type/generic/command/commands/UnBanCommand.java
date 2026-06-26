@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @CommandParameters(
         description = "Unban a player from the server.",
         usage = "/unban <player>",
-        aliases = "unban pardon unbanip pardonip",
+        labels = "unban pardon unbanip pardonip",
         permission = Rank.STAFF,
         allowsConsole = false
 )

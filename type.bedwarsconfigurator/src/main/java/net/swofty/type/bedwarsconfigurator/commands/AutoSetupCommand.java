@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@CommandParameters(aliases = "setup mapsetup autosetup", description = "Automatic BedWars map configuration tool", usage = "/autosetup <subcommand>", permission = Rank.STAFF, allowsConsole = false)
+@CommandParameters(labels = "setup mapsetup autosetup", description = "Automatic BedWars map configuration tool", usage = "/autosetup <subcommand>", permission = Rank.STAFF, allowsConsole = false)
 public class AutoSetupCommand extends HypixelCommand {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

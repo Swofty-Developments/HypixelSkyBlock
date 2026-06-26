@@ -27,24 +27,24 @@ public abstract class HypixelCommand {
             throw new RuntimeException("Command " + this.getClass().getSimpleName() + " does not have a CommandParameters annotation!");
         }
 
-        List<String> aliases = new ArrayList<>();
-        if (params.aliases() != null && !params.aliases().trim().isEmpty()) {
-            aliases.addAll(Arrays.asList(params.aliases().split(" ")));
+        List<String> labels = new ArrayList<>();
+        if (params.labels() != null && !params.labels().trim().isEmpty()) {
+            labels.addAll(Arrays.asList(params.labels().split(" ")));
         }
 
-        this.name = aliases.getFirst();
+        this.name = labels.getFirst();
 
         if (this.name == null || this.name.isBlank()) {
             throw new RuntimeException("Command " + this.getClass().getSimpleName() + " does not have a name!");
         }
 
-        // remove first from aliases
-        aliases.removeFirst();
+        // remove the command name, leaving only the aliases
+        labels.removeFirst();
 
-        if (aliases.isEmpty()) {
+        if (labels.isEmpty()) {
             this.command = new MinestomCommand(this);
         } else {
-            this.command = new MinestomCommand(this, aliases.toArray(new String[0]));
+            this.command = new MinestomCommand(this, labels.toArray(new String[0]));
         }
     }
 

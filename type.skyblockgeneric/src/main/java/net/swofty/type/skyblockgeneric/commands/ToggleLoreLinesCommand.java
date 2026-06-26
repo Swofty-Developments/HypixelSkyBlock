@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "togglelines togglelorelines",
+@CommandParameters(labels = "togglelines togglelorelines",
         description = "Toggles the lore lines of a sandbox item",
         usage = "/togglelines",
         permission = Rank.DEFAULT,

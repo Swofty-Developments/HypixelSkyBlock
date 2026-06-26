@@ -6,7 +6,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "is island",
+@CommandParameters(labels = "is island",
         description = "Sends the player to their island",
         usage = "/is",
         permission = Rank.DEFAULT,

@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.UUID;
 
-@CommandParameters(aliases = "auctionview ahview",
+@CommandParameters(labels = "auctionview ahview",
         description = "Views an auction",
         usage = "/ahview <uuid>",
         permission = Rank.STAFF,

@@ -29,7 +29,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @CommandParameters(
-        aliases = "ban tempban banip tempbanip",
+        labels = "ban tempban banip tempbanip",
         permission = Rank.STAFF,
         description = "Ban a player from the server.",
         usage = "/ban <player> [duration] <reason>",

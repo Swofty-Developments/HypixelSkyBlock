@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * Command for configuring SkyWars maps.
  */
 @CommandParameters(
-        aliases = "swconfig",
+        labels = "swconfig",
         description = "Configure SkyWars maps",
         usage = "/swconfig <subcommand>",
         permission = Rank.STAFF,

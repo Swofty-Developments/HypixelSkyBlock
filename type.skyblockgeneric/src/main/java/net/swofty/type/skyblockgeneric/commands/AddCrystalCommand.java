@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.item.components.ServerOrbComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "spawncrystal addcrystal",
+@CommandParameters(labels = "spawncrystal addcrystal",
         description = "Spawns in a crystal at the player's location.",
         usage = "/addcrystal",
         permission = Rank.STAFF,

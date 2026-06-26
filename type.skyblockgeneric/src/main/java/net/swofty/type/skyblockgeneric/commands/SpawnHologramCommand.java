@@ -10,7 +10,7 @@ import net.swofty.type.generic.entity.hologram.HologramEntity;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "spawnholo spawnhologram",
+@CommandParameters(labels = "spawnholo spawnhologram",
         description = "Rank command",
         usage = "/spawnhologram <text>",
         permission = Rank.STAFF,

@@ -15,7 +15,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.Optional;
 
-@CommandParameters(aliases = "bwadmin",
+@CommandParameters(labels = "bwadmin",
         description = "Admin commands for BedWars game management.",
         usage = "/bwadmin <breakbed|respawnbed|endgame|info> [team]",
         permission = Rank.STAFF,

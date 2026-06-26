@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-@CommandParameters(aliases = "reforgeitem reforge",
+@CommandParameters(labels = "reforgeitem reforge",
         description = "Reforges the item in the players hand",
         usage = "/reforge",
         permission = Rank.STAFF,

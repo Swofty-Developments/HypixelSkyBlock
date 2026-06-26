@@ -14,7 +14,7 @@ import net.swofty.type.lobby.ServerInfoCache;
 import java.util.List;
 
 @CommandParameters(
-    aliases = "sl",
+    labels = "sl",
     description = "Switch to a numbered lobby",
     usage = "/swaplobby <number>",
     permission = Rank.DEFAULT,

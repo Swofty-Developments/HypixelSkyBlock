@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Opens up a skills GUI",
         usage = "/viewskill <skill>",
         permission = Rank.DEFAULT,
-    aliases = "vs viewskill",
+    labels = "vs viewskill",
         allowsConsole = false)
 public class ViewSkillCommand extends HypixelCommand {
     @Override

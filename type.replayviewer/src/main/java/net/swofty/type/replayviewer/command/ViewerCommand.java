@@ -13,7 +13,7 @@ import net.swofty.type.replayviewer.playback.ReplaySession;
         usage = "/viewer <play|pause|speed|skip|goto|restart|leave>",
         permission = Rank.DEFAULT,
         allowsConsole = false,
-        aliases = "viewer"
+        labels = "viewer"
 )
 public class ViewerCommand extends HypixelCommand {
 

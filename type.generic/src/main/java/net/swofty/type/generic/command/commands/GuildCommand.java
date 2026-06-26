@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@CommandParameters(aliases = "g guild",
+@CommandParameters(labels = "g guild",
     description = "Guild management commands",
     usage = "/guild <subcommand>",
     permission = Rank.DEFAULT,

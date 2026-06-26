@@ -13,7 +13,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Opens up a collections GUI",
         usage = "/viewcollection <collection>",
         permission = Rank.DEFAULT,
-    aliases = "vc viewcollection",
+    labels = "vc viewcollection",
         allowsConsole = false)
 public class ViewCollectionCommand extends HypixelCommand {
 

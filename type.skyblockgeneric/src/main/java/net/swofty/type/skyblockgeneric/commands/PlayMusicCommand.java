@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSong;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "playsong playmusic",
+@CommandParameters(labels = "playsong playmusic",
         description = "Plays a song",
         usage = "/playmusic <song>",
         permission = Rank.STAFF,

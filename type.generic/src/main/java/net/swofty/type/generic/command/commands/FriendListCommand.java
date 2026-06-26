@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(
-        aliases = "fl friendlist",
+        labels = "fl friendlist",
         description = "List your friends",
         usage = "/fl [page]",
         permission = Rank.DEFAULT,

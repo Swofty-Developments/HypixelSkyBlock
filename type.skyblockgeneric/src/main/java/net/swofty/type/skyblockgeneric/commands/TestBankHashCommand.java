@@ -6,7 +6,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "runhash testbankhash",
+@CommandParameters(labels = "runhash testbankhash",
         description = "Tests the bank hashing system",
         usage = "/runhash",
         permission = Rank.STAFF,

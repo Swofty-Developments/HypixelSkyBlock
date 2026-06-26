@@ -8,7 +8,7 @@ import net.swofty.type.generic.gui.HypixelAnvilGUI;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "anvilgraphicaluserinterface anvilgui",
+@CommandParameters(labels = "anvilgraphicaluserinterface anvilgui",
         description = "Opens a graphical user interface",
         usage = "/anvilgui <text>",
         permission = Rank.STAFF,

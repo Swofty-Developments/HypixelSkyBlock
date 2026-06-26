@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.structure.structures.IslandPortal;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "structure",
+@CommandParameters(labels = "structure",
         description = "Places a test debug structure",
         usage = "/structure",
         permission = Rank.STAFF,

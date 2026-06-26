@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
 @CommandParameters(
-        aliases = "setswlevel",
+        labels = "setswlevel",
         description = "Set your SkyWars level for testing",
         usage = "/setskywarlevel <level>",
         permission = Rank.STAFF,

@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "updatename",
+@CommandParameters(labels = "updatename",
         description = "Updates the name of a player's item",
         usage = "/setitemname <name>",
         permission = Rank.DEFAULT,

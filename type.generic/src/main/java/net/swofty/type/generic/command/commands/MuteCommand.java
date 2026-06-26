@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 @CommandParameters(
-        aliases = "mute tempmute",
+        labels = "mute tempmute",
         permission = Rank.STAFF,
         description = "Mute a player from the server.",
         usage = "/mute <player> [duration] <reason>",

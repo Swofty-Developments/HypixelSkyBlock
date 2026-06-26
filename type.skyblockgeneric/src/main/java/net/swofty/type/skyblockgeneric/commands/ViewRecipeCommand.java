@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Opens up a recipe GUI",
         usage = "/viewrecipe <recipe>",
         permission = Rank.DEFAULT,
-    aliases = "vr viewrecipe",
+    labels = "vr viewrecipe",
         allowsConsole = false)
 public class ViewRecipeCommand extends HypixelCommand {
     @Override

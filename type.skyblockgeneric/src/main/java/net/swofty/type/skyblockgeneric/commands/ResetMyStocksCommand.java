@@ -5,7 +5,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "resetmystocksnow",
+@CommandParameters(labels = "resetmystocksnow",
         description = "Resets your shop stocks back to MAXIMUM",
         usage = "/resetmystocks",
         permission = Rank.STAFF,

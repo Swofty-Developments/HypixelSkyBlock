@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.Arrays;
 
-@CommandParameters(aliases = "clearmissionset completemissionset",
+@CommandParameters(labels = "clearmissionset completemissionset",
         description = "Clears the mission set given",
         usage = "/finishmissionset <set>",
         permission = Rank.STAFF,
