@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @SuppressWarnings("unused")
-@CommandParameters(aliases = "translatablecomponent",
+@CommandParameters(labels = "translatablecomponent",
     description = "Preview a TranslatableComponent",
     usage = "/translatablecomponent <string>",
     permission = Rank.STAFF,

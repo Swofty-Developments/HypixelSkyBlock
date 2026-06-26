@@ -434,7 +434,6 @@ public class SkyBlockVelocity {
         ));
 
         TransferHandler transferHandler = new TransferHandler(event.getPlayer());
-        transferHandler.transferTo(serverType);
 
         CompletableFuture.delayedExecutor(GameManager.SLEEP_TIME + 300, TimeUnit.MILLISECONDS)
             .execute(() -> {
@@ -448,6 +447,13 @@ public class SkyBlockVelocity {
                     }
 
                     GameManager.GameServer server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
+                    if (server != null && server.registeredServer().equals(originalServer)) {
+                        serverTypeToTry = ServerType.PROTOTYPE_LOBBY;
+                        server = BalanceConfigurations.getServerFor(event.getPlayer(), serverTypeToTry);
+                        if (server != null && server.registeredServer().equals(originalServer)) {
+                            server = null;
+                        }
+                    }
                     if (server == null) {
                         transferHandler.forceRemoveFromLimbo();
                         event.getPlayer().disconnect(reason);

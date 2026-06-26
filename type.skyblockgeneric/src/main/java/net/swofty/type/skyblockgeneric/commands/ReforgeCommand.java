@@ -5,16 +5,16 @@ import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
 import net.swofty.commons.skyblock.item.reforge.ReforgeType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
 import net.swofty.type.skyblockgeneric.item.components.ReforgableComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
-import net.swofty.type.generic.utility.MathUtility;
 
 import java.util.List;
 
-@CommandParameters(aliases = "reforgeitem",
+@CommandParameters(labels = "reforgeitem reforge",
         description = "Reforges the item in the players hand",
         usage = "/reforge",
         permission = Rank.STAFF,

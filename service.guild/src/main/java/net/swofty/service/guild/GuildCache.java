@@ -11,7 +11,7 @@ import net.swofty.commons.guild.events.*;
 import net.swofty.commons.guild.events.response.*;
 import net.swofty.commons.protocol.objects.guild.GuildEventPushProtocol;
 import net.swofty.commons.protocol.objects.messaging.SendMessagePushProtocol;
-import net.swofty.service.generic.redis.ServiceToServerManager;
+import net.swofty.commons.redis.RedisClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.ZonedDateTime;
@@ -677,7 +677,7 @@ public class GuildCache {
     }
 
     private static void sendEvent(final @NotNull GuildEvent event) {
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
             new GuildEventPushProtocol(),
             new GuildEventPushProtocol.Request(
                 event.getClass().getSimpleName(),
@@ -693,7 +693,7 @@ public class GuildCache {
     }
 
     private static void sendMessageToPlayer(final @NotNull UUID playerUUID, final @NotNull String message) {
-        ServiceToServerManager.sendToAllServers(
+        RedisClient.requestAllServersFromService(
             new SendMessagePushProtocol(),
             new SendMessagePushProtocol.Request(playerUUID, message),
             300

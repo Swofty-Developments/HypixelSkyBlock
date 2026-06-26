@@ -7,14 +7,15 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.entity.hologram.HologramEntity;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "spawnholo",
+@CommandParameters(labels = "spawnholo spawnhologram",
         description = "Rank command",
         usage = "/spawnhologram <text>",
         permission = Rank.STAFF,
-        allowsConsole = false)
+    allowsConsole = false
+)
 public class SpawnHologramCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {

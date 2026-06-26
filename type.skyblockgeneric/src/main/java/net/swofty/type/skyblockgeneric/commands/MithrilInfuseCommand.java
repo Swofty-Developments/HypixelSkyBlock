@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "mithrilinfuse",
+@CommandParameters(labels = "mithrilinfuse",
         description = "Mithril Infuses the minion in the players hand",
         usage = "/mithrilinfuse",
         permission = Rank.STAFF,

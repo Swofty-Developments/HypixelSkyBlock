@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.stash.GUIStashItem;
 import net.swofty.type.skyblockgeneric.gui.inventories.stash.GUIStashMaterial;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "viewstash",
+@CommandParameters(labels = "viewstash",
         description = "View your stash",
         usage = "/viewstash [item|material]",
         permission = Rank.DEFAULT,

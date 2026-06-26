@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @CommandParameters(
         description = "Unmute a player on the server.",
         usage = "/unmute <player>",
-        aliases = "unmute",
+        labels = "unmute",
         permission = Rank.STAFF,
         allowsConsole = false
 )

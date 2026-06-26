@@ -14,7 +14,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-@CommandParameters(aliases = "itemtrackedinformation",
+@CommandParameters(labels = "itemtrackedinformation",
         description = "Gets the information of a tracked item in the players hand",
         usage = "/itemtrackedinformation",
         permission = Rank.STAFF,

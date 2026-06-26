@@ -4,12 +4,12 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.swofty.commons.Songs;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSong;
 import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "playsong",
+@CommandParameters(labels = "playsong playmusic",
         description = "Plays a song",
         usage = "/playmusic <song>",
         permission = Rank.STAFF,

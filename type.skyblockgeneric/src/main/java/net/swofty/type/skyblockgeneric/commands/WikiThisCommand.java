@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.Wiki;
 
 @CommandParameters(
-    aliases = "wikithis wikihand wikiinhand",
+    labels = "wikithis wikihand wikiinhand",
     description = "Shows page link of the item held towards the official Hypixel Wiki.",
     usage = "/wikithis",
     permission = Rank.DEFAULT,

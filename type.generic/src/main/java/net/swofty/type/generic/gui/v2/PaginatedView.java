@@ -89,7 +89,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
             if (currentPage > 0) {
                 layout.slot(prevSlot, (s, c) -> createPrevPageItem(currentPage, totalPages), (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
                     @SuppressWarnings("unchecked") S typedState = (S) s;
-                    return typedState.withPage(currentPage - 1);
+                    return typedState.withPage(Math.max(0, typedState.page() - 1));
                 }));
             } else if (shouldRenderNavBackground()) {
                 layout.slot(prevSlot, FILLER);
@@ -100,7 +100,7 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
             if (currentPage < totalPages - 1) {
                 layout.slot(nextSlot, (s, c) -> createNextPageItem(currentPage, totalPages), (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
                     @SuppressWarnings("unchecked") S typedState = (S) s;
-                    return typedState.withPage(currentPage + 1);
+                    return typedState.withPage(typedState.page() + 1);
                 }));
             } else if (shouldRenderNavBackground()) {
                 layout.slot(nextSlot, FILLER);

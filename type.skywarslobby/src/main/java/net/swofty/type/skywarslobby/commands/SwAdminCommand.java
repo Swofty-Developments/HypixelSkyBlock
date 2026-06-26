@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(
-        aliases = "skywarsadmin",
+    labels = "skywarsadmin swadmin",
         description = "Admin command for managing SkyWars currencies",
         usage = "/swadmin <give|set> <coins|souls|tokens> <amount>",
         permission = Rank.STAFF,

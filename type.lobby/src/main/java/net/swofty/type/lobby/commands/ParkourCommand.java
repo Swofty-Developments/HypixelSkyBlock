@@ -10,7 +10,7 @@ import net.swofty.type.lobby.LobbyTypeLoader;
 import net.swofty.type.lobby.parkour.LobbyParkourManager;
 import net.swofty.type.lobby.parkour.Parkour;
 
-@CommandParameters(aliases = "parkour", allowsConsole = false, description = "Parkour related commands", permission = Rank.DEFAULT, usage = "/parkour")
+@CommandParameters(labels = "parkour", allowsConsole = false, description = "Parkour related commands", permission = Rank.DEFAULT, usage = "/parkour")
 public class ParkourCommand extends HypixelCommand {
 
 	@Override

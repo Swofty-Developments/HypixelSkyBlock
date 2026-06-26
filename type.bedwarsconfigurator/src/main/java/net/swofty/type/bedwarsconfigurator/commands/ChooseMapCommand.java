@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-@CommandParameters(aliases = "choose choosemap selectmap select",
+@CommandParameters(labels = "choose choosemap selectmap select",
     description = "Choose a BedWars map to configure",
     usage = "/choosemap <map>",
     permission = Rank.STAFF,

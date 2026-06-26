@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@CommandParameters(aliases = "p",
+@CommandParameters(labels = "p party",
         description = "Party management commands",
         usage = "/party <subcommand>",
         permission = Rank.DEFAULT,

@@ -6,7 +6,7 @@ import net.swofty.type.generic.gui.impl.GUIRankColor;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "rankcolour", description = "Change your MVP+ rank color",
+@CommandParameters(labels = "rankcolour rankcolor", description = "Change your MVP+ rank color",
     usage = "/rankcolor", permission = Rank.DEFAULT, allowsConsole = false)
 public class RankColorCommand extends HypixelCommand {
     @Override

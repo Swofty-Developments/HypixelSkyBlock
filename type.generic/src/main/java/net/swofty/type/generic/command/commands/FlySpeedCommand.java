@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "speed",
+@CommandParameters(labels = "speed flyspeed",
         description = "Sets a players speed",
         usage = "/speed <speed>",
         permission = Rank.STAFF,

@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class HypixelCommand {
-    public static final String COMMAND_SUFFIX = "Command";
-
     @Getter
     private final CommandParameters params;
     @Getter
@@ -24,17 +22,29 @@ public abstract class HypixelCommand {
 
     protected HypixelCommand() {
         this.params = this.getClass().getAnnotation(CommandParameters.class);
-        this.name = this.getClass().getSimpleName().replace(COMMAND_SUFFIX, "").toLowerCase(); // why? - ARI
 
-        List<String> aliases = new ArrayList<>();
-        if (params.aliases() != null && !params.aliases().trim().isEmpty()) {
-            aliases.addAll(Arrays.asList(params.aliases().split(" ")));
+        if (params == null) {
+            throw new RuntimeException("Command " + this.getClass().getSimpleName() + " does not have a CommandParameters annotation!");
         }
 
-        if (aliases.isEmpty()) {
+        List<String> labels = new ArrayList<>();
+        if (params.labels() != null && !params.labels().trim().isEmpty()) {
+            labels.addAll(Arrays.asList(params.labels().split(" ")));
+        }
+
+        this.name = labels.getFirst();
+
+        if (this.name == null || this.name.isBlank()) {
+            throw new RuntimeException("Command " + this.getClass().getSimpleName() + " does not have a name!");
+        }
+
+        // remove the command name, leaving only the aliases
+        labels.removeFirst();
+
+        if (labels.isEmpty()) {
             this.command = new MinestomCommand(this);
         } else {
-            this.command = new MinestomCommand(this, aliases.toArray(new String[0]));
+            this.command = new MinestomCommand(this, labels.toArray(new String[0]));
         }
     }
 

@@ -7,7 +7,7 @@ import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "selectnpcoption",
+@CommandParameters(labels = "selectnpcoption",
 		description = "Selects an option from an NPC dialogue",
 		usage = "/selectnpcoption",
 		permission = Rank.DEFAULT,

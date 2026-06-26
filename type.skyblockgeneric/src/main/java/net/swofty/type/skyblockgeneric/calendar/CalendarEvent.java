@@ -65,14 +65,14 @@ public record CalendarEvent(
         false,
         (time, year) -> {
             ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
-            darkAuctionService.handleRequest(new TriggerDarkAuctionProtocol.TriggerMessage(time))
+            darkAuctionService.handleRequest(
+                    new TriggerDarkAuctionProtocol(),
+                    new TriggerDarkAuctionProtocol.TriggerMessage(time))
                 .thenAccept(response -> {
-                    if (response instanceof TriggerDarkAuctionProtocol.TriggerResponse triggerResponse) {
-                        if (triggerResponse.success()) {
-                            Logger.info("Dark Auction started successfully");
-                        } else {
-                            Logger.debug("Dark Auction trigger: {}", triggerResponse.message());
-                        }
+                    if (response.success()) {
+                        Logger.info("Dark Auction started successfully");
+                    } else {
+                        Logger.debug("Dark Auction trigger: {}", response.message());
                     }
                 })
                 .exceptionally(throwable -> {

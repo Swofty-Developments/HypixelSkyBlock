@@ -2,13 +2,13 @@ package net.swofty.type.skyblockgeneric.commands;
 
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Toggles whether or not you are in build mode",
         usage = "/build",
         permission = Rank.STAFF,
-        aliases = "buildmode",
+    labels = "buildmode build",
         allowsConsole = false)
 public class BuildCommand extends HypixelCommand {
     @Override

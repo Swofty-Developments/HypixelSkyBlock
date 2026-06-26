@@ -3,10 +3,10 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "is",
+@CommandParameters(labels = "is island",
         description = "Sends the player to their island",
         usage = "/is",
         permission = Rank.DEFAULT,
