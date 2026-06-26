@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import java.util.List;
 import java.util.UUID;
 
-@CommandParameters(aliases = "testmutex",
+@CommandParameters(labels = "testmutex",
         description = "Test the data mutex service",
         usage = "/testmutex <global_key> [operation]",
         permission = Rank.STAFF,

@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.coop.GUICoopInviteSender;
 import net.swofty.type.skyblockgeneric.gui.inventories.coop.GUICoopInviteTarget;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "cooperativecheck",
+@CommandParameters(labels = "cooperativecheck",
         description = "Checks outgoing invites",
         usage = "/coop",
         permission = Rank.DEFAULT,

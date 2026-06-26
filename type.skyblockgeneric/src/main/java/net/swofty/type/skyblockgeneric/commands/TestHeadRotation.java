@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Tests the head rotation of ArmorStands",
         usage = "/testheadrotation",
         permission = Rank.STAFF,
-    aliases = "testheadrot testheadrotation",
+    labels = "testheadrot testheadrotation",
         allowsConsole = false)
 public class TestHeadRotation extends HypixelCommand {
     @Override

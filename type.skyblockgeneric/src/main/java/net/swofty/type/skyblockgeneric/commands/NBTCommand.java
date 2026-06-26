@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
-@CommandParameters(aliases = "iteminfo nbt",
+@CommandParameters(labels = "iteminfo nbt",
         description = "Returns the players held item info",
         usage = "/nbt",
         permission = Rank.STAFF,

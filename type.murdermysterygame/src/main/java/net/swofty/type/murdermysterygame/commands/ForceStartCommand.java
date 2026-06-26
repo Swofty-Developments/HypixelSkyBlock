@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "forcestart",
+@CommandParameters(labels = "forcestart",
         description = "Starts a murder mystery game immediately.",
         usage = "/forcestart [seconds]",
         permission = Rank.STAFF,

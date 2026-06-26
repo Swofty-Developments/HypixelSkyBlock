@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-@CommandParameters(aliases = "msg message whipser",
+@CommandParameters(labels = "msg message whipser",
         description = "Sends a message to another player",
         usage = "/msg <player> <message>",
         permission = Rank.DEFAULT,

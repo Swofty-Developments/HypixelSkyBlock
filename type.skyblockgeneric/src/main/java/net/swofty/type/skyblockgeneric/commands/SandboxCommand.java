@@ -7,7 +7,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "getsandboxitem sandbox",
+@CommandParameters(labels = "getsandboxitem sandbox",
         description = "Gets a sandbox item",
         usage = "/getsandboxitem",
         permission = Rank.DEFAULT,

@@ -20,7 +20,7 @@ import java.util.List;
 @CommandParameters(description = "Warps to the given destination",
         usage = "/warp <warp>",
         permission = Rank.DEFAULT,
-    aliases = "teleportregion warp",
+    labels = "teleportregion warp",
         allowsConsole = false)
 public class WarpCommand extends HypixelCommand {
     @Override

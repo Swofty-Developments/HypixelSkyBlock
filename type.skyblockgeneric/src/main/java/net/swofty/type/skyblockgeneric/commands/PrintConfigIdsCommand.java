@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.item.ConfigurableSkyBlockItem;
 import net.swofty.type.generic.user.categories.Rank;
 import org.tinylog.Logger;
 
-@CommandParameters(aliases = "displayconfigids",
+@CommandParameters(labels = "displayconfigids",
         description = "Prints out the item IDs from the config into the console",
         usage = "/displayconfigids",
         permission = Rank.STAFF,

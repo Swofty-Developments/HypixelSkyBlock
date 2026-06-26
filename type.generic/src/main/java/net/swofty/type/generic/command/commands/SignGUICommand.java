@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import org.tinylog.Logger;
 
-@CommandParameters(aliases = "signgraphicaluserinterface signgui",
+@CommandParameters(labels = "signgraphicaluserinterface signgui",
         description = "Opens a graphical user interface",
         usage = "/signgui <text>",
         permission = Rank.STAFF,

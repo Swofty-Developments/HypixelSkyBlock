@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Toggles whether or not you are in build mode",
         usage = "/build",
         permission = Rank.STAFF,
-    aliases = "buildmode build",
+    labels = "buildmode build",
         allowsConsole = false)
 public class BuildCommand extends HypixelCommand {
     @Override

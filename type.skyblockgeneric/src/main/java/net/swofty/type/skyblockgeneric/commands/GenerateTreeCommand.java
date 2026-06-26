@@ -13,7 +13,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(
-        aliases = "tree",
+        labels = "tree",
         description = "Generates a tree at your location",
         usage = "/generatetree <type> [minHeight maxHeight] [minWidth maxWidth]",
         permission = Rank.STAFF,

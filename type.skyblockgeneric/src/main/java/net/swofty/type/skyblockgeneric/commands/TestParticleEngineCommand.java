@@ -13,7 +13,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.time.Duration;
 
-@CommandParameters(aliases = "testpe testparticleengine", permission = Rank.STAFF, description =
+@CommandParameters(labels = "testpe testparticleengine", permission = Rank.STAFF, description =
         "Literally just gives me admin", usage = "/testpe <radius> <intensity> <duration>", allowsConsole = false)
 public class TestParticleEngineCommand extends HypixelCommand
 {

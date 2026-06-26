@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "i item sbitem",
+@CommandParameters(labels = "i item sbitem",
         description = "Gives an item to the player",
         usage = "/item <item> [amount]",
         permission = Rank.STAFF,

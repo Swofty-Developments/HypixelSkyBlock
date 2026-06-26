@@ -12,7 +12,7 @@ import net.swofty.type.generic.utility.ScheduleUtility;
 @CommandParameters(description = "Allows the player to wipe themselves",
         usage = "/wipeme",
         permission = Rank.STAFF,
-    aliases = "deletemyprofiles wipeme",
+    labels = "deletemyprofiles wipeme",
         allowsConsole = false)
 public class WipeMeCommand extends HypixelCommand {
     @Override

@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "allowaccessforapiauthentication verifyapi",
+@CommandParameters(labels = "allowaccessforapiauthentication verifyapi",
         description = "Allows access for API authentication for the given code",
         usage = "/allowaccessforapiauthentication <code>",
         permission = Rank.STAFF,

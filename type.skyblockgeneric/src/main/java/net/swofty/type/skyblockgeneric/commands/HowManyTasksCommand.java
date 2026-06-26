@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@CommandParameters(aliases = "taskcount",
+@CommandParameters(labels = "taskcount",
         description = "Gets the number of tasks currently running on the server",
         usage = "/taskcount",
         permission = Rank.STAFF,

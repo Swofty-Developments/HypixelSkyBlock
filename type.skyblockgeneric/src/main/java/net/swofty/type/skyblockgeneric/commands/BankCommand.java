@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Open your Personal Bank", usage = "/bank", permission = Rank.DEFAULT,
-    aliases = "bank", allowsConsole = false)
+    labels = "bank", allowsConsole = false)
 public class BankCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {

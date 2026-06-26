@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "ench enchant",
+@CommandParameters(labels = "ench enchant",
         description = "Enchants the contents o the players hand",
         usage = "/enchant <enchantment_type> <level>",
         permission = Rank.STAFF,

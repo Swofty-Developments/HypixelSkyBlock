@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "shout",
+@CommandParameters(labels = "shout",
 		description = "Shouts a message to all players on the game.",
 		usage = "/shout <message>",
 		permission = Rank.DEFAULT,

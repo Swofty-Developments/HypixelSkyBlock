@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStash;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "addtostash",
+@CommandParameters(labels = "addtostash",
         description = "Force add an item to your stash",
         usage = "/addtostash <item> [amount]",
         permission = Rank.STAFF,

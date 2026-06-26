@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.abstr.SkyBlockLevelCauseAbstr;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "awardskyblockxp giveskyblockxp",
+@CommandParameters(labels = "awardskyblockxp giveskyblockxp",
         description = "Gives yourself skyblock xp",
         usage = "/giveskyblockxp <cause>",
         permission = Rank.STAFF,

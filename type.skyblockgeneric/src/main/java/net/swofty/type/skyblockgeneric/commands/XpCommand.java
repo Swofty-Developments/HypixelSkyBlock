@@ -7,7 +7,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "experience xp",
+@CommandParameters(labels = "experience xp",
         description = "Sets your experience levels",
         usage = "/xp <level>",
         permission = Rank.STAFF,

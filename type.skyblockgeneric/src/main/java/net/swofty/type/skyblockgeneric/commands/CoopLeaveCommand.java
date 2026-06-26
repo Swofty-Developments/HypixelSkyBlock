@@ -11,7 +11,7 @@ import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "cooperativeleave",
+@CommandParameters(labels = "cooperativeleave",
         description = "Leaves the current coop",
         usage = "/coopleave",
         permission = Rank.DEFAULT,

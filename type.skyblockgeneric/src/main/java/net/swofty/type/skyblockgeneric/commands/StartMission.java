@@ -11,7 +11,7 @@ import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(
-    aliases = "startmission",
+    labels = "startmission",
     description = "Starts a mission for testing purposes",
     usage = "/startmission <mission_id>",
     permission = Rank.STAFF,

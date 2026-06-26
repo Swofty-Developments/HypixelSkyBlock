@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Toggles drop alert",
         usage = "/toggledropalert",
         permission = Rank.DEFAULT,
-    aliases = "dropalert toggledropalert",
+    labels = "dropalert toggledropalert",
         allowsConsole = false)
 public class ToggleDropAlertCommand extends HypixelCommand {
 

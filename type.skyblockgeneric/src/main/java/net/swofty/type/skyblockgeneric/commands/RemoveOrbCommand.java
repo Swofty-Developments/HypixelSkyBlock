@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "deleteorb",
+@CommandParameters(labels = "deleteorb",
         description = "Deletes orbs at the player's location.",
         usage = "/removeorb",
         permission = Rank.STAFF,

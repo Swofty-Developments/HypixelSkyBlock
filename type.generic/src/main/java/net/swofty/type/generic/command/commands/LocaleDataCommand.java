@@ -10,7 +10,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 import java.util.Locale;
 
-@CommandParameters(aliases = "localedata",
+@CommandParameters(labels = "localedata",
     description = "Locale Data",
     usage = "/localedata",
     permission = Rank.STAFF,
