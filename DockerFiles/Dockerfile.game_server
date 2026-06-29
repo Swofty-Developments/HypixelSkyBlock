@@ -14,7 +14,8 @@ RUN curl -fSL -o HypixelCore.jar "https://github.com/Swofty-Developments/Hypixel
     curl -fSL -o ServiceParty.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar" && \
     curl -fSL -o ServiceDarkAuction.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDarkAuction.jar" && \
     curl -fSL -o ServiceOrchestrator.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceOrchestrator.jar" && \
-    curl -fSL -o ServiceFriend.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceFriend.jar"
+    curl -fSL -o ServiceFriend.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceFriend.jar" && \
+    curl -fSL -o ServiceStore.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceStore.jar"
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files
