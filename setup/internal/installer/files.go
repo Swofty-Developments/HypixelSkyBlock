@@ -199,7 +199,7 @@ func writeVelocityTOML(cfg Config) error {
 }
 
 func writeDockerfiles(dir string) error {
-	const velocityURL = "https://fill-data.papermc.io/v1/objects/ef1a852bfae7397e84907837925e7ad21c6312066290edaae401b77f6f423ac3/velocity-3.4.0-SNAPSHOT-558.jar"
+	const velocityURL = "https://fill-data.papermc.io/v1/objects/0ec616020166465dacca3b790d3db2b246f8f7c13b3aaacaae60c825744a66e0/velocity-3.5.0-SNAPSHOT-605.jar"
 	releaseURL := "https://github.com/" + GitHubRepo + "/releases/download/latest"
 
 	proxy := fmt.Sprintf(`FROM eclipse-temurin:25-jdk
