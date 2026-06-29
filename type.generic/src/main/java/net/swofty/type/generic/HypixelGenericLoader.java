@@ -114,7 +114,6 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 public int getBiomeId(@NotNull String name) {
                     int id = MinecraftServer.getBiomeRegistry()
                         .getId(RegistryKey.unsafeOf(name));
-                    Logger.warn(name);
 
                     if (id == -1) {
                         // this implementation is the same as in the default polar except for this log this
