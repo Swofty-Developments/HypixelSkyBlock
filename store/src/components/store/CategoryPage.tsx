@@ -57,7 +57,7 @@ export default function CategoryPage({ category }: { category: Category }) {
           <section className="features-block">
             <h2>Features</h2>
             {category.features.map((feature) => (
-              <details key={feature.title} className="feature-panel" open={feature.images?.length ? true : undefined}>
+              <details key={feature.title} className="feature-panel">
                 <summary>{feature.title}</summary>
                 <div className="feature-panel-body">
                   {feature.text?.map((line) => <p key={line}>{line}</p>)}

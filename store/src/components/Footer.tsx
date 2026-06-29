@@ -218,37 +218,6 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-
-      {/* Tebex Bar */}
-      <div style={{
-        backgroundColor: "rgb(1, 4, 6)",
-        padding: "10px 0",
-        fontFamily: "Raleway, sans-serif",
-      }}>
-        <div style={{
-          maxWidth: "1160px",
-          width: "1160px",
-          margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          fontSize: "11px",
-          color: "rgb(128, 128, 128)",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{ fontWeight: 700, color: "#fff", fontSize: "13px" }}>tebex</span>
-            <span>
-              This website and its checkout process is owned &amp; operated by Tebex
-              Limited, who handle product fulfilment, billing support and refunds.
-            </span>
-          </div>
-          <div style={{ display: "flex", gap: "16px" }}>
-            <Link href="/terms/impressum" style={{ color: "rgb(128, 128, 128)", textDecoration: "none" }}>Impressum</Link>
-            <Link href="/terms/checkout" style={{ color: "rgb(128, 128, 128)", textDecoration: "none" }}>Terms &amp; Conditions</Link>
-            <Link href="/terms/privacy" style={{ color: "rgb(128, 128, 128)", textDecoration: "none" }}>Privacy Policy</Link>
-          </div>
-        </div>
-      </div>
     </>
   );
 }
