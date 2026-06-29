@@ -86,7 +86,7 @@ func (r *Runner) install(ctx context.Context, cfg Config, sourceConfigDir string
 	}
 
 	r.emit("Checking for world assets")
-	if err := DownloadLimboAssets(ctx, cfg.InstallDir); err != nil {
+	if err := DownloadLimboAssets(ctx, cfg.InstallDir, r.Events); err != nil {
 		r.emit("asset import failed: %v", err)
 		r.emit("Manual fallback: %s", LimboAssetsManualHint())
 	} else {
