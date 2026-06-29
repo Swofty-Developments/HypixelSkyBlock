@@ -4,6 +4,7 @@ const (
 	Version           = "2.0.0"
 	GitHubRepo        = "Swofty-Developments/HypixelSkyBlock"
 	GitHubAPI         = "https://api.github.com/repos/" + GitHubRepo
+	LimboAssetsURL    = "https://files.catbox.moe/oybade.zip"
 	StateFileName     = ".state.json"
 	DefaultInstallSub = ".hypixel-skyblock"
 )
