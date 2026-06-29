@@ -230,15 +230,20 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		if ev.Done {
 			m.runDone = true
+			activeEvents = nil
 			if ev.Err == nil {
 				m.logs.SetContent(appendLine(m.logs.View(), "Done. Press Enter to return."))
 				m.logs.GotoBottom()
 			}
+			return m, nil
 		}
 		return m, nextEvent()
 	case logsMsg:
 		m.logs.SetContent(appendLine(m.logs.View(), string(msg)))
 		m.logs.GotoBottom()
+		if string(msg) == "logs ended" {
+			return m, nil
+		}
 		return m, nextLog()
 	case spinner.TickMsg:
 		var cmd tea.Cmd
@@ -844,6 +849,7 @@ func nextEvent() tea.Cmd {
 		}
 		ev, ok := <-activeEvents
 		if !ok {
+			activeEvents = nil
 			return eventMsg{Done: true}
 		}
 		return eventMsg(ev)
@@ -859,6 +865,9 @@ func nextLog() tea.Cmd {
 			return nil
 		}
 		if !activeLogScan.Scan() {
+			_ = activeLogs.Close()
+			activeLogs = nil
+			activeLogScan = nil
 			return logsMsg("logs ended")
 		}
 		return logsMsg(activeLogScan.Text())
