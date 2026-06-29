@@ -20,12 +20,11 @@ RUN curl -fSL -o HypixelCore.jar "https://github.com/Swofty-Developments/Hypixel
 COPY ./configuration /app/configuration_files
 
 RUN mkdir -p configuration && \
-    cp configuration_files/config.yml ./configuration/config.yml
+    cp -a configuration_files/. ./configuration/
 
 EXPOSE 25565 65535 8080 20000
 
 RUN cp configuration_files/server.toml ./server.toml && \
-    cp -a configuration_files/skyblock/. configuration/skyblock/ && \
     cp configuration_files/entrypoint.sh ./entrypoint.sh && \
     chmod +x entrypoint.sh
 
