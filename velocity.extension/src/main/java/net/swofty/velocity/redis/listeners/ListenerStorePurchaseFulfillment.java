@@ -3,7 +3,9 @@ package net.swofty.velocity.redis.listeners;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
+import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.StorePurchaseFulfillmentProtocol;
 import net.swofty.commons.redis.RedisMessageContext;
@@ -67,7 +69,8 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
 
             Document filter = new Document("_id", playerUuid.toString())
                 .append("appliedPurchaseIds", new Document("$ne", message.purchaseId()));
-            Document update = updateFor(message, now, paidAt);
+            boolean playerOnline = SkyBlockVelocity.getServer().getPlayer(playerUuid).isPresent();
+            Document update = updateFor(message, now, paidAt, !playerOnline);
             Document projection = collection.findOneAndUpdate(
                 filter,
                 update,
@@ -86,9 +89,8 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
 
             applyRankProjection(playerUuid, projection);
             if (!duplicate) {
-                notifyOnlinePlayer(playerUuid, message.productName());
+                notifyOnlinePlayer(playerUuid, message);
             }
-
             return new StorePurchaseFulfillmentProtocol.Response(true, duplicate, null);
         } catch (Exception exception) {
             Logger.error(exception, "Failed to fulfill store purchase {}", message.purchaseId());
@@ -137,13 +139,21 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
         );
     }
 
-    private Document updateFor(StorePurchaseFulfillmentProtocol.Request message, Date now, Date paidAt) {
+    private Document updateFor(
+        StorePurchaseFulfillmentProtocol.Request message,
+        Date now,
+        Date paidAt,
+        boolean queueNotification
+    ) {
         Document set = new Document("playerName", message.playerName())
             .append("updatedAt", now);
         Document addToSet = new Document("appliedPurchaseIds", message.purchaseId());
         Document inc = new Document();
         Document eachEntitlements = new Document("$each", entitlementDocuments(message, paidAt));
         addToSet.append("entitlements", eachEntitlements);
+        if (queueNotification) {
+            addToSet.append("pendingStoreNotifications", notificationDocument(message, paidAt));
+        }
 
         for (StorePurchaseFulfillmentProtocol.Entitlement entitlement : message.entitlements()) {
             switch (entitlement.type()) {
@@ -163,6 +173,81 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
             update.append("$inc", inc);
         }
         return update;
+    }
+
+    private static void notifyOnlinePlayer(UUID playerUuid, StorePurchaseFulfillmentProtocol.Request message) {
+        SkyBlockVelocity.getServer().getPlayer(playerUuid).ifPresent(player -> {
+            boolean hasRank = message.entitlements().stream()
+                .anyMatch(entitlement -> "RANK".equals(entitlement.type()));
+
+            if (hasRank) {
+                player.openBook(Book.builder()
+                    .addPage(Component.text("Your purchase has been processed!")
+                        .appendNewline()
+                        .appendNewline()
+                        .append(Component.text("You've received the following items:"))
+                        .appendNewline()
+                        .append(Component.text(rankItems(message.entitlements())))
+                        .appendNewline()
+                        .appendNewline()
+                        .append(Component.text("If you have any problems, contact support.")))
+                    .build());
+                return;
+            }
+
+            player.sendMessage(Component.text("§b" + deliveryMessage(message)));
+        });
+    }
+
+    private static String rankItems(List<StorePurchaseFulfillmentProtocol.Entitlement> entitlements) {
+        return entitlements.stream()
+            .filter(entitlement -> "RANK".equals(entitlement.type()))
+            .map(ListenerStorePurchaseFulfillment::rankItem)
+            .reduce((left, right) -> left + "\n" + right)
+            .orElse("Rank");
+    }
+
+    private static String rankItem(StorePurchaseFulfillmentProtocol.Entitlement entitlement) {
+        String rank = readableKey(entitlement.key()) + " Rank";
+        Long durationDays = entitlement.durationDays();
+        return durationDays == null ? rank : rank + " (" + durationDays + " days)";
+    }
+
+    private static String deliveryMessage(StorePurchaseFulfillmentProtocol.Request message) {
+        String packageName = message.productName();
+
+        long skyBlockGems = entitlementAmount(message.entitlements(), "SKYBLOCK_GEMS");
+        if (skyBlockGems > 0) {
+            packageName = StringUtility.commaify(skyBlockGems) + " SkyBlock Gems";
+        }
+
+        long gold = entitlementAmount(message.entitlements(), "STORE_CURRENCY");
+        if (gold > 0) {
+            packageName = StringUtility.commaify(gold) + " Gold";
+        }
+
+        return "Your package of " + packageName
+            + " has been processed and delivered. You may need to log out and back in to receive the full effects.";
+    }
+
+    private static long entitlementAmount(
+        List<StorePurchaseFulfillmentProtocol.Entitlement> entitlements,
+        String type
+    ) {
+        return entitlements.stream()
+            .filter(entitlement -> type.equals(entitlement.type()))
+            .mapToLong(StorePurchaseFulfillmentProtocol.Entitlement::amount)
+            .sum();
+    }
+
+    private static String readableKey(String key) {
+        if (key == null || key.isBlank()) return "Unknown";
+        return switch (key) {
+            case "VIP_PLUS" -> "VIP+";
+            case "MVP_PLUS" -> "MVP+";
+            case "MVP_PLUS_PLUS" -> "MVP++";
+            default -> StringUtility.toNormalCase(key);
+        };
     }
 
     private Document initialProjection(StorePurchaseFulfillmentProtocol.Request message, Date now) {
@@ -186,11 +271,20 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
 
             if (entitlement.durationDays() != null) {
                 Instant expiresAt = paidAt.toInstant().plus(entitlement.durationDays(), ChronoUnit.DAYS);
-                document.append("expiresAt", Date.from(expiresAt));
+                document.append("durationDays", entitlement.durationDays())
+                    .append("expiresAt", Date.from(expiresAt));
             }
 
             return document;
         }).toList();
+    }
+
+    private Document notificationDocument(StorePurchaseFulfillmentProtocol.Request message, Date paidAt) {
+        return new Document("purchaseId", message.purchaseId())
+            .append("productId", message.productId())
+            .append("productName", message.productName())
+            .append("createdAt", paidAt)
+            .append("entitlements", entitlementDocuments(message, paidAt));
     }
 
     private static void applyRankProjection(UUID playerUuid, Document projection) {
@@ -263,9 +357,4 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
         return "\"" + rank + "\"";
     }
 
-    private void notifyOnlinePlayer(UUID playerUuid, String productName) {
-        SkyBlockVelocity.getServer().getPlayer(playerUuid).ifPresent(player ->
-            player.sendMessage(Component.text("§aYour purchase of §e" + productName + "§a has been delivered."))
-        );
-    }
 }
