@@ -12,8 +12,20 @@ import (
 	"time"
 )
 
+// use this so you can replace the assets
+const limboAssetsEnv = "SKYBLOCK_WORLD_ASSETS"
+
 func DownloadLimboAssets(ctx context.Context, installDir string) error {
-	reqCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+	configDir := filepath.Join(installDir, "configuration")
+	if LimboAssetsPresent(configDir) {
+		return nil
+	}
+
+	if localPath := strings.TrimSpace(os.Getenv(limboAssetsEnv)); localPath != "" {
+		return importLocalLimboAssets(localPath, configDir)
+	}
+
+	reqCtx, cancel := context.WithTimeout(ctx, 5*time.Minute)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(reqCtx, http.MethodGet, LimboAssetsURL, nil)
@@ -45,7 +57,32 @@ func DownloadLimboAssets(ctx context.Context, installDir string) error {
 		return err
 	}
 
-	return extractZip(tmpPath, filepath.Join(installDir, "configuration"))
+	return extractZip(tmpPath, configDir)
+}
+
+func LimboAssetsPresent(configDir string) bool {
+	if _, err := os.Stat(filepath.Join(configDir, "limbo.schem")); err != nil {
+		return false
+	}
+	if info, err := os.Stat(filepath.Join(configDir, "world")); err != nil || !info.IsDir() {
+		return false
+	}
+	return true
+}
+
+func LimboAssetsManualHint() string {
+	return fmt.Sprintf("set %s to a local oybade.zip or an extracted folder containing limbo.schem and world/", limboAssetsEnv)
+}
+
+func importLocalLimboAssets(path, configDir string) error {
+	info, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
+	if info.IsDir() {
+		return CopyDir(path, configDir)
+	}
+	return extractZip(path, configDir)
 }
 
 func extractZip(zipPath, dst string) error {
