@@ -25,14 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-color-scheme="dark">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("store-theme")||"dark";document.documentElement.dataset.colorScheme=t}catch(e){}`,
-          }}
-        />
-      </head>
+    <html lang="en">
       <body className={`${raleway.variable} ${neuton.variable} font-sans`}>{children}</body>
     </html>
   );

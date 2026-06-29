@@ -41,6 +41,10 @@ export default function CategoryPage({ category }: { category: Category }) {
           {category.about.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
+          {category.slug === "gold" && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="gold-about-image" src="/images/in-game-store.png" alt="Hypixel in-game store" />
+          )}
           {category.bullets && (
             <ul>
               {category.bullets.map((bullet) => (

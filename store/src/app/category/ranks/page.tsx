@@ -11,8 +11,8 @@ import ProductCard from "@/components/store/ProductCard";
 import { directProducts } from "@/data/store";
 
 // Easter theme colors
-const saleColor = "rgb(140, 163, 45)"; // green for easter
-const grayBorder = "rgb(199, 199, 199)";
+const saleColor = "rgb(230, 174, 71)";
+const grayBorder = "rgb(51, 51, 51)";
 const checkColor = "rgb(120, 174, 50)";
 
 const ranks = [
@@ -46,6 +46,18 @@ const features: { name: string; values: FVal[] }[] = [
   { name: "Nickname (/nick) Command", values: [false, false, false, false, true] },
   { name: "Golden Guild Tag", values: [false, false, false, false, true] },
   { name: "Exclusive In-Game Emojis", values: [false, false, false, false, true] },
+];
+
+const moreFeatures: { name: string; values: FVal[] }[] = [
+  { name: "Flying in lobbies", values: [true, true, true, true, true] },
+  { name: "Click Effects", values: [true, true, true, true, true] },
+  { name: "Housing Mailboxes", values: [true, true, true, true, true] },
+  { name: "Ability to gift ranks", values: [true, true, true, true, true] },
+  { name: "Particle Packs", values: [false, false, false, true, true] },
+  { name: "Ride & Control Lobby Pets", values: [false, false, false, true, true] },
+  { name: "Ability to change color overlay", values: [false, false, false, false, true] },
+  { name: "/stream Command", values: [false, false, false, false, true] },
+  { name: "Golden \"GG\" at the end of games", values: [false, false, false, false, true] },
 ];
 
 const Check = () => <svg style={{ width: 22, height: 22, display: "inline", color: checkColor }} viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" /></svg>;
@@ -158,13 +170,13 @@ export default function RanksPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: "50px", padding: "0 15px", fontSize: "16px" }}>
           {checkoutError && <p className="checkout-error">{checkoutError}</p>}
           {/* Ranks Table */}
-          <table style={{ width: "1232px", borderCollapse: "separate", borderSpacing: "6px 0px", fontFamily: "Raleway, serif", fontSize: "16px", fontWeight: 700 }}>
+          <table className={`ranks-table ${showMore ? "show-more" : ""}`} style={{ width: "1232px", borderCollapse: "separate", borderSpacing: "6px 0px", fontFamily: "Raleway, serif", fontSize: "16px", fontWeight: 700 }}>
             <thead>
               {/* Icon Row */}
               <tr>
                 <th style={{ padding: "10px 25px", textAlign: "center", verticalAlign: "middle", minWidth: "170px", border: "2px solid transparent" }} />
                 {ranks.map((r) => (
-                  <th key={r.name} style={{
+                  <th key={r.name} className={r.sale ? "rank-sale-cell" : ""} style={{
                     padding: "45px 25px 10px", textAlign: "center", verticalAlign: "top",
                     backgroundColor: "#fff", borderRadius: "8px 8px 0 0",
                     borderLeft: valBorder(r.sale), borderRight: valBorder(r.sale),
@@ -191,12 +203,12 @@ export default function RanksPage() {
               <tr id="header-row">
                 <th style={{ padding: "10px 25px", border: "2px solid transparent" }} />
                 {ranks.map((r) => (
-                  <th key={r.name} style={{
+                  <th key={r.name} className={r.sale ? "rank-sale-cell" : ""} style={{
                     padding: "10px 25px", textAlign: "center", backgroundColor: "#fff",
                     borderLeft: valBorder(r.sale), borderRight: valBorder(r.sale),
                     borderTop: "0px none", borderBottom: "0px none",
                   }}>
-                    <div style={{ color: "rgb(230, 174, 71)", fontSize: "22px", fontWeight: 700 }}>{r.name}</div>
+                    <div className="rank-name" style={{ color: "rgb(230, 174, 71)", fontSize: "22px", fontWeight: 700 }}>{r.name}</div>
                   </th>
                 ))}
               </tr>
@@ -204,7 +216,7 @@ export default function RanksPage() {
               <tr>
                 <th style={{ padding: "10px 25px", border: "2px solid transparent" }} />
                 {ranks.map((r) => (
-                  <th key={r.name} style={{
+                  <th key={r.name} className={`rank-description ${r.sale ? "rank-sale-cell" : ""}`} style={{
                     padding: "10px 20px", textAlign: "center", backgroundColor: "#fff",
                     fontSize: "13px", fontWeight: 400, color: "#555",
                     borderLeft: valBorder(r.sale), borderRight: valBorder(r.sale),
@@ -218,7 +230,7 @@ export default function RanksPage() {
               <tr>
                 <th style={{ padding: "10px 25px", border: "2px solid transparent" }} />
                 {ranks.map((r) => (
-                  <th key={r.name} style={{
+                  <th key={r.name} className={r.sale ? "rank-sale-cell" : ""} style={{
                     padding: "10px 25px 15px", textAlign: "center", backgroundColor: "#fff",
                     borderLeft: valBorder(r.sale), borderRight: valBorder(r.sale),
                     borderTop: "0px none", borderBottom: "0px none",
@@ -255,7 +267,7 @@ export default function RanksPage() {
                   borderTop: `2px solid ${grayBorder}`, borderBottom: `1px solid ${grayBorder}`,
                 }}>Chat Prefix</td>
                 {ranks.map((r) => (
-                  <td key={r.name} style={{
+                  <td key={r.name} className={r.sale ? "rank-sale-cell" : ""} style={{
                     padding: "10px 25px", textAlign: "center", verticalAlign: "middle",
                     backgroundColor: "rgb(242, 242, 242)",
                     borderLeft: valBorder(r.sale), borderRight: valBorder(r.sale),
@@ -277,7 +289,7 @@ export default function RanksPage() {
                     borderBottom: `1px solid ${grayBorder}`, borderTop: "0px none",
                   }}>{feat.name}</td>
                   {feat.values.map((val, i) => (
-                    <td key={i} style={{
+                    <td key={i} className={ranks[i].sale ? "rank-sale-cell" : ""} style={{
                       padding: "10px 25px", textAlign: "center", verticalAlign: "middle",
                       backgroundColor: idx % 2 === 0 ? "#fff" : "rgb(242, 242, 242)",
                       borderLeft: valBorder(ranks[i].sale), borderRight: valBorder(ranks[i].sale),
@@ -289,7 +301,7 @@ export default function RanksPage() {
                 </tr>
               ))}
               {/* See More */}
-              <tr>
+              <tr className="see-more-row">
                 <td colSpan={6} style={{
                   padding: "10px 25px", textAlign: "center", verticalAlign: "middle",
                   backgroundColor: "rgb(242, 242, 242)",
@@ -297,16 +309,36 @@ export default function RanksPage() {
                   borderBottom: `1px solid ${grayBorder}`, borderTop: "0px none",
                   cursor: "pointer", fontWeight: 400,
                 }} onClick={() => setShowMore(!showMore)}>
-                  <svg style={{ display: "inline", width: 12, height: 12, marginRight: 4, transform: showMore ? "rotate(180deg)" : undefined }} viewBox="0 0 320 512" fill="currentColor"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" /></svg>
+                  <span className="rank-toggle-icon" aria-hidden="true" />
                   Click here to see more features
-                  <svg style={{ display: "inline", width: 12, height: 12, marginLeft: 4, transform: showMore ? "rotate(180deg)" : undefined }} viewBox="0 0 320 512" fill="currentColor"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" /></svg>
+                  <span className="rank-toggle-icon" aria-hidden="true" />
                 </td>
               </tr>
+              {showMore && moreFeatures.map((feat, idx) => (
+                  <tr key={feat.name} className="more-feature">
+                    <td style={{
+                      padding: "10px 25px", textAlign: "left", verticalAlign: "middle",
+                      backgroundColor: idx % 2 === 0 ? "#fff" : "rgb(242, 242, 242)",
+                      borderLeft: `2px solid ${grayBorder}`, borderRight: `2px solid ${grayBorder}`,
+                      borderBottom: `1px solid ${grayBorder}`, borderTop: "0px none",
+                    }}>{feat.name}</td>
+                    {feat.values.map((val, i) => (
+                      <td key={i} className={ranks[i].sale ? "rank-sale-cell" : ""} style={{
+                        padding: "10px 25px", textAlign: "center", verticalAlign: "middle",
+                        backgroundColor: idx % 2 === 0 ? "#fff" : "rgb(242, 242, 242)",
+                        borderLeft: valBorder(ranks[i].sale), borderRight: valBorder(ranks[i].sale),
+                        borderBottom: valBorderBottom(ranks[i].sale), borderTop: "0px none",
+                      }}>
+                        {val === true ? <Check /> : val === false ? <Cross /> : <span style={{ fontWeight: 400 }}>{val}</span>}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
               {/* Bottom Buy Row */}
               <tr>
                 <td style={{ padding: "10px 25px", border: "2px solid transparent" }} />
                 {ranks.map((r) => (
-                  <td key={r.name} style={{
+                  <td key={r.name} className={r.sale ? "rank-sale-cell" : ""} style={{
                     padding: "10px 25px", textAlign: "center", backgroundColor: "#fff",
                     borderLeft: valBorder(r.sale), borderRight: valBorder(r.sale),
                     borderBottom: `2px solid ${r.sale ? saleColor : grayBorder}`,
