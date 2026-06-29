@@ -29,9 +29,6 @@ func PrepareFiles(cfg Config) error {
 	if err := writeVelocityTOML(cfg); err != nil {
 		return err
 	}
-	if err := writeDockerfiles(cfg.InstallDir); err != nil {
-		return err
-	}
 	if err := writeCompose(cfg); err != nil {
 		return err
 	}
@@ -196,60 +193,6 @@ func writeVelocityTOML(cfg Config) error {
 		}
 	}
 	return os.WriteFile(path, []byte(strings.Join(lines, "\n")), 0o644)
-}
-
-func writeDockerfiles(dir string) error {
-	const velocityURL = "https://fill-data.papermc.io/v1/objects/0ec616020166465dacca3b790d3db2b246f8f7c13b3aaacaae60c825744a66e0/velocity-3.5.0-SNAPSHOT-605.jar"
-	releaseURL := "https://github.com/" + GitHubRepo + "/releases/download/latest"
-
-	proxy := fmt.Sprintf(`FROM eclipse-temurin:25-jdk
-WORKDIR /app
-RUN apt-get update && apt-get install -y jq netcat-traditional curl && apt-get clean
-RUN curl -fSL -o velocity.jar %q
-RUN mkdir -p plugins && \
-    curl -fSL -o plugins/SkyBlockProxy.jar %q
-COPY ./configuration /app/configuration_files
-RUN rm -f velocity.toml && \
-    cp configuration_files/velocity.toml velocity.toml
-RUN mkdir -p configuration && \
-    cp configuration_files/config.example.yml ./configuration/config.yml
-EXPOSE 25565
-CMD ["sh", "-c", "[ -n \"$FORWARDING_SECRET\" ] || { echo 'FORWARDING_SECRET is required' >&2; exit 1; }; printf '%%s' \"$FORWARDING_SECRET\" > /app/forwarding.secret; sed -i \"s/velocity-secret: .*/velocity-secret: '$FORWARDING_SECRET'/\" /app/configuration/config.yml; java -jar velocity.jar"]
-`, velocityURL, releaseURL+"/SkyBlockProxy.jar")
-
-	jars := []string{
-		"HypixelCore", "ServiceAPI", "ServiceAuctionHouse", "ServiceBazaar",
-		"ServiceItemTracker", "ServiceDataMutex", "ServiceParty",
-		"ServiceDarkAuction", "ServiceOrchestrator", "ServiceFriend",
-	}
-	var downloads strings.Builder
-	for i, jar := range jars {
-		if i == 0 {
-			fmt.Fprintf(&downloads, "RUN curl -fSL -o %[1]s.jar \"%[2]s/%[1]s.jar\"", jar, releaseURL)
-		} else {
-			fmt.Fprintf(&downloads, " && \\\n    curl -fSL -o %[1]s.jar \"%[2]s/%[1]s.jar\"", jar, releaseURL)
-		}
-	}
-	downloads.WriteByte('\n')
-
-	game := fmt.Sprintf(`FROM eclipse-temurin:25-jdk
-WORKDIR /app
-RUN apt-get update && apt-get install -y jq curl && apt-get clean
-%sCOPY ./configuration /app/configuration_files
-RUN mkdir -p configuration && \
-    cp configuration_files/config.yml ./configuration/config.yml
-EXPOSE 25565 65535 8080 20000
-RUN cp configuration_files/server.toml ./server.toml && \
-    cp -a configuration_files/skyblock/. configuration/skyblock/ && \
-    cp configuration_files/entrypoint.sh ./entrypoint.sh && \
-    chmod +x entrypoint.sh
-CMD ["sh", "entrypoint.sh"]
-`, downloads.String())
-
-	if err := os.WriteFile(filepath.Join(dir, "DockerFiles", "Dockerfile.proxy"), []byte(proxy), 0o644); err != nil {
-		return err
-	}
-	return os.WriteFile(filepath.Join(dir, "DockerFiles", "Dockerfile.game_server"), []byte(game), 0o644)
 }
 
 func writeCompose(cfg Config) error {

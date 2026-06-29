@@ -64,13 +64,17 @@ func (r *Runner) install(ctx context.Context, cfg Config, sourceConfigDir string
 		return err
 	}
 
-	repoConfig, err := r.cloneConfig(ctx, cfg.InstallDir)
+	repoDir, err := r.cloneAssets(ctx, cfg.InstallDir)
 	if err != nil {
 		return err
 	}
 
 	r.emit("Copying configuration files")
-	if err := CopyDir(repoConfig, filepath.Join(cfg.InstallDir, "configuration")); err != nil {
+	if err := CopyDir(filepath.Join(repoDir, "configuration"), filepath.Join(cfg.InstallDir, "configuration")); err != nil {
+		return err
+	}
+	r.emit("Copying Dockerfiles")
+	if err := CopyDir(filepath.Join(repoDir, "DockerFiles"), filepath.Join(cfg.InstallDir, "DockerFiles")); err != nil {
 		return err
 	}
 	if sourceConfigDir != "" {
@@ -81,7 +85,7 @@ func (r *Runner) install(ctx context.Context, cfg Config, sourceConfigDir string
 		}
 	}
 
-	r.emit("Writing generated Docker and application config")
+	r.emit("Writing generated Compose and application config")
 	if err := PrepareFiles(cfg); err != nil {
 		return err
 	}
@@ -94,24 +98,27 @@ func (r *Runner) install(ctx context.Context, cfg Config, sourceConfigDir string
 	return r.Start(ctx, cfg.InstallDir)
 }
 
-func (r *Runner) cloneConfig(ctx context.Context, installDir string) (string, error) {
+func (r *Runner) cloneAssets(ctx context.Context, installDir string) (string, error) {
 	repoDir := filepath.Join(installDir, "_repo")
 	if _, err := os.Stat(filepath.Join(repoDir, ".git")); err == nil {
 		r.emit("Updating sparse checkout")
 		if err := runStream(ctx, repoDir, r.Events, "git", "pull", "--depth", "1"); err != nil {
 			return "", err
 		}
-		return filepath.Join(repoDir, "configuration"), nil
+		if err := runStream(ctx, repoDir, r.Events, "git", "sparse-checkout", "set", "configuration", "DockerFiles"); err != nil {
+			return "", err
+		}
+		return repoDir, nil
 	}
 
-	r.emit("Cloning repository configuration")
+	r.emit("Cloning repository assets")
 	if err := runStream(ctx, installDir, r.Events, "git", "clone", "--depth", "1", "--filter=blob:none", "--sparse", "https://github.com/"+GitHubRepo+".git", "_repo"); err != nil {
 		return "", err
 	}
-	if err := runStream(ctx, repoDir, r.Events, "git", "sparse-checkout", "set", "configuration"); err != nil {
+	if err := runStream(ctx, repoDir, r.Events, "git", "sparse-checkout", "set", "configuration", "DockerFiles"); err != nil {
 		return "", err
 	}
-	return filepath.Join(repoDir, "configuration"), nil
+	return repoDir, nil
 }
 
 func (r *Runner) Start(ctx context.Context, dir string) error {
@@ -139,6 +146,15 @@ func (r *Runner) Start(ctx context.Context, dir string) error {
 }
 
 func (r *Runner) Reconfigure(ctx context.Context, cfg Config) error {
+	repoDir, err := r.cloneAssets(ctx, cfg.InstallDir)
+	if err != nil {
+		return err
+	}
+	r.emit("Refreshing Dockerfiles")
+	if err := CopyDir(filepath.Join(repoDir, "DockerFiles"), filepath.Join(cfg.InstallDir, "DockerFiles")); err != nil {
+		return err
+	}
+
 	r.emit("Writing updated configuration")
 	if err := PrepareFiles(cfg); err != nil {
 		return err
