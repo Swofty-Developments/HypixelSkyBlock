@@ -85,11 +85,12 @@ func (r *Runner) install(ctx context.Context, cfg Config, sourceConfigDir string
 		}
 	}
 
-	r.emit("Checking for limbo world assets")
+	r.emit("Checking for world assets")
 	if err := DownloadLimboAssets(ctx, cfg.InstallDir); err != nil {
-		r.emit("Limbo asset download skipped: %v", err)
+		r.emit("asset import failed: %v", err)
+		r.emit("Manual fallback: %s", LimboAssetsManualHint())
 	} else {
-		r.emit("Imported limbo world assets")
+		r.emit("world assets are ready")
 	}
 
 	r.emit("Writing generated Compose and application config")
