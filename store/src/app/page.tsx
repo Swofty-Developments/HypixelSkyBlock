@@ -161,7 +161,7 @@ export default function Home() {
               list above.
             </p>
             <p style={{ marginBottom: "16px" }}>
-              All payments are handled and secured by Tebex.
+              All payments are handled and secured by Stripe.
             </p>
             <p><br /></p>
 

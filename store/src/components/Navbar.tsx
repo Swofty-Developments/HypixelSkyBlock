@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { HelpCircle, Moon, Sun, Tag } from "lucide-react";
+import { HelpCircle, Tag } from "lucide-react";
 import { categories } from "@/data/store";
 import {
   DropdownMenu,

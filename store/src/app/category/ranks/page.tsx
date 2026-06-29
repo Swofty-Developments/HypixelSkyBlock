@@ -2,19 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BuyButton from "@/components/store/BuyButton";
 import ProductCard from "@/components/store/ProductCard";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Product } from "@/data/store";
+import { directProducts } from "@/data/store";
 
 // Easter theme colors
 const saleColor = "rgb(140, 163, 45)"; // green for easter
@@ -22,10 +16,10 @@ const grayBorder = "rgb(199, 199, 199)";
 const checkColor = "rgb(120, 174, 50)";
 
 const ranks = [
-  { name: "VIP Rank", icon: "/images/ranks/vip.png", prefix: "/images/perks/vip-prefix.png", prefixAlt: "A green VIP prefix", originalPrice: "7.69", salePrice: "6.15", sale: true },
-  { name: "VIP+ Rank", icon: "/images/ranks/vip-plus.png", prefix: "/images/perks/vip-plus-prefix.png", prefixAlt: "A green VIP prefix followed by a golden plus", originalPrice: "16.49", salePrice: "13.19", sale: true },
-  { name: "MVP Rank", icon: "/images/ranks/mvp.png", prefix: "/images/perks/mvp-prefix.png", prefixAlt: "An aqua MVP prefix", originalPrice: "32.99", salePrice: "26.39", sale: true },
-  { name: "MVP+ Rank", icon: "/images/ranks/mvp-plus.png", prefix: "/images/perks/mvp-plus-prefix.png", prefixAlt: "An aqua MVP prefix followed by a red plus", originalPrice: "49.49", salePrice: "39.59", sale: true },
+  { name: "VIP Rank", productId: "rank-vip", icon: "/images/ranks/vip.png", prefix: "/images/perks/vip-prefix.png", prefixAlt: "A green VIP prefix", originalPrice: "7.69", salePrice: "6.15", sale: true },
+  { name: "VIP+ Rank", productId: "rank-vip-plus", icon: "/images/ranks/vip-plus.png", prefix: "/images/perks/vip-plus-prefix.png", prefixAlt: "A green VIP prefix followed by a golden plus", originalPrice: "16.49", salePrice: "13.19", sale: true },
+  { name: "MVP Rank", productId: "rank-mvp", icon: "/images/ranks/mvp.png", prefix: "/images/perks/mvp-prefix.png", prefixAlt: "An aqua MVP prefix", originalPrice: "32.99", salePrice: "26.39", sale: true },
+  { name: "MVP+ Rank", productId: "rank-mvp-plus", icon: "/images/ranks/mvp-plus.png", prefix: "/images/perks/mvp-plus-prefix.png", prefixAlt: "An aqua MVP prefix followed by a red plus", originalPrice: "49.49", salePrice: "39.59", sale: true },
   { name: "MVP++ Rank", icon: "/images/ranks/mvp-plus-plus.png", prefix: "/images/perks/mvp-plus-plus-prefix.png", prefixAlt: "A golden MVP prefix followed by two red plusses", originalPrice: null, salePrice: null, sale: false, isSub: true },
 ];
 
@@ -57,11 +51,7 @@ const features: { name: string; values: FVal[] }[] = [
 const Check = () => <svg style={{ width: 22, height: 22, display: "inline", color: checkColor }} viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" /></svg>;
 const Cross = () => <svg style={{ width: 22, height: 22, display: "inline", color: "gray" }} viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" /></svg>;
 
-const mvpPlusPlusProducts: Product[] = [
-  { name: "Monthly MVP++ Subscription", image: "/images/ranks/mvp-plus-plus.png", description: "Receive the MVP++ Rank on the Hypixel Minecraft Server, Hypixel Forums, and Hypixel Discord. Subscription renews every 30 days and can be cancelled at any time.", price: "10.03", cta: "SUBSCRIBE" },
-  { name: "Quarterly MVP++ Subscription", image: "/images/ranks/mvp-plus-plus.png", description: "Receive the MVP++ Rank on the Hypixel Minecraft Server, Hypixel Forums, and Hypixel Discord. Subscription renews every 3 months and can be cancelled at any time.", price: "27.60", cta: "SUBSCRIBE" },
-  { name: "Annual MVP++ Subscription", image: "/images/ranks/mvp-plus-plus.png", description: "Receive the MVP++ Rank on the Hypixel Minecraft Server, Hypixel Forums, and Hypixel Discord. Subscription renews every year and can be cancelled at any time.", price: "89.09", cta: "SUBSCRIBE" },
-];
+const mvpPlusPlusProducts = directProducts.filter((product) => product.id.startsWith("rank-mvp-plus-plus"));
 
 const mvpFeatures = [
   "New Rank Prefix and Color",
@@ -82,9 +72,40 @@ const valBorder = (sale: boolean) => sale ? `2px solid ${saleColor}` : `2px soli
 const valBorderBottom = (sale: boolean) => sale ? `1px solid ${saleColor}` : `1px solid ${grayBorder}`;
 
 export default function RanksPage() {
+  const router = useRouter();
   const [showMore, setShowMore] = useState(false);
-  const [selectedRank, setSelectedRank] = useState<(typeof ranks)[number] | null>(null);
   const [mvpMenu, setMvpMenu] = useState(false);
+  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  async function startCheckout(productId: string) {
+    const username = localStorage.getItem("hypixel_username")?.trim();
+    if (!username) {
+      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+      return;
+    }
+
+    setCheckoutError(null);
+    setLoadingProductId(productId);
+
+    try {
+      const response = await fetch("/api/checkout/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, username }),
+      });
+      const payload = await response.json();
+
+      if (!response.ok || !payload.url) {
+        throw new Error(payload.error ?? "Unable to start checkout.");
+      }
+
+      window.location.assign(payload.url);
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : "Unable to start checkout.");
+      setLoadingProductId(null);
+    }
+  }
 
   if (mvpMenu) {
     return (
@@ -135,6 +156,7 @@ export default function RanksPage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "50px", padding: "0 15px", fontSize: "16px" }}>
+          {checkoutError && <p className="checkout-error">{checkoutError}</p>}
           {/* Ranks Table */}
           <table style={{ width: "1232px", borderCollapse: "separate", borderSpacing: "6px 0px", fontFamily: "Raleway, serif", fontSize: "16px", fontWeight: 700 }}>
             <thead>
@@ -203,7 +225,7 @@ export default function RanksPage() {
                   }}>
                     {r.isSub ? (
                       <div style={{ marginBottom: "8px" }}>
-                        <Link href="https://subscriptions.hypixel.net/" style={{ color: "rgb(230, 174, 71)", fontSize: "13px", fontStyle: "italic" }}>Manage subscription</Link>
+                        <Link href="#" style={{ color: "rgb(230, 174, 71)", fontSize: "13px", fontStyle: "italic" }}>Manage subscription</Link>
                       </div>
                     ) : (
                       <div style={{ marginBottom: "8px" }}>
@@ -214,7 +236,11 @@ export default function RanksPage() {
                         <span style={{ fontSize: "21.6px", fontWeight: 700 }}>{r.salePrice} USD</span>
                       </div>
                     )}
-                    <BuyButton label={r.isSub ? "SUBSCRIBE" : "BUY"} onClick={() => r.isSub ? setMvpMenu(true) : setSelectedRank(r)} />
+                    <BuyButton
+                      label={r.isSub ? "SUBSCRIBE" : "BUY"}
+                      onClick={() => r.isSub ? setMvpMenu(true) : startCheckout(r.productId!)}
+                      loading={Boolean(r.productId && loadingProductId === r.productId)}
+                    />
                   </th>
                 ))}
               </tr>
@@ -286,7 +312,13 @@ export default function RanksPage() {
                     borderBottom: `2px solid ${r.sale ? saleColor : grayBorder}`,
                     borderTop: "0px none",
                     borderRadius: "0 0 8px 8px",
-                  }}><BuyButton label={r.isSub ? "SUBSCRIBE" : "BUY"} onClick={() => r.isSub ? setMvpMenu(true) : setSelectedRank(r)} /></td>
+                  }}>
+                    <BuyButton
+                      label={r.isSub ? "SUBSCRIBE" : "BUY"}
+                      onClick={() => r.isSub ? setMvpMenu(true) : startCheckout(r.productId!)}
+                      loading={Boolean(r.productId && loadingProductId === r.productId)}
+                    />
+                  </td>
                 ))}
               </tr>
             </tbody>
@@ -312,20 +344,6 @@ export default function RanksPage() {
         </div>
       </div>
       <Footer />
-      <Dialog open={Boolean(selectedRank)} onOpenChange={(open) => !open && setSelectedRank(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{selectedRank?.name}</DialogTitle>
-            <DialogDescription>
-              This item would be added to your basket. Checkout is not enabled in this frontend-only version.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="rank-modal-actions">
-            <button className="buy-button" type="button" onClick={() => setSelectedRank(null)}>Cancel</button>
-            <button className="buy-button" type="button">Add to basket</button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [
-`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hypixel Store
 
-## Getting Started
+Next.js storefront for Stripe-hosted checkout. The store records paid purchases in MongoDB; `ServiceStore` performs
+in-game fulfillment through the Velocity proxy.
 
-First, run the development server:
+## Environment
 
 ```bash
-bun dev
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STORE_PUBLIC_URL=http://localhost:3000
+MONGODB_URI=mongodb://localhost:27017
+MONGODB_DATABASE=Minestom
+STRIPE_AUTOMATIC_TAX=false
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically
-optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Forward Stripe webhooks locally:
 
-## Learn More
+```bash
+stripe listen --forward-to http://localhost:3000/api/stripe/webhook
+```
 
-To learn more about Next.js, take a look at the following resources:
+Use the printed webhook secret as `STRIPE_WEBHOOK_SECRET`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Production Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions
-are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use
-the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for
-more details.
+- Configure the Stripe webhook endpoint at `/api/stripe/webhook`.
+- Subscribe to `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`, and
+  `charge.refunded`.
+- Keep `ServiceStore.jar` running with MongoDB and Redis access so paid purchases can be fulfilled.
+- Fulfillment is recoverable: purchases paid while the service is offline remain in MongoDB and are retried when it
+  returns.
