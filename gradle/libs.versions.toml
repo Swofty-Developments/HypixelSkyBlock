@@ -1,5 +1,5 @@
 [versions]
-adventure = "5.1.1"
+adventure = "5.2.0"
 annotations = "26.1.0"
 atlasRedis = "1.1.5"
 byte-buddy = "1.18.7"
