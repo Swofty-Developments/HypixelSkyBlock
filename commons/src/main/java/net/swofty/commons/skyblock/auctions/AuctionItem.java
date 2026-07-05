@@ -1,8 +1,11 @@
 package net.swofty.commons.skyblock.auctions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
+import net.swofty.commons.protocol.serializers.AuctionItemSerializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +40,23 @@ public class AuctionItem {
         this.startingPrice = Math.toIntExact(startingPrice);
 
         this.bids = new ArrayList<>();
+    }
+
+    /**
+     * Jackson round-trips an AuctionItem as its purpose-built serialized string rather than as a
+     * bean graph. The graph contains a {@link UnderstandableSkyBlockItem} whose {@code attributes}
+     * are abstract {@link net.swofty.commons.skyblock.item.attribute.ItemAttribute}s, which Jackson
+     * cannot reconstruct (no concrete type, no default creator). Delegating to
+     * {@link AuctionItemSerializer} reuses the same key-based format used for MongoDB storage.
+     */
+    @JsonValue
+    public String toSerializedString() {
+        return new AuctionItemSerializer<>().serialize(this);
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static AuctionItem fromSerializedString(String json) {
+        return new AuctionItemSerializer<>().deserialize(json);
     }
 
     public Document toDocument() {
