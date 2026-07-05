@@ -11,12 +11,15 @@ public class AuctionService implements SkyBlockService {
     public static AuctionsCacheService cacheService;
 
     static void main(String[] args) {
-        SkyBlockService.init(new AuctionService());
+        // SkyBlockService.init(...) blocks forever (it awaits a latch), so every dependency the
+        // endpoints touch must be initialised BEFORE it is called. Databases first (the cache reads
+        // their static collections), then the cache, then start handling messages.
+        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
 
         cacheService = new AuctionsCacheService();
 
-        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
-        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        SkyBlockService.init(new AuctionService());
     }
 
     @Override
