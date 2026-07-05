@@ -82,46 +82,47 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
             futures.add(future);
         });
 
+        // Render the page once every fetch has resolved — without blocking the caller.
         CompletableFuture<Void> allDone = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
-        allDone.join();
+        allDone.thenRun(() -> {
+            // Sort the items by the time they were added
+            auctionItems.sort((o1, o2) -> Long.compare(o2.getEndTime(), o1.getEndTime()));
 
-        // Sort the items by the time they were added
-        auctionItems.sort((o1, o2) -> Long.compare(o2.getEndTime(), o1.getEndTime()));
+            List<AuctionItem> auctionItemsPage = auctionItems.getPage(1);
 
-        List<AuctionItem> auctionItemsPage = auctionItems.getPage(1);
+            for (int i = 0; i < 7; i++) {
+                int slot = i + 10;
 
-        for (int i = 0; i < 7; i++) {
-            int slot = i + 10;
+                if (i >= auctionItems.size()) {
+                    set(new GUIItem(slot) {
+                        @Override
+                        public ItemStack.Builder getItem(HypixelPlayer p) {
+                            SkyBlockPlayer player = (SkyBlockPlayer) p;
+                            return ItemStack.builder(Material.AIR);
+                        }
+                    });
+                    continue;
+                }
 
-            if (i >= auctionItems.size()) {
-                set(new GUIItem(slot) {
+                AuctionItem item = auctionItemsPage.get(i);
+                set(new GUIClickableItem(slot) {
+                    @Override
+                    public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                        SkyBlockPlayer player = (SkyBlockPlayer) p;
+                        new GUIAuctionViewItem(item.getUuid(), GUIManageAuctions.this).open(player);
+                    }
+
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
                         SkyBlockPlayer player = (SkyBlockPlayer) p;
-                        return ItemStack.builder(Material.AIR);
+                        return ItemStackCreator.getStack(
+                                StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
+                                        .get(DataComponents.CUSTOM_NAME)),
+                                item.getItem().material(), item.getItem().amount(), new AuctionItemLoreHandler(item).getLore(player));
                     }
                 });
-                continue;
             }
-
-            AuctionItem item = auctionItemsPage.get(i);
-            set(new GUIClickableItem(slot) {
-                @Override
-                public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    new GUIAuctionViewItem(item.getUuid(), GUIManageAuctions.this).open(player);
-                }
-
-                @Override
-                public ItemStack.Builder getItem(HypixelPlayer p) {
-                    SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    return ItemStackCreator.getStack(
-                            StringUtility.getTextFromComponent(new NonPlayerItemUpdater(item.getItem()).getUpdatedItem().build()
-                                    .get(DataComponents.CUSTOM_NAME)),
-                            item.getItem().material(), item.getItem().amount(), new AuctionItemLoreHandler(item).getLore(player));
-                }
-            });
-        }
+        });
     }
 
     @Override
@@ -146,13 +147,14 @@ public class GUIManageAuctions extends HypixelInventoryGUI implements Refreshing
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.t("gui_auction.manage.offline_message"));
-            player.closeInventory();
-            return;
-        }
-
-        setItems();
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.manage.offline_message"));
+                player.closeInventory();
+                return;
+            }
+            setItems();
+        });
     }
 
     @Override

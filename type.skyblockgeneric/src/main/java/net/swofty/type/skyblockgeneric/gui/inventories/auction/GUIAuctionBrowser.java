@@ -276,12 +276,14 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.t("gui_auction.browser.offline_message"));
-            player.closeInventory();
-        }
-
-        setItems();
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.browser.offline_message"));
+                player.closeInventory();
+                return;
+            }
+            setItems();
+        });
     }
 
     @Override

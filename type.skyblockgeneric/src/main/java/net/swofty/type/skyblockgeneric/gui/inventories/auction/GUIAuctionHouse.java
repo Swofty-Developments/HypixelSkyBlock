@@ -21,9 +21,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIAuctionHouse() {
         super(I18n.t("gui_auction.house.title"), InventoryType.CHEST_4_ROW);
-
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join())
-            fill(Material.BLACK_STAINED_GLASS_PANE, "");
+        // onOpen paints the panes and refreshItems() handles the offline case async — never
+        // block the tick thread on an isOnline() round-trip here.
     }
 
     @Override
@@ -133,10 +132,12 @@ public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGU
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.t("gui_auction.house.offline_message"));
-            player.closeInventory();
-        }
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.house.offline_message"));
+                player.closeInventory();
+            }
+        });
     }
 
     @Override

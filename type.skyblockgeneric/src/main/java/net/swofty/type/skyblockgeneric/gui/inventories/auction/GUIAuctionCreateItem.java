@@ -281,10 +281,12 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.t("gui_auction.create.offline_message"));
-            player.closeInventory();
-        }
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.create.offline_message"));
+                player.closeInventory();
+            }
+        });
     }
 
     @Override

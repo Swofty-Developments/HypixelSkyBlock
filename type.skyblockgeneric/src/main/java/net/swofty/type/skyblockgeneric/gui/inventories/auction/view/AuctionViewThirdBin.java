@@ -94,6 +94,9 @@ public class AuctionViewThirdBin implements AuctionView {
         gui.set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                // Run the purchase off the tick thread; the blocking joins below park a
+                // cheap virtual thread instead of freezing the server.
+                Thread.startVirtualThread(() -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 double coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
@@ -156,6 +159,7 @@ public class AuctionViewThirdBin implements AuctionView {
                         ClickEvent.runCommand("/ahview " + item.getUuid())
                     ));
                 }
+                });
             }
 
             @Override
