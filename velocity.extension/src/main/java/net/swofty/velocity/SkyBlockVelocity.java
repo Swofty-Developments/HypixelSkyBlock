@@ -60,6 +60,7 @@ import net.swofty.commons.punishment.PunishmentMessages;
 import net.swofty.commons.punishment.PunishmentReason;
 import net.swofty.commons.punishment.PunishmentTag;
 import net.swofty.commons.punishment.PunishmentType;
+import net.swofty.commons.redis.ProxyHeartbeat;
 import net.swofty.commons.redis.RedisClient;
 import net.swofty.commons.redis.RedisEndpoint;
 import net.swofty.commons.redis.RedisMessageHandler;
@@ -265,6 +266,12 @@ public class SkyBlockVelocity {
         RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());
         RedisAPI.getInstance().setFilterId("proxy");
         RedisClient.identify(RedisEndpoint.proxy());
+
+        // Advertise proxy liveness via a short-lived Redis key. Game servers watch this
+        // instead of polling the proxy with a per-server request/response every second.
+        ProxyHeartbeat.init(ConfigProvider.settings().getRedisUri());
+        server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), ProxyHeartbeat::beat)
+            .repeat(Duration.ofSeconds(2)).schedule();
         loopThroughPackage("net.swofty.velocity.redis.listeners", RedisMessageHandler.class)
             .forEach(RedisHandlerRegistry::register);
         RedisProtocol<?, ?>[] fromProxyProtocols = {

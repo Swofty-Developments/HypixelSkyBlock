@@ -21,6 +21,7 @@ import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.*;
+import net.swofty.commons.redis.ProxyHeartbeat;
 import net.swofty.commons.redis.RedisClient;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
@@ -48,8 +49,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -246,7 +250,7 @@ public class Hypixel {
 
                         Logger.info("Received server name: " + HypixelConst.getServerName());
                     });
-            checkProxyConnected(MinecraftServer.getSchedulerManager());
+            checkProxyConnected();
 
             // Initialize anticheat
             if (ConfigProvider.settings().getIntegrations().isAnticheat()) {
@@ -340,32 +344,47 @@ public class Hypixel {
         return options;
     }
 
-    private static void checkProxyConnected(Scheduler scheduler) {
-        scheduler.submitTask(() -> {
-            AtomicBoolean responded = new AtomicBoolean(false);
+    // How often to read the proxy heartbeat key, and how many consecutive absences
+    // to tolerate before declaring the proxy dead. 3 misses x 3s = ~9s of confirmed
+    // silence on top of the key's 6s TTL — resilient to transient Redis/GC blips,
+    // while still cleaning up genuinely orphaned servers promptly.
+    private static final int PROXY_HEARTBEAT_CHECK_SECONDS = 3;
+    private static final int PROXY_HEARTBEAT_MAX_MISSES = 3;
 
+    private static void checkProxyConnected() {
+        ProxyHeartbeat.init(ConfigProvider.settings().getRedisUri());
+
+        ScheduledExecutorService monitor = Executors.newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = new Thread(runnable, "proxy-heartbeat-monitor");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        AtomicInteger missed = new AtomicInteger(0);
+        monitor.scheduleAtFixedRate(() -> {
+            boolean alive;
             try {
-                RedisClient.requestProxy(new ProxyIsOnlineProtocol(),
-                        new ProxyIsOnlineProtocol.Request()).thenAccept(response -> {
-                            if (response.online()) {
-                                responded.set(true);
-                            }
-                        });
+                alive = ProxyHeartbeat.isProxyAlive();
             } catch (Exception e) {
-                MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
-                CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
-                        .execute(() -> System.exit(0));
-                return TaskSchedule.stop();
+                // A Redis hiccup is treated as a miss, but never a fatal one on its own.
+                alive = false;
             }
 
-            scheduler.scheduleTask(() -> {
-                if (!responded.get()) {
-                    Logger.error("Proxy did not respond to alive check. Shutting down...");
-                    System.exit(0);
-                }
-            }, TaskSchedule.tick(20), TaskSchedule.stop());
+            if (alive) {
+                missed.set(0);
+                return;
+            }
 
-            return TaskSchedule.seconds(1);
-        }, ExecutionType.TICK_END);
+            int misses = missed.incrementAndGet();
+            Logger.warn("Proxy heartbeat missing ({}/{})", misses, PROXY_HEARTBEAT_MAX_MISSES);
+            if (misses >= PROXY_HEARTBEAT_MAX_MISSES) {
+                Logger.error("Proxy heartbeat absent for ~{}s. Shutting down...",
+                        PROXY_HEARTBEAT_MAX_MISSES * PROXY_HEARTBEAT_CHECK_SECONDS);
+                MinecraftServer.getConnectionManager().getOnlinePlayers()
+                        .forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
+                CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
+                        .execute(() -> System.exit(0));
+            }
+        }, PROXY_HEARTBEAT_CHECK_SECONDS, PROXY_HEARTBEAT_CHECK_SECONDS, TimeUnit.SECONDS);
     }
 }
