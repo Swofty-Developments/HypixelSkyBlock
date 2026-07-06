@@ -40,8 +40,11 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
         ItemStack clickedItem = event.getClickedItem();
         ItemStack cursorItem = player.getInventory().getCursorItem();
 
-        // Check for offhand
-        if (event.getSlot() == 45) {
+        // Cancel interaction with the offhand slot, but ONLY in the player's own
+        // inventory. Slot 45 is the offhand there, yet in an open chest GUI (e.g. a
+        // CHEST_6_ROW) it is a normal, clickable slot — the 6th auction category button
+        // lives there, and blanket-cancelling slot 45 swallowed its clicks entirely.
+        if (event.getSlot() == 45 && event.getInventory() instanceof PlayerInventory) {
             event.setCancelled(true);
             return;
         }
