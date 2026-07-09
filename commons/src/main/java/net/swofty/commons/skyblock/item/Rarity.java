@@ -6,23 +6,24 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Rarity {
-    COMMON("§f"),
-    UNCOMMON("§a"),
-    RARE("§9"),
-    EPIC("§5"),
-    LEGENDARY("§6"),
-    MYTHIC("§d"),
-    DIVINE("§b"),
-    SPECIAL("§c", false),
-    VERY_SPECIAL("§c", false),
-    ADMIN("§4", false),
+    COMMON("§f", "hypixel_skyblock:common"),
+    UNCOMMON("§a", "hypixel_skyblock:uncommon"),
+    RARE("§9", "hypixel_skyblock:rare"),
+    EPIC("§5", "hypixel_skyblock:epic"),
+    LEGENDARY("§6", "hypixel_skyblock:legendary"),
+    MYTHIC("§d", "hypixel_skyblock:mythic"),
+    DIVINE("§b", "hypixel_skyblock:divine"),
+    SPECIAL("§c", "hypixel_skyblock:special", false),
+    VERY_SPECIAL("§c", "hypixel_skyblock:very_special", false),
+    ADMIN("§4", "hypixel_skyblock:admin", false),
     ;
 
     private final String color;
+    private final String tooltipStyle;
     private final boolean reforgable;
 
-    Rarity(String color) {
-        this(color, true);
+    Rarity(String color, String tooltipStyle) {
+        this(color, tooltipStyle, true);
     }
 
     public Rarity upgrade() {

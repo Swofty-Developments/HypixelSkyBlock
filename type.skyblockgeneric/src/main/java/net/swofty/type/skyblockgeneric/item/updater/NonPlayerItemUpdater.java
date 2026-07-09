@@ -14,6 +14,7 @@ import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeRarity;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.item.ItemLore;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -87,7 +88,7 @@ public class NonPlayerItemUpdater {
             json.put("isPublic", true);
             json.put("signatureRequired", false);
             json.put("textures", new JSONObject().put("SKIN", new JSONObject()
-                    .put("url", "http://textures.minecraft.net/texture/" + component.getSkullTexture(item))
+                .put("url", "https://textures.minecraft.net/texture/" + component.getSkullTexture(item))
                     .put("metadata", new JSONObject().put("model", "slim"))));
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
@@ -98,6 +99,9 @@ public class NonPlayerItemUpdater {
         if (item.hasComponent(ItemModelComponent.class)) {
             stack.set(DataComponents.ITEM_MODEL, item.getComponent(ItemModelComponent.class).getItemModel());
         }
+
+        ItemAttributeRarity rarityAttribute = (ItemAttributeRarity) item.getAttribute("rarity");
+        stack.set(DataComponents.TOOLTIP_STYLE, rarityAttribute.value.getTooltipStyle());
 
         if (item.hasComponent(GemstoneComponent.class)) {
             GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);

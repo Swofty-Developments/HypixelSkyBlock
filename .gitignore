@@ -64,6 +64,7 @@ build/
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
+/configuration/resourcepacks/skyblockpack
 store/.next
 store/node_modules
 store/next-env.d.ts

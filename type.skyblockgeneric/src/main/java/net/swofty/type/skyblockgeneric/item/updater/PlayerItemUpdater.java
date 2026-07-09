@@ -129,7 +129,7 @@ public class PlayerItemUpdater {
             json.put("isPublic", true);
             json.put("signatureRequired", false);
             json.put("textures", new JSONObject().put("SKIN", new JSONObject()
-                    .put("url", "http://textures.minecraft.net/texture/" + skullHeadComponent.getSkullTexture(item))
+                .put("url", "https://textures.minecraft.net/texture/" + skullHeadComponent.getSkullTexture(item))
                     .put("metadata", new JSONObject().put("model", "slim"))));
 
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
@@ -140,6 +140,9 @@ public class PlayerItemUpdater {
         if (item.hasComponent(ItemModelComponent.class)) {
             toReturn.set(DataComponents.ITEM_MODEL, item.getComponent(ItemModelComponent.class).getItemModel());
         }
+
+        Rarity rarity = handler.getRarity();
+        toReturn.set(DataComponents.TOOLTIP_STYLE, rarity.getTooltipStyle());
 
         if (item.hasComponent(GemstoneComponent.class)) {
             GemstoneComponent gemstoneComponent = item.getComponent(GemstoneComponent.class);
