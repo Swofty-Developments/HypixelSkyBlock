@@ -1,7 +1,7 @@
 items:
   - id: ENCHANTED_LAVA_BUCKET
     material: lava_bucket
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SELLABLE
         value: 50000.0
@@ -30,10 +30,9 @@ items:
             result:
               type: ENCHANTED_LAVA_BUCKET
               amount: 1
-
   - id: EVERBURNING_FLAME
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: 990cbd72e41a9bd411be929b73fd269206368b2810d6c6819918cb8eb66224f4
@@ -68,10 +67,11 @@ items:
             result:
               type: EVERBURNING_FLAME
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/everburning_flame
   - id: MAGMA_BUCKET
     material: lava_bucket
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: SELLABLE
         value: 50000.0
@@ -96,10 +96,11 @@ items:
             result:
               type: MAGMA_BUCKET
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/magma_bucket
   - id: PLASMA_BUCKET
     material: lava_bucket
-    rarity: COMMON
+    rarity: MYTHIC
     components:
       - id: SELLABLE
         value: 50000.0
@@ -124,3 +125,5 @@ items:
             result:
               type: PLASMA_BUCKET
               amount: 1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/plasma_bucket

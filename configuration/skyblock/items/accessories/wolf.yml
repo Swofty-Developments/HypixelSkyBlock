@@ -8,9 +8,9 @@ items:
       - id: SKULL_HEAD
         texture: f4cb7a6bf6c32c49f2589147e6f0f888e9e35875dd1ea2a8af379ca710589e6b
       - id: SELLABLE
-        value: 50
+        value: 10000.0
       - id: NOT_FINISHED_YET
-
+    rarity: UNCOMMON
   - id: WOLF_RING
     material: PLAYER_HEAD
     rarity: RARE

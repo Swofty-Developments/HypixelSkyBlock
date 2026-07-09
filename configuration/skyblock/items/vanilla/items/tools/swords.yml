@@ -113,7 +113,7 @@ items:
       damage: 20.0
   - id: DIAMOND_SWORD
     material: DIAMOND_SWORD
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SELLABLE
         value: 8.0

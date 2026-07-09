@@ -3,29 +3,28 @@ items:
     material: player_head
     rarity: LEGENDARY
     lore:
-      - "§7Can be applied to any vanilla Armor"
-      - "§7piece by combining the two items"
-      - "§7in an Anvil to change the hex"
-      - "§7color of that piece to §5#301934§7."
-      - ""
-      - "§7Costs §b100 Bits §7to combine."
+      - "\xA77Can be applied to any vanilla Armor"
+      - "\xA77piece by combining the two items"
+      - "\xA77in an Anvil to change the hex"
+      - "\xA77color of that piece to \xA75#301934\xA77."
+      - ''
+      - "\xA77Costs \xA7b100 Bits \xA77to combine."
     components:
       - id: SKULL_HEAD
         texture: e6182adee5276372c2258256d50e69b7d857c675f54765acf73af61690a62c7e
       - id: ANVIL_COMBINABLE
         handler_id: DARK_PURPLE_DYE
-
   - id: MIDAS_SWORD
     material: GOLDEN_SWORD
     rarity: LEGENDARY
     lore:
-      - "§6Ability: Greed §e§lPASSIVE"
-      - "§7The §c❁ Strength §7and §c❁ Damage §7bonus"
-      - "§7of this item is dependent on the"
-      - "§7price paid for it at the §5Dark"
-      - "§5Auction§7! §7The maximum bonus of this item is"
-      - "§c120 §7if the bid was §650,000,000"
-      - "§6Coins §7or higher!"
+      - "\xA76Ability: Greed \xA7e\xA7lPASSIVE"
+      - "\xA77The \xA7c\u2741 Strength \xA77and \xA7c\u2741 Damage \xA77bonus"
+      - "\xA77of this item is dependent on the"
+      - "\xA77price paid for it at the \xA75Dark"
+      - "\xA75Auction\xA77! \xA77The maximum bonus of this item is"
+      - "\xA7c120 \xA77if the bid was \xA7650,000,000"
+      - "\xA76Coins \xA77or higher!"
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
@@ -51,15 +50,22 @@ items:
       - id: LORE_UPDATE
         handler_id: MIDAS_SWORD
         is_absolute: false
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/midas_sword
     default_statistics:
       damage: 170.0
-
   - id: BIGFOOT_LASSO
     rarity: EPIC
     material: LEAD
   - id: WEIRD_TUBA
     rarity: RARE
     material: HOPPER
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weird_tuba
   - id: HAMSTER_WHEEL
     rarity: RARE
     material: OAK_TRAPDOOR
+    components:
+      - id: SELLABLE
+        value: 20000.0

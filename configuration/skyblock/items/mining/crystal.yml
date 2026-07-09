@@ -4,16 +4,20 @@ items:
     rarity: COMMON
   - id: BOB_OMB
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: a76a2811d1e176a07b6d0a657b910f134896ce30850f6e80c7c83732d85381ea
       - id: CUSTOM_DISPLAY_NAME
         display_name: Bob-omb
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 1000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/bob_omb
   - id: CONCENTRATED_STONE
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: ENCHANTED
         recipe_type: MINING
@@ -36,49 +40,73 @@ items:
               amount: 1
       - id: SKULL_HEAD
         texture: 8c8637bc0628f5710f85b8d0679cc2c19afe0e1089b248b6fdb67f687ae81dc2
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/concentrated_stone
   - id: CONTROL_SWITCH
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 6ace5987fbcc9ffc5a36927986a57777c5a622223bb96214212b83c6375573a4
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/control_switch
   - id: DIVAN_ALLOY
     material: player_head
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
         texture: 8da414d29cc9ebbfc1cbdcd211eee4726d0676be262e9cb8eeffafd1fc380b14
       - id: TRACKED_UNIQUE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/divans_alloy
   - id: DIVAN_FRAGMENT
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: 633844f03c92d82503c9cd567a51fda47404fa53f216fad473f16ac83a97314f
+      - id: SELLABLE
+        value: 200000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/divan_fragment
   - id: ELECTRON_TRANSMITTER
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: ef4e7b91e452c3ee391a3f4b915f73d356b3ba3e3465e5ec786b495a98c83962
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/electron_transmitter
   - id: ETERNAL_FLAME_RING
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
         texture: c9385651845f8bfe186c30da81bacd6971aa51be3b5001fc4ea5cf1af8f23c33
+      - id: SELLABLE
+        value: 10000.0
   - id: FTX_3070
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 765984f037f1231b4067068f62507d77c93d017f872890cdd53e8c1e2f099a15
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/ftx_3070
   - id: GEMSTONE_MIXTURE
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 34d42f9c461cee1997b67bf3610c6411bf852b9e5db607bbf626527cfb42912c
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/gemstone_mixture
   - id: GREEN_GOBLIN_EGG
     material: egg
     rarity: COMMON
@@ -90,26 +118,41 @@ items:
         value: 1.0
   - id: HELIX
     material: player_head
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
         texture: 8177617f51c12f2ca1f561c50eb37b8ba751f2d621992ce3d3ec8f1743913de1
+      - id: SELLABLE
+        value: 10000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/fossils/helix_fossil
   - id: JUNGLE_KEY
     material: tripwire_hook
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: ENCHANTED
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/jungle_key
   - id: MAGMA_CORE
     material: magma_cream
-    rarity: COMMON
+    rarity: RARE
+    components:
+      - id: SELLABLE
+        value: 200000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/magma_core
   - id: OIL_BARREL
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
         texture: d5d2750595477ecc13869580b12ffc3b13fc2b3ac3e5035ecfc9aafa036722a2
       - id: EXTRA_UNDER_NAME
         display: Machine Fuel
+      - id: SELLABLE
+        value: 1000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/oil_barrel
   - id: PICKONIMBUS_2000
     material: diamond_pickaxe
     rarity: COMMON
@@ -131,9 +174,11 @@ items:
       - id: SELLABLE
         value: 1000.0
       - id: TRACKED_UNIQUE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/prehistoric_egg
   - id: RECALL_POTION
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: 1af8151deb39553292b9a69674832dda8001780ca98180a06eaf9b368930b5bb
@@ -143,44 +188,73 @@ items:
     rarity: COMMON
   - id: ROBOTRON_REFLECTOR
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 1cd87c7af039ef4b2c7a37e6b94d9eeda22d2a5d2df43804ffca9e486a4eca15
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/robotron_reflector
   - id: SLUDGE_JUICE
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
         texture: e01ce68842074dde053185b218e34ee3259cb36ac471d80998f9cb01f32e51c7
+      - id: SELLABLE
+        value: 1000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sludge_juice
   - id: SUPERLITE_MOTOR
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 5bb48bcc819277438a986f55813b05fe910f9de226b9cd257682674a8aadc43a
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/superlite_motor
   - id: SYNTHETIC_HEART
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 6bc0f647b4769df300001b0294d99b02900dfdc9a74505017ec29a8719170113
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/synthetic_heart
   - id: WISHING_COMPASS
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
         texture: b8a065588c7dbf1294595aba77791c3ad65f19bf1c9ad7a5c23da40b82860b7
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 1.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/wishing_compass
   - id: WORM_MEMBRANE
     material: rotten_flesh
-    rarity: COMMON
+    rarity: UNCOMMON
+    components:
+      - id: SELLABLE
+        value: 15000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/worm_membrane
   - id: YELLOW_GOBLIN_EGG
     material: egg
     rarity: COMMON
   - id: CORLEONITE
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: df52e888b00dd5f3b82d6f9b89375c9e74bbba41d465860b0c09872873cb0f51
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/corleonite

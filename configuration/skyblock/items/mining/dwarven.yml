@@ -1,23 +1,30 @@
 items:
   - id: GLACITE_JEWEL
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: e80e2c206f06b4163dee678162b2d7a3ed6b20c6419fec44f91f6dd001a12a39
       - id: SELLABLE
         value: 2000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/glacite_jewel
   - id: GOBLIN_EGG
     material: egg
-    rarity: COMMON
+    rarity: RARE
+    components:
+      - id: SELLABLE
+        value: 421.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/mining_3/goblins/eggs/goblin_egg
   - id: MITHRIL
     material: prismarine_crystals
     rarity: COMMON
     lore:
-      - "§7§o\"The Man called it \"true-silver\" while"
-      - "§7§othe Dwarves, who loved it above all"
-      - "§7§othings, had their own, secret name"
-      - "§7§ofor it.\""
+      - "\xA77\xA7o\"The Man called it \"true-silver\" while"
+      - "\xA77\xA7othe Dwarves, who loved it above all"
+      - "\xA77\xA7othings, had their own, secret name"
+      - "\xA77\xA7ofor it.\""
     components:
       - id: SELLABLE
         value: 8.0
@@ -34,47 +41,57 @@ items:
         alchemy_xp: 5
   - id: PLASMA
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 20000.0
       - id: SKULL_HEAD
         texture: 75aa8332bbec4a958fea2be64b8f1682f5d8247451aa2b7569edd0498437d706
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/plasma
   - id: REFINED_MITHRIL
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: 35a7663300619bb6a156d76351ac05f7b3cafeac31e2ff04c55cc9f236327832
       - id: SELLABLE
         value: 204800.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/refined_mithril
   - id: REFINED_TITANIUM
     material: player_head
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
         texture: 704baabf7ef854825aae1992e4a75ff7286ed1654d8f1a08952e7b8669cf692d
       - id: SELLABLE
         value: 51200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/refined_titanium
   - id: SORROW
     material: ghast_tear
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
-        value: 13.0
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sorrow
   - id: STARFALL
     material: nether_star
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 15.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/starfall
   - id: TITANIUM
     material: player_head
     rarity: COMMON
     lore:
-      - "§7Its strength and resistance to"
-      - "§7corrosion are the highest of any"
-      - "§7metallic element."
+      - "\xA77Its strength and resistance to"
+      - "\xA77corrosion are the highest of any"
+      - "\xA77metallic element."
     components:
       - id: SELLABLE
         value: 20.0
@@ -87,13 +104,17 @@ items:
         display: DWARVEN METAL
   - id: TREASURITE
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: be261c6b852dd38e0d51349b1b8132887cd1b69da04d8daf0121af79ad8dd92
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/treasurite
   - id: VOLTA
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 1111.0
@@ -101,12 +122,14 @@ items:
         texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
       - id: EXTRA_UNDER_NAME
         display: Machine Fuel
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/volta
   - id: ROYAL_PIGEON
     rarity: LEGENDARY
     material: PLAYER_HEAD
     components:
       - id: SKULL_HEAD
-        texture: 63a405fb286dbb32e9b3908f60948f0207306c825e63ac9e626ed1dbb2f7a2be
+        texture: c429253b8ed84abcbbd39049cba928cefc3f08b7280d249987402dc7ab2f0a25
       - id: DEFAULT_SOULBOUND
         coop_allowed: true
   - id: ROYAL_COMPASS
@@ -120,39 +143,92 @@ items:
         texture: f106277ad541aa76d9d4a19e7aac92621a3f0251ff9427dfdea539b51dd8d1ea
       - id: DEFAULT_SOULBOUND
         coop_allowed: true
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/uncategorized/royal_compass
   - id: GLACITE
     rarity: COMMON
     material: PACKED_ICE
+    components:
+      - id: SELLABLE
+        value: 12.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/glacite/glacite
   - id: ENCHANTED_GLACITE
-    rarity: UNCOMMON
+    rarity: RARE
     material: PACKED_ICE
+    components:
+      - id: SELLABLE
+        value: 1920.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/glacite/glacite
   - id: TUNGSTEN
     rarity: COMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 10.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/tungsten/tungsten
   - id: ENCHANTED_TUNGSTEN
-    rarity: UNCOMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 1600.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/tungsten/tungsten
   - id: UMBER
     rarity: COMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 10.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/umber/umber
   - id: ENCHANTED_UMBER
-    rarity: UNCOMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 1600.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/glacite/umber/umber
   - id: SULPHUR
     rarity: UNCOMMON
     material: GLOWSTONE_DUST
+    components:
+      - id: SELLABLE
+        value: 4.0
   - id: REFINED_MINERAL
-    rarity: COMMON
+    rarity: RARE
     material: LIGHT_BLUE_DYE
+    components:
+      - id: SELLABLE
+        value: 100000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/cole/refined_mineral
   - id: MANA_DISINTEGRATOR
     rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 1000.0
+      - id: SKULL_HEAD
+        texture: 61565c1c265f50398c0646a9b7d64289522c0b089091ba5a04f1d18baa860d85
   - id: KELVIN_INVERTER
     rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 100000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/pets_related/kelvin_inverter
   - id: SUBZERO_INVERTER
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/pets_related/subzero_inverter
   - id: PROMISING_SHOVEL
     rarity: UNCOMMON
     material: IRON_SHOVEL

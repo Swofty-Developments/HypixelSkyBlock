@@ -19,6 +19,8 @@ items:
             result:
               type: IRON_HELMET
               amount: 1
+      - id: SELLABLE
+        value: 7.0
     default_statistics:
       health: 15.0
       defense: 10.0
@@ -43,6 +45,8 @@ items:
             result:
               type: IRON_CHESTPLATE
               amount: 1
+      - id: SELLABLE
+        value: 12.0
     default_statistics:
       health: 15.0
       defense: 30.0
@@ -67,6 +71,8 @@ items:
             result:
               type: IRON_LEGGINGS
               amount: 1
+      - id: SELLABLE
+        value: 10.0
     default_statistics:
       health: 15.0
       defense: 25.0
@@ -90,6 +96,8 @@ items:
             result:
               type: IRON_BOOTS
               amount: 1
+      - id: SELLABLE
+        value: 6.0
     default_statistics:
       health: 15.0
       defense: 10.0

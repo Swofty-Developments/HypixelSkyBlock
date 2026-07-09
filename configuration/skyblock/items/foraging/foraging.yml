@@ -1,22 +1,30 @@
 items:
   - id: EFFICIENT_AXE
     material: iron_axe
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       damage: 25.0
     components:
       - id: REFORGABLE
         reforge_type: AXES
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 25.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/efficient_axe
   - id: PROMISING_AXE
     material: iron_axe
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       damage: 25.0
     components:
       - id: REFORGABLE
         reforge_type: AXES
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 20.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/promising_axe
   - id: ROOKIE_AXE
     material: stone_axe
     rarity: COMMON
@@ -25,48 +33,114 @@ items:
     components:
       - id: REFORGABLE
         reforge_type: AXES
+      - id: SELLABLE
+        value: 6.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/rookie_axe
   - id: SWEET_AXE
     material: iron_axe
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       damage: 25.0
     components:
       - id: REFORGABLE
         reforge_type: AXES
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 25.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sweet_axe
   - id: FIG_LOG
     rarity: COMMON
     material: STRIPPED_SPRUCE_LOG
+    components:
+      - id: SELLABLE
+        value: 7.0
+      - id: SKULL_HEAD
+        texture: 74078da9b9382e272c391ba01e200e6c175cfecd4cc5d07eebd583dc062f00d0
+      - id: ITEM_MODEL
+        item_model: minecraft:stripped_spruce_log
   - id: FIGSTONE
-    rarity: COMMON
+    rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 179200.0
+      - id: SKULL_HEAD
+        texture: 7861255f3724fc77e7a82600a7c3d08cd61d65e0a7b97db5c24e59630c3ab514
   - id: LUSHLILAC
-    rarity: COMMON
+    rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 10.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/salts/lushlilac
   - id: MANGCORE
-    rarity: COMMON
+    rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 204800.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/logs/stacked/mangcore
   - id: VINESAP
-    rarity: COMMON
+    rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/vinesap
   - id: TENDER_WOOD
-    rarity: COMMON
+    rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/tender_wood
   - id: DEEP_ROOT
-    rarity: COMMON
+    rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/resources/deep_root
   - id: BIOFUEL
     rarity: RARE
     material: GREEN_DYE
+    components:
+      - id: SELLABLE
+        value: 10000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/biofuel
   - id: ENDSTONE_ROSE
     rarity: RARE
     material: POPPY
+    components:
+      - id: SELLABLE
+        value: 3000.0
   - id: GLOWING_MUSHROOM
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/farming_1/glowing_mushroom
   - id: HALF_EATEN_MUSHROOM
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 500.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/half_eaten_mushroom
   - id: WET_WATER
-    rarity: COMMON
+    rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 50.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/wet_water

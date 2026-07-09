@@ -1,7 +1,7 @@
 items:
   - id: SQUIRE_BOOTS
     material: leather_boots
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 20.0
       defense: 20.0
@@ -16,7 +16,7 @@ items:
         value: 2000.0
   - id: SQUIRE_CHESTPLATE
     material: iron_chestplate
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 40.0
       defense: 40.0
@@ -27,7 +27,7 @@ items:
         value: 4000.0
   - id: SQUIRE_HELMET
     material: chainmail_helmet
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 25.0
       defense: 25.0
@@ -38,7 +38,7 @@ items:
         value: 2500.0
   - id: SQUIRE_LEGGINGS
     material: chainmail_leggings
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 30.0
       defense: 30.0

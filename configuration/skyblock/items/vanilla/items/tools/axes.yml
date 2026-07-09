@@ -189,7 +189,7 @@ items:
         value: 6.0
   - id: DIAMOND_AXE
     material: diamond_axe
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       damage: 30.0
     components:

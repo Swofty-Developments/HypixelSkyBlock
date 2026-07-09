@@ -7,6 +7,8 @@ items:
         amount: 1
       - id: SKULL_HEAD
         texture: 84f0214329bb2575b8f4d7623376255d7ec4a439296e140ae9a2c6138a4270c1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/raw_soulflow
   - id: SOULFLOW
     material: PLAYER_HEAD
     rarity: RARE
@@ -15,3 +17,7 @@ items:
         amount: 160
       - id: SKULL_HEAD
         texture: bc85e2fdf9b1b020ac2827d11ae00d90f81c5c6bd361cbd1c8b8e9087757e4b0
+      - id: SELLABLE
+        value: 1.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/soulflow

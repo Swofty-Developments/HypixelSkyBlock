@@ -7,7 +7,6 @@ items:
       breaking_power: 1.0
     components:
       - id: PICKAXE
-
   - id: ROOKIE_PICKAXE
     material: stone_pickaxe
     rarity: COMMON
@@ -17,22 +16,24 @@ items:
       damage: 15.0
     components:
       - id: PICKAXE
-
+      - id: SELLABLE
+        value: 2.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/rookie_pickaxe
   - id: LANTERN
     material: PLAYER_HEAD
-    rarity: RARE
+    rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Lantern
       - id: SKULL_HEAD
-        texture: 16e5682b4a0e5af5237fb9960983c623eab04ec01b90147c4df4c90a7be664d5
+        texture: b7b06b329237e7469d0650ba167aa9611ef1373c3c2c6bbdda7b13773c6aa69f
       - id: NOT_FINISHED_YET
-
   - id: INFINI_TORCH
     material: TORCH
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
-        display_name: InfiniTorch™
+        display_name: "InfiniTorch\u2122"
       - id: NOT_FINISHED_YET
       - id: ENCHANTED

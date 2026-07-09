@@ -1,7 +1,7 @@
 items:
   - id: BUDGET_HOPPER
     material: hopper
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: MINION_SHIPPING
         percentage: 50.0
@@ -29,10 +29,9 @@ items:
             result:
               type: BUDGET_HOPPER
               amount: 1
-
   - id: ENCHANTED_HOPPER
     material: hopper
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: ENCHANTED
       - id: MINION_SHIPPING

@@ -2,17 +2,41 @@ items:
   - id: BLUE_SHARK_TOOTH
     material: ghast_tear
     rarity: RARE
+    components:
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/marina/blue_shark_tooth
   - id: GREAT_WHITE_SHARK_TOOTH
     material: ghast_tear
     rarity: LEGENDARY
     components:
       - id: TRACKED_UNIQUE
+      - id: SELLABLE
+        value: 500000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/marina/great_white_shark_tooth
   - id: NURSE_SHARK_TOOTH
     material: ghast_tear
     rarity: UNCOMMON
+    components:
+      - id: SELLABLE
+        value: 500.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/marina/nurse_shark_tooth
   - id: SHARK_FIN
     material: prismarine_shard
     rarity: RARE
+    components:
+      - id: SELLABLE
+        value: 200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/marina/shark_fin
   - id: TIGER_SHARK_TOOTH
     material: ghast_tear
     rarity: EPIC
+    components:
+      - id: SELLABLE
+        value: 50000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/marina/tiger_shark_tooth
