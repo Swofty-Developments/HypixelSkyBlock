@@ -1,4 +1,4 @@
-package net.swofty.packer.packs;
+package net.swofty.packer.packs.ravengard;
 
 import java.util.HashMap;
 import java.util.Map;

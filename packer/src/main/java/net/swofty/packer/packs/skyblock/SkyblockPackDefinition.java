@@ -1,6 +1,8 @@
-package net.swofty.packer.packs;
+package net.swofty.packer.packs.skyblock;
 
 import net.swofty.packer.PackDefinition;
+import net.swofty.packer.packs.ravengard.TestingLangModifier;
+import net.swofty.packer.packs.ravengard.TestingTexture;
 import team.unnamed.creative.font.FontProvider;
 
 import java.io.File;
@@ -8,22 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TestingPackDefinition implements PackDefinition {
-    public static final TestingPackDefinition INSTANCE = new TestingPackDefinition();
+public class SkyblockPackDefinition implements PackDefinition {
+    public static final SkyblockPackDefinition INSTANCE = new SkyblockPackDefinition();
 
     @Override
     public String getPackName() {
-        return "testingpack";
+        return "skyblockpack";
     }
 
     @Override
     public String getPackDirectory() {
-        return "configuration/resourcepacks/testingpack";
+        return "configuration/resourcepacks/skyblockpack";
     }
 
     @Override
     public String getTexturesDirectory() {
-        return "configuration/resourcepacks/testingpack_textures";
+        return "configuration/resourcepacks/skyblockpack_textures";
     }
 
     @Override

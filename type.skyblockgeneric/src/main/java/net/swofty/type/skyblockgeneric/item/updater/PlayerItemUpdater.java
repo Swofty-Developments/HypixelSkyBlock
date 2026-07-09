@@ -16,19 +16,25 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeGemData;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.item.ItemAttributeHandler;
 import net.swofty.type.skyblockgeneric.item.ItemLore;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
+import net.swofty.type.skyblockgeneric.item.components.ItemModelComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.components.TrackedUniqueComponent;
 import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class PlayerItemUpdater {
@@ -129,6 +135,10 @@ public class PlayerItemUpdater {
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
             toReturn.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)));
+        }
+
+        if (item.hasComponent(ItemModelComponent.class)) {
+            toReturn.set(DataComponents.ITEM_MODEL, item.getComponent(ItemModelComponent.class).getItemModel());
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {

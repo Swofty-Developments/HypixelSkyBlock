@@ -64,3 +64,6 @@ build/
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
+store/.next
+store/node_modules
+store/next-env.d.ts

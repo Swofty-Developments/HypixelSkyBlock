@@ -17,8 +17,8 @@ import net.swofty.type.skyblockgeneric.fishing.rod.FishingShipPartSlot;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.components.*;
-import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.minion.MinionIngredient;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
@@ -314,6 +314,10 @@ public class ItemConfigParser {
 						Logger.warn("Failed to build InteractableComponent for " + handlerId + ": " + e.getMessage());
 						yield null;
 					}
+				}
+				case "ITEM_MODEL" -> {
+					String itemModel = safeConfig.getString("item_model");
+					yield new ItemModelComponent(itemModel);
 				}
 				case "KAT" -> {
 					int reducedDays = safeConfig.getInt("reduced_days");

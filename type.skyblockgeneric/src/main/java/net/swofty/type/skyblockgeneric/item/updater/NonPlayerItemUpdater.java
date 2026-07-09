@@ -19,6 +19,7 @@ import net.swofty.type.skyblockgeneric.item.ItemLore;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
+import net.swofty.type.skyblockgeneric.item.components.ItemModelComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.components.TrackedUniqueComponent;
 import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
@@ -92,6 +93,10 @@ public class NonPlayerItemUpdater {
             String texturesEncoded = Base64.getEncoder().encodeToString(json.toString().getBytes());
 
             stack.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texturesEncoded, null)));
+        }
+
+        if (item.hasComponent(ItemModelComponent.class)) {
+            stack.set(DataComponents.ITEM_MODEL, item.getComponent(ItemModelComponent.class).getItemModel());
         }
 
         if (item.hasComponent(GemstoneComponent.class)) {

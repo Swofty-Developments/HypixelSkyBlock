@@ -40,8 +40,8 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
+import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.user.categories.CustomGroups;
-import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
@@ -74,7 +74,6 @@ import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredPassiveAb
 import net.swofty.type.skyblockgeneric.item.set.impl.SetRepeatable;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
-import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
@@ -86,14 +85,16 @@ import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.resourcepack.resourcepack.SkyblockPack;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
-import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
@@ -285,6 +286,12 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Start data loop
          */
         SkyBlockDataHandler.startRepeatSetValueLoop();
+
+        // Setup Resource Pack
+        SkyblockPack skyblockPack = SkyblockPack.fromConfig();
+        ResourcePackManager packManager = new ResourcePackManager(skyblockPack);
+        HypixelConst.setResourcePackManager(packManager);
+        packManager.initialize();
 
         /**
          * Attempt to start the song service

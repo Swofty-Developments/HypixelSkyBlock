@@ -1,4 +1,4 @@
-package net.swofty.packer.packs;
+package net.swofty.packer.packs.ravengard;
 
 import lombok.Getter;
 import net.kyori.adventure.key.Key;

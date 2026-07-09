@@ -1,6 +1,6 @@
 package net.swofty.packer;
 
-import net.swofty.packer.packs.TestingPackDefinition;
+import net.swofty.packer.packs.skyblock.SkyblockPackDefinition;
 import team.unnamed.creative.BuiltResourcePack;
 import team.unnamed.creative.server.ResourcePackServer;
 
@@ -22,7 +22,8 @@ public class HypixelPackServer {
             }
         }
 
-        PackDefinition definition = TestingPackDefinition.INSTANCE;
+        // TODO: host all packs
+        SkyblockPackDefinition definition = SkyblockPackDefinition.INSTANCE;
         System.out.println("Building resource pack '" + definition.getPackName() + "'...");
         System.out.println("Pack directory: " + definition.getPackDirectory());
         System.out.println("Textures directory: " + definition.getTexturesDirectory());
