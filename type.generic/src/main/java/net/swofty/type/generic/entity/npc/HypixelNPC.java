@@ -22,11 +22,7 @@ import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -136,7 +132,7 @@ public abstract class HypixelNPC {
                     return;
                 }
 
-                Pos npcPosition = config.position(player);
+                Pos npcPosition = entity.getPosition();
                 if (!(entity instanceof NPCViewable npcViewable)) {
                     Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName());
                     return;
@@ -145,7 +141,9 @@ public abstract class HypixelNPC {
 
                 Pos playerPosition = player.getPosition();
                 double entityDistance = playerPosition.distance(npcPosition);
-                boolean isLookingNPC = config.looking(player) && player.getGameMode() != GameMode.SPECTATOR;
+                boolean isLookingNPC = config.looking(player)
+                        && !npcViewable.getMovementController().isMoving()
+                        && player.getGameMode() != GameMode.SPECTATOR;
 
                 // Get inRangeOf list based on entity type
                 List<HypixelPlayer> inRange = npcViewable.getInRangeOf();
@@ -182,6 +180,67 @@ public abstract class HypixelNPC {
 
     public void unregister() {
         registeredNPCs.remove(this);
+    }
+
+    /**
+     * Walks this player's copy of the NPC through the supplied points in order.
+     * Calling this again replaces the NPC's current route.
+     */
+    public CompletableFuture<Void> walkPath(HypixelPlayer player, List<Pos> points) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(points, "points");
+
+        PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+        Entity entity = cache == null ? null : cache.get(this);
+        if (!(entity instanceof NPCViewable viewable)) {
+            return CompletableFuture.failedFuture(
+                    new IllegalStateException("NPC " + getName() + " is not spawned for " + player.getUsername())
+            );
+        }
+        return viewable.getMovementController().walkPath(points);
+    }
+
+    public CompletableFuture<Void> walkPath(HypixelPlayer player, Pos... points) {
+        return walkPath(player, List.of(points));
+    }
+
+    /**
+     * Walks every currently spawned per-player copy of this NPC.
+     */
+    public CompletableFuture<Void> walkPath(List<Pos> points) {
+        Objects.requireNonNull(points, "points");
+        CompletableFuture<?>[] movements = perPlayerNPCs.values().stream()
+                .map(cache -> cache.get(this))
+                .filter(Objects::nonNull)
+                .map(entity -> ((NPCViewable) entity).getMovementController().walkPath(points))
+                .toArray(CompletableFuture[]::new);
+        return CompletableFuture.allOf(movements);
+    }
+
+    public CompletableFuture<Void> walkPath(Pos... points) {
+        return walkPath(List.of(points));
+    }
+
+    /**
+     * Stops this player's copy of the NPC at its current position.
+     */
+    public void stopWalking(HypixelPlayer player) {
+        PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+        Entity entity = cache == null ? null : cache.get(this);
+        if (entity instanceof NPCViewable viewable) {
+            viewable.getMovementController().stop();
+        }
+    }
+
+    /**
+     * Stops every currently spawned per-player copy of this NPC.
+     */
+    public void stopWalking() {
+        perPlayerNPCs.values().stream()
+                .map(cache -> cache.get(this))
+                .filter(Objects::nonNull)
+                .map(entity -> (NPCViewable) entity)
+                .forEach(viewable -> viewable.getMovementController().stop());
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message) {

@@ -2,37 +2,27 @@ package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.entity.Metadata;
-import net.minestom.server.entity.MetadataDef;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.entity.*;
 import net.minestom.server.entity.metadata.avatar.MannequinMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.generic.entity.npc.NPCMovementController;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
-public class NPCEntityImpl extends Entity implements NPCViewable {
+public class NPCEntityImpl extends EntityCreature implements NPCViewable {
     private final HypixelPlayer viewer;
     private final PlayerHolograms.ExternalPlayerHologram holo;
     private final HumanConfiguration config;
+    private final NPCMovementController movementController;
 
     @Getter
     private List<HypixelPlayer> inRangeOf = Collections.synchronizedList(new ArrayList<>());
@@ -41,16 +31,19 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     private final String skinTexture;
     private final String skinSignature;
     private String[] holograms;
+    private Pos lastHologramPosition;
 
     public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config) {
         super(EntityType.MANNEQUIN, UUID.randomUUID());
         this.username = bottomDisplay;
         this.viewer = viewer;
         this.config = config;
+        this.movementController = new NPCMovementController(this);
 
         this.skinTexture = skinTexture;
         this.skinSignature = skinSignature;
         this.holograms = holograms;
+        this.lastHologramPosition = pos;
 
         if (holograms == null) {
             throw new IllegalArgumentException("Holograms cannot be null");
@@ -89,6 +82,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
 
     @Override
     public void remove() {
+        movementController.stop();
         super.remove();
         PlayerHolograms.removeExternalPlayerHologram(holo);
     }
@@ -132,9 +126,10 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
 
     @Override
     public void updateNPC() {
-        Pos npcPosition = config.position(viewer);
-        if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
+        Pos npcPosition = getPosition();
+        if (!npcPosition.asVec().equals(lastHologramPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
             PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getBoundingBox().height() - 0.1f, 0));
+            lastHologramPosition = npcPosition;
         }
 
         if (!getPose().equals(config.pose(viewer))) {
