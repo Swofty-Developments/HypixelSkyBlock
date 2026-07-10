@@ -28,6 +28,8 @@ import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
+import net.swofty.proxyapi.PlayerTransferDataCache;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -42,6 +44,7 @@ import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.user.categories.CustomGroups;
+import net.swofty.type.generic.user.flow.GenericPlayerDataFlow;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
@@ -52,11 +55,7 @@ import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.RegionDatabase;
+import net.swofty.type.skyblockgeneric.data.monogdb.*;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
@@ -94,6 +93,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
+import net.swofty.type.skyblockgeneric.user.flow.SkyBlockPlayerDataFlow;
 import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
@@ -106,15 +106,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -286,6 +278,19 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Start data loop
          */
         SkyBlockDataHandler.startRepeatSetValueLoop();
+
+        ProxyPlayer.setTransferPreparation((playerUuid, targetServer) -> CompletableFuture.supplyAsync(() -> {
+            SkyBlockPlayer player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(playerUuid) instanceof SkyBlockPlayer skyBlockPlayer
+                    ? skyBlockPlayer : null;
+            if (player == null) return null;
+
+            String profileDocument = SkyBlockPlayerDataFlow.saveForTransfer(player);
+            String accountDocument = GenericPlayerDataFlow.saveForTransfer(player);
+            return new org.json.JSONObject()
+                    .put("account_document", PlayerTransferDataCache.encodeDocument(accountDocument))
+                    .put("profile_document", PlayerTransferDataCache.encodeDocument(profileDocument))
+                    .toString();
+        }));
 
         // Setup Resource Pack
         SkyblockPack skyblockPack = SkyblockPack.fromConfig();

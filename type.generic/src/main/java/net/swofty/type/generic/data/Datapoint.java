@@ -28,14 +28,12 @@ public abstract class Datapoint<T> {
 
     @SneakyThrows
     public Datapoint<T> deepClone() {
-        Datapoint<T> toReturn;
-        if (this.value != null) {
-            T clonedValue = serializer.clone(this.value);
-            toReturn = this.getClass().getConstructor(String.class, this.value.getClass())
-                    .newInstance(this.key, clonedValue);
-        } else {
-            toReturn = this.getClass().getConstructor(String.class).newInstance(this.key);
-        }
+        // Every datapoint supports the String constructor (it is also what the
+        // persistence loader uses). Value classes, however, are often nested or
+        // exposed through an interface and therefore do not necessarily have a
+        // matching public two-argument datapoint constructor.
+        Datapoint<T> toReturn = this.getClass().getConstructor(String.class).newInstance(this.key);
+        toReturn.value = this.value == null ? null : serializer.clone(this.value);
         return toReturn;
     }
 

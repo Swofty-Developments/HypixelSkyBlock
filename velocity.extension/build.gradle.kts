@@ -29,7 +29,7 @@ repositories {
 dependencies {
     compileOnly(libs.velocity.api)
     annotationProcessor(libs.velocity.api)
-    compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
+    compileOnly(files("velocity-3.5.0-608.jar"))
 
     implementation(libs.atlas.redis)
     implementation(project(":commons"))

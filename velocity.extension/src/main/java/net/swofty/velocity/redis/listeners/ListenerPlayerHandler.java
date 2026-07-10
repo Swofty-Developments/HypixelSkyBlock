@@ -8,18 +8,19 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.RedisProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.TeleportProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PlayerHandlerProtocol;
+import net.swofty.commons.redis.RedisClient;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.redisapi.api.requests.DataRequest;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.gamemanager.GameManager;
 import net.swofty.velocity.gamemanager.TransferHandler;
 import net.swofty.velocity.presence.PresencePublisher;
-import net.swofty.commons.redis.RedisMessageContext;
-import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.commons.redis.RedisClient;
+import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Optional;
@@ -58,6 +59,19 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
 
         switch (action) {
+            case RESOLVE_TRANSFER -> {
+                ServerType type = ServerType.valueOf((String) data.get("type"));
+                if (!GameManager.hasType(type) || !GameManager.isAnyEmpty(type)) {
+                    return new PlayerHandlerProtocol.Response(Map.of(), false,
+                            "There are no " + StringUtility.toNormalCase(type.name()) + " servers available");
+                }
+                GameManager.GameServer server = net.swofty.velocity.gamemanager.BalanceConfigurations.getServerFor(player, type);
+                if (server == null || !server.hasEmptySlots()) {
+                    return new PlayerHandlerProtocol.Response(Map.of(), false, "No destination server available");
+                }
+                return new PlayerHandlerProtocol.Response(
+                        Map.of("server_uuid", server.internalID().toString()), true, null);
+            }
             case GET_SERVER -> {
                 UUID playersServer = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
                 GameManager.GameServer serverInfo = GameManager.getFromUUID(playersServer);
@@ -95,12 +109,28 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
                     player.sendMessage(Component.text(
                         "§cAttempted to connect to " + serverInfo.displayName() + ", but there are no empty slots available. Please try again later."
                     ));
-                    return EMPTY;
+                    return new PlayerHandlerProtocol.Response(Map.of(), false, "The destination server is full");
+                }
+
+                if (data.get("document") instanceof String document) {
+                    JSONObject snapshot = new JSONObject(document);
+                    JSONObject payload = new JSONObject()
+                            .put("uuid", uuid.toString())
+                            .put("account_document", snapshot.getString("account_document"));
+                    if (snapshot.has("profile_document")) {
+                        payload.put("profile_document", snapshot.getString("profile_document"));
+                    }
+                    var cacheResponse = new DataRequest(server.toString(), "player-transfer-data", payload).await().join();
+                    if (cacheResponse.data() == null || !cacheResponse.data().optBoolean("cached")) {
+                        return new PlayerHandlerProtocol.Response(Map.of(), false,
+                                "The destination server did not acknowledge your data");
+                    }
                 }
 
                 transferHandler.addToDisregard();
                 transferHandler.transferTo(serverInfo.registeredServer())
                     .thenRun(transferHandler::removeFromDisregard);
+                return new PlayerHandlerProtocol.Response(Map.of(), true, null);
             }
             case TRANSFER -> {
                 ServerType type = ServerType.valueOf((String) data.get("type"));

@@ -3,9 +3,9 @@ package net.swofty.commons.protocol.objects.proxy.to;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
-import org.jetbrains.annotations.Nullable;
 
 public class PlayerHandlerProtocol extends RedisProtocol<
         PlayerHandlerProtocol.Request,
@@ -27,6 +27,7 @@ public class PlayerHandlerProtocol extends RedisProtocol<
 
     public enum Action {
         TRANSFER,
+        RESOLVE_TRANSFER,
         TELEPORT,
         BANK_HASH,
         VERSION,

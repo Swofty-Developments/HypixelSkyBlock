@@ -16,10 +16,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 @Getter
 public class ProxyPlayer {
     private static final PlayerHandlerProtocol PLAYER_HANDLER = new PlayerHandlerProtocol();
+    private static volatile BiFunction<UUID, UUID, CompletableFuture<String>> transferPreparation =
+            (player, server) -> CompletableFuture.completedFuture(null);
 
     public static Map<UUID, CompletableFuture<Void>> waitingForTransferComplete = new ConcurrentHashMap<>();
     private final UUID uuid;
@@ -85,17 +88,33 @@ public class ProxyPlayer {
 
     public CompletableFuture<Void> transferToWithIndication(UUID serverToTransferTo) {
         CompletableFuture<Void> future = new CompletableFuture<>();
-        RedisClient.requestProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER_WITH_UUID,
-                        Map.of("server_uuid", serverToTransferTo.toString())));
         waitingForTransferComplete.put(uuid, future);
+        transferPreparation.apply(uuid, serverToTransferTo).thenAccept(document -> RedisClient.requestProxy(PLAYER_HANDLER,
+                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER_WITH_UUID,
+                        document == null
+                                ? Map.of("server_uuid", serverToTransferTo.toString())
+                                : Map.of("server_uuid", serverToTransferTo.toString(), "document", document)))
+                .thenAccept(response -> {
+                    if (!response.success()) {
+                        waitingForTransferComplete.remove(uuid);
+                        future.completeExceptionally(new IllegalStateException(response.error()));
+                        sendMessage("§cUnable to transfer you: " + response.error());
+                    }
+                })).exceptionally(error -> {
+            waitingForTransferComplete.remove(uuid);
+            future.completeExceptionally(error);
+            sendMessage("§cUnable to transfer you: " + rootMessage(error));
+            return null;
+        });
         return future;
     }
 
     public void transferTo(ServerType serverType) {
-        RedisClient.requestProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER,
-                        Map.of("type", serverType.toString())));
+        resolveServer(serverType).thenAccept(this::transferToWithIndication)
+                .exceptionally(error -> {
+                    sendMessage("§cUnable to transfer you: " + rootMessage(error));
+                    return null;
+                });
     }
 
     public void transferToLimbo() {
@@ -115,12 +134,29 @@ public class ProxyPlayer {
     }
 
     public CompletableFuture<Void> transferToWithIndication(ServerType serverType) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
-        RedisClient.requestProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.TRANSFER,
-                        Map.of("type", serverType.toString())));
-        waitingForTransferComplete.put(uuid, future);
-        return future;
+        return resolveServer(serverType).thenCompose(this::transferToWithIndication);
+    }
+
+    private CompletableFuture<UUID> resolveServer(ServerType serverType) {
+        return RedisClient.requestProxy(PLAYER_HANDLER,
+                        new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.RESOLVE_TRANSFER,
+                                Map.of("type", serverType.toString())))
+                .thenApply(response -> {
+                    if (!response.success() || response.data().get("server_uuid") == null) {
+                        throw new IllegalStateException(response.error() != null ? response.error() : "No destination server available");
+                    }
+                    return UUID.fromString((String) response.data().get("server_uuid"));
+                });
+    }
+
+    public static void setTransferPreparation(BiFunction<UUID, UUID, CompletableFuture<String>> preparation) {
+        transferPreparation = preparation;
+    }
+
+    private static String rootMessage(Throwable error) {
+        Throwable cause = error;
+        while (cause.getCause() != null) cause = cause.getCause();
+        return cause.getMessage() != null ? cause.getMessage() : cause.getClass().getSimpleName();
     }
 
     public CompletableFuture<UUID> getBankHash() {

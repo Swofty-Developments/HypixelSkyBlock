@@ -59,6 +59,9 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     public static SkyBlockDataHandler createFromProfileOnly(Document profileDoc) {
+        if (profileDoc == null) {
+            throw new IllegalArgumentException("Cannot create SkyBlock data from a missing profile document");
+        }
         UUID owner = UUID.fromString(profileDoc.getString("_owner"));
         UUID profileId = UUID.fromString(profileDoc.getString("_id"));
         SkyBlockDataHandler sb = new SkyBlockDataHandler(owner, profileId);
@@ -116,7 +119,12 @@ public class SkyBlockDataHandler extends DataHandler {
 
         for (Data data : Data.values()) {
             try {
-                document.put(data.getKey(), getDatapoint(data.getKey()).getSerializedValue());
+                Datapoint<?> datapoint = getDatapoint(data.getKey());
+                if (datapoint == null) {
+                    datapoint = data.getDefaultDatapoint().deepClone().setUser(this).setData(data);
+                    datapoints.put(data.getKey(), datapoint);
+                }
+                document.put(data.getKey(), datapoint.getSerializedValue());
             } catch (JacksonException e) {
                 Logger.error(e, "Failed to serialize SkyBlock datapoint {} for user {}", data.getKey(), this.uuid);
             }
@@ -145,7 +153,8 @@ public class SkyBlockDataHandler extends DataHandler {
         if (profileUUID == null)
             throw new RuntimeException("No profile selected for user " + uuid.toString());
 
-        return createFromProfileOnly(ProfilesDatabase.fetchDocument(profileUUID));
+        Document profile = ProfilesDatabase.fetchDocument(profileUUID);
+        return createFromProfileOnly(profile);
     }
 
     /** SB datapoint by enum (no generic param). */
@@ -311,7 +320,11 @@ public class SkyBlockDataHandler extends DataHandler {
         ISLAND_UUID("island_uuid", false, true, false,
                 DatapointUUID.class, new DatapointUUID("island_uuid", null),
                 (player, datapoint) -> {},
-                (player, datapoint) -> ((DatapointUUID) datapoint).setValue(player.getSkyBlockIsland().getIslandID())),
+                (player, datapoint) -> {
+                    if (player.getSkyBlockIsland() != null) {
+                        ((DatapointUUID) datapoint).setValue(player.getSkyBlockIsland().getIslandID());
+                    }
+                }),
 
         IS_COOP("is_coop", false, true, false,
                 DatapointBoolean.class, new DatapointBoolean("is_coop", false)),

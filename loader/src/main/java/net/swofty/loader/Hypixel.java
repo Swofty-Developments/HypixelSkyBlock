@@ -103,6 +103,11 @@ public class Hypixel {
         );
         serverUUID = UUID.randomUUID();
 
+        // Loaders can schedule Redis-backed work immediately (calendar events,
+        // elections, etc.), so identify and connect this server before running
+        // any loader initialization.
+        ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
+
         // Initialize GenericLoader
         Reflections reflections = new Reflections("net.swofty.type");
         Set<Class<? extends HypixelTypeLoader>> subTypes = reflections.getSubTypesOf(HypixelTypeLoader.class);
@@ -147,7 +152,6 @@ public class Hypixel {
         typeLoader.onInitialize(minecraftServer);
 
         // Initialize proxy support
-        ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", RedisMessageHandler.class)
                 .forEach(proxyAPI::registerProxyHandler);
         SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", RedisMessageHandler.class)

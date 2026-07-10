@@ -2,15 +2,11 @@ package net.swofty.type.generic.user.flow;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
 import net.swofty.commons.protocol.objects.proxy.to.FinishedWithPlayerProtocol;
 import net.swofty.commons.redis.RedisClient;
+import net.swofty.proxyapi.PlayerTransferDataCache;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.data.DataHandler;
-import net.swofty.type.generic.data.Datapoint;
-import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.type.generic.data.GameDataHandlerRegistry;
-import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.*;
 import net.swofty.type.generic.data.datapoints.DatapointLocale;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -31,14 +27,17 @@ import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GenericPlayerDataFlow {
-
     public static void load(HypixelPlayer player) {
         UUID playerUuid = player.getUuid();
         UserDatabase userDatabase = new UserDatabase(playerUuid);
         HypixelDataHandler handler;
         Document userDocument = null;
 
-        if (userDatabase.exists()) {
+        String transferredDocument = PlayerTransferDataCache.takeAccountDocument(playerUuid);
+        if (transferredDocument != null) {
+            userDocument = Document.parse(transferredDocument);
+            handler = HypixelDataHandler.createFromDocument(userDocument);
+        } else if (userDatabase.exists()) {
             userDocument = userDatabase.getHypixelData();
             handler = HypixelDataHandler.createFromDocument(userDocument);
         } else {
@@ -83,11 +82,13 @@ public final class GenericPlayerDataFlow {
 
     public static void save(HypixelPlayer player) {
         UUID uuid = player.getUuid();
+        if (HypixelDataHandler.findHypixelUser(uuid).isEmpty()) return;
 
-        ResourcePackManager packManager = HypixelConst.getResourcePackManager();
-        if (packManager != null) {
-            packManager.getActivePack().onPlayerQuit(player);
-        }
+        persist(player, true);
+    }
+
+    private static void persist(HypixelPlayer player, boolean cleanup) {
+        UUID uuid = player.getUuid();
 
         HypixelDataHandler handler = player.getDataHandler();
         handler.runOnSave(player);
@@ -95,7 +96,7 @@ public final class GenericPlayerDataFlow {
         UserDatabase userDatabase = new UserDatabase(uuid);
         userDatabase.saveData(handler);
         syncLeaderboards(uuid, handler);
-        HypixelDataHandler.userCache.remove(uuid);
+        if (cleanup) HypixelDataHandler.userCache.remove(uuid);
 
         for (Class<? extends GameDataHandler> handlerClass : HypixelConst.getTypeLoader().getAdditionalDataHandlers()) {
             GameDataHandler gameHandler = GameDataHandlerRegistry.get(handlerClass);
@@ -108,12 +109,33 @@ public final class GenericPlayerDataFlow {
             gameDataHandler.runOnSave(player);
             userDatabase.saveData(gameDataHandler);
             syncLeaderboards(uuid, gameDataHandler);
-            gameHandler.removeFromCache(uuid);
+            if (cleanup) gameHandler.removeFromCache(uuid);
         }
 
         RedisClient.requestProxy(new FinishedWithPlayerProtocol(), new FinishedWithPlayerProtocol.Request(uuid.toString()));
 
+        if (cleanup) cleanupAfterDisconnect(player);
+    }
+
+    private static void cleanupAfterDisconnect(HypixelPlayer player) {
+        UUID uuid = player.getUuid();
+        ResourcePackManager packManager = HypixelConst.getResourcePackManager();
+        if (packManager != null) packManager.getActivePack().onPlayerQuit(player);
+
+        HypixelDataHandler.userCache.remove(uuid);
+        for (Class<? extends GameDataHandler> handlerClass : HypixelConst.getTypeLoader().getAdditionalDataHandlers()) {
+            GameDataHandler gameHandler = GameDataHandlerRegistry.get(handlerClass);
+            if (gameHandler != null) gameHandler.removeFromCache(uuid);
+        }
         MathUtility.delay(() -> HypixelConst.getTypeLoader().getTablistManager().deleteTablistEntries(player), 5);
+    }
+
+    public static String saveForTransfer(HypixelPlayer player) {
+        UUID uuid = player.getUuid();
+        persist(player, false);
+        Document document = new UserDatabase(uuid).getHypixelData();
+        if (document == null) throw new IllegalStateException("Saved player data could not be read back from MongoDB");
+        return document.toJson();
     }
 
     private static void loadAdditionalHandlers(HypixelPlayer player, UserDatabase userDatabase, Document userDocument) {

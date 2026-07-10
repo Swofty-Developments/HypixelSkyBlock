@@ -2,13 +2,13 @@ package net.swofty.type.skyblockgeneric.user.flow;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.packer.packs.ravengard.TestingTexture;
+import net.swofty.proxyapi.PlayerTransferDataCache;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
@@ -38,7 +38,6 @@ import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SkyBlockPlayerDataFlow {
-
     public static void load(SkyBlockPlayer player) {
         UUID playerUuid = player.getUuid();
         SkyBlockPlayerProfiles profiles = loadProfiles(player);
@@ -48,7 +47,10 @@ public final class SkyBlockPlayerDataFlow {
         SkyBlockDataHandler handler;
         boolean shouldPersistProfile = false;
 
-        if (profileDb.exists()) {
+        String transferredProfile = PlayerTransferDataCache.takeProfileDocument(playerUuid);
+        if (transferredProfile != null) {
+            handler = SkyBlockDataHandler.createFromProfile(playerUuid, profileId, Document.parse(transferredProfile));
+        } else if (profileDb.exists()) {
             Document profileDocument = profileDb.getDocument();
             handler = SkyBlockDataHandler.createFromProfile(playerUuid, profileId, profileDocument);
         } else {
@@ -108,6 +110,16 @@ public final class SkyBlockPlayerDataFlow {
         }
 
         SkyBlockDataHandler.skyBlockCache.remove(playerUuid);
+    }
+
+    public static String saveForTransfer(SkyBlockPlayer player) {
+        SkyBlockDataHandler handler = SkyBlockDataHandler.skyBlockCache.get(player.getUuid());
+        if (handler == null) throw new IllegalStateException("SkyBlock profile data is not loaded");
+
+        handler.runOnSave(player);
+        Document document = handler.toProfileDocument();
+        new ProfilesDatabase(handler.getCurrentProfileId().toString()).saveDocument(document);
+        return document.toJson();
     }
 
     private static SkyBlockPlayerProfiles loadProfiles(SkyBlockPlayer player) {
