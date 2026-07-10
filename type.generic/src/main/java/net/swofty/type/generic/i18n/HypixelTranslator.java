@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.translation.MiniMessageTranslator;
 import net.kyori.adventure.translation.Translator;
 import net.swofty.commons.StringUtility;
@@ -17,15 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class HypixelTranslator extends MiniMessageTranslator {
 
@@ -40,8 +33,17 @@ public class HypixelTranslator extends MiniMessageTranslator {
     private final Cache<LocaleSubsystem, Map<String, String>> bundleCache;
     private final Cache<LocaleKey, Optional<String>> keyCache;
 
-    public HypixelTranslator() {
-        super(MiniMessage.miniMessage());
+    public HypixelTranslator(TagResolver... resolvers) {
+        super(
+                MiniMessage.builder()
+                        .tags(
+                                TagResolver.builder()
+                                        .resolver(TagResolver.standard())
+                                        .resolvers(resolvers)
+                                        .build()
+                        )
+                        .build()
+        );
 
         this.fileIndexByLocale = buildFileIndex(I18N_ROOT);
         this.defaultLocaleKeys = loadAllKeysForLocale(defaultLocale);
