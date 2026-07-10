@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.item;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -374,12 +375,47 @@ public class SkyBlockItem {
 		return displayName.replaceAll("§[0-9a-fk-or]", "");
 	}
 
+	/**
+	 * Gets the lore of the item, formatted as a list of components
+	 *
+	 * @return the lore of the item, formatted as a list of components
+	 */
+	public List<Component> getLoreComponent() {
+		return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(DataComponents.LORE);
+	}
+
+	/**
+	 * Gets the lore of the item, formatted as a list of components
+	 *
+	 * @param player the player to get the lore for
+	 * @return the lore of the item, formatted as a list of components
+	 */
+	public List<Component> getLoreComponent(final @NotNull SkyBlockPlayer player) {
+		return PlayerItemUpdater.playerUpdate(player, getItemStackBuilder().build(), false).build()
+				.get(DataComponents.LORE);
+	}
+
+	/**
+	 * Gets the lore of the item, formatted as a list of strings
+	 *
+	 * @return the lore of the item, formatted as a list of strings
+	 * @deprecated use {@link #getLoreComponent()}
+	 */
+	@Deprecated
 	public List<String> getLore() {
 		return new NonPlayerItemUpdater(this).getUpdatedItem().build().get(DataComponents.LORE).stream().map(
 				StringUtility::getTextFromComponent
 		).toList();
 	}
 
+	/**
+	 * Gets the lore of the item, formatted as a list of strings
+	 *
+	 * @deprecated use {@link #getLoreComponent(SkyBlockPlayer)}
+	 * @param player the player to get the lore for
+	 * @return the lore of the item, formatted as a list of strings
+	 */
+	@Deprecated
 	public List<String> getLore(@NotNull SkyBlockPlayer player) {
 		return PlayerItemUpdater.playerUpdate(player, getItemStackBuilder().build(), false).build()
 				.get(DataComponents.LORE).stream().map(

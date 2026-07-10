@@ -11,11 +11,7 @@ import net.swofty.commons.ChatColor;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeGemData;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeHotPotatoBookData;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeSoulbound;
+import net.swofty.commons.skyblock.item.attribute.attributes.*;
 import net.swofty.commons.skyblock.item.reforge.Reforge;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
@@ -32,11 +28,7 @@ import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ItemLore {
@@ -94,8 +86,8 @@ public class ItemLore {
 				displayName = StringUtility.toNormalCase(material.key().value());
 			}
 		}
-		String displayRarity = rarity.getDisplay();
 
+		Component displayRarity = rarity.getDisplay();
         if (item.hasComponent(FishingRodMetadataComponent.class)) {
             FishingRodLoreBuilder.FishingRodLore rodLore = FishingRodLoreBuilder.build(item, player);
             if (rodLore != null) {
@@ -360,7 +352,7 @@ public class ItemLore {
 
 		if (item.hasComponent(ExtraRarityComponent.class)) {
 			ExtraRarityComponent extraRarityComponent = item.getComponent(ExtraRarityComponent.class);
-			displayRarity = displayRarity + " " + extraRarityComponent.getExtraRarityDisplay();
+			displayRarity = displayRarity.appendSpace().append(Component.text(extraRarityComponent.getExtraRarityDisplay()));
 		}
 
 		if (item.hasComponent(ReforgableComponent.class)) {
@@ -381,14 +373,20 @@ public class ItemLore {
 			addLoreLine(null);
 		}
 
-		if (recombobulated) displayRarity = rarity.getColor() + "&kL " + displayRarity + " &kL";
+		if (recombobulated) {
+			displayRarity = Component.textOfChildren(
+					Component.text("L", rarity.getColor(), TextDecoration.OBFUSCATED),
+					Component.space(),
+					displayRarity,
+					Component.space(),
+					Component.text("L", rarity.getColor(), TextDecoration.OBFUSCATED)
+			);
+		}
 
-		displayName = rarity.getColor() + displayName;
-		addLoreLine(displayRarity);
+		addLoreComponent(displayRarity);
 		this.stack = stack.with(DataComponents.LORE, loreLines)
 				.withAmount(item.getAmount())
-				.with(DataComponents.CUSTOM_NAME, Component.text(displayName)
-						.decoration(TextDecoration.ITALIC, false));
+				.with(DataComponents.CUSTOM_NAME, Component.text(displayName, rarity.getColor()).decoration(TextDecoration.ITALIC, false));
 	}
 
 	private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,
@@ -432,6 +430,7 @@ public class ItemLore {
 		return true;
 	}
 
+	@Deprecated // we need to use Components
 	private void addLoreLine(String line) {
 		if (line == null) {
 			loreLines.add(Component.empty());
@@ -440,5 +439,9 @@ public class ItemLore {
 
 		loreLines.add(Component.text("§r" + line.replace("&", "§"))
 				.decorations(Collections.singleton(TextDecoration.ITALIC), false));
+	}
+
+	private void addLoreComponent(Component line) {
+		loreLines.add(line.decoration(TextDecoration.ITALIC, false));
 	}
 }
