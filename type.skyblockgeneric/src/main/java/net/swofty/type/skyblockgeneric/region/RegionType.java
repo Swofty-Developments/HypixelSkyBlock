@@ -32,6 +32,7 @@ public enum RegionType {
 	WILDERNESS("Wilderness", "§2", Songs.ABSTRACT_RINGING),
 	PLAYER_MUSEUM("%s's Museum", "§3"),
 	RUINS("Ruins"),
+	RABBIT_HOUSE("Rabbit House", "§e"),
 	HEXATORUM("Hexatorum", "§d"),
 	UNINCORPORATED("Unincorporated", "§c"),
 	COLOSSEUM("Colosseum"),

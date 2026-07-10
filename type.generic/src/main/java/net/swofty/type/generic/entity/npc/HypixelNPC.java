@@ -6,6 +6,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
@@ -92,7 +93,9 @@ public abstract class HypixelNPC {
 
                     if (!config.visible(player)) return;
 
-                    String[] holograms = config.holograms(player);
+                    String[] holograms = Arrays.stream(config.hologramComponents(player))
+                            .map(component -> LegacyComponentSerializer.legacySection().serialize(component))
+                            .toArray(String[]::new);
                     Pos position = config.position(player);
 
                     String username = holograms[holograms.length - 1];
@@ -134,7 +137,7 @@ public abstract class HypixelNPC {
 
                 Pos npcPosition = entity.getPosition();
                 if (!(entity instanceof NPCViewable npcViewable)) {
-                    Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName());
+                    Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName(player));
                     return;
                 }
                 npcViewable.updateNPC();
@@ -194,7 +197,7 @@ public abstract class HypixelNPC {
         Entity entity = cache == null ? null : cache.get(this);
         if (!(entity instanceof NPCViewable viewable)) {
             return CompletableFuture.failedFuture(
-                    new IllegalStateException("NPC " + getName() + " is not spawned for " + player.getUsername())
+                    new IllegalStateException("NPC " + getName(player) + " is not spawned for " + player.getUsername())
             );
         }
         return viewable.getMovementController().walkPath(points);
@@ -251,9 +254,21 @@ public abstract class HypixelNPC {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
+    public String getName(HypixelPlayer player) {
+        return LegacyComponentSerializer.legacySection().serialize(getNameComponent(player));
+    }
+
+    /**
+     * Compatibility name used by administrative commands.
+     */
     public String getName() {
         String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        return parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        return className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+    }
+
+    public Component getNameComponent(HypixelPlayer player) {
+        Component name = parameters.chatNameComponent(player);
+        return name != null ? name : Component.text(getName());
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
@@ -263,7 +278,7 @@ public abstract class HypixelNPC {
     public void sendNPCMessage(HypixelPlayer player, Component message, Sound sound) {
         player.sendMessage(Component.text()
             .append(Component.text("[NPC] ", NamedTextColor.YELLOW))
-            .append(Component.text(getName(), NamedTextColor.YELLOW))
+                .append(getNameComponent(player))
             .append(Component.text(": ", NamedTextColor.WHITE))
             .append(message)
             .build());
