@@ -13,11 +13,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -46,11 +42,7 @@ import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import org.jspecify.annotations.NonNull;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class GUISkyBlockMenu extends StatelessView {
 
@@ -169,18 +161,12 @@ public class GUISkyBlockMenu extends StatelessView {
 
         layout.slot(32, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            boolean unlocked = player.getSkyBlockExperience().getLevel().getLevel() >= 5;
-            int color = 0x00f;
-            return TranslatableItemStackCreator.getStack(unlocked ? "gui_sbmenu.main.wardrobe" : "gui_sbmenu.main.wardrobe.locked",
-                unlocked ? Material.LEATHER_CHESTPLATE : Material.GRAY_DYE, 1,
-                unlocked ? "gui_sbmenu.main.wardrobe.lore" : "gui_sbmenu.main.wardrobe.locked.lore").set(DataComponents.DYED_COLOR, NamedTextColor.DARK_PURPLE);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.wardrobe",
+                    Material.BARREL, 1,
+                    "gui_sbmenu.main.wardrobe.lore").set(DataComponents.DYED_COLOR, NamedTextColor.DARK_PURPLE);
         }, (_, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
-            if (player.getSkyBlockExperience().getLevel().getLevel() < 5) {
-                player.sendMessage("§cYou must be SkyBlock Level 5 to use the Wardrobe!");
-                return;
-            }
-            c.push(new GUIWardrobe());
+            c.push(new GUILoadouts());
         });
 
         layout.autoUpdating(33, (s, c) -> {

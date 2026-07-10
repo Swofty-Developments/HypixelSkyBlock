@@ -9,18 +9,15 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class Components {
 
-    public static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
-            .set(DataComponents.CUSTOM_NAME, Component.text(" "))
+    // use Components#fill(ViewLayout) instead which uses this
+    static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE)
+            .set(DataComponents.CUSTOM_NAME, Component.space())
             .set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
     public static final ItemStack.Builder CLOSE_BUTTON = ItemStack.builder(Material.BARRIER)
             .set(DataComponents.CUSTOM_NAME, Component.text("§cClose"));

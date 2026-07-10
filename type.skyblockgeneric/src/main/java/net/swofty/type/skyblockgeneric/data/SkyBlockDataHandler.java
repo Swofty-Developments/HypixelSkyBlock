@@ -11,14 +11,7 @@ import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
-import net.swofty.type.generic.data.datapoints.DatapointBoolean;
-import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.data.datapoints.DatapointLong;
-import net.swofty.type.generic.data.datapoints.DatapointMapStringLong;
-import net.swofty.type.generic.data.datapoints.DatapointPresentYear;
-import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.generic.data.datapoints.DatapointStringList;
+import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -37,11 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 import tools.jackson.core.JacksonException;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -338,6 +327,9 @@ public class SkyBlockDataHandler extends DataHandler {
 
         WARDROBE("wardrobe", false, false, false,
             DatapointWardrobe.class, new DatapointWardrobe("wardrobe")),
+
+        LOADOUTS("loadouts", false, false, false,
+                DatapointLoadouts.class, new DatapointLoadouts("loadouts")),
 
         BACKPACKS("backpacks", false, false, false,
                 DatapointBackpacks.class, new DatapointBackpacks("backpacks")),

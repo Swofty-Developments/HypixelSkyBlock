@@ -9,11 +9,7 @@ import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -76,6 +72,10 @@ public final class ViewLayout<S> {
         slots.forEach(slot -> slot(slot, render));
     }
 
+
+    public void slots(Collection<Integer> slots) {
+        slots.forEach(slot -> slot(slot, Components.FILLER));
+    }
     public void editable(int slot, BiFunction<S, ViewContext, ItemStack.Builder> initialRender,
                          SlotChangeHandler<S> onChange) {
         components.put(slot, ViewComponent.editable(slot, initialRender, onChange));
@@ -130,6 +130,12 @@ public final class ViewLayout<S> {
     public void filler(Collection<Integer> slots, ItemStack.Builder builder) {
         slots.forEach(s ->
                 components.put(s, ViewComponent.staticItem(s, builder))
+        );
+    }
+
+    public void filler(Collection<Integer> slots) {
+        slots.forEach(s ->
+                components.put(s, ViewComponent.staticItem(s, Components.FILLER))
         );
     }
 

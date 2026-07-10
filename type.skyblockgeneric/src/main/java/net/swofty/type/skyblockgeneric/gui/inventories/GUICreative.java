@@ -11,7 +11,6 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.Layouts;
 import net.swofty.type.generic.gui.v2.PaginatedView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
@@ -74,7 +73,7 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
     @Override
     protected void layoutBackground(ViewLayout<CreativeState> layout, CreativeState state, ViewContext ctx) {
-        layout.filler(Layouts.border(0, 53), Components.FILLER);
+        layout.filler(Layouts.border(0, 53));
     }
 
     @Override
