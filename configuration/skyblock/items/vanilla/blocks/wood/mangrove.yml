@@ -5,7 +5,7 @@ items:
     components:
       - id: SKILLABLE_MINE
         category: FORAGING
-        mining_value: 6.0
+        mining_value: 20.0
       - id: SELLABLE
         value: 8.0
       - id: PLACEABLE

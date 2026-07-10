@@ -18,6 +18,14 @@ public record MiningBlockClassification(ItemStatistic baseSkillFortune, ItemStat
         return new MiningBlockClassification(ItemStatistic.FORAGING_FORTUNE, null);
     }
 
+    public static MiningBlockClassification figForagingBlock() {
+        return new MiningBlockClassification(ItemStatistic.FORAGING_FORTUNE, ItemStatistic.FIG_FORTUNE);
+    }
+
+    public static MiningBlockClassification mangroveForagingBlock() {
+        return new MiningBlockClassification(ItemStatistic.FORAGING_FORTUNE, ItemStatistic.MANGROVE_FORTUNE);
+    }
+
     //Mining Sub-Categories
     public static MiningBlockClassification oreBlock() {
         return new MiningBlockClassification(ItemStatistic.MINING_FORTUNE, ItemStatistic.ORE_FORTUNE);

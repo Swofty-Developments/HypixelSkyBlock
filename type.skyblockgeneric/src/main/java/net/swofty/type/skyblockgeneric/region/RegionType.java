@@ -3,25 +3,9 @@ package net.swofty.type.skyblockgeneric.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.BarnConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.DwarvenMinesConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.GlacialCaveConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.GoldMineConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.MineCoalConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.MineLogsConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.MineWheatConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.WheatAndFlowersConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.DiamondReserveConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.GunpowderMinesConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.LapisQuarryConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.ObsidianSanctuaryConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.PigmensDenConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.SlimehillConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.BirchParkConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.DarkOakConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.JungleIslandConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SavannaWoodlandConfiguration;
-import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SpruceWoodsConfiguration;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.*;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.deepmines.*;
+import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -119,16 +103,16 @@ public enum RegionType {
 	OBSIDIAN_SANCTUARY("Obsidian Sanctuary", ObsidianSanctuaryConfiguration.class),
 
 	// Galatea
-	TANGLEBURGS_PATH("Tangleburg's Path"),
-	TANGLEBURG("Tangleburg"),
+	TANGLEBURGS_PATH("Tangleburg's Path", GalateaForagingConfiguration.class),
+	TANGLEBURG("Tangleburg", GalateaForagingConfiguration.class),
 	TANGLEBURG_BANK("Tangleburg Bank", "§6"),
-	EVERGREEN_PLATEAU("Evergreen Plateau", "§a"),
-	SOUTH_REACHES("South Reaches", "§a"),
-	MOONGLADES_EDGE("Moonglade's Edge", "§2"),
-	MOONGLADE_MARSH("Moonglade Marsh", "§2"),
-	MURKWATER_LOCH("Murkwater Loch", "§2"),
-	MURKWATER_SHALLOWS("Murkwater Shallows", "§3"),
-	NORTH_WETLANDS("North Wetlands", "§2"),
+	EVERGREEN_PLATEAU("Evergreen Plateau", "§a", GalateaForagingConfiguration.class),
+	SOUTH_REACHES("South Reaches", "§a", GalateaForagingConfiguration.class),
+	MOONGLADES_EDGE("Moonglade's Edge", "§2", GalateaForagingConfiguration.class),
+	MOONGLADE_MARSH("Moonglade Marsh", "§2", GalateaForagingConfiguration.class),
+	MURKWATER_LOCH("Murkwater Loch", "§2", GalateaForagingConfiguration.class),
+	MURKWATER_SHALLOWS("Murkwater Shallows", "§3", GalateaForagingConfiguration.class),
+	NORTH_WETLANDS("North Wetlands", "§2", GalateaForagingConfiguration.class),
 
 	// Backwater Bayou
 	BACKWATER_BAYOU("Backwater Bayou", "§2"),

@@ -396,6 +396,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: CUSTOM_AWARD
+          data:
+            customAward: FIG_FORAGING_LEVEL_CAP
 - itemType: TENDER_WOOD
   rewards:
     - amount: 10
@@ -496,6 +499,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: CUSTOM_AWARD
+          data:
+            customAward: MANGROVE_FORAGING_LEVEL_CAP
 - itemType: VINESAP
   rewards:
     - amount: 10

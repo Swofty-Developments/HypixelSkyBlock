@@ -11,11 +11,12 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
-import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
+import net.swofty.type.skyblockgeneric.foraging.ForagingTreeManager;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CustomDropComponent;
 import net.swofty.type.skyblockgeneric.item.components.RegionSelectorComponent;
@@ -58,6 +59,13 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
         Material material = Material.fromKey(block.name());
         boolean shouldItemDrop = false;
 
+        // Leaves on public foraging islands are authored parts of their tree. Handle them before
+        // region mineability validation so players can remove them and the tree can restore them.
+        if (!HypixelConst.isIslandServer() && ForagingTreeManager.isTreeLeaf(block)
+                && ForagingTreeManager.breakLeaf(player, event.getBlockPosition())) {
+            return;
+        }
+
         // Handle island server block breaks
         if (HypixelConst.isIslandServer()) {
             event.getInstance().setBlock(event.getBlockPosition(), Block.AIR);
@@ -77,8 +85,8 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
 
             // Check if player's tool can break this block using the handler system
             MineableBlock mineableBlock = MineableBlock.get(block);
+            SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());
             if (mineableBlock != null) {
-                SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());
                 SkyBlockMiningHandler handler = mineableBlock.getMiningHandler();
 
                 // Check if tool can break this block (unless it breaks instantly)
@@ -93,6 +101,18 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
                     event.setCancelled(true);
                     return;
                 }
+            }
+
+            // Authored Park/Galatea trees are handled as a single tracked structure so Sweep can
+            // harvest connected logs and the exact original blocks can grow back bottom-up.
+            if (ForagingTreeManager.isTreeLog(block)) {
+                List<ForagingTreeManager.HarvestedLog> harvested = ForagingTreeManager.breakLogs(
+                        player, event.getBlockPosition(), heldItem
+                );
+                for (ForagingTreeManager.HarvestedLog log : harvested) {
+                    processTreeLog(player, heldItem, region, log);
+                }
+                return;
             }
 
             // Queue block for mining if in valid region
@@ -193,5 +213,89 @@ public class ActionRegionBlockBreak implements HypixelEventClass {
             }
         }
     }
-}
 
+    private void processTreeLog(SkyBlockPlayer player, SkyBlockItem heldItem, SkyBlockRegion region,
+                                ForagingTreeManager.HarvestedLog harvested) {
+        Material originalMaterial = Material.fromKey(harvested.originalBlock().key());
+        if (originalMaterial == null) return;
+
+        SkyBlockItem brokenItem = harvested.dropType() == null
+                ? new SkyBlockItem(originalMaterial)
+                : new SkyBlockItem(harvested.dropType());
+        List<SkyBlockItem> drops = CustomDropComponent.simulateDrop(
+                brokenItem,
+                player,
+                heldItem,
+                region,
+                HypixelConst.getTypeLoader().getType(),
+                false
+        );
+
+        double fortune = player.getStatistics().allStatistics().getOverall(
+                net.swofty.commons.skyblock.statistics.ItemStatistic.FORAGING_FORTUNE
+        );
+        if (harvested.dropType() == ItemType.FIG_LOG) {
+            fortune += player.getStatistics().allStatistics().getOverall(
+                    net.swofty.commons.skyblock.statistics.ItemStatistic.FIG_FORTUNE
+            );
+        } else if (harvested.dropType() == ItemType.MANGROVE_LOG) {
+            fortune += player.getStatistics().allStatistics().getOverall(
+                    net.swofty.commons.skyblock.statistics.ItemStatistic.MANGROVE_FORTUNE
+            );
+        }
+
+        double multiplier = 1 + fortune * 0.01;
+        for (SkyBlockItem drop : drops) {
+            drop.setAmount((int) Math.ceil(drop.getAmount() * multiplier));
+        }
+
+        // Fire after fortune is applied so collection gains match the items actually awarded.
+        Material harvestedMaterial = Material.fromKey(brokenItem.getMaterial().key());
+        HypixelEventHandler.callCustomEvent(new CustomBlockBreakEvent(
+                player,
+                harvestedMaterial == null ? originalMaterial : harvestedMaterial,
+                harvested.position(),
+                drops,
+                false
+        ));
+
+        for (SkyBlockItem drop : drops) {
+            distributeDrop(player, drop, harvested.position().asPos());
+        }
+    }
+
+    private void distributeDrop(SkyBlockPlayer player, SkyBlockItem dropItem, Pos source) {
+        int amount = dropItem.getAmount();
+        ItemType type = dropItem.getAttributeHandler().getPotentialType();
+        if (player.canInsertItemIntoSacks(type, amount)) {
+            player.getSackItems().increase(type, amount);
+            return;
+        }
+        if (player.getSkyBlockExperience().getLevel().asInt() >= 6) {
+            player.addAndUpdateItem(dropItem);
+            return;
+        }
+
+        Pos[] offsets = {
+                new Pos(1, 0, 0), new Pos(-1, 0, 0),
+                new Pos(0, 1, 0), new Pos(0, -1, 0),
+                new Pos(0, 0, 1), new Pos(0, 0, -1)
+        };
+        Pos nearest = null;
+        double nearestDistance = Double.MAX_VALUE;
+        for (Pos offset : offsets) {
+            Pos candidate = source.add(offset);
+            if (!player.getInstance().getBlock(candidate).isAir()) continue;
+            double distance = candidate.distanceSquared(player.getPosition());
+            if (distance < nearestDistance) {
+                nearest = candidate;
+                nearestDistance = distance;
+            }
+        }
+
+        Pos dropPosition = nearest == null ? source.add(0.5, 1.5, 0.5) : nearest.add(0.5, 0.5, 0.5);
+        DroppedItemEntityImpl entity = new DroppedItemEntityImpl(dropItem, player);
+        entity.setInstance(player.getInstance(), dropPosition);
+        entity.addViewer(player);
+    }
+}
