@@ -5,7 +5,7 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.swofty.type.skyblockgeneric.resourcepack.resourcepack.PackSprite;
+import net.swofty.commons.skyblock.PackSprite;
 
 @Getter
 @AllArgsConstructor
@@ -29,7 +29,9 @@ public enum IslandType {
     private final String legacyColorCode;
 
     public Component getFormattedName() {
-        return Component.text(PackSprite.GUI_LOCATION + " " + name, color);
+        return PackSprite.GUI_LOCATION.getSprite().appendSpace().append(
+                Component.text(name)
+        ).color(color);
     }
 
     public Component getResidentLabel() {

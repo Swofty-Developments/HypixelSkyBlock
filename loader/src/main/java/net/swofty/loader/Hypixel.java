@@ -24,6 +24,7 @@ import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.*;
 import net.swofty.commons.redis.RedisClient;
 import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.skyblock.PackSprite;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.spark.Spark;
@@ -32,7 +33,6 @@ import net.swofty.type.generic.i18n.HypixelTranslator;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import net.swofty.type.skyblockgeneric.resourcepack.resourcepack.PackSprite;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 

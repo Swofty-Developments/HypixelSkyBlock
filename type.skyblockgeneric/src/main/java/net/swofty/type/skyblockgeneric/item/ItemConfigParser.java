@@ -89,6 +89,7 @@ public class ItemConfigParser {
 
 		try {
 			return switch (id.toUpperCase()) {
+				case "ATTRIBUTE_SHARD" -> new AttributeShardComponent(safeConfig.getString("shard_id", null));
 				case "ABILITY" -> {
 					List<String> abilities = safeConfig.getList("abilities", String.class);
 					yield new AbilityComponent(abilities);

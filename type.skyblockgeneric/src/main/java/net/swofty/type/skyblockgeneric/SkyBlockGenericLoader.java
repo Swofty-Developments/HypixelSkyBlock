@@ -62,6 +62,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.fishing.registry.FishingRegistry;
+import net.swofty.type.skyblockgeneric.hunting.HuntrapService;
 import net.swofty.type.skyblockgeneric.item.ItemConfigParser;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
@@ -143,6 +144,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Register items
          */
         ItemAttribute.registerItemAttributes();
+        HuntrapService.initialize();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
         File configDir = new File("./configuration/skyblock");
         File itemsDir = new File(configDir, "items");

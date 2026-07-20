@@ -37,6 +37,15 @@ public class ItemAttributeHandler {
         return ((ItemAttributeType) item.getAttribute("item_type")).getValue();
     }
 
+    public @Nullable String getAttributeShardId() {
+        String value = ((ItemAttributeShardId) item.getAttribute("attribute_shard_id")).getValue();
+        return value == null || value.equalsIgnoreCase("none") ? null : value;
+    }
+
+    public void setAttributeShardId(@Nullable String shardId) {
+        item.getAttribute("attribute_shard_id").setValue(shardId == null ? "none" : shardId);
+    }
+
     public boolean shouldBeEnchanted() {
         return item.hasComponent(EnchantedComponent.class);
     }

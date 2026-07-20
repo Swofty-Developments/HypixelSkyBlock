@@ -43,7 +43,10 @@ public class SkyBlockDataHandler extends DataHandler {
     @Getter
     private UUID currentProfileId;
 
-    protected SkyBlockDataHandler() { super(); }
+    protected SkyBlockDataHandler() {
+        super();
+    }
+
     protected SkyBlockDataHandler(UUID uuid, UUID profileId) {
         super(uuid);
         this.currentProfileId = profileId;
@@ -55,7 +58,11 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     public static @Nullable SkyBlockDataHandler getUser(HypixelPlayer player) {
-        try { return getUser(player.getUuid()); } catch (Exception e) { return null; }
+        try {
+            return getUser(player.getUuid());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static SkyBlockDataHandler createFromProfileOnly(Document profileDoc) {
@@ -76,7 +83,10 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     private void loadSkyBlock(Document document) {
-        if (document == null) { initSkyBlockDefaults(); return; }
+        if (document == null) {
+            initSkyBlockDefaults();
+            return;
+        }
         this.uuid = UUID.fromString(document.getString("_owner"));
         this.currentProfileId = UUID.fromString(document.getString("_id"));
 
@@ -157,13 +167,17 @@ public class SkyBlockDataHandler extends DataHandler {
         return createFromProfileOnly(profile);
     }
 
-    /** SB datapoint by enum (no generic param). */
+    /**
+     * SB datapoint by enum (no generic param).
+     */
     public Datapoint<?> get(Data datapoint) {
         Datapoint<?> dp = datapoints.get(datapoint.key);
         return dp != null ? dp : datapoint.defaultDatapoint;
     }
 
-    /** Optionally typed getter (casts to the class you pass). */
+    /**
+     * Optionally typed getter (casts to the class you pass).
+     */
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));
@@ -219,7 +233,8 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointStringList.class, new DatapointStringList("experienced_statistics")),
         PROFILE_NAME("profile_name", false, true, false,
                 DatapointString.class, new DatapointString("profile_name", "null"),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> {
                     if (Objects.equals(datapoint.getValue(), "null")) {
                         ((DatapointString) datapoint).setValue(SkyBlockPlayerProfiles.getRandomName());
@@ -231,7 +246,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
         INVENTORY("inventory", false, false, false,
                 DatapointInventory.class, new DatapointInventory("inventory", new SkyBlockInventory()),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> {
                     SkyBlockInventory inv = (SkyBlockInventory) datapoint.getValue();
 
@@ -262,9 +278,11 @@ public class SkyBlockDataHandler extends DataHandler {
                     ItemStack helmet = player.getHelmet();
                     if (SkyBlockItem.isSkyBlockItem(helmet)) inv.setHelmet(new SkyBlockItem(helmet).toUnderstandable());
                     ItemStack chestplate = player.getChestplate();
-                    if (SkyBlockItem.isSkyBlockItem(chestplate)) inv.setChestplate(new SkyBlockItem(chestplate).toUnderstandable());
+                    if (SkyBlockItem.isSkyBlockItem(chestplate))
+                        inv.setChestplate(new SkyBlockItem(chestplate).toUnderstandable());
                     ItemStack leggings = player.getLeggings();
-                    if (SkyBlockItem.isSkyBlockItem(leggings)) inv.setLeggings(new SkyBlockItem(leggings).toUnderstandable());
+                    if (SkyBlockItem.isSkyBlockItem(leggings))
+                        inv.setLeggings(new SkyBlockItem(leggings).toUnderstandable());
                     ItemStack boots = player.getBoots();
                     if (SkyBlockItem.isSkyBlockItem(boots)) inv.setBoots(new SkyBlockItem(boots).toUnderstandable());
 
@@ -282,7 +300,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
         EXPERIENCE("experience", false, false, false,
                 DatapointLong.class, new DatapointLong("experience", 0L),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> player.setExperience((Long) datapoint.getValue()),
                 (player) -> new DatapointLong("experience", player.getExperience())),
 
@@ -291,7 +310,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
         MISSION_DATA("mission_data", false, false, false,
                 DatapointMissionData.class, new DatapointMissionData("mission_data", new MissionData()),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> {
                     MissionData data = (MissionData) datapoint.getValue();
                     data.setSkyBlockPlayer(player);
@@ -300,14 +320,16 @@ public class SkyBlockDataHandler extends DataHandler {
 
         SHOPPING_DATA("shopping_data", false, false, true,
                 DatapointShopData.class, new DatapointShopData("shopping_data", new PlayerShopData()),
-                (player, datapoint) -> {}),
+                (player, datapoint) -> {
+                }),
 
         FAIRY_SOULS("player_fairy_souls", false, false, false,
                 DatapointFairySouls.class, new DatapointFairySouls("player_fairy_souls")),
 
         CREATED("created", false, true, false,
                 DatapointLong.class, new DatapointLong("created", 0L),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> {
                     if (Objects.equals(datapoint.getValue(), 0L)) {
                         ((DatapointLong) datapoint).setValue(System.currentTimeMillis());
@@ -319,7 +341,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
         ISLAND_UUID("island_uuid", false, true, false,
                 DatapointUUID.class, new DatapointUUID("island_uuid", null),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> {
                     if (player.getSkyBlockIsland() != null) {
                         ((DatapointUUID) datapoint).setValue(player.getSkyBlockIsland().getIslandID());
@@ -332,6 +355,18 @@ public class SkyBlockDataHandler extends DataHandler {
         COLLECTION("collection", false, true, false,
                 DatapointCollection.class, new DatapointCollection("collection")),
 
+        HUNTING("hunting", false, false, false,
+                DatapointHunting.class, new DatapointHunting("hunting")),
+
+        FOREST_ESSENCE("forest_essence", false, false, false,
+                DatapointLong.class, new DatapointLong("forest_essence", 0L)),
+
+        FOREST_WHISPERS("forest_whispers", false, false, false,
+                DatapointLong.class, new DatapointLong("forest_whispers", 0L)),
+
+        HOTF_EXPERIENCE("hotf_experience", false, false, false,
+                DatapointLong.class, new DatapointLong("hotf_experience", 0L)),
+
         MINION_DATA("minions", false, true, false,
                 DatapointMinionData.class, new DatapointMinionData("minions")),
 
@@ -339,7 +374,7 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointStorage.class, new DatapointStorage("storage")),
 
         WARDROBE("wardrobe", false, false, false,
-            DatapointWardrobe.class, new DatapointWardrobe("wardrobe")),
+                DatapointWardrobe.class, new DatapointWardrobe("wardrobe")),
 
         LOADOUTS("loadouts", false, false, false,
                 DatapointLoadouts.class, new DatapointLoadouts("loadouts")),
@@ -370,7 +405,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
         BANK_DATA("bank_data", false, true, false,
                 DatapointBankData.class, new DatapointBankData("bank_data"),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> Thread.startVirtualThread(() ->
                         ((DatapointBankData) datapoint).setValue(((DatapointBankData) datapoint).getValue())
                 )),
@@ -382,13 +418,13 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointQuiver.class, new DatapointQuiver("quiver")),
 
         SHIP_STATE("ship_state", false, false, false,
-            DatapointShipState.class, new DatapointShipState("ship_state")),
+                DatapointShipState.class, new DatapointShipState("ship_state")),
 
         TROPHY_FISH("trophy_fish", false, false, false,
-            DatapointTrophyFish.class, new DatapointTrophyFish("trophy_fish")),
+                DatapointTrophyFish.class, new DatapointTrophyFish("trophy_fish")),
 
         SLAYER("slayer", false, false, false,
-            DatapointSlayer.class, new DatapointSlayer("slayer")),
+                DatapointSlayer.class, new DatapointSlayer("slayer")),
 
         RACE_BEST_TIME("race_best_time", false, false, false, DatapointMapStringLong.class,
                 new DatapointMapStringLong("race_best_time")),
@@ -422,7 +458,8 @@ public class SkyBlockDataHandler extends DataHandler {
 
         MUSEUM_DATA("museum_data", false, false, false,
                 DatapointMuseum.class, new DatapointMuseum("museum_data"),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> {
                     DatapointMuseum.MuseumData data = (DatapointMuseum.MuseumData) datapoint.getValue();
                     data.setCurrentlyViewing(new DatapointMuseum.ViewingInfo(
@@ -439,12 +476,14 @@ public class SkyBlockDataHandler extends DataHandler {
 
         SKIN_SIGNATURE("skin_signature", false, false, false,
                 DatapointString.class, new DatapointString("skin_signature", "null"),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> ((DatapointString) datapoint).setValue(player.getSkin().signature())),
 
         SKIN_TEXTURE("skin_texture", false, false, false,
                 DatapointString.class, new DatapointString("skin_texture", "null"),
-                (player, datapoint) -> {},
+                (player, datapoint) -> {
+                },
                 (player, datapoint) -> ((DatapointString) datapoint).setValue(player.getSkin().textures())),
 
         VISITED_ISLANDS("visited_islands", false, false, false,
@@ -490,12 +529,18 @@ public class SkyBlockDataHandler extends DataHandler {
                 DatapointCollectedMobTypeRewards.class, new DatapointCollectedMobTypeRewards("collected_mob_type_rewards")),
         ;
 
-        @Getter private final String key;
-        @Getter private final Boolean isProfilePersistent;
-        @Getter private final Boolean isCoopPersistent;
-        @Getter private final Boolean repeatSetValue;
-        @Getter private final Class<? extends Datapoint<?>> type;
-        @Getter private final Datapoint<?> defaultDatapoint;
+        @Getter
+        private final String key;
+        @Getter
+        private final Boolean isProfilePersistent;
+        @Getter
+        private final Boolean isCoopPersistent;
+        @Getter
+        private final Boolean repeatSetValue;
+        @Getter
+        private final Class<? extends Datapoint<?>> type;
+        @Getter
+        private final Datapoint<?> defaultDatapoint;
         public final BiConsumer<Player, Datapoint<?>> onChange;
         public final BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad;
         public final Function<SkyBlockPlayer, Datapoint<?>> onQuit;
@@ -503,19 +548,28 @@ public class SkyBlockDataHandler extends DataHandler {
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,
              BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad, Function<SkyBlockPlayer, Datapoint<?>> onQuit) {
-            this.key = key; this.isProfilePersistent = isProfilePersistent; this.isCoopPersistent = isCoopPersistent;
-            this.repeatSetValue = repeatSetValue; this.type = type; this.defaultDatapoint = defaultDatapoint;
-            this.onChange = onChange; this.onLoad = onLoad; this.onQuit = onQuit;
+            this.key = key;
+            this.isProfilePersistent = isProfilePersistent;
+            this.isCoopPersistent = isCoopPersistent;
+            this.repeatSetValue = repeatSetValue;
+            this.type = type;
+            this.defaultDatapoint = defaultDatapoint;
+            this.onChange = onChange;
+            this.onLoad = onLoad;
+            this.onQuit = onQuit;
         }
+
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,
              BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad) {
             this(key, isProfilePersistent, isCoopPersistent, repeatSetValue, type, defaultDatapoint, onChange, onLoad, null);
         }
+
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint, BiConsumer<Player, Datapoint<?>> onChange) {
             this(key, isProfilePersistent, isCoopPersistent, repeatSetValue, type, defaultDatapoint, onChange, null, null);
         }
+
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint) {
             this(key, isProfilePersistent, isCoopPersistent, repeatSetValue, type, defaultDatapoint, null, null, null);

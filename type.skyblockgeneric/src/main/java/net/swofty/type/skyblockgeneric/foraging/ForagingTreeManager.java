@@ -20,6 +20,10 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.entity.hologram.HologramEntity;
+import net.swofty.type.skyblockgeneric.hunting.AttributeEffectService;
+import net.swofty.type.skyblockgeneric.hunting.AttributeId;
+import net.swofty.type.skyblockgeneric.hunting.AttributeRarity;
+import net.swofty.type.skyblockgeneric.hunting.AttributeRegistry;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AxeComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -98,6 +102,16 @@ public final class ForagingTreeManager {
         double sweep = tool.hasComponent(AxeComponent.class)
                 ? player.getStatistics().allStatistics().getOverall(ItemStatistic.SWEEP)
                 : 0;
+        if (tool.hasComponent(AxeComponent.class)) {
+            if (kind == TreeKind.FIG)
+                sweep += AttributeEffectService.value(player.getHuntingData(), AttributeId.parse("C19"));
+            if (kind == TreeKind.MANGROVE)
+                sweep += AttributeEffectService.value(player.getHuntingData(), AttributeId.parse("U16"));
+            int commonAttributes = (int) AttributeRegistry.values().stream()
+                    .filter(definition -> definition.rarity() == AttributeRarity.COMMON)
+                    .filter(definition -> player.getHuntingData().level(definition.id()) > 0).count();
+            sweep += AttributeEffectService.value(player.getHuntingData(), AttributeId.parse("C20")) * commonAttributes;
+        }
         TreePart hitPart = tree.parts.getOrDefault(hit, TreePart.TRUNK);
         boolean correctOrder = tree.isCorrectPart(hitPart);
         int logCount = calculateLogs(sweep, tree.kind.toughness(hitPart), tree.kind != TreeKind.BASIC && !correctOrder);
@@ -128,6 +142,7 @@ public final class ForagingTreeManager {
             if (tree.isFullyBroken()) {
                 tree.decayAllLeaves(instance);
                 tree.playCompletionSound(instance);
+                tree.awardGifts(instance);
                 tree.scheduleRegeneration(instance);
             }
         }
@@ -296,6 +311,9 @@ public final class ForagingTreeManager {
             if (material == Material.MANGROVE_LOG || material == Material.MANGROVE_WOOD) {
                 return TreeKind.MANGROVE;
             }
+            if (material.key().value().equals("pale_oak_log") || material.key().value().equals("pale_oak_wood")) {
+                return TreeKind.HELIX;
+            }
             return null;
         }
 
@@ -312,7 +330,8 @@ public final class ForagingTreeManager {
     private enum TreeKind {
         BASIC,
         FIG,
-        MANGROVE;
+        MANGROVE,
+        HELIX;
 
         boolean matches(Block block, String woodFamily) {
             TreeKind other = getTreeKind(block);
@@ -328,12 +347,14 @@ public final class ForagingTreeManager {
                 case BASIC -> 0;
                 case FIG -> part == TreePart.BRANCH ? 3.5 : 7;
                 case MANGROVE -> part == TreePart.BRANCH ? 25 : 50;
+                case HELIX -> part == TreePart.BRANCH ? 40 : 80;
             };
         }
 
         ItemType dropType(Block block) {
             if (this == FIG) return ItemType.FIG_LOG;
             if (this == MANGROVE) return ItemType.MANGROVE_LOG;
+            if (this == HELIX) return null;
 
             Material material = Material.fromKey(block.key());
             if (material == null) return null;
@@ -382,20 +403,20 @@ public final class ForagingTreeManager {
 
         private Pos center() {
             double x = originalBlocks.keySet().stream().mapToInt(BlockPosition::x).average().orElse(0) + 0.5;
-            double y = originalBlocks.keySet().stream().mapToInt(BlockPosition::y).average().orElse(0) + 0.5;
+            double y = originalBlocks.keySet().stream().mapToInt(BlockPosition::y).average().orElse(0);
             double z = originalBlocks.keySet().stream().mapToInt(BlockPosition::z).average().orElse(0) + 0.5;
             return new Pos(x, y, z);
         }
 
         private void updateHologram(Instance instance) {
             int percent = Math.min(100, (int) Math.round(broken.size() * 100.0 / originalBlocks.size()));
-            String title = "§2§l" + (kind == TreeKind.FIG ? "FIG TREE " : "MANGROVE TREE ") + "§b" + percent + "%";
+            String title = "§2§l" + kind.name() + " TREE §b" + percent + "%";
             String contributors = "§7by " + contributions.values().stream()
                     .sorted(Comparator.comparingInt(Contribution::logs).reversed())
                     .map(Contribution::name)
                     .reduce((left, right) -> left + "§7, " + right).orElse("§7Unknown");
             String[] lines = {title, contributors};
-            Pos position = center().add(0, 1.3, 0);
+            Pos position = center().add(0, 0, 0);
             if (hologram.isEmpty()) {
                 for (int i = 0; i < lines.length; i++) {
                     HologramEntity entity = new HologramEntity(lines[i]);
@@ -470,12 +491,19 @@ public final class ForagingTreeManager {
                     if (!isTreeLeaf(instance.getBlock(position.asPoint()))) return;
                     instance.setBlock(position.asPoint(), Block.AIR);
                     brokenLeaves.add(position);
-                }, TaskSchedule.tick(i + i / 12), TaskSchedule.stop());
+                }, TaskSchedule.tick(i + i / 12 + 1), TaskSchedule.stop());
             }
         }
 
         private void playCompletionSound(Instance instance) {
             instance.playSound(Sound.sound(Key.key("entity.creaking.death"), Sound.Source.BLOCK, 1.25f, 0.8f), center());
+        }
+
+        private void awardGifts(Instance instance) {
+            if (kind == TreeKind.BASIC) return;
+            Map<UUID, Integer> amounts = new HashMap<>();
+            contributions.forEach((uuid, contribution) -> amounts.put(uuid, contribution.logs));
+            TreeGiftService.award(instance, kind.name(), amounts, originalBlocks.size());
         }
 
         private void scheduleLooseLeafRegeneration(Instance instance, BlockPosition leaf) {
@@ -577,7 +605,7 @@ public final class ForagingTreeManager {
                     if (instance.getBlock(leaf.asPoint()).isAir())
                         instance.setBlock(leaf.asPoint(), originalLeaves.get(leaf));
                     brokenLeaves.remove(leaf);
-                }, TaskSchedule.tick(i / 20), TaskSchedule.stop());
+                }, TaskSchedule.tick(i / 20 + 1), TaskSchedule.stop());
             }
             hologram.forEach(Entity::remove);
             hologram.clear();

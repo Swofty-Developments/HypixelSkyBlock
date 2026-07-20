@@ -3,7 +3,9 @@ package net.swofty.type.skyblockgeneric.item;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -352,7 +354,8 @@ public class ItemLore {
 
 		if (item.hasComponent(ExtraRarityComponent.class)) {
 			ExtraRarityComponent extraRarityComponent = item.getComponent(ExtraRarityComponent.class);
-			displayRarity = displayRarity.appendSpace().append(Component.text(extraRarityComponent.getExtraRarityDisplay()));
+            displayRarity = displayRarity.appendSpace().append(
+                    LegacyComponentSerializer.legacySection().deserialize(extraRarityComponent.getExtraRarityDisplay(item)));
 		}
 
 		if (item.hasComponent(ReforgableComponent.class)) {
@@ -414,11 +417,11 @@ public class ItemLore {
 
 		if (overallValue == 0) return false;
 
-		String color = statistic.getLoreColor();
+        TextColor color = statistic.getLoreColor();
 		String prefix = statistic.getIsPercentage() ? "" : "+";
 		String suffix = statistic.getIsPercentage() ? "%" : "";
 		String line = "§7" + StringUtility.toNormalCase(statistic.getDisplayName()) + ": " +
-				color + prefix + Math.round(overallValue) + suffix;
+                LegacyComponentSerializer.legacySection().serialize(Component.text("Q", color)).replace("Q", "") + prefix + Math.round(overallValue) + suffix;
 
 		if (hpbValue != 0) line += " §e(" + (Math.round(hpbValue) >= 1 ? "+" : "") + Math.round(hpbValue) + ")";
 		if (reforgeValue != 0)

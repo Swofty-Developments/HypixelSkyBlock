@@ -38,6 +38,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.RegenerationValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
+import net.swofty.type.skyblockgeneric.hunting.AttributeEffectService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ConstantStatisticsComponent;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
@@ -57,14 +58,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PlayerStatistics {
     private static final Map<Player, BossBar> barCache = new HashMap<>();
@@ -249,6 +243,7 @@ public class PlayerStatistics {
         total = ItemStatistics.add(total, getTemporaryStatistics());
         total = ItemStatistics.add(total, petStatistics());
         total = ItemStatistics.add(total, accessoryStatistics);
+        total = ItemStatistics.add(total, AttributeEffectService.statistics(player));
         total = ItemStatistics.add(total, ItemStatistic.getOfAllBaseValues());
 
         return total;
@@ -301,6 +296,8 @@ public class PlayerStatistics {
 
         addItemModifiers(modifiers, getMainHandItem(), StatisticSourceType.HELD_ITEM);
         addProgressionModifiers(modifiers);
+        addModifier(modifiers, "Attributes", AttributeEffectService.statistics(player),
+                StatisticSourceType.ATTRIBUTE, StatisticModifierType.ATTRIBUTE, null, Material.PRISMARINE_SHARD, null);
         addTemporaryModifiers(modifiers);
 
         SkyBlockItem pet = player.getPetData().getEnabledPet();

@@ -187,6 +187,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).getValue();
     }
 
+    public DatapointHunting.HuntingData getHuntingData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.HUNTING, DatapointHunting.class).getValue();
+    }
+
     public DatapointSkills.PlayerSkills getSkills() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKILLS, DatapointSkills.class).getValue().attach(this);
     }
