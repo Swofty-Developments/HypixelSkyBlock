@@ -81,6 +81,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                         SkyBlockDataHandler islandHandler = SkyBlockDataHandler.createFromProfileOnly(islandDatabase.getDocument());
                         handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).getValue());
                         handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue());
+                        handler.get(SkyBlockDataHandler.Data.PROFILE_MODE, DatapointString.class).setValue(islandHandler.get(SkyBlockDataHandler.Data.PROFILE_MODE, DatapointString.class).getValue());
                     } else {
                         SkyBlockPlayer profileOwner = SkyBlockGenericLoader.getPlayerFromProfileUUID(otherCoopMember);
 
@@ -91,6 +92,8 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
                         handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(
                                 profileOwnerHandler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).getValue()
                         );
+                        handler.get(SkyBlockDataHandler.Data.PROFILE_MODE, DatapointString.class).setValue(
+                                profileOwnerHandler.get(SkyBlockDataHandler.Data.PROFILE_MODE, DatapointString.class).getValue());
                     }
                 }
 

@@ -70,6 +70,10 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
+        if (((SkyBlockPlayer) e.player()).isIronman()) {
+            new GUISpecialBazaar().open(e.player());
+            return;
+        }
         // Tabs at top
         renderCategoryTabs();
 
