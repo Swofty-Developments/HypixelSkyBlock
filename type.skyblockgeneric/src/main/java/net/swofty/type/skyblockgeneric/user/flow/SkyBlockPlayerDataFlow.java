@@ -119,6 +119,19 @@ public final class SkyBlockPlayerDataFlow {
         handler.runOnSave(player);
         Document document = handler.toProfileDocument();
         new ProfilesDatabase(handler.getCurrentProfileId().toString()).saveDocument(document);
+
+        // A profile switch updates the selected profile before the proxy prepares the transfer.
+        // Save the profile the player is leaving, but send the destination profile's document;
+        // otherwise the destination server loads the old profile data under the new profile ID.
+        UUID selectedProfileId = player.getProfiles().getCurrentlySelected();
+        if (!handler.getCurrentProfileId().equals(selectedProfileId)) {
+            Document selectedDocument = new ProfilesDatabase(selectedProfileId.toString()).getDocument();
+            if (selectedDocument == null) {
+                throw new IllegalStateException("Selected SkyBlock profile does not exist: " + selectedProfileId);
+            }
+            return selectedDocument.toJson();
+        }
+
         return document.toJson();
     }
 

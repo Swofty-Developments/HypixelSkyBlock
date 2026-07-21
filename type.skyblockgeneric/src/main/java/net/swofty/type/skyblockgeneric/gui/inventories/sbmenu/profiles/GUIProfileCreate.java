@@ -1,7 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles;
 
 import lombok.SneakyThrows;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
@@ -9,14 +8,8 @@ import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
-import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -68,11 +61,10 @@ public class GUIProfileCreate extends StatelessView {
                     profiles.addProfile(profileId);
                     ProfilesDatabase.collection.insertOne(document);
 
-                    player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
-                        profiles.setCurrentlySelected(profileId);
-                        UserDatabase database = new UserDatabase(player.getUuid());
-                        database.saveProfiles(profiles);
-                    }, false);
+                    // Persist the selection before transfer preparation takes its account snapshot.
+                    profiles.setCurrentlySelected(profileId);
+                    UserDatabase database = new UserDatabase(player.getUuid());
+                    database.saveProfiles(profiles);
 
                     player.sendTo(ServerType.SKYBLOCK_ISLAND, true);
                 });

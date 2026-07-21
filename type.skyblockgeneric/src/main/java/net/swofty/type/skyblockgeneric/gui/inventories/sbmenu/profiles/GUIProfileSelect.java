@@ -9,13 +9,8 @@ import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
-import net.swofty.type.generic.event.actions.data.ActionPlayerDataSave;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -60,14 +55,10 @@ public class GUIProfileSelect extends StatelessView {
         }, (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             SkyBlockPlayerProfiles profiles = player.getProfiles();
-            SkyBlockPlayerProfiles toSet = new SkyBlockPlayerProfiles();
-            toSet.setProfiles(profiles.getProfiles());
-
-            player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
-                UserDatabase database = new UserDatabase(player.getUuid());
-                toSet.setCurrentlySelected(profileUuid);
-                database.saveProfiles(toSet);
-            }, false);
+            // Persist the selection before transfer preparation takes its account snapshot.
+            profiles.setCurrentlySelected(profileUuid);
+            UserDatabase database = new UserDatabase(player.getUuid());
+            database.saveProfiles(profiles);
 
             player.sendTo(ServerType.SKYBLOCK_ISLAND, true);
         });
