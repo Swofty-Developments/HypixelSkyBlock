@@ -391,6 +391,16 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
     }
 
+    public ProfileMode getProfileMode() {
+        return ProfileMode.fromStored(getSkyblockDataHandler()
+                .get(SkyBlockDataHandler.Data.PROFILE_MODE, net.swofty.type.generic.data.datapoints.DatapointString.class)
+                .getValue());
+    }
+
+    public boolean isIronman() {
+        return getProfileMode() == ProfileMode.IRONMAN;
+    }
+
     public CoopDatabase.Coop getCoop() {
         return CoopDatabase.getFromMember(getUuid());
     }

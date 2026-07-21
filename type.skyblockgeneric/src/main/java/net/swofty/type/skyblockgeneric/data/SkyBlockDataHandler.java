@@ -241,6 +241,9 @@ public class SkyBlockDataHandler extends DataHandler {
                     }
                 }),
 
+        PROFILE_MODE("profile_mode", false, true, false,
+                DatapointString.class, new DatapointString("profile_mode", "CLASSIC")),
+
         COINS("coins", false, false, false,
                 DatapointDouble.class, new DatapointDouble("coins", 0.0)),
 

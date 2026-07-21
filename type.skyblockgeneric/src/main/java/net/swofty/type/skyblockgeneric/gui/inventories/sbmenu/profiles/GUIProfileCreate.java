@@ -27,10 +27,16 @@ import org.bson.Document;
 import java.util.UUID;
 
 public class GUIProfileCreate extends StatelessView {
+    private final net.swofty.type.skyblockgeneric.user.ProfileMode mode;
+
+    public GUIProfileCreate(net.swofty.type.skyblockgeneric.user.ProfileMode mode) {
+        this.mode = mode;
+    }
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return ViewConfiguration.translatable("gui_sbmenu.profiles.create.title", InventoryType.CHEST_3_ROW);
+        return new ViewConfiguration<>(mode == net.swofty.type.skyblockgeneric.user.ProfileMode.IRONMAN
+                ? "Create an Ironman Profile" : "Create a Profile", InventoryType.CHEST_3_ROW);
     }
 
     @SneakyThrows
@@ -40,8 +46,11 @@ public class GUIProfileCreate extends StatelessView {
 
         String profileName = SkyBlockPlayerProfiles.getRandomName();
 
-        layout.slot(11, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.create.confirm", Material.GREEN_TERRACOTTA, 1,
-                "gui_sbmenu.profiles.create.confirm.lore", Component.text(profileName)),
+        layout.slot(11, (s, c) -> ItemStackCreator.getStack("§aCreate New Profile", Material.GREEN_TERRACOTTA, 1,
+                "§7You are creating a new SkyBlock", "§7profile.", "", "§7Profile name: §e" + profileName,
+                "§7Mode: " + mode.getDisplayName(), "", "§7You won't lose any progress.",
+                "§7You can switch between profiles.", "", "§bYou are creating a SOLO profile!",
+                "§bUse /coopadd <name> to play with friends!", "§eClick to confirm new profile!"),
                 (click, c) -> {
                     SkyBlockPlayer player = (SkyBlockPlayer) c.player();
                     SkyBlockPlayerProfiles profiles = player.getProfiles();
@@ -50,6 +59,7 @@ public class GUIProfileCreate extends StatelessView {
                     // Create new SkyBlock data handler with the profile ID
                     SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(player.getUuid(), profileId);
                     handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class).setValue(profileName);
+                    handler.get(SkyBlockDataHandler.Data.PROFILE_MODE, DatapointString.class).setValue(mode.name());
                     handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class).setValue(profileId);
 
                     // Convert to document for saving
@@ -68,6 +78,7 @@ public class GUIProfileCreate extends StatelessView {
                 });
 
         layout.slot(15, (s, c) -> ItemStackCreator.createNamedItemStack(Material.RED_TERRACOTTA, I18n.string("gui_sbmenu.profiles.create.cancel", c.player().getLocale())),
-                (click, c) -> c.player().openView(new GUIProfileSelectMode()));
+                (click, c) -> c.player().openView(mode == net.swofty.type.skyblockgeneric.user.ProfileMode.IRONMAN
+                        ? new GUIProfileSelectSpecialMode() : new GUIProfileSelectMode()));
     }
 }

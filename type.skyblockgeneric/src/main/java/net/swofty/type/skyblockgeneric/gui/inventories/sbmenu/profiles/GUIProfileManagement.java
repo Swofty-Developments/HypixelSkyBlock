@@ -83,7 +83,7 @@ public class GUIProfileManagement extends StatelessView {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                     Locale l = p.getLocale();
                     List<String> lore = new ArrayList<>(Arrays.asList(I18n.string("gui_sbmenu.profiles.selected.subtitle", l), " "));
-                    updateLore(p.getUuid(), finalDataHandler, lore);
+                    updateLore(profileId, finalDataHandler, lore);
                     lore.add(" ");
                     lore.add(I18n.string("gui_sbmenu.profiles.selected.playing", l));
 
@@ -101,7 +101,7 @@ public class GUIProfileManagement extends StatelessView {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                     Locale l = p.getLocale();
                     List<String> lore = new ArrayList<>(Arrays.asList(I18n.string("gui_sbmenu.profiles.unselected.subtitle", l), " "));
-                    updateLore(p.getUuid(), finalDataHandler, lore);
+                    updateLore(profileId, finalDataHandler, lore);
                     lore.add(" ");
                     lore.add(I18n.string("gui_sbmenu.profiles.unselected.click", l));
 
@@ -112,17 +112,23 @@ public class GUIProfileManagement extends StatelessView {
         }
     }
 
-    public static List<String> updateLore(UUID playerUuid, SkyBlockDataHandler handler, List<String> lore) {
-        if (handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
-            lore.add(I18n.string("gui_sbmenu.profiles.coop_label"));
-
-            CoopDatabase.Coop coop = CoopDatabase.getFromMember(playerUuid);
-            coop.members().forEach(member -> lore.add("§7Member " + SkyBlockPlayer.getDisplayName(member)));
-            coop.memberInvites().forEach(invite -> lore.add("§7Invited " + SkyBlockPlayer.getDisplayName(invite)));
+    public static List<String> updateLore(UUID profileUuid, SkyBlockDataHandler handler, List<String> lore) {
+        net.swofty.type.skyblockgeneric.user.ProfileMode mode = net.swofty.type.skyblockgeneric.user.ProfileMode.fromStored(
+                handler.get(SkyBlockDataHandler.Data.PROFILE_MODE, DatapointString.class).getValue());
+        if (mode != net.swofty.type.skyblockgeneric.user.ProfileMode.CLASSIC) {
+            lore.add("§7Mode: " + mode.getDisplayName());
             lore.add(" ");
         }
+        if (handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) {
+            CoopDatabase.Coop coop = CoopDatabase.getFromMemberProfile(profileUuid);
+            if (coop != null) {
+                lore.add("§bCo-op with §e" + coop.members().size() + " §bplayers:");
+                coop.members().forEach(member -> lore.add(" §7- §7" + SkyBlockPlayer.getDisplayName(member)));
+                lore.add(" ");
+            }
+        }
 
-        SkyBlockRecipe.getMissionDisplay(lore, playerUuid);
+        SkyBlockRecipe.getMissionDisplay(lore, handler.getUuid());
         lore.add(" ");
 
         lore.add(I18n.string("gui_sbmenu.profiles.no_skills"));

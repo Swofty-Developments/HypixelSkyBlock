@@ -8,6 +8,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.bazaar.BazaarCategories;
 import net.swofty.type.skyblockgeneric.gui.inventories.bazaar.GUIBazaar;
+import net.swofty.type.skyblockgeneric.gui.inventories.bazaar.GUISpecialBazaar;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -50,7 +51,8 @@ public class NPCBazaar extends HypixelNPC {
         SkyBlockLevelRequirement lvl = player.getSkyBlockExperience().getLevel();
         if (lvl.asInt() >= 7 || player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
             player.getLogHandler().debug("As a staff member, you have bypassed the bazaar requirement.");
-            new GUIBazaar(BazaarCategories.FARMING).open(player);
+            if (player.isIronman()) new GUISpecialBazaar().open(player);
+            else new GUIBazaar(BazaarCategories.FARMING).open(player);
             return;
         }
         setDialogue(player, "hello");
