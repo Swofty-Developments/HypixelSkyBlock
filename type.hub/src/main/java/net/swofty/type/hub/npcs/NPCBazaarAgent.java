@@ -19,22 +19,22 @@ public class NPCBazaarAgent extends HypixelNPC {
         super(new HumanConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
-                return new String[]{"§6Auction Agent", "§e§lCLICK"};
+                return new String[]{"§6Bazaar Agent", "§e§lCLICK"};
             }
 
             @Override
             public String signature(HypixelPlayer player) {
-                return "uBZtSbevRudSrX4uG3hxrRKGqULSiiAW80AJg7RfrK8/I7aJnDMTZ7z4Sz7ck2i2dugnBL3CTs0RyK3QGRVC20yx4YijE50AenwGw65pNHed2l54eThuC01xcPsPM1LQ/qBxldHYy+iLMSDMxf4gYszD50fWLGU2H1tfi9CWQFoea3SngFpUvozICfbCe7ZzlhybE15XmlkAUFR293tYTP6CxA8hIjuisNnW5LE1m1EHNH8K0vR87T4OrMJ4tXKFRlN362v6gUkXC3jPEzAzVAln3oBfUeSvgYne0nyYxFZjTg3+xiP4fd3ULzDIouEBer0VUOB1CIPeoGxK72UviDuXSdOoQonQOdadn4nj2i7MsrIrVzYYz1sWTLUsdfNilZb8rH5T/Z4MvKmktxhe0eeN19NnEWdEwgkZSqi7ivoACWEdFRqr62d3Bkf9kqk/j/cz9Z20VBr57THOFRgSNIznA7eV7Mhdao/G3QGPmbtNCWjhmDQ+UJ7ADbIN1M+p/h7vi/z9nYBpb/ei9U7xPfVKslyY2hgv+eH4dYO3whwWhfGhsjgbOA1Ibp9dln9t612adJh2XSlaJH7AFr2HS40tG6HOWhwxghJl+qScVdoyJ/fm4bfubZYrR3E8QDvQtYqAEuWmLFOiXtOg3SJgi/BfjjXHGfV3AydH0PFAI3A=";
+                return "Uw6+Tq5MobvryAxcWBW3NTVjq/GShE7gSTmg2BPlIJVJohDfKx2ZoLf4TnSTeG5GKwX/EjdiwkqS8RmS/8XkxVIDVGbNFHeeOBc6b7cs0nkwo82t0Fr/GNJq2B/kCffLBnVNAUNS0G6A83voThbRVqeFzL5mldFZatPO80aaHZtnoQfYlzpSBA4QW6+D79FFyRrbiNyJTvH+24nrJLG62rgiLs5wcBBeStDOIpal0X8mAnBrI68lOsvHXHmwSBxkQdOm39ppO/L5C7m3IFbvmaELUepSqVOzaqOz+uBNSSkPWUW7vvEuU5spYeSQmcfkX8I161j9ouIWCSejDTRNt9DxIsAgYSX+py0LMqYXn/l004yyVs7/67Bg7bqVtfrincfZqKbn3Azvq+6tgYrKkyF4hNqNpTqb9cAAXuSvoHGMzdqIh7LCH2pxwwz+koe0kbRzNyMCFf/BuRgl6litdUZD+atDOzjWOuQIP4EctL8QqIFobBE0cXQfsuSbL246PiQHSq+vneVdkUGfIzTmuPGTnJUOESpeiQs3HyT1s0gckmsJg8qg+/SMo1lEOFITkY6GIvhF+Sc2a9w5RfCYBkONm1KDaj211nKAswwKgAChpdP4tpKyDrkcrwkAwS/rkZPjy5xLXKdRXsf24DA/VJkKzg/Y6SoAr9A+OcyVxhQ=";
             }
 
             @Override
             public String texture(HypixelPlayer player) {
-                return "ewogICJ0aW1lc3RhbXAiIDogMTU5NzMwNTM5MDExMSwKICAicHJvZmlsZUlkIiA6ICI0MWQzYWJjMmQ3NDk0MDBjOTA5MGQ1NDM0ZDAzODMxYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZWdha2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTg2MTQyNDFiOTgwMzE5YzAyZjVlZTNhZTFhN2ZjN2ViZjhiM2ZkZDUzMDFlZDNkNGUyMTU5YTgwZGFlMWQyYyIKICAgIH0KICB9Cn0=";
+                return "ewogICJ0aW1lc3RhbXAiIDogMTU5NzMwNjQwOTk1NSwKICAicHJvZmlsZUlkIiA6ICI0MWQzYWJjMmQ3NDk0MDBjOTA5MGQ1NDM0ZDAzODMxYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJNZWdha2xvb24iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmM5NDUzYjU4OWUxNzc2NzBkODZmM2U1ZDRmMTcxMzEzM2FkNzkyYmY4YzU0ZmE2MWQwN2I1MDQ0ZDU3ZGI5OSIKICAgIH0KICB9Cn0=";
             }
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-33.5, 73, -17.5, 0, 0);
+                return new Pos(-35.5, 73, -31.5, 0, 0);
             }
 
             @Override
@@ -50,7 +50,6 @@ public class NPCBazaarAgent extends HypixelNPC {
         if (isInDialogue(player)) return;
         SkyBlockLevelRequirement lvl = player.getSkyBlockExperience().getLevel();
         if (lvl.asInt() >= 7 || player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
-            player.getLogHandler().debug("As a staff member, you have bypassed the bazaar requirement.");
             if (player.isIronman()) new GUISpecialBazaar().open(player);
             else new GUIBazaar(BazaarCategories.FARMING).open(player);
             return;
