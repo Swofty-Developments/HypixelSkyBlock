@@ -73,9 +73,7 @@ public class CoopCommand extends HypixelCommand {
                 return;
             }
 
-            if (chosenPlayers.asProxyPlayers().stream().anyMatch(player1 -> {
-                return CoopDatabase.getFromMember(player1.getUuid()) != null;
-            })) {
+            if (chosenPlayers.asProxyPlayers().stream().anyMatch(player1 -> CoopDatabase.getFromMember(player1.uuid()) != null)) {
                 player.sendMessage("§b[Co-op] §cOne or more of the players you specified already have a co-op or an invite pending!");
                 return;
             }
@@ -96,7 +94,7 @@ public class CoopCommand extends HypixelCommand {
 
             int i = 0;
             for (ProxyPlayer invitedPlayer : chosenPlayers.asProxyPlayers()) {
-                coop.addInvite(invitedPlayer.getUuid());
+                coop.addInvite(invitedPlayer.uuid());
                 player.sendMessage("§b[Co-op] §eYou invited " + players[i] + " to a SkyBlock co-op!");
                 i++;
 
