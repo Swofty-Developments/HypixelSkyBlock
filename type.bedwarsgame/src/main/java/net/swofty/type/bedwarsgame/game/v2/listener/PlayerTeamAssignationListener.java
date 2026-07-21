@@ -6,12 +6,13 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.commons.TeamColorUtil;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class PlayerTeamAssignationListener implements HypixelEventClass {
 
@@ -24,7 +25,7 @@ public class PlayerTeamAssignationListener implements HypixelEventClass {
         NamedTextColor color = NamedTextColor.nearestTo(textColor); // possible performance hit?
         player.setTeam(new TeamBuilder(event.team().getName(), MinecraftServer.getTeamManager())
             .prefix(Component.text(event.team().firstLetter(), textColor, TextDecoration.BOLD).appendSpace())
-            .teamColor(color)
+                .teamColor(TeamColorUtil.fromNamedColor(color))
             .build());
         player.getTeam().sendUpdatePacket();
     }

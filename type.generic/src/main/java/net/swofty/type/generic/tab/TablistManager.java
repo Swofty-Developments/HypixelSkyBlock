@@ -1,7 +1,7 @@
 package net.swofty.type.generic.tab;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.minestom.server.color.TeamColor;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
@@ -69,13 +69,15 @@ public abstract class TablistManager {
 
                             if (cache.createdTeams.add(teamName)) {
                                 TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(
-                                    Component.text(teamName),
-                                    (byte) 0x01,
-                                    TeamsPacket.NameTagVisibility.ALWAYS,
-                                    TeamsPacket.CollisionRule.ALWAYS,
-                                    NamedTextColor.RED,
-                                    Component.text(teamName),
-                                    Component.empty(),
+                                        new TeamsPacket.Settings(
+                                                Component.text(teamName),
+                                                Component.text(teamName),
+                                                Component.empty(),
+                                                TeamsPacket.NameTagVisibility.ALWAYS,
+                                                TeamsPacket.CollisionRule.ALWAYS,
+                                                TeamColor.RED,
+                                                (byte) 0x01
+                                        ),
                                     new ArrayList<>(Collections.singletonList(fakeProfileName))
                                 ));
 

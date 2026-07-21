@@ -20,13 +20,13 @@ import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.biome.Biome;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.ServerMemory;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.proxyapi.ProxyPlayer;
@@ -62,7 +62,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
-import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -169,15 +168,12 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         if (!isSkyBlockType && !(loader.getType() == ServerType.BEDWARS_GAME)) {
             MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
                     LAST_TICK.set(event.getTickMonitor()));
-            BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
-            benchmarkManager.enable(Duration.ofDays(3));
             MinecraftServer.getSchedulerManager().buildTask(() -> {
                 Collection<HypixelPlayer> players = getLoadedPlayers();
                 if (players.isEmpty())
                     return;
 
-                long ramUsage = benchmarkManager.getUsedMemory();
-                ramUsage /= (long) 1e6; // bytes to MB
+                long ramUsage = (long) ServerMemory.getUsed();
                 TickMonitor tickMonitor = LAST_TICK.get();
                 double TPS = 1000 / tickMonitor.getTickTime();
 

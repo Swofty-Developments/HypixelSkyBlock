@@ -112,6 +112,29 @@ public enum PackSprite {
     STAT_CROP_FORTUNE("\uE051"),
 
     // gui/mobs
+    MOBS_UNDEAD("\uE084"),
+    MOBS_SKELETAL("\uE081"),
+    MOBS_ENDER("\uE078"),
+    MOBS_ARTHROPOD("\uE074"),
+    MOBS_HUMANOID("\uE07B"),
+    MOBS_INFERNAL("\uE07C"),
+    MOBS_CUBIC("\uE076"),
+    MOBS_FROZEN("\uE079"),
+    MOBS_SPOOKY("\uE082"),
+    MOBS_MYTHOLOGICAL("\uE07E"),
+    MOBS_WITHER("\uE085"),
+    MOBS_SUBTERRANEAN("\uE083"),
+    MOBS_AQUATIC("\uE072"),
+    MOBS_PEST("\uE07F"),
+    MOBS_ANIMAL("\uE071"),
+    MOBS_MAGMATIC("\uE07D"),
+    MOBS_ELUSIVE("\uE077"),
+    MOBS_CONSTRUCT("\uE075"),
+    MOBS_ARCANE("\uE073"),
+    MOBS_SHIELDED("\uE080"),
+    MOBS_AIRBORNE("\uE070"),
+    MOBS_GLACIAL("\uE07A"),
+    MOBS_WOODLAND("\uE086"),
 
     // icons/staff
     ICONS_STAFF("ዞ");

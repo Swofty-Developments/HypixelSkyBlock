@@ -13,17 +13,13 @@ import net.minestom.server.coordinate.CoordConversion;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.Chunk;
-import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.minestom.server.world.biome.Biome;
-import net.swofty.commons.CustomWorlds;
-import net.swofty.commons.Songs;
-import net.swofty.commons.StringUtility;
-import net.swofty.commons.YamlFileUtils;
+import net.swofty.commons.*;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
@@ -85,7 +81,7 @@ import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
-import net.swofty.type.skyblockgeneric.resourcepack.resourcepack.SkyblockPack;
+import net.swofty.type.skyblockgeneric.resourcepack.SkyblockPack;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
 import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
@@ -106,7 +102,6 @@ import org.tinylog.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
@@ -203,15 +198,12 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
             HypixelGenericLoader.LAST_TICK.set(event.getTickMonitor()));
-        BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
-        benchmarkManager.enable(Duration.ofDays(3));
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             Collection<SkyBlockPlayer> players = getLoadedPlayers();
             if (players.isEmpty())
                 return;
 
-            long ramUsage = benchmarkManager.getUsedMemory();
-            ramUsage /= (long) 1e6; // bytes to MB
+            long ramUsage = (long) ServerMemory.getUsed();
             TickMonitor tickMonitor = HypixelGenericLoader.LAST_TICK.get();
             double TPS = 1000 / tickMonitor.getTickTime();
 

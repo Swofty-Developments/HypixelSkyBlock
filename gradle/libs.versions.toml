@@ -20,7 +20,7 @@ junit = "4.13.2"
 junit-jupiter = "6.1.0"
 kotlin-stdlib = "2.3.20"
 lombok = "1.18.46"
-minestom = "2026.07.01-26.1.2"
+minestom = "2026.07.12-26.2"
 mongodb = "5.6.4"
 netty-bom = "4.2.9.Final"
 polar = "1.16.0"
@@ -30,11 +30,12 @@ sentry-async-profiler = "8.35.0"
 slf4j = "2.0.17"
 snakeyaml = "2.6"
 spark = "1.10.172-SNAPSHOT"
+spark-api = "0.1-SNAPSHOT"
 sparkjava = "2.9.4"
 tinylog = "2.7.0"
 velocity-api = "3.5.0-SNAPSHOT"
 viarewind = "4.1.2"
-viaversion = "5.10.0"
+viaversion = "5.11.0"
 packetevents = "2.12.3-SNAPSHOT"
 shadow = "9.4.2"
 protobuf = "4.35.1"
@@ -87,6 +88,7 @@ slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
 spark-common = { module = "me.lucko:spark-common", version.ref = "spark" }
 spark-core = { module = "com.sparkjava:spark-core", version.ref = "sparkjava" }
+spark-api = { module = "me.lucko:spark-api", version.ref = "spark-api" }
 tinylog-api = { module = "org.tinylog:tinylog-api", version.ref = "tinylog" }
 tinylog-impl = { module = "org.tinylog:tinylog-impl", version.ref = "tinylog" }
 velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity-api" }

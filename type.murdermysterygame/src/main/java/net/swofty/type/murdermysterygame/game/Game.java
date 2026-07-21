@@ -9,6 +9,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.TeamColor;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
@@ -38,13 +39,7 @@ import net.swofty.type.murdermysterygame.weapon.WeaponManager;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
@@ -396,13 +391,15 @@ public class Game {
         TeamsPacket createTeamPacket = new TeamsPacket(
                 "mm_hidden",
                 new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x00,
-                        TeamsPacket.NameTagVisibility.NEVER,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        NamedTextColor.WHITE,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.NEVER,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColor.WHITE,
+                                (byte) 0x00
+                        ),
                         playerNames
                 )
         );
@@ -420,13 +417,15 @@ public class Game {
         TeamsPacket createTeamPacket = new TeamsPacket(
                 "mm_hidden",
                 new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x00,
-                        TeamsPacket.NameTagVisibility.NEVER,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        NamedTextColor.WHITE,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.NEVER,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColor.WHITE,
+                                (byte) 0x00
+                        ),
                         allPlayerNames
                 )
         );
