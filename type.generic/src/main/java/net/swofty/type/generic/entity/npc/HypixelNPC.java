@@ -158,17 +158,22 @@ public abstract class HypixelNPC {
 
                     if (isLookingNPC) {
                         if (entityDistance <= LOOK_DISTANCE) {
+                            cache.setLookingAtPlayer(npc);
                             entity.lookAt(player);
-                        } else {
+                        } else if (cache.stopLookingAtPlayer(npc)) {
                             // over the distance, reset back to default rotation
-                            entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                            Pos defaultPosition = config.position(player);
+                            entity.setView(defaultPosition.yaw(), defaultPosition.pitch());
                         }
                     }
                 } else {
                     if (inRange.contains(player)) {
                         inRange.remove(player);
                         entity.updateOldViewer(player);
-                        entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                        if (cache.stopLookingAtPlayer(npc)) {
+                            Pos defaultPosition = config.position(player);
+                            entity.setView(defaultPosition.yaw(), defaultPosition.pitch());
+                        }
                     }
                 }
             });
@@ -330,6 +335,7 @@ public abstract class HypixelNPC {
 
     public static class PlayerNPCCache {
         private final Map<HypixelNPC, Entity> npcs = new ConcurrentHashMap<>();
+        private final Set<HypixelNPC> lookingAtPlayer = ConcurrentHashMap.newKeySet();
 
         public void add(HypixelNPC npc, Entity entity) {
             npcs.put(npc, entity);
@@ -337,6 +343,15 @@ public abstract class HypixelNPC {
 
         public void remove(HypixelNPC npc) {
             npcs.remove(npc);
+            lookingAtPlayer.remove(npc);
+        }
+
+        public void setLookingAtPlayer(HypixelNPC npc) {
+            lookingAtPlayer.add(npc);
+        }
+
+        public boolean stopLookingAtPlayer(HypixelNPC npc) {
+            return lookingAtPlayer.remove(npc);
         }
 
         public Map<HypixelNPC, Entity> getEntityImpls() {
