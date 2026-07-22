@@ -1,5 +1,6 @@
 [versions]
 adventure = "5.2.0"
+adventure-platform-mod = "7.0.0"
 annotations = "26.1.0"
 atlasRedis = "1.1.5"
 byte-buddy = "1.18.7"
@@ -40,11 +41,22 @@ packetevents = "2.12.3-SNAPSHOT"
 shadow = "9.4.2"
 protobuf = "4.35.1"
 zstd-jni = "1.5.7-4"
+fabric-loom = "1.17-SNAPSHOT"
+fabric-loader = "0.19.3"
+fabric-api = "0.155.2+26.2"
+minecraft = "26.2"
+hypixel-mod-api = "1.0.2"
+hypixel-mod-api-fabric = "1.0.2+build.1+mc26.1"
 
 [libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
+adventure-nbt = { module = "net.kyori:adventure-nbt", version.ref = "adventure" }
+adventure-platform-fabric = { module = "net.kyori:adventure-platform-fabric", version.ref = "adventure-platform-mod" }
 adventure-text-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
 adventure-text-serializer-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
+adventure-text-serializer-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "adventure" }
+adventure-text-logger-slf4j = { module = "net.kyori:adventure-text-logger-slf4j", version.ref = "adventure" }
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
 atlas-redis = { module = "com.github.Swofty-Developments:AtlasRedisAPI", version.ref = "atlasRedis" }
 byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byte-buddy" }
@@ -97,6 +109,11 @@ viarewind-common = { module = "com.viaversion:viarewind-common", version.ref = "
 viaversion = { module = "com.viaversion:viaversion", version.ref = "viaversion" }
 packetevents-velocity = { module = "com.github.retrooper:packetevents-velocity", version.ref = "packetevents" }
 zstd-jni = { module = "com.github.luben:zstd-jni", version.ref = "zstd-jni" }
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+hypixel-mod-api = { module = "net.hypixel:mod-api", version.ref = "hypixel-mod-api" }
+hypixel-mod-api-fabric = { module = "maven.modrinth:hypixel-mod-api", version.ref = "hypixel-mod-api-fabric" }
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric-loom" }
