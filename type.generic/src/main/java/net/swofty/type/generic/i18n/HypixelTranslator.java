@@ -3,10 +3,14 @@ package net.swofty.type.generic.i18n;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.translation.MiniMessageTranslator;
 import net.kyori.adventure.translation.Translator;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,17 +21,29 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class HypixelTranslator extends MiniMessageTranslator {
+
+    public static final TagResolver SKYBLOCK_STAT_TAG_RESOLVER = TagResolver.resolver(
+            "sbstat",
+            (arguments, context) -> {
+                String statisticName = arguments.popOr("Expected a statistic name, for example <sbstat:intelligence>").value();
+                final ItemStatistic statistic;
+                try {
+                    statistic = ItemStatistic.valueOf(statisticName.toUpperCase(Locale.ROOT).replace('-', '_').replace(' ', '_'));
+                } catch (IllegalArgumentException exception) {
+                    throw context.newException("Unknown SkyBlock statistic '" + statisticName + "'", arguments);
+                }
+
+                Component display = statistic.getCompleteDisplayName();
+                if (arguments.hasNext()) {
+                    display = Component.text(arguments.pop().value()).appendSpace().append(display)
+                            .color(statistic.getDisplayColor());
+                }
+                return Tag.inserting(display);
+            }
+    );
 
     public static final Locale defaultLocale = Locale.US;
     private static final Path I18N_ROOT = Path.of("./configuration/i18n");
@@ -40,8 +56,18 @@ public class HypixelTranslator extends MiniMessageTranslator {
     private final Cache<LocaleSubsystem, Map<String, String>> bundleCache;
     private final Cache<LocaleKey, Optional<String>> keyCache;
 
-    public HypixelTranslator() {
-        super(MiniMessage.miniMessage());
+    public HypixelTranslator(TagResolver... resolvers) {
+        super(
+                MiniMessage.builder()
+                        .tags(
+                                TagResolver.builder()
+                                        .resolver(TagResolver.standard())
+                                        .resolver(SKYBLOCK_STAT_TAG_RESOLVER)
+                                        .resolvers(resolvers)
+                                        .build()
+                        )
+                        .build()
+        );
 
         this.fileIndexByLocale = buildFileIndex(I18N_ROOT);
         this.defaultLocaleKeys = loadAllKeysForLocale(defaultLocale);

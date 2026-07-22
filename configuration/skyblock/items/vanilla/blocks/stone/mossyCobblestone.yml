@@ -5,7 +5,7 @@ items:
     components:
       - id: PLACEABLE
       - id: SELLABLE
-        value: 1.0
+        value: 6.0
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -22,7 +22,6 @@ items:
             result:
               type: MOSSY_COBBLESTONE
               amount: 1
-
   - id: MOSSY_COBBLESTONE_SLAB
     material: MOSSY_COBBLESTONE_SLAB
     rarity: COMMON
@@ -43,7 +42,6 @@ items:
             result:
               type: MOSSY_COBBLESTONE_SLAB
               amount: 6
-
   - id: MOSSY_COBBLESTONE_STAIRS
     material: MOSSY_COBBLESTONE_STAIRS
     rarity: COMMON
@@ -66,7 +64,6 @@ items:
             result:
               type: MOSSY_COBBLESTONE_STAIRS
               amount: 4
-
   - id: MOSSY_COBBLESTONE_WALL
     material: MOSSY_COBBLESTONE_WALL
     rarity: COMMON

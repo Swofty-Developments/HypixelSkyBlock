@@ -1,23 +1,23 @@
 items:
   - id: CHILI_PEPPER
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SELLABLE
         value: 5000.0
       - id: SKULL_HEAD
         texture: f859c8df1109c08a756275f1d2887c2748049fe33877769a7b415d56eda469d8
-
   - id: SOUL_STRING
     material: string
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 5000.0
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/soul_string
   - id: ZOMBIE_HEART
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     default_statistics:
       health: 50.0
     components:
@@ -25,7 +25,7 @@ items:
       - id: SELLABLE
         value: 123000.0
       - id: SKULL_HEAD
-        texture: 71d7c816fc8c636d7f50a93a0ba7aaeff06c96a561645e9eb1bef391655c531
+        texture: 65d9d98ad6d154ef1f4c63dba92a51337cd1f4eb0cb65b9b2a90fe8b03096db7
       - id: TRACKED_UNIQUE
       - id: STANDARD_ITEM
         standard_item_type: HELMET

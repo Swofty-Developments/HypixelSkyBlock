@@ -7,8 +7,8 @@ import net.swofty.type.generic.chat.StaffChat;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
@@ -19,6 +19,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void run(PlayerChatEvent event) {
+        if (event.isCancelled()) return;
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         event.setCancelled(true);
 
@@ -66,4 +67,3 @@ public class ActionPlayerChat implements HypixelEventClass {
         });
     }
 }
-

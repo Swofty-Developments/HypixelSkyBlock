@@ -8,6 +8,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
@@ -351,7 +352,6 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
         private final int amount;
         private final ShopPrice price;
         private final boolean stackable;
-        @Setter
         private List<String> lore = null;
         @Setter
         private String displayName = null;
@@ -371,6 +371,16 @@ public abstract class ShopView extends StatefulPaginatedView<ShopView.ShopItem, 
 
         public static ShopItem Single(SkyBlockItem item, int amount, ShopPrice price) {
             return new ShopItem(item, amount, price, false);
+        }
+
+        public void setComponentLore(List<Component> lore) {
+            // TODO: don't move to a string
+            this.lore = lore.stream().map(inp -> LegacyComponentSerializer.legacySection().serialize(inp)).toList();
+        }
+
+        @Deprecated(forRemoval = true)
+        public void setLore(List<String> lore) {
+            this.lore = lore;
         }
 
     }

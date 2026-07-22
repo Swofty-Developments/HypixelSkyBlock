@@ -1,15 +1,19 @@
 items:
   - id: KAT_BOUQUET
     material: rose_bush
-    rarity: COMMON
+    rarity: SPECIAL
     components:
       - id: KAT
         reduced_days: 5
       - id: ENCHANTED
+      - id: SELLABLE
+        value: 1.0
   - id: KAT_FLOWER
     material: poppy
-    rarity: COMMON
+    rarity: SPECIAL
     components:
       - id: KAT
         reduced_days: 1
       - id: ENCHANTED
+      - id: SELLABLE
+        value: 1.0

@@ -58,3 +58,11 @@ include(":service.punishment")
 include(":service.elections")
 include(":service.guild")
 include(":anticheat")
+include(":clientmod")
+
+pluginManagement {
+    repositories {
+        maven("https://maven.fabricmc.net/")
+        gradlePluginPortal()
+    }
+}

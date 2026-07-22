@@ -1,16 +1,17 @@
 items:
   - id: AUTO_RECOMBOBULATOR
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: ACCESSORY
       - id: SKULL_HEAD
         texture: 5dff8dbbab15bfbb11e23b1f50b34ef548ad9832c0bd7f5a13791adad0057e1b
-
+      - id: SELLABLE
+        value: 1000.0
   - id: CATACOMBS_EXPERT_RING
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: ACCESSORY
       - id: SKULL_HEAD
-        texture: c078c68f6f9669370ea39be72945a3a8688e0e024e5d6158fd854fb2b80fb
+        texture: dfcc213d3369b5570edd3549d22277fc496bfce539d19f7583d6d64bb1649cb3

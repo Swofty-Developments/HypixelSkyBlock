@@ -8,9 +8,9 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.GUIMinion;
-import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionSkinComponent;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
@@ -92,7 +92,7 @@ public class MinionSkinExtension extends MinionExtension {
                             "§7here to change the appearance of",
                             "§7your minion.",
                             " ",
-                            "§7Current Skin: " + getItemTypePassedIn().rarity.getColor() + getItemTypePassedIn().getDisplayName(),
+                            "§7Current Skin: " + getItemTypePassedIn().rarity.getLegacyColor() + getItemTypePassedIn().getDisplayName(),
                             " ",
                             "§eClick to remove."
                     ).toList());

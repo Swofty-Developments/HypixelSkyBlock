@@ -19,7 +19,6 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.swofty.commons.StringUtility;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.PlayerShopData;
@@ -30,12 +29,7 @@ import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointBoolean;
-import net.swofty.type.generic.data.datapoints.DatapointDouble;
-import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.data.datapoints.DatapointLong;
-import net.swofty.type.generic.data.datapoints.DatapointRank;
-import net.swofty.type.generic.data.datapoints.DatapointString;
+import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -73,11 +67,7 @@ import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -197,8 +187,12 @@ public class SkyBlockPlayer extends HypixelPlayer {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.COLLECTION, DatapointCollection.class).getValue();
     }
 
+    public DatapointHunting.HuntingData getHuntingData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.HUNTING, DatapointHunting.class).getValue();
+    }
+
     public DatapointSkills.PlayerSkills getSkills() {
-        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKILLS, DatapointSkills.class).getValue();
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SKILLS, DatapointSkills.class).getValue().attach(this);
     }
 
     public boolean isOnIsland() {
@@ -395,6 +389,16 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public boolean isCoop() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue();
+    }
+
+    public ProfileMode getProfileMode() {
+        return ProfileMode.fromStored(getSkyblockDataHandler()
+                .get(SkyBlockDataHandler.Data.PROFILE_MODE, net.swofty.type.generic.data.datapoints.DatapointString.class)
+                .getValue());
+    }
+
+    public boolean isIronman() {
+        return getProfileMode() == ProfileMode.IRONMAN;
     }
 
     public CoopDatabase.Coop getCoop() {
@@ -752,7 +756,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         Map.Entry<ItemType, Integer> entry = CustomCollectionAward.AWARD_CACHE.get(award);
         if (entry == null) return false;
 
-        return getCollection().get(entry.getKey()) > entry.getValue();
+        return getCollection().get(entry.getKey()) >= entry.getValue();
     }
 
     public boolean hasCustomLevelAward(CustomLevelAward award) {

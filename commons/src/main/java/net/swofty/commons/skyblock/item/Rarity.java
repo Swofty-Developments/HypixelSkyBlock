@@ -2,27 +2,33 @@ package net.swofty.commons.skyblock.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 @Getter
 @AllArgsConstructor
 public enum Rarity {
-    COMMON("§f"),
-    UNCOMMON("§a"),
-    RARE("§9"),
-    EPIC("§5"),
-    LEGENDARY("§6"),
-    MYTHIC("§d"),
-    DIVINE("§b"),
-    SPECIAL("§c", false),
-    VERY_SPECIAL("§c", false),
-    ADMIN("§4", false),
+    COMMON(NamedTextColor.WHITE, "hypixel_skyblock:common"),
+    UNCOMMON(NamedTextColor.GREEN, "hypixel_skyblock:uncommon"),
+    RARE(NamedTextColor.BLUE, "hypixel_skyblock:rare"),
+    EPIC(NamedTextColor.DARK_PURPLE, "hypixel_skyblock:epic"),
+    LEGENDARY(NamedTextColor.GOLD, "hypixel_skyblock:legendary"),
+    MYTHIC(NamedTextColor.LIGHT_PURPLE, "hypixel_skyblock:mythic"),
+    DIVINE(NamedTextColor.AQUA, "hypixel_skyblock:divine"),
+    SPECIAL(NamedTextColor.RED, "hypixel_skyblock:special", false),
+    VERY_SPECIAL(NamedTextColor.RED, "hypixel_skyblock:very_special", false),
+    ADMIN(NamedTextColor.DARK_RED, "hypixel_skyblock:admin", false),
     ;
 
-    private final String color;
-    private final boolean reforgable;
+    private final TextColor color;
+    private final String tooltipStyle;
+    private final boolean canReforge;
 
-    Rarity(String color) {
-        this(color, true);
+    Rarity(TextColor color, String tooltipStyle) {
+        this(color, tooltipStyle, true);
     }
 
     public Rarity upgrade() {
@@ -39,16 +45,22 @@ public enum Rarity {
         return ordinal() >= rarity.ordinal();
     }
 
-    public String getDisplay() {
-        return color + "§l" + name().replaceAll("_", " ");
+    public Component getDisplay() {
+        return Component.text(name().replace("_", " "), color, TextDecoration.BOLD);
     }
 
-    public String getDisplayCapitalized() {
-        return name().charAt(0) + name().toLowerCase().replaceAll("_", " ").substring(1);
+    public Component getDisplayCapitalized() {
+        return Component.text(name().charAt(0) + name().toLowerCase().replace("_", " ").substring(1), color, TextDecoration.BOLD);
     }
 
-    public String getBoldedColor() {
-        return color + "§l";
+    @Deprecated(forRemoval = true)
+    public String getLegacyColor() {
+        return LegacyComponentSerializer.legacySection().serialize(Component.text("|", color)).replace("|", "");
+    }
+
+    @Deprecated(forRemoval = true)
+    public String getLegacyDisplay() {
+        return LegacyComponentSerializer.legacySection().serialize(getDisplay());
     }
 
     public static Rarity getRarity(String string) {

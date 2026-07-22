@@ -11,7 +11,8 @@ items:
       - id: SKULL_HEAD
         texture: b83adf648d4e97de3b928a4e82d1169c1978d71e18757cbaee36627b9b0d3f2e
       - id: NOT_FINISHED_YET
-
+      - id: SELLABLE
+        value: 0.0
   - id: GREAT_SPOOK_RING
     material: PLAYER_HEAD
     rarity: UNCOMMON
@@ -24,7 +25,8 @@ items:
       - id: SKULL_HEAD
         texture: 8566b0b75f9a173e8155007bdc3a3499874b17327d98645cde6d11a2255750c
       - id: NOT_FINISHED_YET
-
+      - id: SELLABLE
+        value: 0.0
   - id: GREAT_SPOOK_ARTIFACT
     material: PLAYER_HEAD
     rarity: RARE
@@ -37,3 +39,5 @@ items:
       - id: SKULL_HEAD
         texture: a89cc1ede755709debb7d1fe7ab8129ac8901788d8d8613b03eac157c23cc49c
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 0.0

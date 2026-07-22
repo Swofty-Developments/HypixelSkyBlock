@@ -31,19 +31,26 @@ import java.util.Map;
 
 public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI {
     private final ItemType itemType;
+    private final boolean specialBazaar;
     private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
     private BazaarConnector.BazaarStatistics currentStats;
 
     public GUIBazaarItem(ItemType itemType) {
+        this(itemType, false);
+    }
+
+    public GUIBazaarItem(ItemType itemType, boolean specialBazaar) {
         super(I18n.t("gui_bazaar.item.title", Component.text(BazaarCategories.getFromItem(itemType).getValue().displayName), Component.text(itemType.getDisplayName())), InventoryType.CHEST_4_ROW);
         this.itemType = itemType;
+        this.specialBazaar = specialBazaar;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
         Map.Entry<BazaarCategories, BazaarItemSet> bazaarCategory = BazaarCategories.getFromItem(itemType);
-        set(GUIClickableItem.getGoBackItem(30, new GUIBazaarItemSet(bazaarCategory.getKey(), bazaarCategory.getValue())));
+        set(GUIClickableItem.getGoBackItem(30, specialBazaar
+                ? new GUISpecialBazaar() : new GUIBazaarItemSet(bazaarCategory.getKey(), bazaarCategory.getValue())));
 
-        set(new GUIClickableItem(32) {
+        if (!specialBazaar) set(new GUIClickableItem(32) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -58,7 +65,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
             }
         });
 
-        set(new GUIClickableItem(31) {
+        if (!specialBazaar) set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
@@ -85,6 +92,10 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
+        if (player.isIronman() && itemType != ItemType.BOOSTER_COOKIE) {
+            new GUISpecialBazaar().open(player);
+            return;
+        }
         player.getBazaarConnector().getItemStatistics(itemType)
                 .thenAccept(stats -> {
                     this.currentStats = stats;
@@ -150,6 +161,11 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
                 return ItemStackCreator.getStack(I18n.string("gui_bazaar.item.buy_instantly", l), Material.GOLDEN_HORSE_ARMOR, 1, lore);
             }
         });
+
+        if (specialBazaar) {
+            updateItemStacks(getInventory(), getPlayer());
+            return;
+        }
 
         set(new GUIClickableItem(11) {
             @Override

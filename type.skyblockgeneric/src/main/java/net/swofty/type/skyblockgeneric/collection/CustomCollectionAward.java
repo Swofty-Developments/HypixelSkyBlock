@@ -69,6 +69,10 @@ public enum CustomCollectionAward {
     SACK_OF_SACKS_UPGRADE_3("§aGreater Sack of Sacks Upgrade §7(+3 slots)"),
     SACK_OF_SACKS_UPGRADE_4("§aGiant Sack of Sacks Upgrade §7(+3 slots)"),
     SACK_OF_SACKS_UPGRADE_5("§aMassive Sack of Sacks Upgrade §7(+3 slots)"),
+
+    // FORAGING LEVEL CAP
+    FIG_FORAGING_LEVEL_CAP("§aForaging Level Cap §7(+1)"),
+    MANGROVE_FORAGING_LEVEL_CAP("§aForaging Level Cap §7(+1)"),
     ;
 
     public static final Map<CustomCollectionAward, Map.Entry<ItemType, Integer>> AWARD_CACHE = new HashMap<>();

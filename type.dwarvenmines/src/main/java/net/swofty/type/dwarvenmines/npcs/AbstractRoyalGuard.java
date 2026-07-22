@@ -3,14 +3,13 @@ package net.swofty.type.dwarvenmines.npcs;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
-
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import org.jspecify.annotations.NonNull;
 
 public class AbstractRoyalGuard extends HypixelNPC {
 
@@ -37,7 +36,7 @@ public class AbstractRoyalGuard extends HypixelNPC {
 			}
 
 			@Override
-			public @NonNull String chatName() {
+			public @NonNull String chatName(HypixelPlayer player) {
 				return "§6Royal Guard";
 			}
 

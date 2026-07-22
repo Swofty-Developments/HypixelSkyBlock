@@ -38,7 +38,7 @@ public abstract class AbstractEmissary extends HypixelNPC {
 			}
 
 			@Override
-			public @NonNull String chatName() {
+			public @NonNull String chatName(HypixelPlayer player) {
 				return "§6" + name;
 			}
 		});

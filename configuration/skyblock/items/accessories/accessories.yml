@@ -1,12 +1,11 @@
 items:
   - id: BITS_TALISMAN
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 2ebadb1725aa85bb2810d0b73bf7cd74db3d9d8fc61c4cf9e543dbcc199187cc
       - id: TALISMAN
-
   - id: FARMING_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
@@ -14,7 +13,7 @@ items:
       speed: 10.0
     components:
       - id: SKULL_HEAD
-        texture: 9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc
+        texture: ad7a30c82dba9f5a7befd6abc16089e29256e52e06f2a85f2461acd7a557c14a
       - id: TALISMAN
       - id: DEFAULT_CRAFTABLE
         default-craftable: false
@@ -35,23 +34,26 @@ items:
             result:
               type: FARMING_TALISMAN
               amount: 1
-
+      - id: SELLABLE
+        value: 25.0
   - id: FIRE_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
     components:
       - id: SKULL_HEAD
-        texture: 9af328c87b068509aca9834eface197705fe5d4f0871731b7b21cd99b9fddc
+        texture: 2f6c7aa31556a12080cc36e8a28d113221eef8f738dc4756529b5b328e82981a
       - id: TALISMAN
-
+      - id: SELLABLE
+        value: 6480.0
   - id: LAVA_TALISMAN
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
-        texture: c078f3f24b1760f9d4abb0851eb8f6c7dfff8855708e6049d15dc02042ba8436
+        texture: e47dcba7379cb3d53530d318bb40b621271a22df3ba59aeb424a06517c1b7eaa
       - id: TALISMAN
-
+      - id: SELLABLE
+        value: 5800.0
   - id: MINE_AFFINITY_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
@@ -61,7 +63,6 @@ items:
       - id: SKULL_HEAD
         texture: d9563fdc4acab6db324b21bc43b238fe465e530a6327e7eef11d2d0c4ea
       - id: TALISMAN
-
   - id: POTATO_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
@@ -71,7 +72,6 @@ items:
       - id: SKULL_HEAD
         texture: 318476e3cf0d5fc8ab1761065cf0e372b11004ed4c97156396e17c869b4aa389
       - id: TALISMAN
-
   - id: VILLAGE_AFFINITY_TALISMAN
     material: PLAYER_HEAD
     rarity: COMMON
@@ -81,19 +81,35 @@ items:
       - id: SKULL_HEAD
         texture: 9c11d6c79b8a1f18902d783cdda4bdfb9d47337b73791028a126a6e6cf101def
       - id: TALISMAN
-
   - id: SKELETON_TALISMAN
     rarity: COMMON
     material: SKELETON_SKULL
+    components:
+      - id: SELLABLE
+        value: 50.0
   - id: BLUE_RING
-    rarity: UNCOMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 25000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/blue_ring
   - id: ARCHFIEND_DICE
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: 8ff7c410a4a8b4b518b94d21402d2892fcc8fa68c3028417dd4eaa8b7e35c568
   - id: HIGH_CLASS_ARCHFIEND_DICE
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: 8ff7c410a4a8b4b518b94d21402d2892fcc8fa68c3028417dd4eaa8b7e35c568
   - id: SINFUL_DICE
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: c32ded1b5bd7e0a52050aa6eca4658fd8bb9d48c3bc50a00994643b128a23de3

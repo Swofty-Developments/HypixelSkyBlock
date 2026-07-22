@@ -1,7 +1,7 @@
 items:
   - id: SMALL_BACKPACK
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: BACKPACK
         rows: 1
@@ -25,10 +25,11 @@ items:
             result:
               type: SMALL_BACKPACK
               amount: 1
-
+      - id: SKULL_HEAD
+        texture: 21d837ca222cbc0bc12426f5da018c3a931b406008800960a9df112a596e7d62
   - id: MEDIUM_BACKPACK
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: BACKPACK
         rows: 2
@@ -52,10 +53,11 @@ items:
             result:
               type: MEDIUM_BACKPACK
               amount: 1
-
+      - id: SKULL_HEAD
+        texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
   - id: LARGE_BACKPACK
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: BACKPACK
         rows: 3
@@ -79,10 +81,11 @@ items:
             result:
               type: LARGE_BACKPACK
               amount: 1
-
+      - id: SKULL_HEAD
+        texture: 4d05baa5ddaa70bf452f53544711ca5116b8abbd6218b9e1aed94b1e6b094022
   - id: GREATER_BACKPACK
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: BACKPACK
         rows: 4
@@ -106,10 +109,11 @@ items:
             result:
               type: GREATER_BACKPACK
               amount: 1
-
+      - id: SKULL_HEAD
+        texture: 8ae187145ee732e7c00905a9c16ed1e43ba88d5624a6f4af829f10453fcc9165
   - id: JUMBO_BACKPACK
     material: player_head
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: BACKPACK
         rows: 5
@@ -126,3 +130,5 @@ items:
                 amount: 1
               - type: JUMBO_BACKPACK_UPGRADE
                 amount: 1
+      - id: SKULL_HEAD
+        texture: 21d837ca222cbc0bc12426f5da018c3a931b406008800960a9df112a596e7d62

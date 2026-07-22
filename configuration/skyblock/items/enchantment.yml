@@ -9,13 +9,12 @@ items:
         handler_id: ENCHANTED_BOOK
       - id: TRACKED_UNIQUE
       - id: ENCHANTED
-
   - id: HOT_POTATO_BOOK
     material: book
     rarity: EPIC
     lore:
-      - "§7This item can be applied to an item up to"
-      - "§a10 §7times!"
+      - "\xA77This item can be applied to an item up to"
+      - "\xA7a10 \xA77times!"
     components:
       - id: ANVIL_COMBINABLE
         handler_id: HOT_POTATO_BOOK
@@ -44,14 +43,13 @@ items:
             result:
               type: HOT_POTATO_BOOK
               amount: 1
-
   - id: FUMING_POTATO_BOOK
     material: book
     rarity: EPIC
     lore:
-      - "§7This book bypasses the §5 Hot Potato"
-      - "§5Book §7 limit of §a10§7, allowing you to"
-      - "§7upgrade an item up to §a15§7 times!"
+      - "\xA77This book bypasses the \xA75 Hot Potato"
+      - "\xA75Book \xA77 limit of \xA7a10\xA77, allowing you to"
+      - "\xA77upgrade an item up to \xA7a15\xA77 times!"
     components:
       - id: ANVIL_COMBINABLE
         handler_id: HOT_POTATO_BOOK
@@ -61,3 +59,5 @@ items:
       - id: TRACKED_UNIQUE
       - id: ENCHANTED
       - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: minecraft:written_book

@@ -15,11 +15,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -167,6 +163,20 @@ public class ItemStackCreator {
 
 		return clearAttributes(builder.set(DataComponents.LORE, copiedLore.stream()
 						.map(line -> Component.text(line).decoration(TextDecoration.ITALIC, false))
+						.collect(Collectors.toList()))
+				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
+	}
+
+	/**
+	 * Updates the lore of the given {@link ItemStack.Builder} with the specified lore lines.
+	 *
+	 * @param builder the {@link ItemStack.Builder} to update
+	 * @param lore    the new lore lines to set
+	 * @return the updated {@link ItemStack.Builder}
+	 */
+	public static ItemStack.Builder updateComponentLore(ItemStack.Builder builder, List<Component> lore) {
+		return clearAttributes(builder.set(DataComponents.LORE, lore.stream()
+						.map(line -> line.decoration(TextDecoration.ITALIC, false))
 						.collect(Collectors.toList()))
 				.set(DataComponents.TOOLTIP_DISPLAY, DEFAULT_TOOLTIP_DISPLAY));
 	}

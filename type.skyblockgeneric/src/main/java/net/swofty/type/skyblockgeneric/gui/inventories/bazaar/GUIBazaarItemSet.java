@@ -146,7 +146,7 @@ public class GUIBazaarItemSet extends HypixelInventoryGUI implements RefreshingG
                                 lore.add(I18n.string("gui_bazaar.item_set.click_to_view", l));
 
                                 return getStack(
-                                        itemType.rarity.getColor() + itemType.getDisplayName(),
+                                        itemType.rarity.getLegacyColor() + itemType.getDisplayName(),
                                         itemType.material, 1, lore);
                             }
                         });

@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.item.components;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.particle.Particle;
 import net.swofty.commons.ChatColor;
 import net.swofty.commons.StringUtility;
@@ -75,7 +76,7 @@ public class PetComponent extends SkyBlockItemComponent {
 
         petData.addPet(item);
         player.setItemInHand(null);
-        player.sendMessage("§aSuccessfully added " + rarity.getColor() + item.getDisplayName() + " §ato your pet menu!");
+        player.sendMessage(Component.text("§aSuccessfully added ").append(Component.text(item.getDisplayName(), rarity.getColor()).append(Component.text(" §ato your pet menu!"))));
         player.playSound(Sound.sound()
                 .type(Key.key("minecraft", "entity.experience_orb.pickup"))
                 .volume(1f)
@@ -132,7 +133,7 @@ public class PetComponent extends SkyBlockItemComponent {
         }
 
         lore.add(" ");
-        lore.add(rarity.getBoldedColor() + rarity.getDisplay());
+        lore.add(rarity.getLegacyDisplay());
 
         return lore;
     }

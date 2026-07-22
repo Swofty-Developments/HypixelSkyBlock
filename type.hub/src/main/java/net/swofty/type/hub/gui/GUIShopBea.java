@@ -1,5 +1,7 @@
 package net.swofty.type.hub.gui;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
@@ -54,12 +56,12 @@ public class GUIShopBea extends ShopView {
         petData.setLevel(100, rarity);
         beeDisplayItem.getAttributeHandler().setPetData(petData);
 
-        ArrayList<String> lore = new ArrayList<>(beeDisplayItem.getLore());
-        lore.add(" ");
-        lore.add("§cThis is a preview of Lvl 100");
-        lore.add("§cNew pets are lowest level!");
+        ArrayList<Component> lore = new ArrayList<>(beeDisplayItem.getLoreComponent());
+        lore.add(Component.space());
+        lore.add(Component.text("This is a preview of Lvl 100", NamedTextColor.RED));
+        lore.add(Component.text("New pets are lowest level!", NamedTextColor.RED));
 
-        bee.setLore(lore);
+        bee.setComponentLore(lore);
         bee.setDisplayName(beeDisplayItem.getDisplayName());
         attachItem(bee);
     }

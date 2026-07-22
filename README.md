@@ -67,4 +67,4 @@ Thanks to the Minestom community and all [contributors](https://github.com/Swoft
 
 ## License
 
-See repository for license details.
+See the repository for license details.

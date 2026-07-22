@@ -62,7 +62,7 @@ items:
               type: STONE_PICKAXE
               amount: 1
       - id: SELLABLE
-        value: 1.0
+        value: 2.0
   - id: IRON_PICKAXE
     material: iron_pickaxe
     rarity: COMMON
@@ -129,7 +129,7 @@ items:
         value: 6.0
   - id: DIAMOND_PICKAXE
     material: diamond_pickaxe
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       mining_speed: 230.0
       breaking_power: 4.0

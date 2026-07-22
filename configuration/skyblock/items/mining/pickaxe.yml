@@ -13,3 +13,5 @@ items:
       - id: PICKAXE
       - id: SELLABLE
         value: 10.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/promising_pickaxe

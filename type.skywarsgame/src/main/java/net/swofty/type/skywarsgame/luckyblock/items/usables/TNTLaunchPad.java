@@ -87,7 +87,7 @@ public class TNTLaunchPad implements LuckyBlockConsumable {
                 tntMeta.setFuseTime(FUSE_TICKS);
             }
 
-            Vec toCenter = Vec.fromPoint(playerPos.sub(tntPos)).normalize();
+            Vec toCenter = playerPos.sub(tntPos).asVec().normalize();
             tnt.setVelocity(toCenter.mul(5).add(0, 5, 0));
         }
 

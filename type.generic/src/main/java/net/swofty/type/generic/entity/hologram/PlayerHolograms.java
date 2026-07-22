@@ -145,6 +145,7 @@ public enum PlayerHolograms {
         List<HologramEntity> entities = externalPlayerHolograms.get(hologram);
         if (entities == null) return;
 
+        hologram.pos = newPosition;
         double spacing = hologram.getSpacing();
         double startY = hologram.text.length * spacing - spacing;
         for (int i = 0; i < entities.size(); i++) {
@@ -185,6 +186,8 @@ public enum PlayerHolograms {
             );
             entities.add(entity);
         }
+
+        hologram.text = newText;
 
         // Remove excess lines if needed
         while (entities.size() > newText.length) {
@@ -272,8 +275,8 @@ public enum PlayerHolograms {
     @Getter
     public static class ExternalPlayerHologram {
         private final HypixelPlayer player;
-        private final Pos pos;
-        private final String[] text;
+        private Pos pos;
+        private String[] text;
         private final Instance instance;
         private final Function<HypixelPlayer, String[]> displayFunction;
         @Builder.Default

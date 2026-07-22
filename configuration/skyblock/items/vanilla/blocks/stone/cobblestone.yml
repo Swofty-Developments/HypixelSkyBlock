@@ -9,7 +9,6 @@ items:
       - id: SKILLABLE_MINE
         category: MINING
         mining_value: 1.0
-
   - id: COBBLESTONE_SLAB
     material: COBBLESTONE_SLAB
     rarity: COMMON
@@ -30,14 +29,13 @@ items:
             result:
               type: COBBLESTONE_SLAB
               amount: 6
-
   - id: COBBLESTONE_STAIRS
     material: COBBLESTONE_STAIRS
     rarity: COMMON
     components:
       - id: PLACEABLE
       - id: SELLABLE
-        value: 0.5
+        value: 1.0
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -53,7 +51,6 @@ items:
             result:
               type: COBBLESTONE_STAIRS
               amount: 4
-
   - id: COBBLESTONE_WALL
     material: COBBLESTONE_WALL
     rarity: COMMON

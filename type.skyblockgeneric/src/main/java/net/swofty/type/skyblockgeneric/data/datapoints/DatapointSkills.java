@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.data.datapoints;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -8,6 +7,7 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.event.custom.SkillUpdateEvent;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
@@ -79,10 +79,20 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
     }
 
     @Getter
-    @AllArgsConstructor
     public static class PlayerSkills {
         private HashMap<SkillCategories, Double> skills;
         private ItemStatistics skillStatistics = ItemStatistics.empty();
+        private transient SkyBlockPlayer attachedPlayer;
+
+        public PlayerSkills(HashMap<SkillCategories, Double> skills, ItemStatistics skillStatistics) {
+            this.skills = skills;
+            this.skillStatistics = skillStatistics;
+        }
+
+        public PlayerSkills attach(SkyBlockPlayer player) {
+            this.attachedPlayer = player;
+            return this;
+        }
 
         /**
          * Gets the raw experience value for the specified skill category.
@@ -104,7 +114,7 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
         public Double getCumulative(SkillCategories category) {
             // Minus the requirements of all previous levels
             SkillCategory skillCategory = category.asCategory();
-            int level = skillCategory.getLevel(getRaw(category));
+            int level = getCurrentLevel(category);
             double cumulative = 0.0;
 
             for (int i = 1; i <= level; i++) {
@@ -180,8 +190,22 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
          */
         public Integer getCurrentLevel(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
+            return Math.min(skillCategory.getLevel(getRaw(category)), getUnlockedLevelCap(category));
+        }
 
-            return skillCategory.getLevel(getRaw(category));
+        public int getLevelAt(SkillCategories category, double rawExperience) {
+            return Math.min(category.asCategory().getLevel(rawExperience), getUnlockedLevelCap(category));
+        }
+
+        private int getUnlockedLevelCap(SkillCategories category) {
+            if (category != SkillCategories.FORAGING || attachedPlayer == null) {
+                return category.asCategory().getHighestLevel();
+            }
+
+            int cap = 50;
+            if (attachedPlayer.hasCustomCollectionAward(CustomCollectionAward.FIG_FORAGING_LEVEL_CAP)) cap++;
+            if (attachedPlayer.hasCustomCollectionAward(CustomCollectionAward.MANGROVE_FORAGING_LEVEL_CAP)) cap++;
+            return Math.min(cap, category.asCategory().getHighestLevel());
         }
 
         /**
@@ -194,9 +218,9 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
         public Integer getNextLevel(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
-            int level = skillCategory.getLevel(getRaw(category));
+            int level = getCurrentLevel(category);
 
-            if (level == skillCategory.getHighestLevel()) {
+            if (level >= getUnlockedLevelCap(category)) {
                 return null;
             }
 
@@ -213,7 +237,7 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
         public String getPercentage(SkillCategories category) {
             SkillCategory skillCategory = category.asCategory();
 
-            int level = skillCategory.getLevel(getRaw(category));
+            int level = getCurrentLevel(category);
             int nextLevel = level + 1;
 
             if (nextLevel > skillCategory.getHighestLevel()) {

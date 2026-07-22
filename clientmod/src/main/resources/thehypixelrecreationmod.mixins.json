@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "gg.itzkatze.thehypixelrecreationmod.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "AbstractContainerScreenMixin",
+    "ClientPacketListenerMixin",
+    "HandledScreenAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

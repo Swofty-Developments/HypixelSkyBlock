@@ -13,21 +13,19 @@ import net.minestom.server.coordinate.CoordConversion;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.Chunk;
-import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
 import net.minestom.server.world.biome.Biome;
-import net.swofty.commons.CustomWorlds;
-import net.swofty.commons.Songs;
-import net.swofty.commons.StringUtility;
-import net.swofty.commons.YamlFileUtils;
+import net.swofty.commons.*;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.skyblock.item.reforge.ReforgeLoader;
+import net.swofty.proxyapi.PlayerTransferDataCache;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -40,8 +38,9 @@ import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
+import net.swofty.type.generic.resourcepack.ResourcePackManager;
 import net.swofty.type.generic.user.categories.CustomGroups;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.user.flow.GenericPlayerDataFlow;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
@@ -52,17 +51,14 @@ import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.CrystalDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.FairySoulDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
-import net.swofty.type.skyblockgeneric.data.monogdb.RegionDatabase;
+import net.swofty.type.skyblockgeneric.data.monogdb.*;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.fishing.registry.FishingRegistry;
+import net.swofty.type.skyblockgeneric.hunting.HuntrapService;
 import net.swofty.type.skyblockgeneric.item.ItemConfigParser;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
@@ -74,7 +70,6 @@ import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredPassiveAb
 import net.swofty.type.skyblockgeneric.item.set.impl.SetRepeatable;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.levels.CustomLevelAward;
-import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
 import net.swofty.type.skyblockgeneric.levels.unlocks.CustomLevelUnlock;
@@ -86,14 +81,17 @@ import net.swofty.type.skyblockgeneric.noteblock.SkyBlockSongsHandler;
 import net.swofty.type.skyblockgeneric.region.SkyBlockBiomeConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegenConfiguration;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.skyblockgeneric.resourcepack.SkyblockPack;
 import net.swofty.type.skyblockgeneric.server.attribute.SkyBlockServerAttributes;
 import net.swofty.type.skyblockgeneric.server.eventcaller.CustomEventCaller;
-import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
+import net.swofty.type.skyblockgeneric.slayer.SlayerRegistry;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
+import net.swofty.type.skyblockgeneric.user.flow.SkyBlockPlayerDataFlow;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.user.statistics.TemporaryStatistic;
 import net.swofty.type.skyblockgeneric.utility.LaunchPads;
@@ -104,16 +102,7 @@ import org.tinylog.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -150,6 +139,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Register items
          */
         ItemAttribute.registerItemAttributes();
+        HuntrapService.initialize();
         PlayerItemUpdater.updateLoop(MinecraftServer.getSchedulerManager());
         File configDir = new File("./configuration/skyblock");
         File itemsDir = new File(configDir, "items");
@@ -208,15 +198,12 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
             HypixelGenericLoader.LAST_TICK.set(event.getTickMonitor()));
-        BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
-        benchmarkManager.enable(Duration.ofDays(3));
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             Collection<SkyBlockPlayer> players = getLoadedPlayers();
             if (players.isEmpty())
                 return;
 
-            long ramUsage = benchmarkManager.getUsedMemory();
-            ramUsage /= (long) 1e6; // bytes to MB
+            long ramUsage = (long) ServerMemory.getUsed();
             TickMonitor tickMonitor = HypixelGenericLoader.LAST_TICK.get();
             double TPS = 1000 / tickMonitor.getTickTime();
 
@@ -285,6 +272,25 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Start data loop
          */
         SkyBlockDataHandler.startRepeatSetValueLoop();
+
+        ProxyPlayer.setTransferPreparation((playerUuid, targetServer) -> CompletableFuture.supplyAsync(() -> {
+            SkyBlockPlayer player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(playerUuid) instanceof SkyBlockPlayer skyBlockPlayer
+                    ? skyBlockPlayer : null;
+            if (player == null) return null;
+
+            String profileDocument = SkyBlockPlayerDataFlow.saveForTransfer(player);
+            String accountDocument = GenericPlayerDataFlow.saveForTransfer(player);
+            return new org.json.JSONObject()
+                    .put("account_document", PlayerTransferDataCache.encodeDocument(accountDocument))
+                    .put("profile_document", PlayerTransferDataCache.encodeDocument(profileDocument))
+                    .toString();
+        }));
+
+        // Setup Resource Pack
+        SkyblockPack skyblockPack = SkyblockPack.fromConfig();
+        ResourcePackManager packManager = new ResourcePackManager(skyblockPack);
+        HypixelConst.setResourcePackManager(packManager);
+        packManager.initialize();
 
         /**
          * Attempt to start the song service

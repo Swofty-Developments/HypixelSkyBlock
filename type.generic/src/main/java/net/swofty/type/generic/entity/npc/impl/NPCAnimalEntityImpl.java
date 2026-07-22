@@ -2,31 +2,26 @@ package net.swofty.type.generic.entity.npc.impl;
 
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.*;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.generic.entity.npc.NPCMovementController;
 import net.swofty.type.generic.entity.npc.configuration.AnimalConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
-public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
+public class NPCAnimalEntityImpl extends EntityCreature implements NPCViewable {
     private final List<HypixelPlayer> inRangeOf = Collections.synchronizedList(new ArrayList<>());
     private final HypixelPlayer viewer;
     private final PlayerHolograms.ExternalPlayerHologram holo;
     private final AnimalConfiguration config;
+    private final NPCMovementController movementController;
     private String[] holograms;
+    private Pos lastHologramPosition;
     private Entity seatMount;
 
     public NPCAnimalEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull EntityType entityType, @NotNull AnimalConfiguration config, String[] holograms) {
@@ -34,6 +29,9 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
 
         this.viewer = viewer;
         this.config = config;
+        this.movementController = new NPCMovementController(this);
+        this.holograms = holograms;
+        this.lastHologramPosition = pos;
 
         this.setCustomNameVisible(false);
         setNoGravity(true);
@@ -56,6 +54,7 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
 
     @Override
     public void remove() {
+        movementController.stop();
         super.remove();
         PlayerHolograms.removeExternalPlayerHologram(holo);
     }
@@ -74,9 +73,10 @@ public class NPCAnimalEntityImpl extends LivingEntity implements NPCViewable {
 
     @Override
     public void updateNPC() {
-        Pos npcPosition = config.position(viewer);
-        if (!getPosition().asVec().equals(npcPosition.asVec())) {
+        Pos npcPosition = getPosition();
+        if (!npcPosition.asVec().equals(lastHologramPosition.asVec())) {
             PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getBoundingBox().height() - 0.1f, 0));
+            lastHologramPosition = npcPosition;
         }
 
         if (!getPose().equals(config.pose(viewer))) {

@@ -30,15 +30,15 @@ public class IslandServerModule extends TablistModule {
         ).getValue();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.server_info", l)), TablistSkinRegistry.CYAN)
+                new TablistEntry(Component.text(getCentered(I18n.string("tablist.module.server_info", l))), TablistSkinRegistry.CYAN)
         ));
 
-        entries.add(new TablistEntry(I18n.string("tablist.server_info.area.private_island", l), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(I18n.string("tablist.server_info.server_label", l, Component.text(HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
-        entries.add(new TablistEntry(I18n.string("tablist.island.minions_label", l, Component.text(String.valueOf(minions.size())), Component.text(String.valueOf(data.getSlots()))), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.t("tablist.server_info.area.private_island"), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.t("tablist.server_info.server_label", Component.text(HypixelConst.getServerName())), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.t("tablist.island.minions_label", Component.text(String.valueOf(minions.size())), Component.text(String.valueOf(data.getSlots()))), TablistSkinRegistry.GRAY));
 
         entries.add(getGrayEntry());
-        entries.add(new TablistEntry(I18n.string("tablist.module.minions", l, Component.text(String.valueOf(minions.size()))), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.t("tablist.module.minions", Component.text(String.valueOf(minions.size()))), TablistSkinRegistry.GRAY));
 
         minions.forEach(minion -> {
             String content = " " + minion.getMinion().getDisplay().replace(" Minion", "");
@@ -53,7 +53,7 @@ public class IslandServerModule extends TablistModule {
                 default -> content = content + " " + I18n.string("tablist.island.minion_state.active", l);
             }
 
-            entries.add(new TablistEntry(content, TablistSkinRegistry.GRAY));
+            entries.add(new TablistEntry(Component.text(content), TablistSkinRegistry.GRAY));
         });
 
         fillRestWithGray(entries);

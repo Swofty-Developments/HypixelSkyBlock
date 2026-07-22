@@ -11,11 +11,7 @@ import net.hollowcube.polar.PolarReader;
 import net.hollowcube.polar.PolarWorld;
 import net.hollowcube.polar.PolarWorldAccess;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.nbt.BinaryTag;
-import net.kyori.adventure.nbt.BinaryTagIO;
-import net.kyori.adventure.nbt.BinaryTagTypes;
-import net.kyori.adventure.nbt.CompoundBinaryTag;
-import net.kyori.adventure.nbt.ListBinaryTag;
+import net.kyori.adventure.nbt.*;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
@@ -24,15 +20,16 @@ import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.biome.Biome;
 import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.ServerMemory;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.achievement.AchievementRegistry;
 import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.BannerBlockHandler;
@@ -41,12 +38,7 @@ import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.handlers.ArcadeDataHandler;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
-import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
-import net.swofty.type.generic.data.handlers.ReplayDataHandler;
-import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
+import net.swofty.type.generic.data.handlers.*;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.BedWarsStatsDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
@@ -60,6 +52,7 @@ import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.quest.QuestRegistry;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.generic.user.flow.GenericPlayerDataFlow;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -69,13 +62,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
@@ -180,15 +168,12 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         if (!isSkyBlockType && !(loader.getType() == ServerType.BEDWARS_GAME)) {
             MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
                     LAST_TICK.set(event.getTickMonitor()));
-            BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
-            benchmarkManager.enable(Duration.ofDays(3));
             MinecraftServer.getSchedulerManager().buildTask(() -> {
                 Collection<HypixelPlayer> players = getLoadedPlayers();
                 if (players.isEmpty())
                     return;
 
-                long ramUsage = benchmarkManager.getUsedMemory();
-                ramUsage /= (long) 1e6; // bytes to MB
+                long ramUsage = (long) ServerMemory.getUsed();
                 TickMonitor tickMonitor = LAST_TICK.get();
                 double TPS = 1000 / tickMonitor.getTickTime();
 
@@ -232,6 +217,16 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
         BedWarsStatsDatabase.connect(mongoClient);
+
+        ProxyPlayer.setTransferPreparation((playerUuid, targetServer) -> CompletableFuture.supplyAsync(() -> {
+            HypixelPlayer player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(playerUuid) instanceof HypixelPlayer hypixelPlayer
+                    ? hypixelPlayer : null;
+            if (player == null) return null;
+            return new org.json.JSONObject()
+                    .put("account_document", net.swofty.proxyapi.PlayerTransferDataCache.encodeDocument(
+                            GenericPlayerDataFlow.saveForTransfer(player)))
+                    .toString();
+        }));
 
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
         LeaderboardService.connect(ConfigProvider.settings().getRedisUri());

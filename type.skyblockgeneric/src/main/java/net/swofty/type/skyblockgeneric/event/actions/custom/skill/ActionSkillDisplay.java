@@ -19,6 +19,7 @@ public class ActionSkillDisplay implements HypixelEventClass {
         if (difference <= 0) return;
 
         int currentLevel = event.getPlayer().getSkills().getCurrentLevel(event.getSkillCategory());
+        if (currentLevel >= event.getSkillCategory().asCategory().getHighestLevel()) return;
         int currentRequirement = event.getSkillCategory().asCategory().getReward(currentLevel + 1).requirement();
 
         SkyBlockActionBar.getFor(event.getPlayer()).addReplacement(

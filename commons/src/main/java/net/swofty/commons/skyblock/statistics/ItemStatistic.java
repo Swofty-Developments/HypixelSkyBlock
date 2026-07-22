@@ -2,133 +2,138 @@ package net.swofty.commons.skyblock.statistics;
 
 import lombok.Getter;
 import lombok.NonNull;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.item.Material;
+import net.swofty.commons.skyblock.PackSprite;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
 public enum ItemStatistic {
     // Combat Stats
-    HEALTH("Health", "§a", "§c",
-            false, "❤", 100D, 1D),
-    DEFENSE("Defense", "§a", "§a", false, "❈"),
-    STRENGTH("Strength", "§c", "§c", false, "❁"),
-    INTELLIGENCE("Intelligence", "§a", "§b", false, "✎"),
-    CRITICAL_CHANCE("Crit Chance", "§c", "§9",
-            true, "☣", 30D, 1D),
-    CRITICAL_DAMAGE("Crit Damage", "§c", "§9",
-            true, "☠", 50D, 1D),
-    BONUS_ATTACK_SPEED("Bonus Attack Speed", "§c", "§e", true, "⚔", 100D),
-    ABILITY_DAMAGE("Ability Damage", "§c", "§c", true, "๑", 0D, 1D, null, false),
-    TRUE_DEFENSE("True Defense", "§a", "§f", false, "❂"),
-    FEROCITY("Ferocity", "§a", "§c", false, "⫽"),
-    HEALTH_REGENERATION("Health Regen", "§a", "§c",
-            false, "❣", 100D, 1D),
-    VITALITY("Vitality", "§a", "§4",
-            false, "♨", 100D, 1D),
-    MENDING("Mending", "§a", "§a", false, "☄",
+    HEALTH("Health", NamedTextColor.GREEN, NamedTextColor.RED,
+            false, PackSprite.STAT_HEALTH, 100D, 1D),
+    DEFENSE("Defense", NamedTextColor.GREEN, NamedTextColor.GREEN, false, PackSprite.STAT_DEFENSE),
+    STRENGTH("Strength", NamedTextColor.RED, NamedTextColor.RED, false, PackSprite.STAT_STRENGTH),
+    INTELLIGENCE("Intelligence", NamedTextColor.GREEN, NamedTextColor.AQUA, false, PackSprite.STAT_INTELLIGENCE),
+    CRITICAL_CHANCE("Crit Chance", NamedTextColor.RED, NamedTextColor.BLUE,
+            true, PackSprite.STAT_CRIT_CHANCE, 30D, 1D),
+    CRITICAL_DAMAGE("Crit Damage", NamedTextColor.RED, NamedTextColor.BLUE,
+            true, PackSprite.STAT_CRIT_DAMAGE, 50D, 1D),
+    BONUS_ATTACK_SPEED("Bonus Attack Speed", NamedTextColor.RED, NamedTextColor.YELLOW, true, PackSprite.STAT_ATTACK_SPEED, 100D),
+    ABILITY_DAMAGE("Ability Damage", NamedTextColor.RED, NamedTextColor.RED, true, PackSprite.STAT_ABILITY_DAMAGE, 0D, 1D, null, false),
+    TRUE_DEFENSE("True Defense", NamedTextColor.GREEN, NamedTextColor.WHITE, false, PackSprite.STAT_TRUE_DEFENSE),
+    FEROCITY("Ferocity", NamedTextColor.GREEN, NamedTextColor.RED, false, PackSprite.STAT_FEROCITY),
+    HEALTH_REGENERATION("Health Regen", NamedTextColor.GREEN, NamedTextColor.RED,
+            false, PackSprite.STAT_HEALTH_REGEN, 100D, 1D),
+    VITALITY("Vitality", NamedTextColor.GREEN, NamedTextColor.DARK_RED,
+            false, PackSprite.STAT_VITALITY, 100D, 1D),
+    MENDING("Mending", NamedTextColor.GREEN, NamedTextColor.GREEN, false, PackSprite.STAT_MENDING,
             100D, 1D),
-    SWING_RANGE("Swing Range", "§e", "§e", false, "Ⓢ", 3D, 1D, 15D),
+    SWING_RANGE("Swing Range", NamedTextColor.YELLOW, NamedTextColor.YELLOW, false, PackSprite.STAT_SWING_RANGE, 3D, 1D, 15D),
 
     // Gathering Stats
-    MINING_SPEED("Mining Speed", "§a", "§6", false, "⸕"),
-    MINING_FORTUNE("Mining Fortune", "§a", "§6", false, "☘"),
-    FARMING_FORTUNE("Farming Fortune", "§a", "§6", false, "☘"),
-    FORAGING_FORTUNE("Foraging Fortune", "§a", "§6", false, "☘"),
-    BREAKING_POWER("Breaking Power", "§a", "§2", false, "Ⓟ"),
-    PRISTINE("Pristine", "§a", "§5", false, "✧"),
-    MINING_SPREAD("Mining Spread", "§a", "§e", false, "▚", 10_000D),
-    GEMSTONE_SPREAD("Gemstone Spread", "§a", "§e", false, "▚"),
-    HUNTER_FORTUNE("Hunter Fortune", "§a", "§d", false, "☘"),
-    SWEEP("Sweep", "§a", "§2", false, "∮"),
+    MINING_SPEED("Mining Speed", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_MINING_SPEED),
+    MINING_FORTUNE("Mining Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_MINING_FORTUNE),
+    FARMING_FORTUNE("Farming Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    FORAGING_FORTUNE("Foraging Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FORAGING_FORTUNE),
+    BREAKING_POWER("Breaking Power", NamedTextColor.GREEN, NamedTextColor.DARK_GREEN, false, PackSprite.STAT_BREAKING_POWER),
+    PRISTINE("Pristine", NamedTextColor.GREEN, NamedTextColor.DARK_PURPLE, false, PackSprite.STAT_PRISTINE),
+    MINING_SPREAD("Mining Spread", NamedTextColor.GREEN, NamedTextColor.YELLOW, false, PackSprite.STAT_MINING_SPREAD, 10_000D),
+    GEMSTONE_SPREAD("Gemstone Spread", NamedTextColor.GREEN, NamedTextColor.YELLOW, false, PackSprite.STAT_GEMSTONE_SPREAD),
+    HUNTER_FORTUNE("Hunter Fortune", NamedTextColor.GREEN, NamedTextColor.LIGHT_PURPLE, false, PackSprite.STAT_HUNTER_FORTUNE),
+    SWEEP("Sweep", NamedTextColor.GREEN, NamedTextColor.DARK_GREEN, false, PackSprite.STAT_SWEEP),
 
     // Sub-Gathering Stats
-    ORE_FORTUNE("Ore Fortune", "§a", "§6", false, "☘"),
-    BLOCK_FORTUNE("Block Fortune", "§a", "§6", false, "☘"),
-    DWARVEN_METAL_FORTUNE("Dwarven Metal Fortune", "§a", "§6", false, "☘"),
-    GEMSTONE_FORTUNE("Gemstone Fortune", "§a", "§6", false, "☘"),
+    ORE_FORTUNE("Ore Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_ORE_FORTUNE),
+    BLOCK_FORTUNE("Block Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_BLOCK_FORTUNE),
+    DWARVEN_METAL_FORTUNE("Dwarven Metal Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_DWARVEN_METAL_FORTUNE),
+    GEMSTONE_FORTUNE("Gemstone Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_GEMSTONE_FORTUNE),
 
-    WHEAT_FORTUNE("Wheat Fortune", "§a", "§6", false, "☘"),
-    POTATO_FORTUNE("Potato Fortune", "§a", "§6", false, "☘"),
-    CARROT_FORTUNE("Carrot Fortune", "§a", "§6", false, "☘"),
-    PUMPKIN_FORTUNE("Pumpkin Fortune", "§a", "§6", false, "☘"),
-    MELON_FORTUNE("Melon Fortune", "§a", "§6", false, "☘"),
-    CACTUS_FORTUNE("Cactus Fortune", "§a", "§6", false, "☘"),
-    NETHER_WART_FORTUNE("Nether Wart Fortune", "§a", "§6", false, "☘"),
-    COCOA_BEANS_FORTUNE("Cocoa Beans Fortune", "§a", "§6", false, "☘"),
-    MUSHROOM_FORTUNE("Mushroom Fortune", "§a", "§6", false, "☘"),
-    SUGAR_CANE_FORTUNE("Sugar Cane Fortune", "§a", "§6", false, "☘"),
-    SUNFLOWER_FORTUNE("Sunflower Fortune", "§a", "§6", false, "☘"),
-    MOONFLOWER_FORTUNE("Moonflower Fortune", "§a", "§6", false, "☘"),
-    WILD_ROSE_FORTUNE("Wild Rose Fortune", "§a", "§6", false, "☘"),
+    WHEAT_FORTUNE("Wheat Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    POTATO_FORTUNE("Potato Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    CARROT_FORTUNE("Carrot Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    PUMPKIN_FORTUNE("Pumpkin Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    MELON_FORTUNE("Melon Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    CACTUS_FORTUNE("Cactus Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    NETHER_WART_FORTUNE("Nether Wart Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    COCOA_BEANS_FORTUNE("Cocoa Beans Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    MUSHROOM_FORTUNE("Mushroom Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    SUGAR_CANE_FORTUNE("Sugar Cane Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    SUNFLOWER_FORTUNE("Sunflower Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    MOONFLOWER_FORTUNE("Moonflower Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
+    WILD_ROSE_FORTUNE("Wild Rose Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FARMING_FORTUNE),
 
-    FIG_FORTUNE("Fig Fortune", "§a", "§6", false, "☘"),
-    MANGROVE_FORTUNE("Mangrove Fortune", "§a", "§6", false, "☘"),
+    FIG_FORTUNE("Fig Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FORAGING_FORTUNE),
+    MANGROVE_FORTUNE("Mangrove Fortune", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_FORAGING_FORTUNE),
 
     // Wisdom Stats
-    ALCHEMY_WISDOM("Alchemy Wisdom", "§a", "§3", false, "☯"),
-    CARPENTRY_WISDOM("Carpentry Wisdom", "§a", "§3", false, "☯"),
-    COMBAT_WISDOM("Combat Wisdom", "§a", "§3", false, "☯"),
-    ENCHANTING_WISDOM("Enchanting Wisdom", "§a", "§3", false, "☯"),
-    FARMING_WISDOM("Farming Wisdom", "§a", "§3", false, "☯"),
-    FISHING_WISDOM("Fishing Wisdom", "§a", "§3", false, "☯"),
-    FORAGING_WISDOM("Foraging Wisdom", "§a", "§3", false, "☯"),
-    MINING_WISDOM("Mining Wisdom", "§a", "§3", false, "☯"),
-    RUNE_CRAFTING_WISDOM("Runecrafting Wisdom", "§a", "§3", false, "☯"),
-    SOCIAL_WISDOM("Social Wisdom", "§a", "§3", false, "☯"),
-    TAMING_WISDOM("Taming Wisdom", "§a", "§3", false, "☯"),
-    HUNTING_WISDOM("Hunting Wisdom", "§a", "§3", false, "☯"),
+    ALCHEMY_WISDOM("Alchemy Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    CARPENTRY_WISDOM("Carpentry Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    COMBAT_WISDOM("Combat Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    ENCHANTING_WISDOM("Enchanting Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    FARMING_WISDOM("Farming Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    FISHING_WISDOM("Fishing Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    FORAGING_WISDOM("Foraging Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    MINING_WISDOM("Mining Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    RUNE_CRAFTING_WISDOM("Runecrafting Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    SOCIAL_WISDOM("Social Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    TAMING_WISDOM("Taming Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
+    HUNTING_WISDOM("Hunting Wisdom", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_WISDOM),
 
     // Misc Stats
-    SPEED("Speed", "§a", "§f", false, "✦", 100D, 1D, 400D),
-    MAGIC_FIND("Magic Find", "§a", "§b", false, "✯", 900D),
-    PET_LUCK("Pet Luck", "§a", "§d", false, "♣"),
-    SEA_CREATURE_CHANCE("Sea Creature Chance", "§c", "§9", true, "α", 2D, 1D),
-    FISHING_SPEED("Fishing Speed", "§a", "§b", false, "☂", 300D),
-    TREASURE_CHANCE("Treasure Chance", "§a", "§6", true, "⛃", 100D),
-    TROPHY_FISH_CHANCE("Trophy Fish Chance", "§a", "§6", true, "♔"),
-    DOUBLE_HOOK_CHANCE("Double Hook Chance", "§a", "§3", true, "⚓"),
-    BONUS_PEST_CHANCE("Bonus Pest Chance", "§a", "§2", true, "ൠ"),
-    OVERBLOOM("Overbloom", "§a", "§e", false, "☀"),
-    HEAT_RESISTANCE("Heat Resistance","§a","§c",false,"♨"),
-    COLD_RESISTANCE("Cold Resistance", "§a", "§b", false, "❄"),
-    FEAR("Fear","§a","§5",false,"☠"),
-    PULL("Pull","§a","§b",false,"ᛷ"),
-    RESPIRATION("Respiration","§a","§3",false,"⚶"),
-    PRESSURE_RESISTANCE("Pressure Resistance","§a","§9",false,"❍"),
-    TRACKING("Tracking", "§a", "§d", false, "❃"),
-    BREWER("Brewer", "§a", "§d", true, "☕"),
+    SPEED("Speed", NamedTextColor.GREEN, NamedTextColor.WHITE, false, PackSprite.STAT_SPEED, 100D, 1D, 400D),
+    MAGIC_FIND("Magic Find", NamedTextColor.GREEN, NamedTextColor.AQUA, false, PackSprite.STAT_MAGIC_FIND, 900D),
+    PET_LUCK("Pet Luck", NamedTextColor.GREEN, NamedTextColor.LIGHT_PURPLE, false, PackSprite.STAT_PET_LUCK),
+    SEA_CREATURE_CHANCE("Sea Creature Chance", NamedTextColor.RED, NamedTextColor.BLUE, true, PackSprite.STAT_SEA_CREATURE_CHANCE, 2D, 1D),
+    FISHING_SPEED("Fishing Speed", NamedTextColor.GREEN, NamedTextColor.AQUA, false, PackSprite.STAT_FISHING_SPEED, 300D),
+    TREASURE_CHANCE("Treasure Chance", NamedTextColor.GREEN, NamedTextColor.GOLD, true, PackSprite.STAT_TREASURE_CHANCE, 100D),
+    TROPHY_FISH_CHANCE("Trophy Fish Chance", NamedTextColor.GREEN, NamedTextColor.GOLD, true, PackSprite.STAT_TROPHY_CHANCE),
+    DOUBLE_HOOK_CHANCE("Double Hook Chance", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, true, PackSprite.STAT_DOUBLE_HOOK_CHANCE),
+    BONUS_PEST_CHANCE("Bonus Pest Chance", NamedTextColor.GREEN, NamedTextColor.DARK_GREEN, true, PackSprite.STAT_BONUS_PEST_CHANCE),
+    OVERBLOOM("Overbloom", NamedTextColor.GREEN, NamedTextColor.YELLOW, false, PackSprite.STAT_OVERBLOOM),
+    HEAT_RESISTANCE("Heat Resistance", NamedTextColor.GREEN, NamedTextColor.RED, false, PackSprite.STAT_HEAT_RESISTANCE),
+    COLD_RESISTANCE("Cold Resistance", NamedTextColor.GREEN, NamedTextColor.AQUA, false, PackSprite.STAT_COLD_RESISTANCE),
+    FEAR("Fear", NamedTextColor.GREEN, NamedTextColor.DARK_PURPLE, false, PackSprite.STAT_FEAR),
+    PULL("Pull", NamedTextColor.GREEN, NamedTextColor.AQUA, false, PackSprite.STAT_PULL),
+    RESPIRATION("Respiration", NamedTextColor.GREEN, NamedTextColor.DARK_AQUA, false, PackSprite.STAT_RESPIRATION),
+    PRESSURE_RESISTANCE("Pressure Resistance", NamedTextColor.GREEN, NamedTextColor.BLUE, false, PackSprite.STAT_PRESSURE_RESISTANCE),
+    TRACKING("Tracking", NamedTextColor.GREEN, NamedTextColor.LIGHT_PURPLE, false, PackSprite.STAT_TRACKING),
+    BREWER("Brewer", NamedTextColor.GREEN, NamedTextColor.LIGHT_PURPLE, true, PackSprite.GUI_DENY), // TODO: what is this?
 
     // Other Stats
-    DAMAGE("Damage", "§c", "§c", false, "❁",
+    DAMAGE("Damage", NamedTextColor.RED, NamedTextColor.RED, false, PackSprite.STAT_ABILITY_DAMAGE,
             5D, 1D),
     ;
 
     private final @NonNull String displayName;
-    private final @NonNull String loreColor;
-    private final @NonNull String displayColor;
+    private final @NonNull TextColor loreColor;
+    private final @NonNull TextColor displayColor;
     private final @NonNull Boolean isPercentage;
-    private final @NonNull String symbol;
+    private final @NonNull PackSprite symbol;
     private final Double baseAdditiveValue;
     private final Double baseMultiplicativeValue;
     private final Double cap;
     private final boolean isRendered;
 
-    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
-                  @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
+    ItemStatistic(@NotNull String displayName, @NotNull TextColor loreColor, @NotNull TextColor displayColor,
+                  @NonNull Boolean isPercentage, @NotNull PackSprite symbol, @NotNull Double baseAdditiveValue,
                   @NotNull Double baseMultiplicativeValue) {
         this(displayName, loreColor, displayColor, isPercentage, symbol,
-            baseAdditiveValue, baseMultiplicativeValue, null);
+                baseAdditiveValue, baseMultiplicativeValue, null);
     }
 
-    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
-                  @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
+    ItemStatistic(@NotNull String displayName, @NotNull TextColor loreColor, @NotNull TextColor displayColor,
+                  @NonNull Boolean isPercentage, @NotNull PackSprite symbol, @NotNull Double baseAdditiveValue,
                   @NotNull Double baseMultiplicativeValue, Double cap) {
         this(displayName, loreColor, displayColor, isPercentage, symbol,
-            baseAdditiveValue, baseMultiplicativeValue, cap, true);
+                baseAdditiveValue, baseMultiplicativeValue, cap, true);
     }
 
-    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
-                  @NonNull Boolean isPercentage, @NotNull String symbol, @NotNull Double baseAdditiveValue,
+    ItemStatistic(@NotNull String displayName, @NotNull TextColor loreColor, @NotNull TextColor displayColor,
+                  @NonNull Boolean isPercentage, @NotNull PackSprite symbol, @NotNull Double baseAdditiveValue,
                   @NotNull Double baseMultiplicativeValue, Double cap, boolean isRendered) {
         this.displayName = displayName;
         this.loreColor = loreColor;
@@ -141,13 +146,13 @@ public enum ItemStatistic {
         this.isRendered = isRendered;
     }
 
-    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
-                  @NonNull Boolean isPercentage, @NotNull String symbol) {
+    ItemStatistic(@NotNull String displayName, @NotNull TextColor loreColor, @NotNull TextColor displayColor,
+                  @NonNull Boolean isPercentage, @NotNull PackSprite symbol) {
         this(displayName, loreColor, displayColor, isPercentage, symbol, 0D, 1D, null);
     }
 
-    ItemStatistic(@NotNull String displayName, @NotNull String loreColor, @NotNull String displayColor,
-                  @NonNull Boolean isPercentage, @NotNull String symbol, Double cap) {
+    ItemStatistic(@NotNull String displayName, @NotNull TextColor loreColor, @NotNull TextColor displayColor,
+                  @NonNull Boolean isPercentage, @NotNull PackSprite symbol, Double cap) {
         this(displayName, loreColor, displayColor, isPercentage, symbol, 0D, 1D, cap);
     }
 
@@ -160,7 +165,15 @@ public enum ItemStatistic {
     }
 
     public String getFullDisplayName() {
-        return displayColor + symbol + " " + displayName;
+        return LegacyComponentSerializer.legacySection().serialize(getCompleteDisplayName());
+    }
+
+    public Component getCompleteDisplayName() {
+        return symbol.getSprite().appendSpace().append(Component.text(displayName)).color(displayColor);
+    }
+
+    public Component getColouredSymbol() {
+        return symbol.getSprite().color(displayColor);
     }
 
     // it's a method cuz it's in common, so it doesn't require minestom to be imported.
@@ -226,7 +239,7 @@ public enum ItemStatistic {
             case CRITICAL_DAMAGE -> "ddafb23efc57f251878e5328d11cb0eef87b79c87b254a7ec72296f9363ef7c";
             case PRISTINE -> "d886e0f41185b18a3afd89488d2ee4caa0735009247cccf039ced6aed752ff1a";
             case MINING_FORTUNE, ORE_FORTUNE, BLOCK_FORTUNE, DWARVEN_METAL_FORTUNE, GEMSTONE_FORTUNE ->
-                "b73579575ca88b3a8afe1ed18907b3125fe0987b02a88ef0e8a01087c3d024c4";
+                    "b73579575ca88b3a8afe1ed18907b3125fe0987b02a88ef0e8a01087c3d024c4";
             case FORAGING_FORTUNE -> "4e44e2a8dff90f5b005e76e6f5db7c12ae59cbbc56d8bc8050f3e3dbf0c3b734";
             case FARMING_FORTUNE -> "220ee7741ff1b958dbb9fa7cddad9c3cce93373f470f9b834da02da67c8202a4";
             case TROPHY_FISH_CHANCE -> "afe7bfb403d9c8c0cdc539c147035869a23e8810a0f3c74a767140180abd00a7";

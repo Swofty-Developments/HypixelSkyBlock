@@ -6,11 +6,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.entity.GameMode;
-import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.*;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
@@ -19,6 +15,7 @@ import net.minestom.server.network.packet.server.play.UpdateScorePacket;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.TeamColorUtil;
 import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.game.replay.entity.EntityStateTracker;
 import net.swofty.type.game.replay.recordable.Recordable;
@@ -36,12 +33,7 @@ import net.swofty.type.replayviewer.util.ReplaySettingsUtil;
 import org.tinylog.Logger;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -75,10 +67,10 @@ public class ReplaySession {
     public static final short[] SKIP_PRESETS = {1, 5, 10, 30, 60};
 
     public ReplaySession(
-        Player initialViewer,
-        ReplayMetadata metadata,
-        InstanceContainer instance,
-        ReplayData replayData
+            Player initialViewer,
+            ReplayMetadata metadata,
+            InstanceContainer instance,
+            ReplayData replayData
     ) {
         this.replayId = metadata.getReplayId();
         this.metadata = metadata;
@@ -239,8 +231,8 @@ public class ReplaySession {
 
         for (var entry : viewerScoreboards.entrySet()) {
             viewers.stream()
-                .filter(v -> v.getUuid().equals(entry.getKey()))
-                .findFirst().ifPresent(viewer -> entry.getValue().remove(viewer));
+                    .filter(v -> v.getUuid().equals(entry.getKey()))
+                    .findFirst().ifPresent(viewer -> entry.getValue().remove(viewer));
         }
         viewerScoreboards.clear();
 
@@ -348,12 +340,12 @@ public class ReplaySession {
 
     private void updateActionBar() {
         Component actionBar = Component.text()
-            .append(Component.text(playing ? "§aPlaying" : "§cPaused"))
-            .append(Component.text("    "))
-            .append(Component.text(getFormattedTime() + " / " + getFormattedTotalTime(), NamedTextColor.YELLOW))
-            .append(Component.text("    "))
-            .append(Component.text(String.format("%.1fx", playbackSpeed), NamedTextColor.GOLD))
-            .build();
+                .append(Component.text(playing ? "§aPlaying" : "§cPaused"))
+                .append(Component.text("    "))
+                .append(Component.text(getFormattedTime() + " / " + getFormattedTotalTime(), NamedTextColor.YELLOW))
+                .append(Component.text("    "))
+                .append(Component.text(String.format("%.1fx", playbackSpeed), NamedTextColor.GOLD))
+                .build();
         for (Player viewer : viewers) {
             viewer.sendActionBar(actionBar);
         }
@@ -391,9 +383,9 @@ public class ReplaySession {
 
     private void showSeekTitle(int tick) {
         Title title = Title.title(
-            Component.text(getFormattedTime(), NamedTextColor.GREEN),
-            Component.text("/" + getFormattedTotalTime(), NamedTextColor.GRAY),
-            Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofMillis(200))
+                Component.text(getFormattedTime(), NamedTextColor.GREEN),
+                Component.text("/" + getFormattedTotalTime(), NamedTextColor.GRAY),
+                Title.Times.times(Duration.ZERO, Duration.ofMillis(500), Duration.ofMillis(200))
         );
         for (Player viewer : viewers) {
             viewer.showTitle(title);
@@ -414,11 +406,11 @@ public class ReplaySession {
 
     private void sendBelowNameScore(String entryName, int score) {
         UpdateScorePacket packet = new UpdateScorePacket(
-            entryName,
-            belowNameTag.getObjectiveName(),
-            score,
-            null,
-            null
+                entryName,
+                belowNameTag.getObjectiveName(),
+                score,
+                null,
+                null
         );
         for (Player viewer : viewers) {
             viewer.sendPacket(packet);
@@ -433,22 +425,24 @@ public class ReplaySession {
 
     private void sendNameTagTeam(int entityId, PlayerNameTag tag, Player viewer) {
         NamedTextColor teamColor = tag.nameColor >= 0
-            ? NamedTextColor.nearestTo(TextColor.color(tag.nameColor))
-            : NamedTextColor.WHITE;
+                ? NamedTextColor.nearestTo(TextColor.color(tag.nameColor))
+                : NamedTextColor.WHITE;
         String teamName = "REPLAY_NAME_" + entityId;
 
         TeamsPacket packet = new TeamsPacket(
-            teamName,
-            new TeamsPacket.CreateTeamAction(
-                Component.empty(),
-                (byte) 0x00,
-                TeamsPacket.NameTagVisibility.ALWAYS,
-                TeamsPacket.CollisionRule.NEVER,
-                teamColor,
-                Component.text(tag.prefix()),
-                Component.text(tag.suffix()),
-                new ArrayList<>(List.of(tag.entryName()))
-            )
+                teamName,
+                new TeamsPacket.CreateTeamAction(
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.text(tag.prefix()),
+                                Component.text(tag.suffix()),
+                                TeamsPacket.NameTagVisibility.ALWAYS,
+                                TeamsPacket.CollisionRule.NEVER,
+                                TeamColorUtil.fromNamedColor(teamColor),
+                                (byte) 0x00
+                        ),
+                        new ArrayList<>(List.of(tag.entryName()))
+                )
         );
 
         if (viewer != null) {
@@ -464,9 +458,9 @@ public class ReplaySession {
     private void onReplayEnd() {
         pause();
         Title title = Title.title(
-            Component.text("Replay Ended", NamedTextColor.GOLD),
-            Component.text("Use /replay restart to watch again", NamedTextColor.GRAY),
-            Title.Times.times(Duration.ofMillis(200), Duration.ofSeconds(3), Duration.ofMillis(500))
+                Component.text("Replay Ended", NamedTextColor.GOLD),
+                Component.text("Use /replay restart to watch again", NamedTextColor.GRAY),
+                Title.Times.times(Duration.ofMillis(200), Duration.ofSeconds(3), Duration.ofMillis(500))
         );
         for (Player viewer : viewers) {
             viewer.showTitle(title);
@@ -570,17 +564,19 @@ public class ReplaySession {
         String entityName = playerEntity.getPlayerName();
 
         viewer.sendPacket(new TeamsPacket(
-            teamName,
-            new TeamsPacket.CreateTeamAction(
-                Component.empty(),
-                (byte) 0x02,
-                TeamsPacket.NameTagVisibility.ALWAYS,
-                TeamsPacket.CollisionRule.NEVER,
-                teamColor,
-                Component.empty(),
-                Component.empty(),
-                new ArrayList<>(List.of(entityName))
-            )
+                teamName,
+                new TeamsPacket.CreateTeamAction(
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.ALWAYS,
+                                TeamsPacket.CollisionRule.NEVER,
+                                TeamColorUtil.fromNamedColor(teamColor),
+                                (byte) 0x02
+                        ),
+                        new ArrayList<>(List.of(entityName))
+                )
         ));
     }
 

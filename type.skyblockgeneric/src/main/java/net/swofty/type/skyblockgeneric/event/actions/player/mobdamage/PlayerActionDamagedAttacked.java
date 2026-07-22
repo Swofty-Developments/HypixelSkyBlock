@@ -12,6 +12,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.SlayerBossMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.hunting.AttributeEffectService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
@@ -34,8 +35,13 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
             Map.Entry<Double, Boolean> damageDealt =
                     PlayerStatistics.runPrimaryDamageFormula(mobStatistics, playerStatistics);
 
+            SkyBlockPlayer player = (SkyBlockPlayer) event.getTarget();
+            double baseDefense = playerStatistics.getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.DEFENSE);
+            double resistance = AttributeEffectService.resistanceDefense(player.getHuntingData(), mob);
+            double resistanceMultiplier = (100D + Math.max(0, baseDefense))
+                    / (100D + Math.max(0, baseDefense + resistance));
             PlayerDamagedByMobValueUpdateEvent valueEvent = new PlayerDamagedByMobValueUpdateEvent(
-                    (SkyBlockPlayer) event.getTarget(), damageDealt.getKey().floatValue(), mob);
+                    player, (float) (damageDealt.getKey() * resistanceMultiplier), mob);
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
             ((SkyBlockPlayer) event.getTarget()).damage(new EntityDamage(mob, (float) valueEvent.getValue()));

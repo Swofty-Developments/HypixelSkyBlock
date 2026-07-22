@@ -44,7 +44,8 @@ items:
             result:
               type: ASPECT_OF_THE_END
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_end
   - id: ASPECT_OF_THE_JERRY
     material: WOODEN_SWORD
     rarity: COMMON
@@ -73,7 +74,8 @@ items:
             result:
               type: ASPECT_OF_THE_JERRY
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_jerry
   - id: ASPECT_OF_THE_DRAGON
     material: DIAMOND_SWORD
     rarity: LEGENDARY
@@ -129,20 +131,24 @@ items:
         game_stage: INTERMEDIATE
         donation_xp: 5
       - id: CUSTOM_DISPLAY_NAME
-        display_name: "Aspect of the Dragons"
-
+        display_name: Aspect of the Dragons
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_dragon
   - id: END_SWORD
     material: IRON_SWORD
     rarity: UNCOMMON
     lore:
-      - "Deals §a+100% §7damage to Ender"
-      - "Dragons, Endermites, and Endermen."
+      - "Deals \xA7a+100% \xA77damage to Ender"
+      - Dragons, Endermites, and Endermen.
     default_statistics:
       damage: 35
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-
+      - id: SELLABLE
+        value: 10.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/weapons/end_sword
   - id: ASPECT_OF_THE_VOID
     material: DIAMOND_SHOVEL
     rarity: EPIC
@@ -155,8 +161,8 @@ items:
     components:
       - id: ABILITY
         abilities:
-        - INSTANT_TRANSMISSION
-        - ETHER_TRANSMISSION
+          - INSTANT_TRANSMISSION
+          - ETHER_TRANSMISSION
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: GEMSTONE
@@ -166,12 +172,13 @@ items:
       - id: SELLABLE
         value: 56000
       - id: CUSTOM_DISPLAY_NAME
-        display_name: "Aspect of the Void"
+        display_name: Aspect of the Void
       - id: MUSEUM
         museum_category: WEAPONS
         game_stage: EXPERT
         donation_xp: 6
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/aspect_of_the_void
   - id: FANCY_SWORD
     material: GOLDEN_SWORD
     rarity: UNCOMMON
@@ -183,7 +190,8 @@ items:
         standard_item_type: SWORD
       - id: SELLABLE
         value: 50
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/fancy_sword
   - id: FLINT_ARROW
     material: ARROW
     rarity: COMMON
@@ -191,7 +199,6 @@ items:
       damage: 1
     components:
       - id: ARROW
-
   - id: HUNTER_KNIFE
     material: IRON_SWORD
     rarity: UNCOMMON
@@ -202,17 +209,21 @@ items:
         standard_item_type: SWORD
       - id: DEFAULT_SOULBOUND
         coop_allowed: false
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hunters_knife
   - id: MERCENARY_AXE
     material: IRON_AXE
-    rarity: UNCOMMON
+    rarity: RARE
     default_statistics:
       damage: 70
       strength: 20
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-
+      - id: SELLABLE
+        value: 15000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/mercenary_sword
   - id: PRISMARINE_BLADE
     material: PRISMARINE_SHARD
     rarity: UNCOMMON
@@ -243,7 +254,8 @@ items:
             result:
               type: PRISMARINE_BLADE
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/prismarine_blade
   - id: ROGUE_SWORD
     material: GOLDEN_SWORD
     rarity: COMMON
@@ -256,7 +268,10 @@ items:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
       - id: TRACKED_UNIQUE
-
+      - id: SELLABLE
+        value: 3.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/rogue_sword
   - id: SILVER_FANG
     material: IRON_SWORD
     rarity: UNCOMMON
@@ -286,21 +301,25 @@ items:
             result:
               type: SILVER_FANG
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/silver_fang
   - id: SPIDER_SWORD
     material: IRON_SWORD
     rarity: UNCOMMON
     lore:
-      - "Deals §a+100% §7damage to Silverfish,"
-      - "Spiders, and Cave Spiders."
-      - ""
-      - "§4This item is Arachnal Ж!"
+      - "Deals \xA7a+100% \xA77damage to Silverfish,"
+      - Spiders, and Cave Spiders.
+      - ''
+      - "\xA74This item is Arachnal \u0416!"
     default_statistics:
       damage: 30
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-
+      - id: SELLABLE
+        value: 5.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/spider_sword
   - id: SQUIRE_SWORD
     material: IRON_SWORD
     rarity: UNCOMMON
@@ -310,27 +329,33 @@ items:
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-
+      - id: SELLABLE
+        value: 2500.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/squire_sword
   - id: UNDEAD_SWORD
     material: IRON_SWORD
     rarity: UNCOMMON
     lore:
-      - "Deals §a+100% §7damage to Zombies,"
-      - "Skeletons, Zombie Pigmen, and"
-      - "Withers."
+      - "Deals \xA7a+100% \xA77damage to Zombies,"
+      - Skeletons, Zombie Pigmen, and
+      - Withers.
     default_statistics:
       damage: 30
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-
+      - id: SELLABLE
+        value: 5.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/undead_sword
   - id: HYPERION
     material: IRON_SWORD
     rarity: LEGENDARY
     lore:
-      - "Deals §c+50% §7damage to §8☠ Wither §7mobs."
-      - "Grants §c+1 ❁ Damage §7and §a+2 §b✎"
-      - "§bIntelligence §7per §cCatacombs §7level."
+      - "Deals \xA7c+50% \xA77damage to \xA78\u2620 Wither \xA77mobs."
+      - "Grants \xA7c+1 \u2741 Damage \xA77and \xA7a+2 \xA7b\u270E"
+      - "\xA7bIntelligence \xA77per \xA7cCatacombs \xA77level."
     default_statistics:
       health: 20
       damage: 100
@@ -377,79 +402,118 @@ items:
               amount: 1
             requirements:
               level:
-                left: "%player.SKYBLOCK_LEVEL%"
-                operation: ">="
-                right: "10"
-                fail-message: "§cLevel Requirement\n§7You must be at least §eLevel 10 §7to craft this item!"
-
+                left: '%player.SKYBLOCK_LEVEL%'
+                operation: '>='
+                right: '10'
+                fail-message: "\xA7cLevel Requirement\n\xA77You must be at least \xA7eLevel 10 \xA77to craft this item!"
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hyperion
   - id: ATOMSPLIT_KATANA
     rarity: LEGENDARY
     material: DIAMOND_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/atomsplit_katana
   - id: VOIDEDGE_KATANA
     rarity: RARE
     material: DIAMOND_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/voidedge_katana
   - id: VOIDWALKER_KATANA
     rarity: UNCOMMON
     material: IRON_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/voidwalker_katana
   - id: VORPAL_KATANA
     rarity: EPIC
     material: DIAMOND_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/vorpal_katana
   - id: DAEDALUS_AXE
     rarity: LEGENDARY
     material: GOLDEN_AXE
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/diana/daedalus_blade
   - id: POOCH_SWORD
     rarity: LEGENDARY
     material: GOLDEN_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weapons/pooch_sword
   - id: RECLUSE_FANG
-    rarity: RARE
+    rarity: UNCOMMON
     material: IRON_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/recluse_fang
   - id: SHAMAN_SWORD
     rarity: EPIC
     material: IRON_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weapons/shaman_sword
   - id: SOUL_ESOWARD
     rarity: RARE
     material: BIRCH_SAPLING
-
   - id: SWORD_OF_REVELATIONS
     rarity: EPIC
     material: WOODEN_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/diana/sword_of_revelations
   - id: SCORPION_FOIL
     rarity: EPIC
     material: WOODEN_SWORD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/scorpion_foil
   - id: NULL_BLADE
     rarity: LEGENDARY
     material: SHEARS
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_blade
   - id: NULL_EDGE
     rarity: EPIC
     material: STICK
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_edge
   - id: SINSEEKER_SCYTHE
     rarity: EPIC
     material: GOLDEN_HOE
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/sinseeker_scythe
   - id: FLY_SWATTER
     rarity: EPIC
     material: GOLDEN_SHOVEL
-
+    components:
+      - id: SELLABLE
+        value: 500000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/fly_swatter
   - id: EDIBLE_MACE
     rarity: RARE
     material: MUTTON
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weapons/edible_mace
   - id: CROWN_OF_GREED
     rarity: LEGENDARY
     material: GOLDEN_HELMET
-
+    components:
+      - id: SELLABLE
+        value: 1000000.0
   - id: STRETCHING_STICKS
-    rarity: COMMON
+    rarity: UNCOMMON
     material: STICK
+    components:
+      - id: SELLABLE
+        value: 200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/stretching_sticks

@@ -196,7 +196,10 @@ public class GUIReforge extends HypixelInventoryGUI {
 
                 String itemName = StringUtility.toNormalCase(item.getAttributeHandler().getTypeAsString());
 
-                player.sendMessage(I18n.t("gui_reforge.success_message", Component.text(item.getAttributeHandler().getRarity().getColor() + oldPrefix), Component.text(itemName), Component.text(item.getAttributeHandler().getRarity().getColor() + " " + selectedReforge.getPrefix())));
+                player.sendMessage(I18n.t("gui_reforge.success_message",
+                        Component.text(oldPrefix, item.getAttributeHandler().getRarity().getColor()),
+                        Component.text(itemName),
+                        Component.text(" " + selectedReforge.getPrefix(), item.getAttributeHandler().getRarity().getColor())));
 
                 updateFromItem(item);
             }

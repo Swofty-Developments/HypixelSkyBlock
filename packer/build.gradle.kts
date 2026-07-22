@@ -21,7 +21,6 @@ dependencies {
     api(libs.creative.api)
     api(libs.creative.serializer.minecraft)
     api(libs.creative.server)
-    api(libs.examination.api) // kind of a legacy API
 }
 
 application {

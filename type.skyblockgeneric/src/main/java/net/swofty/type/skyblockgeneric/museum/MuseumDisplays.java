@@ -13,11 +13,7 @@ import net.swofty.type.skyblockgeneric.museum.display.ItemMuseumDisplayHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public enum MuseumDisplays {
@@ -77,9 +73,13 @@ public enum MuseumDisplays {
         if (museumPlayerToView.equals(player.getUuid())) {
             museumDataViewing = playerMuseumData;
         } else {
-            museumDataViewing = SkyBlockDataHandler.createFromProfileOnly(
-                    ProfilesDatabase.fetchDocument(museumProfileToView)
-            ).get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+            var profileDocument = ProfilesDatabase.fetchDocument(museumProfileToView);
+            if (profileDocument == null) {
+                museumDataViewing = playerMuseumData;
+            } else {
+                museumDataViewing = SkyBlockDataHandler.createFromProfileOnly(profileDocument)
+                        .get(SkyBlockDataHandler.Data.MUSEUM_DATA, DatapointMuseum.class).getValue();
+            }
         }
 
         if (displayEntities.containsKey(player.getUuid())) {

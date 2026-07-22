@@ -5,7 +5,10 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.View;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -24,7 +27,7 @@ public final class GUIContactManagementView implements View<GUIContactManagement
 
     @Override
     public void layout(ViewLayout<State> layout, State state, ViewContext ctx) {
-        layout.filler(Components.FILLER);
+        Components.fill(layout);
         layout.slot(4, (s, c) -> ItemStackCreator.updateLore(
                 s.npc().getIcon().set(DataComponents.CUSTOM_NAME, Component.text("§f" + s.npc().getName())),
                 List.of("§7" + s.npc().getDescription())

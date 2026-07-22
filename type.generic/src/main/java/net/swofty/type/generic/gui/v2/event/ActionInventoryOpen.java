@@ -18,6 +18,7 @@ public class ActionInventoryOpen implements HypixelEventClass {
             HypixelPlayer player = (HypixelPlayer) event.getPlayer();
             ViewNavigator.find(player).ifPresent(navigator -> {
                 if (navigator.getCurrentSession() == null) {
+                    // could also be that this is a legacy view. However, why is ViewNavigator lingering then?
                     Logger.warn("Current session is null for player {} when opening inventory, this should not happen.", player.getUsername());
                     return;
                 }

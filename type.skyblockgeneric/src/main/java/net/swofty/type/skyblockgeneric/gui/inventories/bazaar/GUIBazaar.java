@@ -70,6 +70,10 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
 
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
+        if (((SkyBlockPlayer) e.player()).isIronman()) {
+            new GUISpecialBazaar().open(e.player());
+            return;
+        }
         // Tabs at top
         renderCategoryTabs();
 
@@ -186,7 +190,7 @@ public class GUIBazaar extends HypixelInventoryGUI implements RefreshingGUI {
                         for (ItemType type : set.items) {
                             PriceData priceData = priceDataMap.get(type);
                             if (priceData != null) {
-                                lore.add(type.rarity.getColor()
+                                lore.add(type.rarity.getLegacyColor()
                                         + "▶ §7" + type.getDisplayName()
                                         + " §c" + StringUtility.shortenNumber(priceData.sellPrice())
                                         + " §8| §a" + StringUtility.shortenNumber(priceData.buyPrice()));

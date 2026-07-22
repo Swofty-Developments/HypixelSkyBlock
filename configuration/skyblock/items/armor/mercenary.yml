@@ -1,7 +1,7 @@
 items:
   - id: MERCENARY_BOOTS
     material: leather_boots
-    rarity: COMMON
+    rarity: RARE
     default_statistics:
       health: 30.0
       defense: 30.0
@@ -16,7 +16,7 @@ items:
         value: 5000.0
   - id: MERCENARY_CHESTPLATE
     material: iron_chestplate
-    rarity: COMMON
+    rarity: RARE
     default_statistics:
       health: 70.0
       defense: 70.0
@@ -27,7 +27,7 @@ items:
         value: 20000.0
   - id: MERCENARY_HELMET
     material: chainmail_helmet
-    rarity: COMMON
+    rarity: RARE
     default_statistics:
       health: 40.0
       defense: 40.0
@@ -38,7 +38,7 @@ items:
         value: 10000.0
   - id: MERCENARY_LEGGINGS
     material: chainmail_leggings
-    rarity: COMMON
+    rarity: RARE
     default_statistics:
       health: 60.0
       defense: 60.0

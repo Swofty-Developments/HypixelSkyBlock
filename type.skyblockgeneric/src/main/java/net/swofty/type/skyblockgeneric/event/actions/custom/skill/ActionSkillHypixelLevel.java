@@ -18,11 +18,13 @@ public class ActionSkillHypixelLevel implements HypixelEventClass {
         SkyBlockPlayer player = event.getPlayer();
         SkillCategories skillCategory = event.getSkillCategory();
 
-        int oldLevel = skillCategory.asCategory().getLevel(event.getOldValueRaw());
-        int newLevel = skillCategory.asCategory().getLevel(event.getNewValueRaw());
+        int oldLevel = player.getSkills().getLevelAt(skillCategory, event.getOldValueRaw());
+        int newLevel = player.getSkills().getLevelAt(skillCategory, event.getNewValueRaw());
 
         if (oldLevel == newLevel) return;
 
-        player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getSkillCause(skillCategory, newLevel));
+        for (int level = oldLevel + 1; level <= newLevel; level++) {
+            player.getSkyBlockExperience().addExperience(SkyBlockLevelCause.getSkillCause(skillCategory, level));
+        }
     }
 }
