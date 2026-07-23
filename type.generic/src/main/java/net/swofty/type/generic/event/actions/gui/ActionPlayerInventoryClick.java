@@ -40,8 +40,7 @@ public class ActionPlayerInventoryClick implements HypixelEventClass {
         ItemStack clickedItem = event.getClickedItem();
         ItemStack cursorItem = player.getInventory().getCursorItem();
 
-        // Check for offhand
-        if (event.getSlot() == 45) {
+        if (event.getSlot() == 45 && event.getInventory() instanceof PlayerInventory) {
             event.setCancelled(true);
             return;
         }

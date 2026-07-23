@@ -11,12 +11,12 @@ public class AuctionService implements SkyBlockService {
     public static AuctionsCacheService cacheService;
 
     static void main(String[] args) {
-        SkyBlockService.init(new AuctionService());
+        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
 
         cacheService = new AuctionsCacheService();
 
-        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
-        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        SkyBlockService.init(new AuctionService());
     }
 
     @Override

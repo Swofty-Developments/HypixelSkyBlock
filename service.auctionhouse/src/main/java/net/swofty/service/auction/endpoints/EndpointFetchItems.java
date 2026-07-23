@@ -66,6 +66,15 @@ public class EndpointFetchItems implements RedisMessageHandler<
                 break;
         }
 
-        return new AuctionFetchItemsProtocol.AuctionFetchItemsResponse(results.stream().map(AuctionItem::fromDocument).toList(), true, null);
+        List<AuctionItem> items = new ArrayList<>(results.size());
+        for (Document document : results) {
+            try {
+                items.add(AuctionItem.fromDocument(document));
+            } catch (Exception e) {
+                System.err.println("Skipping unreadable auction _id=" + document.get("_id") + " in category " + category);
+                e.printStackTrace();
+            }
+        }
+        return new AuctionFetchItemsProtocol.AuctionFetchItemsResponse(items, true, null);
     }
 }

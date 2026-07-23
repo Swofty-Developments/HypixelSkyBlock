@@ -94,6 +94,7 @@ public class AuctionViewThirdBin implements AuctionView {
         gui.set(new GUIClickableItem(31) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                Thread.startVirtualThread(() -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 Locale l = p.getLocale();
                 double coins = player.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue();
@@ -156,6 +157,7 @@ public class AuctionViewThirdBin implements AuctionView {
                         ClickEvent.runCommand("/ahview " + item.getUuid())
                     ));
                 }
+                });
             }
 
             @Override
