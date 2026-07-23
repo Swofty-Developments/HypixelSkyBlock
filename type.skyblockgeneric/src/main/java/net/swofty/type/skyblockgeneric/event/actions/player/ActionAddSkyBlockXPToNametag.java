@@ -14,6 +14,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.utility.TeamColorUtility;
 
 public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
 
@@ -37,7 +38,7 @@ public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
         Team team = new TeamBuilder("Z" + teamName, MinecraftServer.getTeamManager())
             .prefix(Component.text("§8[" + experience.getLevel().getColor() + experience.getLevel() + "§8] ")
                 .append(player.getRankPrefix()))
-                .teamColor(rank.getTextColor())
+                .teamColor(TeamColorUtility.fromNamedColor(rank.getTextColor()))
                 .build();
         player.setTeam(team);
         player.getTeam().sendUpdatePacket();

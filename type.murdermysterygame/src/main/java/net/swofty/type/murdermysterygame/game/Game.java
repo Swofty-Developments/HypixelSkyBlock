@@ -46,6 +46,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import net.minestom.server.color.TeamColor;
 
 @Getter
 public class Game {
@@ -396,13 +397,15 @@ public class Game {
         TeamsPacket createTeamPacket = new TeamsPacket(
                 "mm_hidden",
                 new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x00,
-                        TeamsPacket.NameTagVisibility.NEVER,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        NamedTextColor.WHITE,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.NEVER,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColor.WHITE,
+                                (byte) 0x00
+                        ),
                         playerNames
                 )
         );
@@ -420,13 +423,15 @@ public class Game {
         TeamsPacket createTeamPacket = new TeamsPacket(
                 "mm_hidden",
                 new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x00,
-                        TeamsPacket.NameTagVisibility.NEVER,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        NamedTextColor.WHITE,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.NEVER,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColor.WHITE,
+                                (byte) 0x00
+                        ),
                         allPlayerNames
                 )
         );
