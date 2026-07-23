@@ -2,6 +2,7 @@ package net.swofty.commons.data;
 
 import net.swofty.DataAPI;
 import net.swofty.api.DataAPIImpl;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.redis.RedisConnectionPool;
 import net.swofty.data.format.JsonFormat;
 import net.swofty.event.RedisPubSubHandler;
@@ -27,19 +28,27 @@ public final class SwoftyData {
                 new RedisPubSubHandler(pool, "hsb-prof"), true, lock);
     }
 
+    private static void ensureBootstrapped() {
+        if (account == null) bootstrap(ConfigProvider.settings().getRedisUri());
+    }
+
     public static DataAPI account() {
+        ensureBootstrapped();
         return account;
     }
 
     public static DataAPI profile() {
+        ensureBootstrapped();
         return profile;
     }
 
     public static RedisDistributedLock lock() {
+        ensureBootstrapped();
         return lock;
     }
 
     public static JedisPool jedisPool() {
+        ensureBootstrapped();
         return pool;
     }
 }
