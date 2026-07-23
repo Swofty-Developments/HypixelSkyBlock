@@ -48,6 +48,7 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.ai.vanilla.VanillaNavigator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,6 +68,14 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     private Component customName;
     private TextDisplayEntity nameDisplayEntity;
+
+    // Fully self-contained vanilla navigator (own A* + own follow loop + vanilla physics). Every mob
+    // movement goal paths through this instead of Minestom's Navigator.
+    private final VanillaNavigator vanillaNavigator = new VanillaNavigator(this);
+
+    public VanillaNavigator getVanillaNavigator() {
+        return vanillaNavigator;
+    }
 
     public SkyBlockMob(EntityType entityType) {
         super(entityType);
@@ -96,6 +105,7 @@ public abstract class SkyBlockMob extends EntityCreature {
         setAutoViewable(true);
         setAutoViewEntities(true);
         this.addAIGroup(getGoalSelectors(), getTargetSelectors());
+
         onInit();
     }
 
@@ -327,6 +337,9 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (hasCollision()) {
             applyEntityCollision();
         }
+
+        // Drive our own vanilla navigator's path-follow loop.
+        this.vanillaNavigator.tick();
 
         try {
             super.tick(time);

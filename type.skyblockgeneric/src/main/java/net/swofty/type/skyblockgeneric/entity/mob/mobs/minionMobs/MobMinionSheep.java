@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.VanillaRandomStrollGoal;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
@@ -37,7 +37,7 @@ public class MobMinionSheep extends SkyBlockMob {
     @Override
     public List<GoalSelector> getGoalSelectors() {
         return List.of(
-                new RandomStrollGoal(this, 15)
+                new VanillaRandomStrollGoal(this, 15)
         );
     }
 

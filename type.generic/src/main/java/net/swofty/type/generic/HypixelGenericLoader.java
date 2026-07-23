@@ -24,7 +24,6 @@ import net.minestom.server.event.server.ServerTickMonitorEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.monitoring.BenchmarkManager;
 import net.minestom.server.monitoring.TickMonitor;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
@@ -69,7 +68,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -180,14 +178,12 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         if (!isSkyBlockType && !(loader.getType() == ServerType.BEDWARS_GAME)) {
             MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent.class, event ->
                     LAST_TICK.set(event.getTickMonitor()));
-            BenchmarkManager benchmarkManager = MinecraftServer.getBenchmarkManager();
-            benchmarkManager.enable(Duration.ofDays(3));
             MinecraftServer.getSchedulerManager().buildTask(() -> {
                 Collection<HypixelPlayer> players = getLoadedPlayers();
                 if (players.isEmpty())
                     return;
 
-                long ramUsage = benchmarkManager.getUsedMemory();
+                long ramUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
                 ramUsage /= (long) 1e6; // bytes to MB
                 TickMonitor tickMonitor = LAST_TICK.get();
                 double TPS = 1000 / tickMonitor.getTickTime();

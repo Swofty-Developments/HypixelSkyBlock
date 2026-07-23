@@ -13,6 +13,7 @@ import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import net.swofty.type.generic.utility.TeamColorUtility;
 
 public class ActionPlayerNameColors implements HypixelEventClass {
 
@@ -30,13 +31,15 @@ public class ActionPlayerNameColors implements HypixelEventClass {
                 player.sendPacket(new TeamsPacket(
                     "SW_" + other.getUsername(),
                     new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x01,
-                        TeamsPacket.NameTagVisibility.ALWAYS,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        color,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                            Component.empty(),
+                            Component.empty(),
+                            Component.empty(),
+                            TeamsPacket.NameTagVisibility.ALWAYS,
+                            TeamsPacket.CollisionRule.ALWAYS,
+                            TeamColorUtility.fromNamedColor(color),
+                            (byte) 0x01
+                        ),
                         new ArrayList<>(Collections.singletonList(other.getUsername()))
                     )
                 ));
@@ -45,13 +48,15 @@ public class ActionPlayerNameColors implements HypixelEventClass {
                     other.sendPacket(new TeamsPacket(
                         "SW_" + player.getUsername(),
                         new TeamsPacket.CreateTeamAction(
-                            Component.empty(),
-                            (byte) 0x01,
-                            TeamsPacket.NameTagVisibility.ALWAYS,
-                            TeamsPacket.CollisionRule.ALWAYS,
-                            NamedTextColor.RED,
-                            Component.empty(),
-                            Component.empty(),
+                            new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.ALWAYS,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColorUtility.fromNamedColor(NamedTextColor.RED),
+                                (byte) 0x01
+                            ),
                             new ArrayList<>(Collections.singletonList(player.getUsername()))
                         )
                     ));

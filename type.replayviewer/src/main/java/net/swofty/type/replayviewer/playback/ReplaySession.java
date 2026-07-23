@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import net.swofty.type.generic.utility.TeamColorUtility;
 
 @Getter
 public class ReplaySession {
@@ -440,13 +441,15 @@ public class ReplaySession {
         TeamsPacket packet = new TeamsPacket(
             teamName,
             new TeamsPacket.CreateTeamAction(
-                Component.empty(),
-                (byte) 0x00,
-                TeamsPacket.NameTagVisibility.ALWAYS,
-                TeamsPacket.CollisionRule.NEVER,
-                teamColor,
-                Component.text(tag.prefix()),
-                Component.text(tag.suffix()),
+                new TeamsPacket.Settings(
+                    Component.empty(),
+                    Component.text(tag.prefix()),
+                    Component.text(tag.suffix()),
+                    TeamsPacket.NameTagVisibility.ALWAYS,
+                    TeamsPacket.CollisionRule.NEVER,
+                    TeamColorUtility.fromNamedColor(teamColor),
+                    (byte) 0x00
+                ),
                 new ArrayList<>(List.of(tag.entryName()))
             )
         );
@@ -572,13 +575,15 @@ public class ReplaySession {
         viewer.sendPacket(new TeamsPacket(
             teamName,
             new TeamsPacket.CreateTeamAction(
-                Component.empty(),
-                (byte) 0x02,
-                TeamsPacket.NameTagVisibility.ALWAYS,
-                TeamsPacket.CollisionRule.NEVER,
-                teamColor,
-                Component.empty(),
-                Component.empty(),
+                new TeamsPacket.Settings(
+                    Component.empty(),
+                    Component.empty(),
+                    Component.empty(),
+                    TeamsPacket.NameTagVisibility.ALWAYS,
+                    TeamsPacket.CollisionRule.NEVER,
+                    TeamColorUtility.fromNamedColor(teamColor),
+                    (byte) 0x02
+                ),
                 new ArrayList<>(List.of(entityName))
             )
         ));
