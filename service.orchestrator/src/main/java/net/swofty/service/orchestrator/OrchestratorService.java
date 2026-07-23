@@ -13,8 +13,6 @@ import java.util.concurrent.TimeUnit;
 public class OrchestratorService implements SkyBlockService {
 
 	static void main() {
-        // SkyBlockService.init(...) blocks forever, so schedule the cleanup task before calling it,
-        // otherwise the scheduler is never started.
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
             Thread t = new Thread(r, "orchestrator-cleanup");
             t.setDaemon(true);

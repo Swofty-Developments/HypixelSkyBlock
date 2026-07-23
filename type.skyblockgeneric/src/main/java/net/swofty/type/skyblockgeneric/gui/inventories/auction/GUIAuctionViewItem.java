@@ -52,7 +52,6 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     public void updateItems() {
         AuctionFetchItemProtocol.AuctionFetchItemMessage message =
                 new AuctionFetchItemProtocol.AuctionFetchItemMessage(auctionID);
-        // Fully async: never block on the reply (which arrives on the Redis thread).
         new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).thenAccept(response -> {
             AuctionItem item = ((AuctionFetchItemProtocol.AuctionFetchItemResponse) response).item();
 

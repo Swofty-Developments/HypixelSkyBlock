@@ -267,8 +267,6 @@ public class SkyBlockVelocity {
         RedisAPI.getInstance().setFilterId("proxy");
         RedisClient.identify(RedisEndpoint.proxy());
 
-        // Advertise proxy liveness via a short-lived Redis key. Game servers watch this
-        // instead of polling the proxy with a per-server request/response every second.
         ProxyHeartbeat.init(ConfigProvider.settings().getRedisUri());
         server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), ProxyHeartbeat::beat)
             .repeat(Duration.ofSeconds(2)).schedule();

@@ -67,10 +67,8 @@ public class GUIViewBids extends HypixelInventoryGUI implements RefreshingGUI {
             futures.add(future);
         });
 
-        // Render the page once every fetch has resolved — without blocking the caller.
         CompletableFuture<Void> allDone = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         allDone.thenRun(() -> {
-            // Sort the items by the time they were added
             auctionItems.sort((o1, o2) -> Long.compare(o2.getEndTime(), o1.getEndTime()));
 
             List<AuctionItem> auctionItemsPage = auctionItems.getPage(1);

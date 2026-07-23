@@ -21,8 +21,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class GUIAuctionHouse extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIAuctionHouse() {
         super(I18n.t("gui_auction.house.title"), InventoryType.CHEST_4_ROW);
-        // onOpen paints the panes and refreshItems() handles the offline case async — never
-        // block the tick thread on an isOnline() round-trip here.
     }
 
     @Override

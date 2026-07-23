@@ -66,8 +66,6 @@ public class EndpointFetchItems implements RedisMessageHandler<
                 break;
         }
 
-        // Deserialize each document defensively: one malformed stored item should not
-        // take down the whole category fetch.
         List<AuctionItem> items = new ArrayList<>(results.size());
         for (Document document : results) {
             try {

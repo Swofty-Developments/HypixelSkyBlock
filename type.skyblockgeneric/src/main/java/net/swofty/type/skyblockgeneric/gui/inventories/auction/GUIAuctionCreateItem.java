@@ -169,8 +169,6 @@ public class GUIAuctionCreateItem extends HypixelInventoryGUI implements Refresh
 
                     AuctionAddItemProtocol.AuctionAddItemMessage message =
                             new AuctionAddItemProtocol.AuctionAddItemMessage(item, category);
-                    // Never block here: this callback runs on the Redis response thread, and the
-                    // add-item reply arrives on that same thread — a join() would deadlock forever.
                     CompletableFuture<AuctionAddItemProtocol.AuctionAddItemResponse> future =
                             auctionService.handleRequest(message);
                     future.thenAccept(addResponse -> {

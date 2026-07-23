@@ -344,10 +344,6 @@ public class Hypixel {
         return options;
     }
 
-    // How often to read the proxy heartbeat key, and how many consecutive absences
-    // to tolerate before declaring the proxy dead. 3 misses x 3s = ~9s of confirmed
-    // silence on top of the key's 6s TTL — resilient to transient Redis/GC blips,
-    // while still cleaning up genuinely orphaned servers promptly.
     private static final int PROXY_HEARTBEAT_CHECK_SECONDS = 3;
     private static final int PROXY_HEARTBEAT_MAX_MISSES = 3;
 
@@ -366,7 +362,6 @@ public class Hypixel {
             try {
                 alive = ProxyHeartbeat.isProxyAlive();
             } catch (Exception e) {
-                // A Redis hiccup is treated as a miss, but never a fatal one on its own.
                 alive = false;
             }
 
