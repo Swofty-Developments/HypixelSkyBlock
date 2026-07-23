@@ -211,6 +211,7 @@ public class SkyBlockDataHandler extends DataHandler {
 
     public void saveToApi() {
         saveBackedData();
+        SwoftyData.profile().set(currentProfileId, ProfilesDatabase.DOCUMENT, toProfileDocument().toJson());
     }
 
     public Map<String, Object> getCoopValues() {

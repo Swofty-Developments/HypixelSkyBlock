@@ -94,7 +94,7 @@ public class GUIProfileSelect extends StatelessView {
                         player.sendMessage(I18n.t("gui_sbmenu.profiles.select.msg.deleted_generic"));
                     }
 
-                    ProfilesDatabase.collection.deleteOne(Filters.eq("_id", profileUuid.toString()));
+                    ProfilesDatabase.deleteDocument(profileUuid.toString());
                     player.openView(new GUIProfileManagement());
                 });
     }

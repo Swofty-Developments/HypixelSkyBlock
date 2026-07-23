@@ -56,7 +56,7 @@ public class GUIProfileCreate extends StatelessView {
                     Document document = handler.toProfileDocument();
 
                     profiles.addProfile(profileId);
-                    ProfilesDatabase.collection.insertOne(document);
+                    new ProfilesDatabase(profileId.toString()).saveDocument(document);
 
                     player.getHookManager().registerHook(ActionPlayerDataSave.class, (nil) -> {
                         profiles.setCurrentlySelected(profileId);

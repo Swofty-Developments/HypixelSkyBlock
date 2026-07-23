@@ -96,8 +96,7 @@ public class GUICoopInviteSender extends HypixelInventoryGUI implements Refreshi
 
                 player.kick(I18n.string("gui_coop.sender.reconnect_kick", player.getLocale()));
 
-                // Fixed: Use the updated method signature
-                ProfilesDatabase.collection.insertOne(handler.toProfileDocument());
+                new ProfilesDatabase(profileId.toString()).saveDocument(handler.toProfileDocument());
                 coop.memberProfiles().add(profileId);
                 coop.save();
 
