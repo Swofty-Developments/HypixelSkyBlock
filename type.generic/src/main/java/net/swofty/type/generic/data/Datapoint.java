@@ -18,7 +18,7 @@ public abstract class Datapoint<T> {
     @Getter private String key;
     @Getter public T value;
     @Getter protected Serializer<T> serializer;
-    protected Enum<?> data;
+    @Getter protected Enum<?> data;
 
     protected Datapoint(String key, T value, Serializer<T> serializer) {
         this.key = key;
@@ -50,7 +50,10 @@ public abstract class Datapoint<T> {
     public void setFrom(Datapoint<?> other) { this.value = ((Datapoint<T>) other).getValue(); }
 
     @SneakyThrows
-    public void setValueBypassOnChange(T value) { this.value = value; }
+    public void setValueBypassOnChange(T value) {
+        this.value = value;
+        writeThrough(value);
+    }
 
     @SneakyThrows
     public void setValue(T value) {
@@ -59,11 +62,17 @@ public abstract class Datapoint<T> {
         T oldValue = this.value;
         this.value = value;
 
-        // Sync to leaderboard if tracked
         syncToLeaderboard(oldValue, value);
+        writeThrough(value);
 
         Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(dataHandler.getUuid());
         if (player != null && hasOnChange()) triggerOnChange(player, this);
+    }
+
+    protected void writeThrough(T value) {
+        if (dataHandler != null && data instanceof BackedField field) {
+            field.writeData(dataHandler, serializer.serialize(value));
+        }
     }
 
     /**
