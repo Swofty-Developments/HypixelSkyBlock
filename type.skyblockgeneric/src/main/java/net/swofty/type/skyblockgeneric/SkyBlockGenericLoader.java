@@ -285,6 +285,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          * Start data loop
          */
         SkyBlockDataHandler.startRepeatSetValueLoop();
+        net.swofty.type.skyblockgeneric.data.CoopSync.subscribe();
 
         /**
          * Attempt to start the song service

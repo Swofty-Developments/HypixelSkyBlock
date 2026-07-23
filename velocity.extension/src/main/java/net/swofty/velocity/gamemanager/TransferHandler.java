@@ -5,6 +5,8 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PrepareTransferProtocol;
+import java.util.concurrent.TimeUnit;
 import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.commons.redis.RedisClient;
@@ -255,6 +257,14 @@ public record TransferHandler(Player player) {
 							new GivePlayersOriginTypeProtocol(),
 							new GivePlayersOriginTypeProtocol.Request(
 									player.getUniqueId().toString(), originServerType.name()));
+				}
+
+				try {
+					RedisClient.requestServer(serverUUID,
+							new PrepareTransferProtocol(),
+							new PrepareTransferProtocol.Request(player.getUniqueId().toString()))
+							.orTimeout(3, TimeUnit.SECONDS).join();
+				} catch (Exception ignored) {
 				}
 
 				player.createConnectionRequest(toTransferTo).connectWithIndication();

@@ -148,7 +148,7 @@ public class GUICoopInviteTarget extends HypixelInventoryGUI {
 
                 player.kick(I18n.string("gui_coop.target.reconnect_kick", player.getLocale()));
 
-                ProfilesDatabase.collection.insertOne(handler.toProfileDocument());
+                new ProfilesDatabase(profileId.toString()).saveDocument(handler.toProfileDocument());
                 coop.memberProfiles().add(profileId);
                 coop.save();
 

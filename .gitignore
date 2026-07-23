@@ -64,3 +64,5 @@ build/
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
+.claude/
+server/proxy/ViaLoader/

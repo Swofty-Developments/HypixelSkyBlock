@@ -19,6 +19,7 @@ import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.*;
 import net.swofty.commons.redis.ProxyHeartbeat;
@@ -114,6 +115,8 @@ public class Hypixel {
                 new Auth.Velocity(ConfigProvider.settings().getVelocitySecret())
         );
         serverUUID = UUID.randomUUID();
+
+        SwoftyData.bootstrap(ConfigProvider.settings().getRedisUri());
 
         // Initialize GenericLoader
         Reflections reflections = new Reflections("net.swofty.type");

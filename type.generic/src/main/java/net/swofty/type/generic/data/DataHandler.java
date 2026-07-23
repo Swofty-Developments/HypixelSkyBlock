@@ -2,6 +2,9 @@ package net.swofty.type.generic.data;
 
 import lombok.Getter;
 import lombok.NonNull;
+import net.swofty.PlayerField;
+import net.swofty.codec.Codecs;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
@@ -23,6 +26,35 @@ public abstract class DataHandler {
     protected DataHandler(UUID uuid) { this.uuid = uuid; }
 
     public Datapoint<?> getDatapoint(String key) { return this.datapoints.get(key); }
+
+    private static final Map<String, PlayerField<String>> gameFields = new ConcurrentHashMap<>();
+
+    private static PlayerField<String> gameField(String key) {
+        return gameFields.computeIfAbsent(key, k -> PlayerField.create("game", k, Codecs.STRING, null));
+    }
+
+    public void loadBackedData() {
+        for (Datapoint<?> datapoint : datapoints.values()) {
+            String stored = datapoint.getData() instanceof BackedField field
+                    ? field.readData(this)
+                    : SwoftyData.account().get(getUuid(), gameField(datapoint.getKey()));
+            if (stored != null) datapoint.deserializeValue(stored);
+        }
+    }
+
+    public void saveBackedData() {
+        for (Datapoint<?> datapoint : datapoints.values()) {
+            try {
+                String serialized = datapoint.getSerializedValue();
+                if (datapoint.getData() instanceof BackedField field) {
+                    field.writeData(this, serialized);
+                } else {
+                    SwoftyData.account().set(getUuid(), gameField(datapoint.getKey()), serialized);
+                }
+            } catch (Exception ignored) {
+            }
+        }
+    }
 
     public static @NonNull DataHandler getUser(UUID uuid) {
         DataHandler handler = userCache.get(uuid);

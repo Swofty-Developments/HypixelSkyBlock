@@ -6,9 +6,15 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.LinkedField;
+import net.swofty.PlayerField;
+import net.swofty.codec.Codecs;
+import net.swofty.commons.data.NameIndex;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.type.generic.data.BackedField;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
@@ -198,6 +204,16 @@ public class SkyBlockDataHandler extends DataHandler {
         return h;
     }
 
+    public void loadFromApi() {
+        SwoftyData.profile().load(currentProfileId);
+        loadBackedData();
+    }
+
+    public void saveToApi() {
+        saveBackedData();
+        SwoftyData.profile().set(currentProfileId, ProfilesDatabase.DOCUMENT, toProfileDocument().toJson());
+    }
+
     public Map<String, Object> getCoopValues() {
         Map<String, Object> values = new HashMap<>();
         Arrays.stream(Data.values()).forEach(data -> {
@@ -209,14 +225,10 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
-        Document doc = UserDatabase.collection.find(new Document("ignLowercase", name.toLowerCase())).first();
-        if (doc == null) return null;
-        String id = doc.getString("_id");
-        return id != null ? UUID.fromString(id) : null;
+        return NameIndex.lookup(name);
     }
 
-    // Same Data enum as before - unchanged
-    public enum Data {
+    public enum Data implements BackedField {
         EXPERIENCED_STATISTICS("experienced_statistics", false, false, false,
                 DatapointStringList.class, new DatapointStringList("experienced_statistics")),
         PROFILE_NAME("profile_name", false, true, false,
@@ -488,6 +500,8 @@ public class SkyBlockDataHandler extends DataHandler {
         @Getter private final Boolean repeatSetValue;
         @Getter private final Class<? extends Datapoint<?>> type;
         @Getter private final Datapoint<?> defaultDatapoint;
+        private final PlayerField<String> profileField;
+        private final LinkedField<UUID, String> coopField;
         public final BiConsumer<Player, Datapoint<?>> onChange;
         public final BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad;
         public final Function<SkyBlockPlayer, Datapoint<?>> onQuit;
@@ -498,6 +512,35 @@ public class SkyBlockDataHandler extends DataHandler {
             this.key = key; this.isProfilePersistent = isProfilePersistent; this.isCoopPersistent = isCoopPersistent;
             this.repeatSetValue = repeatSetValue; this.type = type; this.defaultDatapoint = defaultDatapoint;
             this.onChange = onChange; this.onLoad = onLoad; this.onQuit = onQuit;
+            if (Boolean.TRUE.equals(isCoopPersistent)) {
+                this.coopField = LinkedField.create("coop", key, Codecs.STRING, null, CoopLinks.COOP);
+                this.profileField = null;
+            } else {
+                this.profileField = PlayerField.create("skyblock", key, Codecs.STRING, null);
+                this.coopField = null;
+            }
+        }
+
+        @Override
+        public String readData(DataHandler handler) {
+            UUID profileId = ((SkyBlockDataHandler) handler).getCurrentProfileId();
+            return coopField != null
+                    ? SwoftyData.profile().get(profileId, coopField)
+                    : SwoftyData.profile().get(profileId, profileField);
+        }
+
+        @Override
+        public void writeData(DataHandler handler, String serialized) {
+            UUID profileId = ((SkyBlockDataHandler) handler).getCurrentProfileId();
+            if (coopField != null) {
+                SwoftyData.profile().set(profileId, coopField, serialized);
+            } else {
+                SwoftyData.profile().set(profileId, profileField, serialized);
+            }
+        }
+
+        public LinkedField<UUID, String> coopField() {
+            return coopField;
         }
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,

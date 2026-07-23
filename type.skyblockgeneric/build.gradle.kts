@@ -26,6 +26,7 @@ dependencies {
     implementation(project(":type.generic"))
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driver.sync)
+    implementation(libs.jedis)
     implementation(libs.tinylog.api)
     implementation(libs.tinylog.impl)
     implementation(libs.minestom) {

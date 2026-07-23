@@ -7,12 +7,14 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.PlayerField;
+import net.swofty.codec.Codecs;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.data.NameIndex;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.*;
-import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.ScheduleUtility;
@@ -144,37 +146,44 @@ public class HypixelDataHandler extends DataHandler {
         return h;
     }
 
+    public void loadFromApi() {
+        SwoftyData.account().load(uuid);
+        loadBackedData();
+        String ign = get(Data.IGN, DatapointString.class).getValue();
+        if (ign != null && !ign.equals("null")) NameIndex.index(ign, uuid);
+    }
+
+    public void saveToApi() {
+        saveBackedData();
+    }
+
     public static HypixelDataHandler getOfOfflinePlayer(UUID uuid) throws RuntimeException {
         if (userCache.containsKey(uuid))
             return (HypixelDataHandler) userCache.get(uuid);
 
-        UserDatabase userDatabase = new UserDatabase(uuid.toString());
-        Document doc = userDatabase.getHypixelData();
-        return createFromDocument(doc);
+        HypixelDataHandler handler = initUserWithDefaultData(uuid);
+        handler.loadFromApi();
+        return handler;
     }
 
     @Blocking
     public static String getPotentialIGNFromUUID(UUID uuid) {
         if (userCache.containsKey(uuid))
             return ((HypixelDataHandler) userCache.get(uuid)).get(Data.IGN, DatapointString.class).getValue();
-        Document doc = ProfilesDatabase.collection.find(new Document("_id", uuid.toString())).first();
-        HypixelDataHandler handler = HypixelDataHandler.createFromDocument(doc);
-        return handler.get(Data.IGN, DatapointString.class).getValue();
+
+        String stored = SwoftyData.account().get(uuid, Data.IGN.field);
+        if (stored == null) return "null";
+        DatapointString dp = new DatapointString("ign");
+        dp.deserializeValue(stored);
+        return dp.getValue();
     }
 
     @Blocking
     public static @Nullable UUID getPotentialUUIDFromName(String name) throws RuntimeException {
-        Document doc = UserDatabase.collection.find(
-                new Document("ignLowercase", "\"" + name.toLowerCase() + "\"")
-        ).first();
-
-        if (doc == null)
-            return null;
-        return UUID.fromString(doc.getString("_id"));
+        return NameIndex.lookup(name);
     }
 
-    /** Account-wide data (non-generic enum). */
-    public enum Data {
+    public enum Data implements BackedField {
         RANK("rank", DatapointRank.class, new DatapointRank("rank", Rank.DEFAULT),
                 (player, datapoint) -> {
             player.sendPacket(MinecraftServer.getCommandManager().createDeclareCommandsPacket(player));
@@ -317,6 +326,7 @@ public class HypixelDataHandler extends DataHandler {
         @Getter private final String key;
         @Getter private final Class<? extends Datapoint<?>> type;
         @Getter private final Datapoint<?> defaultDatapoint;
+        private final PlayerField<String> field;
         public final BiConsumer<Player, Datapoint<?>> onChange;
         public final BiConsumer<Player, Datapoint<?>> onLoad;
         public final Function<Player, Datapoint<?>> onQuit;
@@ -328,7 +338,18 @@ public class HypixelDataHandler extends DataHandler {
              BiConsumer<Player, Datapoint<?>> onLoad,
              Function<Player, Datapoint<?>> onQuit) {
             this.key = key; this.type = type; this.defaultDatapoint = defaultDatapoint;
+            this.field = PlayerField.create("hypixel", key, Codecs.STRING, null);
             this.onChange = onChange; this.onLoad = onLoad; this.onQuit = onQuit;
+        }
+
+        @Override
+        public String readData(DataHandler handler) {
+            return SwoftyData.account().get(handler.getUuid(), field);
+        }
+
+        @Override
+        public void writeData(DataHandler handler, String serialized) {
+            SwoftyData.account().set(handler.getUuid(), field, serialized);
         }
         Data(String key, Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,
              BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<Player, Datapoint<?>> onLoad) {

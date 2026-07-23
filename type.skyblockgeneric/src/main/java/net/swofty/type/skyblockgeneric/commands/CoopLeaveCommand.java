@@ -43,7 +43,7 @@ public class CoopLeaveCommand extends HypixelCommand {
             coop.save();
 
             MinecraftServer.getSchedulerManager().scheduleTask(() -> {
-                ProfilesDatabase.collection.deleteOne(Filters.eq("_id", player.getProfiles().getCurrentlySelected().toString()));
+                ProfilesDatabase.deleteDocument(player.getProfiles().getCurrentlySelected().toString());
 
                 player.getProfiles().removeProfile(player.getProfiles().getCurrentlySelected());
                 player.getProfiles().setCurrentlySelected(player.getProfiles().getProfiles().getFirst());

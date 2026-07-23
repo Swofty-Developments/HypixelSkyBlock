@@ -7,8 +7,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
 import net.swofty.packer.packs.TestingTexture;
+import net.swofty.type.skyblockgeneric.data.CoopLinks;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointString;
@@ -44,47 +46,30 @@ public final class SkyBlockPlayerDataFlow {
         SkyBlockPlayerProfiles profiles = loadProfiles(player);
         UUID profileId = profiles.getCurrentlySelected();
 
-        ProfilesDatabase profileDb = new ProfilesDatabase(profileId.toString());
-        SkyBlockDataHandler handler;
-        boolean shouldPersistProfile = false;
-
-        if (profileDb.exists()) {
-            Document profileDocument = profileDb.getDocument();
-            handler = SkyBlockDataHandler.createFromProfile(playerUuid, profileId, profileDocument);
-        } else {
-            handler = SkyBlockDataHandler.initUserWithDefaultData(playerUuid, profileId);
-            shouldPersistProfile = true;
-        }
+        SkyBlockDataHandler handler = SkyBlockDataHandler.initUserWithDefaultData(playerUuid, profileId);
+        SwoftyData.profile().link(profileId, CoopLinks.COOP, resolveCoopId(profileId));
+        handler.loadFromApi();
 
         DatapointUUID islandDatapoint = handler.get(SkyBlockDataHandler.Data.ISLAND_UUID, DatapointUUID.class);
         UUID islandUuid = islandDatapoint.getValue();
         if (islandUuid == null) {
             islandUuid = profileId;
             islandDatapoint.setValue(islandUuid);
-            shouldPersistProfile = true;
         }
 
         DatapointString profileNameDatapoint = handler.get(SkyBlockDataHandler.Data.PROFILE_NAME, DatapointString.class);
         if (Objects.equals(profileNameDatapoint.getValue(), "null")) {
             profileNameDatapoint.setValue(SkyBlockPlayerProfiles.getRandomName());
-            shouldPersistProfile = true;
         }
 
         SkyBlockDataHandler.skyBlockCache.put(playerUuid, handler);
-
-        if (shouldPersistProfile) {
-            profileDb.saveDocument(handler.toProfileDocument());
-        }
-
         player.setSkyBlockIsland(SkyBlockIsland.getOrCreate(islandUuid, profileId));
     }
 
     public static void postSpawn(SkyBlockPlayer player) {
-        SkyBlockPlayerProfiles profiles = player.getProfiles();
         SkyBlockDataHandler handler = player.getSkyblockDataHandler();
         handler.runOnLoad(player);
 
-        syncCoopValues(player, profiles, handler);
         scheduleRegionRefresh(player);
         sendProfileIntro(player);
     }
@@ -96,18 +81,14 @@ public final class SkyBlockPlayerDataFlow {
         if (handler == null) return;
 
         handler.runOnSave(player);
-
-        UUID profileId = handler.getCurrentProfileId();
-        ProfilesDatabase profileDb = new ProfilesDatabase(profileId.toString());
-        Document newDoc = handler.toProfileDocument();
-
-        if (profileDb.exists()) {
-            ProfilesDatabase.collection.replaceOne(com.mongodb.client.model.Filters.eq("_id", profileId.toString()), newDoc);
-        } else {
-            ProfilesDatabase.collection.insertOne(newDoc);
-        }
-
+        handler.saveToApi();
+        SwoftyData.profile().unload(handler.getCurrentProfileId());
         SkyBlockDataHandler.skyBlockCache.remove(playerUuid);
+    }
+
+    private static UUID resolveCoopId(UUID profileId) {
+        CoopDatabase.Coop coop = CoopDatabase.getFromMemberProfile(profileId);
+        return coop != null ? coop.coopUUID() : profileId;
     }
 
     private static SkyBlockPlayerProfiles loadProfiles(SkyBlockPlayer player) {
@@ -131,37 +112,6 @@ public final class SkyBlockPlayerDataFlow {
         }
 
         return profiles;
-    }
-
-    private static void syncCoopValues(SkyBlockPlayer player, SkyBlockPlayerProfiles profiles, SkyBlockDataHandler handler) {
-        if (!handler.get(SkyBlockDataHandler.Data.IS_COOP, DatapointBoolean.class).getValue()) return;
-
-        CoopDatabase.Coop coop = CoopDatabase.getFromMember(player.getUuid());
-        if (coop == null) return;
-        if (coop.members().size() == 1) return;
-
-        SkyBlockDataHandler sourceData;
-        if (SkyBlockGenericLoader.getLoadedPlayers().stream()
-                .anyMatch(player1 -> !player1.getUuid().equals(player.getUuid()) && coop.members().contains(player1.getUuid()))) {
-            SkyBlockPlayer otherCoopMember = SkyBlockGenericLoader.getLoadedPlayers().stream()
-                    .filter(player1 -> !player1.getUuid().equals(player.getUuid()) && coop.members().contains(player1.getUuid()))
-                    .findFirst()
-                    .get();
-            sourceData = otherCoopMember.getSkyblockDataHandler();
-        } else {
-            UUID finalProfileId = profiles.getCurrentlySelected();
-            sourceData = SkyBlockDataHandler.createFromProfileOnly(
-                    new ProfilesDatabase(coop.memberProfiles().stream()
-                            .filter(uuid -> !uuid.equals(finalProfileId))
-                            .findFirst()
-                            .get().toString()).getDocument()
-            );
-        }
-
-        sourceData.getCoopValues().forEach((key, value) -> {
-            SkyBlockDatapoint<Object> targetDatapoint = (SkyBlockDatapoint<Object>) handler.getSkyBlockDatapoint(key);
-            targetDatapoint.setValueBypassCoop(value);
-        });
     }
 
     private static void scheduleRegionRefresh(SkyBlockPlayer player) {
