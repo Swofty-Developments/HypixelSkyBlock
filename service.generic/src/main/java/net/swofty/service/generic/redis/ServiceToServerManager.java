@@ -3,10 +3,6 @@ package net.swofty.service.generic.redis;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.redis.RedisEnvelope;
-import net.swofty.commons.protocol.objects.data.GetPlayerDataPushProtocol;
-import net.swofty.commons.protocol.objects.data.LockPlayerDataPushProtocol;
-import net.swofty.commons.protocol.objects.data.UnlockPlayerDataPushProtocol;
-import net.swofty.commons.protocol.objects.data.UpdatePlayerDataPushProtocol;
 import net.swofty.commons.protocol.objects.game.GameInformationPushProtocol;
 import net.swofty.commons.protocol.objects.gui.KickFromGUIPushProtocol;
 import net.swofty.redisapi.api.ChannelRegistry;
@@ -165,31 +161,6 @@ public class ServiceToServerManager {
                     });
                     return results;
                 });
-    }
-
-    private static final GetPlayerDataPushProtocol GET_PLAYER_DATA_PROTOCOL = new GetPlayerDataPushProtocol();
-    private static final UpdatePlayerDataPushProtocol UPDATE_PLAYER_DATA_PROTOCOL = new UpdatePlayerDataPushProtocol();
-    private static final LockPlayerDataPushProtocol LOCK_PLAYER_DATA_PROTOCOL = new LockPlayerDataPushProtocol();
-    private static final UnlockPlayerDataPushProtocol UNLOCK_PLAYER_DATA_PROTOCOL = new UnlockPlayerDataPushProtocol();
-
-    public static CompletableFuture<GetPlayerDataPushProtocol.Response> getPlayerData(UUID serverUUID, UUID playerUUID, String dataKey) {
-        return sendToServer(serverUUID, GET_PLAYER_DATA_PROTOCOL,
-                new GetPlayerDataPushProtocol.Request(playerUUID, dataKey));
-    }
-
-    public static CompletableFuture<UpdatePlayerDataPushProtocol.Response> updatePlayerData(UUID serverUUID, UUID playerUUID, String dataKey, String newData) {
-        return sendToServer(serverUUID, UPDATE_PLAYER_DATA_PROTOCOL,
-                new UpdatePlayerDataPushProtocol.Request(playerUUID, dataKey, newData));
-    }
-
-    public static CompletableFuture<Map<UUID, LockPlayerDataPushProtocol.Response>> lockPlayerData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
-        return sendToServers(serverUUIDs, LOCK_PLAYER_DATA_PROTOCOL,
-                new LockPlayerDataPushProtocol.Request(playerUUID, dataKey));
-    }
-
-    public static CompletableFuture<Map<UUID, UnlockPlayerDataPushProtocol.Response>> unlockPlayerData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
-        return sendToServers(serverUUIDs, UNLOCK_PLAYER_DATA_PROTOCOL,
-                new UnlockPlayerDataPushProtocol.Request(playerUUID, dataKey));
     }
 
     private static final KickFromGUIPushProtocol KICK_FROM_GUI_PROTOCOL = new KickFromGUIPushProtocol();

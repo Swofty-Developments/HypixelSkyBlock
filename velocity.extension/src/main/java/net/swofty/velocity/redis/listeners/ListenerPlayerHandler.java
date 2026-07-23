@@ -9,7 +9,6 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.TeleportProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PlayerHandlerProtocol;
@@ -151,16 +150,6 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
                     new RunEventProtocol.Request(uuid.toString(),
                         (String) data.get("event"),
                         (String) data.get("data"))).join();
-            }
-            case REFRESH_COOP_DATA -> {
-                if (potentialServer.isEmpty()) {
-                    return EMPTY;
-                }
-                UUID server = UUID.fromString(potentialServer.get().getServer().getServerInfo().getName());
-                RedisClient.requestServer(server,
-                    new RefreshCoopDataProtocol(),
-                    new RefreshCoopDataProtocol.Request(uuid.toString(),
-                        (String) data.get("datapoint"))).join();
             }
             case MESSAGE -> {
                 String messageToSend = (String) data.get("message");

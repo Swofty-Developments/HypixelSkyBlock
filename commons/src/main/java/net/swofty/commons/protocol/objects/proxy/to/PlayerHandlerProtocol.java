@@ -32,7 +32,6 @@ public class PlayerHandlerProtocol extends RedisProtocol<
         VERSION,
         IS_ONLINE,
         EVENT,
-        REFRESH_COOP_DATA,
         MESSAGE,
         TRANSFER_WITH_UUID,
         GET_SERVER,

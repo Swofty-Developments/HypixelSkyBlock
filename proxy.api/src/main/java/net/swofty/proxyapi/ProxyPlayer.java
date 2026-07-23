@@ -134,9 +134,4 @@ public class ProxyPlayer {
         return future;
     }
 
-    public void refreshCoopData(String datapoint) {
-        RedisClient.requestProxy(PLAYER_HANDLER,
-                new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.REFRESH_COOP_DATA,
-                        Map.of("datapoint", datapoint)));
-    }
 }
