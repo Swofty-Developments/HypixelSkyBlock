@@ -152,6 +152,8 @@ public class PlayerAchievementHandler {
     }
 
     private void onAchievementUnlocked(AchievementDefinition def, AchievementData.AchievementProgress progress) {
+        AchievementStatisticsService.recordUnlock(def, progress);
+
         String tierText = "";
         if (def.getType() == AchievementType.TIERED) {
             tierText = " " + toRoman(progress.getCurrentTier());

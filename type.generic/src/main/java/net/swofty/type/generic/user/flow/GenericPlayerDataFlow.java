@@ -39,6 +39,7 @@ public final class GenericPlayerDataFlow {
         HypixelDataHandler handler = HypixelDataHandler.initUserWithDefaultData(playerUuid);
         handler.loadFromApi();
         HypixelDataHandler.userCache.put(playerUuid, handler);
+        net.swofty.type.generic.achievement.AchievementStatisticsService.recordPlayer(playerUuid);
 
         Locale locale = handler.get(HypixelDataHandler.Data.LOCALE, DatapointLocale.class)
                 .getValue()
