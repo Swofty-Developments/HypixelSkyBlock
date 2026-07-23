@@ -5,8 +5,10 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.instance.block.Block;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.generic.utility.BlockProps;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -20,12 +22,18 @@ public class RandomRegionStrollGoal extends GoalSelector {
     private final List<Vec> closePositions;
     private final Random random = new Random();
     private final RegionType type;
+    private final boolean avoidWater;
 
     private long lastStroll;
 
     public RandomRegionStrollGoal(@NotNull EntityCreature entityCreature, int radius, RegionType type) {
+        this(entityCreature, radius, type, false);
+    }
+
+    public RandomRegionStrollGoal(@NotNull EntityCreature entityCreature, int radius, RegionType type, boolean avoidWater) {
         super(entityCreature);
         this.type = type;
+        this.avoidWater = avoidWater;
         this.closePositions = getNearbyBlocks(radius);
     }
 
@@ -48,7 +56,7 @@ public class RandomRegionStrollGoal extends GoalSelector {
             final Vec position = closePositions.get(index);
 
             final var target = entityCreature.getPosition().add(position);
-            final boolean result = entityCreature.getNavigator().setPathTo(target);
+            final boolean result = ((SkyBlockMob) entityCreature).getVanillaNavigator().pathTo(target);
             if (result) {
                 break;
             }
@@ -81,6 +89,8 @@ public class RandomRegionStrollGoal extends GoalSelector {
                     if (!entityCreature.getInstance().isChunkLoaded(new Pos(entityX, y, entityZ)))
                         entityCreature.getInstance().loadChunk(new Pos(entityX, y, entityZ)).join();
                     Block block = entityCreature.getInstance().getBlock(entityX, y, entityZ);
+
+                    if (avoidWater && BlockProps.isWater(block)) continue;
 
                     if (!block.isAir()) continue;
                 }
