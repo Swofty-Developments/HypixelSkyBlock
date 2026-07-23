@@ -86,7 +86,6 @@ public final class GenericPlayerDataFlow {
         handler.saveToApi();
         syncLeaderboards(uuid, handler);
 
-        UserDatabase userDatabase = new UserDatabase(uuid);
         for (Class<? extends GameDataHandler> handlerClass : HypixelConst.getTypeLoader().getAdditionalDataHandlers()) {
             GameDataHandler gameHandler = GameDataHandlerRegistry.get(handlerClass);
             if (gameHandler == null) continue;
@@ -95,7 +94,7 @@ public final class GenericPlayerDataFlow {
             if (gameDataHandler == null) continue;
 
             gameDataHandler.runOnSave(player);
-            userDatabase.saveData(gameDataHandler);
+            gameDataHandler.saveBackedData();
             syncLeaderboards(uuid, gameDataHandler);
             gameHandler.removeFromCache(uuid);
         }
@@ -110,8 +109,6 @@ public final class GenericPlayerDataFlow {
 
     private static void loadAdditionalHandlers(HypixelPlayer player) {
         UUID playerUuid = player.getUuid();
-        UserDatabase userDatabase = new UserDatabase(playerUuid);
-        Document userDocument = userDatabase.exists() ? userDatabase.getHypixelData() : null;
         List<Class<? extends GameDataHandler>> additionalHandlers = HypixelConst.getTypeLoader().getAdditionalDataHandlers();
 
         for (Class<? extends GameDataHandler> handlerClass : additionalHandlers) {
@@ -121,20 +118,9 @@ public final class GenericPlayerDataFlow {
                 continue;
             }
 
-            Logger.info("Loading {} data for {}", gameHandler.getHandlerId(), player.getUsername());
-
-            DataHandler gameDataHandler;
-            if (userDocument != null && gameHandler.hasDataInDocument(userDocument)) {
-                gameDataHandler = gameHandler.createFromDocument(playerUuid, userDocument);
-            } else {
-                gameDataHandler = gameHandler.initWithDefaults(playerUuid);
-            }
-
+            DataHandler gameDataHandler = gameHandler.initWithDefaults(playerUuid);
+            gameDataHandler.loadBackedData();
             gameHandler.cacheHandler(playerUuid, gameDataHandler);
-
-            if (userDocument == null || !gameHandler.hasDataInDocument(userDocument)) {
-                userDatabase.saveData(gameDataHandler);
-            }
         }
     }
 

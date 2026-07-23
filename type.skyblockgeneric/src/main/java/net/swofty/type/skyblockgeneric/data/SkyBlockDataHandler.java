@@ -206,20 +206,11 @@ public class SkyBlockDataHandler extends DataHandler {
 
     public void loadFromApi() {
         SwoftyData.profile().load(currentProfileId);
-        for (Data data : Data.values()) {
-            String stored = data.readData(this);
-            if (stored != null) get(data).deserializeValue(stored);
-        }
+        loadBackedData();
     }
 
     public void saveToApi() {
-        for (Data data : Data.values()) {
-            try {
-                data.writeData(this, get(data).getSerializedValue());
-            } catch (Exception e) {
-                Logger.error(e, "Failed to save SkyBlock datapoint {} for user {}", data.getKey(), uuid);
-            }
-        }
+        saveBackedData();
     }
 
     public Map<String, Object> getCoopValues() {

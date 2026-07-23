@@ -148,22 +148,13 @@ public class HypixelDataHandler extends DataHandler {
 
     public void loadFromApi() {
         SwoftyData.account().load(uuid);
-        for (Data data : Data.values()) {
-            String stored = data.readData(this);
-            if (stored != null) get(data).deserializeValue(stored);
-        }
+        loadBackedData();
         String ign = get(Data.IGN, DatapointString.class).getValue();
         if (ign != null && !ign.equals("null")) NameIndex.index(ign, uuid);
     }
 
     public void saveToApi() {
-        for (Data data : Data.values()) {
-            try {
-                data.writeData(this, get(data).getSerializedValue());
-            } catch (Exception e) {
-                Logger.error(e, "Failed to save datapoint {} for user {}", data.getKey(), uuid);
-            }
-        }
+        saveBackedData();
     }
 
     public static HypixelDataHandler getOfOfflinePlayer(UUID uuid) throws RuntimeException {
