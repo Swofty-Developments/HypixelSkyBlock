@@ -49,6 +49,7 @@ import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.DoesServerHaveIslandProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PrepareTransferProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
@@ -276,7 +277,8 @@ public class SkyBlockVelocity {
             new TeleportProtocol(), new PlayerSwitchedProtocol(),
             new DoesServerHaveIslandProtocol(), new RefreshCoopDataProtocol(),
             new RunEventProtocol(), new PingServerProtocol(),
-            new GivePlayersOriginTypeProtocol(), new BroadcastStaffChatProtocol()
+            new GivePlayersOriginTypeProtocol(), new BroadcastStaffChatProtocol(),
+            new PrepareTransferProtocol()
         };
         for (RedisProtocol<?, ?> protocol : fromProxyProtocols) {
             RedisClient.registerResponseProtocol(protocol);
