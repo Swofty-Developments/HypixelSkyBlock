@@ -1,194 +1,55 @@
 package net.swofty.type.skyblockgeneric.data;
 
-import net.swofty.commons.ServiceType;
-import net.swofty.commons.UnderstandableProxyServer;
+import net.swofty.LinkedField;
+import net.swofty.api.DataAPIImpl;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocol;
-import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocol;
-import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocol;
-import net.swofty.proxyapi.ProxyInformation;
-import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.ProxyService;
-import org.tinylog.Logger;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 public class DataMutexService {
-    private final ProxyService service;
-    private final ProxyInformation proxyInfo;
 
-    public DataMutexService() {
-        this.service = new ProxyService(ServiceType.DATA_MUTEX);
-        this.proxyInfo = new ProxyInformation();
-    }
-
-    /**
-     * Performs a synchronized operation on shared data across multiple servers
-     *
-     * @param lockKey The key to identify what data to lock (e.g., "bank_data:coop_id")
-     * @param coopMembers List of coop member UUIDs
-     * @param operation Function that receives the latest data and returns modified data (null = no changes)
-     * @param onFailure Callback if the operation fails
-     */
+    @SuppressWarnings("unchecked")
     public <T> void withSynchronizedData(String lockKey, List<UUID> coopMembers,
                                          SkyBlockDataHandler.Data dataType,
                                          Function<T, T> operation,
                                          Runnable onFailure) {
-
-        Logger.info("Starting withSynchronizedData for lockKey: " + lockKey + ", dataType: " + dataType.getKey());
-
-        if (!service.isOnline().join()) {
-            Logger.error("DataMutexService is offline!");
+        UUID coopId = resolveCoopId(coopMembers);
+        LinkedField<UUID, String> field = dataType.coopField();
+        if (coopId == null || field == null) {
             onFailure.run();
             return;
         }
 
-        Logger.info("DataMutexService is online, getting servers for players: " + coopMembers);
+        try (var ignored = ((DataAPIImpl) SwoftyData.profile())
+                .lock("coop:" + dataType.getKey() + ":" + coopId, Duration.ofSeconds(5))) {
+            Serializer<T> serializer = (Serializer<T>) dataType.getDefaultDatapoint().getSerializer();
+            String stored = SwoftyData.profile().getDirect(coopId, field);
+            T current = stored != null
+                    ? serializer.deserialize(stored)
+                    : (T) dataType.getDefaultDatapoint().getValue();
 
-        // Get list of servers where coop members are online
-        getOnlineServersForPlayers(coopMembers).thenAccept(onlineServers -> {
-            Logger.info("Found online servers: " + onlineServers);
-
-            if (onlineServers.isEmpty()) {
-                Logger.error("No online servers found for players: " + coopMembers);
-                onFailure.run();
-                return;
+            T modified = operation.apply(current);
+            if (modified != null) {
+                SwoftyData.profile().setDirect(coopId, field, serializer.serialize(modified));
             }
-
-            // Pick the first player for data synchronization (all coop members share the same data)
-            UUID playerUUID = coopMembers.getFirst();
-            Logger.info("Using playerUUID: " + playerUUID + " for synchronization");
-
-            SynchronizeDataProtocol.SynchronizeDataRequest request =
-                    new SynchronizeDataProtocol.SynchronizeDataRequest(onlineServers, playerUUID, dataType.getKey());
-
-            Logger.info("Sending synchronization request to service...");
-
-            CompletableFuture<SynchronizeDataProtocol.SynchronizeDataResponse> syncFuture =
-                    service.handleRequest(request);
-
-            syncFuture.thenAccept(response -> {
-                if (!response.success()) { onFailure.run(); return; }
-
-                try {
-                    @SuppressWarnings("unchecked")
-                    Serializer<T> ser = (Serializer<T>) dataType.getDefaultDatapoint().getSerializer();
-
-                    // Deserialize as T
-                    T currentData = ser.deserialize(response.synchronizedData());
-
-                    // Apply op as T -> T
-                    T modifiedData = operation.apply(currentData);
-
-                    if (modifiedData != null) {
-                        // Serialize as T
-                        String serializedData = ser.serialize(modifiedData);
-
-                        UpdateSynchronizedDataProtocol.UpdateDataRequest updateRequest =
-                                new UpdateSynchronizedDataProtocol.UpdateDataRequest(
-                                        onlineServers, playerUUID, dataType.getKey(), serializedData);
-
-                        CompletableFuture<UpdateSynchronizedDataProtocol.UpdateDataResponse> updateFuture =
-                                service.handleRequest(updateRequest);
-
-                        updateFuture.thenAccept(updateResponse -> {
-                            Logger.info("Update response: success=" + updateResponse.success() + ", error=" + updateResponse.error());
-
-                            if (!updateResponse.success()) {
-                                // If update fails, unlock the data
-                                Logger.error("Failed to update data: " + updateResponse.error());
-                                unlockData(onlineServers, playerUUID, dataType.getKey());
-                                onFailure.run();
-                            } else {
-                                Logger.info("Data successfully synchronized across all servers!");
-                            }
-                            // Success - data has been synchronized across all servers
-                        }).exceptionally(updateThrowable -> {
-                            Logger.error("Exception during update: " + updateThrowable.getMessage(), updateThrowable);
-                            unlockData(onlineServers, playerUUID, dataType.getKey());
-                            onFailure.run();
-                            return null;
-                        });
-                    } else {
-                        Logger.info("No changes needed, unlocking data...");
-                        // No changes needed, just unlock
-                        unlockData(onlineServers, playerUUID, dataType.getKey());
-                    }
-                } catch (Exception e) {
-                    Logger.error("Exception during data processing: " + e.getMessage(), e);
-                    unlockData(onlineServers, playerUUID, dataType.getKey());
-                    onFailure.run();
-                }
-            }).exceptionally(throwable -> {
-                Logger.error("Exception during synchronization request: " + throwable.getMessage(), throwable);
-                onFailure.run();
-                return null;
-            });
-        }).exceptionally(throwable -> {
-            Logger.error("Exception getting online servers: " + throwable.getMessage(), throwable);
+        } catch (Exception e) {
             onFailure.run();
-            return null;
-        });
-    }
-
-    private CompletableFuture<List<UUID>> getOnlineServersForPlayers(List<UUID> playerUUIDs) {
-        Logger.info("Getting online servers for players: " + playerUUIDs);
-
-        List<CompletableFuture<UnderstandableProxyServer>> futures = new ArrayList<>();
-
-        for (UUID playerUUID : playerUUIDs) {
-            ProxyPlayer proxyPlayer = new ProxyPlayer(playerUUID);
-            futures.add(proxyInfo.getServerInformation(proxyPlayer));
         }
-
-        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenApply(v -> {
-                    List<UUID> onlineServers = new ArrayList<>();
-
-                    for (int i = 0; i < futures.size(); i++) {
-                        UUID playerUUID = playerUUIDs.get(i);
-                        CompletableFuture<UnderstandableProxyServer> future = futures.get(i);
-
-                        try {
-                            UnderstandableProxyServer server = future.get();
-                            Logger.info("Player " + playerUUID + " is on server: " + (server != null ? server.uuid() : "null"));
-
-                            if (server != null && !onlineServers.contains(server.uuid())) {
-                                onlineServers.add(server.uuid());
-                            }
-                        } catch (Exception e) {
-                            Logger.warn("Failed to get server info for player " + playerUUID + ": " + e.getMessage());
-                            // Player might be offline or proxy unreachable
-                            continue;
-                        }
-                    }
-
-                    Logger.info("Final online servers list: " + onlineServers);
-                    return onlineServers;
-                });
     }
 
-    private void unlockData(List<UUID> serverUUIDs, UUID playerUUID, String dataKey) {
-        Logger.info("Unlocking data for player " + playerUUID + " on servers: " + serverUUIDs);
-
-        // Send unlock request to the mutex service, which will then unlock on all servers
-        service.handleRequest(new UnlockDataProtocol.UnlockDataRequest(
-                serverUUIDs, playerUUID, dataKey
-        )).thenAccept(response -> {
-            UnlockDataProtocol.UnlockDataResponse responseObject = (UnlockDataProtocol.UnlockDataResponse) response;
-            Logger.info("Unlock response: success=" + responseObject.success() + ", error=" + responseObject.error());
-
-            if (!responseObject.success()) {
-                Logger.error("Failed to unlock data for player " + playerUUID +
-                        ", dataKey: " + dataKey + " - " + responseObject.error());
-            }
-        }).exceptionally(throwable -> {
-            Logger.error("Error unlocking data: " + throwable.getMessage(), throwable);
-            return null;
-        });
+    private UUID resolveCoopId(List<UUID> coopMembers) {
+        for (UUID member : coopMembers) {
+            SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(member);
+            if (player == null) continue;
+            UUID profileId = player.getSkyblockDataHandler().getCurrentProfileId();
+            return SwoftyData.profile().getLinkKey(profileId, CoopLinks.COOP).orElse(profileId);
+        }
+        return null;
     }
 }

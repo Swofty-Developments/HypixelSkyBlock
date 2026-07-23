@@ -537,6 +537,10 @@ public class SkyBlockDataHandler extends DataHandler {
                 SwoftyData.profile().set(profileId, profileField, serialized);
             }
         }
+
+        public LinkedField<UUID, String> coopField() {
+            return coopField;
+        }
         Data(String key, Boolean isProfilePersistent, Boolean isCoopPersistent, Boolean repeatSetValue,
              Class<? extends Datapoint<?>> type, Datapoint<?> defaultDatapoint,
              BiConsumer<Player, Datapoint<?>> onChange, BiConsumer<SkyBlockPlayer, Datapoint<?>> onLoad) {
