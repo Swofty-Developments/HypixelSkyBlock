@@ -85,6 +85,7 @@ import net.swofty.velocity.packet.listener.PlayerMovementListener;
 import net.swofty.velocity.presence.PresencePublisher;
 import net.swofty.velocity.redis.RedisHandlerRegistry;
 import net.swofty.velocity.redis.listeners.ListenerStaffChat;
+import net.swofty.velocity.redis.listeners.ListenerStorePurchaseFulfillment;
 import net.swofty.velocity.testflow.TestFlowManager;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
 import net.swofty.velocity.viaversion.loader.SkyBlockPlatformLoader;
@@ -261,6 +262,7 @@ public class SkyBlockVelocity {
         new AuthenticationDatabase(new UUID(0, 0)).connect(ConfigProvider.settings().getMongodb());
         UserDatabase.connect(ConfigProvider.settings().getMongodb());
         CoopDatabase.connect(ConfigProvider.settings().getMongodb());
+        ListenerStorePurchaseFulfillment.startRankExpirationReconciler();
 
         // Setup Redis
         RedisAPI.generateInstance(ConfigProvider.settings().getRedisUri());

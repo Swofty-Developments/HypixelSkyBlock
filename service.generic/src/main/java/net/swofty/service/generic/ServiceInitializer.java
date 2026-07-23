@@ -58,6 +58,7 @@ public class ServiceInitializer {
 
         RedisAPI.getInstance().startListeners();
         Logger.info("Service {} initialized!", service.getType().name());
+        service.onReady();
 
         try {
             new CountDownLatch(1).await();
