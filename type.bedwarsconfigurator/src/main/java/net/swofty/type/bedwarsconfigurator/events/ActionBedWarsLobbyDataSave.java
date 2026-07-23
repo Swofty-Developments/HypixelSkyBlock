@@ -28,11 +28,8 @@ public class ActionBedWarsLobbyDataSave implements HypixelEventClass {
 
         // Run onSave callbacks for basic Hypixel functionality
         handler.runOnSave(player);
+        handler.saveBackedData();
 
-        UserDatabase userDatabase = new UserDatabase(uuid);
-        userDatabase.saveData(handler);
-
-        // Remove from cache
         BedWarsDataHandler.userCache.remove(uuid);
 
         Logger.info("Successfully saved BedWars account data for: " + player.getUsername());

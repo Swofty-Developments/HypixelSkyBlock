@@ -29,7 +29,7 @@ public class ActionPlayerRavengardDataSave implements HypixelEventClass {
         Logger.info("Saving Ravengard data for: {}", player.getUsername());
 
         handler.runOnSave(player);
-        new UserDatabase(playerUuid).saveData(handler);
+        handler.saveBackedData();
         RavengardDataHandler.ravengardCache.remove(playerUuid);
 
         Logger.info("Successfully saved Ravengard data for: {}", player.getUsername());

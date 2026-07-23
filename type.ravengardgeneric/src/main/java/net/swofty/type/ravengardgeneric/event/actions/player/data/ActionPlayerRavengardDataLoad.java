@@ -24,17 +24,8 @@ public class ActionPlayerRavengardDataLoad implements HypixelEventClass {
 
         Logger.info("Loading Ravengard data for: {}", player.getUsername());
 
-        UserDatabase userDatabase = new UserDatabase(playerUuid);
-        Document userDocument = userDatabase.getHypixelData();
-
-        RavengardDataHandler handler;
-        if (RavengardDataHandler.hasDataInDocument(userDocument)) {
-            handler = RavengardDataHandler.createFromDocument(playerUuid, userDocument);
-        } else {
-            handler = RavengardDataHandler.initUserWithDefaultData(playerUuid);
-            userDatabase.saveData(handler);
-        }
-
+        RavengardDataHandler handler = RavengardDataHandler.initUserWithDefaultData(playerUuid);
+        handler.loadBackedData();
         RavengardDataHandler.ravengardCache.put(playerUuid, handler);
         Logger.info("Successfully loaded Ravengard data for: {}", player.getUsername());
     }

@@ -160,9 +160,9 @@ public class RavengardDataHandler extends DataHandler {
             return ravengardCache.get(uuid);
         }
 
-        UserDatabase userDatabase = new UserDatabase(uuid.toString());
-        Document document = userDatabase.getHypixelData();
-        return createFromDocument(uuid, document);
+        RavengardDataHandler handler = initUserWithDefaultData(uuid);
+        handler.loadBackedData();
+        return handler;
     }
 
     public enum Data {

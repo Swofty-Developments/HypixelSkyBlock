@@ -24,18 +24,9 @@ public class ActionBedWarsLobbyDataLoad implements HypixelEventClass {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         UUID playerUuid = player.getUuid();
 
-        UserDatabase userDatabase = new UserDatabase(playerUuid);
-        BedWarsDataHandler handler;
-
-        if (userDatabase.exists()) {
-            Document userDocument = userDatabase.getHypixelData();
-            handler = BedWarsDataHandler.createFromDocument(userDocument);
-            BedWarsDataHandler.bedwarsCache.put(playerUuid, handler);
-        } else {
-            handler = BedWarsDataHandler.initUserWithDefaultData(playerUuid);
-            BedWarsDataHandler.bedwarsCache.put(playerUuid, handler);
-            userDatabase.saveData(handler);
-        }
+        BedWarsDataHandler handler = BedWarsDataHandler.initUserWithDefaultData(playerUuid);
+        handler.loadBackedData();
+        BedWarsDataHandler.bedwarsCache.put(playerUuid, handler);
 
         Logger.info("Successfully loaded BedWars data for player: " + player.getUsername());
     }
