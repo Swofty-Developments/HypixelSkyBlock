@@ -32,6 +32,7 @@ dependencies {
     compileOnly(files("velocity-3.5.0-SNAPSHOT-576.jar"))
 
     implementation(libs.atlas.redis)
+    implementation(libs.jedis)
     implementation(project(":commons"))
     implementation(project(":proxy.api"))
     implementation(libs.mongodb.bson)
