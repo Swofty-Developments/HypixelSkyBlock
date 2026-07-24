@@ -39,7 +39,11 @@ import net.swofty.type.generic.block.BannerBlockHandler;
 import net.swofty.type.generic.block.PlayerHeadBlockHandler;
 import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
+import net.swofty.type.generic.data.domain.AccountDomain;
+import net.swofty.type.generic.data.domain.GameDomain;
+import net.swofty.type.generic.data.domain.PlayerDataService;
 import net.swofty.type.generic.data.HypixelDataHandler;
 import net.swofty.type.generic.data.handlers.ArcadeDataHandler;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
@@ -250,6 +254,12 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         GameDataHandlerRegistry.register(new SkywarsDataHandler());
         GameDataHandlerRegistry.register(new ReplayDataHandler());
         GameDataHandlerRegistry.register(new ArcadeDataHandler());
+
+        PlayerDataService.register(new AccountDomain());
+        for (Class<? extends GameDataHandler> gameHandlerClass : loader.getAdditionalDataHandlers()) {
+            GameDataHandler gameHandler = GameDataHandlerRegistry.get(gameHandlerClass);
+            if (gameHandler != null) PlayerDataService.register(new GameDomain(gameHandler));
+        }
 
         // Register Block Handlers
         MinecraftServer.getBlockManager().registerHandler(PlayerHeadBlockHandler.KEY, PlayerHeadBlockHandler::new);

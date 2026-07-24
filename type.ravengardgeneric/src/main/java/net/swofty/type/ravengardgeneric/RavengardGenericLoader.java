@@ -33,6 +33,7 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
     @SneakyThrows
     public void initialize(MinecraftServer server) {
         RavengardGenericLoader.server = server;
+        net.swofty.type.generic.data.domain.PlayerDataService.register(new net.swofty.type.ravengardgeneric.data.RavengardDomain());
 
         loopThroughPackage("net.swofty.type.ravengardgeneric.event.actions", HypixelEventClass.class)
                 .forEach(HypixelEventHandler::registerEventMethods);

@@ -13,6 +13,8 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.data.NameIndex;
 import net.swofty.commons.data.SwoftyData;
+import net.swofty.type.generic.data.domain.AccountDomain;
+import net.swofty.type.generic.data.domain.PlayerDataService;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -34,17 +36,15 @@ public class HypixelDataHandler extends DataHandler {
     public HypixelDataHandler(UUID uuid) { super(uuid); }
 
     public static HypixelDataHandler getUser(UUID uuid) {
-        HypixelDataHandler handler = (HypixelDataHandler) userCache.get(uuid);
-        if (handler == null) throw new RuntimeException("User " + uuid + " does not exist!");
-        return handler;
+        return PlayerDataService.get(AccountDomain.KEY, uuid);
     }
 
     public static @Nullable HypixelDataHandler getUser(Player player) {
-        return (HypixelDataHandler) userCache.get(player.getUuid());
+        return PlayerDataService.find(AccountDomain.KEY, player.getUuid()).orElse(null);
     }
 
     public static java.util.Optional<HypixelDataHandler> findHypixelUser(UUID uuid) {
-        return java.util.Optional.ofNullable((HypixelDataHandler) userCache.get(uuid));
+        return PlayerDataService.find(AccountDomain.KEY, uuid);
     }
 
     public static java.util.Optional<HypixelDataHandler> awaitHypixelUser(UUID uuid, long timeoutMillis) {
@@ -158,8 +158,8 @@ public class HypixelDataHandler extends DataHandler {
     }
 
     public static HypixelDataHandler getOfOfflinePlayer(UUID uuid) throws RuntimeException {
-        if (userCache.containsKey(uuid))
-            return (HypixelDataHandler) userCache.get(uuid);
+        HypixelDataHandler cached = PlayerDataService.find(AccountDomain.KEY, uuid).orElse(null);
+        if (cached != null) return cached;
 
         HypixelDataHandler handler = initUserWithDefaultData(uuid);
         handler.loadFromApi();
@@ -168,8 +168,8 @@ public class HypixelDataHandler extends DataHandler {
 
     @Blocking
     public static String getPotentialIGNFromUUID(UUID uuid) {
-        if (userCache.containsKey(uuid))
-            return ((HypixelDataHandler) userCache.get(uuid)).get(Data.IGN, DatapointString.class).getValue();
+        HypixelDataHandler cached = PlayerDataService.find(AccountDomain.KEY, uuid).orElse(null);
+        if (cached != null) return cached.get(Data.IGN, DatapointString.class).getValue();
 
         String stored = SwoftyData.account().get(uuid, Data.IGN.field);
         if (stored == null) return "null";

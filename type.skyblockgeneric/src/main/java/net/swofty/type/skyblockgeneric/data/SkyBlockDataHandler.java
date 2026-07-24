@@ -17,6 +17,7 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.data.BackedField;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
+import net.swofty.type.generic.data.domain.PlayerDataService;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointDouble;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
@@ -54,9 +55,6 @@ import java.util.function.Function;
 
 public class SkyBlockDataHandler extends DataHandler {
 
-    // SkyBlock specific cache
-    public static final Map<UUID, SkyBlockDataHandler> skyBlockCache = new ConcurrentHashMap<>();
-
     @Getter
     private UUID currentProfileId;
 
@@ -67,12 +65,11 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     public static SkyBlockDataHandler getUser(UUID uuid) {
-        if (!skyBlockCache.containsKey(uuid)) throw new RuntimeException("User " + uuid + " does not exist!");
-        return skyBlockCache.get(uuid);
+        return PlayerDataService.get(SkyBlockDomain.KEY, uuid);
     }
 
     public static @Nullable SkyBlockDataHandler getUser(HypixelPlayer player) {
-        try { return getUser(player.getUuid()); } catch (Exception e) { return null; }
+        return PlayerDataService.find(SkyBlockDomain.KEY, player.getUuid()).orElse(null);
     }
 
     public static SkyBlockDataHandler createFromProfileOnly(Document profileDoc) {
@@ -156,8 +153,8 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     public static SkyBlockDataHandler getProfileOfOfflinePlayer(UUID uuid, UUID profileUUID) throws RuntimeException {
-        if (skyBlockCache.containsKey(uuid))
-            return skyBlockCache.get(uuid);
+        SkyBlockDataHandler cached = PlayerDataService.find(SkyBlockDomain.KEY, uuid).orElse(null);
+        if (cached != null) return cached;
 
         if (profileUUID == null)
             throw new RuntimeException("No profile selected for user " + uuid.toString());
