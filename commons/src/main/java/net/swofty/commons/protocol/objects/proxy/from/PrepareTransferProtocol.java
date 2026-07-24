@@ -22,6 +22,6 @@ public class PrepareTransferProtocol extends RedisProtocol<
         return RETURN_SERIALIZER;
     }
 
-    public record Request(String uuid) {}
+    public record Request(String uuid, String originType) {}
     public record Response(boolean ready) {}
 }

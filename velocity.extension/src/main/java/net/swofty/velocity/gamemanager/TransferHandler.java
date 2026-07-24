@@ -4,7 +4,6 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
-import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.PrepareTransferProtocol;
 import java.util.concurrent.TimeUnit;
 import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
@@ -152,13 +151,17 @@ public record TransferHandler(Player player) {
 			UUID serverUUID = UUID.fromString(manualPick.getServerInfo().getName());
 			UUID originServerUUID = UUID.fromString(originServer.getServerInfo().getName());
 
-			RedisClient.requestServer(serverUUID,
-					new GivePlayersOriginTypeProtocol(),
-					new GivePlayersOriginTypeProtocol.Request(
-							player.getUniqueId().toString(), originServerType.name()));
-
 			playersGoalServerType.remove(player);
 			playersOriginServer.remove(player);
+
+			try {
+				RedisClient.requestServer(serverUUID,
+						new PrepareTransferProtocol(),
+						new PrepareTransferProtocol.Request(player.getUniqueId().toString(),
+								originServerType != null ? originServerType.name() : null))
+						.orTimeout(3, TimeUnit.SECONDS).join();
+			} catch (Exception ignored) {
+			}
 
 			GameManager.GameServer manualPickAsGame = GameManager.getFromUUID(serverUUID);
 			player.sendMessage(Component.text("§7Sending to server " + manualPickAsGame.displayName() + "..."));
@@ -198,13 +201,17 @@ public record TransferHandler(Player player) {
 			UUID sendingToServerUUID = server.internalID();
 			ServerType originServerType = GameManager.getTypeFromRegisteredServer(originServer);
 
-			RedisClient.requestServer(sendingToServerUUID,
-					new GivePlayersOriginTypeProtocol(),
-					new GivePlayersOriginTypeProtocol.Request(
-							player.getUniqueId().toString(), originServerType.name()));
-
 			playersOriginServer.remove(player);
 			playersGoalServerType.remove(player);
+
+			try {
+				RedisClient.requestServer(sendingToServerUUID,
+						new PrepareTransferProtocol(),
+						new PrepareTransferProtocol.Request(player.getUniqueId().toString(),
+								originServerType != null ? originServerType.name() : null))
+						.orTimeout(3, TimeUnit.SECONDS).join();
+			} catch (Exception ignored) {
+			}
 
 			player.sendMessage(Component.text("§7Sending to server " + server.displayName() + "..."));
 			player.createConnectionRequest(server.registeredServer()).connectWithIndication();
@@ -251,23 +258,24 @@ public record TransferHandler(Player player) {
 				playersOriginServer.remove(player);
 
 				UUID serverUUID = UUID.fromString(toTransferTo.getServerInfo().getName());
-
-				if (originServer != null && originServerType != null) {
-					RedisClient.requestServer(serverUUID,
-							new GivePlayersOriginTypeProtocol(),
-							new GivePlayersOriginTypeProtocol.Request(
-									player.getUniqueId().toString(), originServerType.name()));
-				}
+				String originName = originServerType != null ? originServerType.name() : null;
 
 				try {
 					RedisClient.requestServer(serverUUID,
 							new PrepareTransferProtocol(),
-							new PrepareTransferProtocol.Request(player.getUniqueId().toString()))
+							new PrepareTransferProtocol.Request(player.getUniqueId().toString(), originName))
 							.orTimeout(3, TimeUnit.SECONDS).join();
 				} catch (Exception ignored) {
 				}
 
 				player.createConnectionRequest(toTransferTo).connectWithIndication();
+
+				if (originServer != null && originServerType != null) {
+					RedisClient.requestServer(UUID.fromString(originServer.getServerInfo().getName()),
+							new PlayerSwitchedProtocol(),
+							new PlayerSwitchedProtocol.Request(player.getUniqueId().toString()));
+				}
+
 				future.complete(null);
 			} catch (Exception e) {
 				future.completeExceptionally(e);

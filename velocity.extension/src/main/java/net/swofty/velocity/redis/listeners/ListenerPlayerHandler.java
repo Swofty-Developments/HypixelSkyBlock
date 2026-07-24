@@ -8,7 +8,6 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.RedisProtocol;
-import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.TeleportProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.PlayerHandlerProtocol;
