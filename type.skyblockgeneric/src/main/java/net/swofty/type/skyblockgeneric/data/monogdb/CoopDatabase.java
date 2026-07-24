@@ -1,66 +1,62 @@
 package net.swofty.type.skyblockgeneric.data.monogdb;
 
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
+import net.swofty.commons.data.SwoftyData;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.bson.Document;
+import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class CoopDatabase {
-    public static MongoDatabase database;
-    public static MongoCollection<Document> collection;
+    private static final String COOP_PREFIX = "hsb:coop:";
+    private static final String BY_MEMBER = "hsb:coop:bymember";
+    private static final String BY_PROFILE = "hsb:coop:byprofile";
 
     public static void connect(MongoClient client) {
-        database = client.getDatabase("Minestom");
-        collection = database.getCollection("coop");
     }
 
     public void save(Coop coop) {
-        if (coop.members.isEmpty() && coop.memberInvites.isEmpty()) {
-            collection.deleteOne(Filters.eq("_id", coop.coopUUID.toString()));
-            return;
-        }
+        try (Jedis jedis = SwoftyData.jedisPool().getResource()) {
+            String existing = jedis.get(COOP_PREFIX + coop.coopUUID);
+            if (existing != null) {
+                Coop old = Coop.deserialize(Document.parse(existing));
+                old.members.forEach(uuid -> jedis.hdel(BY_MEMBER, uuid.toString()));
+                old.memberInvites.forEach(uuid -> jedis.hdel(BY_MEMBER, uuid.toString()));
+                old.memberProfiles.forEach(uuid -> jedis.hdel(BY_PROFILE, uuid.toString()));
+            }
 
-        Document document = coop.serialize();
-        if (collection.find(Filters.eq("_id", coop.coopUUID.toString())).first() != null) {
-            collection.replaceOne(Filters.eq("_id", coop.coopUUID.toString()), document);
-        } else {
-            collection.insertOne(document);
+            if (coop.members.isEmpty() && coop.memberInvites.isEmpty()) {
+                jedis.del(COOP_PREFIX + coop.coopUUID);
+                return;
+            }
+
+            jedis.set(COOP_PREFIX + coop.coopUUID, coop.serialize().toJson());
+            coop.members.forEach(uuid -> jedis.hset(BY_MEMBER, uuid.toString(), coop.coopUUID.toString()));
+            coop.memberInvites.forEach(uuid -> jedis.hset(BY_MEMBER, uuid.toString(), coop.coopUUID.toString()));
+            coop.memberProfiles.forEach(uuid -> jedis.hset(BY_PROFILE, uuid.toString(), coop.coopUUID.toString()));
         }
     }
 
     public static Coop getFromMember(UUID member) {
-        // Search through all coop documents and find the one that contains the UUID the list Members or MembersInvited
-        for (Document document : collection.find()) {
-            List<String> members = (List<String>) document.get("members");
-            List<String> memberInvites = (List<String>) document.get("memberInvites");
-
-            if (members.contains(member.toString()) || memberInvites.contains(member.toString())) {
-                return Coop.deserialize(document);
-            }
-        }
-
-        return null;
+        return lookup(BY_MEMBER, member);
     }
 
     public static Coop getFromMemberProfile(UUID memberProfile) {
-        // Search through all coop documents and find the one that contains the UUID in the memberProfiles list
-        for (Document document : collection.find()) {
-            List<String> memberProfiles = (List<String>) document.get("memberProfiles");
+        return lookup(BY_PROFILE, memberProfile);
+    }
 
-            if (memberProfiles.contains(memberProfile.toString())) {
-                return Coop.deserialize(document);
-            }
+    private static Coop lookup(String index, UUID key) {
+        try (Jedis jedis = SwoftyData.jedisPool().getResource()) {
+            String coopId = jedis.hget(index, key.toString());
+            if (coopId == null) return null;
+            String json = jedis.get(COOP_PREFIX + coopId);
+            return json == null ? null : Coop.deserialize(Document.parse(json));
         }
-
-        return null;
     }
 
     public static Coop getClean(UUID originator) {
@@ -91,7 +87,6 @@ public class CoopDatabase {
             Document document = new Document("_id", coopUUID.toString());
             document.put("originator", originator.toString());
 
-            // Convert UUIDs to strings
             List<String> members = new ArrayList<>();
             this.members.forEach(uuid -> members.add(uuid.toString()));
             document.put("members", members);
