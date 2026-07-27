@@ -7,6 +7,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import java.util.stream.Stream;
+
 public class NPCHaymitch extends HypixelNPC {
     public NPCHaymitch() {
         super(new HumanConfiguration() {
@@ -42,5 +44,28 @@ public class NPCHaymitch extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent event) {
 
+    }
+
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("first-interaction").lines(new String[]{
+                                "There's lots to do in the " + ChatColor.DARK_RED + "Spider's Den" + ChatColor.WHITE + ".",
+                                "Behind me is the " + ChatColor.DARK_RED + "Spiders Mound" + ChatColor.WHITE + ".",
+                                "Be careful, though! The " + ChatColor.DARK_RED + "Broodmother" + ChatColor.WHITE + " has made the summit home, and she's quite tenacious!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("before-enter-spider-mound").lines(new String[]{
+                                "Try to reach the top of the " + ChatColor.RED + "Spider Mound" + ChatColor.WHITE + ".",
+                                "Once there, test yourself against the " + ChatColor.DARK_RED + "Broodmother" + ChatColor.WHITE + ", if you're up to the challenge!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("after-enter-spider-mound").lines(new String[]{
+                                "Wow you're quite strong!.",
+                                "Unfortunately, there's always bigger fish. Or, in this case, a bigger spider.",
+                                "But, for now, you should hone your skills until you reach " + ChatColor.GREEN + "Combat Skill Level 12" + ChatColor.WHITE + ", and then travel to " + ChatColor.DARK_PURPLE + "The End" + ChatColor.WHITE + "."
+                        }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }

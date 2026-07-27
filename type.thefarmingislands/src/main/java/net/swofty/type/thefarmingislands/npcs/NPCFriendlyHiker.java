@@ -9,6 +9,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
+import java.util.stream.Stream;
+
 public class NPCFriendlyHiker extends HypixelNPC {
     public NPCFriendlyHiker() {
         super(new HumanConfiguration() {
@@ -42,5 +44,32 @@ public class NPCFriendlyHiker extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
+    }
+
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("introduction").lines(new String[]{
+                                "My hiking buddy has been missing for a couple days...",
+                                "He said he was going to go explore the gorge, but that was a while ago.",
+                                "I'm getting worried, could you go check on him?"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("saving-hungry-hiker").lines(new String[]{
+                                "Thank you for saving my friend!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("failed-to-feed-hungry-hiker").lines(new String[]{
+                                "My hiking buddy still hasn't returned. I'm afraid the worst has happened and he's starved to death...",
+                                "I'm going to send someone down soon to find him."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("5-days-after-hungry-hiker-died").lines(new String[]{
+                                "My last hiking buddy didn't make it out of the gorge...",
+                                "My new hiking buddy went there a couple days ago to explore but he hasn't come back!",
+                                "Could you go check up on him?"
+                        }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }

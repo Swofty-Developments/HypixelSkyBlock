@@ -1,13 +1,13 @@
 package net.swofty.type.thefarmingislands.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.commons.ChatColor;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+
+import java.util.stream.Stream;
 
 public class NPCMoby extends HypixelNPC {
     public NPCMoby() {
@@ -42,5 +42,55 @@ public class NPCMoby extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
+    }
+
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("first-interaction").lines(new String[]{
+                                "So listen.",
+                                "The other day I was chumming with my chums.",
+                                "One of them yaps and I say, \"ever tried my tonic\"?",
+                                "So yeah, I come back to my crib, right?",
+                                "And listen, I've never seen anybody down here, but you seem like a nice fellow.",
+                                "So just bring me " + ChatColor.GREEN + "8 Glowing Mushrooms" + ChatColor.WHITE + " and I'll show you how to chum, alright buddy?"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("after-bringing-8-glowing-mushrooms").lines(new String[]{
+                                "Ok listen now, I practice a secret chumming technique.",
+                                "It's reverse-chumming!",
+                                "Instead of chumming, it's the sea creatures giving you " + ChatColor.GREEN + "Chums" + ChatColor.WHITE + ".",
+                                "Listen, it's very easy.",
+                                "First we trade a Chum Bucket, ok?",
+                                "Just click me!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("before-buying-an-empty-chum-bucket").lines(new String[]{
+                                "Just click me!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("after-buying-an-empty-chum-bucket").lines(new String[]{
+                                "First you place down the bucket near water, right?",
+                                "Then use a fishing rod and throw a line in said water.",
+                                "Ok and you wait now. That part is easier with YOUR chums.",
+                                "Listen, time is shorter with friends.",
+                                "After waiting you kill a sea creature and get a " + ChatColor.GREEN + "Chums" + ChatColor.WHITE + ".",
+                                "You put it in the bucket and someday it's filled.",
+                                "Then listen you bring me the filled bucket, ok?"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("bringing-a-full-chum-bucket").lines(new String[]{
+                                "Wow ok listen that's good.",
+                                "You are the chumming expert ok?",
+                                "Listen. I also have some good items for your chumming.",
+                                "And I have this really good tonic. It's a really good tonic, ok?",
+                                "So get mushrooms, fill chum buckets, trade tonics! Easy chums!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("not-bringing-the-correct-items").lines(new String[]{
+                                "Come back with the right amount of items!"
+                        }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }

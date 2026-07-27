@@ -1,13 +1,12 @@
 package net.swofty.type.thefarmingislands.npcs;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
+import net.swofty.type.generic.user.HypixelPlayer;
+
+import java.util.stream.Stream;
 
 public class NPCFarmerJon extends HypixelNPC {
     public NPCFarmerJon() {
@@ -42,5 +41,17 @@ public class NPCFarmerJon extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
+    }
+
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("introduction").lines(new String[]{
+                                "I've been living on this island for 10 years.",
+                                "Before that, I used to compete in sugar cane contests.",
+                                "I've now retired to this house to live out the rest of my days."
+                        }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }

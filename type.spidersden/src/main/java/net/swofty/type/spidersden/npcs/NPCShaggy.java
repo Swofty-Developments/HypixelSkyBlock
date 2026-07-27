@@ -7,6 +7,8 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
+import java.util.stream.Stream;
+
 public class NPCShaggy extends HypixelNPC {
     public NPCShaggy() {
         super(new HumanConfiguration() {
@@ -42,5 +44,33 @@ public class NPCShaggy extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent event) {
 
+    }
+
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("first-interaction").lines(new String[]{
+                                "I used to think this world was peaceful, but there are some beings in this world that are stronger than I could ever hope to handle...",
+                                "This spider, " + ChatColor.DARK_RED + "Arachne" + ChatColor.WHITE + " - it's way out of my league...",
+                                "I can barely defeat her " + ChatColor.DARK_PURPLE + "Keepers" + ChatColor.WHITE + "..."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("holding-arachne-fragment").lines(new String[]{
+                                "Wow, you actually challenged that old witch Arachne, you have some potential kid...",
+                                "Have you heard about the rare relics on this island?",
+                                "Legend says they are infused with an evil deities strength, the truth is it is her power.",
+                                "If you help me find those Relics I will tell you everything I know about the creature."
+                        }).build(),
+                DialogueSet.builder()
+                        .key("bringing-required-materials").lines(new String[]{
+                                "Great, this is everything I need! With this I can make the crystal.",
+                                "* Hammer and drilling sounds *",
+                                "* Glass breaking *",
+                                "Here ya go, if you put this on the alter, it will drag that retched creature to this world.",
+                                "But be warned, she is strong, and I have it set up to drag her back if she is not defeated in 10 minutes, for the safety of this whole world.",
+                                "I wish you good luck!"
+                        }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }

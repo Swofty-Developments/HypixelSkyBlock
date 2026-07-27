@@ -2,10 +2,13 @@ package net.swofty.type.spidersden.npcs;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ChatColor;
+import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
+
+import java.util.stream.Stream;
 
 public class NPCGrandmaWolf extends HypixelNPC {
     public NPCGrandmaWolf() {
@@ -43,5 +46,51 @@ public class NPCGrandmaWolf extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent event) {
 
+    }
+
+    @Override
+    public DialogueSet[] dialogues(HypixelPlayer player) {
+        return Stream.of(
+                DialogueSet.builder()
+                        .key("first-interaction").lines(new String[]{
+                                "Oh, " + player.getFullDisplayName() + ChatColor.WHITE + "! I'm having a conundrum! There's so much to kill, yet so little time.",
+                                "I've added the " + ChatColor.GREEN + "Grandma Wolf Pet" + ChatColor.WHITE + " to your " + ChatColor.GREEN + "Pets Menu" + ChatColor.WHITE + ".",
+                                "The Grandma Wolf is particularly adept at combos. The more mobs you kill in quick succession, the better!",
+                                "If you reach high enough " + ChatColor.GOLD + "Bestiary Milestones" + ChatColor.WHITE + ", I will increase the rarity of this pet!",
+                                "The pet does not need to be spawned for combos to work! Happy hunting!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("before-bestiary-10").lines(new String[]{
+                                "There you go! I've upgraded your " + ChatColor.GREEN + "Grandma Wolf Pet" + ChatColor.WHITE + " to " + ChatColor.GREEN + "Uncommon" + ChatColor.WHITE + "!",
+                                "Come back when you've reached " + ChatColor.GOLD + "Bestiary Milestone X" + ChatColor.WHITE + " to upgrade it to " + ChatColor.BLUE + "Rare" + ChatColor.WHITE + "!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("before-bestiary-15").lines(new String[]{
+                                "There you go! I've upgraded your " + ChatColor.BLUE + "Grandma Wolf Pet" + ChatColor.WHITE + " to " + ChatColor.BLUE + "Rare" + ChatColor.WHITE + "!",
+                                "Come back when you've reached " + ChatColor.GOLD + "Bestiary Milestone XV" + ChatColor.WHITE + " to upgrade it to " + ChatColor.DARK_PURPLE + "Epic" + ChatColor.WHITE + "!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("before-bestiary-20").lines(new String[]{
+                                "There you go! I've upgraded your " + ChatColor.DARK_PURPLE + "Grandma Wolf Pet" + ChatColor.WHITE + " to " + ChatColor.DARK_PURPLE + "Epic" + ChatColor.WHITE + "!",
+                                "Come back when you've reached " + ChatColor.GOLD + "Bestiary Milestone XX" + ChatColor.WHITE + " to upgrade it to " + ChatColor.GOLD + "Legendary" + ChatColor.WHITE + "!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("after-bestiary-20").lines(new String[]{
+                                "There you go! I've upgraded your " + ChatColor.GOLD + "Grandma Wolf Pet" + ChatColor.WHITE + " to " + ChatColor.GOLD + "Legendary" + ChatColor.WHITE + "!",
+                                "I'm afraid that's all I can do for you. Thank you for helping this little old Grandma!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("pet-is-already-legendary").lines(new String[]{
+                                "I've already upgraded your pet to the maximum tier! Leave this little old Grandma alone!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("losing-pet").lines(new String[]{
+                                "I'm afraid you don't have a " + ChatColor.GOLD + "Grandma Wolf Pet" + ChatColor.WHITE + "! Leave this little old Grandma alone!"
+                        }).build(),
+                DialogueSet.builder()
+                        .key("without-bestiary-requirement").lines(new String[]{
+                                "I will upgrade your Grandma Wolf Pet to [rarity] when you reach Bestiary Milestone #." // TODO: Replace [rarity] and # with the actual values when calling this dialogue.
+                        }).build()
+        ).toArray(DialogueSet[]::new);
     }
 }
