@@ -2,16 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { HelpCircle, Tag } from "lucide-react";
-import { categories } from "@/data/store";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import {HelpCircle, Tag} from "lucide-react";
+import {categories} from "@/data/store";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 
-const borderImageStyle = "url(/images/classic-border.webp) 500 / 18px / 6px stretch";
+const borderImageStyle = "url(https://staticassets.hypixel.net/store/borders/classic-border.webp) 500 / 18px / 6px stretch";
 const separatorColor = "rgb(7, 11, 54)";
 const currencies = ["AUD", "BRL", "CAD", "DKK", "EUR", "NOK", "NZD", "PLN", "GBP", "SEK", "USD"];
 
@@ -33,7 +28,7 @@ export default function Navbar({ username }: { username?: string }) {
       <div style={{ padding: "15px 0", height: "90px", display: "flex", alignItems: "center" }}>
         <Link href="/" title="Hypixel Store Homepage">
           <Image
-            src="/images/hypixel-logo.png"
+              src="https://dunb17ur4ymx4.cloudfront.net/webstore/logos/6c9b0cbd5c2f0ceef98f01068102b0d056c04b7b.png"
             alt="Hypixel Logo"
             width={103}
             height={55}

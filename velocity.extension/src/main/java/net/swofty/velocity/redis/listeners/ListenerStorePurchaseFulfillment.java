@@ -3,8 +3,12 @@ package net.swofty.velocity.redis.listeners;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
+import com.mongodb.client.model.UpdateOptions;
 import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.to.StorePurchaseFulfillmentProtocol;
@@ -29,6 +33,11 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
     StorePurchaseFulfillmentProtocol.Request,
     StorePurchaseFulfillmentProtocol.Response> {
 
+    private static final String ENTITLEMENTS_COLLECTION = "store-player-entitlements";
+    private static final String SUPPORT_URL = "https://support.hypixel.net/";
+    private static final UpdateOptions UPSERT = new UpdateOptions().upsert(true);
+    private static final FindOneAndUpdateOptions RETURN_UPDATED =
+            new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER);
     private static final Map<String, Integer> STORE_RANK_STRENGTH = Map.of(
         "DEFAULT", 0,
         "VIP", 1,
@@ -55,53 +64,53 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
         RedisMessageContext context
     ) {
         try {
-            UUID playerUuid = UUID.fromString(message.playerUuid());
-            MongoCollection<Document> collection = UserDatabase.database.getCollection("store-player-entitlements");
-            Date now = new Date();
-            Date paidAt = new Date(message.paidAt() > 0 ? message.paidAt() : now.getTime());
-
-            collection.updateOne(
-                new Document("_id", playerUuid.toString()),
-                new Document("$setOnInsert", initialProjection(message, now)),
-                new com.mongodb.client.model.UpdateOptions().upsert(true)
-            );
-            preserveTemporaryRankFallback(playerUuid, collection, message);
-
-            Document filter = new Document("_id", playerUuid.toString())
-                .append("appliedPurchaseIds", new Document("$ne", message.purchaseId()));
-            boolean playerOnline = SkyBlockVelocity.getServer().getPlayer(playerUuid).isPresent();
-            Document update = updateFor(message, now, paidAt, !playerOnline);
-            Document projection = collection.findOneAndUpdate(
-                filter,
-                update,
-                new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
-            );
-
-            boolean duplicate = false;
-            if (projection == null) {
-                duplicate = true;
-                projection = collection.find(new Document("_id", playerUuid.toString())).first();
-            }
-
-            if (projection == null) {
-                return new StorePurchaseFulfillmentProtocol.Response(false, duplicate, "Projection was not written.");
-            }
-
-            applyRankProjection(playerUuid, projection);
-            if (!duplicate) {
-                notifyOnlinePlayer(playerUuid, message);
-            }
-            return new StorePurchaseFulfillmentProtocol.Response(true, duplicate, null);
+            return fulfill(message);
         } catch (Exception exception) {
             Logger.error(exception, "Failed to fulfill store purchase {}", message.purchaseId());
             return new StorePurchaseFulfillmentProtocol.Response(false, false, exception.getMessage());
         }
     }
 
+    private StorePurchaseFulfillmentProtocol.Response fulfill(StorePurchaseFulfillmentProtocol.Request purchase) {
+        UUID playerUuid = UUID.fromString(purchase.playerUuid());
+        MongoCollection<Document> entitlements = entitlementCollection();
+        Date now = new Date();
+        Date paidAt = new Date(purchase.paidAt() > 0 ? purchase.paidAt() : now.getTime());
+
+        entitlements.updateOne(
+                playerFilter(playerUuid),
+                new Document("$setOnInsert", initialProjection(purchase, now)),
+                UPSERT
+        );
+
+        Document projection = entitlements.findOneAndUpdate(
+                unappliedPurchaseFilter(playerUuid, purchase.purchaseId()),
+                updateFor(purchase, now, paidAt, !isOnline(playerUuid)),
+                RETURN_UPDATED
+        );
+        boolean duplicate = projection == null;
+
+        if (duplicate) {
+            projection = entitlements.find(playerFilter(playerUuid)).first();
+        } else {
+            preserveTemporaryRankFallback(playerUuid, entitlements, purchase);
+        }
+
+        if (projection == null) {
+            return new StorePurchaseFulfillmentProtocol.Response(false, duplicate, "Projection was not written.");
+        }
+
+        applyRankProjection(playerUuid, projection);
+        if (!duplicate) {
+            notifyOnlinePlayer(playerUuid, purchase);
+        }
+        return new StorePurchaseFulfillmentProtocol.Response(true, duplicate, null);
+    }
+
     public static void startRankExpirationReconciler() {
         EXPIRATION_RECONCILER.scheduleWithFixedDelay(() -> {
             try {
-                MongoCollection<Document> collection = UserDatabase.database.getCollection("store-player-entitlements");
+                MongoCollection<Document> collection = entitlementCollection();
                 Date now = new Date();
                 Document expiredRankFilter = new Document("entitlements", new Document("$elemMatch",
                     new Document("type", "RANK").append("expiresAt", new Document("$lte", now))));
@@ -181,17 +190,7 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
                 .anyMatch(entitlement -> "RANK".equals(entitlement.type()));
 
             if (hasRank) {
-                player.openBook(Book.builder()
-                    .addPage(Component.text("Your purchase has been processed!")
-                        .appendNewline()
-                        .appendNewline()
-                        .append(Component.text("You've received the following items:"))
-                        .appendNewline()
-                        .append(Component.text(rankItems(message.entitlements())))
-                        .appendNewline()
-                        .appendNewline()
-                        .append(Component.text("If you have any problems, contact support.")))
-                    .build());
+                player.openBook(purchaseBook(message.entitlements()));
                 return;
             }
 
@@ -199,18 +198,57 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
         });
     }
 
-    private static String rankItems(List<StorePurchaseFulfillmentProtocol.Entitlement> entitlements) {
-        return entitlements.stream()
-            .filter(entitlement -> "RANK".equals(entitlement.type()))
-            .map(ListenerStorePurchaseFulfillment::rankItem)
-            .reduce((left, right) -> left + "\n" + right)
-            .orElse("Rank");
+    private static Book purchaseBook(List<StorePurchaseFulfillmentProtocol.Entitlement> entitlements) {
+        Component page = Component.text("Your purchase has been processed!", NamedTextColor.BLACK)
+                .appendNewline()
+                .appendNewline()
+                .append(Component.text("You've received the following items:", NamedTextColor.BLACK))
+                .appendNewline()
+                .append(rankItems(entitlements))
+                .appendNewline()
+                .appendNewline()
+                .append(Component.text("If you have any problems, ", NamedTextColor.BLACK))
+                .append(Component.text("contact support.", NamedTextColor.LIGHT_PURPLE)
+                        .decorate(TextDecoration.UNDERLINED)
+                        .clickEvent(ClickEvent.openUrl(SUPPORT_URL)));
+        return Book.builder().addPage(page).build();
     }
 
-    private static String rankItem(StorePurchaseFulfillmentProtocol.Entitlement entitlement) {
-        String rank = readableKey(entitlement.key()) + " Rank";
+    private static Component rankItems(List<StorePurchaseFulfillmentProtocol.Entitlement> entitlements) {
+        List<Component> ranks = entitlements.stream()
+            .filter(entitlement -> "RANK".equals(entitlement.type()))
+            .map(ListenerStorePurchaseFulfillment::rankItem)
+                .toList();
+        if (ranks.isEmpty()) return Component.text("Rank", NamedTextColor.BLACK);
+
+        Component result = Component.empty();
+        for (int index = 0; index < ranks.size(); index++) {
+            if (index > 0) result = result.appendNewline();
+            result = result.append(ranks.get(index));
+        }
+        return result;
+    }
+
+    private static Component rankItem(StorePurchaseFulfillmentProtocol.Entitlement entitlement) {
+        Component rank = rankName(entitlement.key()).append(Component.text(" Rank", NamedTextColor.BLACK));
         Long durationDays = entitlement.durationDays();
-        return durationDays == null ? rank : rank + " (" + durationDays + " days)";
+        return durationDays == null
+                ? rank
+                : rank.append(Component.text(" (" + durationDays + " days)", NamedTextColor.BLACK));
+    }
+
+    private static Component rankName(String rank) {
+        return switch (rank) {
+            case "VIP" -> Component.text("VIP", NamedTextColor.GREEN);
+            case "VIP_PLUS" -> Component.text("VIP", NamedTextColor.GREEN)
+                    .append(Component.text("+", NamedTextColor.GOLD));
+            case "MVP" -> Component.text("MVP", NamedTextColor.AQUA);
+            case "MVP_PLUS" -> Component.text("MVP", NamedTextColor.AQUA)
+                    .append(Component.text("+", NamedTextColor.RED));
+            case "MVP_PLUS_PLUS" -> Component.text("MVP", NamedTextColor.GOLD)
+                    .append(Component.text("++", NamedTextColor.RED));
+            default -> Component.text(readableKey(rank), NamedTextColor.BLACK);
+        };
     }
 
     private static String deliveryMessage(StorePurchaseFulfillmentProtocol.Request message) {
@@ -319,11 +357,28 @@ public class ListenerStorePurchaseFulfillment implements RedisMessageHandler<
 
     private static void setProfileRank(UUID playerUuid, String rank) {
         UserDatabase.collection.updateOne(
-            new Document("_id", playerUuid.toString()),
+                playerFilter(playerUuid),
             new Document("$set", new Document("rank", serializeRank(rank)))
                 .append("$setOnInsert", new Document("_id", playerUuid.toString())),
-            new com.mongodb.client.model.UpdateOptions().upsert(true)
+                UPSERT
         );
+    }
+
+    private static MongoCollection<Document> entitlementCollection() {
+        return UserDatabase.database.getCollection(ENTITLEMENTS_COLLECTION);
+    }
+
+    private static Document playerFilter(UUID playerUuid) {
+        return new Document("_id", playerUuid.toString());
+    }
+
+    private static Document unappliedPurchaseFilter(UUID playerUuid, String purchaseId) {
+        return playerFilter(playerUuid)
+                .append("appliedPurchaseIds", new Document("$ne", purchaseId));
+    }
+
+    private static boolean isOnline(UUID playerUuid) {
+        return SkyBlockVelocity.getServer().getPlayer(playerUuid).isPresent();
     }
 
     private static String highestActiveStoreRank(Document projection) {

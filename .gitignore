@@ -64,3 +64,4 @@ build/
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
+/configuration/resourcepacks/skyblockpack/

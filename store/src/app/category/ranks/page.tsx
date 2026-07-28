@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import {useRouter} from "next/navigation";
+import {useState} from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BuyButton from "@/components/store/BuyButton";
 import ProductCard from "@/components/store/ProductCard";
-import { directProducts } from "@/data/store";
+import {directProducts} from "@/data/store";
 
 // Easter theme colors
 const saleColor = "rgb(230, 174, 71)";
@@ -16,11 +16,56 @@ const grayBorder = "rgb(51, 51, 51)";
 const checkColor = "rgb(120, 174, 50)";
 
 const ranks = [
-  { name: "VIP Rank", productId: "rank-vip", icon: "/images/ranks/vip.png", prefix: "/images/perks/vip-prefix.png", prefixAlt: "A green VIP prefix", originalPrice: "7.69", salePrice: "6.15", sale: true },
-  { name: "VIP+ Rank", productId: "rank-vip-plus", icon: "/images/ranks/vip-plus.png", prefix: "/images/perks/vip-plus-prefix.png", prefixAlt: "A green VIP prefix followed by a golden plus", originalPrice: "16.49", salePrice: "13.19", sale: true },
-  { name: "MVP Rank", productId: "rank-mvp", icon: "/images/ranks/mvp.png", prefix: "/images/perks/mvp-prefix.png", prefixAlt: "An aqua MVP prefix", originalPrice: "32.99", salePrice: "26.39", sale: true },
-  { name: "MVP+ Rank", productId: "rank-mvp-plus", icon: "/images/ranks/mvp-plus.png", prefix: "/images/perks/mvp-plus-prefix.png", prefixAlt: "An aqua MVP prefix followed by a red plus", originalPrice: "49.49", salePrice: "39.59", sale: true },
-  { name: "MVP++ Rank", icon: "/images/ranks/mvp-plus-plus.png", prefix: "/images/perks/mvp-plus-plus-prefix.png", prefixAlt: "A golden MVP prefix followed by two red plusses", originalPrice: null, salePrice: null, sale: false, isSub: true },
+  {
+    name: "VIP Rank",
+    productId: "rank-vip",
+    icon: "https://dunb17ur4ymx4.cloudfront.net/packages/images/9f9aef1a97dd7a7061958a2d2dc72238e06a455c.png",
+    prefix: "https://staticassets.hypixel.net/store/perks/vip-prefix.png",
+    prefixAlt: "A green VIP prefix",
+    originalPrice: "7.69",
+    salePrice: "6.15",
+    sale: true
+  },
+  {
+    name: "VIP+ Rank",
+    productId: "rank-vip-plus",
+    icon: "https://dunb17ur4ymx4.cloudfront.net/packages/images/573d597eebcbfdc8c5485d6bf044abb60175c2c5.png",
+    prefix: "https://staticassets.hypixel.net/store/perks/vip-plus-prefix.png",
+    prefixAlt: "A green VIP prefix followed by a golden plus",
+    originalPrice: "16.49",
+    salePrice: "13.19",
+    sale: true
+  },
+  {
+    name: "MVP Rank",
+    productId: "rank-mvp",
+    icon: "https://dunb17ur4ymx4.cloudfront.net/packages/images/1b734bae59b7cef0dbbfc1b43d1ceed19b9cfebf.png",
+    prefix: "https://staticassets.hypixel.net/store/perks/mvp-prefix.png",
+    prefixAlt: "An aqua MVP prefix",
+    originalPrice: "32.99",
+    salePrice: "26.39",
+    sale: true
+  },
+  {
+    name: "MVP+ Rank",
+    productId: "rank-mvp-plus",
+    icon: "https://dunb17ur4ymx4.cloudfront.net/packages/images/be813e0264e79d198cc076ef686e4b6d1ed44c89.png",
+    prefix: "https://staticassets.hypixel.net/store/perks/mvp-plus-prefix.png",
+    prefixAlt: "An aqua MVP prefix followed by a red plus",
+    originalPrice: "49.49",
+    salePrice: "39.59",
+    sale: true
+  },
+  {
+    name: "MVP++ Rank",
+    icon: "https://staticassets.hypixel.net/store/icons/ranks/mvp-plus-plus.png",
+    prefix: "https://staticassets.hypixel.net/store/perks/mvp-plus-plus-prefix.png",
+    prefixAlt: "A golden MVP prefix followed by two red plusses",
+    originalPrice: null,
+    salePrice: null,
+    sale: false,
+    isSub: true
+  },
 ];
 
 type FVal = boolean | string;

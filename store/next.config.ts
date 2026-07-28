@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type {NextConfig} from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { hostname: "crafthead.net" },
+      {hostname: "dunb17ur4ymx4.cloudfront.net"},
+      {hostname: "staticassets.hypixel.net"},
     ],
   },
 };

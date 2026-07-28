@@ -71,7 +71,7 @@ ul {
   height: 118px;
   background:
     linear-gradient(rgba(var(--background-color-rgb), 0.2), rgba(var(--background-color-rgb), 1)),
-    url("/images/artwork.webp") top center / 100% auto no-repeat;
+    url("https://staticassets.hypixel.net/store/artwork.webp") top center / 100% auto no-repeat;
   pointer-events: none;
 }
 
@@ -527,7 +527,7 @@ ul {
 .footer-community {
   background:
     linear-gradient(rgba(26, 26, 26, 0.86), rgb(26, 26, 26)),
-    url("/images/artwork.webp") center / cover;
+    url("https://staticassets.hypixel.net/store/artwork.webp") center / cover;
   color: #fff;
   padding: 30px 0 36px;
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 const paymentMethods = [
   { name: "MasterCard", file: "mastercard.webp" },
   { name: "Visa", file: "visa.webp" },
-  { name: "AmEx", file: "amex.webp" },
+    {name: "AmEx", file: "americanexpress.webp"},
   { name: "PayPal", file: "paypal.webp" },
   { name: "iDEAL", file: "ideal.webp" },
   { name: "Paysafecard", file: "paysafecard.webp" },
@@ -57,7 +57,7 @@ export default function Footer() {
                     className="payment-method"
                     role="img"
                     aria-label={method.name}
-                    style={{ backgroundImage: `url(/images/payments/${method.file})` }}
+                    style={{backgroundImage: `url(https://staticassets.hypixel.net/store/payments/${method.file})`}}
                   />
                 ))}
               </div>
@@ -82,7 +82,7 @@ export default function Footer() {
           <section>
             <Link href="https://hypixel.net/">
               <Image
-                src="/images/hypixel-footer-logo.png"
+                  src="https://dunb17ur4ymx4.cloudfront.net/webstore/logos/6c9b0cbd5c2f0ceef98f01068102b0d056c04b7b.png"
                 alt="Hypixel"
                 width={200}
                 height={60}

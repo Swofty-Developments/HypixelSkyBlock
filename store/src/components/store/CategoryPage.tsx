@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Category } from "@/data/store";
+import {Category} from "@/data/store";
 import StoreShell from "./StoreShell";
 import ProductCard from "./ProductCard";
 
@@ -43,7 +43,8 @@ export default function CategoryPage({ category }: { category: Category }) {
           ))}
           {category.slug === "gold" && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img className="gold-about-image" src="/images/in-game-store.png" alt="Hypixel in-game store" />
+              <img className="gold-about-image" src="https://staticassets.hypixel.net/store/hints/in-game-store.png"
+                   alt="Hypixel in-game store"/>
           )}
           {category.bullets && (
             <ul>
