@@ -17,8 +17,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetRegistry;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.PetType;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
@@ -89,8 +88,7 @@ public class PetComponent extends SkyBlockItemComponent {
         Rarity rarity = item.getAttributeHandler().getRarity();
         int level = petData.getAsLevel(rarity);
 
-        PetHandler handler = PetRegistry.getHandler(handlerId);
-        List<PetAbility> abilities = handler.getAbilities(item);
+        List<PetAbility> abilities = PetType.valueOf(handlerId.toUpperCase()).getAbilities(item);
 
         lore.add("§8" + skillCategory.asCategory().getName() + " Pet");
         lore.add(" ");
