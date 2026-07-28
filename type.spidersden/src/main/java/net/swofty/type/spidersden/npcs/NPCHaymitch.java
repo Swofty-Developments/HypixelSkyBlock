@@ -43,7 +43,6 @@ public class NPCHaymitch extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
-
     }
 
     @Override

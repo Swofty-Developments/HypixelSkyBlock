@@ -45,7 +45,6 @@ public class NPCGrandmaWolf extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
-
     }
 
     @Override
