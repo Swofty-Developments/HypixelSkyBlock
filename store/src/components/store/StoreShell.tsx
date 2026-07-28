@@ -2,8 +2,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
 export default function StoreShell({
-  children,
-  username = "ArikSquad",
+                                       children
 }: {
   children: React.ReactNode;
   username?: string;
@@ -11,7 +10,7 @@ export default function StoreShell({
   return (
     <div className="store-page">
       <div className="store-container">
-        <Navbar username={username} />
+          <Navbar/>
         {children}
       </div>
       <Footer />

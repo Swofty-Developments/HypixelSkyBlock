@@ -168,7 +168,7 @@ export default function RanksPage() {
     return (
       <div className="store-page">
         <div className="store-container">
-          <Navbar username="ArikSquad" />
+          <Navbar/>
           <main className="category-content">
             <h1>Rank Upgrades</h1>
             <div className="product-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", maxWidth: 980 }}>
@@ -206,7 +206,7 @@ export default function RanksPage() {
   return (
     <div className="store-page">
       <div style={{ width: "1250px", maxWidth: "1250px", margin: "0 auto", padding: "0 15px", fontFamily: "Raleway, sans-serif", fontSize: "14px", color: "var(--text-color)" }}>
-        <Navbar username="ArikSquad" />
+        <Navbar/>
 
         <div style={{ padding: "10px 15px", fontSize: "38.4px", fontWeight: 400, fontFamily: "Neuton, Raleway, serif" }}>
           Ranks
