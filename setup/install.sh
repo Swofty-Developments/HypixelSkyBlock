@@ -46,6 +46,10 @@ asset="${INSTALLER_NAME}_${os}_${arch}.tar.gz"
 mkdir -p "$CACHE_DIR"
 bin="$CACHE_DIR/${INSTALLER_NAME}-${VERSION}-${os}-${arch}"
 
+if [[ "$VERSION" == "latest" ]]; then
+  rm -f "$bin"
+fi
+
 if [[ ! -x "$bin" ]]; then
   tmp="$(mktemp -d)"
   trap 'rm -rf "$tmp"' EXIT

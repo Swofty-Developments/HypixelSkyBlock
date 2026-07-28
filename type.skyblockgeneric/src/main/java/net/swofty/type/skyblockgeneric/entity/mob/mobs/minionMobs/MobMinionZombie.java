@@ -3,8 +3,6 @@ package net.swofty.type.skyblockgeneric.entity.mob.mobs.minionMobs;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
@@ -12,6 +10,8 @@ import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.VanillaMeleeAttackGoal;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.VanillaRandomStrollGoal;
 import net.swofty.type.skyblockgeneric.loottable.OtherLoot;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
@@ -39,8 +39,8 @@ public class MobMinionZombie extends SkyBlockMob {
     @Override
     public List<GoalSelector> getGoalSelectors() {
         return List.of(
-                new MeleeAttackGoal(this, 1.6, 20, TimeUnit.SERVER_TICK),
-                new RandomStrollGoal(this, 15)
+                new VanillaMeleeAttackGoal(this, 1.6, 20, TimeUnit.SERVER_TICK),
+                new VanillaRandomStrollGoal(this, 15)
         );
     }
 

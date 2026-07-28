@@ -3,12 +3,12 @@ package net.swofty.type.skyblockgeneric.entity.mob.mobs.seacreature;
 import java.util.List;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
-import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
-import net.minestom.server.entity.ai.goal.RandomStrollGoal;
 import net.minestom.server.entity.ai.target.ClosestEntityTarget;
 import net.minestom.server.entity.ai.target.LastEntityDamagerTarget;
 import net.minestom.server.utils.time.TimeUnit;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.VanillaMeleeAttackGoal;
+import net.swofty.type.skyblockgeneric.entity.mob.ai.VanillaRandomStrollGoal;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 /**
@@ -41,7 +41,7 @@ public sealed interface SeaCreatureBehaviour
     record Passive(int strollRange) implements SeaCreatureBehaviour {
         @Override
         public List<GoalSelector> goals(SkyBlockMob self) {
-            return List.of(new RandomStrollGoal(self, strollRange));
+            return List.of(new VanillaRandomStrollGoal(self, strollRange));
         }
 
         @Override
@@ -54,8 +54,8 @@ public sealed interface SeaCreatureBehaviour
         @Override
         public List<GoalSelector> goals(SkyBlockMob self) {
             return List.of(
-                    new MeleeAttackGoal(self, speed, attackCooldownTicks, TimeUnit.SERVER_TICK),
-                    new RandomStrollGoal(self, Math.max(8, aggroRange / 2))
+                    new VanillaMeleeAttackGoal(self, speed, attackCooldownTicks, TimeUnit.SERVER_TICK),
+                    new VanillaRandomStrollGoal(self, Math.max(8, aggroRange / 2))
             );
         }
 

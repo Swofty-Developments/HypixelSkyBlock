@@ -144,9 +144,13 @@ func MakeStaff(ctx context.Context, username string) error {
 	defer cli.Close()
 
 	usernameLower := strings.ToLower(username)
+	serializedUsernameLower := fmt.Sprintf("%q", usernameLower)
+	serializedStaffRank := fmt.Sprintf("%q", "STAFF")
 	script := fmt.Sprintf(
-		`var result = db.profiles.updateOne({ignLowercase: %q}, {$set: {rank: "STAFF"}}); if (result.matchedCount !== 1) { quit(44); }`,
+		`var result = db.profiles.updateOne({$or: [{ignLowercase: %q}, {ignLowercase: %q}]}, {$set: {rank: %q}}); if (result.matchedCount !== 1) { quit(44); }`,
 		usernameLower,
+		serializedUsernameLower,
+		serializedStaffRank,
 	)
 	created, err := cli.ExecCreate(ctx, "hypixel_mongo", client.ExecCreateOptions{
 		AttachStdout: false,

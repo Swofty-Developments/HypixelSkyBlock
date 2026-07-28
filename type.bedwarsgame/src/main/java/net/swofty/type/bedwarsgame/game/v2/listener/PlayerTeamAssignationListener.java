@@ -12,6 +12,7 @@ import net.swofty.type.game.game.event.PlayerAssignedTeamEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.utility.TeamColorUtility;
 
 public class PlayerTeamAssignationListener implements HypixelEventClass {
 
@@ -24,7 +25,7 @@ public class PlayerTeamAssignationListener implements HypixelEventClass {
         NamedTextColor color = NamedTextColor.nearestTo(textColor); // possible performance hit?
         player.setTeam(new TeamBuilder(event.team().getName(), MinecraftServer.getTeamManager())
             .prefix(Component.text(event.team().firstLetter(), textColor, TextDecoration.BOLD).appendSpace())
-            .teamColor(color)
+            .teamColor(TeamColorUtility.fromNamedColor(color))
             .build());
         player.getTeam().sendUpdatePacket();
     }
