@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -9,6 +10,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static net.swofty.commons.StringUtility.decimalify;
 
 public class WeaponizedHoneyAbility implements PetAbility, DamageEventPetAbility {
 
@@ -24,7 +27,7 @@ public class WeaponizedHoneyAbility implements PetAbility, DamageEventPetAbility
         int level = petData.getAsLevel(rarity);
 
         return Arrays.asList(
-                "§7Gain §a" + level * 0.2 + "% §7of received damage as §6❤",
+                "§7Gain §a" + decimalify(level * 0.2, 1) + "% §7of received damage as §6❤",
                 "§6Absorption"
         );
     }

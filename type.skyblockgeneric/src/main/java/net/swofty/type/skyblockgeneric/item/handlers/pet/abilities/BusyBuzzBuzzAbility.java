@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
@@ -10,6 +11,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static net.swofty.commons.StringUtility.decimalify;
 
 public class BusyBuzzBuzzAbility implements PetAbility {
 
@@ -26,7 +29,7 @@ public class BusyBuzzBuzzAbility implements PetAbility {
         double bonus = rarity.isAtLeast(Rarity.EPIC) ? level * 0.3 : level * 0.2;
 
         return Arrays.asList(
-                "§7Grants §a+" + bonus + " §7of each to your pet:",
+                "§7Grants §a+" + decimalify(bonus, 1) + " §7of each to your pet:",
                 "§6☘ Farming Fortune",
                 "§6☘ Foraging Fortune",
                 "§6☘ Mining Fortune"

@@ -1,19 +1,27 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
+import net.swofty.commons.StringUtility;
+import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
+import net.minestom.server.instance.Instance;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class HiveAbility implements PetAbility {
-    private static final RarityValue<Integer> INTELLIGENCE = new RarityValue<>(3, 6, 6, 10, 10, 0);
-    private static final RarityValue<Integer> STRENGTH = new RarityValue<>(3, 5, 5, 8, 8, 0);
-    private static final RarityValue<Integer> DEFENSE = new RarityValue<>(2, 3, 3, 5, 5, 0);
+    private static final Integer INTELLIGENCE = 1;
+    private static final Integer STRENGTH = 1;
+    private static final Integer DEFENSE = 1;
+
+    private static final RarityValue<Double> INTELLIGENCE_BONUSES = new RarityValue<>(0.02, 0.05, 0.05, 0.09, 0.09, 0.0);
+    private static final RarityValue<Double> STRENGTH_BONUSES = new RarityValue<>(0.02, 0.04, 0.04, 0.07, 0.07, 0.0);
+    private static final RarityValue<Double> DEFENSE_BONUSES = new RarityValue<>(0.01, 0.02, 0.02, 0.04, 0.04, 0.0);
+
 
     @Override
     public String getName() {
@@ -22,13 +30,17 @@ public class HiveAbility implements PetAbility {
 
     @Override
     public List<String> getDescription(SkyBlockItem instance) {
-        var rarity = instance.getAttributeHandler().getRarity();
+        Rarity rarity = instance.getAttributeHandler().getRarity();
+        int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
+        double perPlayerIntel = INTELLIGENCE + INTELLIGENCE_BONUSES.getForRarity(rarity) * level;
+        double perPlayerStr = STRENGTH + STRENGTH_BONUSES.getForRarity(rarity) * level;
+        double perPlayerDef = DEFENSE + DEFENSE_BONUSES.getForRarity(rarity) * level;
 
         return Arrays.asList(
                 "§7For each player within §a25 §7 blocks:",
-                " §7Gain §b+" + INTELLIGENCE.getForRarity(rarity) + "✎ Intelligence",
-                " §7Gain §c+" + STRENGTH.getForRarity(rarity) + "❁ Strength",
-                " §7Gain §a+" + DEFENSE.getForRarity(rarity) + "❈ Defense",
+                " §7Gain §b+" + StringUtility.decimalify(perPlayerIntel, 2) + "✎ Intelligence",
+                " §7Gain §c+" + StringUtility.decimalify(perPlayerStr, 2) + "❁ Strength",
+                " §7Gain §a+" + StringUtility.decimalify(perPlayerDef, 2) + "❈ Defense",
                 "§8Max 15 players"
         );
     }
@@ -36,19 +48,24 @@ public class HiveAbility implements PetAbility {
     @Override
     public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
         var rarity = pet.getAttributeHandler().getRarity();
-        int count = (int) player.getInstance().getPlayers().stream()
-                .filter(p -> p != player && p.getPosition().distance(player.getPosition()) <= 25)
-                .count();
-        count = Math.min(count, 15);
+        int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
 
-        int intel = INTELLIGENCE.getForRarity(rarity) * count;
-        int str = STRENGTH.getForRarity(rarity) * count;
-        int def = DEFENSE.getForRarity(rarity) * count;
+        Instance instance = player.getInstance();
+        int count = 0;
+        if (instance != null) {
+            count = Math.min((int) instance.getPlayers().stream()
+                    .filter(p -> p != player && p.getPosition().distance(player.getPosition()) <= 25)
+                    .count(), 15);
+        }
+
+        double perPlayerIntel = INTELLIGENCE + INTELLIGENCE_BONUSES.getForRarity(rarity) * level;
+        double perPlayerStr = STRENGTH + STRENGTH_BONUSES.getForRarity(rarity) * level;
+        double perPlayerDef = DEFENSE + DEFENSE_BONUSES.getForRarity(rarity) * level;
 
         return ItemStatistics.builder()
-                .withBase(ItemStatistic.INTELLIGENCE, (double) intel)
-                .withBase(ItemStatistic.STRENGTH, (double) str)
-                .withBase(ItemStatistic.DEFENSE, (double) def)
+                .withBase(ItemStatistic.INTELLIGENCE, perPlayerIntel * count)
+                .withBase(ItemStatistic.STRENGTH, perPlayerStr * count)
+                .withBase(ItemStatistic.DEFENSE, perPlayerDef * count)
                 .build();
     }
 }
