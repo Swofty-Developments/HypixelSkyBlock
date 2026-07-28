@@ -24,7 +24,7 @@ const ranks = [
     prefixAlt: "A green VIP prefix",
     originalPrice: "7.69",
     salePrice: "6.15",
-    sale: true
+    sale: false
   },
   {
     name: "VIP+ Rank",
@@ -34,7 +34,7 @@ const ranks = [
     prefixAlt: "A green VIP prefix followed by a golden plus",
     originalPrice: "16.49",
     salePrice: "13.19",
-    sale: true
+    sale: false
   },
   {
     name: "MVP Rank",
@@ -44,7 +44,7 @@ const ranks = [
     prefixAlt: "An aqua MVP prefix",
     originalPrice: "32.99",
     salePrice: "26.39",
-    sale: true
+    sale: false
   },
   {
     name: "MVP+ Rank",
@@ -54,7 +54,7 @@ const ranks = [
     prefixAlt: "An aqua MVP prefix followed by a red plus",
     originalPrice: "49.49",
     salePrice: "39.59",
-    sale: true
+    sale: false
   },
   {
     name: "MVP++ Rank",
@@ -290,7 +290,10 @@ export default function RanksPage() {
                           <span style={{ color: "red", fontSize: "14px", textDecoration: "line-through" }}>{r.originalPrice} USD</span>
                         )}
                         <br />
-                        <span style={{ fontSize: "21.6px", fontWeight: 700 }}>{r.salePrice} USD</span>
+                        <span style={{
+                          fontSize: "21.6px",
+                          fontWeight: 700
+                        }}>{r.sale ? r.salePrice : r.originalPrice} USD</span>
                       </div>
                     )}
                     <BuyButton
