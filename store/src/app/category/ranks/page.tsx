@@ -7,8 +7,6 @@ import {useState} from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BuyButton from "@/components/store/BuyButton";
-import ProductCard from "@/components/store/ProductCard";
-import {directProducts} from "@/data/store";
 
 // Easter theme colors
 const saleColor = "rgb(230, 174, 71)";
@@ -108,22 +106,6 @@ const moreFeatures: { name: string; values: FVal[] }[] = [
 const Check = () => <svg style={{ width: 22, height: 22, display: "inline", color: checkColor }} viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" /></svg>;
 const Cross = () => <svg style={{ width: 22, height: 22, display: "inline", color: "gray" }} viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" /></svg>;
 
-const mvpPlusPlusProducts = directProducts.filter((product) => product.id.startsWith("rank-mvp-plus-plus"));
-
-const mvpFeatures = [
-  "New Rank Prefix and Color",
-  "Monthly 500 SkyBlock Gems Included",
-  "Access to Nickname (/nick) Command",
-  "Access to /stream Command",
-  "Access to Private Games (/party private) Command",
-  "Golden Guild Tag",
-  "Animated Forum Frame and Private Forum",
-  "Auto-Tip Enabled",
-  "New Unique Join Message and Particle Effect on Lobby Join",
-  "Exclusive In-Game Emojis",
-  'Golden "GG" at the End of Games',
-];
-
 // Cell border helper
 const valBorder = (sale: boolean) => sale ? `2px solid ${saleColor}` : `2px solid ${grayBorder}`;
 const valBorderBottom = (sale: boolean) => sale ? `1px solid ${saleColor}` : `1px solid ${grayBorder}`;
@@ -131,7 +113,6 @@ const valBorderBottom = (sale: boolean) => sale ? `1px solid ${saleColor}` : `1p
 export default function RanksPage() {
   const router = useRouter();
   const [showMore, setShowMore] = useState(false);
-  const [mvpMenu, setMvpMenu] = useState(false);
   const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
@@ -164,58 +145,26 @@ export default function RanksPage() {
     }
   }
 
-  if (mvpMenu) {
-    return (
+  return (
       <div className="store-page">
         <div className="store-container">
-          <Navbar/>
-          <main className="category-content">
-            <h1>Rank Upgrades</h1>
-            <div className="product-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))", maxWidth: 980 }}>
-              {mvpPlusPlusProducts.map((product) => (
-                <ProductCard key={product.name} product={product} />
-              ))}
-            </div>
-            <button type="button" className="rank-back-button" onClick={() => setMvpMenu(false)}>‹ GO BACK TO ALL RANKS</button>
-            <section className="copy-block">
-              <h2>About Rank Upgrades</h2>
-              <p>MVP++ is an exclusive rank upgrade to your existing MVP+ rank. This rank upgrade allows you to access some very useful commands and is the best way to support the Hypixel Network.</p>
-              <p>MVP++ is a recurring subscription that will be charged every 30 days, 3 months, or 1 year depending on the option you choose. Any prepaid days you already have will be paused if you choose to subscribe.</p>
-              <p>MVP++ is not a lifetime rank and will expire after the subscription is cancelled or the prepaid time has passed. Once it expires, you will automatically go back to MVP+.</p>
-            </section>
-            <section className="copy-block">
-              <h2>Need help?</h2>
-              <p>If you have any questions or issues related to payments, <Link href="https://support.hypixel.net/" style={{ color: "rgb(230, 174, 71)" }}>send us a ticket here</Link>, and we will reply as fast as possible.</p>
-              <p>You can <Link href="https://subscriptions.hypixel.net/" style={{ color: "rgb(230, 174, 71)" }}>manage or cancel your subscriptions by visiting our subscription portal here</Link>.</p>
-            </section>
-            <section className="features-block">
-              <h2>Features</h2>
-              {mvpFeatures.map((feature) => (
-                <div className="feature-panel" key={feature}>
-                  <summary>{feature}</summary>
-                </div>
-              ))}
-            </section>
-          </main>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  return (
-    <div className="store-page">
-      <div style={{ width: "1250px", maxWidth: "1250px", margin: "0 auto", padding: "0 15px", fontFamily: "Raleway, sans-serif", fontSize: "14px", color: "var(--text-color)" }}>
         <Navbar/>
 
         <div style={{ padding: "10px 15px", fontSize: "38.4px", fontWeight: 400, fontFamily: "Neuton, Raleway, serif" }}>
           Ranks
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "50px", padding: "0 15px", fontSize: "16px" }}>
+          <div className="ranks-content">
           {checkoutError && <p className="checkout-error">{checkoutError}</p>}
           {/* Ranks Table */}
-          <table className={`ranks-table ${showMore ? "show-more" : ""}`} style={{ width: "1232px", borderCollapse: "separate", borderSpacing: "6px 0px", fontFamily: "Raleway, serif", fontSize: "16px", fontWeight: 700 }}>
+            <table className={`ranks-table ${showMore ? "show-more" : ""}`} style={{
+              width: "100%",
+              borderCollapse: "separate",
+              borderSpacing: "6px 0px",
+              fontFamily: "Raleway, serif",
+              fontSize: "16px",
+              fontWeight: 700
+            }}>
             <thead>
               {/* Icon Row */}
               <tr>
@@ -297,8 +246,8 @@ export default function RanksPage() {
                       </div>
                     )}
                     <BuyButton
-                      label={r.isSub ? "SUBSCRIBE" : "BUY"}
-                      onClick={() => r.isSub ? setMvpMenu(true) : startCheckout(r.productId!)}
+                        label="BUY"
+                        onClick={() => r.isSub ? router.push("/category/rank-upgrades") : startCheckout(r.productId!)}
                       loading={Boolean(r.productId && loadingProductId === r.productId)}
                     />
                   </th>
@@ -394,8 +343,8 @@ export default function RanksPage() {
                     borderRadius: "0 0 8px 8px",
                   }}>
                     <BuyButton
-                      label={r.isSub ? "SUBSCRIBE" : "BUY"}
-                      onClick={() => r.isSub ? setMvpMenu(true) : startCheckout(r.productId!)}
+                        label="BUY"
+                        onClick={() => r.isSub ? router.push("/category/rank-upgrades") : startCheckout(r.productId!)}
                       loading={Boolean(r.productId && loadingProductId === r.productId)}
                     />
                   </td>
@@ -405,7 +354,7 @@ export default function RanksPage() {
           </table>
 
           {/* About Ranks */}
-          <div style={{ width: "854px", margin: "0 183px", fontSize: "16px" }}>
+            <div className="ranks-about">
             <h3 style={{ fontSize: "24px", fontWeight: 500, marginBottom: "10px" }}>About Ranks</h3>
             <p style={{ marginBottom: "16px" }}>
               A Hypixel Rank is a fun way to help support the Hypixel Server! With different perks, commands, and rank colors, this table above is to help you figure out which rank best suits you.

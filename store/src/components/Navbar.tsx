@@ -2,37 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {HelpCircle, Tag} from "lucide-react";
+import {HelpCircle} from "lucide-react";
 import {categories} from "@/data/store";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
+import CurrencySelector from "@/components/CurrencySelector";
+import {useLocalStorageValue} from "@/lib/use-local-storage";
 
 const borderImageStyle = "url(https://staticassets.hypixel.net/store/borders/classic-border.webp) 500 / 18px / 6px stretch";
 const separatorColor = "rgb(7, 11, 54)";
-const currencies = ["AUD", "BRL", "CAD", "DKK", "EUR", "NOK", "NZD", "PLN", "GBP", "SEK", "USD"];
-
-export default function Navbar({ username }: { username?: string }) {
+export default function Navbar() {
+    const username = useLocalStorageValue("hypixel_username").trim();
 
   return (
-    <nav style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      height: "90px",
-      width: "1220px",
-      maxWidth: "1220px",
-      margin: "0 auto 15px",
-      gap: "15px",
-      position: "relative",
-    }}>
+      <nav className="store-navbar">
       {/* Logo */}
-      <div style={{ padding: "15px 0", height: "90px", display: "flex", alignItems: "center" }}>
+          <div className="store-navbar-logo">
         <Link href="/" title="Hypixel Store Homepage">
           <Image
               src="https://dunb17ur4ymx4.cloudfront.net/webstore/logos/6c9b0cbd5c2f0ceef98f01068102b0d056c04b7b.png"
             alt="Hypixel Logo"
             width={103}
             height={55}
-            style={{ height: "55px", width: "auto", display: "block" }}
+              className="store-logo-image"
             priority
           />
         </Link>
@@ -65,7 +55,7 @@ export default function Navbar({ username }: { username?: string }) {
                   fontWeight: 500,
                   fontFamily: "Raleway, sans-serif",
                   padding: "8px 12px",
-                  paddingRight: cat.sale ? "36px" : "12px",
+                    paddingRight: "12px",
                   lineHeight: "20px",
                   height: "36px",
                   textDecoration: "none",
@@ -74,17 +64,6 @@ export default function Navbar({ username }: { username?: string }) {
               >
                 {cat.name}
               </Link>
-              {cat.sale && (
-                <span style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "8px",
-                  width: "20px",
-                  height: "20px",
-                }}>
-                  <Tag fill="rgb(230, 174, 71)" color="rgb(230, 174, 71)" size={18} />
-                </span>
-              )}
             </li>
           ))}
         </ul>
@@ -105,6 +84,7 @@ export default function Navbar({ username }: { username?: string }) {
           <li style={{ borderRight: `1px solid ${separatorColor}` }}>
             <Link
               href="/login"
+              className={`nav-user-button${username ? " nav-user-button-logged-in" : ""}`}
               style={{
                 display: "inline-block",
                 color: "white",
@@ -129,14 +109,7 @@ export default function Navbar({ username }: { username?: string }) {
 
           {/* Currency */}
           <li style={{ borderRight: `1px solid ${separatorColor}`, borderLeft: `1px solid ${separatorColor}` }}>
-            <DropdownMenu>
-              <DropdownMenuTrigger className="nav-button">USD ▾</DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                {currencies.map((currency) => (
-                  <DropdownMenuItem key={currency}>{currency}</DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              <CurrencySelector/>
           </li>
 
           {/* Support */}

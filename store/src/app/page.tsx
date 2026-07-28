@@ -1,25 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {categories} from "@/data/store";
-
-function CountdownTimer({ targetSeconds }: { targetSeconds: number }) {
-  const [remaining, setRemaining] = useState(targetSeconds);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRemaining((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-  const days = Math.floor(remaining / 86400);
-  const hours = Math.floor((remaining % 86400) / 3600);
-  const minutes = Math.floor((remaining % 3600) / 60);
-  const seconds = remaining % 60;
-  return <span>{days}d {hours}h {minutes}m {seconds}s</span>;
-}
 
 export default function Home() {
   return (
@@ -38,13 +22,12 @@ export default function Home() {
             {categories.map((cat) => (
               <li
                 key={cat.slug}
-                className={`home-category-card ${cat.sale ? "sale" : ""}`}
+                className="home-category-card"
               >
                 <Link
                   href={`/category/${cat.slug}`}
                   title={cat.name}
                 >
-                  {cat.sale && <div className="sale-ribbon">SALE!</div>}
                   <div
                     className="home-category-icon"
                     style={{ backgroundImage: `url(${cat.icon})` }}

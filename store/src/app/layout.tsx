@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
-import { Neuton, Raleway } from "next/font/google";
+import type {Metadata} from "next";
+import {Neuton, Raleway} from "next/font/google";
+import AuthGate from "@/components/AuthGate";
 import "./globals.css";
 
 const raleway = Raleway({
@@ -26,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${raleway.variable} ${neuton.variable} font-sans`}>{children}</body>
+    <body className={`${raleway.variable} ${neuton.variable} font-sans`}>
+    <AuthGate>{children}</AuthGate>
+    </body>
     </html>
   );
 }

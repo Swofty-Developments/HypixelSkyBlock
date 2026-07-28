@@ -16,6 +16,9 @@
   --hover-color-secondary: rgba(0, 0, 0, 0.4);
   --table-row-alt-color: #151515;
   --artwork-color: #1a1a1a;
+  --header-opacity: 0.5;
+  --artwork1x: url("https://staticassets.hypixel.net/store/artwork.webp");
+  --artwork2x: url("https://staticassets.hypixel.net/store/artwork.webp");
 }
 
 @theme inline {
@@ -69,9 +72,10 @@ ul {
   position: absolute;
   inset: 0 0 auto;
   height: 118px;
-  background:
-    linear-gradient(rgba(var(--background-color-rgb), 0.2), rgba(var(--background-color-rgb), 1)),
-    url("https://staticassets.hypixel.net/store/artwork.webp") top center / 100% auto no-repeat;
+  background-image: radial-gradient(farthest-side at top, rgba(var(--background-color-rgb), var(--header-opacity)), var(--background-color)), -webkit-image-set(var(--artwork1x) 1x, var(--artwork2x) 2x) !important;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: auto;
   pointer-events: none;
 }
 
@@ -86,6 +90,77 @@ ul {
   margin: 0 auto;
   padding: 0 15px;
   font-size: 14px;
+}
+
+.store-navbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 90px;
+  margin: 0 auto 15px;
+  gap: 15px;
+}
+
+.store-navbar-logo {
+  display: flex;
+  align-items: center;
+  height: 90px;
+  padding: 15px 0;
+  flex: 0 0 auto;
+}
+
+.store-logo-image {
+  display: block;
+  width: auto;
+  height: 55px;
+  object-fit: contain;
+}
+
+.nav-user-button {
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.nav-user-button-logged-in:hover {
+  background-color: rgba(0, 0, 0, 0.24);
+  color: var(--primary) !important;
+}
+
+.login-title {
+  padding: 10px 15px;
+  font-family: var(--font-neuton), "Neuton", serif;
+  font-size: 38.4px;
+  font-weight: 400;
+}
+
+.login-content {
+  padding: 0 15px;
+  font-size: 16px;
+}
+
+.login-panel {
+  text-align: center;
+}
+
+.login-panel > p {
+  margin-bottom: 20px;
+}
+
+.ranks-content {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 0 15px;
+  font-size: 16px;
+  overflow-x: auto;
+}
+
+.ranks-about {
+  width: 854px;
+  max-width: 100%;
+  margin: 0 auto;
+  font-size: 16px;
 }
 
 .category-content {
@@ -303,6 +378,10 @@ ul {
 }
 
 .features-block {
+  width: 854px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 14px;
 }
 
@@ -375,6 +454,36 @@ ul {
   border: 1px solid #393939;
   padding: 4px 0;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.currency-menu {
+  z-index: 60;
+  min-width: 88px;
+  padding: 5px;
+  border: 1px solid #393939;
+  background: #1f1f1f;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.currency-menu-item {
+  padding: 7px 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.currency-menu-item[data-highlighted] {
+  color: var(--primary);
+  background: #303030;
+}
+
+.footer-currency-trigger {
+  border: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.55);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
 }
 
 .home-content {
@@ -714,6 +823,64 @@ ul {
   padding: 8px 14px;
   font-weight: 700;
   cursor: pointer;
+  text-align: center;
+}
+
+.rank-upgrades {
+  font-size: 16px;
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: 854px;
+  max-width: 100%;
+  margin: 0 auto 46px;
+}
+
+.upgrade-card {
+  display: flex;
+  min-height: 480px;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 20px 25px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: var(--background-color-secondary);
+  text-align: center;
+}
+
+.upgrade-card > img {
+  width: 144px;
+  height: 144px;
+  margin-bottom: 18px;
+  object-fit: contain;
+}
+
+.upgrade-card h2 {
+  min-height: 48px;
+  color: var(--primary);
+  font-family: var(--font-raleway), "Raleway", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.upgrade-card p {
+  margin-bottom: 14px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.upgrade-card .upgrade-renewal {
+  margin-top: auto;
+  text-decoration: underline;
+}
+
+.upgrade-price {
+  display: block;
+  margin: 2px 0 13px;
+  font-size: 20px;
 }
 
 .checkout-result {
@@ -758,6 +925,7 @@ ul {
   }
 
   .product-grid,
+  .upgrade-grid,
   .product-grid-skyblock-gems,
   .product-grid-boosters,
   .product-grid-companions {
@@ -791,6 +959,7 @@ ul {
 
 @media (max-width: 560px) {
   .product-grid,
+  .upgrade-grid,
   .product-grid-skyblock-gems,
   .product-grid-boosters,
   .product-grid-companions,

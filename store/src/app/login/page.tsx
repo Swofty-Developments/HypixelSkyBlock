@@ -1,9 +1,10 @@
 "use client";
 
-import { Suspense, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import {Suspense, useState} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {setLocalStorageValue} from "@/lib/use-local-storage";
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (username.trim()) {
-      localStorage.setItem("hypixel_username", username.trim());
+        setLocalStorageValue("hypixel_username", username.trim());
       router.push(redirect);
     }
   };
@@ -74,19 +75,19 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <div style={{ width: "1250px", maxWidth: "1250px", margin: "0 auto", padding: "0 15px", fontFamily: "Raleway, sans-serif", fontSize: "14px", color: "#000" }}>
+      <div className="store-page">
+          <div className="store-container">
         <Navbar />
 
         {/* Heading */}
-        <div style={{ padding: "10px 15px", fontSize: "38.4px", fontWeight: 400, fontFamily: "Neuton, Raleway, serif" }}>
+              <div className="login-title">
           Login
         </div>
 
         {/* Content */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "50px", padding: "0 15px", fontSize: "16px" }}>
-          <div style={{ textAlign: "center" }}>
-            <p style={{ marginBottom: "20px", fontSize: "16px" }}>Enter your Minecraft username</p>
+              <div className="login-content">
+                  <div className="login-panel">
+                      <p>Enter your Minecraft username</p>
             <Suspense fallback={<div>Loading...</div>}>
               <LoginForm />
             </Suspense>

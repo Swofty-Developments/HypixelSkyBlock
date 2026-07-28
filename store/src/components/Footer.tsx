@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import CurrencySelector from "@/components/CurrencySelector";
 
 const paymentMethods = [
   { name: "MasterCard", file: "mastercard.webp" },
@@ -67,7 +68,7 @@ export default function Footer() {
 
           <ul className="footer-links">
             <li>Server IP: <strong>mc.hypixel.net</strong></li>
-            <li>USD ▾</li>
+            <li><CurrencySelector footer/></li>
             {footerLinks.map((link) => (
               <li key={link.label}>
                 <Link href={link.href}>{link.label}</Link>
