@@ -116,6 +116,9 @@ items:
     rarity: UNCOMMON
     default_statistics: {}
     components:
+      - id: MINION_FUEL
+        fuel_percentage: 5.0
+        last_time_ms: 43200000
       - id: ENCHANTED
         recipe_type: FARMING
         item_id: BREAD
@@ -225,6 +228,9 @@ items:
     rarity: UNCOMMON
     default_statistics: {}
     components:
+      - id: MINION_FUEL
+        fuel_percentage: 20.0
+        last_time_ms: 129600000
       - id: ENCHANTED
         recipes:
           - type: shaped
@@ -283,6 +289,9 @@ items:
     rarity: UNCOMMON
     default_statistics: {}
     components:
+      - id: MINION_FUEL
+        fuel_percentage: 10.0
+        last_time_ms: 86400000
       - id: ENCHANTED
         recipe_type: MINING
         item_id: COAL

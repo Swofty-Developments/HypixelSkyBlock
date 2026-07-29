@@ -357,7 +357,8 @@ public class ItemConfigParser {
 				case "MINION_FUEL" -> {
 					double percentage = safeConfig.getDouble("fuel_percentage");
 					long lastTime = safeConfig.getInt("last_time_ms");
-					yield new MinionFuelComponent(percentage, lastTime);
+					double outputMultiplier = safeConfig.getDouble("output_multiplier", 1.0);
+					yield new MinionFuelComponent(percentage, lastTime, outputMultiplier);
 				}
 				case "MINION_SHIPPING" -> {
 					double percentage = safeConfig.getDouble("percentage");

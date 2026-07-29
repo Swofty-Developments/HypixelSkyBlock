@@ -1,6 +1,8 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
 package net.swofty.commons.skyblock.item;
 
+import java.lang.Exception;
+import java.lang.String;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -574,6 +576,8 @@ public enum ItemType {
 
   CATACOMBS_EXPERT_RING(Material.PLAYER_HEAD, Rarity.EPIC),
 
+  CATALYST(Material.END_STONE, Rarity.RARE),
+
   CAT_TALISMAN(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   CAVE_SPIDER_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -875,6 +879,8 @@ public enum ItemType {
   DARK_PURPLE_DYE(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   DAYLIGHT_DETECTOR(Material.DAYLIGHT_DETECTOR, Rarity.COMMON),
+
+  DAYSWITCH(Material.SUNFLOWER, Rarity.EPIC),
 
   DEAD_BUSH(Material.DEAD_BUSH, Rarity.COMMON),
 
@@ -1868,6 +1874,8 @@ public enum ItemType {
 
   HYPERION(Material.IRON_SWORD, Rarity.LEGENDARY),
 
+  HYPER_CATALYST(Material.END_STONE, Rarity.EPIC),
+
   HYPER_CATALYST_UPGRADER(Material.PLAYER_HEAD, Rarity.COMMON),
 
   HYPER_FURNACE(Material.FURNACE, Rarity.UNCOMMON),
@@ -2433,6 +2441,8 @@ public enum ItemType {
   NEW_YEAR_CAKE_BAG(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   NIBBLE_CHOCOLATE_STICK(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  NIGHTSWITCH(Material.WITHER_ROSE, Rarity.EPIC),
 
   NIGHT_VISION_POTION(Material.POTION, Rarity.COMMON),
 
@@ -3582,6 +3592,8 @@ public enum ItemType {
 
   SNOW_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  SOLAR_PANEL(Material.DAYLIGHT_DETECTOR, Rarity.UNCOMMON),
+
   SORROW(Material.GHAST_TEAR, Rarity.RARE),
 
   SOULFLOW(Material.PLAYER_HEAD, Rarity.RARE),
@@ -3900,6 +3912,8 @@ public enum ItemType {
 
   TARANTULA_WEB(Material.STRING, Rarity.UNCOMMON),
 
+  TASTY_CHEESE(Material.SPONGE, Rarity.RARE),
+
   TENDER_WOOD(Material.PLAYER_HEAD, Rarity.UNCOMMON),
 
   TEPID_GREEN_TEA(Material.PLAYER_HEAD, Rarity.COMMON),
@@ -3911,6 +3925,8 @@ public enum ItemType {
   TESSELLATED_ENDER_PEARL(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   THE_SHREDDER(Material.FISHING_ROD, Rarity.LEGENDARY),
+
+  THORNY_VINES(Material.VINE, Rarity.EPIC),
 
   TIGER_SHARK_TOOTH(Material.GHAST_TEAR, Rarity.EPIC),
 

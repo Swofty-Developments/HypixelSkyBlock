@@ -8,6 +8,7 @@ import net.minestom.server.instance.Instance;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.MinionShippingComponent;
+import net.swofty.type.skyblockgeneric.item.components.MinionFuelComponent;
 import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensionData;
 import net.swofty.type.skyblockgeneric.minion.extension.MinionExtensions;
@@ -31,8 +32,18 @@ public abstract class MinionAction {
                                              SkyBlockMinion minion,
                                              List<SkyBlockItem> items) {
         MinionExtensionData extensionData = islandMinion.getExtensionData();
+        SkyBlockItem fuel = extensionData.getFuel();
+        double outputMultiplier = fuel == null ? 1.0
+                : fuel.getComponent(MinionFuelComponent.class).getOutputMultiplier();
 
         for (SkyBlockItem item : items) {
+            if (extensionData.hasMinionUpgrade(ItemType.AUTO_SMELTER)) {
+                ItemType smelted = getAutoSmelterResult(item.getAttributeHandler().getPotentialType());
+                if (smelted != null) item = new SkyBlockItem(smelted, item.getAmount());
+            }
+            if (outputMultiplier > 1.0) {
+                item.setAmount((int) Math.floor(item.getAmount() * outputMultiplier));
+            }
             boolean hasAdded = islandMinion.addItem(item);
             double sellAmount = !item.hasComponent(SellableComponent.class) ? 0 :
                     item.getComponent(SellableComponent.class).getSellValue();
@@ -45,18 +56,35 @@ public abstract class MinionAction {
 
                 SkyBlockItem shippingItem = new SkyBlockItem(shippingExtension.getItemTypePassedIn());
                 double percentage = shippingItem.getComponent(MinionShippingComponent.class).getPercentageOfOriginalPrice();
-                double sellValue = sellAmount * (percentage / 100);
-                shippingExtension.addCoins(sellValue);
+                double sellValue = sellAmount * item.getAmount() * (percentage / 100);
+                shippingExtension.addCoins(sellValue, item.getAmount());
 
                 extensionData.setData(MinionExtensions.SHIPPING_SLOT.getSlots()[0], shippingExtension);
             }
         }
 
         if (extensionData.hasMinionUpgrade(ItemType.DIAMOND_SPREADING)) {
-            if (Math.random() < 0.1) {
-                SkyBlockItem diamond = new SkyBlockItem(ItemType.DIAMOND);
-                islandMinion.addItem(diamond);
+            int baseDrops = items.stream().mapToInt(SkyBlockItem::getAmount).sum();
+            int diamonds = 0;
+            for (int i = 0; i < baseDrops; i++) {
+                if (Math.random() < 0.1) diamonds++;
             }
+            if (diamonds > 0) islandMinion.addItem(new SkyBlockItem(ItemType.DIAMOND, diamonds));
         }
+    }
+
+    private static ItemType getAutoSmelterResult(ItemType input) {
+        if (input == null) return null;
+        return switch (input) {
+            case IRON_ORE -> ItemType.IRON_INGOT;
+            case GOLD_ORE -> ItemType.GOLD_INGOT;
+            case CACTUS -> ItemType.GREEN_DYE;
+            case SAND -> ItemType.GLASS;
+            case OAK_LOG, SPRUCE_LOG, BIRCH_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG ->
+                    ItemType.CHARCOAL;
+            case COBBLESTONE -> ItemType.STONE;
+            case CLAY_BALL -> ItemType.BRICKS;
+            default -> null;
+        };
     }
 }
