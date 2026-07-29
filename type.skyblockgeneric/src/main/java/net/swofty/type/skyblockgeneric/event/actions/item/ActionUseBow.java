@@ -9,6 +9,7 @@ import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.BowComponent;
+import net.swofty.type.skyblockgeneric.item.components.ItemRequirementsComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionUseBow implements HypixelEventClass {
@@ -20,6 +21,8 @@ public class ActionUseBow implements HypixelEventClass {
         SkyBlockItem item = new SkyBlockItem(event.getItemStack());
 
         if (item.getItemStack().material() != Material.BOW) return;
+        if (item.hasComponent(ItemRequirementsComponent.class)
+                && !item.getComponent(ItemRequirementsComponent.class).ensureCanUse(player)) return;
 
         // Calculate power based on charge time (vanilla formula)
         double power = getBowPower(event.getUseDuration());

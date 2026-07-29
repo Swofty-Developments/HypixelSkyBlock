@@ -1,9 +1,124 @@
 items:
+  - id: AIMING_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_bow
+  - id: ALCHEMISTS_STAFF
+    material: POPPY
+    rarity: RARE
+    default_statistics:
+      damage: 50
+      strength: 20
+      intelligence: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/alchemists_staff
+  - id: ANTI_SENTIENT_PICKAXE
+    material: WOODEN_PICKAXE
+    rarity: EPIC
+    default_statistics:
+      rift_damage: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/mountaintop/anti_sentient_pickaxe
+  - id: ARACK
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 90
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/combat_1/arack
+  - id: ARCHER_DUNGEON_ABILITY_2
+    material: BOW
+    rarity: UNCOMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_bow
+  - id: ARCHER_DUNGEON_ABILITY_3
+    material: BOW
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_bow
+  - id: ARTISANAL_SHORTBOW
+    material: BOW
+    rarity: RARE
+    default_statistics:
+      damage: 40
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/artisanal_shortbow
+  - id: ASPECT_OF_THE_DRAGON
+    material: DIAMOND_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 225
+      strength: 100
+    components:
+      - id: ABILITY
+        abilities:
+          - DRAGON_RAGE
+      - id: SELLABLE
+        value: 100000
+      - id: MUSEUM
+        museum_category: WEAPONS
+        game_stage: INTERMEDIATE
+        donation_xp: 5
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Aspect of the Dragons
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 18
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_dragon
   - id: ASPECT_OF_THE_END
     material: DIAMOND_SWORD
     rarity: RARE
-    abilities:
-      - INSTANT_TRANSMISSION
     default_statistics:
       damage: 100
       strength: 100
@@ -11,12 +126,6 @@ items:
       - id: ABILITY
         abilities:
           - INSTANT_TRANSMISSION
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: GEMSTONE
-        gemstone_slots:
-          - gemstone: SAPPHIRE
-            coins: 50000
       - id: SELLABLE
         value: 56000
       - id: MUSEUM
@@ -44,6 +153,11 @@ items:
             result:
               type: ASPECT_OF_THE_END
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_end
   - id: ASPECT_OF_THE_JERRY
@@ -55,8 +169,6 @@ items:
       - id: ABILITY
         abilities:
           - PARLEY
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
       - id: DEFAULT_CRAFTABLE
         recipes:
           - type: SHAPED
@@ -74,101 +186,55 @@ items:
             result:
               type: ASPECT_OF_THE_JERRY
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_jerry
-  - id: ASPECT_OF_THE_DRAGON
-    material: DIAMOND_SWORD
-    rarity: LEGENDARY
-    abilities:
-      - DRAGON_RAGE
-    default_statistics:
-      damage: 225
-      strength: 100
-      ability_damage: 12000
-    components:
-      - id: ABILITY
-        abilities:
-          - DRAGON_RAGE
-      - id: SELLABLE
-        value: 100000
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: GEMSTONE
-        gemstone_slots:
-          - gemstone: JASPER
-            coins: 50000
-            items:
-              - FINE_JASPER_GEM:20
-      - id: UPGRADES
-        levels:
-          - level: 1
-            requirements:
-              - type: ESSENCE
-                essence: DRAGON
-                amount: 50
-          - level: 2
-            requirements:
-              - type: ESSENCE
-                essence: DRAGON
-                amount: 100
-          - level: 3
-            requirements:
-              - type: ESSENCE
-                essence: DRAGON
-                amount: 200
-          - level: 4
-            requirements:
-              - type: ESSENCE
-                essence: DRAGON
-                amount: 300
-          - level: 5
-            requirements:
-              - type: ESSENCE
-                essence: DRAGON
-                amount: 400
-      - id: MUSEUM
-        museum_category: WEAPONS
-        game_stage: INTERMEDIATE
-        donation_xp: 5
-      - id: CUSTOM_DISPLAY_NAME
-        display_name: Aspect of the Dragons
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/aspect_of_the_dragon
-  - id: END_SWORD
-    material: IRON_SWORD
+  - id: ASPECT_OF_THE_JERRY_SIGNATURE
+    material: WOODEN_SWORD
     rarity: UNCOMMON
-    lore:
-      - "Deals \xA7a+100% \xA77damage to Ender"
-      - Dragons, Endermites, and Endermen.
     default_statistics:
-      damage: 35
+      damage: 2
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-      - id: SELLABLE
-        value: 10.0
       - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/island_relevant/combat_3/weapons/end_sword
+        item_model: hypixel_skyblock:item/events/century/aspect_of_the_jerry_signature
+  - id: ASPECT_OF_THE_LEECH_1
+    material: WOODEN_SHOVEL
+    rarity: UNCOMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/wands/aspect_of_the_leech_1
+  - id: ASPECT_OF_THE_LEECH_2
+    material: WOODEN_SHOVEL
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/wands/aspect_of_the_leech_2
+  - id: ASPECT_OF_THE_LEECH_3
+    material: WOODEN_SHOVEL
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/wands/aspect_of_the_leech_3
   - id: ASPECT_OF_THE_VOID
     material: DIAMOND_SHOVEL
     rarity: EPIC
     default_statistics:
       damage: 120
       strength: 100
-    abilities:
-      - INSTANT_TRANSMISSION
-      - ETHER_TRANSMISSION
     components:
       - id: ABILITY
         abilities:
           - INSTANT_TRANSMISSION
           - ETHER_TRANSMISSION
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: GEMSTONE
-        gemstone_slots:
-          - gemstone: SAPPHIRE
-            coins: 50000
       - id: SELLABLE
         value: 56000
       - id: CUSTOM_DISPLAY_NAME
@@ -177,53 +243,1715 @@ items:
         museum_category: WEAPONS
         game_stage: EXPERT
         donation_xp: 6
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/aspect_of_the_void
+  - id: ASTRAEA
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      defense: 250
+      damage: 270
+      strength: 150
+      ferocity: 30
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 7
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: DEFENSIVE
+            coins: 250000
+            items:
+              - FLAWLESS_AMETHYST_GEM:2
+              - FLAWLESS_RUBY_GEM:2
+          - gemstone: COMBAT
+            coins: 250000
+            items:
+              - FLAWLESS_JASPER_GEM:1
+              - FLAWLESS_SAPPHIRE_GEM:1
+              - FLAWLESS_RUBY_GEM:1
+              - FLAWLESS_AMETHYST_GEM:1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/astraea
+  - id: ATOMSPLIT_KATANA
+    material: BLAZE_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 305
+      strength: 100
+      critical_damage: 50
+      intelligence: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: SAPPHIRE
+            coins: 100000
+            items:
+              - FINE_SAPPHIRE_GEM:40
+          - gemstone: SAPPHIRE
+            coins: 250000
+            items:
+              - FLAWLESS_SAPPHIRE_GEM:2
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/atomsplit_katana
+  - id: AXE_OF_THE_SHREDDED
+    material: DIAMOND_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 140
+      strength: 115
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=8
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/weapons/halberd_of_the_shredded
+  - id: BASIC_CHICKEN_AXE
+    material: WOODEN_AXE
+    rarity: COMMON
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/basic_chicken_axe
+  - id: BASIC_COW_AXE
+    material: WOODEN_AXE
+    rarity: COMMON
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/basic_cow_axe
+  - id: BASIC_MUSHROOM_COW_AXE
+    material: WOODEN_AXE
+    rarity: COMMON
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/basic_mushroom_cow_axe
+  - id: BASIC_PIG_AXE
+    material: WOODEN_AXE
+    rarity: COMMON
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/basic_pig_axe
+  - id: BASIC_RABBIT_AXE
+    material: WOODEN_AXE
+    rarity: COMMON
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/basic_rabbit_axe
+  - id: BASIC_SHEEP_AXE
+    material: WOODEN_AXE
+    rarity: COMMON
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/basic_sheep_axe
+  - id: BAT_WAND
+    material: PAPER
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 180
+      intelligence: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/spirit_sceptre
+  - id: BINGO_BLASTER
+    material: PAPER
+    rarity: EPIC
+    default_statistics:
+      ability_damage: 20
+      intelligence: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/bingo/bingo_blaster
+  - id: BLADE_OF_THE_VOLCANO
+    material: IRON_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 220
+      strength: 70
+      critical_damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/blade_of_the_volcano
+  - id: BONE_BOOMERANG
+    material: BONE
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 270
+      strength: 130
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/bonemerang
+  - id: BONZO_STAFF
+    material: BLAZE_ROD
+    rarity: RARE
+    default_statistics:
+      damage: 160
+      intelligence: 250
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 1
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/bonzos_staff
+  - id: BOSS_SPIRIT_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 1
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/spirit_shortbow
+  - id: BOUQUET_OF_LIES
+    material: SUNFLOWER
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 220
+      strength: 300
+      critical_damage: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/bouqet_of_lies
+  - id: BOW
+    material: BOW
+    rarity: COMMON
+    default_statistics:
+      damage: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+  - id: BURSTFIRE_DAGGER
+    material: STONE_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 130
+      strength: 55
+      critical_damage: 20
+      bonus_attack_speed: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=blaze level=4
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 250000
+          - gemstone: OPAL
+            coins: 500000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/swords/kindlebane_dagger
+  - id: BURSTMAW_DAGGER
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 130
+      strength: 55
+      critical_damage: 20
+      bonus_attack_speed: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=blaze level=4
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 250000
+          - gemstone: OPAL
+            coins: 500000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/swords/mawdredge_dagger
+  - id: CELESTE_WAND
+    material: STICK
+    rarity: UNCOMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/celeste_wand
+  - id: CHICKEN_AXE
+    material: STONE_AXE
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: FARMING
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/chicken_axe
+  - id: CHRONO_PICKAXE
+    material: IRON_PICKAXE
+    rarity: EPIC
+    default_statistics:
+      rift_damage: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/mountaintop/timite_collection/chrono_pickaxe
+  - id: CLEAVER
+    material: GOLDEN_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 40
+      strength: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/cleaver
+  - id: CONJURING_SWORD
+    material: STONE_SWORD
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 13
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/conjuring
+  - id: COW_AXE
+    material: STONE_AXE
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: FARMING
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/cow_axe
+  - id: CROWN_OF_GREED
+    material: GOLDEN_HELMET
+    rarity: LEGENDARY
+    default_statistics:
+      defense: 50
+      health: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: CRYPT_BOW
+    material: BOW
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 5
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/soulstealer_bow
+  - id: CRYPT_DREADLORD_SWORD
+    material: IRON_SWORD
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/dreadlord_sword
+  - id: CRYPT_WITHERLORD_SWORD
+    material: DIAMOND_SWORD
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 18
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_sword
+  - id: CUTLASS
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 1
+      bonus_attack_speed: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_sword
+  - id: DAEDALUS_AXE
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/diana/daedalus_blade
+  - id: DEATH_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 6
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/death_bow
+  - id: DECENT_BOW
+    material: BOW
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 45
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/decent_bow
+  - id: DIAMOND_SWORD
+    material: DIAMOND_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 35
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: DRAGON_SHORTBOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      strength: 40
+      critical_damage: 50
+      critical_chance: 15
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/dragon_shortbow
+  - id: EARTH_SHARD
+    material: STONE_SWORD
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 19
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/earth_shard
+  - id: EDIBLE_MACE
+    material: MUTTON
+    rarity: RARE
+    default_statistics:
+      damage: 125
+      strength: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=wolf level=5
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weapons/edible_mace
+  - id: ELECTRIC_WAND_ITEM
+    material: STICK
+    rarity: RARE
+    default_statistics:
+      damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_wand
+  - id: EMBER_ROD
+    material: BLAZE_ROD
+    rarity: EPIC
+    default_statistics:
+      damage: 80
+      strength: 35
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 8
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/ember_rod
+  - id: EMERALD_BLADE
+    material: EMERALD
+    rarity: EPIC
+    default_statistics:
+      damage: 130
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/emerald_blade
+  - id: ENDER_BOW
+    material: BOW
+    rarity: RARE
+    default_statistics:
+      damage: 60
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/weapons/ender_bow
+  - id: END_STONE_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 140
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/weapons/end_stone_bow
+  - id: END_STONE_SWORD
+    material: GOLDEN_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      strength: 80
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/weapons/endstone_blade
+  - id: END_SWORD
+    material: DIAMOND_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 35
+    lore:
+      - Deals §a+100% §7damage to Ender
+      - Dragons, Endermites, and Endermen.
+    components:
+      - id: SELLABLE
+        value: 10.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/weapons/end_sword
+  - id: ENRAGER
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 270
+      strength: 150
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 25
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/enrager
+  - id: EON_PICKAXE
+    material: GOLDEN_PICKAXE
+    rarity: EPIC
+    default_statistics:
+      rift_damage: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/mountaintop/timite_collection/eon_pickaxe
+  - id: EXPLOSIVE_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 100
+      strength: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/explosive_bow
   - id: FANCY_SWORD
     material: GOLDEN_SWORD
     rarity: UNCOMMON
     default_statistics:
-      damage: 50
-      speed: 40
+      damage: 20
+    components:
+      - id: SELLABLE
+        value: 50
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/fancy_sword
+  - id: FARMING_WAND
+    material: GOLDEN_HOE
+    rarity: RARE
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-      - id: SELLABLE
-        value: 50
       - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/fancy_sword
-  - id: FLINT_ARROW
-    material: ARROW
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/dreadfarm/wand_of_farming
+  - id: FEL_SWORD
+    material: STONE_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 190
+      strength: 135
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/fel_sword
+  - id: FIREDUST_DAGGER
+    material: STONE_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 90
+      strength: 45
+      critical_damage: 15
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=blaze level=2
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 250000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/swords/firedust_dagger
+  - id: FIRE_FREEZE_STAFF
+    material: DANDELION
+    rarity: EPIC
+    default_statistics:
+      damage: 50
+      strength: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/fire_freeze_staff
+  - id: FIRE_FURY_STAFF
+    material: BLAZE_ROD
+    rarity: EPIC
+    default_statistics:
+      damage: 100
+      intelligence: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/fire_fury_staff
+  - id: FIRE_VEIL_WAND
+    material: BLAZE_ROD
+    rarity: EPIC
+    default_statistics:
+      damage: 50
+      intelligence: 200
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/fire_veil_wand
+  - id: FLAMING_FLAY
+    material: FISHING_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 200
+      strength: 250
+      ferocity: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 23
+          - type: SKILL
+            skill: FISHING
+            level: 47
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:4
+          - gemstone: COMBAT
+            coins: 250000
+            items:
+              - FLAWLESS_JASPER_GEM:1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/flaming_flay
+  - id: FLAMING_SWORD
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 50
+      strength: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/flaming_sword
+  - id: FLORID_ZOMBIE_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 150
+      strength: 80
+      intelligence: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 18
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+          - gemstone: RUBY
+            coins: 20000
+            items:
+              - FINE_RUBY_GEM:10
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/florid_zombie_sword
+  - id: FLOWER_OF_TRUTH
+    material: PAPER
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 160
+      strength: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/flower_of_truth
+  - id: FLY_SWATTER
+    material: PAPER
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/fly_swatter
+  - id: FROZEN_SCYTHE
+    material: IRON_HOE
+    rarity: RARE
+    default_statistics:
+      damage: 80
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/frozen_scythe
+  - id: GATEWAY_WAND
+    material: PAPER
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_wand
+  - id: GEMSTONE_GAUNTLET
+    material: PLAYER_HEAD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 300
+      strength: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: tier=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JADE
+          - gemstone: AMBER
+          - gemstone: TOPAZ
+          - gemstone: SAPPHIRE
+          - gemstone: AMETHYST
+      - id: DECORATION_HEAD
+        texture:
+          value: ewogICJ0aW1lc3RhbXAiIDogMTYxODUyMTY2MzY1NCwKICAicHJvZmlsZUlkIiA6ICIxZDUyMzNkMzg4NjI0YmFmYjAwZTMxNTBhN2FhM2E4OSIsCiAgInByb2ZpbGVOYW1lIiA6ICIwMDAwMDAwMDAwMDAwMDBKIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdiZjAxYzE5OGY2ZTE2OTY1ZTIzMDIzNWNkMjJhNWE5ZjRhNDBlNDA5NDEyMzQ0Nzg5NDhmZjlhNTZlNTE3NzUiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==
+          signature: SOQb/wJC4uwWbZOKEdbt9k6yVTvofC/ax8qME9rSairtZhZe4vuA7iV+QVXi9rYP1ssh9gMCyeuIA7+jcQ1xwg4l+TUzZUUTV9zPz+lvKTKdQNFLHbfUWo452MTy3Gf79UbRQprkCBSgi8Tl4NPwlIVxFV7s+D+/agS4oga6skqvZDX5/lakZBVWeed6gJtgBOsRJQZWAolJrOK7nz1wLR2I5w4nWKZhuKsHa5Xe47OKwopEuGLH8ZH4hjovY77vszmjJ6g31dq92WnKKhwkifb9k520FYlwZcH1tbXf5h8RBqoT7dylBlMuQg3MaRqn3QMb1ZeU8Y/3On/VmWP8GGH/rv44MoBQ0bNlG9ZI3b2qhRF5lCVER2cRt2J2U2NNLFTL8AkcHNqWt8bVnlFIFPzhypdVRzUKi6xOtDVwQZmvlHUPnQUbH30Xkb99nducU0JNcQPIFIV1WDdEXKvM7541zVBl3tqQogUVqfHza+wzH3uQZUGqY2xmQA70HcQDby35d4ilQh++AMoqK/J97Z3QIde/znWEv2M3z9IF1no+GRmclq/bM4MAcdhN5PxsH60hOINwwVmQCtPV8spWQHYia5zM8nXuyOsEfKNQBLuJHUXirHKf3kiWiRbt5aTqtkUHh1k2DYpAiHViAlY2cpWHnwUByxiRTDAoDUEMaLw=
+  - id: GENERALS_HOPE_OF_THE_RESISTANCE
+    material: SUNFLOWER
+    rarity: LEGENDARY
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/staff_of_the_rising_sun_2
+  - id: GHOUL_BUSTER
+    material: IRON_HOE
+    rarity: EPIC
+    default_statistics:
+      damage: 140
+      strength: 90
+      critical_damage: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/great_spook/ghoul_buster
+  - id: GIANT_CLEAVER
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 235
+      strength: 120
+      critical_damage: 120
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 6
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/giant_cleaver
+  - id: GLACIAL_SCYTHE
+    material: DIAMOND_HOE
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      intelligence: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/glacial_scythe
+  - id: GOLD_SWORD
+    material: GOLDEN_SWORD
     rarity: COMMON
     default_statistics:
-      damage: 1
+      damage: 20
     components:
-      - id: ARROW
-  - id: HUNTER_KNIFE
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: GOLEM_SWORD
     material: IRON_SWORD
+    rarity: RARE
+    default_statistics:
+      defense: 25
+      damage: 80
+      strength: 125
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/golem_sword
+  - id: GREAT_SPOOK_SWORD
+    material: WOODEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/great_spook/great_spook_sword
+  - id: GYROKINETIC_WAND
+    material: BLAZE_ROD
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=6
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/support_items/gyrokinetic_wand
+  - id: HARVESTING_SWORD
+    material: DIAMOND_SWORD
     rarity: UNCOMMON
     default_statistics:
       damage: 50
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-      - id: DEFAULT_SOULBOUND
-        coop_allowed: false
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/hunters_knife
-  - id: MERCENARY_AXE
-    material: IRON_AXE
+  - id: HEALING_CIRCLE_ITEM
+    material: STICK
     rarity: RARE
     default_statistics:
-      damage: 70
-      strength: 20
+      damage: 10
     components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_wand
+  - id: HEARTFIRE_DAGGER
+    material: STONE_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 160
+      strength: 75
+      critical_damage: 25
+      critical_chance: 10
+      bonus_attack_speed: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=blaze level=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 250000
+          - gemstone: OPAL
+            coins: 500000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/swords/pyrochaos_dagger
+  - id: HEARTMAW_DAGGER
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 160
+      strength: 75
+      critical_damage: 25
+      critical_chance: 10
+      bonus_attack_speed: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=blaze level=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 250000
+          - gemstone: OPAL
+            coins: 500000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/swords/deathripper_dagger
+  - id: HELLSTORM_STAFF
+    material: REDSTONE_TORCH
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      strength: 50
+      intelligence: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 25
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hellstorm_wand
+  - id: HOLLOW_WAND
+    material: FEATHER
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 150
+      strength: 20
+      intelligence: 120
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+          - type: PENDING
+            description: kuudra_tier=NONE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/crimson_isle/armors/hollow/hollow_wand
+  - id: HOPE_OF_THE_RESISTANCE
+    material: SUNFLOWER
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/staff_of_the_rising_sun
+  - id: HORSEMAN_SCYTHE
+    material: DIAMOND_HOE
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_hoe
+  - id: HUNTER_KNIFE
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      speed: 40
+      damage: 50
+    components:
+      - id: DEFAULT_SOULBOUND
+        coop_allowed: false
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hunters_knife
+  - id: HURRICANE_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      strength: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hurricane_bow
+  - id: HYPERION
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 260
+      strength: 150
+      ferocity: 30
+      intelligence: 350
+    lore:
+      - Deals §c+50% §7damage to §8☠ Wither §7mobs.
+      - Grants §c+1 ❁ Damage §7and §a+2 §b✎
+      - §bIntelligence §7per §cCatacombs §7level.
+    components:
+      - id: ABILITY
+        abilities:
+          - WITHER_IMPACT
+      - id: MUSEUM
+        museum_category: WEAPONS
+      - id: TRACKED_UNIQUE
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 7
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 250000
+            items:
+              - FLAWLESS_SAPPHIRE_GEM:4
+          - gemstone: COMBAT
+            coins: 250000
+            items:
+              - FLAWLESS_JASPER_GEM:1
+              - FLAWLESS_SAPPHIRE_GEM:1
+              - FLAWLESS_RUBY_GEM:1
+              - FLAWLESS_AMETHYST_GEM:1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hyperion
+  - id: HYPER_CLEAVER
+    material: GOLDEN_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 175
+      strength: 100
+      critical_damage: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/hyper_cleaver
+  - id: ICE_SPRAY_WAND
+    material: STICK
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 20
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/ice_spray_wand
+  - id: INK_WAND
+    material: STICK
+    rarity: EPIC
+    default_statistics:
+      damage: 130
+      strength: 90
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/ink_wand
+  - id: IRON_SWORD
+    material: IRON_SWORD
+    rarity: COMMON
+    default_statistics:
+      damage: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: ITEM_SPIRIT_BOW
+    material: BOW
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 210
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/spirit_shortbow
+  - id: JERRY_STAFF
+    material: GOLDEN_HORSE_ARMOR
+    rarity: EPIC
+    default_statistics:
+      damage: 80
+      intelligence: 200
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/jerry/jerrychine_gun
+  - id: JUJU_SHORTBOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 310
+      strength: 40
+      critical_damage: 110
+      critical_chance: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=5
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/juju_shortbow
+  - id: LAST_BREATH
+    material: BOW
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 200
+      strength: 180
+      critical_damage: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 5
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/last_breath
+  - id: LEAPING_SWORD
+    material: GOLDEN_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 150
+      strength: 100
+      critical_damage: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 8
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/leaping_sword
+  - id: LEECH_SWORD
+    material: WOODEN_SWORD
+    rarity: RARE
+    default_statistics:
+      rift_damage: 3
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/weapons/leech_sword
+  - id: LIVID_DAGGER
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 210
+      strength: 60
+      bonus_attack_speed: 50
+      critical_damage: 50
+      critical_chance: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 5
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/livid_dagger
+  - id: MACHINE_GUN_BOW
+    material: BOW
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 2
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/machine_gun_shortbow
+  - id: MAGMA_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 100
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/magma_bow
+  - id: MAWDUST_DAGGER
+    material: IRON_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 90
+      strength: 45
+      critical_damage: 15
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=blaze level=2
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 250000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/swords/twilight_dagger
+  - id: MERCENARY_AXE
+    material: IRON_SWORD
+    rarity: RARE
+    default_statistics:
+      strength: 20
+      damage: 70
+    components:
       - id: SELLABLE
         value: 15000.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 4
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/mercenary_sword
+  - id: MIDAS_STAFF
+    material: GOLDEN_SHOVEL
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 130
+      strength: 150
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/scorpius/midas_staff
+  - id: MIDAS_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 170
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 20
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/midas_sword
+  - id: MIRRORED_BOW
+    material: BOW
+    rarity: COMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/mirrorcosm/crafting_room/crafts/wob
+  - id: MOSQUITO_BOW
+    material: BOW
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 319
+      strength: 151
+      critical_damage: 39
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=spider level=7
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/mosquito_shortbow
+  - id: MUSHROOM_COW_AXE
+    material: STONE_AXE
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: FARMING
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/mushroom_cow_axe
+  - id: NECROMANCER_SWORD
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      defense: 125
+      damage: 250
+      strength: 125
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 6
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/necromancers_sword
+  - id: NECRON_BLADE
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 260
+      strength: 110
+      ferocity: 30
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 7
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/necrons_blade
+  - id: NULL_BLADE
+    material: PAPER
+    rarity: LEGENDARY
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_blade
+  - id: NULL_EDGE
+    material: STICK
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_edge
+  - id: ORNATE_ZOMBIE_SWORD
+    material: GOLDEN_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 110
+      strength: 60
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 18
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+          - gemstone: RUBY
+            coins: 20000
+            items:
+              - FINE_RUBY_GEM:10
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/ornate_zombie_sword
+  - id: PIGMAN_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 200
+      strength: 100
+      critical_damage: 30
+      critical_chance: 5
+      intelligence: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 18
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/pigman_sword
+  - id: PIG_AXE
+    material: STONE_AXE
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: FARMING
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/pig_axe
+  - id: POLYMORPH_WAND
+    material: STICK
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_wand
+  - id: POOCH_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      speed: 10
+      damage: 160
+      strength: 80
+      bonus_attack_speed: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=wolf level=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weapons/pooch_sword
   - id: PRISMARINE_BLADE
     material: PRISMARINE_SHARD
     rarity: UNCOMMON
@@ -231,8 +1959,6 @@ items:
       damage: 50
       strength: 25
     components:
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
       - id: SELLABLE
         value: 160
       - id: DEFAULT_CRAFTABLE
@@ -254,8 +1980,136 @@ items:
             result:
               type: PRISMARINE_BLADE
               amount: 1
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/prismarine_blade
+  - id: PRISMARINE_BOW
+    material: BOW
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 50
+      strength: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/prismarine_bow
+  - id: RABBIT_AXE
+    material: STONE_AXE
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: FARMING
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/rabbit_axe
+  - id: RAGNAROCK_AXE
+    material: GOLDEN_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 200
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/events/april_fools/ragnarock
+  - id: RAIDER_AXE
+    material: IRON_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 80
+      strength: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/raider_sword
+  - id: REAPER_SCYTHE
+    material: DIAMOND_HOE
+    rarity: LEGENDARY
+    default_statistics:
+      speed: 10
+      damage: 333
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=7
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/weapons/reaper_scythe
+  - id: REAPER_SWORD
+    material: DIAMOND_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      strength: 100
+      intelligence: 200
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/weapons/reaper_falchion
+  - id: RECLUSE_FANG
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 60
+      strength: 30
+      critical_damage: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=spider level=2
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/recluse_fang
+  - id: REVENANT_SWORD
+    material: DIAMOND_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 90
+      strength: 50
+      intelligence: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/weapons/revenant_falchion
   - id: ROGUE_SWORD
     material: GOLDEN_SWORD
     rarity: COMMON
@@ -265,112 +2119,117 @@ items:
       - id: ABILITY
         abilities:
           - SPEED_BOOST
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
       - id: TRACKED_UNIQUE
       - id: SELLABLE
         value: 3.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/rogue_sword
-  - id: SILVER_FANG
-    material: IRON_SWORD
-    rarity: UNCOMMON
-    default_statistics:
-      damage: 100
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: SELLABLE
-        value: 2000
-      - id: DEFAULT_CRAFTABLE
-        default-craftable: false
-        recipes:
-          - type: SHAPED
-            recipe-type: COMBAT
-            pattern:
-              - OAO
-              - AAA
-              - OAO
-            ingredients:
-              A:
-                type: ENCHANTED_GHAST_TEAR
-                amount: 5
-              O:
-                type: AIR
-                amount: 1
-            result:
-              type: SILVER_FANG
-              amount: 1
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/silver_fang
-  - id: SPIDER_SWORD
-    material: IRON_SWORD
-    rarity: UNCOMMON
-    lore:
-      - "Deals \xA7a+100% \xA77damage to Silverfish,"
-      - Spiders, and Cave Spiders.
-      - ''
-      - "\xA74This item is Arachnal \u0416!"
-    default_statistics:
-      damage: 30
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: SELLABLE
-        value: 5.0
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/spider_sword
-  - id: SQUIRE_SWORD
-    material: IRON_SWORD
-    rarity: UNCOMMON
-    default_statistics:
-      damage: 50
-      strength: 10
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: SELLABLE
-        value: 2500.0
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/squire_sword
-  - id: UNDEAD_SWORD
-    material: IRON_SWORD
-    rarity: UNCOMMON
-    lore:
-      - "Deals \xA7a+100% \xA77damage to Zombies,"
-      - Skeletons, Zombie Pigmen, and
-      - Withers.
-    default_statistics:
-      damage: 30
-    components:
-      - id: STANDARD_ITEM
-        standard_item_type: SWORD
-      - id: SELLABLE
-        value: 5.0
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/undead_sword
-  - id: HYPERION
-    material: IRON_SWORD
+  - id: RUNAANS_BOW
+    material: BOW
     rarity: LEGENDARY
-    lore:
-      - "Deals \xA7c+50% \xA77damage to \xA78\u2620 Wither \xA77mobs."
-      - "Grants \xA7c+1 \u2741 Damage \xA77and \xA7a+2 \xA7b\u270E"
-      - "\xA7bIntelligence \xA77per \xA7cCatacombs \xA77level."
     default_statistics:
-      health: 20
-      damage: 100
-      speed: 50
-      defense: 30
+      damage: 160
+      strength: 50
     components:
-      - id: ABILITY
-        abilities:
-          - WITHER_IMPACT
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/runaans_bow
+  - id: RUNIC_STAFF
+    material: BLAZE_ROD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 20
+      intelligence: 250
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+          - type: PENDING
+            description: kuudra_tier=NONE
       - id: GEMSTONE
         gemstone_slots:
           - gemstone: SAPPHIRE
             coins: 250000
-            items:
-              - FLAWLESS_SAPPHIRE_GEM:4
+          - gemstone: SAPPHIRE
+            coins: 250000
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/aurora_staff
+  - id: SAVANA_BOW
+    material: BOW
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/savanna_bow
+  - id: SCORPION_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 50
+      strength: 25
+      critical_chance: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=spider level=3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/spider_shortbow
+  - id: SCORPION_FOIL
+    material: WOODEN_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 120
+      strength: 60
+      critical_damage: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=spider level=6
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/scorpion_foil
+  - id: SCYLLA
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 270
+      strength: 150
+      critical_damage: 35
+      critical_chance: 12
+      ferocity: 30
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 7
+      - id: GEMSTONE
+        gemstone_slots:
           - gemstone: COMBAT
             coins: 250000
             items:
@@ -378,142 +2237,1309 @@ items:
               - FLAWLESS_SAPPHIRE_GEM:1
               - FLAWLESS_RUBY_GEM:1
               - FLAWLESS_AMETHYST_GEM:1
-      - id: MUSEUM
-        museum_category: WEAPONS
-      - id: TRACKED_UNIQUE
-      - id: NOT_FINISHED_YET
+          - gemstone: COMBAT
+            coins: 250000
+            items:
+              - FLAWLESS_JASPER_GEM:1
+              - FLAWLESS_SAPPHIRE_GEM:1
+              - FLAWLESS_RUBY_GEM:1
+              - FLAWLESS_AMETHYST_GEM:1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/scylla
+  - id: SEISMIC_WAVE_STICK
+    material: STICK
+    rarity: RARE
+    default_statistics:
+      damage: 10
+    components:
       - id: STANDARD_ITEM
         standard_item_type: SWORD
-      - id: DEFAULT_CRAFTABLE
-        recipes:
-          - type: SHAPED
-            recipe-type: SLAYER
-            pattern:
-              - ABA
-            ingredients:
-              A:
-                type: REVENANT_FLESH
-                amount: 32
-              B:
-                type: ZOMBIE_TALISMAN
-                amount: 1
-            result:
-              type: ZOMBIE_RING
-              amount: 1
-            requirements:
-              level:
-                left: '%player.SKYBLOCK_LEVEL%'
-                operation: '>='
-                right: '10'
-                fail-message: "\xA7cLevel Requirement\n\xA77You must be at least \xA7eLevel 10 \xA77to craft this item!"
+      - id: DUNGEON_ITEM
       - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/uncategorized/hyperion
-  - id: ATOMSPLIT_KATANA
-    rarity: LEGENDARY
-    material: DIAMOND_SWORD
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/atomsplit_katana
-  - id: VOIDEDGE_KATANA
+        item_model: hypixel_skyblock:item/broken/broken_wand
+  - id: SELF_RECURSIVE_PICKAXE
+    material: DIAMOND_PICKAXE
     rarity: RARE
-    material: DIAMOND_SWORD
+    default_statistics:
+      rift_damage: 5
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/cave/self_recursive_pickaxe
+  - id: SHADOW_FURY
+    material: DIAMOND_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      speed: 30
+      damage: 300
+      strength: 130
+      critical_damage: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 5
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/shadow_fury
+  - id: SHAMAN_SWORD
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      speed: 5
+      damage: 100
+      strength: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=wolf level=3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/weapons/shaman_sword
+  - id: SHARP_STEAK_STAKE
+    material: COOKED_MUTTON
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=vampire level=3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/castle/super_sharp_and_stabby_steak_stake
+  - id: SHEEP_AXE
+    material: STONE_AXE
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: FARMING
+            level: 15
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sheep_axe
+  - id: SILENT_DEATH
+    material: IRON_SWORD
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/silent_death
+  - id: SILK_EDGE_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 175
+      strength: 125
+      critical_damage: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 13
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/silk_edge_sword
+  - id: SILVERTWIST_KARAMBIT
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      rift_damage: 6
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=vampire level=4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/castle/swords/silver_twist_karambit
+  - id: SILVER_LACED_KARAMBIT
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      rift_damage: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=vampire level=1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/castle/swords/silver_laced_karambit
+  - id: SINSEEKER_SCYTHE
+    material: GOLDEN_HOE
+    rarity: EPIC
+    default_statistics:
+      damage: 100
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=6
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/sinseeker_scythe
+  - id: SKELETON_LORD_BOW
+    material: BOW
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 30
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_bow
+  - id: SLIME_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 100
+      critical_damage: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/slime_bow
+  - id: SNIPER_BOW
+    material: BOW
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 10
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sniper_bow
+  - id: SOULS_REBOUND
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 450
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/souls_rebound
+  - id: SOUL_ESOWARD
+    material: OAK_SAPLING
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: SOUL_WHIP
+    material: FISHING_ROD
+    rarity: EPIC
+    default_statistics:
+      damage: 145
+      strength: 175
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 23
+          - type: SKILL
+            skill: FISHING
+            level: 26
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/soul_whip
+  - id: SPIDER_QUEENS_STINGER
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 360
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/spider_queens_stinger
+  - id: SPIDER_SWORD
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 30
+    lore:
+      - Deals §a+100% §7damage to Silverfish,
+      - Spiders, and Cave Spiders.
+      - ''
+      - §4This item is Arachnal Ж!
+    components:
+      - id: SELLABLE
+        value: 5.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/spider_sword
+  - id: SPIRIT_SWORD
+    material: IRON_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 210
+      strength: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/spirit_sword
+  - id: SQUIRE_SWORD
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      strength: 10
+      damage: 50
+    components:
+      - id: SELLABLE
+        value: 2500.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/squire_sword
+  - id: STAFF_OF_THE_RISING_MOON
+    material: POPPY
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/wands/staff_of_the_rising_moon
+  - id: STAFF_OF_THE_VOLCANO
+    material: WHEAT
+    rarity: RARE
+    default_statistics:
+      damage: 60
+      intelligence: 150
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/staff_of_the_volcano
+  - id: STARLIGHT_WAND
+    material: STICK
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 8
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/starlight_wand
+  - id: STARRED_BAT_WAND
+    material: PAPER
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 190
+      intelligence: 330
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/spirit_sceptre_fragged
+  - id: STARRED_BONE_BOOMERANG
+    material: BONE
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 320
+      strength: 150
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/bonemerang
+  - id: STARRED_BONZO_STAFF
+    material: BLAZE_ROD
+    rarity: RARE
+    default_statistics:
+      damage: 160
+      intelligence: 300
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 1
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/bonzos_staff_fragged
+  - id: STARRED_DAEDALUS_AXE
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/diana/daedalus_blade_fragged
+  - id: STARRED_GLACIAL_SCYTHE
+    material: DIAMOND_HOE
+    rarity: EPIC
+    default_statistics:
+      damage: 130
+      intelligence: 40
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/glacial_scythe
+  - id: STARRED_ICE_SPRAY_WAND
+    material: STICK
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 20
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/ice_spray_wand
+  - id: STARRED_ITEM_SPIRIT_BOW
+    material: BOW
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 220
+      strength: 110
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 4
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/dungeons/spirit_shortbow
+  - id: STARRED_LAST_BREATH
+    material: BOW
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 210
+      strength: 190
+      critical_damage: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 5
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/last_breath
+  - id: STARRED_MIDAS_STAFF
+    material: GOLDEN_SHOVEL
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 130
+      strength: 150
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/scorpius/midas_staff_fragged
+  - id: STARRED_MIDAS_SWORD
+    material: GOLDEN_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 170
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 20
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/midas_sword_fragged
+  - id: STARRED_SHADOW_FURY
+    material: DIAMOND_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      speed: 40
+      damage: 310
+      strength: 160
+      critical_damage: 60
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 5
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/shadow_fury_fragged
+  - id: STARRED_SPIDER_QUEENS_STINGER
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 600
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/spider_queens_stinger
+  - id: STARRED_STONE_BLADE
+    material: STONE_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 190
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 2
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/adaptive_blade_fragged
+  - id: STARRED_VENOMS_TOUCH
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 370
+      strength: 180
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/venoms_touch
+  - id: STARRED_YETI_SWORD
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 160
+      strength: 185
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+          - gemstone: JASPER
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/yeti_sword_fragged
+  - id: STEAK_STAKE
+    material: COOKED_MUTTON
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=vampire level=2
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/zones/castle/steak_stake
+  - id: STING
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 150
+      strength: 75
+      critical_damage: 40
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=spider level=8
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+              - FINE_RUBY_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_AMETHYST_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/sting
+  - id: STINGER_BOW
+    material: BOW
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 12
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_bow
+  - id: STONE_BLADE
+    material: STONE_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 170
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 2
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: DEFENSIVE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/adaptive_blade
+  - id: STONE_SWORD
+    material: STONE_SWORD
+    rarity: COMMON
+    default_statistics:
+      damage: 25
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: STRETCHING_STICKS
+    material: STICK
+    rarity: UNCOMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/stretching_sticks
+  - id: SULPHUR_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 200
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sulphur_bow
+  - id: SUPER_CLEAVER
+    material: GOLDEN_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 105
+      strength: 20
+      critical_damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/super_cleaver
+  - id: SUPER_UNDEAD_BOW
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 220
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/super_undead_bow
+  - id: SWORD_OF_BAD_HEALTH
+    material: WOODEN_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 200
+      strength: 50
+      critical_damage: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/sword_of_bad_health
+  - id: SWORD_OF_REVELATIONS
+    material: WOODEN_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 180
+      strength: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/diana/sword_of_revelations
+  - id: TACTICIAN_MURDER_WEAPON
+    material: STONE_SWORD
+    rarity: RARE
+    default_statistics:
+      rift_damage: 4
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/weapons/tacticians_murder_weapon
+  - id: TACTICIAN_SWORD
+    material: WOODEN_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 50
+      critical_chance: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/tacticians_sword
+  - id: TARANTULA_FANG
+    material: STONE_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 90
+      strength: 45
+      critical_damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=spider level=4
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/weapons/tarantula_fang
+  - id: TERMINATOR
+    material: BOW
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 310
+      strength: 50
+      bonus_attack_speed: 40
+      critical_damage: 250
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=7
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/weapons/terminator
+  - id: TEST_WAND_WEAPON
+    material: STICK
+    rarity: RARE
+    default_statistics:
+      rift_damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: TIME_KNIFE
+    material: NETHER_STAR
+    rarity: SPECIAL
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/weapons/time_shuriken
+  - id: TORMENTOR
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 525
+      strength: 30
+      critical_damage: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 42
+          - type: PENDING
+            description: kuudra_tier=INFERNAL
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_JASPER_GEM:40
+          - gemstone: COMBAT
+            coins: 100000
+            items:
+              - FINE_RUBY_GEM:40
+              - FINE_AMETHYST_GEM:40
+              - FINE_SAPPHIRE_GEM:40
+              - FINE_JASPER_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/crimson_isle/tormentor
+  - id: TRIBAL_SPEAR
+    material: STICK
+    rarity: RARE
+    default_statistics:
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/tribal_spear
+  - id: UNDEAD_BOW
+    material: BOW
+    rarity: RARE
+    default_statistics:
+      damage: 80
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: DUNGEON_ITEM
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/undead_bow
+  - id: UNDEAD_SWORD
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 30
+    lore:
+      - Deals §a+100% §7damage to Zombies,
+      - Skeletons, Zombie Pigmen, and
+      - Withers.
+    components:
+      - id: SELLABLE
+        value: 5.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/undead_sword
+  - id: VALKYRIE
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 270
+      strength: 145
+      ferocity: 60
+      intelligence: 60
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 7
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 250000
+            items:
+              - FLAWLESS_JASPER_GEM:2
+          - gemstone: COMBAT
+            coins: 250000
+            items:
+              - FLAWLESS_JASPER_GEM:1
+              - FLAWLESS_SAPPHIRE_GEM:1
+              - FLAWLESS_RUBY_GEM:1
+              - FLAWLESS_AMETHYST_GEM:1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/valkyrie
+  - id: VENOMOUS_SWORD
+    material: IRON_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_sword
+  - id: VENOMS_TOUCH
+    material: BOW
+    rarity: EPIC
+    default_statistics:
+      damage: 250
+      strength: 100
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/venoms_touch
+  - id: VOIDEDGE_KATANA
+    material: BLAZE_ROD
+    rarity: RARE
+    default_statistics:
+      damage: 155
+      strength: 60
+      critical_damage: 25
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=3
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: SAPPHIRE
+            coins: 100000
+            items:
+              - FINE_SAPPHIRE_GEM:40
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/voidedge_katana
   - id: VOIDWALKER_KATANA
+    material: BLAZE_ROD
     rarity: UNCOMMON
-    material: IRON_SWORD
+    default_statistics:
+      damage: 105
+      strength: 40
+      critical_damage: 15
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/voidwalker_katana
-  - id: VORPAL_KATANA
-    rarity: EPIC
+  - id: VOID_SWORD
     material: DIAMOND_SWORD
+    rarity: EPIC
+    default_statistics:
+      damage: 125
     components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/combat_3/void_sword
+  - id: VORPAL_KATANA
+    material: BLAZE_ROD
+    rarity: EPIC
+    default_statistics:
+      damage: 190
+      strength: 80
+      critical_damage: 30
+      intelligence: 200
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=enderman level=5
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: JASPER
+            coins: 50000
+            items:
+              - FINE_JASPER_GEM:20
+          - gemstone: SAPPHIRE
+            coins: 100000
+            items:
+              - FINE_SAPPHIRE_GEM:40
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/weapons/katanas/vorpal_katana
-  - id: DAEDALUS_AXE
-    rarity: LEGENDARY
-    material: GOLDEN_AXE
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/community_center/mayor/diana/daedalus_blade
-  - id: POOCH_SWORD
-    rarity: LEGENDARY
-    material: GOLDEN_SWORD
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/wolf/weapons/pooch_sword
-  - id: RECLUSE_FANG
-    rarity: UNCOMMON
-    material: IRON_SWORD
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/spider/weapons/recluse_fang
-  - id: SHAMAN_SWORD
-    rarity: EPIC
-    material: IRON_SWORD
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/wolf/weapons/shaman_sword
-  - id: SOUL_ESOWARD
-    rarity: RARE
-    material: BIRCH_SAPLING
-  - id: SWORD_OF_REVELATIONS
-    rarity: EPIC
-    material: WOODEN_SWORD
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/community_center/mayor/diana/sword_of_revelations
-  - id: SCORPION_FOIL
-    rarity: EPIC
-    material: WOODEN_SWORD
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/spider/weapons/scorpion_foil
-  - id: NULL_BLADE
-    rarity: LEGENDARY
-    material: SHEARS
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_blade
-  - id: NULL_EDGE
-    rarity: EPIC
+  - id: WAND_OF_ATONEMENT
     material: STICK
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_edge
-  - id: SINSEEKER_SCYTHE
-    rarity: EPIC
-    material: GOLDEN_HOE
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/enderman/weapons/sinseeker_scythe
-  - id: FLY_SWATTER
-    rarity: EPIC
-    material: GOLDEN_SHOVEL
-    components:
-      - id: SELLABLE
-        value: 500000.0
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/spider/fly_swatter
-  - id: EDIBLE_MACE
-    rarity: RARE
-    material: MUTTON
-    components:
-      - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/slayer/wolf/weapons/edible_mace
-  - id: CROWN_OF_GREED
     rarity: LEGENDARY
-    material: GOLDEN_HELMET
     components:
-      - id: SELLABLE
-        value: 1000000.0
-  - id: STRETCHING_STICKS
-    rarity: UNCOMMON
-    material: STICK
-    components:
-      - id: SELLABLE
-        value: 200.0
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=7
       - id: ITEM_MODEL
-        item_model: hypixel_skyblock:item/island_relevant/foraging_2/stretching_sticks
+        item_model: hypixel_skyblock:item/slayer/zombie/wands/wand_of_atonement
+  - id: WAND_OF_HEALING
+    material: STICK
+    rarity: UNCOMMON
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/wands/wand_of_healing
+  - id: WAND_OF_MENDING
+    material: STICK
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=3
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/wands/wand_of_mending
+  - id: WAND_OF_RECALL
+    material: IRON_HOE
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/broken/broken_wand
+  - id: WAND_OF_RESTORATION
+    material: STICK
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: PENDING
+            description: slayer_boss_type=zombie level=6
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/wands/wand_of_restoration
+  - id: WAND_OF_STRENGTH
+    material: STICK
+    rarity: EPIC
+    default_statistics:
+      damage: 50
+      strength: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: SKILL
+            skill: COMBAT
+            level: 22
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/wand_of_strength
+  - id: WITHER_BOW
+    material: BOW
+    rarity: UNCOMMON
+    default_statistics:
+      damage: 30
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: BOW
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/wither_bow
+  - id: WITHER_CLOAK
+    material: STONE_SWORD
+    rarity: EPIC
+    default_statistics:
+      defense: 250
+      damage: 190
+      strength: 135
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_TIER
+            dungeon: CATACOMBS
+            tier: 7
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/wither_cloak_sword
+  - id: WIZARD_WAND
+    material: BLAZE_ROD
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/wizard_wand
+  - id: WOOD_SWORD
+    material: WOODEN_SWORD
+    rarity: COMMON
+    default_statistics:
+      damage: 20
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+  - id: WYLD_SWORD
+    material: WOODEN_SWORD
+    rarity: UNCOMMON
+    default_statistics:
+      rift_damage: 2
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/rift/weapons/wyld_sword
+  - id: YETI_SWORD
+    material: IRON_SWORD
+    rarity: LEGENDARY
+    default_statistics:
+      damage: 150
+      strength: 170
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+            coins: 50000
+            items:
+              - FINE_SAPPHIRE_GEM:20
+          - gemstone: JASPER
+            coins: 100000
+            items:
+              - FINE_JASPER_GEM:40
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/winter/weapons/yeti_sword
+  - id: ZOMBIE_COMMANDER_WHIP
+    material: FISHING_ROD
+    rarity: EPIC
+    default_statistics:
+      damage: 65
+      strength: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 18
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/zombie_commander_whip
+  - id: ZOMBIE_KNIGHT_SWORD
+    material: IRON_SWORD
+    rarity: EPIC
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 14
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/zombie_knight_sword
+  - id: ZOMBIE_SOLDIER_CUTLASS
+    material: IRON_SWORD
+    rarity: RARE
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: DUNGEON_ITEM
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 5
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/zombie_soldier_cutlass
+  - id: ZOMBIE_SWORD
+    material: IRON_SWORD
+    rarity: RARE
+    default_statistics:
+      damage: 100
+      strength: 50
+      intelligence: 50
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: ITEM_REQUIREMENTS
+        requirements:
+          - type: DUNGEON_SKILL
+            dungeon: CATACOMBS
+            level: 18
+      - id: GEMSTONE
+        gemstone_slots:
+          - gemstone: SAPPHIRE
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/zombie_sword

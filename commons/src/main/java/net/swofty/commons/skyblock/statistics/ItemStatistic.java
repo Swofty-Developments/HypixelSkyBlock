@@ -33,6 +33,7 @@ public enum ItemStatistic {
     MENDING("Mending", NamedTextColor.GREEN, NamedTextColor.GREEN, false, PackSprite.STAT_MENDING,
             100D, 1D),
     SWING_RANGE("Swing Range", NamedTextColor.YELLOW, NamedTextColor.YELLOW, false, PackSprite.STAT_SWING_RANGE, 3D, 1D, 15D),
+    RIFT_DAMAGE("Rift Damage", NamedTextColor.DARK_PURPLE, NamedTextColor.LIGHT_PURPLE, false, PackSprite.STAT_RIFT_DAMAGE),
 
     // Gathering Stats
     MINING_SPEED("Mining Speed", NamedTextColor.GREEN, NamedTextColor.GOLD, false, PackSprite.STAT_MINING_SPEED),

@@ -3,9 +3,13 @@ package net.swofty.type.skyblockgeneric.item.handlers.ability;
 import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.damage.Damage;
+import net.minestom.server.entity.damage.DamageType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.event.EventNodes;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.abilities.BuildersWandAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -20,6 +24,36 @@ public class AbilityRegistry {
 
     static {
         register(new RegisteredAbility(
+                "DRAGON_RAGE",
+                "Dragon Rage",
+                (_, _) -> "§7All Monsters in front of you take §a12,000 §7damage. Hit monsters take large knockback.",
+                RegisteredAbility.AbilityActivation.RIGHT_CLICK,
+                0,
+                new RegisteredAbility.AbilityManaCost(100),
+                (player, _, _, _) -> {
+                    for (Entity entity : player.getInstance().getNearbyEntities(player.getPosition(), 6)) {
+                        if (!(entity instanceof SkyBlockMob mob)) continue;
+                        mob.damage(new Damage(DamageType.MAGIC, player, player, player.getPosition(), 12000));
+                        mob.setVelocity(mob.getPosition().sub(player.getPosition()).asVec().normalize().mul(14).withY(7));
+                    }
+                    return true;
+                }
+        ));
+
+        register(new RegisteredAbility(
+                "PARLEY",
+                "Parley",
+                (_, _) -> "§7Channel your inner Jerry.",
+                RegisteredAbility.AbilityActivation.RIGHT_CLICK,
+                20,
+                new RegisteredAbility.AbilityManaCost(10),
+                (player, _, _, _) -> {
+                    player.sendMessage("§aJerry!");
+                    return true;
+                }
+        ));
+
+        register(new RegisteredAbility(
             "WITHER_IMPACT",
             "Wither Impact",
             (player, item) -> "§7Teleports §a10 Blocks §7ahead of you. Then implode dealing §c10000 §7damage to nearby enemies. Also applies the wither shield scroll ability reducing mobdamage taken and granting an absorption shield for §e5 §7seconds.",
@@ -28,9 +62,9 @@ public class AbilityRegistry {
             new RegisteredAbility.AbilityManaCost(25),
             (player, _, _, _) -> {
                 BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(10)).asBlockVec();
-                if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir())
+                if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).air() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).air())
                     return false;
-                player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
+                player.teleport(tpPos.add(0, 1, 0).asPos(player.getPosition().yaw(), player.getPosition().pitch()));
                 return true;
                 // TODO: damage nearby mobs
             }
@@ -46,7 +80,7 @@ public class AbilityRegistry {
             (player, _, _, _) -> {
                 BlockVec tpPos = player.getPosition().add(player.getPosition().direction().mul(8)).asBlockVec();
                 // TODO: Make it so you can't go through walls
-                if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).isAir() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).isAir())
+                if (!player.getInstance().getBlock(tpPos.add(0, 1, 0)).air() || !player.getInstance().getBlock(tpPos.add(0, 2, 0)).air())
                     return false;
                 player.teleport(new Pos(tpPos.add(0, 1, 0), player.getPosition().yaw(), player.getPosition().pitch()));
                 ItemStatistics speedStats = ItemStatistics.builder().withBase(ItemStatistic.SPEED, 50.0).build();

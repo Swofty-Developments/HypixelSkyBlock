@@ -22,6 +22,7 @@ import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamageMobValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.hunting.AttributeEffectService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.ItemRequirementsComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
@@ -40,6 +41,9 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
         if (!event.getEntity().getEntityType().equals(EntityType.PLAYER)) return;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getEntity();
+        SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());
+        if (heldItem.hasComponent(ItemRequirementsComponent.class)
+                && !heldItem.getComponent(ItemRequirementsComponent.class).ensureCanUse(player)) return;
 
         Entity targetEntity = event.getTarget();
         SkyBlockMob mob;

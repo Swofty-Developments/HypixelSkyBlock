@@ -94,6 +94,25 @@ public class ItemConfigParser {
 					List<String> abilities = safeConfig.getList("abilities", String.class);
 					yield new AbilityComponent(abilities);
 				}
+				case "ITEM_REQUIREMENTS" -> {
+					List<ItemRequirementsComponent.Requirement> requirements = new ArrayList<>();
+					for (Map<String, Object> entry : safeConfig.getMapList("requirements")) {
+						SafeConfig requirement = SafeConfig.of(entry);
+						ItemRequirementsComponent.Type type = requirement.getEnum(
+								"type", ItemRequirementsComponent.Type.class);
+						String category = switch (type) {
+							case SKILL -> requirement.getString("skill", "");
+							case DUNGEON_SKILL, DUNGEON_TIER -> requirement.getString("dungeon", "CATACOMBS");
+							case PENDING -> "";
+						};
+						int level = type == ItemRequirementsComponent.Type.DUNGEON_TIER
+								? requirement.getInt("tier", 0)
+								: requirement.getInt("level", 0);
+						requirements.add(new ItemRequirementsComponent.Requirement(
+								type, category, level, requirement.getString("description", "pending progression")));
+					}
+					yield new ItemRequirementsComponent(requirements);
+				}
 				case "TALISMAN", "ACCESSORY" -> new AccessoryComponent();
 				case "ANVIL_COMBINABLE" -> {
 					String handlerId = safeConfig.getString("handler_id");

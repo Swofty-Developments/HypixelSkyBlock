@@ -154,7 +154,7 @@ public class ItemLore {
 				ItemStatistic.SPEED, ItemStatistic.INTELLIGENCE, ItemStatistic.MAGIC_FIND, ItemStatistic.PET_LUCK, ItemStatistic.TRUE_DEFENSE, ItemStatistic.HEALTH_REGENERATION,
 				ItemStatistic.MENDING, ItemStatistic.VITALITY, ItemStatistic.FEROCITY, ItemStatistic.MINING_SPEED, ItemStatistic.MINING_FORTUNE,
 				ItemStatistic.FARMING_FORTUNE, ItemStatistic.FORAGING_FORTUNE, ItemStatistic.BONUS_PEST_CHANCE, ItemStatistic.COLD_RESISTANCE, ItemStatistic.PRISTINE,
-				ItemStatistic.SWING_RANGE));
+				ItemStatistic.SWING_RANGE, ItemStatistic.RIFT_DAMAGE));
 
 		boolean addNextLine = false;
 		for (ItemStatistic itemStatistic : itemStatistics) {
