@@ -21,6 +21,7 @@ public class ReforgeLoader {
 
     @Data
     public static class ReforgeConfig {
+        public String id;
         public String name;
         public String prefix;
         public List<String> applicableTypes;
@@ -60,7 +61,7 @@ public class ReforgeLoader {
                 try {
                     Reforge reforge = loadFromFile(file);
                     if (reforge != null) {
-                        LOADED_REFORGES.put(reforge.getName().toLowerCase(), reforge);
+                        LOADED_REFORGES.put(reforge.getId().toLowerCase(Locale.ROOT), reforge);
                     }
                 } catch (Exception e) {
                     Logger.error(e, "Failed to load reforge from file: {}", file.getName());
@@ -105,7 +106,8 @@ public class ReforgeLoader {
         // Create the calculation function
         BiFunction<ItemStatistics, Integer, ItemStatistics> calculation = createCalculationFunction(config.statistics);
 
-        return new Reforge(config.name, config.prefix, applicableTypes, calculation);
+        String id = config.id == null || config.id.isBlank() ? config.name : config.id;
+        return new Reforge(id, config.name, config.prefix, applicableTypes, calculation);
     }
 
     private static BiFunction<ItemStatistics, Integer, ItemStatistics> createCalculationFunction(
@@ -207,7 +209,26 @@ public class ReforgeLoader {
     }
 
     public static Reforge getReforge(String name) {
-        return LOADED_REFORGES.get(name.toLowerCase());
+        if (name == null) return null;
+        Reforge byId = LOADED_REFORGES.get(name.toLowerCase(Locale.ROOT));
+        if (byId != null) return byId;
+
+        // Compatibility with items saved before reforges received distinct IDs.
+        return LOADED_REFORGES.values().stream()
+                .filter(reforge -> reforge.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static Reforge getReforge(String name, ReforgeType type) {
+        Reforge exact = getReforge(name);
+        if (exact != null && exact.isApplicableTo(type)) return exact;
+
+        return LOADED_REFORGES.values().stream()
+                .filter(reforge -> reforge.getName().equalsIgnoreCase(name))
+                .filter(reforge -> reforge.isApplicableTo(type))
+                .findFirst()
+                .orElse(null);
     }
 
     public static Collection<Reforge> getAllReforges() {
