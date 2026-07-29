@@ -1,7 +1,7 @@
 items:
   - id: BEE_PET
     material: player_head
-    rarity: LEGENDARY
+    rarity: MYTHIC
     components:
       - id: PET
         pet_name: Bee

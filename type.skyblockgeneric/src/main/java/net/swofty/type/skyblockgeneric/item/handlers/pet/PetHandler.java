@@ -11,7 +11,8 @@ public enum PetHandler {
     BEE(List.of(
             at(new HiveAbility(), Rarity.COMMON),
             at(new BusyBuzzBuzzAbility(), Rarity.RARE),
-            at(new WeaponizedHoneyAbility(), Rarity.LEGENDARY)
+            at(new HoneyHarvesterAbility(), Rarity.LEGENDARY),
+            at(new PoweredByPollenAbility(), Rarity.MYTHIC)
     )),
     GRANDMA_WOLF(List.of(
             at(new KillComboAbility(), Rarity.COMMON)

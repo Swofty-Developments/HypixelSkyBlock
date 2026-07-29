@@ -58,7 +58,11 @@ public class PetComponent extends SkyBlockItemComponent {
         addInheritedComponent(new TrackedUniqueComponent());
         addInheritedComponent(new InteractableComponent(this::interact, this::interact, null));
         addInheritedComponent(new LoreUpdateComponent(
-                new LoreConfig((item, player) -> getAbsoluteLore(player, item), null), true)
+                new LoreConfig((item, player) -> getAbsoluteLore(player, item), (item, player) -> {
+                    Rarity rarity = item.getAttributeHandler().getRarity();
+                    int level = item.getAttributeHandler().getPetData().getAsLevel(rarity);
+                    return "§7[Lvl " + level + "] " + rarity.getColor() + petName;
+                }), true)
         );
     }
 
