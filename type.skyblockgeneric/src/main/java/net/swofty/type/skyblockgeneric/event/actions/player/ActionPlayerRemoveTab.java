@@ -15,6 +15,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import net.swofty.type.generic.utility.TeamColorUtility;
 
 public class ActionPlayerRemoveTab implements HypixelEventClass {
 

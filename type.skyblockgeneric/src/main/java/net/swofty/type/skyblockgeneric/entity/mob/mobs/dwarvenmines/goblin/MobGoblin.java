@@ -13,7 +13,6 @@ import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.MobType;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.ClosestEntityRegionTarget;
-import net.swofty.type.skyblockgeneric.entity.mob.ai.GroundNodeLockedPitchFollower;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.MeleeAttackWithinRegionGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.ai.RandomRegionStrollGoal;
 import net.swofty.type.skyblockgeneric.entity.mob.impl.MobPlayerSkin;
@@ -62,11 +61,6 @@ public class MobGoblin extends BestiaryMob implements RegionPopulator, MobPlayer
 	@Override
 	public String getDisplayName() {
 		return "Goblin";
-	}
-
-	@Override
-	public void onInit() {
-		getNavigator().setNodeFollower(() -> new GroundNodeLockedPitchFollower(this, 90));
 	}
 
 	@Override

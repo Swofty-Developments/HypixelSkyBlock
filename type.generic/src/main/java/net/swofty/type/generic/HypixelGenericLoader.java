@@ -62,7 +62,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
@@ -173,7 +178,8 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 if (players.isEmpty())
                     return;
 
-                long ramUsage = (long) ServerMemory.getUsed();
+                long ramUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                ramUsage /= (long) 1e6; // bytes to MB
                 TickMonitor tickMonitor = LAST_TICK.get();
                 double TPS = 1000 / tickMonitor.getTickTime();
 

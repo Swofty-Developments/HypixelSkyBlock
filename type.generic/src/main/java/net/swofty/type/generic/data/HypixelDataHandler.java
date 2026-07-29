@@ -7,6 +7,7 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
+import net.swofty.type.generic.utility.TeamColorUtility;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TeamColorUtil;
@@ -205,7 +206,7 @@ public class HypixelDataHandler extends DataHandler {
             String teamName = StringUtility.limitStringLength(rank.getPriorityCharacter() + player.getUsername(), 15);
             player.setTeam(new TeamBuilder("H" + teamName, MinecraftServer.getTeamManager())
                 .prefix(((HypixelPlayer) player).getRankPrefix())
-                    //.teamColor(rank.getTextColor())
+                    .teamColor(TeamColorUtility.fromNamedColor(rank.getTextColor()))
                     .build());
             player.getTeam().sendUpdatePacket();
         }),

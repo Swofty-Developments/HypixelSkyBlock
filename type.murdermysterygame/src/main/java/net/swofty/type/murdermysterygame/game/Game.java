@@ -41,6 +41,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import net.minestom.server.color.TeamColor;
 
 @Getter
 public class Game {

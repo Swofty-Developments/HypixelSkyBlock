@@ -5,6 +5,7 @@ import net.minestom.server.color.TeamColor;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
+import net.minestom.server.color.TeamColor;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;

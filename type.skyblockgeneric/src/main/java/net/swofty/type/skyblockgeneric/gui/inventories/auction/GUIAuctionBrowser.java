@@ -28,6 +28,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
@@ -82,6 +83,10 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                     // Set the items in the GUI
                     List<AuctionItem> paginatedItems = paginationList.getPage(page);
                     setItemCache(paginatedItems);
+                })
+                .exceptionally(ex -> {
+                    Logger.error(ex, "Auction browse failed for category {}", category);
+                    return null;
                 });
     }
 
@@ -276,12 +281,14 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.t("gui_auction.browser.offline_message"));
-            player.closeInventory();
-        }
-
-        setItems();
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.browser.offline_message"));
+                player.closeInventory();
+                return;
+            }
+            setItems();
+        });
     }
 
     @Override
