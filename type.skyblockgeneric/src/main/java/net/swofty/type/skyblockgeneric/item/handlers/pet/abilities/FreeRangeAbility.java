@@ -29,7 +29,7 @@ public class FreeRangeAbility implements PetAbility {
         double ff = PER_LEVEL.getForRarity(rarity) * level;
 
         return Arrays.asList(
-                "§7Grants §a+" + decimalify(ff, 1) + " §6☘ Farming Fortune",
+                "§7Grants §a+" + decimalify(ff, 1) + " " + ItemStatistic.FARMING_FORTUNE.getFullDisplayName(),
                 "§7while on §bPublic Islands§7."
         );
     }

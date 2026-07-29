@@ -29,9 +29,9 @@ public class BusyBuzzBuzzAbility implements PetAbility {
 
         return Arrays.asList(
                 "§7Grants §a+" + decimalify(bonus, 1) + " §7of each to your pet:",
-                "§6☘ Farming Fortune",
-                "§6☘ Foraging Fortune",
-                "§6☘ Mining Fortune"
+                ItemStatistic.FARMING_FORTUNE.getFullDisplayName(),
+                ItemStatistic.FORAGING_FORTUNE.getFullDisplayName(),
+                ItemStatistic.MINING_FORTUNE.getFullDisplayName()
         );
     }
 

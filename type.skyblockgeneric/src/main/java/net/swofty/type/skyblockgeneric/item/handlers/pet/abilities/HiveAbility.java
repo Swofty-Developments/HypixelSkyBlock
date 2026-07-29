@@ -38,9 +38,9 @@ public class HiveAbility implements PetAbility {
 
         return Arrays.asList(
                 "§7For each player within §a25 §7 blocks:",
-                " §7Gain §b+" + StringUtility.decimalify(perPlayerIntel, 2) + "✎ Intelligence",
-                " §7Gain §c+" + StringUtility.decimalify(perPlayerStr, 2) + "❁ Strength",
-                " §7Gain §a+" + StringUtility.decimalify(perPlayerDef, 2) + "❈ Defense",
+                " §7Gain " + ItemStatistic.INTELLIGENCE.getDisplayColor() + "+" + StringUtility.decimalify(perPlayerIntel, 2) + ItemStatistic.INTELLIGENCE.getFullDisplayName(),
+                " §7Gain " + ItemStatistic.STRENGTH.getDisplayColor() + "+" + StringUtility.decimalify(perPlayerStr, 2) + ItemStatistic.STRENGTH.getFullDisplayName(),
+                " §7Gain " + ItemStatistic.DEFENSE.getDisplayColor() + "+" + StringUtility.decimalify(perPlayerDef, 2) + ItemStatistic.DEFENSE.getFullDisplayName(),
                 "§8Max 15 players"
         );
     }
