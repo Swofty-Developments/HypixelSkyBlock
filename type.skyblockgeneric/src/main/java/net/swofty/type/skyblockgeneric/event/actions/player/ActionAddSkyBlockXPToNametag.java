@@ -15,7 +15,6 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointSkyBlockExperience;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.TeamColorUtility;
 
 public class ActionAddSkyBlockXPToNametag implements HypixelEventClass {
 
