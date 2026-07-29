@@ -42,8 +42,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ConstantStatisticsComponent;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetType;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
@@ -209,8 +208,7 @@ public class PlayerStatistics {
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
         ItemStatistics stats = ItemStatistics.add(baseStatistics, ItemStatistics.multiply(perLevelStatistics, level));
 
-        List<PetAbility> abilities = PetType.valueOf(component.getHandlerId().toUpperCase()).getAbilities(pet);
-        for (PetAbility ability : abilities) {
+        for (PetAbility ability : player.getPetData().getCachedAbilities(pet)) {
             stats = ItemStatistics.add(stats, ability.getStatistics(player, pet));
         }
 

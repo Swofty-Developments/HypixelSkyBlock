@@ -13,15 +13,12 @@ import net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.SlayerBossMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.PetComponent;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.DamageEventPetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetType;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.DamageEventPetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
 
-import java.util.List;
 import java.util.Map;
 
 public class PlayerActionDamagedAttacked implements HypixelEventClass {
@@ -48,10 +45,8 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
             SkyBlockPlayer damagedPlayer = (SkyBlockPlayer) event.getTarget();
             SkyBlockItem pet = damagedPlayer.getPetData().getEnabledPet();
             if (pet != null) {
-                PetComponent component = pet.getComponent(PetComponent.class);
-                List<PetAbility> abilities = PetType.valueOf(component.getHandlerId().toUpperCase()).getAbilities(pet);
                 float finalDamage = (float) valueEvent.getValue();
-                for (PetAbility ability : abilities) {
+                for (PetAbility ability : damagedPlayer.getPetData().getCachedAbilities(pet)) {
                     if (ability instanceof DamageEventPetAbility e)
                         e.onPlayerDamagedByMob(damagedPlayer, pet, mob, finalDamage);
                 }

@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.item.handlers.pet;
+package net.swofty.type.skyblockgeneric.item.handlers.pet.abstr;
 
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;

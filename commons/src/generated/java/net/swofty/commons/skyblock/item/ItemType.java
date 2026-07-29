@@ -662,6 +662,8 @@ public enum ItemType {
 
   CHICKEN_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
+  CHICKEN_PET(Material.PLAYER_HEAD, Rarity.COMMON),
+
   CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.COMMON),
 
   CHISELED_QUARTZ_BLOCK(Material.CHISELED_QUARTZ_BLOCK, Rarity.COMMON),
@@ -1701,6 +1703,8 @@ public enum ItemType {
   GOLD_VANILLE(Material.PLAYER_HEAD, Rarity.COMMON),
 
   GOLD_VOLCANIC_STONEFISH(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  GRANDMA_WOLF_PET(Material.PLAYER_HEAD, Rarity.COMMON),
 
   GRANITE(Material.GRANITE, Rarity.COMMON),
 

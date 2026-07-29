@@ -1,0 +1,50 @@
+package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
+
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
+import net.swofty.commons.skyblock.statistics.ItemStatistics;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.region.RegionType;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.utility.RarityValue;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static net.swofty.commons.StringUtility.decimalify;
+
+public class FreeRangeAbility implements PetAbility {
+    private static final RarityValue<Double> PER_LEVEL = new RarityValue<>(0.5, 0.75, 1.0, 1.0, 1.0, 0.0);
+
+    @Override
+    public String getName() {
+        return "Free Range";
+    }
+
+    @Override
+    public List<String> getDescription(SkyBlockItem instance) {
+        Rarity rarity = instance.getAttributeHandler().getRarity();
+        int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
+        double ff = PER_LEVEL.getForRarity(rarity) * level;
+
+        return Arrays.asList(
+                "§7Grants §a+" + decimalify(ff, 1) + " §6☘ Farming Fortune",
+                "§7while on §bPublic Islands§7."
+        );
+    }
+
+    @Override
+    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
+        if (player.getRegion() == null || player.getRegion().getType() == RegionType.PRIVATE_ISLAND)
+            return ItemStatistics.empty();
+
+        Rarity rarity = pet.getAttributeHandler().getRarity();
+        int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
+        double ff = PER_LEVEL.getForRarity(rarity) * level;
+
+        return ItemStatistics.builder()
+                .withBase(ItemStatistic.FARMING_FORTUNE, ff)
+                .build();
+    }
+}

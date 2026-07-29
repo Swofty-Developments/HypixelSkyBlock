@@ -1,11 +1,10 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
-import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePetData;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.DamageEventPetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.DamageEventPetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;

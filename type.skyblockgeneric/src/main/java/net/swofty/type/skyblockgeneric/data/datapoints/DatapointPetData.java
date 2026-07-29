@@ -3,18 +3,23 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.protocol.Serializer;
 import net.swofty.commons.protocol.serializers.UnderstandableSkyBlockItemSerializer;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDatapoint;
 import net.swofty.type.skyblockgeneric.entity.PetEntityImpl;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPetData> {
     private static final Serializer serializer = new Serializer<UserPetData>() {
@@ -64,6 +69,8 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
     public static class UserPetData {
         private HashMap<SkyBlockItem, Boolean> petsMap;
         private PetEntityImpl enabledPetEntityImpl = null;
+        private transient List<PetAbility> cachedAbilities;
+        private transient Rarity cachedPetRarity;
 
         public UserPetData() {
             this.petsMap = new HashMap<>();
@@ -86,6 +93,8 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
 
             if (enabledPetEntityImpl != null)
                 enabledPetEntityImpl.remove();
+
+            refreshCachedAbilities();
         }
 
         public void updatePetEntityImpl(SkyBlockPlayer player) {
@@ -108,10 +117,34 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
 
         public void deselectCurrent() {
             petsMap.keySet().forEach(pet -> petsMap.put(pet, false));
+            this.cachedAbilities = null;
+            this.cachedPetRarity = null;
         }
 
         public @Nullable SkyBlockItem getEnabledPet() {
             return petsMap.keySet().stream().filter(petsMap::get).findFirst().orElse(null);
+        }
+
+        public List<PetAbility> getCachedAbilities(SkyBlockItem pet) {
+            Rarity currentRarity = pet.getAttributeHandler().getRarity();
+            if (cachedAbilities == null || cachedPetRarity != currentRarity) {
+                PetComponent component = pet.getComponent(PetComponent.class);
+                cachedAbilities = PetHandler.valueOf(component.getHandlerId().toUpperCase()).getAbilities(pet);
+                cachedPetRarity = currentRarity;
+            }
+            return cachedAbilities;
+        }
+
+        private void refreshCachedAbilities() {
+            SkyBlockItem activePet = getEnabledPet();
+            if (activePet != null) {
+                PetComponent component = activePet.getComponent(PetComponent.class);
+                this.cachedAbilities = PetHandler.valueOf(component.getHandlerId().toUpperCase()).getAbilities(activePet);
+                this.cachedPetRarity = activePet.getAttributeHandler().getRarity();
+            } else {
+                this.cachedAbilities = null;
+                this.cachedPetRarity = null;
+            }
         }
 
         public @Nullable SkyBlockItem getPet(ItemType type) {

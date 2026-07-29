@@ -8,6 +8,9 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
+import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.FallDamageEventPetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerFall implements HypixelEventClass {
@@ -37,7 +40,19 @@ public class ActionPlayerFall implements HypixelEventClass {
         if (player.isOnGround()) {
             int fallDistance = currentHeight - newPosition.blockY();
             if (fallDistance > 4) {
-                player.damage(DamageType.FALL, (float) ((fallDistance * 2) - 4));
+                float baseDamage = (float) ((fallDistance * 2) - 4);
+                float finalDamage = baseDamage;
+
+                SkyBlockItem pet = player.getPetData().getEnabledPet();
+                if (pet != null) {
+                    for (PetAbility ability : player.getPetData().getCachedAbilities(pet)) {
+                        if (ability instanceof FallDamageEventPetAbility e)
+                            finalDamage = (float) e.onPlayerFallDamage(player, pet, finalDamage);
+                    }
+                }
+
+                if (finalDamage > 0)
+                    player.damage(DamageType.FALL, finalDamage);
             }
 
             player.setFallHeight(newPosition.blockY());
