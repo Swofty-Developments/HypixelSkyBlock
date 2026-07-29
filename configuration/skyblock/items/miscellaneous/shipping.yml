@@ -35,7 +35,7 @@ items:
     components:
       - id: ENCHANTED
       - id: MINION_SHIPPING
-        percentage: 90.0
+        percentage: 70.0
       - id: SELLABLE
         value: 192000.0
       - id: DEFAULT_CRAFTABLE

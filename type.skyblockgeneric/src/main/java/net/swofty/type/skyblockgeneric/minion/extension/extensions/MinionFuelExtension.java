@@ -38,6 +38,32 @@ public class MinionFuelExtension extends MinionExtension {
         }
     }
 
+    /**
+     * Advances a finite fuel stack based on wall-clock time. This is deliberately
+     * called from the minion tick as well as the GUI: fuel must expire while nobody
+     * has the menu open.
+     */
+    public boolean refresh() {
+        if (getItemTypePassedIn() == null) return false;
+
+        long duration = new SkyBlockItem(getItemTypePassedIn())
+                .getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
+        if (duration == 0) return true;
+
+        long elapsed = Math.max(0, System.currentTimeMillis() - insertionTime);
+        long consumed = elapsed / duration;
+        if (consumed == 0) return count > 0;
+
+        count -= (int) Math.min(consumed, Integer.MAX_VALUE);
+        if (count <= 0) {
+            count = 0;
+            setItemTypePassedIn(null);
+            return false;
+        }
+        insertionTime += consumed * duration;
+        return true;
+    }
+
     @Override
     public @NonNull GUIClickableItem getDisplayItem(IslandMinionData.IslandMinion minion, int slot) {
         boolean shouldDisplayItem = true;
@@ -45,17 +71,8 @@ public class MinionFuelExtension extends MinionExtension {
         if (getItemTypePassedIn() == null) {
             shouldDisplayItem = false;
         } else {
-            long timeFuelLasts = new SkyBlockItem(getItemTypePassedIn()).getComponent(MinionFuelComponent.class).getFuelLastTimeInMS();
-            if (System.currentTimeMillis() - insertionTime > timeFuelLasts && timeFuelLasts > 0) {
-                // Time has surpassed the fuel time of 1 of the fuel items
-                count -= 1;
-                if (count <= 0) {
-                    // All fuel items have been used
-                    shouldDisplayItem = false;
-                    setItemTypePassedIn(null);
-                }
-                // Set insertion time for now because we've moved onto the next item
-                insertionTime = System.currentTimeMillis();
+            if (!refresh()) {
+                shouldDisplayItem = false;
                 minion.getExtensionData().setData(slot, MinionFuelExtension.this);
             }
         }

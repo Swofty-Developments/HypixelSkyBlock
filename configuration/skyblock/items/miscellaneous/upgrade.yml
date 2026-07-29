@@ -4,7 +4,7 @@ items:
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
-        speed_increase: 0.1
+        speed_increase: 0.0
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE
       - id: DEFAULT_CRAFTABLE
@@ -32,6 +32,8 @@ items:
     material: dispenser
     rarity: UNCOMMON
     components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.0
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE
@@ -63,6 +65,8 @@ items:
     material: furnace
     rarity: UNCOMMON
     components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.0
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE
@@ -90,7 +94,7 @@ items:
     rarity: RARE
     components:
       - id: MINION_UPGRADE
-        speed_increase: 0.1
+        speed_increase: 0.0
       - id: ENCHANTED
       - id: SELLABLE
         value: 640.0
@@ -119,7 +123,7 @@ items:
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
-        speed_increase: 0.1
+        speed_increase: 20.0
       - id: ENCHANTED
       - id: TRACKED_UNIQUE
   - id: MINION_EXPANDER
@@ -127,7 +131,7 @@ items:
     rarity: RARE
     components:
       - id: MINION_UPGRADE
-        speed_increase: 0.1
+        speed_increase: 5.0
       - id: ENCHANTED
       - id: TRACKED_UNIQUE
       - id: SELLABLE
@@ -136,6 +140,8 @@ items:
     material: dispenser
     rarity: RARE
     components:
+      - id: MINION_UPGRADE
+        speed_increase: 0.0
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
       - id: TRACKED_UNIQUE

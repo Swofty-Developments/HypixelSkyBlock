@@ -39,7 +39,7 @@ items:
       - id: SELLABLE
         value: 159855.0
       - id: MINION_FUEL
-        fuel_percentage: 35.0
+        fuel_percentage: 40.0
         last_time_ms: 0
       - id: NOT_FINISHED_YET
       - id: DEFAULT_CRAFTABLE
@@ -127,3 +127,101 @@ items:
               amount: 1
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/plasma_bucket
+  - id: SOLAR_PANEL
+    material: daylight_detector
+    rarity: UNCOMMON
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 25.0
+        last_time_ms: 0
+      - id: ENCHANTED
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: MINING
+            pattern:
+              - AAA
+              - BBB
+              - CCC
+            ingredients:
+              A:
+                type: ENCHANTED_QUARTZ
+                amount: 64
+              B:
+                type: GLASS
+                amount: 1
+              C:
+                type: OAK_PLANKS
+                amount: 1
+            result:
+              type: SOLAR_PANEL
+              amount: 1
+  - id: TASTY_CHEESE
+    material: sponge
+    rarity: RARE
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 0.0
+        output_multiplier: 2.0
+        last_time_ms: 3600000
+  - id: CATALYST
+    material: end_stone
+    rarity: RARE
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 0.0
+        output_multiplier: 3.0
+        last_time_ms: 10800000
+      - id: ENCHANTED
+  - id: HYPER_CATALYST
+    material: end_stone
+    rarity: EPIC
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 0.0
+        output_multiplier: 4.0
+        last_time_ms: 21600000
+      - id: ENCHANTED
+      - id: DEFAULT_CRAFTABLE
+        recipes:
+          - type: SHAPED
+            recipe-type: NONE
+            pattern:
+              - AAA
+              - ABA
+              - AAA
+            ingredients:
+              A:
+                type: CATALYST
+                amount: 1
+              B:
+                type: ENCHANTED_END_STONE
+                amount: 8
+            result:
+              type: HYPER_CATALYST
+              amount: 1
+  - id: THORNY_VINES
+    material: vine
+    rarity: EPIC
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 20.0
+        last_time_ms: 0
+      - id: ENCHANTED
+  - id: DAYSWITCH
+    material: sunflower
+    rarity: EPIC
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 20.0
+        last_time_ms: 0
+      - id: ENCHANTED
+  - id: NIGHTSWITCH
+    material: wither_rose
+    rarity: EPIC
+    components:
+      - id: MINION_FUEL
+        fuel_percentage: 20.0
+        last_time_ms: 0
+      - id: ENCHANTED

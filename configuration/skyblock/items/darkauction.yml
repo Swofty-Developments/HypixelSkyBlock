@@ -67,5 +67,8 @@ items:
     rarity: RARE
     material: OAK_TRAPDOOR
     components:
+      - id: MINION_FUEL
+        fuel_percentage: 50.0
+        last_time_ms: 86400000
       - id: SELLABLE
         value: 20000.0
