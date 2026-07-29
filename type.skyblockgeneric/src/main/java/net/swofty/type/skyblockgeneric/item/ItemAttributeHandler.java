@@ -279,6 +279,10 @@ public class ItemAttributeHandler {
         if (reforgeName == null || reforgeName.isEmpty()) {
             return null;
         }
+        if (item.hasComponent(ReforgableComponent.class)) {
+            return ReforgeLoader.getReforge(reforgeName,
+                    item.getComponent(ReforgableComponent.class).getReforgeType());
+        }
         return ReforgeLoader.getReforge(reforgeName);
     }
 
@@ -306,7 +310,7 @@ public class ItemAttributeHandler {
         if (!item.getAttributeHandler().getRarity().isCanReforge())
             throw new IllegalArgumentException("The rarity " + item.getAttributeHandler().getRarity().name() + " is not reforgable.");
 
-        String reforgeName = (reforge != null) ? reforge.getName() : null;
+        String reforgeName = (reforge != null) ? reforge.getId() : null;
         item.getAttribute("reforge").setValue(reforgeName);
     }
 

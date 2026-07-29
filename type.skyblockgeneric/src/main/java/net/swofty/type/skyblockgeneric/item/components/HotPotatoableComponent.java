@@ -31,4 +31,10 @@ public class HotPotatoableComponent extends SkyBlockItemComponent {
     public int getMax(ItemType type) {
         return applicableItems.getOrDefault(type, 0);
     }
+
+    public boolean canApply(ItemType type, int appliedBooks) {
+        if (!canApply(type)) return false;
+        int maximum = type == ItemType.FUMING_POTATO_BOOK ? 15 : 10;
+        return appliedBooks < maximum;
+    }
 }

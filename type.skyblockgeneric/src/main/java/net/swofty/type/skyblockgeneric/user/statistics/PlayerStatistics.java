@@ -514,7 +514,9 @@ public class PlayerStatistics {
             ItemStatistics.Builder toAdd = ItemStatistics.builder();
             PotatoType potatoType = hotPotatoBookData.getPotatoType();
 
-            potatoType.stats.forEach(toAdd::withBase);
+            int appliedBooks = hotPotatoBookData.getTotalAmount();
+            potatoType.stats.forEach((statistic, amount) ->
+                    toAdd.withBase(statistic, amount * appliedBooks));
             statistics = ItemStatistics.add(statistics, toAdd.build());
         }
         return statistics;

@@ -410,7 +410,7 @@ public class ItemLore {
 			for (Map.Entry<ItemStatistic, Double> entry : hotPotatoBookData.getPotatoType().stats.entrySet()) {
 				ItemStatistic stat = entry.getKey();
 				Double value = entry.getValue();
-				if (stat == statistic) hpbValue += value;
+				if (stat == statistic) hpbValue += value * hotPotatoBookData.getTotalAmount();
 			}
 		}
 		overallValue += hpbValue;

@@ -38,7 +38,8 @@ public class AnvilCombineRegistry {
 
                         HotPotatoableComponent hotPotatoable = upgradeItem.getComponent(HotPotatoableComponent.class);
                         ItemAttributeHotPotatoBookData.HotPotatoBookData upgradeData = upgradeItem.getAttributeHandler().getHotPotatoBookData();
-                        return hotPotatoable.canApply(type) && upgradeData.getAmount(type) < hotPotatoable.getMax(type);
+                        return hotPotatoable.canApply(type)
+                                && hotPotatoable.canApply(type, upgradeData.getTotalAmount());
                     }
                     return false;
                 },

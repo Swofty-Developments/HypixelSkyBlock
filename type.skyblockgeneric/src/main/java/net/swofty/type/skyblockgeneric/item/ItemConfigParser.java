@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +99,15 @@ public class ItemConfigParser {
 				case "ANVIL_COMBINABLE" -> {
 					String handlerId = safeConfig.getString("handler_id");
 					yield new AnvilCombinableComponent(handlerId);
+				}
+				case "REFORGE_STONE" -> {
+					String reforgeId = safeConfig.getString("reforge");
+					Map<Rarity, Integer> costs = new EnumMap<>(Rarity.class);
+					for (Rarity rarity : Rarity.values()) {
+						int cost = safeConfig.getInt(rarity.name().toLowerCase() + "_cost", 0);
+						costs.put(rarity, cost);
+					}
+					yield new ReforgeStoneComponent(reforgeId, costs);
 				}
 				case "ARMOR" -> new ArmorComponent();
 				case "ARROW" -> new ArrowComponent();
