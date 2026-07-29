@@ -9,8 +9,6 @@ import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneNPC;
 import net.swofty.type.skyblockgeneric.abiphone.AbiphoneRegistry;
-import net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSource;
-import net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AbiphoneComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -22,9 +20,6 @@ public class ActionPlayerInteractNPC implements HypixelEventClass {
 	public void run(NPCInteractEvent event) {
 		final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 		HypixelNPC npc = event.getNpc();
-		if (npc instanceof GardenProgressionSource source) {
-			source.gardenProgressionRewards(player).forEach(reward -> GardenProgressionSupport.apply(player, reward));
-		}
 		SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
 		if (item.hasComponent(AbiphoneComponent.class)) {
 			if (!(npc instanceof NPCAbiphoneTrait trait)) {

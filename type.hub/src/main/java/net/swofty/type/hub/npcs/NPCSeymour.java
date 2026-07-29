@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUISeymour;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCSeymour extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCSeymour extends HypixelNPC {
 
     public NPCSeymour() {
         super(new HumanConfiguration() {
@@ -47,7 +47,7 @@ public class NPCSeymour extends HypixelNPC implements net.swofty.type.skyblockge
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_SEYMOUR);
 
         if (!hasSpokenBefore) {
-            setDialogue(player, "hello").thenRun(() -> {
+            setGardenDialogue(player, "hello").thenRun(() -> {
                 player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_SEYMOUR, true);
             });
             return;
@@ -66,8 +66,14 @@ public class NPCSeymour extends HypixelNPC implements net.swofty.type.skyblockge
         };
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "SEYMOUR";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("SEYMOUR")
+                );
+            }
+        });
     }
 }

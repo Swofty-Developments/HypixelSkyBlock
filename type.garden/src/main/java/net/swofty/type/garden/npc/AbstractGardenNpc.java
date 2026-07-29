@@ -7,14 +7,13 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport;
-import net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractGardenNpc extends HypixelNPC implements GardenSpokenNpcSource {
+public abstract class AbstractGardenNpc extends HypixelNPC {
     private final String npcId;
 
     protected AbstractGardenNpc(String npcId, String displayName, String texture, String signature) {
@@ -66,11 +65,6 @@ public abstract class AbstractGardenNpc extends HypixelNPC implements GardenSpok
 
     protected void markSpoken(SkyBlockPlayer player) {
         GardenProgressionSupport.apply(player, net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc(npcId));
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return npcId;
     }
 
     protected DialogueSet[] configuredDialogues() {

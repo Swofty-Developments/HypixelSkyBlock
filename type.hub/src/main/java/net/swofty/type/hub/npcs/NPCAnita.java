@@ -6,7 +6,7 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class NPCAnita extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCAnita extends HypixelNPC {
 
     public NPCAnita() {
         super(new HumanConfiguration() {
@@ -40,10 +40,5 @@ public class NPCAnita extends HypixelNPC implements net.swofty.type.skyblockgene
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "ANITA";
     }
 }

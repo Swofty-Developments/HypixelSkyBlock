@@ -7,7 +7,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 
-public class NPCBankerBroadjaw extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCBankerBroadjaw extends HypixelNPC {
 
 	public NPCBankerBroadjaw() {
 		super(new HumanConfiguration() {
@@ -42,9 +42,4 @@ public class NPCBankerBroadjaw extends HypixelNPC implements net.swofty.type.sky
 	public void onClick(NPCInteractEvent event) {
 		new GUIBanker().open(event.player());
 	}
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "BANKER_BROADJAW";
-    }
 }

@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait, net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait {
 	public VillagerRusty() {
 		super(new VillagerConfiguration() {
 			@Override
@@ -49,11 +49,11 @@ public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait, net.s
 
 		if (!hasSpokenBefore) {
 			if (isAboveSkyBlockLevel6) {
-				setDialogue(player, "first-interaction-over-sb-6").thenRun(() -> {
+				setGardenDialogue(player, "first-interaction-over-sb-6").thenRun(() -> {
 					player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY, true);
 				});
 			} else {
-				setDialogue(player, "first-interaction-below-sb-6").thenRun(() -> {
+				setGardenDialogue(player, "first-interaction-below-sb-6").thenRun(() -> {
 					player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY, true);
 				});
 			}
@@ -63,7 +63,7 @@ public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait, net.s
 		boolean hasSpokenAboutPickaxe = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE);
 		boolean hasFoundPickaxe = player.getMissionData().hasCompleted(MissionFindLazyMinerPickaxe.class);
 		if (!hasSpokenAboutPickaxe && hasFoundPickaxe) {
-			setDialogue(player, "found-pickaxe").thenRun(() -> {
+			setGardenDialogue(player, "found-pickaxe").thenRun(() -> {
 				player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE, true);
 			});
 			return;
@@ -105,8 +105,14 @@ public class VillagerRusty extends HypixelNPC implements NPCAbiphoneTrait, net.s
 		return "rusty";
 	}
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "RUSTY";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("RUSTY")
+                );
+            }
+        });
     }
 }

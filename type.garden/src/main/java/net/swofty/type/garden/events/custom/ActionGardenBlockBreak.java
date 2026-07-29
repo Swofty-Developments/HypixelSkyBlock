@@ -9,8 +9,8 @@ import net.swofty.type.garden.gui.GardenGuiSupport;
 import net.swofty.type.garden.plot.GardenPlotService;
 import net.swofty.type.garden.user.SkyBlockGarden;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.garden.GardenData;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ActionGardenBlockBreak implements HypixelEventClass {
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
     public void run(CustomBlockBreakEvent event) {
         SkyBlockPlayer player = event.getPlayer();
         if (!player.isOnGarden() || Boolean.TRUE.equals(event.getPlayerPlaced())) {

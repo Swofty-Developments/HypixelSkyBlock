@@ -5,8 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.garden.commands.GardenAdminCommand;
 import net.swofty.type.garden.npc.NPCAnita;
 import net.swofty.type.garden.npc.NPCGardenVisitorSlot;
@@ -116,12 +115,7 @@ public class TypeGardenLoader implements SkyBlockTypeLoader {
     }
 
     @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
-
-    @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

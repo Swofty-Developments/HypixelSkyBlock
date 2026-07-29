@@ -19,6 +19,8 @@ import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.skyblockgeneric.data.monogdb.IslandDatabase;
+import net.swofty.type.skyblockgeneric.garden.SkyBlockEditableWorldHandle;
+import net.swofty.type.skyblockgeneric.garden.WorldBuildLimits;
 import net.swofty.type.skyblockgeneric.minion.IslandMinionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.JerryInformation;
@@ -32,7 +34,8 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Getter
-public class SkyBlockIsland {
+public class SkyBlockIsland implements SkyBlockEditableWorldHandle {
+    private static final WorldBuildLimits BUILD_LIMITS = new WorldBuildLimits(-80, 80, -80, 80);
     private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
 
     private final IslandDatabase database;
@@ -50,6 +53,11 @@ public class SkyBlockIsland {
     private long lastSaved = 0;
     @Setter
     private Integer islandVersion;
+
+    @Override
+    public WorldBuildLimits getBuildLimits() {
+        return BUILD_LIMITS;
+    }
 
     public SkyBlockIsland(UUID islandID, UUID profileID) {
         this.islandID = islandID;

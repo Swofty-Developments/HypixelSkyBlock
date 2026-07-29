@@ -1,6 +1,6 @@
 package net.swofty.commons.protocol.objects.jacobscontest;
 
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetJacobContestScheduleProtocol extends ProtocolObject<
+public class GetJacobContestScheduleProtocol extends RedisProtocol<
     GetJacobContestScheduleProtocol.GetJacobContestScheduleMessage,
     GetJacobContestScheduleProtocol.GetJacobContestScheduleResponse> {
 

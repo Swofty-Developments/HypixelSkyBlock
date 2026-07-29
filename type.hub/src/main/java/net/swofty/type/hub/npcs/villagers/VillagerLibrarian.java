@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class VillagerLibrarian extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class VillagerLibrarian extends HypixelNPC {
     public VillagerLibrarian() {
         super(new VillagerConfiguration(){
             @Override
@@ -45,7 +45,7 @@ public class VillagerLibrarian extends HypixelNPC implements net.swofty.type.sky
         MissionData data = player.getMissionData();
 
         if (data.isCurrentlyActive("speak_to_librarian")) {
-            setDialogue(player, "quest-hello").thenRun(() -> {
+            setGardenDialogue(player, "quest-hello").thenRun(() -> {
                 data.endMission("speak_to_librarian");
             });
             return;
@@ -67,8 +67,14 @@ public class VillagerLibrarian extends HypixelNPC implements net.swofty.type.sky
         ).toArray(DialogueSet[]::new);
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "LIBRARIAN";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("LIBRARIAN")
+                );
+            }
+        });
     }
 }

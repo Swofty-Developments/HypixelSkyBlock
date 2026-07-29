@@ -7,7 +7,7 @@ import net.swofty.type.generic.entity.npc.configuration.VillagerConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class VillagerPlumberJoe extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class VillagerPlumberJoe extends HypixelNPC {
     public VillagerPlumberJoe() {
         super(new VillagerConfiguration() {
             @Override
@@ -35,10 +35,5 @@ public class VillagerPlumberJoe extends HypixelNPC implements net.swofty.type.sk
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "PLUMBER_JOE";
     }
 }

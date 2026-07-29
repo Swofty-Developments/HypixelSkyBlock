@@ -17,7 +17,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCLumberJack extends HypixelNPC {
 
     public NPCLumberJack() {
         super(new HumanConfiguration() {
@@ -55,7 +55,7 @@ public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skybloc
         MissionData data = player.getMissionData();
 
         if (data.isCurrentlyActive(MissionTalkToLumberjack.class)) {
-            setDialogue(player, "initial-hello").thenRun(() -> {
+            setGardenDialogue(player, "initial-hello").thenRun(() -> {
                 NPCOption.sendOption(player, "lumber_jack", true, List.of(
                         new NPCOption.Option(
                                 "r_2_1",
@@ -63,7 +63,7 @@ public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skybloc
 								false,
                                 "Sure",
                                 (p) -> {
-                                    setDialogue(p, "option-accept").thenRun(() -> {
+                                    setGardenDialogue(p, "option-accept").thenRun(() -> {
 										data.endMission(MissionTalkToLumberjack.class);
                                     });
                                 }
@@ -74,7 +74,7 @@ public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skybloc
 								false,
                                 "Nah, I'm good",
                                 (p) -> {
-                                    setDialogue(player, "option-nah");
+                                    setGardenDialogue(player, "option-nah");
                                 }
                         )
                 ));
@@ -86,14 +86,14 @@ public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skybloc
             return;
         }
         if (!data.hasCompleted(MissionTalkToLumberjackAgain.class)) {
-            setDialogue(player, "spoke-again").thenRun(() -> {
+            setGardenDialogue(player, "spoke-again").thenRun(() -> {
 				player.openView(new ClaimRewardView(), new ClaimRewardView.State(ItemType.PROMISING_AXE, () -> {
 					data.endMission(MissionTalkToLumberjackAgain.class);
 				}));
             });
             return;
         }
-		setDialogue(player, "idle-" + (1 + (int)(Math.random() * 3)));
+		setGardenDialogue(player, "idle-" + (1 + (int)(Math.random() * 3)));
     }
 
     @Override
@@ -139,8 +139,14 @@ public class NPCLumberJack extends HypixelNPC implements net.swofty.type.skybloc
 		).toArray(DialogueSet[]::new);
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "LUMBER_JACK";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("LUMBER_JACK")
+                );
+            }
+        });
     }
 }

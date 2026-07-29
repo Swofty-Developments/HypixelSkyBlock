@@ -7,7 +7,7 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-public class NPCRhys extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCRhys extends HypixelNPC {
 
 	public NPCRhys() {
 		super(new HumanConfiguration() {
@@ -42,9 +42,4 @@ public class NPCRhys extends HypixelNPC implements net.swofty.type.skyblockgener
 	public void onClick(NPCInteractEvent event) {
 		new GUIGuide().open(event.player());
 	}
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "RHYS";
-    }
 }

@@ -7,9 +7,8 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource;
 
-public class NPCBeth extends HypixelNPC implements GardenSpokenNpcSource {
+public class NPCBeth extends HypixelNPC {
     public NPCBeth() {
         super(new HumanConfiguration() {
             @Override
@@ -42,10 +41,5 @@ public class NPCBeth extends HypixelNPC implements GardenSpokenNpcSource {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "BETH";
     }
 }

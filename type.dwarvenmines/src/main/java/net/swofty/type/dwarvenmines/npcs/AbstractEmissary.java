@@ -8,8 +8,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.jspecify.annotations.NonNull;
 
-public abstract class AbstractEmissary extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
-    private final String gardenSpokenNpcId;
+public abstract class AbstractEmissary extends HypixelNPC {
 
 	public AbstractEmissary(String name, String texture, String signature, Pos pos) {
 		super(new HumanConfiguration() {
@@ -43,10 +42,6 @@ public abstract class AbstractEmissary extends HypixelNPC implements net.swofty.
 				return "§6" + name;
 			}
 		});
-        this.gardenSpokenNpcId = "EMISSARY_" + name
-            .trim()
-            .replace(' ', '_')
-            .toUpperCase(java.util.Locale.ROOT);
 	}
 
 	@Override
@@ -54,9 +49,4 @@ public abstract class AbstractEmissary extends HypixelNPC implements net.swofty.
 		HypixelPlayer player = event.player();
 		new GUICommisions().open(player);
 	}
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return gardenSpokenNpcId;
-    }
 }

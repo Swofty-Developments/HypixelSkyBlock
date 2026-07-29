@@ -8,7 +8,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCDusk extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCDusk extends HypixelNPC {
 
     public NPCDusk() {
         super(new HumanConfiguration() {
@@ -42,7 +42,7 @@ public class NPCDusk extends HypixelNPC implements net.swofty.type.skyblockgener
     @Override
     public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
-        setDialogue(e.player(), "hello");
+        setGardenDialogue(e.player(), "hello");
     }
 
     @Override
@@ -56,8 +56,14 @@ public class NPCDusk extends HypixelNPC implements net.swofty.type.skyblockgener
         ).toArray(DialogueSet[]::new);
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "DUSK";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("DUSK")
+                );
+            }
+        });
     }
 }

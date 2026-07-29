@@ -20,7 +20,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.Locale;
 
 @CommandParameters(
-    aliases = "gardenadmin",
+    labels = "gardenadmin",
     description = "Mutates Garden data for testing",
     usage = "/gardenadmin <section> ...",
     permission = Rank.STAFF,

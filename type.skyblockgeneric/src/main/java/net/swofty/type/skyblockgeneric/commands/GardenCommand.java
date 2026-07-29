@@ -6,7 +6,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "gar",
+@CommandParameters(labels = "garden, gar",
     description = "Sends the player to their Garden",
     usage = "/garden",
     permission = Rank.DEFAULT,

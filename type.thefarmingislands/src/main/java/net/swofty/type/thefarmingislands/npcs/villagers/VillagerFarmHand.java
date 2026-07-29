@@ -14,7 +14,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-public class VillagerFarmHand extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class VillagerFarmHand extends HypixelNPC {
     public VillagerFarmHand() {
         super(new VillagerConfiguration(){
             @Override
@@ -70,7 +70,7 @@ public class VillagerFarmHand extends HypixelNPC implements net.swofty.type.skyb
         MissionData data = ((SkyBlockPlayer) e.player()).getMissionData();
 
         if (data.isCurrentlyActive(MissionTalkToFarmHand.class)) {
-            setDialogue(e.player(), "quest-hello").thenRun(() -> {
+            setGardenDialogue(e.player(), "quest-hello").thenRun(() -> {
                 data.endMission(MissionTalkToFarmHand.class);
             });
             return;
@@ -80,16 +80,22 @@ public class VillagerFarmHand extends HypixelNPC implements net.swofty.type.skyb
             return;
         }
         if (!data.hasCompleted(MissionTalkToFarmhandAgain.class)) {
-            setDialogue(e.player(), "spoke-again").thenRun(() -> {
+            setGardenDialogue(e.player(), "spoke-again").thenRun(() -> {
                 data.endMission(MissionTalkToFarmhandAgain.class);
             });
             return;
         }
-        setDialogue(e.player(), "initial-hello");
+        setGardenDialogue(e.player(), "initial-hello");
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "FARMHAND";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("FARMHAND")
+                );
+            }
+        });
     }
 }

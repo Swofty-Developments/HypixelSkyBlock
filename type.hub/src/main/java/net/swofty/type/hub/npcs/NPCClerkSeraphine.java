@@ -8,7 +8,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCClerkSeraphine extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCClerkSeraphine extends HypixelNPC {
 
     public NPCClerkSeraphine() {
         super(new HumanConfiguration() {
@@ -42,7 +42,7 @@ public class NPCClerkSeraphine extends HypixelNPC implements net.swofty.type.sky
     @Override
     public void onClick(NPCInteractEvent e) {
         if (isInDialogue(e.player())) return;
-        setDialogue(e.player(), "hello");
+        setGardenDialogue(e.player(), "hello");
     }
 
     @Override
@@ -57,8 +57,14 @@ public class NPCClerkSeraphine extends HypixelNPC implements net.swofty.type.sky
         ).toArray(DialogueSet[]::new);
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "CLERK_SERAPHINE";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("CLERK_SERAPHINE")
+                );
+            }
+        });
     }
 }

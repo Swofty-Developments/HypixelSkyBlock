@@ -1,8 +1,8 @@
 package net.swofty.service.jacobscontest;
 
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class JacobsContestService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.jacobscontest.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.jacobscontest.endpoints", RedisMessageHandler.class).toList();
     }
 }

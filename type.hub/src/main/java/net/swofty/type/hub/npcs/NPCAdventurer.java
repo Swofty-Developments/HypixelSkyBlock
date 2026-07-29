@@ -8,7 +8,7 @@ import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAdventurer;
 
-public class NPCAdventurer extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCAdventurer extends HypixelNPC {
     public NPCAdventurer() {
         super(new HumanConfiguration() {
             @Override
@@ -45,7 +45,7 @@ public class NPCAdventurer extends HypixelNPC implements net.swofty.type.skybloc
         boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ADVENTURER);
 
         if (!hasSpokenBefore) {
-            setDialogue(player, "hello").thenRun(() -> {
+            setGardenDialogue(player, "hello").thenRun(() -> {
                 player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ADVENTURER, true);
             });
             return;
@@ -61,8 +61,14 @@ public class NPCAdventurer extends HypixelNPC implements net.swofty.type.skybloc
         };
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "ADVENTURER";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("ADVENTURER")
+                );
+            }
+        });
     }
 }

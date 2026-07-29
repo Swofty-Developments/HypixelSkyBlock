@@ -11,7 +11,7 @@ import net.swofty.type.hub.gui.GUITiaTheFairy;
 
 import java.util.stream.Stream;
 
-public class NPCTiaTheFairy extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCTiaTheFairy extends HypixelNPC {
     public NPCTiaTheFairy() {
         super(new HumanConfiguration() {
             @Override
@@ -48,7 +48,7 @@ public class NPCTiaTheFairy extends HypixelNPC implements net.swofty.type.skyblo
         DatapointToggles.Toggles toggle = e.player().getToggles();
 
         if (!toggle.get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_TIA)) {
-            setDialogue(e.player(), "hello");
+            setGardenDialogue(e.player(), "hello");
             toggle.set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_TIA, true);
             return;
         }
@@ -69,8 +69,14 @@ public class NPCTiaTheFairy extends HypixelNPC implements net.swofty.type.skyblo
         ).toArray(DialogueSet[]::new);
     }
 
-    @Override
-    public String gardenSpokenNpcId() {
-        return "TIA_THE_FAIRY";
+    private java.util.concurrent.CompletableFuture<Void> setGardenDialogue(HypixelPlayer player, String key) {
+        return setDialogue(player, key).thenRun(() -> {
+            if (player instanceof net.swofty.type.skyblockgeneric.user.SkyBlockPlayer skyBlockPlayer) {
+                net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionSupport.apply(
+                    skyBlockPlayer,
+                    net.swofty.type.skyblockgeneric.garden.progression.GardenProgressionReward.spokenNpc("TIA_THE_FAIRY")
+                );
+            }
+        });
     }
 }
