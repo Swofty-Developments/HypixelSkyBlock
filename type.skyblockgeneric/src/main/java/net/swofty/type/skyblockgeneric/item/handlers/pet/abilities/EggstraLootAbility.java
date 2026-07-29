@@ -23,7 +23,7 @@ import java.util.Set;
 import static net.swofty.commons.StringUtility.decimalify;
 
 public class EggstraLootAbility implements PetAbility, KillEventPetAbility {
-    private static final RarityValue<Double> CHANCE_PER_LEVEL = new RarityValue<>(0.0, 0.0, 0.8, 1.0, 1.0, 0.0);
+    private static final RarityValue<Double> CHANCE_PER_LEVEL = new RarityValue<>(0.0, 0.0, 0.8, 1.0, 1.0, 1.0, 0.0);
     private static final Set<EntityType> ANIMALS = Set.of(
             EntityType.CHICKEN, EntityType.COW, EntityType.SHEEP,
             EntityType.PIG, EntityType.RABBIT
@@ -41,9 +41,9 @@ public class EggstraLootAbility implements PetAbility, KillEventPetAbility {
         double chance = CHANCE_PER_LEVEL.getForRarity(rarity) * level;
 
         return Arrays.asList(
-                "§7Chickens always drop an Egg when killed.",
-                "§7Grants a §a" + decimalify(chance, 1) + "% §7chance for animals",
-                "§7to drop an additional item."
+                "§7Chickens always drop an §fEgg §7when",
+                "§7killed. Grants a §a" + decimalify(chance, 1) + "% §7chance for",
+                "§7animals to drop an additional item."
         );
     }
 

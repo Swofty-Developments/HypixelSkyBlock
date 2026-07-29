@@ -573,6 +573,7 @@ public class ItemConfigParser {
 							georgePriceConfig.getInt("rare"),
 							georgePriceConfig.getInt("epic"),
 							georgePriceConfig.getInt("legendary"),
+                            georgePriceConfig.getInt("mythic"),
 							georgePriceConfig.getInt("rest")
 					);
 
@@ -586,6 +587,7 @@ public class ItemConfigParser {
 								parseKatUpgrade(katUpgradeConfig.getNested("rare").config),
 								parseKatUpgrade(katUpgradeConfig.getNested("epic").config),
 								parseKatUpgrade(katUpgradeConfig.getNested("legendary").config),
+                                parseKatUpgrade(katUpgradeConfig.getNested("mythic").config),
 								parseKatUpgrade(katUpgradeConfig.getNested("rest").config)
 						);
 					}

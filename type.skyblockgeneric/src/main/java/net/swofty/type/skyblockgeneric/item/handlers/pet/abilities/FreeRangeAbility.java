@@ -15,7 +15,7 @@ import java.util.List;
 import static net.swofty.commons.StringUtility.decimalify;
 
 public class FreeRangeAbility implements PetAbility {
-    private static final RarityValue<Double> PER_LEVEL = new RarityValue<>(0.5, 0.75, 1.0, 1.0, 1.0, 0.0);
+    private static final RarityValue<Double> PER_LEVEL = new RarityValue<>(0.5, 0.75, 1.0, 1.0, 1.0, 1.0,0.0);
 
     @Override
     public String getName() {
@@ -29,8 +29,8 @@ public class FreeRangeAbility implements PetAbility {
         double ff = PER_LEVEL.getForRarity(rarity) * level;
 
         return Arrays.asList(
-                "§7Grants §a+" + decimalify(ff, 1) + " " + ItemStatistic.FARMING_FORTUNE.getFullDisplayName(),
-                "§7while on §bPublic Islands§7."
+                "§7Grants §6+" + decimalify(ff, 1) + ItemStatistic.FARMING_FORTUNE.getFullDisplayName() + "§7while",
+                "§7on §bPublic Islands§7."
         );
     }
 

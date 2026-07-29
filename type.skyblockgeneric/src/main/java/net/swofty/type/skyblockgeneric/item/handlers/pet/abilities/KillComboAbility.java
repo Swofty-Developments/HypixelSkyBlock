@@ -13,19 +13,19 @@ import net.swofty.type.skyblockgeneric.utility.RarityValue;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.swofty.commons.StringUtility.decimalify;
+import static net.swofty.commons.StringUtility.commaify;
 
 public class KillComboAbility implements PetAbility, KillEventPetAbility {
-    private static final RarityValue<Double> MAGIC_FIND_5 = new RarityValue<>(1.0, 1.0, 2.0, 2.0, 3.0, 0.0);
-    private static final RarityValue<Double> MAGIC_FIND_15 = new RarityValue<>(1.0, 1.0, 2.0, 2.0, 3.0, 0.0);
-    private static final RarityValue<Double> MAGIC_FIND_25 = new RarityValue<>(1.0, 1.0, 2.0, 2.0, 3.0, 0.0);
+    private static final RarityValue<Integer> MAGIC_FIND_5 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
+    private static final RarityValue<Integer> MAGIC_FIND_15 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
+    private static final RarityValue<Integer> MAGIC_FIND_25 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
 
-    private static final RarityValue<Integer> COINS_10 = new RarityValue<>(2, 4, 6, 8, 10, 0);
-    private static final RarityValue<Integer> COINS_30 = new RarityValue<>(2, 4, 6, 8, 10, 0);
+    private static final RarityValue<Integer> COINS_10 = new RarityValue<>(2, 4, 6, 8, 10, 10, 0);
+    private static final RarityValue<Integer> COINS_30 = new RarityValue<>(2, 4, 6, 8, 10, 10, 0);
 
-    private static final RarityValue<Integer> COMBAT_WISDOM_20 = new RarityValue<>(5, 7, 9, 12, 15, 0);
+    private static final RarityValue<Integer> COMBAT_WISDOM_20 = new RarityValue<>(5, 7, 9, 12, 15, 15, 0);
 
-    private static final double[] BASE_DURATIONS = {8.02, 6.02, 4.02, 3.02, 3.01, 2.01};
+    private static final double[] BASE_DURATIONS = {8.00, 6.00, 4.00, 3.00, 3.00, 2.00};
     private static final double[] DURATION_PER_LEVEL = {0.02, 0.02, 0.02, 0.02, 0.01, 0.01};
     private static final int[] THRESHOLDS = {5, 10, 15, 20, 25, 30};
 
@@ -39,30 +39,36 @@ public class KillComboAbility implements PetAbility, KillEventPetAbility {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
 
-        String d5 = decimalify(BASE_DURATIONS[0] + level * DURATION_PER_LEVEL[0], 2);
-        String d10 = decimalify(BASE_DURATIONS[1] + level * DURATION_PER_LEVEL[1], 2);
-        String d15 = decimalify(BASE_DURATIONS[2] + level * DURATION_PER_LEVEL[2], 2);
-        String d20 = decimalify(BASE_DURATIONS[3] + level * DURATION_PER_LEVEL[3], 2);
-        String d25 = decimalify(BASE_DURATIONS[4] + level * DURATION_PER_LEVEL[4], 2);
-        String d30 = decimalify(BASE_DURATIONS[5] + level * DURATION_PER_LEVEL[5], 2);
+        String d5 = commaify(BASE_DURATIONS[0] + level * DURATION_PER_LEVEL[0]);
+        String d10 = commaify(BASE_DURATIONS[1] + level * DURATION_PER_LEVEL[1]);
+        String d15 = commaify(BASE_DURATIONS[2] + level * DURATION_PER_LEVEL[2]);
+        String d20 = commaify(BASE_DURATIONS[3] + level * DURATION_PER_LEVEL[3]);
+        String d25 = commaify(BASE_DURATIONS[4] + level * DURATION_PER_LEVEL[4]);
+        String d30 = commaify(BASE_DURATIONS[5] + level * DURATION_PER_LEVEL[5]);
 
-        String mf5 = decimalify(MAGIC_FIND_5.getForRarity(rarity), 0);
-        String mf15 = decimalify(MAGIC_FIND_15.getForRarity(rarity), 0);
-        String mf25 = decimalify(MAGIC_FIND_25.getForRarity(rarity), 0);
+        int mf5 = MAGIC_FIND_5.getForRarity(rarity);
+        int mf15 = MAGIC_FIND_15.getForRarity(rarity);
+        int mf25 = MAGIC_FIND_25.getForRarity(rarity);
         int coins10 = COINS_10.getForRarity(rarity);
         int coins30 = COINS_30.getForRarity(rarity);
         int wisdom20 = COMBAT_WISDOM_20.getForRarity(rarity);
 
         return Arrays.asList(
-                "§7Gain buffs for combo kills. Effects stack as",
-                "§7you increase your combo.",
+                "§7Gain buffs for combo kills. Effects",
+                "§7stack as you increase your combo.",
                 "",
-                " §a5 Combo §8(lasts " + d5 + "s) §b+" + mf5 + "% ✯ Magic Find",
-                " §a10 Combo §8(lasts " + d10 + "s) §6+" + coins10 + " coins per kill",
-                " §a15 Combo §8(lasts " + d15 + "s) §b+" + mf15 + "% ✯ Magic Find",
-                " §a20 Combo §8(lasts " + d20 + "s) §3+" + wisdom20 + " ☯ Combat Wisdom",
-                " §a25 Combo §8(lasts " + d25 + "s) §b+" + mf25 + "% ✯ Magic Find",
-                " §a30 Combo §8(lasts " + d30 + "s) §6+" + coins30 + " coins per kill"
+                "§a5 Combo §8(lasts §a" + d5 + "§8s)",
+                " §b+" + mf5 + "% " + ItemStatistic.MAGIC_FIND.getFullDisplayName(),
+                "§a10 Combo §8(lasts " + d10 + "s)",
+                " §8+§6" + coins10 + " §7coins per kill",
+                "§a15 Combo §8(lasts " + d15 + "s)",
+                " §b+" + mf15 + "% " + ItemStatistic.MAGIC_FIND.getFullDisplayName(),
+                "§a20 Combo §8(lasts " + d20 + "s)",
+                " §3+" + wisdom20 + " " + ItemStatistic.COMBAT_WISDOM.getFullDisplayName(),
+                "§a25 Combo §8(lasts " + d25 + "s)",
+                " §b+" + mf25 + "% " + ItemStatistic.MAGIC_FIND.getFullDisplayName(),
+                "§a30 Combo §8(lasts " + d30 + "s)",
+                " §8+§6" + coins10 + " §7coins per kill"
         );
     }
 
@@ -96,7 +102,7 @@ public class KillComboAbility implements PetAbility, KillEventPetAbility {
         if (combo >= 20) totalWisdom += COMBAT_WISDOM_20.getForRarity(rarity);
 
         return ItemStatistics.builder()
-                .withBase(ItemStatistic.MAGIC_FIND, totalMf)
+                .withAdditivePercentage(ItemStatistic.MAGIC_FIND, totalMf)
                 .withBase(ItemStatistic.COMBAT_WISDOM, (double) totalWisdom)
                 .build();
     }

@@ -93,22 +93,17 @@ public class PetComponent extends SkyBlockItemComponent {
         lore.add("§8" + skillCategory.asCategory().getName() + " Pet");
         lore.add(" ");
 
-        addPropertyInt("Magic Find", (baseStatistics.getOverall(ItemStatistic.MAGIC_FIND) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.MAGIC_FIND) * 100.0 * level), lore);
-        addPropertyPercent("Crit Damage", (baseStatistics.getOverall(ItemStatistic.CRITICAL_DAMAGE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRITICAL_DAMAGE) * level), lore);
-        addPropertyPercent("Crit Chance", (baseStatistics.getOverall(ItemStatistic.CRITICAL_CHANCE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRITICAL_CHANCE) * level), lore);
-        addPropertyPercent("Health", (baseStatistics.getOverall(ItemStatistic.HEALTH) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.HEALTH) * level), lore);
-        addPropertyInt("Strength", baseStatistics.getOverall(ItemStatistic.STRENGTH) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.STRENGTH) * level, lore);
-        addPropertyInt("Defense", baseStatistics.getOverall(ItemStatistic.DEFENSE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.DEFENSE) * level, lore);
-        addPropertyInt("Speed", baseStatistics.getOverall(ItemStatistic.SPEED) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.SPEED) * level, lore);
-        addPropertyInt("Intelligence", baseStatistics.getOverall(ItemStatistic.INTELLIGENCE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.INTELLIGENCE) * level, lore);
+        for (ItemStatistic stat : ItemStatistic.values()) {
+            double value = baseStatistics.getOverall(stat)
+                    + getPerLevelStatistics(rarity).getOverall(stat) * level;
+            if (value == 0) continue;
+
+            if (stat.getIsPercentage()) {
+                addPropertyPercent(stat.getDisplayName(), value, lore);
+            } else {
+                addPropertyInt(stat.getDisplayName(), value, lore);
+            }
+        }
 
 
         for (PetAbility ability : abilities) {

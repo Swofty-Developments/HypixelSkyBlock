@@ -11,7 +11,5 @@ public interface PetAbility {
 
     List<String> getDescription(SkyBlockItem instance);
 
-    default ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
-        return ItemStatistics.empty();
-    }
+    ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet);
 }

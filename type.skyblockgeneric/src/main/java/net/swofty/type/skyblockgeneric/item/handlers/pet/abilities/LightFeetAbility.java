@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
-import static net.swofty.commons.StringUtility.decimalify;
+import static net.swofty.commons.StringUtility.commaify;
 
 public class LightFeetAbility implements PetAbility, FallDamageEventPetAbility {
 
@@ -23,7 +23,7 @@ public class LightFeetAbility implements PetAbility, FallDamageEventPetAbility {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
 
-        return List.of("§7Reduces fall damage by §a" + decimalify(1.0 * level, 1) + "%§7.");
+        return List.of("§7Reduces fall damage by §a" + commaify(level) + "%§7.");
     }
 
     @Override

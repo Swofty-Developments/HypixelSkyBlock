@@ -224,7 +224,7 @@ public enum ItemType {
 
   BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON),
 
-  BEE_PET(Material.PLAYER_HEAD, Rarity.EPIC),
+  BEE_PET(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   BEHEADED_HORROR(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -662,7 +662,7 @@ public enum ItemType {
 
   CHICKEN_MINION(Material.PLAYER_HEAD, Rarity.COMMON),
 
-  CHICKEN_PET(Material.PLAYER_HEAD, Rarity.COMMON),
+  CHICKEN_PET(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   CHILI_PEPPER(Material.PLAYER_HEAD, Rarity.COMMON),
 
@@ -1704,7 +1704,7 @@ public enum ItemType {
 
   GOLD_VOLCANIC_STONEFISH(Material.PLAYER_HEAD, Rarity.COMMON),
 
-  GRANDMA_WOLF_PET(Material.PLAYER_HEAD, Rarity.COMMON),
+  GRANDMA_WOLF_PET(Material.PLAYER_HEAD, Rarity.LEGENDARY),
 
   GRANITE(Material.GRANITE, Rarity.COMMON),
 
