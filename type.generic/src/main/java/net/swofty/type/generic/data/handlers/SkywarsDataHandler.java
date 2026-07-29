@@ -5,7 +5,13 @@ import lombok.Getter;
 import net.swofty.type.generic.data.DataHandler;
 import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.type.generic.data.datapoints.*;
+import net.swofty.type.generic.data.datapoints.DatapointBoolean;
+import net.swofty.type.generic.data.datapoints.DatapointLong;
+import net.swofty.type.generic.data.datapoints.DatapointSkywarsKitStats;
+import net.swofty.type.generic.data.datapoints.DatapointSkywarsLeaderboardPreferences;
+import net.swofty.type.generic.data.datapoints.DatapointSkywarsModeStats;
+import net.swofty.type.generic.data.datapoints.DatapointSkywarsUnlocks;
+import net.swofty.type.generic.data.datapoints.DatapointSoulWellUpgrades;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.bson.Document;
@@ -140,7 +146,6 @@ public class SkywarsDataHandler extends DataHandler implements GameDataHandler {
         return dp != null ? dp : datapoint.defaultDatapoint;
     }
 
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = this.datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));

@@ -7,11 +7,14 @@ import net.minestom.server.item.Material;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.shop.Currency;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 
 public class GoldenApple extends SimpleInteractableItem {
 
 	public GoldenApple() {
-		super("golden_apple");
+		super("golden_apple", new ShopData("Golden Apple", "Well-rounded healing.",
+			3, 1, Currency.GOLD, DatapointBedWarsHotbar.HotbarItemType.UTILITY, 7));
 	}
 
 	@Override

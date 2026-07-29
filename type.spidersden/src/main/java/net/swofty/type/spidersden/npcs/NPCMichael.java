@@ -1,20 +1,15 @@
 package net.swofty.type.spidersden.npcs;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ChatColor;
-import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.NPCOption;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.mission.missions.spidersden.MissionTheFlintBros;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Collections;
 import java.util.List;
 
 public class NPCMichael extends HypixelNPC {

@@ -1,28 +1,28 @@
 package net.swofty.type.generic.redis;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import org.json.JSONObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.GivePlayersOriginTypeProtocol;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisOriginServer implements ProxyToClient {
+public class RedisOriginServer implements RedisMessageHandler<GivePlayersOriginTypeProtocol.Request, GivePlayersOriginTypeProtocol.Response> {
     public static Map<UUID, ServerType> origin = new HashMap<>();
 
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.GIVE_PLAYERS_ORIGIN_TYPE;
+    public RedisProtocol<GivePlayersOriginTypeProtocol.Request, GivePlayersOriginTypeProtocol.Response> protocol() {
+        return new GivePlayersOriginTypeProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        UUID uuid = UUID.fromString(message.getString("uuid"));
-        ServerType originType = ServerType.valueOf(message.getString("origin-type"));
-
+    public GivePlayersOriginTypeProtocol.Response handle(GivePlayersOriginTypeProtocol.Request message, RedisMessageContext context) {
+        UUID uuid = UUID.fromString(message.uuid());
+        ServerType originType = ServerType.valueOf(message.originType());
         origin.put(uuid, originType);
-        return new JSONObject();
+        return new GivePlayersOriginTypeProtocol.Response();
     }
 }

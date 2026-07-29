@@ -5,8 +5,7 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 
@@ -15,6 +14,7 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.island.lifecycle.IslandLifecycleSteps;
 import net.swofty.type.island.tab.IslandGuestsModule;
 import net.swofty.type.island.tab.IslandMemberModule;
 import net.swofty.type.island.tab.IslandServerModule;
@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeIslandLoader implements SkyBlockTypeLoader {
+    public static final Pos SPAWN_POS = new Pos(7.5, 100, 7.5);
+
     @Override
     public ServerType getType() {
         return ServerType.SKYBLOCK_ISLAND;
@@ -38,9 +40,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     public void onInitialize(MinecraftServer server) {
         Logger.info("TypeIslandLoader initialized!");
 
-        /**
-         * Initialize Minions
-         */
+        IslandLifecycleSteps.register();
         new MinionHandler(MinecraftServer.getSchedulerManager()).start();
     }
 
@@ -52,7 +52,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
     @Override
     public HypixelTypeLoader.LoaderValues getLoaderValues() {
         return new HypixelTypeLoader.LoaderValues(
-                (type) -> new Pos(0, 100, 0), // Spawn position
+            (_) -> SPAWN_POS, // Spawn position
                 true // Announce death messages
         );
     }
@@ -82,10 +82,7 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
 
     @Override
     public List<HypixelEventClass> getCustomEvents() {
-        return SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.type.island.events.custom",
-                HypixelEventClass.class
-        ).collect(Collectors.toList());
+        return List.of();
     }
 
     @Override
@@ -93,13 +90,9 @@ public class TypeIslandLoader implements SkyBlockTypeLoader {
         return new ArrayList<>();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

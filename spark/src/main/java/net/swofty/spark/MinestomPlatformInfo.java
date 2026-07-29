@@ -5,13 +5,12 @@ import net.minestom.server.MinecraftServer;
 
 public final class MinestomPlatformInfo implements PlatformInfo {
 
-    public MinestomPlatformInfo() {
-    }
-
+    @Override
     public Type getType() {
         return Type.SERVER;
     }
 
+    @Override
     public String getName() {
         return "Minestom";
     }
@@ -21,12 +20,13 @@ public final class MinestomPlatformInfo implements PlatformInfo {
         return "Hypixel";
     }
 
+    @Override
     public String getVersion() {
         return getMinecraftVersion() + "-" + MinecraftServer.getBrandName();
     }
 
+    @Override
     public String getMinecraftVersion() {
         return MinecraftServer.VERSION_NAME;
     }
-
 }

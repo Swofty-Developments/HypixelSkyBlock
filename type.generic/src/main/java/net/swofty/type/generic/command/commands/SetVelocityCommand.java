@@ -7,7 +7,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "setvelocity",
+@CommandParameters(labels = "setvelocity",
 		description = "Sets the velocity of a player",
 		usage = "/velocity <player> <x> <y> <z>",
 		permission = Rank.STAFF,

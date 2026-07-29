@@ -7,7 +7,12 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.service.darkauction.loot.DarkAuctionBookPool;
 import net.swofty.service.darkauction.loot.DarkAuctionItemPool;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -92,7 +97,7 @@ public class DarkAuctionState {
      */
     public void recordBid(UUID playerId, String playerName, long bidAmount) {
         // Add to front of list (most recent first)
-        bidHistory.add(0, new BidEntry(playerId, playerName, bidAmount));
+        bidHistory.addFirst(new BidEntry(playerId, playerName, bidAmount));
     }
 
     /**

@@ -34,8 +34,6 @@ dependencies {
     implementation(libs.tinylog.api)
     implementation(libs.tinylog.impl)
 
-    compileOnly(libs.spigot.api)
-
     compileOnly(libs.protocollib)
 }
 

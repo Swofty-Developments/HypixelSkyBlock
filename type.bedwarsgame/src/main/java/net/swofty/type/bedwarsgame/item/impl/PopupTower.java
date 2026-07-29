@@ -10,7 +10,9 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
+import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,20 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PopupTower extends SimpleInteractableItem {
 
 	public PopupTower() {
-		super("popup_tower");
-	}
-
-	private static Block mapTeamToBlock(BedWarsMapsConfig.TeamKey teamKey) {
-		return switch (teamKey) {
-			case RED -> Block.RED_WOOL;
-			case BLUE -> Block.BLUE_WOOL;
-			case GREEN -> Block.LIME_WOOL;
-			case YELLOW -> Block.YELLOW_WOOL;
-			case AQUA -> Block.LIGHT_BLUE_WOOL;
-			case PINK -> Block.PINK_WOOL;
-			case WHITE -> Block.WHITE_WOOL;
-			case GRAY -> Block.GRAY_WOOL;
-		};
+        super("popup_tower", new ShopData("Pop-Up Tower", "Place a pop-up defence!",
+            24, 1, Currency.IRON, DatapointBedWarsHotbar.HotbarItemType.UTILITY, 7));
 	}
 
 	@Override
@@ -48,7 +38,7 @@ public class PopupTower extends SimpleInteractableItem {
 
 		try {
 			instance.loadChunk(basePos).join();
-		} catch (Exception ignored) {
+		} catch (Exception _) {
 		}
 
 		final int LAYERS = 4;
@@ -71,6 +61,7 @@ public class PopupTower extends SimpleInteractableItem {
 		AtomicInteger layerCounter = new AtomicInteger(0);
 
 		BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
+		BedWarsMapsConfig.TeamKey teamKey = player.getTeamKey();
 		Pos playerPos = player.getPosition();
 		double dx = playerPos.x() - basePos.x();
 		double dz = playerPos.z() - basePos.z();
@@ -127,24 +118,24 @@ public class PopupTower extends SimpleInteractableItem {
 					double worldX = basePos.x() + rotX;
 					double worldZ = basePos.z() + rotZ;
 
-					Pos target = new Pos(worldX, basePos.y() + layerIndex - 1, worldZ);
+					Pos target = new Pos(worldX, basePos.y() + layerIndex, worldZ);
 					try {
 						if (val == 1) {
 							if (instance.getBlock(target).isAir()) {
-								instance.setBlock(target, mapTeamToBlock(player.getTeamKey()));
+								instance.setBlock(target, teamKey.woolMaterial().block());
 							}
 						} else if (val == 5) {
 							try {
 								instance.setBlock(target, Block.LADDER.withProperty("facing", ladderFacing));
-							} catch (IllegalArgumentException ignored) {
+							} catch (IllegalArgumentException _) {
 								instance.setBlock(target, Block.LADDER);
 							}
 						}
-					} catch (IllegalArgumentException e) {
+					} catch (IllegalArgumentException _) {
 						if (val == 1) {
 							instance.setBlock(target, Block.WHITE_WOOL);
 						}
-					} catch (Exception ignored) {
+					} catch (Exception _) {
 					}
 				}
 			}

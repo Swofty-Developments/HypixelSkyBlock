@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointStash;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "clearstash",
+@CommandParameters(labels = "clearstash",
         description = "Clear your stash",
         usage = "/clearstash",
         permission = Rank.DEFAULT,

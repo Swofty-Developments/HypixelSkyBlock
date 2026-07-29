@@ -41,10 +41,10 @@ public record TrackedItemsDatabase(UUID itemUUID) {
 
     public void insertOrUpdate(TrackedItem trackedItem) {
         if (!exists()) {
-            collection.insertOne(trackedItem.toDocument().append("_id", trackedItem.itemUUID.toString()));
+            collection.insertOne(trackedItem.toDocument().append("_id", trackedItem.getItemUUID().toString()));
             return;
         }
-        collection.replaceOne(Filters.eq("_id", trackedItem.itemUUID.toString()), trackedItem.toDocument());
+        collection.replaceOne(Filters.eq("_id", trackedItem.getItemUUID().toString()), trackedItem.toDocument());
     }
 }
 

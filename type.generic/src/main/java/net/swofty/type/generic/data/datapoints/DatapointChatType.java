@@ -4,7 +4,7 @@ import net.swofty.commons.protocol.Serializer;
 import net.swofty.type.generic.data.Datapoint;
 
 public class DatapointChatType extends Datapoint<DatapointChatType.ChatType> {
-    private static final Serializer<ChatType> serializer = new Serializer<ChatType>() {
+    private static final Serializer<ChatType> serializer = new Serializer<>() {
         @Override
         public String serialize(ChatType value) {
             return value.currentChatType.name();

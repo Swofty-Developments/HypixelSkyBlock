@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 @CommandParameters(description = "Opens the SkyBlock Calendar",
     usage = "/calendar",
     permission = Rank.DEFAULT,
-    aliases = "calendar",
+    labels = "calendar",
     allowsConsole = false)
 public class CalendarCommand extends HypixelCommand {
 

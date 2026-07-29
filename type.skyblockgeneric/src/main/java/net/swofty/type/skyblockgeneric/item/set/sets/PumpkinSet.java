@@ -8,7 +8,6 @@ import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValu
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PumpkinSet extends SkyBlockValueEvent implements ArmorSet {

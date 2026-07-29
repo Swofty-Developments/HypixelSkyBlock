@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.auction;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
@@ -9,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIQueryItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -16,13 +18,12 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointAuctionEscrow;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Map;
-
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GUIAuctionDuration extends HypixelInventoryGUI {
     public GUIAuctionDuration() {
-        super(I18n.string("gui_auction.duration.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_auction.duration.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
@@ -39,24 +40,25 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
         set(new GUIQueryItem(16) {
             @Override
             public HypixelInventoryGUI onQueryFinish(String query, HypixelPlayer player) {
-                long l;
+                Locale loc = player.getLocale();
+                long val;
                 try {
-                    l = Long.parseLong(query);
+                    val = Long.parseLong(query);
                 } catch (NumberFormatException ex) {
-                    player.sendMessage(I18n.string("gui_auction.duration.number_parse_error"));
+                    player.sendMessage(I18n.t("gui_auction.duration.number_parse_error"));
                     return null;
                 }
-                if (l <= 1) {
-                    player.sendMessage(I18n.string("gui_auction.duration.invalid_time"));
+                if (val <= 1) {
+                    player.sendMessage(I18n.t("gui_auction.duration.invalid_time"));
                     return null;
                 }
-                if (l >= 336 && !right.get()) {
-                    player.sendMessage(I18n.string("gui_auction.duration.max_exceeded"));
+                if (val >= 336 && !right.get()) {
+                    player.sendMessage(I18n.t("gui_auction.duration.max_exceeded"));
                     return null;
                 }
 
                 ((SkyBlockPlayer) player).getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().setDuration(
-                        l * (right.get() ? 60000 : 3600000)
+                        val * (right.get() ? 60000 : 3600000)
                 );
 
                 return new GUIAuctionCreateItem(GUIAuctionDuration.this);
@@ -70,8 +72,8 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_auction.duration.custom"), Material.COMPASS, 1,
-                        I18n.lore("gui_auction.duration.custom.lore"));
+                return TranslatableItemStackCreator.getStack("gui_auction.duration.custom", Material.COMPASS, 1,
+                        "gui_auction.duration.custom.lore");
             }
         });
 
@@ -105,11 +107,12 @@ public class GUIAuctionDuration extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 ItemStack.Builder stack = ItemStackCreator.getStack(
-                        I18n.string("gui_auction.duration.hours", Map.of("hours", String.valueOf(hours))),
+                    I18n.string("gui_auction.duration.hours", l, Component.text(String.valueOf(hours))),
                         color, 1,
                         " ",
-                        I18n.string("gui_auction.duration.hours_click"));
+                        I18n.string("gui_auction.duration.hours_click", l));
 
                 if (user.getSkyblockDataHandler().get(net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler.Data.AUCTION_ESCROW, DatapointAuctionEscrow.class).getValue().getDuration() == millis) {
                     stack = ItemStackCreator.enchant(stack);

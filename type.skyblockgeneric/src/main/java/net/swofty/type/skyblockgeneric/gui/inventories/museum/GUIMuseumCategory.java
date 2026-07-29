@@ -11,8 +11,8 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.TrackedItem;
+import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocol;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.protocol.objects.itemtracker.TrackedItemRetrieveProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelPaginatedGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -30,7 +30,7 @@ import net.swofty.type.skyblockgeneric.utility.ItemPriceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 import java.util.UUID;
 
 public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
@@ -62,7 +62,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
         DatapointMuseum.MuseumData data = player.getMuseumData();
 
         if (data.getItemInMuseum(skyBlockItem.getAttributeHandler().getPotentialType()) != null) {
-            player.sendMessage(I18n.string("gui_museum.category.already_in_museum", Map.of("item_name", skyBlockItem.getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.category.already_in_museum", Component.text(skyBlockItem.getDisplayName())));
             return;
         }
 
@@ -74,7 +74,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             );
 
             if (!trackedItemUUID.equals(previouslyInMuseumUUID)) {
-                player.sendMessage(I18n.string("gui_museum.category.can_only_readd"));
+                player.sendMessage(I18n.t("gui_museum.category.can_only_read"));
                 return;
             }
         }
@@ -88,7 +88,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             MuseumDisplays.updateDisplay(player);
 
             new GUIMuseumCategory(category).open(player);
-            player.sendMessage(I18n.string("gui_museum.category.donated", Map.of("item_name", skyBlockItem.getDisplayName())));
+            player.sendMessage(I18n.t("gui_museum.category.donated", Component.text(skyBlockItem.getDisplayName())));
         }
     }
 
@@ -135,18 +135,18 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             }
 
             if (category.contains(item.getAttributeHandler().getPotentialType())) {
-                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(
+                TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(
                         UUID.fromString(item.getAttributeHandler().getUniqueTrackedID())
                 );
-                TrackedItem trackedItem = ((TrackedItemRetrieveProtocolObject.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join()).trackedItem();
+                TrackedItem trackedItem = ((TrackedItemRetrieveProtocol.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER).handleRequest(message).join()).trackedItem();
 
                 ItemStack.Builder toReturn = item.getItemStackBuilder();
                 List<String> lore = new ArrayList<>(item.getLore(player));
                 lore.add("§8§m---------------------");
-                lore.add(I18n.string("gui_museum.category.item_created_label"));
+                lore.add(I18n.string("gui_museum.category.item_created_label", player.getLocale()));
                 lore.add("§a" + StringUtility.formatAsDate(trackedItem.getCreated()));
                 lore.add(" ");
-                lore.add(I18n.string("gui_museum.category.click_to_donate"));
+                lore.add(I18n.string("gui_museum.category.click_to_donate", player.getLocale()));
 
                 player.getInventory().setItemStack(i, ItemStackCreator.updateLore(toReturn, lore)
                         .set(DataComponents.CUSTOM_NAME, Component.text(item.getDisplayName()).decoration(
@@ -159,7 +159,7 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
 
     @Override
     public String getTitle(HypixelPlayer player, String query, int page, PaginationList<ItemType> paged) {
-        return I18n.string("gui_museum.category.title", Map.of("category", category.toString()));
+        return I18n.string("gui_museum.category.title", player.getLocale(), Component.text(category.toString()));
     }
 
     @Override
@@ -178,8 +178,8 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
                     return;
                 }
 
-                player.sendMessage(I18n.string("gui_museum.category.retrieved_message", Map.of("item_name", item.getDisplayName())));
-                player.sendMessage(I18n.string("gui_museum.category.retrieved_return_message"));
+                player.sendMessage(I18n.t("gui_museum.category.retrieved_message", Component.text(item.getDisplayName())));
+                player.sendMessage(I18n.t("gui_museum.category.retrieved_return_message"));
 
                 data.moveToRetrieved(skyBlockItem);
                 player.setMuseumData(data);
@@ -194,49 +194,51 @@ public class GUIMuseumCategory extends HypixelPaginatedGUI<ItemType> {
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (!inMuseum) {
-                    return ItemStackCreator.getStack(I18n.string("gui_museum.category.item_not_in_museum", Map.of("item_name", item.getDisplayName())),
+                    Locale l = player.getLocale();
+                    return ItemStackCreator.getStack(I18n.string("gui_museum.category.item_not_in_museum", l, Component.text(item.getDisplayName())),
                             Material.GRAY_DYE, 1,
-                            I18n.lore("gui_museum.category.item_not_in_museum.lore"));
+                        I18n.iterable("gui_museum.category.item_not_in_museum.lore"));
                 }
 
                 UUID trackedItemUUID = UUID.fromString(skyBlockItem.getAttributeHandler().getUniqueTrackedID());
-                TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocolObject.TrackedItemRetrieveMessage(trackedItemUUID);
-                TrackedItem trackedItem = ((TrackedItemRetrieveProtocolObject.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER)
+                TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage message = new TrackedItemRetrieveProtocol.TrackedItemRetrieveMessage(trackedItemUUID);
+                TrackedItem trackedItem = ((TrackedItemRetrieveProtocol.TrackedItemResponse) new ProxyService(ServiceType.ITEM_TRACKER)
                         .handleRequest(message).join()).trackedItem();
 
-                List<String> lore = new ArrayList<>(skyBlockItem.getLore());
+                Locale l = player.getLocale();
+                List<Object> lore = new ArrayList<>(skyBlockItem.getLore());
                 lore.add("§8§m---------------------");
-                lore.add(I18n.string("gui_museum.category.item_donated_label"));
+                lore.add(I18n.string("gui_museum.category.item_donated_label", l));
                 lore.add("§b" + StringUtility.formatAsDate(data.getInsertionTimes().get(trackedItemUUID)));
                 lore.add(" ");
-                lore.add(I18n.string("gui_museum.category.item_created_label"));
+                lore.add(I18n.string("gui_museum.category.item_created_label", player.getLocale()));
                 lore.add("§a" + StringUtility.formatAsDate(trackedItem.getCreated()));
                 lore.add("§6  " + StringUtility.commaifyAndTh(trackedItem.getNumberMade()) + " §7created");
                 lore.add(" ");
-                lore.add(I18n.string("gui_museum.category.item_clean_value_label"));
+                lore.add(I18n.string("gui_museum.category.item_clean_value_label", l));
                 lore.add("§6" + StringUtility.commaify(new ItemPriceCalculator(skyBlockItem).calculateCleanPrice())
                         + " Coins");
                 lore.add(" ");
-                lore.add(I18n.string("gui_museum.category.item_value_label"));
+                lore.add(I18n.string("gui_museum.category.item_value_label", l));
                 if (data.getCalculatedPrices().containsKey(trackedItemUUID)) {
                     lore.add("§6" + StringUtility.commaify(data.getCalculatedPrices().get(trackedItemUUID)) + " Coins");
                 } else {
-                    lore.add(I18n.string("gui_museum.category.uncalculated"));
+                    lore.add(I18n.string("gui_museum.category.uncalculated", l));
                 }
                 lore.add(" ");
-                lore.add(I18n.string("gui_museum.category.display_slot_label"));
+                lore.add(I18n.string("gui_museum.category.display_slot_label", l));
                 DatapointMuseum.DisplayPlacement placement = data.getDisplayHandler().getItemDisplayPlacement(skyBlockItem);
                 if (data.getCurrentlyInMuseum().contains(skyBlockItem) && placement != null) {
                     lore.add("§9" + placement.display() + " Slot #" + (placement.slot() + 1));
                 } else {
-                    lore.add(I18n.string("gui_museum.category.not_in_display"));
+                    lore.add(I18n.string("gui_museum.category.not_in_display", l));
                 }
                 if (hasTakenItOut) {
                     lore.add("§8§m---------------------");
-                    lore.addAll(I18n.lore("gui_museum.category.retrieved_from_museum.lore"));
+                    lore.addAll(List.of(I18n.iterable("gui_museum.category.retrieved_from_museum.lore")));
                 } else {
                     lore.add(" ");
-                    lore.add(I18n.string("gui_museum.category.click_to_retrieve"));
+                    lore.add(I18n.string("gui_museum.category.click_to_retrieve", l));
                 }
 
                 return ItemStackCreator.getStack("§a" + item.getDisplayName(),

@@ -1,25 +1,26 @@
 package net.swofty.type.generic.redis;
 
-import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PlayerSwitchedProtocol;
 import net.swofty.proxyapi.ProxyPlayer;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import org.json.JSONObject;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisTransferredFromThisServer implements ProxyToClient {
+public class RedisTransferredFromThisServer implements RedisMessageHandler<PlayerSwitchedProtocol.Request, PlayerSwitchedProtocol.Response> {
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.PLAYER_HAS_SWITCHED_FROM_HERE;
+    public RedisProtocol<PlayerSwitchedProtocol.Request, PlayerSwitchedProtocol.Response> protocol() {
+        return new PlayerSwitchedProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        UUID uuid = UUID.fromString(message.getString("uuid"));
+    public PlayerSwitchedProtocol.Response handle(PlayerSwitchedProtocol.Request message, RedisMessageContext context) {
+        UUID uuid = UUID.fromString(message.uuid());
         if (!ProxyPlayer.waitingForTransferComplete.containsKey(uuid)) {
-            return new JSONObject();
+            return new PlayerSwitchedProtocol.Response();
         }
 
         CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
@@ -31,6 +32,6 @@ public class RedisTransferredFromThisServer implements ProxyToClient {
                     ProxyPlayer.waitingForTransferComplete.remove(uuid);
                 });
 
-        return new JSONObject();
+        return new PlayerSwitchedProtocol.Response();
     }
 }

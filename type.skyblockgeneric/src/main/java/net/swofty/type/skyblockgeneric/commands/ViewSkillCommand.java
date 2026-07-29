@@ -4,15 +4,15 @@ import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkillCategory;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(description = "Opens up a skills GUI",
         usage = "/viewskill <skill>",
         permission = Rank.DEFAULT,
-        aliases = "vs",
+    labels = "vs viewskill",
         allowsConsole = false)
 public class ViewSkillCommand extends HypixelCommand {
     @Override

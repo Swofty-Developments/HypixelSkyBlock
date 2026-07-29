@@ -2,13 +2,18 @@ package net.swofty.service.friend;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.client.*;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import net.swofty.commons.friend.FriendData;
 import net.swofty.commons.friend.PendingFriendRequest;
 import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,7 @@ public record FriendDatabase(String playerId) implements MongoDB {
     public static MongoCollection<Document> pendingRequestsCollection;
 
     @Override
-    public MongoDB connect(String connectionString) {
+    public @NonNull MongoDB connect(@NonNull String connectionString) {
         ConnectionString cs = new ConnectionString(connectionString);
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         client = MongoClients.create(settings);
@@ -119,12 +124,12 @@ public record FriendDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public void set(String key, Object value) {
+    public void set(@NonNull String key, Object value) {
         insertOrUpdate(key, value);
     }
 
     @Override
-    public Object get(String key, Object def) {
+    public Object get(@NonNull String key, Object def) {
         Document doc = friendDataCollection.find(Filters.eq("_id", playerId)).first();
         if (doc == null) {
             return def;
@@ -133,7 +138,7 @@ public record FriendDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public void insertOrUpdate(String key, Object value) {
+    public void insertOrUpdate(@NonNull String key, Object value) {
         if (exists()) {
             Document query = new Document("_id", playerId);
             Document found = friendDataCollection.find(query).first();
@@ -147,7 +152,7 @@ public record FriendDatabase(String playerId) implements MongoDB {
     }
 
     @Override
-    public boolean remove(String id) {
+    public boolean remove(@NonNull String id) {
         Document query = new Document("_id", id);
         Document found = friendDataCollection.find(query).first();
         if (found == null) {

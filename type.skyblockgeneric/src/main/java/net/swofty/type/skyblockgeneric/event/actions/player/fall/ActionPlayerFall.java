@@ -5,39 +5,42 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.HashMap;
-
 public class ActionPlayerFall implements HypixelEventClass {
-    public static HashMap<SkyBlockPlayer, Integer> fallHeight = new HashMap<>();
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         Pos newPosition = event.getNewPosition();
         Pos currentPosition = player.getPosition();
 
         if (player.isFlying() || player.getGameMode().equals(GameMode.CREATIVE) || player.isInLaunchpad()) {
-            fallHeight.put(player, currentPosition.blockY());
+            player.setFallHeight(currentPosition.blockY());
             return;
         }
 
-        fallHeight.computeIfAbsent(player, k -> currentPosition.blockY());
-        int currentHeight = fallHeight.get(player);
+        Integer currentHeight = player.getFallHeight();
+        if (currentHeight == null) {
+            currentHeight = currentPosition.blockY();
+        }
 
         if (newPosition.y() > currentPosition.y() && currentHeight < newPosition.blockY()) {
-            fallHeight.put(player, newPosition.blockY());
-        } else if (newPosition.y() == currentPosition.y()) {
-            int fallDistance = currentHeight - newPosition.blockY();
+            player.setFallHeight(newPosition.blockY());
+            return;
+        }
 
+        if (player.isOnGround()) {
+            int fallDistance = currentHeight - newPosition.blockY();
             if (fallDistance > 4) {
                 player.damage(DamageType.FALL, (float) ((fallDistance * 2) - 4));
             }
 
-            fallHeight.put(player, currentPosition.blockY());
+            player.setFallHeight(newPosition.blockY());
         }
     }
 }

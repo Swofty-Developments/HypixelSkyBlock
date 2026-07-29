@@ -1,18 +1,19 @@
 package net.swofty.type.skyblockgeneric.tabmodules;
 
+import net.kyori.adventure.text.Component;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.data.datapoints.DatapointRank;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class SkyBlockPlayersOnlineModule extends TablistModule {
     public int page;
@@ -23,10 +24,11 @@ public class SkyBlockPlayersOnlineModule extends TablistModule {
 
 
     public List<TablistEntry> getEntries(SkyBlockPlayer player) {
+        Locale l = player.getLocale();
         List<SkyBlockPlayer> players = SkyBlockGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.players", Map.of("count", String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
+            new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Component.text(String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
         ));
 
         List<SkyBlockPlayer> toShow = new ArrayList<>();

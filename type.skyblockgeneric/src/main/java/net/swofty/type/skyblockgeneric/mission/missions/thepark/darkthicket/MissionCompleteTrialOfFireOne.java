@@ -1,21 +1,14 @@
 package net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.player.PlayerTickEvent;
-import net.minestom.server.instance.block.Block;
-import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.entity.npc.HypixelNPC;
-import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
-import net.swofty.type.skyblockgeneric.mission.missions.thepark.savanna.MissionTravelToTheSavannaWoodland;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 public class MissionCompleteTrialOfFireOne extends SkyBlockMission implements LocationAssociatedMission {
 

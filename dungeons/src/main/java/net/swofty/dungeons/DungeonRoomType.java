@@ -9,6 +9,8 @@ public enum DungeonRoomType {
     FAIRY(true, false),
     PUZZLE(true),
     MINI_BOSS(true),
+    TRAP(),
+    BLOOD(),
     EXIT(),
     ;
 

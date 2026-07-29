@@ -1,7 +1,5 @@
 package net.swofty.type.skyblockgeneric.mission.missions.thepark.spruce.race;
 
-import net.minestom.server.coordinate.Pos;
-import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;

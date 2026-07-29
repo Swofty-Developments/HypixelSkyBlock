@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
@@ -7,19 +8,23 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.StatefulView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.SackComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class GUISack implements StatefulView<GUISack.SackState> {
     private final ItemType itemTypeLinker;
@@ -82,8 +87,8 @@ public class GUISack implements StatefulView<GUISack.SackState> {
         };
 
         if (!closeGUIButton) {
-            layout.slot(backSlot, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.bags.sack.go_back"), Material.ARROW, 1,
-                            I18n.lore("gui_sbmenu.bags.sack.go_back.lore")),
+            layout.slot(backSlot, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.bags.sack.go_back", Material.ARROW, 1,
+                            "gui_sbmenu.bags.sack.go_back.lore"),
                     (click, c) -> c.player().openView(new GUISackOfSacks()));
         } else {
             Components.close(layout, backSlot);
@@ -111,22 +116,19 @@ public class GUISack implements StatefulView<GUISack.SackState> {
 
                 layout.slot(slot, (s, c) -> {
                     SkyBlockPlayer p = (SkyBlockPlayer) c.player();
+                    Locale l = p.getLocale();
                     ItemStack.Builder builder = PlayerItemUpdater.playerUpdate(p, skyBlockItem.getItemStack());
                     ArrayList<String> lore = new ArrayList<>();
                     Integer amount = p.getSackItems().getAmount(linker);
                     String color = (amount == finalMaxStorage) ? "§a" : "§e";
                     lore.add("");
-                    lore.add(I18n.string("gui_sbmenu.bags.sack.stored", Map.of(
-                            "color", color,
-                            "amount", String.valueOf(amount),
-                            "max", StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0))
-                    )));
+                    lore.add(I18n.string("gui_sbmenu.bags.sack.stored", l, Component.text(color), Component.text(String.valueOf(amount)), Component.text(StringUtility.shortenNumber(StringUtility.roundTo(finalMaxStorage, 0)))));
                     lore.add("");
                     if (amount != 0) {
-                        lore.add(I18n.string("gui_sbmenu.bags.sack.right_click_stack"));
-                        lore.add(I18n.string("gui_sbmenu.bags.sack.click_to_pickup"));
+                        lore.add(I18n.string("gui_sbmenu.bags.sack.right_click_stack", l));
+                        lore.add(I18n.string("gui_sbmenu.bags.sack.click_to_pickup", l));
                     } else {
-                        lore.add(I18n.string("gui_sbmenu.bags.sack.empty"));
+                        lore.add(I18n.string("gui_sbmenu.bags.sack.empty", l));
                     }
                     return ItemStackCreator.updateLore(builder, lore);
                 }, (click, c) -> handleSackItemClick(click, c, linker));

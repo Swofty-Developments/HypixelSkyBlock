@@ -2,8 +2,9 @@ package net.swofty.type.generic.event.actions.gui;
 
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
@@ -11,7 +12,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 
 public class ActionPlayerInventoryPostClick implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(InventoryClickEvent event) {
 		final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

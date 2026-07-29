@@ -1,7 +1,7 @@
 package net.swofty.dungeons;
 
 public class DungeonsTest {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         DungeonsData data = new DungeonsData(5, 5)
                 .with(DungeonRoomType.FAIRY, new DungeonsData.RoomData(1, 1))
                 .with(DungeonRoomType.PUZZLE, new DungeonsData.RoomData(2, 4))

@@ -1,14 +1,16 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.banker;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -20,26 +22,27 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
     public GUIBanker() {
-        super(I18n.string("gui_banker.main.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_banker.main.title"), InventoryType.CHEST_4_ROW);
     }
 
     @Override
     public void setItems(InventoryGUIOpenEvent e) {
+        Locale l = e.player().getLocale();
         if (((SkyBlockPlayer) e.player()).isBankDelayed) {
-            e.player().sendMessage(I18n.string("gui_banker.main.processing_transactions"));
-            e.player().sendMessage(I18n.string("gui_banker.main.processing_wait"));
+            e.player().sendMessage(I18n.t("gui_banker.main.processing_transactions"));
+            e.player().sendMessage(I18n.t("gui_banker.main.processing_wait"));
             e.player().closeInventory();
             return;
         }
 
         e.inventory().setTitle(Component.text(
-                ((SkyBlockPlayer) e.player()).isCoop()
-                        ? I18n.string("gui_banker.main.title_coop")
-                        : I18n.string("gui_banker.main.title_personal")
+            ((SkyBlockPlayer) e.player()).isCoop()
+                ? I18n.string("gui_banker.main.title_coop", l)
+                : I18n.string("gui_banker.main.title_personal", l)
         ));
 
         refreshItems(e.player());
@@ -51,18 +54,16 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
         set(GUIClickableItem.getCloseItem(31));
 
         DatapointBankData.BankData bankData = (((SkyBlockPlayer) player).getSkyblockDataHandler())
-                .get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class)
-                .getValue();
+            .get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class)
+            .getValue();
 
         set(new GUIItem(32) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.main.information"), Material.REDSTONE_TORCH, 1,
-                        I18n.lore("gui_banker.main.information.lore", Map.of(
-                                "limit", StringUtility.commaify(bankData.getBalanceLimit()),
-                                "hours", String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
-                        )));
+                return TranslatableItemStackCreator.getStack("gui_banker.main.information", Material.REDSTONE_TORCH, 1,
+                    "gui_banker.main.information.lore", Component.text(StringUtility.commaify(bankData.getBalanceLimit())),
+                    Component.text(String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
+                    ));
             }
         });
 
@@ -75,12 +76,10 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.main.deposit"), Material.CHEST, 1,
-                        I18n.lore("gui_banker.main.deposit.lore", Map.of(
-                                "balance", StringUtility.decimalify(bankData.getAmount(), 1),
-                                "hours", String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
-                        )));
+                return TranslatableItemStackCreator.getStack("gui_banker.main.deposit", Material.CHEST, 1,
+                    "gui_banker.main.deposit.lore", Component.text(StringUtility.decimalify(bankData.getAmount(), 1)),
+                    Component.text(String.valueOf(SkyBlockCalendar.getHoursUntilNextInterest())
+                    ));
             }
         });
 
@@ -93,22 +92,19 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_banker.main.withdraw"), Material.DISPENSER, 1,
-                        I18n.lore("gui_banker.main.withdraw.lore", Map.of(
-                                "balance", StringUtility.decimalify(bankData.getAmount(), 1)
-                        )));
+                return TranslatableItemStackCreator.getStack("gui_banker.main.withdraw", Material.DISPENSER, 1,
+                    "gui_banker.main.withdraw.lore", Component.text(StringUtility.decimalify(bankData.getAmount(), 1)));
             }
         });
 
         set(new GUIItem(15) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
                 List<DatapointBankData.Transaction> transactions = bankData.getTransactions();
 
-                if (transactions.isEmpty()) lore.add(I18n.string("gui_banker.main.no_transactions"));
+                if (transactions.isEmpty()) lore.add(I18n.string("gui_banker.main.no_transactions", l));
                 else {
                     for (int i = Math.min(transactions.size() - 1, 10); i >= 0; i--) {
                         DatapointBankData.Transaction transaction = transactions.get(i);
@@ -116,18 +112,27 @@ public class GUIBanker extends HypixelInventoryGUI implements RefreshingGUI {
                         boolean isNegative = transaction.amount < 0;
                         String amount = StringUtility.decimalify(Math.abs(transaction.amount), 1);
 
-                        lore.add(I18n.string("gui_banker.main.transaction_entry", Map.of(
-                                "sign", isNegative ? "§c-" : "§a+",
-                                "amount", amount,
-                                "time_ago", StringUtility.formatTimeAsAgo(transaction.timestamp),
-                                "originator", transaction.originator
-                        )));
+                        lore.add(I18n.string("gui_banker.main.transaction_entry", l, Component.text(isNegative ? "§c-" : "§a+"), Component.text(amount), Component.text(StringUtility.formatTimeAsAgo(transaction.timestamp)), Component.text(transaction.originator)));
                     }
                 }
 
-                return ItemStackCreator.getStack(I18n.string("gui_banker.main.recent_transactions"),
-                        Material.FILLED_MAP, 1, lore
-                );
+                return TranslatableItemStackCreator.getStack("gui_banker.main.recent_transactions",
+                    Material.FILLED_MAP, 1, lore);
+            }
+        });
+
+        set(new GUIClickableItem(35) {
+            @Override
+            public void run(InventoryPreClickEvent e, HypixelPlayer p) {
+                new GUIBankUpgrades().open(p);
+            }
+
+            @Override
+            public ItemStack.Builder getItem(HypixelPlayer p) {
+                return TranslatableItemStackCreator.getStack("gui_banker.main.account_upgrades", Material.GOLD_BLOCK, 1,
+                    "gui_banker.main.account_upgrades.lore",
+                    Argument.component("tier", Component.text(bankData.getAccountTier().getDisplayName())),
+                    Argument.tagResolver(Formatter.number("limit", bankData.getBalanceLimit())));
             }
         });
     }

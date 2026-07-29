@@ -2,14 +2,14 @@
 
 [<img src="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg" alt="" height="55" />](https://discord.gg/atlasmc)
 
-An advanced prediction-based anticheat for both Minestom and Spigot/Bukkit servers. Features comprehensive packet tracking, movement prediction with physics simulation, and lag compensation.
+An advanced prediction-based anticheat for Minestom servers. Features comprehensive packet tracking, movement prediction
+with physics simulation, and lag compensation.
 
 ## Table of contents
 
 * [Features](#features)
 * [Getting Started](#getting-started)
 * [Minestom Loader](#minestom-loader)
-* [Spigot Loader](#spigot-loader)
 * [API Usage](#api-usage)
   * [Custom Modifiers](#custom-modifiers)
   * [Player Data Storage](#player-data-storage)
@@ -47,12 +47,12 @@ An advanced prediction-based anticheat for both Minestom and Spigot/Bukkit serve
 
 ### Cross-Platform Support
 - Full Minestom support with native packet API
-- Full Spigot/Bukkit support via ProtocolLib
 - Unified packet abstraction layer
 - Platform-specific scheduler managers
 
 ## Getting Started
-SwoftyAnticheat requires Java 17+ and either Minestom or Spigot/Bukkit with ProtocolLib. 
+
+SwoftyAnticheat requires Java 25+ and Minestom.
 
 ## Minestom Loader
 To use SwoftyAnticheat with Minestom, create a new instance of the MinestomLoader and initialize the anticheat:
@@ -66,24 +66,6 @@ SwoftyAnticheat.start(); // Do this after MinecraftServer#init()
 ```
 
 The MinestomLoader automatically registers all packet listeners using Minestom's native packet API.
-
-## Spigot Loader
-To use SwoftyAnticheat with Spigot/Bukkit, you need ProtocolLib installed. Then create a SpigotLoader instance:
-
-```java
-public class YourPlugin extends JavaPlugin {
-    @Override
-    public void onEnable() {
-        SpigotLoader spigotLoader = new SpigotLoader(this);
-
-        SwoftyAnticheat.loader(spigotLoader);
-        SwoftyAnticheat.values(new SwoftyValues());
-        SwoftyAnticheat.start();
-    }
-}
-```
-
-The SpigotLoader uses ProtocolLib to intercept and process all relevant packets.
 
 ## API Usage
 

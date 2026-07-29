@@ -2,26 +2,26 @@ package net.swofty.type.skywarsgame.events;
 
 import net.minestom.server.event.player.PlayerChatEvent;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.skywars.SkywarsLevelColor;
-import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
+import net.swofty.commons.skywars.SkyWarsLevelColor;
 import net.swofty.type.generic.chat.StaffChat;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointLong;
 import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.party.PartyManager;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.game.SkywarsGame;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
+import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
 public class ActionPlayerChat implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerChatEvent event) {
         final SkywarsPlayer player = (SkywarsPlayer) event.getPlayer();
         event.setCancelled(true);
@@ -73,16 +73,16 @@ public class ActionPlayerChat implements HypixelEventClass {
             int level = SkywarsLevelRegistry.calculateLevel(
                     skywarsDataHandler.get(SkywarsDataHandler.Data.EXPERIENCE, DatapointLong.class).getValue()
             );
-            levelPrefix = SkywarsLevelColor.getLevelDisplay(level) + " ";
+            levelPrefix = SkyWarsLevelColor.getLevelDisplay(level) + " ";
         } else {
             levelPrefix = "";
         }
 
         for (SkywarsPlayer gamePlayer : game.getPlayers()) {
             if (rank.equals(Rank.DEFAULT))
-                gamePlayer.sendMessage(levelPrefix + rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
+                gamePlayer.sendMessage(levelPrefix + player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
             else
-                gamePlayer.sendMessage(levelPrefix + rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
+                gamePlayer.sendMessage(levelPrefix + player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
         }
     }
 }

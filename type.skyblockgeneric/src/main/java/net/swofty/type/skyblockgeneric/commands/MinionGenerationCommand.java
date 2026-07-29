@@ -5,7 +5,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "handleminionspeed",
+@CommandParameters(labels = "handleminionspeed",
         description = "Handle minion speed",
         usage = "/handleminionspeed",
         permission = Rank.STAFF,

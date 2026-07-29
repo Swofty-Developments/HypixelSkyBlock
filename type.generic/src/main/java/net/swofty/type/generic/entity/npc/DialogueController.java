@@ -1,5 +1,6 @@
 package net.swofty.type.generic.entity.npc;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -70,7 +71,7 @@ public class DialogueController {
             npc.sendNPCMessage(player, dialogueSet.lines()[0]);
         }
 
-        String[] newLines = new String[dialogueSet.lines().length - 1];
+        Component[] newLines = new Component[dialogueSet.lines().length - 1];
         System.arraycopy(dialogueSet.lines(), 1, newLines, 0, dialogueSet.lines().length - 1);
 
         if (newLines.length == 0) {

@@ -59,7 +59,7 @@ public class ParticleEngine
 
       public ParticleEngine shape(ParticleShape shape) {
             if (offsets != Vec.ZERO)
-                  System.out.println("[WARNING] Particle offsets overridden by shape preset.");
+                  org.tinylog.Logger.warn("Particle offsets overridden by shape preset.");
 
             this.shape = shape;
             return this;

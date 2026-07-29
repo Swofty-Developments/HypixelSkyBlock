@@ -2,13 +2,13 @@ package net.swofty.service.party;
 
 import net.swofty.commons.ServiceType;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
 public class PartyService implements SkyBlockService {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SkyBlockService.init(new PartyService());
     }
 
@@ -18,7 +18,7 @@ public class PartyService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.party.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.party.endpoints", RedisMessageHandler.class).toList();
     }
 }

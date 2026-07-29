@@ -50,8 +50,7 @@ public class GUIKitStats extends HypixelInventoryGUI {
         set(new GUIItem(13) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
-                List<String> lore = new ArrayList<>();
-                lore.addAll(kit.getItemsLore(mode));
+                List<String> lore = new ArrayList<>(kit.getItemsLore(mode));
 
                 String name = "§a" + kit.getName();
                 if (kit.hasCustomTexture()) {

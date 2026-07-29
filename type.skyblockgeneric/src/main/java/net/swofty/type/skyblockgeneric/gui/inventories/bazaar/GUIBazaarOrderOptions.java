@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.bazaar;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
@@ -22,7 +23,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
     private final BazaarConnector.BazaarOrder order;
@@ -31,7 +32,7 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             .withZone(ZoneId.systemDefault());
 
     public GUIBazaarOrderOptions(BazaarConnector.BazaarOrder order) {
-        super(I18n.string("gui_bazaar.order_options.title", Map.of("item_name", order.getItemType().getDisplayName())), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_bazaar.order_options.title", Component.text(order.getItemType().getDisplayName())), InventoryType.CHEST_4_ROW);
         this.order = order;
 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
@@ -51,29 +52,30 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
 
                 var relatedTransactions = getRelatedTransactions(player);
                 double originalQuantity = getOriginalQuantity(player);
                 double filledQuantity = getFilledQuantity(relatedTransactions);
 
-                lore.add(isSell ? I18n.string("gui_bazaar.order_options.order_type_sell") : I18n.string("gui_bazaar.order_options.order_type_buy"));
+                lore.add(isSell ? I18n.string("gui_bazaar.order_options.order_type_sell", l) : I18n.string("gui_bazaar.order_options.order_type_buy", l));
                 lore.add(" ");
-                lore.add(I18n.string("gui_bazaar.order_options.original_amount", Map.of("amount", String.valueOf((int) originalQuantity))));
-                lore.add(I18n.string("gui_bazaar.order_options.remaining_amount", Map.of("amount", String.valueOf((int) order.amount()))));
-                lore.add(I18n.string("gui_bazaar.order_options.price_per_unit", Map.of("price", FORMATTER.format(order.price()))));
+                lore.add(I18n.string("gui_bazaar.order_options.original_amount", l, Component.text(String.valueOf((int) originalQuantity))));
+                lore.add(I18n.string("gui_bazaar.order_options.remaining_amount", l, Component.text(String.valueOf((int) order.amount()))));
+                lore.add(I18n.string("gui_bazaar.order_options.price_per_unit", l, Component.text(FORMATTER.format(order.price()))));
                 lore.add(" ");
 
                 if (filledQuantity > 0) {
-                    lore.add(I18n.string("gui_bazaar.order_options.filled_items", Map.of("count", String.valueOf((int) filledQuantity))));
-                    lore.add(I18n.string("gui_bazaar.order_options.filled_progress", Map.of("percent", String.format("%.1f%%", (filledQuantity / originalQuantity) * 100))));
+                    lore.add(I18n.string("gui_bazaar.order_options.filled_items", l, Component.text(String.valueOf((int) filledQuantity))));
+                    lore.add(I18n.string("gui_bazaar.order_options.filled_progress", l, Component.text(String.format("%.1f%%", (filledQuantity / originalQuantity) * 100))));
                 } else {
-                    lore.add(I18n.string("gui_bazaar.order_options.no_fills"));
-                    lore.add(I18n.string("gui_bazaar.order_options.no_fills_progress"));
+                    lore.add(I18n.string("gui_bazaar.order_options.no_fills", l));
+                    lore.add(I18n.string("gui_bazaar.order_options.no_fills_progress", l));
                 }
 
                 lore.add(" ");
-                lore.add(I18n.string("gui_bazaar.order_options.order_id", Map.of("id", order.orderId().toString().substring(0, 8))));
+                lore.add(I18n.string("gui_bazaar.order_options.order_id", l, Component.text(order.orderId().toString().substring(0, 8))));
 
                 return ItemStackCreator.getStack(
                         (isSell ? "§6" : "§a") + itemType.getDisplayName() + " Order",
@@ -95,22 +97,23 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
-                lore.add(I18n.string("gui_bazaar.order_options.transaction_history_subtitle"));
+                lore.add(I18n.string("gui_bazaar.order_options.transaction_history_subtitle", l));
                 lore.add(" ");
 
                 var transactions = getRelatedTransactions(player);
                 if (transactions.isEmpty()) {
-                    lore.add(I18n.string("gui_bazaar.order_options.no_transactions"));
-                    lore.add(I18n.string("gui_bazaar.order_options.no_transactions_pending"));
+                    lore.add(I18n.string("gui_bazaar.order_options.no_transactions", l));
+                    lore.add(I18n.string("gui_bazaar.order_options.no_transactions_pending", l));
                 } else {
-                    lore.add(I18n.string("gui_bazaar.order_options.transaction_count", Map.of("count", String.valueOf(transactions.size()), "suffix", transactions.size() == 1 ? "" : "s")));
+                    lore.add(I18n.string("gui_bazaar.order_options.transaction_count", l, Component.text(String.valueOf(transactions.size())), Component.text(transactions.size() == 1 ? "" : "s")));
                     lore.add(" ");
 
                     int count = 0;
                     for (var tx : transactions) {
                         if (count >= 5) {
-                            lore.add(I18n.string("gui_bazaar.order_options.transaction_more", Map.of("count", String.valueOf(transactions.size() - 5))));
+                            lore.add(I18n.string("gui_bazaar.order_options.transaction_more", l, Component.text(String.valueOf(transactions.size() - 5))));
                             break;
                         }
 
@@ -119,18 +122,18 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                             lore.add("§a▲ " + (int) tx.getQuantity() + "x at §6" +
                                     FORMATTER.format(tx.getPricePerUnit()) + " §8(" + timeStr + ")");
                             if (tx.getSecondaryAmount() > 0) {
-                                lore.add("  " + I18n.string("gui_bazaar.order_options.transaction_saved", Map.of("amount", FORMATTER.format(tx.getSecondaryAmount()))));
+                                lore.add("  " + I18n.string("gui_bazaar.order_options.transaction_saved", l, Component.text(FORMATTER.format(tx.getSecondaryAmount()))));
                             }
                         } else if (tx.getType() == DatapointCompletedBazaarTransactions.TransactionType.SELL_COMPLETED) {
                             lore.add("§6▼ " + (int) tx.getQuantity() + "x at §6" +
                                     FORMATTER.format(tx.getPricePerUnit()) + " §8(" + timeStr + ")");
-                            lore.add("  " + I18n.string("gui_bazaar.order_options.transaction_tax", Map.of("amount", FORMATTER.format(tx.getSecondaryAmount()))));
+                            lore.add("  " + I18n.string("gui_bazaar.order_options.transaction_tax", l, Component.text(FORMATTER.format(tx.getSecondaryAmount()))));
                         }
                         count++;
                     }
                 }
 
-                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.transaction_history"), Material.BOOK, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.transaction_history", l), Material.BOOK, 1, lore);
             }
         });
     }
@@ -142,18 +145,19 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>();
-                lore.add(I18n.string("gui_bazaar.order_options.financial_subtitle"));
+                lore.add(I18n.string("gui_bazaar.order_options.financial_subtitle", l));
                 lore.add(" ");
 
                 var transactions = getRelatedTransactions(player);
                 double originalValue = getOriginalQuantity(player) * order.price();
                 double currentValue = order.amount() * order.price();
 
-                lore.add(I18n.string("gui_bazaar.order_options.original_order_value"));
+                lore.add(I18n.string("gui_bazaar.order_options.original_order_value", l));
                 lore.add("  §6" + FORMATTER.format(originalValue) + " coins");
                 lore.add(" ");
-                lore.add(I18n.string("gui_bazaar.order_options.remaining_order_value"));
+                lore.add(I18n.string("gui_bazaar.order_options.remaining_order_value", l));
                 lore.add("  §6" + FORMATTER.format(currentValue) + " coins");
                 lore.add(" ");
 
@@ -167,12 +171,12 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                                 .sum();
                         double netEarned = totalEarned - totalTax;
 
-                        lore.add(I18n.string("gui_bazaar.order_options.transactions_completed"));
-                        lore.add("  " + I18n.string("gui_bazaar.order_options.gross_prefix") + FORMATTER.format(totalEarned) + " coins");
-                        lore.add("  " + I18n.string("gui_bazaar.order_options.tax_prefix") + FORMATTER.format(totalTax) + " coins");
-                        lore.add("  " + I18n.string("gui_bazaar.order_options.net_prefix") + FORMATTER.format(netEarned) + " coins");
+                        lore.add(I18n.string("gui_bazaar.order_options.transactions_completed", l));
+                        lore.add("  " + I18n.string("gui_bazaar.order_options.gross_prefix", l) + FORMATTER.format(totalEarned) + " coins");
+                        lore.add("  " + I18n.string("gui_bazaar.order_options.tax_prefix", l) + FORMATTER.format(totalTax) + " coins");
+                        lore.add("  " + I18n.string("gui_bazaar.order_options.net_prefix", l) + FORMATTER.format(netEarned) + " coins");
                         lore.add(" ");
-                        lore.add(I18n.string("gui_bazaar.order_options.avg_sell_price"));
+                        lore.add(I18n.string("gui_bazaar.order_options.avg_sell_price", l));
                         lore.add("  §6" + FORMATTER.format(totalEarned / getFilledQuantity(transactions)) + " coins/item");
                     } else {
                         double totalSpent = transactions.stream()
@@ -182,17 +186,17 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                                 .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getSecondaryAmount)
                                 .sum();
 
-                        lore.add(I18n.string("gui_bazaar.order_options.transactions_completed"));
-                        lore.add("  " + I18n.string("gui_bazaar.order_options.spent_prefix") + FORMATTER.format(totalSpent) + " coins");
-                        lore.add("  " + I18n.string("gui_bazaar.order_options.saved_prefix") + FORMATTER.format(totalSaved) + " coins");
+                        lore.add(I18n.string("gui_bazaar.order_options.transactions_completed", l));
+                        lore.add("  " + I18n.string("gui_bazaar.order_options.spent_prefix", l) + FORMATTER.format(totalSpent) + " coins");
+                        lore.add("  " + I18n.string("gui_bazaar.order_options.saved_prefix", l) + FORMATTER.format(totalSaved) + " coins");
                         lore.add(" ");
-                        lore.add(I18n.string("gui_bazaar.order_options.avg_buy_price"));
+                        lore.add(I18n.string("gui_bazaar.order_options.avg_buy_price", l));
                         lore.add("  §6" + FORMATTER.format(totalSpent / getFilledQuantity(transactions)) + " coins/item");
-                        lore.add(I18n.string("gui_bazaar.order_options.vs_your_bid", Map.of("price", FORMATTER.format(order.price()))));
+                        lore.add(I18n.string("gui_bazaar.order_options.vs_your_bid", l, Component.text(FORMATTER.format(order.price()))));
                     }
                 }
 
-                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.financial_summary"), Material.GOLD_INGOT, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.financial_summary", l), Material.GOLD_INGOT, 1, lore);
             }
         });
     }
@@ -205,35 +209,36 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
-                p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_message"));
+                Locale l = p.getLocale();
+                p.sendMessage(I18n.t("gui_bazaar.order_options.cancel_message"));
 
                 player.getBazaarConnector().cancelOrder(order.orderId())
                         .thenAccept(success -> {
                             if (success) {
-                                p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_success"));
+                                p.sendMessage(I18n.t("gui_bazaar.order_options.cancel_success"));
 
                                 if (isSell) {
                                     SkyBlockItem item = new SkyBlockItem(order.getItemType());
                                     item.setAmount((int) order.amount());
                                     player.addAndUpdateItem(item);
-                                    p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_return_items", Map.of("amount", String.valueOf((int) order.amount()), "item_name", itemType.getDisplayName())));
+                                    p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_return_items", l, Component.text(String.valueOf((int) order.amount())), Component.text(itemType.getDisplayName())));
                                 } else {
                                     double refund = order.price() * order.amount();
                                     player.addCoins(refund);
-                                    p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_refund_coins", Map.of("amount", FORMATTER.format(refund))));
+                                    p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_refund_coins", l, Component.text(FORMATTER.format(refund))));
                                 }
 
                                 new GUIBazaarOrders().open(p);
                             } else {
-                                p.sendMessage(I18n.string("gui_bazaar.order_options.cancel_failed"));
+                                p.sendMessage(I18n.t("gui_bazaar.order_options.cancel_failed"));
                             }
                         });
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                List<String> lore = new ArrayList<>(I18n.lore("gui_bazaar.order_options.cancel_order.lore_header"));
+                Locale l = p.getLocale();
+                List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_bazaar.order_options.cancel_order.lore_header")));
                 lore.add(" ");
 
                 if (isSell) {
@@ -243,27 +248,26 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                 }
 
                 lore.add(" ");
-                lore.add(I18n.string("gui_bazaar.order_options.cancel_undone"));
-                lore.addAll(I18n.lore("gui_bazaar.order_options.cancel_completed_remain"));
+                lore.add(I18n.string("gui_bazaar.order_options.cancel_undone", l));
+                lore.addAll(List.of(I18n.iterable("gui_bazaar.order_options.cancel_completed_remain")));
                 lore.add(" ");
-                lore.add(I18n.string("gui_bazaar.order_options.cancel_click"));
+                lore.add(I18n.string("gui_bazaar.order_options.cancel_click", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.cancel_order"), Material.RED_DYE, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.cancel_order", l), Material.RED_DYE, 1, lore);
             }
         });
 
         set(new GUIClickableItem(24) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIBazaarItem(itemType).open(p);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.view_market"), Material.EMERALD, 1,
-                        I18n.lore("gui_bazaar.order_options.view_market.lore", Map.of("item_name", itemType.getDisplayName())));
+                Locale l = p.getLocale();
+                return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.view_market", l), Material.EMERALD, 1,
+                    I18n.iterable("gui_bazaar.order_options.view_market.lore", Component.text(itemType.getDisplayName())));
             }
         });
     }
@@ -285,13 +289,14 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                 if (!unclaimedForThisOrder.isEmpty()) {
                     new GUIBazaarOrderCompletedOptions(unclaimedForThisOrder, order).open(p);
                 } else {
-                    p.sendMessage(I18n.string("gui_bazaar.order_options.no_completed_message"));
+                    p.sendMessage(I18n.t("gui_bazaar.order_options.no_completed_message"));
                 }
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 var completedTransactions = player.getSkyblockDataHandler().get(
                         SkyBlockDataHandler.Data.COMPLETED_BAZAAR_TRANSACTIONS,
                         DatapointCompletedBazaarTransactions.class
@@ -302,19 +307,15 @@ public class GUIBazaarOrderOptions extends HypixelInventoryGUI {
                         .toList();
 
                 if (unclaimedForThisOrder.isEmpty()) {
-                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.no_completed"), Material.GRAY_DYE, 1,
-                            I18n.lore("gui_bazaar.order_options.no_completed.lore"));
+                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.no_completed", l), Material.GRAY_DYE, 1,
+                        I18n.iterable("gui_bazaar.order_options.no_completed.lore"));
                 } else {
                     double totalValue = unclaimedForThisOrder.stream()
                             .mapToDouble(DatapointCompletedBazaarTransactions.CompletedBazaarTransaction::getTotalValue)
                             .sum();
 
-                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.view_completed"), Material.CHEST, 1,
-                            I18n.lore("gui_bazaar.order_options.view_completed.lore", Map.of(
-                                    "count", String.valueOf(unclaimedForThisOrder.size()),
-                                    "suffix", unclaimedForThisOrder.size() == 1 ? "" : "s",
-                                    "amount", FORMATTER.format(Math.abs(totalValue))
-                            )));
+                    return ItemStackCreator.getStack(I18n.string("gui_bazaar.order_options.view_completed", l), Material.CHEST, 1,
+                        I18n.iterable("gui_bazaar.order_options.view_completed.lore", Component.text(String.valueOf(unclaimedForThisOrder.size())), Component.text(unclaimedForThisOrder.size() == 1 ? "" : "s"), Component.text(FORMATTER.format(Math.abs(totalValue)))));
                 }
             }
         });

@@ -1,9 +1,8 @@
 package net.swofty.type.skywarslobby.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.commons.skywars.SkyWarsLevelColor;
 import net.swofty.commons.skywars.SkywarsLeaderboardPeriod;
-import net.swofty.commons.skywars.SkywarsLevelColor;
-import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 import net.swofty.commons.skywars.SkywarsModeStats;
 import net.swofty.type.generic.achievement.AchievementCategory;
 import net.swofty.type.generic.achievement.AchievementRegistry;
@@ -16,6 +15,7 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skywarslobby.gui.GUISkywarsStatistics;
+import net.swofty.type.skywarslobby.level.SkywarsLevelRegistry;
 
 import java.text.DecimalFormat;
 
@@ -46,7 +46,7 @@ public class NPCSkywarsStats extends HypixelNPC {
 
                 return new String[]{
                         "§6§lYour SkyWars Profile",
-                        "§fYour Level: " + SkywarsLevelColor.getLevelDisplay(level),
+                        "§fYour Level: " + SkyWarsLevelColor.getLevelDisplay(level),
                         "§fProgress: " + SkywarsLevelRegistry.formatXPDisplay(experience),
                         "§fTotal Wins: §a" + NUMBER_FORMAT.format(totalWins),
                         "§fTotal Kills: §a" + NUMBER_FORMAT.format(totalKills),

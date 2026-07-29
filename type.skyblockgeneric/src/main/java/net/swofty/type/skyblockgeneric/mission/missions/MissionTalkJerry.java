@@ -5,7 +5,6 @@ import net.minestom.server.timer.SchedulerManager;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.JerryClickedEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -16,9 +15,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionTalkJerry extends SkyBlockMission {
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onJerryClicked(JerryClickedEvent event) {
         MissionData data = event.getPlayer().getMissionData();
         SkyBlockPlayer player = event.getPlayer();
@@ -38,16 +40,10 @@ public class MissionTalkJerry extends SkyBlockMission {
         data.getMission(this.getClass()).getKey().getCustomData().put("talking", true);
 
         SchedulerManager scheduler = MinecraftServer.getSchedulerManager();
-        player.sendMessage("Your SkyBlock island is part of a much larger universe.");
-        scheduler.scheduleTask(() -> {
-            player.sendMessage("§e[NPC] Jerry§f: The SkyBlock universe is full of islands to explore and resources to discover!");
-        }, TaskSchedule.tick(20), TaskSchedule.stop());
-        scheduler.scheduleTask(() -> {
-            player.sendMessage("§e[NPC] Jerry§f: Use the §dPortal§f to warp to the first of those islands - the SkyBlock Hub!");
-        }, TaskSchedule.tick(20 * 2), TaskSchedule.stop());
-        scheduler.scheduleTask(() -> {
-            data.endMission(this.getClass());
-        }, TaskSchedule.tick(20 * 3), TaskSchedule.stop());
+        player.sendMessage("§e[NPC] Jerry§f: Your SkyBlock island is part of a much larger universe.");
+        scheduler.scheduleTask(() -> player.sendMessage("§e[NPC] Jerry§f: The SkyBlock universe is full of islands to explore and resources to discover!"), TaskSchedule.tick(20), TaskSchedule.stop());
+        scheduler.scheduleTask(() -> player.sendMessage("§e[NPC] Jerry§f: Use the §dPortal§f to warp to the first of those islands - the SkyBlock Hub!"), TaskSchedule.tick(20 * 2), TaskSchedule.stop());
+        scheduler.scheduleTask(() -> data.endMission(this.getClass()), TaskSchedule.tick(20 * 3), TaskSchedule.stop());
     }
 
     @Override

@@ -6,16 +6,26 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.utility.ChestUtility;
 import net.swofty.type.skyblockgeneric.block.BlockType;
 import net.swofty.type.skyblockgeneric.block.SkyBlockBlock;
+import net.swofty.type.skyblockgeneric.block.placement.states.state.Facing;
 
 public class ChestBuilder {
     private final Instance instance;
     private final Point position;
     private final ChestType chestType;
+    private final Facing facing;
+
+    public ChestBuilder(Instance instance, Point position, ChestType chestType, Facing facing) {
+        this.instance = instance;
+        this.position = position;
+        this.chestType = chestType;
+        this.facing = facing;
+    }
 
     public ChestBuilder(Instance instance, Point position, ChestType chestType) {
         this.instance = instance;
         this.position = position;
         this.chestType = chestType;
+        this.facing = Facing.NORTH;
     }
 
     public ChestBuilder(Instance instance, Point position) {
@@ -24,7 +34,7 @@ public class ChestBuilder {
 
     public Chest build() {
         if (!instance.getBlock(position).name().equals("minecraft:chest") || !SkyBlockBlock.isSkyBlockBlock(instance.getBlock(position)))
-            instance.setBlock(position, new SkyBlockBlock(BlockType.CHEST).toBlock());
+            instance.setBlock(position, new SkyBlockBlock(BlockType.CHEST, facing).toBlock());
         if (chestType == ChestType.SINGLE) {
             return new SingleChest(instance, position);
         } else if (chestType == ChestType.DOUBLE) {

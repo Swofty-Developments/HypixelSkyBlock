@@ -7,7 +7,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 public class SoulWellHologramManager {
-    private static final Pos SOUL_WELL_POS = new Pos(33.5, 67, 0.5);
+    private static final Pos SOUL_WELL_POS = new Pos(33.5, 68, 0.5);
     private static boolean initialized = false;
 
     public static void initialize(Instance instance) {

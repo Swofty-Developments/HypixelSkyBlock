@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.shop.type.CoinShopPrice;
 
 public class GUIShopAlda extends ShopView {
     public GUIShopAlda() {
-        super(I18n.string("gui_shop.alda.title"), SINGLE_SLOT);
+        super(I18n.t("gui_shop.alda.title"), SINGLE_SLOT);
     }
 
     @Override

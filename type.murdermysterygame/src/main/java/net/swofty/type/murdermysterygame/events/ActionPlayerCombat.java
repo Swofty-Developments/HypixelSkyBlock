@@ -11,12 +11,13 @@ import net.swofty.type.murdermysterygame.protection.WeaknessProtectionManager;
 import net.swofty.type.murdermysterygame.role.GameRole;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionPlayerCombat implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PrepareAttackEvent event) {
         if (!(event.getEntity() instanceof MurderMysteryPlayer attacker)) return;
         if (!(event.getTarget() instanceof MurderMysteryPlayer victim)) return;

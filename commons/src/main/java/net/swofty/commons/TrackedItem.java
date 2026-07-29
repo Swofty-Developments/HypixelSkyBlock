@@ -1,7 +1,8 @@
 package net.swofty.commons;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.Setter;
 import org.bson.Document;
 import org.json.JSONObject;
 
@@ -11,15 +12,19 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-@Setter
 public class TrackedItem {
-    public final UUID itemUUID;
-    public final long created;
-    public final ArrayList<PlayerOwnershipLog> attachedPlayers;
-    public final String itemType;
-    public final Integer numberMade;
+    private final UUID itemUUID;
+    private final long created;
+    private final ArrayList<PlayerOwnershipLog> attachedPlayers;
+    private final String itemType;
+    private final Integer numberMade;
 
-    public TrackedItem(UUID itemUUID, long created, ArrayList<PlayerOwnershipLog> attachedPlayers, String itemType, Integer numberMade) {
+    @JsonCreator
+    public TrackedItem(@JsonProperty("itemUUID") UUID itemUUID,
+                       @JsonProperty("created") long created,
+                       @JsonProperty("attachedPlayers") ArrayList<PlayerOwnershipLog> attachedPlayers,
+                       @JsonProperty("itemType") String itemType,
+                       @JsonProperty("numberMade") Integer numberMade) {
         this.itemUUID = itemUUID;
         this.created = created;
         this.attachedPlayers = attachedPlayers;

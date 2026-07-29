@@ -1,13 +1,11 @@
 package net.swofty.type.generic.leaderboard;
 
+import net.swofty.commons.redis.RedisConnectionPool;
 import org.tinylog.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.resps.Tuple;
 
-import java.net.URI;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,23 +29,7 @@ public class LeaderboardService {
         connecting = true;
 
         try {
-            JedisPoolConfig poolConfig = new JedisPoolConfig();
-            poolConfig.setMaxTotal(20);
-            poolConfig.setMaxIdle(5);
-            poolConfig.setMinIdle(1);
-            poolConfig.setMaxWait(Duration.ofSeconds(2));
-            poolConfig.setTestOnBorrow(true);
-            poolConfig.setTestWhileIdle(true);
-            poolConfig.setBlockWhenExhausted(false);
-
-            URI uri = URI.create(redisUri);
-            jedisPool = new JedisPool(poolConfig, uri);
-
-            // Test connection
-            try (Jedis jedis = jedisPool.getResource()) {
-                jedis.ping();
-            }
-
+            jedisPool = RedisConnectionPool.connect(redisUri, RedisConnectionPool.Settings.standard());
             initialized = true;
             Logger.info("LeaderboardService connected to Redis");
         } catch (Exception e) {

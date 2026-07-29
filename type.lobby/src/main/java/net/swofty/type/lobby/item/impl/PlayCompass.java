@@ -22,7 +22,7 @@ public class PlayCompass extends LobbyItem {
     }
 
     public PlayCompass() {
-        this(player -> new GUIGameMenu().open(player));
+        this(player -> player.openView(new GUIGameMenu()));
     }
 
     @Override

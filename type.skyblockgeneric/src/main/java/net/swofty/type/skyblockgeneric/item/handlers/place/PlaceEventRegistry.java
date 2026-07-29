@@ -1,6 +1,5 @@
 package net.swofty.type.skyblockgeneric.item.handlers.place;
 
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
@@ -16,7 +15,7 @@ public class PlaceEventRegistry {
 
     static {
         register("minion", (event, player, item) -> {
-            if (!HypixelConst.isIslandServer() && !HypixelConst.isGarden()) {
+            if (!HypixelConst.isIslandServer()) {
                 player.sendMessage("§cYou can only place minions on your island!");
                 event.setCancelled(true);
                 return;
@@ -38,7 +37,7 @@ public class PlaceEventRegistry {
 
             MinionComponent component = item.toConfigurableItem().getComponent(MinionComponent.class);
 
-            IslandMinionData.IslandMinion minion = minionData.initializeMinion(Pos.fromPoint(event.getBlockPosition()),
+            IslandMinionData.IslandMinion minion = minionData.initializeMinion(event.getBlockPosition().asPos(),
                     component.getMinionRegistry(),
                     item.getAttributeHandler().getMinionData(),
                     item.getAttributeHandler().isMithrilInfused());

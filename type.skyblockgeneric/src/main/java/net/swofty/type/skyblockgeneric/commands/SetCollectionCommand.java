@@ -9,7 +9,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "updatecollection",
+@CommandParameters(labels = "updatecollection",
         description = "Updates the collection of a player",
         usage = "/setcollection <item_type> <amount>",
         permission = Rank.STAFF,

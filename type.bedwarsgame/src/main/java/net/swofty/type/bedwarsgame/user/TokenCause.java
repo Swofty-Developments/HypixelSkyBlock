@@ -2,7 +2,6 @@ package net.swofty.type.bedwarsgame.user;
 
 import lombok.Getter;
 
-// most likely not actual token values
 @Getter
 public enum TokenCause {
 	// WIN
@@ -13,17 +12,12 @@ public enum TokenCause {
 	BED_BREAK(40),
 
 	// PLAYTIME
-	TIME_PLAYED(25); // every 1 minute of playtime
+	TIME_PLAYED(6); // every 1 minute of playtime
 
 	private final long experience;
 
 	TokenCause(long experience) {
 		this.experience = experience;
-	}
-
-	public long calculateXp(long units) {
-		if (units <= 1) return experience;
-		return experience * units;
 	}
 
 

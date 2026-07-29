@@ -19,7 +19,6 @@ import net.swofty.type.skywarsgame.luckyblock.items.LuckyBlockItemRegistry;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 
 import java.util.List;
-import java.util.UUID;
 
 public class TNTLaunchPad implements LuckyBlockConsumable {
 

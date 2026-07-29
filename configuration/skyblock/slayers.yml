@@ -1,0 +1,113 @@
+slayers:
+  - id: REVENANT_HORROR
+    enabled: true
+    targetMobTypes: [UNDEAD]
+    levels:
+      - { level: 1, requiredXp: 5, title: Noob }
+      - { level: 2, requiredXp: 15, title: Novice }
+      - { level: 3, requiredXp: 200, title: Skilled }
+      - { level: 4, requiredXp: 1000, title: Destroyer }
+      - { level: 5, requiredXp: 5000, title: Bulldozer }
+      - { level: 6, requiredXp: 20000, title: Savage }
+      - { level: 7, requiredXp: 100000, title: Deathripper }
+      - { level: 8, requiredXp: 400000, title: Necromancer }
+      - { level: 9, requiredXp: 1000000, title: Grim Reaper }
+    tiers:
+      - { tier: I, cost: 2000, requiredCombatXp: 150, slayerXp: 5, bossLevel: 1, bossHealth: 500, bossDamage: 15, bossSpeed: 100, tokenItem: REVENANT_FLESH, tokenDrops: 1 }
+      - { tier: II, cost: 7500, requiredCombatXp: 1440, slayerXp: 25, bossLevel: 2, bossHealth: 20000, bossDamage: 50, bossSpeed: 110, tokenItem: REVENANT_FLESH, tokenDrops: 8 }
+      - { tier: III, cost: 20000, requiredCombatXp: 2400, slayerXp: 100, bossLevel: 3, bossHealth: 400000, bossDamage: 120, bossSpeed: 120, tokenItem: REVENANT_FLESH, tokenDrops: 32 }
+      - { tier: IV, cost: 50000, requiredCombatXp: 4800, slayerXp: 500, bossLevel: 4, bossHealth: 1500000, bossDamage: 400, bossSpeed: 130, tokenItem: REVENANT_FLESH, tokenDrops: 64 }
+      - { tier: V, cost: 100000, requiredCombatXp: 6000, slayerXp: 1500, bossLevel: 5, bossHealth: 10000000, bossDamage: 2400, bossSpeed: 135, tokenItem: REVENANT_FLESH, tokenDrops: 128 }
+
+  - id: TARANTULA_BROODFATHER
+    enabled: true
+    unlock: { type: REVENANT_HORROR, tier: II }
+    targetMobTypes: [ARTHROPOD]
+    levels:
+      - { level: 1, requiredXp: 5, title: Noob }
+      - { level: 2, requiredXp: 25, title: Novice }
+      - { level: 3, requiredXp: 200, title: Skilled }
+      - { level: 4, requiredXp: 1000, title: Destroyer }
+      - { level: 5, requiredXp: 5000, title: Bulldozer }
+      - { level: 6, requiredXp: 20000, title: Savage }
+      - { level: 7, requiredXp: 100000, title: Pest Control Genius }
+      - { level: 8, requiredXp: 400000, title: Tarantula Exterminator }
+      - { level: 9, requiredXp: 1000000, title: Spider Annihilator }
+    tiers:
+      - { tier: I, cost: 2000, requiredCombatXp: 225, slayerXp: 5, bossLevel: 1, bossHealth: 750, bossDamage: 35, bossSpeed: 120, tokenItem: TARANTULA_WEB, tokenDrops: 1 }
+      - { tier: II, cost: 7500, requiredCombatXp: 540, slayerXp: 25, bossLevel: 2, bossHealth: 30000, bossDamage: 110, bossSpeed: 125, tokenItem: TARANTULA_WEB, tokenDrops: 8 }
+      - { tier: III, cost: 20000, requiredCombatXp: 1320, slayerXp: 100, bossLevel: 3, bossHealth: 900000, bossDamage: 525, bossSpeed: 135, tokenItem: TARANTULA_WEB, tokenDrops: 32 }
+      - { tier: IV, cost: 50000, requiredCombatXp: 2000, slayerXp: 500, bossLevel: 4, bossHealth: 2400000, bossDamage: 1325, bossSpeed: 145, tokenItem: TARANTULA_WEB, tokenDrops: 64 }
+      - { tier: V, cost: 100000, requiredCombatXp: 10000, slayerXp: 1500, bossLevel: 5, bossHealth: 10000000, bossDamage: 3500, bossSpeed: 150, tokenItem: TARANTULA_WEB, tokenDrops: 128 }
+
+  - id: SVEN_PACKMASTER
+    enabled: true
+    unlock: { type: TARANTULA_BROODFATHER, tier: II }
+    targetMobTypes: [WOODLAND]
+    levels:
+      - { level: 1, requiredXp: 10, title: Noob }
+      - { level: 2, requiredXp: 30, title: Novice }
+      - { level: 3, requiredXp: 250, title: Skilled }
+      - { level: 4, requiredXp: 1500, title: Destroyer }
+      - { level: 5, requiredXp: 5000, title: Bulldozer }
+      - { level: 6, requiredXp: 20000, title: Savage }
+      - { level: 7, requiredXp: 100000, title: King Hunter }
+      - { level: 8, requiredXp: 400000, title: Pack Leader }
+      - { level: 9, requiredXp: 1000000, title: Alpha Wolf }
+    tiers:
+      - { tier: I, cost: 2000, requiredCombatXp: 270, slayerXp: 5, bossLevel: 1, bossHealth: 2000, bossDamage: 60, bossSpeed: 130, tokenItem: WOLF_TOOTH, tokenDrops: 1 }
+      - { tier: II, cost: 7500, requiredCombatXp: 648, slayerXp: 25, bossLevel: 2, bossHealth: 40000, bossDamage: 200, bossSpeed: 135, tokenItem: WOLF_TOOTH, tokenDrops: 4 }
+      - { tier: III, cost: 20000, requiredCombatXp: 1584, slayerXp: 100, bossLevel: 3, bossHealth: 750000, bossDamage: 450, bossSpeed: 145, tokenItem: WOLF_TOOTH, tokenDrops: 16 }
+      - { tier: IV, cost: 50000, requiredCombatXp: 3168, slayerXp: 500, bossLevel: 4, bossHealth: 2000000, bossDamage: 1100, bossSpeed: 155, tokenItem: WOLF_TOOTH, tokenDrops: 64 }
+
+  - id: VOIDGLOOM_SERAPH
+    enabled: true
+    unlock: { type: SVEN_PACKMASTER, tier: IV }
+    targetMobTypes: [ENDER]
+    levels:
+      - { level: 1, requiredXp: 10, title: Noob }
+      - { level: 2, requiredXp: 30, title: Novice }
+      - { level: 3, requiredXp: 250, title: Skilled }
+      - { level: 4, requiredXp: 1500, title: Destroyer }
+      - { level: 5, requiredXp: 5000, title: Bulldozer }
+      - { level: 6, requiredXp: 20000, title: Savage }
+      - { level: 7, requiredXp: 100000, title: Voidwracker }
+      - { level: 8, requiredXp: 400000, title: Tall Purple Hater }
+      - { level: 9, requiredXp: 1000000, title: Definition of End }
+    tiers:
+      - { tier: I, cost: 2000, requiredCombatXp: 2750, slayerXp: 5, bossLevel: 1, bossHealth: 300000, bossDamage: 1200, bossSpeed: 140, tokenItem: NULL_SPHERE, tokenDrops: 1 }
+      - { tier: II, cost: 7500, requiredCombatXp: 6600, slayerXp: 25, bossLevel: 2, bossHealth: 15000000, bossDamage: 5000, bossSpeed: 145, tokenItem: NULL_SPHERE, tokenDrops: 2 }
+      - { tier: III, cost: 20000, requiredCombatXp: 11000, slayerXp: 100, bossLevel: 3, bossHealth: 66000000, bossDamage: 12000, bossSpeed: 150, tokenItem: NULL_SPHERE, tokenDrops: 3 }
+      - { tier: IV, cost: 50000, requiredCombatXp: 22000, slayerXp: 500, bossLevel: 4, bossHealth: 300000000, bossDamage: 21000, bossSpeed: 160, tokenItem: NULL_SPHERE, tokenDrops: 4 }
+
+  - id: RIFTSTALKER_BLOODFIEND
+    enabled: false
+    unlock: { type: SVEN_PACKMASTER, tier: II }
+    targetMobTypes: [UNDEAD]
+    levels:
+      - { level: 1, requiredXp: 20, title: Noob }
+      - { level: 2, requiredXp: 75, title: Novice }
+      - { level: 3, requiredXp: 240, title: Alum }
+      - { level: 4, requiredXp: 840, title: Heartpiercer }
+      - { level: 5, requiredXp: 2400, title: Lord of Night }
+    tiers: []
+
+  - id: INFERNO_DEMONLORD
+    enabled: true
+    unlock: { type: VOIDGLOOM_SERAPH, tier: III }
+    targetMobTypes: [INFERNAL, MAGMATIC]
+    levels:
+      - { level: 1, requiredXp: 10, title: Noob }
+      - { level: 2, requiredXp: 30, title: Novice }
+      - { level: 3, requiredXp: 250, title: Skilled }
+      - { level: 4, requiredXp: 1500, title: Destroyer }
+      - { level: 5, requiredXp: 5000, title: Bulldozer }
+      - { level: 6, requiredXp: 20000, title: Savage }
+      - { level: 7, requiredXp: 100000, title: Hellsplitter }
+      - { level: 8, requiredXp: 400000, title: Demon Eater }
+      - { level: 9, requiredXp: 1000000, title: Gabagool King }
+    tiers:
+      - { tier: I, cost: 10000, requiredCombatXp: 6000, slayerXp: 5, bossLevel: 1, bossHealth: 2500000, bossDamage: 1500, bossSpeed: 130, tokenItem: DERELICT_ASHE, tokenDrops: 1 }
+      - { tier: II, cost: 25000, requiredCombatXp: 14400, slayerXp: 25, bossLevel: 2, bossHealth: 12000000, bossDamage: 3600, bossSpeed: 135, tokenItem: DERELICT_ASHE, tokenDrops: 2 }
+      - { tier: III, cost: 60000, requiredCombatXp: 18000, slayerXp: 100, bossLevel: 3, bossHealth: 60000000, bossDamage: 7200, bossSpeed: 145, tokenItem: DERELICT_ASHE, tokenDrops: 3 }
+      - { tier: IV, cost: 150000, requiredCombatXp: 36000, slayerXp: 500, bossLevel: 4, bossHealth: 150000000, bossDamage: 15000, bossSpeed: 150, tokenItem: DERELICT_ASHE, tokenDrops: 4 }

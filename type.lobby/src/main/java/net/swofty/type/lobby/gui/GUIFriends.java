@@ -22,7 +22,11 @@ import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class GUIFriends extends HypixelInventoryGUI {
@@ -237,7 +241,6 @@ public class GUIFriends extends HypixelInventoryGUI {
         set(GUIClickableItem.getCloseItem(19));
 
         // Change Sort button (slot 25)
-        int finalTotalPages = totalPages;
         set(new GUIClickableItem(25) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer player) {
@@ -357,7 +360,7 @@ public class GUIFriends extends HypixelInventoryGUI {
                             "§aPrevious Page",
                             Material.ARROW,
                             1,
-                            "§7Page " + (currentPage - 1) + "/" + finalTotalPages
+                        "§7Page " + (currentPage - 1) + "/" + totalPages
                     );
                 }
 
@@ -377,7 +380,7 @@ public class GUIFriends extends HypixelInventoryGUI {
                             "§aNext Page",
                             Material.ARROW,
                             1,
-                            "§7Page " + (currentPage + 1) + "/" + finalTotalPages
+                        "§7Page " + (currentPage + 1) + "/" + totalPages
                     );
                 }
 
@@ -395,7 +398,7 @@ public class GUIFriends extends HypixelInventoryGUI {
             public ItemStack.Builder getItem(HypixelPlayer player) {
                 if (searchFilter != null && !searchFilter.isEmpty()) {
                     return ItemStackCreator.getStack(
-                            "§aPage " + currentPage + "/" + finalTotalPages,
+                        "§aPage " + currentPage + "/" + totalPages,
                             Material.BOOK,
                             1,
                             "§7Showing §e" + matchingCount + "§7 of §e" + totalFriendCount + "§7 friends",
@@ -403,7 +406,7 @@ public class GUIFriends extends HypixelInventoryGUI {
                     );
                 } else {
                     return ItemStackCreator.getStack(
-                            "§aPage " + currentPage + "/" + finalTotalPages,
+                        "§aPage " + currentPage + "/" + totalPages,
                             Material.BOOK,
                             1,
                             "§7Total friends: §e" + totalFriendCount

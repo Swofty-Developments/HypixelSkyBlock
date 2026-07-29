@@ -2,35 +2,35 @@ name: Java CI with Gradle
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v5.1.0
+        uses: actions/setup-java@v5
         with:
           java-version: '25'
           distribution: 'temurin'
+          check-latest: false
 
       - name: Grant Gradlew Permissions
         run: chmod +x gradlew
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
-      - name: Build with Gradle
-        run: ./gradlew shadowJar
+        uses: gradle/actions/setup-gradle@v6
 
-      - name: Cache Gradle packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      - name: Build with Gradle
+        run: ./gradlew shadowJar --no-daemon

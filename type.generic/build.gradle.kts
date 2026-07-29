@@ -33,7 +33,7 @@ dependencies {
     compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }
-    implementation(libs.adventure.text.minimessage)
+    api(libs.adventure.text.minimessage)
     implementation(libs.caffeine)
     implementation(libs.polar)
     implementation(libs.snakeyaml)

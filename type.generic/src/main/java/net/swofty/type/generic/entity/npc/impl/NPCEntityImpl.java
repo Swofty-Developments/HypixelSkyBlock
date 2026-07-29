@@ -4,12 +4,14 @@ import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.Metadata;
 import net.minestom.server.entity.MetadataDef;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.avatar.MannequinMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityMetaDataPacket;
 import net.minestom.server.network.player.ResolvableProfile;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
@@ -40,7 +42,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     private final String skinSignature;
     private String[] holograms;
 
-    public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config, boolean overflowing) {
+    public NPCEntityImpl(@NotNull HypixelPlayer viewer, @NotNull Pos pos, @NotNull String bottomDisplay, @NotNull String skinTexture, @NotNull String skinSignature, @NotNull String[] holograms, HumanConfiguration config) {
         super(EntityType.MANNEQUIN, UUID.randomUUID());
         this.username = bottomDisplay;
         this.viewer = viewer;
@@ -58,10 +60,10 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
         setAutoViewable(false);
 
         PlayerHolograms.ExternalPlayerHologram holo = PlayerHolograms.ExternalPlayerHologram.builder()
-            .pos(pos.add(0, getEyeHeight() + 0.1f, 0))
+            .pos(pos.add(0, getBoundingBox().height() - 0.1f, 0))
             .text(holograms)
             .player(viewer)
-            .instance(config.instance(viewer))
+            .instance(config.instance())
             .build();
 
         this.holo = holo;
@@ -69,7 +71,7 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
             PlayerHolograms.addExternalPlayerHologram(holo);
         }
 
-        setInstance(config.instance(viewer), pos);
+        setInstance(config.instance(), pos);
         addViewer(viewer);
         setCustomNameVisible(false);
 
@@ -98,6 +100,13 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
         if (player.getUuid() != viewer.getUuid()) {
             Logger.warn("Player {} is viewing NPC {} but is not the intended viewer", player.getUsername(), getUuid());
         }
+
+        Map<EquipmentSlot, ItemStack> equipment = config.equipment((HypixelPlayer) player);
+        if (equipment != null) {
+            for (Map.Entry<EquipmentSlot, ItemStack> entry : equipment.entrySet()) {
+                syncEntityEquipment(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     @Override
@@ -124,12 +133,8 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
     @Override
     public void updateNPC() {
         Pos npcPosition = config.position(viewer);
-        if (!getPosition().samePoint(npcPosition)) {
-            Pos nextPosition = stepTowards(getPosition(), npcPosition, 0.85D);
-            teleport(nextPosition);
-            if (config.shouldDisplayHolograms(viewer)) {
-                PlayerHolograms.relocateExternalPlayerHologram(holo, nextPosition.add(0, getEyeHeight() + 0.1f, 0));
-            }
+        if (!getPosition().asVec().equals(npcPosition.asVec()) && config.shouldDisplayHolograms(viewer)) {
+            PlayerHolograms.relocateExternalPlayerHologram(holo, npcPosition.add(0, getBoundingBox().height() - 0.1f, 0));
         }
 
         if (!getPose().equals(config.pose(viewer))) {
@@ -167,24 +172,5 @@ public class NPCEntityImpl extends Entity implements NPCViewable {
                 );
             });
         }
-    }
-
-    private static Pos stepTowards(Pos current, Pos target, double maxDistance) {
-        double dx = target.x() - current.x();
-        double dy = target.y() - current.y();
-        double dz = target.z() - current.z();
-        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        if (distance <= maxDistance || distance == 0D) {
-            return target;
-        }
-
-        double multiplier = maxDistance / distance;
-        return new Pos(
-            current.x() + dx * multiplier,
-            current.y() + dy * multiplier,
-            current.z() + dz * multiplier,
-            target.yaw(),
-            target.pitch()
-        );
     }
 }

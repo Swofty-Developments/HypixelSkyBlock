@@ -5,9 +5,16 @@ import net.kyori.adventure.util.RGBLike;
 import net.minestom.server.color.Color;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.PotionType;
+import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
-import net.swofty.type.skyblockgeneric.potion.handler.*;
+import net.swofty.type.skyblockgeneric.potion.handler.DebuffHandler;
+import net.swofty.type.skyblockgeneric.potion.handler.InstantDamageHandler;
+import net.swofty.type.skyblockgeneric.potion.handler.InstantHealingHandler;
+import net.swofty.type.skyblockgeneric.potion.handler.NoOpHandler;
+import net.swofty.type.skyblockgeneric.potion.handler.PotionEffectHandler;
+import net.swofty.type.skyblockgeneric.potion.handler.StatBuffHandler;
+import net.swofty.type.skyblockgeneric.potion.handler.UtilityEffectHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
@@ -324,7 +331,7 @@ public enum PotionEffectType {
      */
     public String getLevelDisplay(int level) {
         if (maxLevel == 1) return displayName;
-        return displayName + " " + toRoman(level);
+        return displayName + " " + StringUtility.getAsRomanNumeral(level);
     }
 
     /**
@@ -438,17 +445,6 @@ public enum PotionEffectType {
     public double getStunChance(int level) {
         if (this != STUN) return 0;
         return 10.0 * level; // 10-40%
-    }
-
-    /**
-     * Convert integer to Roman numeral (up to 10)
-     */
-    public static String toRoman(int level) {
-        String[] romans = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        if (level >= 1 && level <= 10) {
-            return romans[level];
-        }
-        return String.valueOf(level);
     }
 
     /**

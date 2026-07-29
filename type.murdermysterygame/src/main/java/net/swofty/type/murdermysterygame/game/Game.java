@@ -6,11 +6,18 @@ import net.hollowcube.polar.PolarLoader;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.metadata.item.ItemEntityMeta;
 import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
@@ -18,10 +25,10 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.murdermystery.MurderMysteryLeaderboardMode;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.data.datapoints.DatapointMurderMysteryModeStats;
 import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.gold.GoldManager;
 import net.swofty.type.murdermysterygame.role.GameRole;
@@ -31,16 +38,15 @@ import net.swofty.type.murdermysterygame.weapon.WeaponManager;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.metadata.item.ItemEntityMeta;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
-import net.swofty.type.generic.achievement.PlayerAchievementHandler;
+import net.minestom.server.color.TeamColor;
 
 @Getter
 public class Game {
@@ -391,13 +397,15 @@ public class Game {
         TeamsPacket createTeamPacket = new TeamsPacket(
                 "mm_hidden",
                 new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x00,
-                        TeamsPacket.NameTagVisibility.NEVER,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        NamedTextColor.WHITE,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.NEVER,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColor.WHITE,
+                                (byte) 0x00
+                        ),
                         playerNames
                 )
         );
@@ -415,13 +423,15 @@ public class Game {
         TeamsPacket createTeamPacket = new TeamsPacket(
                 "mm_hidden",
                 new TeamsPacket.CreateTeamAction(
-                        Component.empty(),
-                        (byte) 0x00,
-                        TeamsPacket.NameTagVisibility.NEVER,
-                        TeamsPacket.CollisionRule.ALWAYS,
-                        NamedTextColor.WHITE,
-                        Component.empty(),
-                        Component.empty(),
+                        new TeamsPacket.Settings(
+                                Component.empty(),
+                                Component.empty(),
+                                Component.empty(),
+                                TeamsPacket.NameTagVisibility.NEVER,
+                                TeamsPacket.CollisionRule.ALWAYS,
+                                TeamColor.WHITE,
+                                (byte) 0x00
+                        ),
                         allPlayerNames
                 )
         );
@@ -1025,9 +1035,7 @@ public class Game {
         instanceContainer.setChunkLoader(loader);
 
         // Unload all chunks so they reload fresh from the polar file
-        instanceContainer.getChunks().forEach(chunk -> {
-            instanceContainer.unloadChunk(chunk);
-        });
+        instanceContainer.getChunks().forEach(instanceContainer::unloadChunk);
     }
 
     private enum WinCondition {

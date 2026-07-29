@@ -3,13 +3,17 @@ package net.swofty.anticheat.engine;
 import net.swofty.anticheat.event.AntiCheatListener;
 import net.swofty.anticheat.event.ListenerMethod;
 import net.swofty.anticheat.event.events.AnticheatPacketEvent;
-import net.swofty.anticheat.event.packet.*;
+import net.swofty.anticheat.event.packet.IsOnGroundPacket;
+import net.swofty.anticheat.event.packet.PositionAndRotationPacket;
+import net.swofty.anticheat.event.packet.PositionPacket;
+import net.swofty.anticheat.event.packet.RotationPacket;
+import net.swofty.anticheat.event.packet.SwoftyPacket;
 import net.swofty.anticheat.math.Pos;
 
 public class MovementEvents extends AntiCheatListener {
     @ListenerMethod
     public void onPacketReceive(AnticheatPacketEvent event) {
-        SwoftyPacket packet = event.getPacket();
+        SwoftyPacket packet = event.packet();
         SwoftyPlayer player = packet.getPlayer();
 
         Pos pos = player.getCurrentTick().getPos();

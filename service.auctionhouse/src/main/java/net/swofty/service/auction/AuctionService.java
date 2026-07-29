@@ -3,20 +3,20 @@ package net.swofty.service.auction;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
 public class AuctionService implements SkyBlockService {
     public static AuctionsCacheService cacheService;
 
-    public static void main(String[] args) {
-        SkyBlockService.init(new AuctionService());
+    static void main(String[] args) {
+        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
 
         cacheService = new AuctionsCacheService();
 
-        new AuctionActiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
-        new AuctionInactiveDatabase("_placeholder").connect(ConfigProvider.settings().getMongodb());
+        SkyBlockService.init(new AuctionService());
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AuctionService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.auction.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.auction.endpoints", RedisMessageHandler.class).toList();
     }
 }

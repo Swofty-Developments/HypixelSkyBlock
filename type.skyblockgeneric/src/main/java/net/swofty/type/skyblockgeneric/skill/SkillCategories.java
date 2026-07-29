@@ -1,25 +1,28 @@
 package net.swofty.type.skyblockgeneric.skill;
 
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
 public enum SkillCategories {
-    COMBAT("combat"),
-    FARMING("farming"),
-    FISHING("fishing"),
-    MINING("mining"),
-    FORAGING("foraging"),
-    ENCHANTING("enchanting"),
-    RUNECRAFTING("runecrafting"),
-    CARPENTRY("carpentry"),
-    ALCHEMY("alchemy"),
-    TAMING("taming"),
+    COMBAT("combat", ItemStatistic.COMBAT_WISDOM),
+    FARMING("farming", ItemStatistic.FARMING_WISDOM),
+    FISHING("fishing", ItemStatistic.FISHING_WISDOM),
+    MINING("mining", ItemStatistic.MINING_WISDOM),
+    FORAGING("foraging", ItemStatistic.FORAGING_WISDOM),
+    ENCHANTING("enchanting", ItemStatistic.ENCHANTING_WISDOM),
+    RUNECRAFTING("runecrafting", ItemStatistic.RUNE_CRAFTING_WISDOM),
+    CARPENTRY("carpentry", ItemStatistic.CARPENTRY_WISDOM),
+    ALCHEMY("alchemy", ItemStatistic.ALCHEMY_WISDOM),
+    TAMING("taming", ItemStatistic.TAMING_WISDOM),
     ;
 
     private final String file;
+    private final ItemStatistic wisdomStatistic;
     private SkillCategory category;
 
-    SkillCategories(String file) {
+    SkillCategories(String file, ItemStatistic wisdomStatistic) {
         this.file = file;
+        this.wisdomStatistic = wisdomStatistic;
     }
 
     @Override
@@ -32,5 +35,9 @@ public enum SkillCategories {
             category = SkillLoader.loadFromFile(file);
         }
         return category;
+    }
+
+    public ItemStatistic getWisdomStatistic() {
+        return wisdomStatistic;
     }
 }

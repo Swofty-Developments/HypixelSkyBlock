@@ -37,7 +37,6 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     && packet.getClass() != KnownPacksPacket.class
                     && packet.getClass() != TagsUpdatePacket.class
             ) {
-                //System.out.println("Blocked packet " + packet.getClass().getSimpleName() + " from being sent to " + player.getUsername() + " because they are in limbo.");
                 return;
             }
             if (respawn == null && packet.getClass() == RespawnPacket.class) {
@@ -48,7 +47,12 @@ public final class PlayerChannelHandler extends ChannelDuplexHandler {
                     write(ctx, respawn, ctx.newPromise());
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            // Limbo packet replay is best-effort: a malformed cached respawn
+            // shouldn't drop the player. Log at debug so it surfaces during
+            // diagnostic runs without spamming production logs.
+            org.tinylog.Logger.debug(e, "Failed to replay cached respawn during limbo transfer");
+        }
 
 
         super.write(ctx, packet, promise);

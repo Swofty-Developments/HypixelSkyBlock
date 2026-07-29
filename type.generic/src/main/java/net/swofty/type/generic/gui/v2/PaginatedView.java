@@ -21,6 +21,12 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
             37, 38, 39, 40, 41, 42, 43
     };
 
+    protected static final int[] SLIM = {
+        10, 11, 12, 13, 14, 15, 16,
+        19, 20, 21, 22, 23, 24, 25,
+        28, 29, 30, 31, 32, 33, 34
+    };
+
     protected static final ItemStack.Builder FILLER = ItemStack.builder(Material.BLACK_STAINED_GLASS_PANE).set(DataComponents.CUSTOM_NAME, Component.text(" ")).set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of()));
 
     public interface PaginatedState<T> {
@@ -63,6 +69,10 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
         layoutCustom(layout, state, ctx);
     }
 
+    protected boolean shouldRenderNavBackground() {
+        return true;
+    }
+
     protected List<T> getFilteredItems(S state) {
         return state.items().stream().filter(item -> !shouldFilterFromSearch(state, item)).toList();
     }
@@ -79,9 +89,9 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
             if (currentPage > 0) {
                 layout.slot(prevSlot, (s, c) -> createPrevPageItem(currentPage, totalPages), (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
                     @SuppressWarnings("unchecked") S typedState = (S) s;
-                    return typedState.withPage(currentPage - 1);
+                    return typedState.withPage(Math.max(0, typedState.page() - 1));
                 }));
-            } else {
+            } else if (shouldRenderNavBackground()) {
                 layout.slot(prevSlot, FILLER);
             }
         }
@@ -90,9 +100,9 @@ public abstract class PaginatedView<T, S extends PaginatedView.PaginatedState<T>
             if (currentPage < totalPages - 1) {
                 layout.slot(nextSlot, (s, c) -> createNextPageItem(currentPage, totalPages), (click, viewCtx) -> viewCtx.session(Object.class).updateUnchecked(s -> {
                     @SuppressWarnings("unchecked") S typedState = (S) s;
-                    return typedState.withPage(currentPage + 1);
+                    return typedState.withPage(typedState.page() + 1);
                 }));
-            } else {
+            } else if (shouldRenderNavBackground()) {
                 layout.slot(nextSlot, FILLER);
             }
         }

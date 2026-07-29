@@ -7,7 +7,7 @@ import net.swofty.type.generic.i18n.I18n;
 
 public class GUIMuseumAppraisal extends HypixelInventoryGUI {
     public GUIMuseumAppraisal() {
-        super(I18n.string("gui_museum.appraisal.title"), InventoryType.CHEST_5_ROW);
+        super(I18n.t("gui_museum.appraisal.title"), InventoryType.CHEST_5_ROW);
     }
 
     @Override

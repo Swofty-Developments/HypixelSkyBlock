@@ -1,17 +1,18 @@
 package net.swofty.type.generic.redis;
 
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import org.json.JSONObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class RedisPing implements ProxyToClient {
+public class RedisPing implements RedisMessageHandler<PingServerProtocol.Request, PingServerProtocol.Response> {
     @Override
-    public FromProxyChannels getChannel() {
-        return FromProxyChannels.PING_SERVER;
+    public RedisProtocol<PingServerProtocol.Request, PingServerProtocol.Response> protocol() {
+        return new PingServerProtocol();
     }
 
     @Override
-    public JSONObject onMessage(JSONObject message) {
-        return new JSONObject();
+    public PingServerProtocol.Response handle(PingServerProtocol.Request message, RedisMessageContext context) {
+        return new PingServerProtocol.Response();
     }
 }

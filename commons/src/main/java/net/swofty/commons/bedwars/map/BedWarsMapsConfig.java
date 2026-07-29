@@ -2,7 +2,11 @@ package net.swofty.commons.bedwars.map;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.swofty.commons.bedwars.BedwarsGameType;
+import net.minestom.server.item.Material;
+import net.swofty.commons.bedwars.BedWarsGameType;
+import net.swofty.commons.mc.HypixelPosition;
+import net.swofty.commons.mc.Vec3i;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -23,18 +27,18 @@ public class BedWarsMapsConfig {
         @Getter
         @Setter
         public static class MapConfiguration {
-            private List<BedwarsGameType> types;
+            private List<BedWarsGameType> types;
             private GeneratorSpeed generatorSpeed;
             private MapBounds bounds;
             private Map<TeamKey, MapTeam> teams;
             private MapLocations locations;
-            private Map<String, GlobalGenerator> global_generator;
+            private Map<GlobalGeneratorKey, GlobalGenerator> globalGenerator;
 
             @Getter
             @Setter
             public static class MapLocations {
-                private Position waiting;
-                private Position spectator;
+                private HypixelPosition waiting;
+                private HypixelPosition spectator;
             }
 
             @Getter
@@ -45,57 +49,70 @@ public class BedWarsMapsConfig {
                 private MinMax z;
             }
 
-
             @Getter
             @Setter
             public static class GlobalGenerator {
-                private int amount;
-                private int max;
-                private List<Position> locations;
+                private List<HypixelPosition> locations; // maybe Vec3i
             }
 
         }
     }
 
-    public record Position(double x, double y, double z) {
-    }
-
-    public record PitchYawPosition(double x, double y, double z, float pitch, float yaw) {
-    }
-
-    public record TwoBlockPosition(Position feet, Position head) {
+    public record TwoBlockPosition(Vec3i feet, Vec3i head) {
     }
 
     public record MinMax(double min, double max) {
     }
 
+    public enum GlobalGeneratorKey {
+        IRON, GOLD, DIAMOND, EMERALD
+    }
+
     public enum TeamKey {
-        RED("Red", "§c", 0xFF0000),
-        BLUE("Blue", "§9", 0x5555FF),
-        GREEN("Green", "§a", 0x55FF55),
-        YELLOW("Yellow", "§e", 0xFFFF55),
-        AQUA("Aqua", "§b", 0x00AAAA),
-        WHITE("White", "§f", 0xFFFFFF),
-        PINK("Pink", "§d", 0xFF55FF),
-        GRAY("Gray", "§7", 0xAAAAAA);
+        RED("Red", "§c", 0xFF5555, Material.RED_BED, Material.RED_WOOL),
+        BLUE("Blue", "§9", 0x5555FF, Material.BLUE_BED, Material.BLUE_BED),
+        GREEN("Green", "§a", 0x55FF55, Material.LIME_BED, Material.LIME_WOOL),
+        YELLOW("Yellow", "§e", 0xFFFF55, Material.YELLOW_BED, Material.YELLOW_WOOL),
+        AQUA("Aqua", "§b", 0x00AAAA, Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_WOOL),
+        WHITE("White", "§f", 0xFFFFFF, Material.WHITE_BED, Material.WHITE_WOOL),
+        PINK("Pink", "§d", 0xFF55FF, Material.PINK_BED, Material.PINK_WOOL),
+        GRAY("Gray", "§7", 0xAAAAAA, Material.GRAY_BED, Material.GRAY_WOOL),
+        ;
 
         @Getter
         private final String name;
         private final String chatColor;
-        private final int armorColor;
+        private final int rgb;
+        @NotNull
+        private final Material bedMaterial;
+        @NotNull
+        private final Material woolMaterial;
 
-        TeamKey(String name, String chatColor, int rbg) {
+        TeamKey(@NotNull String name, @NotNull String chatColor, int rgb, @NotNull Material bedMaterial, @NotNull Material woolMaterial) {
             this.name = name;
             this.chatColor = chatColor;
-            this.armorColor = rbg;
+            this.rgb = rgb;
+            this.bedMaterial = bedMaterial;
+            this.woolMaterial = woolMaterial;
+        }
+
+        @NotNull
+        public String chatColor() {
+            return chatColor;
         }
 
         public int rgb() {
-            return armorColor;
+            return rgb;
         }
 
-        public String chatColor() {
-            return chatColor;
+        @NotNull
+        public Material bedMaterial() {
+            return bedMaterial;
+        }
+
+        @NotNull
+        public Material woolMaterial() {
+            return woolMaterial;
         }
     }
 
@@ -139,11 +156,11 @@ public class BedWarsMapsConfig {
     @Setter
     public static class MapTeam {
         private Shops shop;
-        private PitchYawPosition spawn;
+        private HypixelPosition spawn;
         private TwoBlockPosition bed;
-        private Position generator;
+        private HypixelPosition generator;
 
-        public record Shops(PitchYawPosition item, PitchYawPosition team) {
+        public record Shops(HypixelPosition item, HypixelPosition team) {
         }
     }
 

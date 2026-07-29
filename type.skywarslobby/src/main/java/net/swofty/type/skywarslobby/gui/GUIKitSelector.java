@@ -17,9 +17,7 @@ import net.swofty.type.skywarslobby.kit.SkywarsKit;
 import net.swofty.type.skywarslobby.kit.SkywarsKitRegistry;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Kit selector GUI for a specific game mode.
@@ -215,10 +213,8 @@ public class GUIKitSelector extends HypixelInventoryGUI {
                 boolean owned = unlocks.hasKit(kit.getId());
                 boolean selected = unlocks.getSelectedKitForMode(mode).equals(kit.getId());
 
-                List<String> lore = new ArrayList<>();
-
                 // Items preview
-                lore.addAll(kit.getItemsLore(mode));
+                List<String> lore = new ArrayList<>(kit.getItemsLore(mode));
                 lore.add("");
 
                 // Rarity

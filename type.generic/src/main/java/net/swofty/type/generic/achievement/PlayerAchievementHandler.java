@@ -182,13 +182,6 @@ public class PlayerAchievementHandler {
     }
 
     private String toRoman(int tier) {
-        return switch (tier) {
-            case 1 -> "I";
-            case 2 -> "II";
-            case 3 -> "III";
-            case 4 -> "IV";
-            case 5 -> "V";
-            default -> String.valueOf(tier);
-        };
+        return AchievementTier.toRomanNumeral(tier);
     }
 }

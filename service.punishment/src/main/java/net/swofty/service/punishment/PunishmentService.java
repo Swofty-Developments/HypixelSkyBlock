@@ -4,7 +4,7 @@ import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.punishment.PunishmentRedis;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
@@ -13,9 +13,8 @@ public class PunishmentService implements SkyBlockService {
     static void main(String[] args) {
         String mongoUri = ConfigProvider.settings().getMongodb();
         new PunishmentDatabase(null).connect(mongoUri);
-        SkyBlockService.init(new PunishmentService());
         PunishmentRedis.connect(ConfigProvider.settings().getRedisUri());
-        ProxyRedis.connect(ConfigProvider.settings().getRedisUri());
+        SkyBlockService.init(new PunishmentService());
     }
 
     @Override
@@ -24,7 +23,7 @@ public class PunishmentService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.punishment.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.punishment.endpoints", RedisMessageHandler.class).toList();
     }
 }

@@ -6,12 +6,13 @@ import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionPlayerDisconnect implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.DISCONNECT)
 	public void run(PlayerDisconnectEvent event) {
 		MurderMysteryPlayer player = (MurderMysteryPlayer) event.getPlayer();
 

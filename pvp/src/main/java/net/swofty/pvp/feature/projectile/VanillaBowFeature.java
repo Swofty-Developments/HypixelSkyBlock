@@ -5,7 +5,11 @@ import net.minestom.server.ServerFlag;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.*;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerHand;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.item.PlayerBeginItemUseEvent;
 import net.minestom.server.event.item.PlayerCancelItemUseEvent;
@@ -126,7 +130,7 @@ public class VanillaBowFeature implements BowFeature, RegistrableFeature {
 
 			// Arrow shooting
 			Pos position = player.getPosition().add(0D, player.getEyeHeight() - 0.1, 0D);
-			arrow.shootFromRotation(position.pitch(), position.yaw(), 0, power * 3, 1.0);
+			arrow.shootFromRotation(position.pitch(), position.yaw(), 0, power * 3, 1.0, 0.0);
 			Vec playerVel = player.getVelocity();
 			arrow.setVelocity(arrow.getVelocity().add(playerVel.x(),
 					player.isOnGround() ? 0.0D : playerVel.y(), playerVel.z()));

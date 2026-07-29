@@ -3,8 +3,9 @@ package net.swofty.type.thepark.events;
 import net.minestom.server.entity.Entity;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerRegionChangeEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.thepark.birchpark.MissionTravelToThePark;
@@ -19,7 +20,7 @@ import net.swofty.type.thepark.npcs.NPCWorkerXavier;
 
 public class ActionContinueParkMission implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerRegionChangeEvent event) {
         if (event.getTo() == null) return;
 

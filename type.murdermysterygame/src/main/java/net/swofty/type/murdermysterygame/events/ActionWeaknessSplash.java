@@ -3,8 +3,9 @@ package net.swofty.type.murdermysterygame.events;
 import net.minestom.server.event.entity.EntityPotionAddEvent;
 import net.minestom.server.potion.PotionEffect;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.murdermysterygame.game.Game;
 import net.swofty.type.murdermysterygame.game.GameStatus;
@@ -18,7 +19,7 @@ import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
  */
 public class ActionWeaknessSplash implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(EntityPotionAddEvent event) {
         if (!(event.getEntity() instanceof MurderMysteryPlayer player)) return;
 

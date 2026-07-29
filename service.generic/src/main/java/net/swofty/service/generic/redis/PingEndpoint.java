@@ -1,19 +1,20 @@
 package net.swofty.service.generic.redis;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.protocol.objects.PingProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.PingProtocol;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 
-public class PingEndpoint implements ServiceEndpoint<
-        PingProtocolObject.EmptyMessage,
-        PingProtocolObject.EmptyMessage> {
+public class PingEndpoint implements RedisMessageHandler<
+        PingProtocol.EmptyMessage,
+        PingProtocol.EmptyMessage> {
     @Override
-    public ProtocolObject<PingProtocolObject.EmptyMessage, PingProtocolObject.EmptyMessage> associatedProtocolObject() {
-        return new PingProtocolObject();
+    public RedisProtocol<PingProtocol.EmptyMessage, PingProtocol.EmptyMessage> protocol() {
+        return new PingProtocol();
     }
 
     @Override
-    public PingProtocolObject.EmptyMessage onMessage(ServiceProxyRequest message, PingProtocolObject.EmptyMessage messageObject) {
-        return new PingProtocolObject.EmptyMessage();
+    public PingProtocol.EmptyMessage handle(PingProtocol.EmptyMessage messageObject, RedisMessageContext context) {
+        return new PingProtocol.EmptyMessage();
     }
 }

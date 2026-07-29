@@ -19,7 +19,8 @@ public class StandardItemComponent extends SkyBlockItemComponent {
         addInheritedComponent(new ExtraRarityComponent(this.type.getRarityDisplay()));
         addInheritedComponent(new ReforgableComponent(this.type.getReforgeType()));
         addInheritedComponent(new EnchantableComponent(this.type.getEnchantGroups(), true));
-        addInheritedComponent(new RuneableComponent(this.type.getRuneApplicableTo()));
+        if (this.type.getRuneApplicableTo() != null)
+            addInheritedComponent(new RuneableComponent(this.type.getRuneApplicableTo()));
         if (this.type.potatoType != null)
             addInheritedComponent(new HotPotatoableComponent(this.type.getPotatoType()));
     }
@@ -32,7 +33,12 @@ public class StandardItemComponent extends SkyBlockItemComponent {
         HELMET("HELMET", ReforgeType.ARMOR, List.of(EnchantItemGroups.ARMOR), RuneableComponent.RuneApplicableTo.HELMETS, PotatoType.ARMOR),
         CHESTPLATE("CHESTPLATE", ReforgeType.ARMOR, List.of(EnchantItemGroups.ARMOR), RuneableComponent.RuneApplicableTo.CHESTPLATES, PotatoType.ARMOR),
         LEGGINGS("LEGGINGS", ReforgeType.ARMOR, List.of(EnchantItemGroups.ARMOR), RuneableComponent.RuneApplicableTo.LEGGINGS, PotatoType.ARMOR),
-        BOOTS("BOOTS", ReforgeType.ARMOR, List.of(EnchantItemGroups.ARMOR), RuneableComponent.RuneApplicableTo.BOOTS, PotatoType.ARMOR);
+        BOOTS("BOOTS", ReforgeType.ARMOR, List.of(EnchantItemGroups.ARMOR), RuneableComponent.RuneApplicableTo.BOOTS, PotatoType.ARMOR),
+        NECKLACE("NECKLACE", ReforgeType.EQUIPMENT, List.of(), null, null),
+        CLOAK("CLOAK", ReforgeType.EQUIPMENT, List.of(), null, null),
+        BELT("BELT", ReforgeType.EQUIPMENT, List.of(), null, null),
+        GLOVES("GLOVES", ReforgeType.EQUIPMENT, List.of(), null, null),
+        BRACELET("BRACELET", ReforgeType.EQUIPMENT, List.of(), null, null);
 
         private final String rarityDisplay;
         private final ReforgeType reforgeType;
@@ -51,6 +57,10 @@ public class StandardItemComponent extends SkyBlockItemComponent {
 
         public boolean isArmor() {
             return this == HELMET || this == CHESTPLATE || this == LEGGINGS || this == BOOTS;
+        }
+
+        public boolean isEquipment() {
+            return this == NECKLACE || this == CLOAK || this == BELT || this == GLOVES || this == BRACELET;
         }
     }
 }

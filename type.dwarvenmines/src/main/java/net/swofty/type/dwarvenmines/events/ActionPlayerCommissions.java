@@ -7,8 +7,9 @@ import net.swofty.type.dwarvenmines.commission.Commissions;
 import net.swofty.type.dwarvenmines.commission.Objective;
 import net.swofty.type.dwarvenmines.commission.ObjectiveType;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointCommissions;
 import net.swofty.type.skyblockgeneric.region.RegionType;
@@ -23,7 +24,7 @@ public class ActionPlayerCommissions implements HypixelEventClass {
 
 	private static final Set<Material> TITANIUM_BLOCKS = Set.of(Material.POLISHED_DIORITE);
 
-	@HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+	@PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
 	public void run(PlayerBlockBreakEvent event) {
 		if (!(event.getPlayer() instanceof SkyBlockPlayer player)) return;
 

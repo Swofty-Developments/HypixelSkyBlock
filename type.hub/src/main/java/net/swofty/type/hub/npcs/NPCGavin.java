@@ -30,7 +30,7 @@ public class NPCGavin extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(147.5, 69.9, -59.5, -90, 0);
+                return new Pos(161.5, 69.900, 43.5, 203, 17);
             }
 
             @Override
@@ -46,7 +46,9 @@ public class NPCGavin extends HypixelNPC {
         if (isInDialogue(player)) return;
 
         if(!player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_GAVIN)) {
-            setDialogue(player, "first-interaction").thenRun(() -> player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_GAVIN, true));
+            setDialogue(player, "first-interaction").thenRun(() -> {
+                player.getToggles().set(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_GAVIN, true);
+            });
             return;
         }
 

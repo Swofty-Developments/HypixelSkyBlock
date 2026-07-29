@@ -10,8 +10,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
@@ -37,13 +36,12 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
     @Override
     public void onInitialize(MinecraftServer server) {
         RegistryKey<DimensionType> fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register(
-                Key.key("ravengard:lobby_fullbright"),
+            Key.key("ravengard", "lobby_fullbright"),
                 DimensionType.builder().ambientLight(1.0f).build()
         );
 
         InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer(fullbrightDimension);
         instance.setTime(6000);
-        instance.setTimeRate(0);
 
         HypixelConst.setInstanceContainer(MinecraftServer.getInstanceManager().createSharedInstance(instance));
         int minimapRadiusChunks = 8;
@@ -113,13 +111,9 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
         return new ArrayList<>();
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

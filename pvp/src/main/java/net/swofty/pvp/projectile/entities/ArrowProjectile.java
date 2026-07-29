@@ -1,6 +1,6 @@
 package net.swofty.pvp.projectile.entities;
 
-import net.swofty.pvp.projectile.AbstractProjectile;
+import lombok.Getter;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.Aerodynamics;
 import net.minestom.server.collision.BoundingBox;
@@ -14,6 +14,7 @@ import net.minestom.server.entity.metadata.projectile.ProjectileMeta;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.entity.EntityShootEvent;
 import net.minestom.server.instance.block.Block;
+import net.swofty.pvp.projectile.AbstractProjectile;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -24,12 +25,9 @@ public class ArrowProjectile extends AbstractProjectile {
     private static final BoundingBox SMALL_BOUNDING_BOX = new BoundingBox(0.01, 0.01, 0.01);
     private static final BoundingBox REGULAR_BOUNDING_BOX = EntityType.ARROW.registry().boundingBox();
 
+    @Getter
     private boolean critical = false;
     private boolean firstTick = true;
-
-    public boolean isCritical() {
-        return critical;
-    }
 
     public void setCritical(boolean critical) {
         this.critical = critical;
@@ -59,7 +57,7 @@ public class ArrowProjectile extends AbstractProjectile {
         updatePosition(time);
         final Pos posNow = getPosition();
 
-        Vec diff = Vec.fromPoint(posNow.sub(posBefore));
+        Vec diff = posNow.sub(posBefore).asVec();
         float yaw = (float) Math.toDegrees(Math.atan2(diff.x(), diff.z()));
         float pitch = (float) Math.toDegrees(Math.atan2(diff.y(), Math.sqrt(diff.x() * diff.x() + diff.z() * diff.z())));
         this.position = posNow.withView(yaw, pitch);

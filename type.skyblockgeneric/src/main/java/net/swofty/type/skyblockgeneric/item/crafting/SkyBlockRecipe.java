@@ -91,33 +91,35 @@ public abstract class SkyBlockRecipe<T> {
     }
 
     public static List<String> getMissionDisplay(List<String> lore, UUID uuid) {
-        ArrayList<SkyBlockRecipe> allRecipes = new ArrayList<>();
-        ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
+        ArrayList<SkyBlockRecipe<?>> allRecipes = new ArrayList<>();
+        ArrayList<SkyBlockRecipe<?>> allowedRecipes = new ArrayList<>();
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
-        allRecipes.forEach(recipe -> {
-            SkyBlockRecipe.CraftingResult result =
-                    (SkyBlockRecipe.CraftingResult) recipe.getCanCraft().apply(SkyBlockGenericLoader.getFromUUID(uuid));
+        SkyBlockPlayer player = SkyBlockGenericLoader.getFromUUID(uuid);
 
-            if (result.allowed()) {
-                allowedRecipes.add(recipe);
-            }
-        });
+        if (player != null) {
+            allRecipes.forEach(recipe -> {
+                SkyBlockRecipe.CraftingResult result = recipe.getCanCraft().apply(player);
 
-        String unlockedPercentage = String.format("%.2f", (allowedRecipes.size() / (double) allRecipes.size()) * 100);
+                if (result != null && result.allowed()) {
+                    allowedRecipes.add(recipe);
+                }
+            });
+        }
+
+        double unlockedRatio = allRecipes.isEmpty() ? 0D : allowedRecipes.size() / (double) allRecipes.size();
+        String unlockedPercentage = String.format("%.2f", unlockedRatio * 100);
+
         lore.add("§7Recipe Book Unlocked: §e" + unlockedPercentage + "§6%");
 
         String baseLoadingBar = "─────────────────";
         int maxBarLength = baseLoadingBar.length();
-        int completedLength = (int) ((allowedRecipes.size() / (double) allRecipes.size()) * maxBarLength);
+        int completedLength = (int) Math.round(unlockedRatio * maxBarLength);
+        completedLength = Math.max(0, Math.min(completedLength, maxBarLength));
 
-        String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, Math.min(completedLength, maxBarLength));
-        int formattingCodeLength = 4;  // Adjust this if you add or remove formatting codes
-        String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(Math.min(
-                completedLoadingBar.length() - formattingCodeLength,  // Adjust for added formatting codes
-                maxBarLength
-        ));
+        String completedLoadingBar = "§2§m" + baseLoadingBar.substring(0, completedLength);
+        String uncompletedLoadingBar = "§7§m" + baseLoadingBar.substring(completedLength);
 
         lore.add(completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + allRecipes.size());
 

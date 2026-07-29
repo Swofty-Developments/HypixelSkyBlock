@@ -16,7 +16,13 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -27,7 +33,7 @@ public abstract class HypixelInventoryGUI {
             .set(DataComponents.CUSTOM_NAME, Component.space())
             .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.EMPTY);
 
-    protected String title;
+    protected Component title;
     protected InventoryType size;
     protected final List<GUIItem> items;
     private Inventory inventory;
@@ -36,6 +42,12 @@ public abstract class HypixelInventoryGUI {
     private int itemInHand = 0;
 
     public HypixelInventoryGUI(String title, InventoryType size) {
+        this.title = Component.text(title);
+        this.size = size;
+        this.items = Collections.synchronizedList(new ArrayList<>());
+    }
+
+    public HypixelInventoryGUI(Component title, InventoryType size) {
         this.title = title;
         this.size = size;
         this.items = Collections.synchronizedList(new ArrayList<>());
@@ -296,7 +308,7 @@ public abstract class HypixelInventoryGUI {
     public void open(HypixelPlayer player) {
         this.player = player;
         this.itemInHand = player.getHeldSlot();
-        this.inventory = new Inventory(size, getTitle());
+        this.inventory = new Inventory(size, title);
 
         HypixelInventoryGUI previouslyOpen = GUI_MAP.get(player.getUuid());
         if (previouslyOpen != null) {
@@ -312,7 +324,7 @@ public abstract class HypixelInventoryGUI {
 
             if (previouslyOpen.getInventory().getInventoryType() == size) {
                 inventory = previouslyOpen.getInventory();
-                inventory.setTitle(Component.text(getTitle()));
+                inventory.setTitle(title);
                 for (int slot = 0; slot < inventory.getSize(); slot++) {
                     inventory.setItemStack(slot, ItemStack.AIR);
                 }
@@ -362,7 +374,13 @@ public abstract class HypixelInventoryGUI {
     }
 
     protected void setTitle(String title) {
-        inventory.setTitle(Component.text(title));
+        this.title = Component.text(title);
+        inventory.setTitle(this.title);
+    }
+
+    protected void setTitle(Component title) {
+        this.title = title;
+        inventory.setTitle(this.title);
     }
 
     /**

@@ -59,7 +59,7 @@ public class WaterBalloon implements LuckyBlockItem {
 
         WaterBalloonProjectile projectile = new WaterBalloonProjectile(holder, createItemStack());
         projectile.setInstance(instance, holder.getPosition().add(0, holder.getEyeHeight(), 0));
-        projectile.shootFromRotation(holder.getPosition().pitch(), holder.getPosition().yaw(), 0, 1.0, 1.0);
+        projectile.shootFromRotation(holder.getPosition().pitch(), holder.getPosition().yaw(), 0, 1.0, 1.0, 0.0);
 
         return true;
     }

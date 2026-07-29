@@ -4,10 +4,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventHandler;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
@@ -21,7 +22,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 public class ActionCollectionAdd implements HypixelEventClass {
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(CustomBlockBreakEvent event) {
         if (event.getPlayerPlaced()) return;
 
@@ -68,7 +69,7 @@ public class ActionCollectionAdd implements HypixelEventClass {
 
             final int finalDropAmount = dropAmount;
             final ItemType finalType = type;
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 SkyBlockActionBar bar = SkyBlockActionBar.getFor(player);
                 int startingPriority = 5;
                 int addedAmount = finalDropAmount;

@@ -8,6 +8,7 @@ import net.hollowcube.polar.PolarLoader;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
@@ -17,32 +18,23 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.world.DimensionType;
-import net.swofty.commons.murdermystery.MurderMysteryGameType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocolObject;
-import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.pvp.MinestomPvP;
-import net.swofty.pvp.feature.CombatFeatureSet;
-import net.swofty.pvp.feature.CombatFeatures;
-import net.swofty.pvp.feature.FeatureType;
-import net.swofty.pvp.utils.CombatVersion;
-import net.swofty.type.murdermysterygame.game.Game;
-import net.swofty.type.murdermysterygame.item.SimpleInteractableItem;
-import net.swofty.type.murdermysterygame.item.SimpleInteractableItemHandler;
-import net.swofty.type.murdermysterygame.maphandler.MapHandler;
-import net.swofty.type.murdermysterygame.maphandler.MapHandlerRegistry;
-import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
+import net.swofty.commons.murdermystery.MurderMysteryGameType;
 import net.swofty.commons.murdermystery.map.MurderMysteryMapsConfig;
+import net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocol;
+import net.swofty.proxyapi.ProxyService;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.pvp.MinestomPvP;
+import net.swofty.type.game.game.GameObject;
 import net.swofty.type.generic.HypixelConst;
-import net.swofty.type.generic.data.GameDataHandler;
-import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.data.GameDataHandler;
+import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.redis.RedisOriginServer;
@@ -50,6 +42,12 @@ import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.murdermysterygame.game.Game;
+import net.swofty.type.murdermysterygame.item.SimpleInteractableItem;
+import net.swofty.type.murdermysterygame.item.SimpleInteractableItemHandler;
+import net.swofty.type.murdermysterygame.maphandler.MapHandler;
+import net.swofty.type.murdermysterygame.maphandler.MapHandlerRegistry;
+import net.swofty.type.murdermysterygame.user.MurderMysteryPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -64,7 +62,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import static net.swofty.pvp.feature.CombatFeatures.*;
 import static net.swofty.type.generic.HypixelGenericLoader.getLoadedPlayers;
 
 public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
@@ -130,7 +127,7 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
     public void onInitialize(MinecraftServer server) {
         gson = new GsonBuilder().create();
         instanceManager = MinecraftServer.getInstanceManager();
-        fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(0.9f).build());
+        fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register("fullbright", DimensionType.builder().ambientLight(1f).setAttribute(EnvironmentAttribute.AMBIENT_LIGHT_COLOR, Color.WHITE).build());
 
         Path mapsPath = Path.of("./configuration/murdermystery/maps.json");
         if (!Files.exists(mapsPath)) {
@@ -192,9 +189,9 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
             int maxPlayers = HypixelConst.getMaxPlayers();
             int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
 
-            List<net.swofty.commons.game.Game> commonsGames = new ArrayList<>();
+            List<GameObject> commonsGames = new ArrayList<>();
             for (Game internalGame : TypeMurderMysteryGameLoader.getGames()) {
-                net.swofty.commons.game.Game commonsGame = new net.swofty.commons.game.Game();
+                GameObject commonsGame = new GameObject();
                 commonsGame.setGameId(UUID.fromString(internalGame.getGameId()));
                 commonsGame.setType(ServerType.MURDER_MYSTERY_GAME);
                 commonsGame.setMap(internalGame.getMapEntry().getName());
@@ -210,7 +207,7 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
                 commonsGames.add(commonsGame);
             }
 
-            var heartbeat = new GameHeartbeatProtocolObject.HeartbeatMessage(
+            var heartbeat = new GameHeartbeatProtocol.HeartbeatMessage(
                     uuid,
                     shortName,
                     getType(),
@@ -283,19 +280,22 @@ public class TypeMurderMysteryGameLoader implements HypixelTypeLoader {
         ).toList();
     }
 
+
     @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
+    @SuppressWarnings("unchecked")
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.murdermysterygame.redis.service",
-                ServiceToClient.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
+    @SuppressWarnings("unchecked")
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
+        return (List<RedisMessageHandler<?, ?>>) (List<?>) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.murdermysterygame.redis",
-                ProxyToClient.class
+                RedisMessageHandler.class
         ).toList();
     }
 

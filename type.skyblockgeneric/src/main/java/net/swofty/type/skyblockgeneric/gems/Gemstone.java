@@ -69,7 +69,7 @@ public enum Gemstone {
             if (gemstone.getItem().contains(item)) {
                 return gemstone;
             }
-        };
+        }
         return null;
     }
 
@@ -121,7 +121,7 @@ public enum Gemstone {
                 if (slots.getValidGemstones().contains(gemstone) && slots.getValidGemstones().size() == 1) {
                     return slots;
                 }
-            };
+            }
             return null;
         }
     }

@@ -7,7 +7,7 @@ public enum StatusResponse {
     ERROR("error");
 
     @Getter
-    private String status;
+    private final String status;
 
     StatusResponse(String status) {
         this.status = status;

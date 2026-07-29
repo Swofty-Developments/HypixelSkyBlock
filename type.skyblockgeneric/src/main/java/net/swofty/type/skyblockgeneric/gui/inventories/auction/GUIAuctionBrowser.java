@@ -14,11 +14,11 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionCategories;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
 import net.swofty.commons.skyblock.auctions.AuctionsFilter;
 import net.swofty.commons.skyblock.auctions.AuctionsSorting;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemsProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -28,6 +28,7 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.PaginationList;
+import org.tinylog.Logger;
 import net.swofty.type.skyblockgeneric.auction.AuctionItemLoreHandler;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemUpdater;
@@ -36,7 +37,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 @Setter
 public class GUIAuctionBrowser extends HypixelInventoryGUI implements RefreshingGUI {
@@ -57,14 +58,14 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     private List<AuctionItem> itemCache = new ArrayList<>();
 
     public GUIAuctionBrowser() {
-        super(I18n.string("gui_auction.browser.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_auction.browser.title"), InventoryType.CHEST_6_ROW);
 
         Thread.startVirtualThread(this::updateItemsCache);
     }
 
     private void updateItemsCache() {
-        AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage message =
-                new AuctionFetchItemsProtocolObject.AuctionFetchItemsMessage(
+        AuctionFetchItemsProtocol.AuctionFetchItemsMessage message =
+                new AuctionFetchItemsProtocol.AuctionFetchItemsMessage(
                         sorting,
                         filter,
                         category
@@ -72,7 +73,7 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
         new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message)
                 .thenAccept(responseRaw -> {
-                    AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocolObject.AuctionFetchItemsResponse) responseRaw;
+                    AuctionFetchItemsProtocol.AuctionFetchItemsResponse response = (AuctionFetchItemsProtocol.AuctionFetchItemsResponse) responseRaw;
                     List<AuctionItem> auctionItems = response.items();
 
                     // Items are already sorted, so just paginate them
@@ -82,6 +83,10 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                     // Set the items in the GUI
                     List<AuctionItem> paginatedItems = paginationList.getPage(page);
                     setItemCache(paginatedItems);
+                })
+                .exceptionally(ex -> {
+                    Logger.error(ex, "Auction browse failed for category {}", category);
+                    return null;
                 });
     }
 
@@ -89,7 +94,8 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
     private void setItems() {
         fill(ItemStackCreator.createNamedItemStack(category.getMaterial(), ""));
         set(GUIClickableItem.getGoBackItem(49, new GUIAuctionHouse()));
-        getInventory().setTitle(Component.text(I18n.string("gui_auction.browser.title_with_category", Map.of("category", StringUtility.toNormalCase(category.name())))));
+        getInventory().setTitle(I18n.t("gui_auction.browser.title_with_category",
+            Component.text(StringUtility.toNormalCase(category.name()))));
 
         set(new GUIClickableItem(50) {
             @Override
@@ -111,10 +117,10 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>(List.of(" "));
 
                 Arrays.stream(AuctionsSorting.values()).forEach(sort -> {
-                    // Ensure to not display the MOST_BIDS sorting if the filter is BIN_ONLY
                     if (filter.equals(AuctionsFilter.BIN_ONLY)) {
                         if (sort.equals(AuctionsSorting.MOST_BIDS)) {
                             return;
@@ -122,16 +128,16 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                     }
 
                     if (sort == sorting) {
-                        lore.add(I18n.string("gui_auction.browser.sort_selected_prefix") + StringUtility.toNormalCase(sort.name()));
+                        lore.add(I18n.string("gui_auction.browser.sort_selected_prefix", l) + StringUtility.toNormalCase(sort.name()));
                     } else {
-                        lore.add(I18n.string("gui_auction.browser.sort_unselected_prefix") + StringUtility.toNormalCase(sort.name()));
+                        lore.add(I18n.string("gui_auction.browser.sort_unselected_prefix", l) + StringUtility.toNormalCase(sort.name()));
                     }
                 });
 
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.browser.sort_click"));
+                lore.add(I18n.string("gui_auction.browser.sort_click", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_auction.browser.sort_button"), Material.HOPPER, 1,
+                return ItemStackCreator.getStack(I18n.string("gui_auction.browser.sort_button", l), Material.HOPPER, 1,
                         lore);
             }
         });
@@ -154,21 +160,22 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
                 SkyBlockPlayer player = (SkyBlockPlayer) p;
+                Locale l = p.getLocale();
                 List<String> lore = new ArrayList<>(List.of(" "));
 
                 Arrays.stream(AuctionsFilter.values()).forEach(filter -> {
                     if (filter == GUIAuctionBrowser.this.filter) {
-                        lore.add(I18n.string("gui_auction.browser.filter_selected_prefix") + StringUtility.toNormalCase(filter.name()));
+                        lore.add(I18n.string("gui_auction.browser.filter_selected_prefix", l) + StringUtility.toNormalCase(filter.name()));
                     } else {
-                        lore.add(I18n.string("gui_auction.browser.filter_unselected_prefix") + StringUtility.toNormalCase(filter.name()));
+                        lore.add(I18n.string("gui_auction.browser.filter_unselected_prefix", l) + StringUtility.toNormalCase(filter.name()));
                     }
                 });
 
                 lore.add(" ");
-                lore.add(I18n.string("gui_auction.browser.filter_right_click"));
-                lore.add(I18n.string("gui_auction.browser.filter_click"));
+                lore.add(I18n.string("gui_auction.browser.filter_right_click", l));
+                lore.add(I18n.string("gui_auction.browser.filter_click", l));
 
-                return ItemStackCreator.getStack(I18n.string("gui_auction.browser.filter_button"), Material.GOLD_BLOCK, 1,
+                return ItemStackCreator.getStack(I18n.string("gui_auction.browser.filter_button", l), Material.GOLD_BLOCK, 1,
                         lore);
             }
         });
@@ -189,14 +196,15 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
                     SkyBlockPlayer player = (SkyBlockPlayer) p;
-                    List<String> lore = new ArrayList<>(List.of(I18n.string("gui_auction.browser.category_subtitle"), " ", I18n.string("gui_auction.browser.category_examples")));
-                    category.getExamples().forEach(example -> lore.add(I18n.string("gui_auction.browser.category_example_prefix") + example));
+                    Locale l = p.getLocale();
+                    List<String> lore = new ArrayList<>(List.of(I18n.string("gui_auction.browser.category_subtitle", l), " ", I18n.string("gui_auction.browser.category_examples", l)));
+                    category.getExamples().forEach(example -> lore.add(I18n.string("gui_auction.browser.category_example_prefix", l) + example));
                     lore.add(" ");
 
                     if (category.equals(getCategory())) {
-                        lore.add(I18n.string("gui_auction.browser.category_browsing"));
+                        lore.add(I18n.string("gui_auction.browser.category_browsing", l));
                     } else {
-                        lore.add(I18n.string("gui_auction.browser.category_click"));
+                        lore.add(I18n.string("gui_auction.browser.category_click", l));
                     }
 
                     return ItemStackCreator.getStack(category.getColor() + StringUtility.toNormalCase(category.name()), category.getDisplayMaterial(), 1, lore);
@@ -273,12 +281,14 @@ public class GUIAuctionBrowser extends HypixelInventoryGUI implements Refreshing
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.browser.offline_message"));
-            player.closeInventory();
-        }
-
-        setItems();
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.browser.offline_message"));
+                player.closeInventory();
+                return;
+            }
+            setItems();
+        });
     }
 
     @Override

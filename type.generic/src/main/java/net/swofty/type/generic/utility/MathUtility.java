@@ -1,5 +1,8 @@
 package net.swofty.type.generic.utility;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
@@ -7,11 +10,14 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.Direction;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MathUtility {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class MathUtility {
+
     public static double normalizeAngle(double angle, double maximum) {
         return (angle % maximum + maximum) % maximum - (maximum / 2);
     }
@@ -108,8 +114,7 @@ public class MathUtility {
                                 blocks.add(new Pos(x, y, z));
                             }
                         } catch (Exception e) {
-                            System.out.println("Threw an error for " + x + " " + y + " " + z);
-                            continue;
+                            Logger.debug(e, "Block read failed at {} {} {} during getBlocksInRadius", x, y, z);
                         }
                     }
                 }

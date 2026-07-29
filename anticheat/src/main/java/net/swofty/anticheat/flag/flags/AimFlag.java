@@ -1,13 +1,15 @@
 package net.swofty.anticheat.flag.flags;
 
-import net.swofty.anticheat.engine.PlayerTickInformation;
 import net.swofty.anticheat.event.ListenerMethod;
 import net.swofty.anticheat.event.events.PlayerAttackEvent;
 import net.swofty.anticheat.event.events.PlayerPositionUpdateEvent;
 import net.swofty.anticheat.flag.Flag;
-import net.swofty.anticheat.math.Pos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class AimFlag extends Flag {
     // Track rotation changes per player

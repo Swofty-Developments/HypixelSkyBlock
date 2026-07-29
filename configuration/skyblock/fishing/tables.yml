@@ -1,0 +1,206 @@
+tables:
+  - id: DEFAULT_WATER
+    regions: [ ]
+    mediums:
+      - WATER
+    items:
+      - itemId: RAW_FISH
+        chance: 36
+        amount: 1
+        skillXp: 5
+      - itemId: RAW_SALMON
+        chance: 22
+        amount: 1
+        skillXp: 6
+      - itemId: PUFFERFISH
+        chance: 10
+        amount: 1
+        skillXp: 7
+      - itemId: INK_SAC
+        chance: 8
+        amount: 1
+        skillXp: 5
+      - itemId: LILY_PAD
+        chance: 8
+        amount: 1
+        skillXp: 5
+      - itemId: CLAY_BALL
+        chance: 6
+        amount: 1
+        skillXp: 5
+      - itemId: PRISMARINE_CRYSTALS
+        chance: 4
+        amount: 1
+        skillXp: 6
+      - itemId: PRISMARINE_SHARD
+        chance: 3
+        amount: 1
+        skillXp: 6
+      - itemId: TROPICAL_FISH
+        chance: 2
+        amount: 1
+        skillXp: 8
+      - itemId: SPONGE
+        chance: 1
+        amount: 1
+        skillXp: 10
+    treasures:
+      - itemId: PRISMARINE_CRYSTALS
+        chance: 50
+        amount: 2
+        skillXp: 10
+      - itemId: PRISMARINE_SHARD
+        chance: 35
+        amount: 2
+        skillXp: 10
+      - itemId: SPONGE
+        chance: 15
+        amount: 1
+        skillXp: 12
+    junk: [ ]
+    seaCreatures:
+      - seaCreatureId: SQUID
+        chance: 6
+      - seaCreatureId: SEA_WALKER
+        chance: 4
+      - seaCreatureId: NIGHT_SQUID
+        chance: 2
+  - id: DEFAULT_LAVA
+    regions: [ ]
+    mediums:
+      - LAVA
+    items:
+      - itemId: MAGMAFISH
+        chance: 100
+        amount: 1
+        skillXp: 10
+    treasures:
+      - itemId: MAGMAFISH
+        chance: 100
+        amount: 2
+        skillXp: 15
+    junk: [ ]
+    seaCreatures:
+      - seaCreatureId: LAVA_BLAZE
+        chance: 5
+  - id: BAYOU_WATERS
+    regions:
+      - BACKWATER_BAYOU
+    mediums:
+      - WATER
+    items:
+      - itemId: RAW_FISH
+        chance: 30
+        amount: 1
+        skillXp: 5
+      - itemId: RAW_SALMON
+        chance: 20
+        amount: 1
+        skillXp: 6
+      - itemId: PUFFERFISH
+        chance: 10
+        amount: 1
+        skillXp: 7
+      - itemId: INK_SAC
+        chance: 8
+        amount: 1
+        skillXp: 5
+      - itemId: LILY_PAD
+        chance: 8
+        amount: 1
+        skillXp: 5
+      - itemId: CLAY_BALL
+        chance: 8
+        amount: 1
+        skillXp: 5
+      - itemId: PRISMARINE_CRYSTALS
+        chance: 5
+        amount: 1
+        skillXp: 6
+      - itemId: PRISMARINE_SHARD
+        chance: 4
+        amount: 1
+        skillXp: 6
+      - itemId: TROPICAL_FISH
+        chance: 5
+        amount: 1
+        skillXp: 8
+      - itemId: SPONGE
+        chance: 2
+        amount: 1
+        skillXp: 10
+    treasures:
+      - itemId: PRISMARINE_CRYSTALS
+        chance: 40
+        amount: 2
+        skillXp: 10
+      - itemId: PRISMARINE_SHARD
+        chance: 30
+        amount: 2
+        skillXp: 10
+      - itemId: SPONGE
+        chance: 20
+        amount: 1
+        skillXp: 12
+      - itemId: CLAY_BALL
+        chance: 10
+        amount: 4
+        skillXp: 8
+    junk:
+      - itemId: RUSTY_COIN
+        chance: 50
+        amount: 1
+        skillXp: 2
+      - itemId: BUSTED_BELT_BUCKLE
+        chance: 30
+        amount: 1
+        skillXp: 2
+      - itemId: OLD_LEATHER_BOOT
+        chance: 20
+        amount: 1
+        skillXp: 2
+    seaCreatures:
+      - seaCreatureId: ALLIGATOR
+        chance: 5
+      - seaCreatureId: BANSHEE
+        chance: 3
+      - seaCreatureId: BAYOU_SLUDGE
+        chance: 3
+      - seaCreatureId: DUMPSTER_DIVER
+        chance: 2
+      - seaCreatureId: TITANOBOA
+        chance: 1
+      - seaCreatureId: TRASH_GOBBLER
+        chance: 1
+  - id: CRIMSON_ISLE_LAVA
+    regions:
+      - CRIMSON_ISLE
+      - BLAZING_VOLCANO
+    mediums:
+      - LAVA
+    items:
+      - itemId: MAGMAFISH
+        chance: 100
+        amount: 1
+        skillXp: 10
+    treasures:
+      - itemId: MAGMAFISH
+        chance: 75
+        amount: 2
+        skillXp: 15
+      - itemId: SULPHUR
+        chance: 25
+        amount: 2
+        skillXp: 15
+    junk: [ ]
+    seaCreatures:
+      - seaCreatureId: LAVA_BLAZE
+        chance: 3
+      - seaCreatureId: FRIED_CHICKEN
+        chance: 2
+      - seaCreatureId: FIREPROOF_WITCH
+        chance: 2
+      - seaCreatureId: FIERY_SCUTTLER
+        chance: 1
+      - seaCreatureId: RAGNAROK
+        chance: 1

@@ -15,12 +15,15 @@ import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.pvp.projectile.entities.FireballProjectile;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
-import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.bedwarsgame.shop.Currency;
+import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 public class Fireball extends SimpleInteractableItem {
 
 	public Fireball() {
-		super("fireball");
+		super("fireball", new ShopData("Fireball", "Right-click to launch! Great to knock\nback enemies walking on thin bridges.",
+			40, 1, Currency.IRON, DatapointBedWarsHotbar.HotbarItemType.UTILITY, 7));
 	}
 
 
@@ -44,6 +47,6 @@ public class Fireball extends SimpleInteractableItem {
 		new FireballProjectile(EntityType.FIREBALL, player).shoot(player.getPosition().add(0, player.getEyeHeight(), 0).asVec(), 1, 1);
 		player.playSound(Sound.sound(Key.key("minecraft:entity.ghast.shoot"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
 		player.getAttribute(Attribute.MOVEMENT_SPEED).addModifier(new AttributeModifier(Key.key("bw:fireball"), -0.3, AttributeOperation.ADD_MULTIPLIED_TOTAL));
-		MathUtility.delay(() -> player.getAttribute(Attribute.MOVEMENT_SPEED).removeModifier(Key.key("bw:fireball")), TaskSchedule.seconds(2));
+		ScheduleUtility.delay(() -> player.getAttribute(Attribute.MOVEMENT_SPEED).removeModifier(Key.key("bw:fireball")), TaskSchedule.seconds(2));
 	}
 }

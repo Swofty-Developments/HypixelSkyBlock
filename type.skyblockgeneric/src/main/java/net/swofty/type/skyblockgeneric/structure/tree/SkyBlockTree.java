@@ -5,7 +5,13 @@ import lombok.Setter;
 import net.minestom.server.instance.Instance;
 import net.swofty.type.skyblockgeneric.structure.SkyBlockStructure;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 @Getter
 @Setter

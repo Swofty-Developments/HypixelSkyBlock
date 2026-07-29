@@ -34,8 +34,6 @@ public class AnvilCombineRegistry {
                 },
                 (player, upgradeItem, sacrificeItem) -> {
                     if (upgradeItem.hasComponent(HotPotatoableComponent.class)) {
-                        System.out.println(upgradeItem.getAttributeHandler().getPotentialType());
-
                         var type = sacrificeItem.getAttributeHandler().getPotentialType();
 
                         HotPotatoableComponent hotPotatoable = upgradeItem.getComponent(HotPotatoableComponent.class);

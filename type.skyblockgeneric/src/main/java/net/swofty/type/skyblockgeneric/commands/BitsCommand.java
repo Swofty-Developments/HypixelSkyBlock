@@ -5,11 +5,11 @@ import net.minestom.server.command.builder.arguments.number.ArgumentNumber;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Sets your bits balance",
-        aliases = "bit",
+    labels = "bit bits",
         usage = "/bits <amount>",
         permission = Rank.STAFF,
         allowsConsole = false)

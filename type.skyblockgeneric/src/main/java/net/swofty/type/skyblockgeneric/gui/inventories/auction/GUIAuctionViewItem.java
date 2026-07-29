@@ -7,8 +7,8 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocol;
 import net.swofty.commons.skyblock.auctions.AuctionItem;
-import net.swofty.commons.protocol.objects.auctions.AuctionFetchItemProtocolObject;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -36,7 +36,7 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     public long minimumBidAmount = 0;
 
     public GUIAuctionViewItem(UUID auctionID, HypixelInventoryGUI previousGUI) {
-        super(I18n.string("gui_auction.view.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_auction.view.title"), InventoryType.CHEST_6_ROW);
 
         this.auctionID = auctionID;
         this.previousGUI = previousGUI;
@@ -50,50 +50,52 @@ public class GUIAuctionViewItem extends HypixelInventoryGUI implements Refreshin
     }
 
     public void updateItems() {
-        AuctionFetchItemProtocolObject.AuctionFetchItemMessage message =
-                new AuctionFetchItemProtocolObject.AuctionFetchItemMessage(auctionID);
-        CompletableFuture<AuctionFetchItemProtocolObject.AuctionFetchItemResponse> future =
-                new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message);
-        AuctionItem item = future.join().item();
+        AuctionFetchItemProtocol.AuctionFetchItemMessage message =
+                new AuctionFetchItemProtocol.AuctionFetchItemMessage(auctionID);
+        new ProxyService(ServiceType.AUCTION_HOUSE).handleRequest(message).thenAccept(response -> {
+            AuctionItem item = ((AuctionFetchItemProtocol.AuctionFetchItemResponse) response).item();
 
-        set(GUIClickableItem.getGoBackItem(49, previousGUI));
+            set(GUIClickableItem.getGoBackItem(49, previousGUI));
 
-        set(new GUIItem(13) {
-            @Override
-            public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.updateLore(
-                        PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
-                        new AuctionItemLoreHandler(item).getLore(player)
-                );
+            set(new GUIItem(13) {
+                @Override
+                public ItemStack.Builder getItem(HypixelPlayer p) {
+                    SkyBlockPlayer player = (SkyBlockPlayer) p;
+                    return ItemStackCreator.updateLore(
+                            PlayerItemUpdater.playerUpdate(player, new SkyBlockItem(item.getItem()).getItemStack()),
+                            new AuctionItemLoreHandler(item).getLore(player)
+                    );
+                }
+            });
+
+            if (!item.getOriginator().equals(getPlayer().getUuid())) {
+                if (item.isBin()) {
+                    new AuctionViewThirdBin().open(this, item, (SkyBlockPlayer) getPlayer());
+                    return;
+                }
+
+                new AuctionViewThirdNormal().open(this, item, (SkyBlockPlayer) getPlayer());
+            } else {
+                if (item.isBin()) {
+                    new AuctionViewSelfBIN().open(this, item, (SkyBlockPlayer) getPlayer());
+                    return;
+                }
+
+                new AuctionViewSelfNormal().open(this, item, (SkyBlockPlayer) getPlayer());
             }
         });
-
-        if (!item.getOriginator().equals(getPlayer().getUuid())) {
-            if (item.isBin()) {
-                new AuctionViewThirdBin().open(this, item, (SkyBlockPlayer) getPlayer());
-                return;
-            }
-
-            new AuctionViewThirdNormal().open(this, item, (SkyBlockPlayer) getPlayer());
-        } else {
-            if (item.isBin()) {
-                new AuctionViewSelfBIN().open(this, item, (SkyBlockPlayer) getPlayer());
-                return;
-            }
-
-            new AuctionViewSelfNormal().open(this, item, (SkyBlockPlayer) getPlayer());
-        }
     }
 
     @Override
     public void refreshItems(HypixelPlayer player) {
-        if (!new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().join()) {
-            player.sendMessage(I18n.string("gui_auction.view.offline_message"));
-            player.closeInventory();
-        }
-
-        updateItems();
+        new ProxyService(ServiceType.AUCTION_HOUSE).isOnline().thenAccept(online -> {
+            if (!online) {
+                player.sendMessage(I18n.t("gui_auction.view.offline_message"));
+                player.closeInventory();
+                return;
+            }
+            updateItems();
+        });
     }
 
     @Override

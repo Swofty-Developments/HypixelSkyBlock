@@ -28,7 +28,7 @@ public class LobbySelector extends LobbyItem {
         this(player -> {
             ServerType currentType = HypixelConst.getTypeLoader().getType();
             String lobbyName = StringUtility.toNormalCase(currentType.name());
-            new GUILobbySelector(currentType, lobbyName).open(player);
+            player.openView(new GUILobbySelector(currentType, lobbyName));
         });
     }
 

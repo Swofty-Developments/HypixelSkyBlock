@@ -6,27 +6,28 @@ import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.event.player.PlayerUseItemOnBlockEvent;
 import net.swofty.type.murdermysterygame.TypeMurderMysteryGameLoader;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionGameCustomItems implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerUseItemOnBlockEvent event) {
         TypeMurderMysteryGameLoader.getItemHandler().onItemUseOnBlock(event);
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerFinishItemUseEvent event) {
         TypeMurderMysteryGameLoader.getItemHandler().onItemFinishUse(event);
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerUseItemEvent event) {
         TypeMurderMysteryGameLoader.getItemHandler().onItemUse(event);
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerBlockPlaceEvent event) {
         TypeMurderMysteryGameLoader.getItemHandler().onBlockPlace(event);
     }

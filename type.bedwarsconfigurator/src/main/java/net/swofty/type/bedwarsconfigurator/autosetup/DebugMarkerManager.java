@@ -10,10 +10,14 @@ import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.commons.bedwars.map.BedWarsMapsConfig.Position;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
+import net.swofty.commons.mc.HypixelPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class DebugMarkerManager {
 
@@ -31,15 +35,15 @@ public class DebugMarkerManager {
 
             // Bed markers
             if (config.getBedFeet() != null) {
-                markers.add(createMarker(instance, config.getBedFeet(), teamColor + team.getName() + " Bed (Feet)", Material.RED_BED));
+                markers.add(createMarker(instance, config.getBedFeet().asHypixelPosition(), teamColor + team.getName() + " Bed (Feet)", Material.RED_BED));
             }
             if (config.getBedHead() != null) {
-                markers.add(createMarker(instance, config.getBedHead(), teamColor + team.getName() + " Bed (Head)", Material.RED_BED));
+                markers.add(createMarker(instance, config.getBedHead().asHypixelPosition(), teamColor + team.getName() + " Bed (Head)", Material.RED_BED));
             }
 
             // Spawn marker
             if (config.getSpawn() != null) {
-                Position pos = new Position(config.getSpawn().x(), config.getSpawn().y(), config.getSpawn().z());
+                HypixelPosition pos = new HypixelPosition(config.getSpawn().x(), config.getSpawn().y(), config.getSpawn().z());
                 markers.add(createMarker(instance, pos, teamColor + team.getName() + " Spawn", Material.PLAYER_HEAD));
             }
 
@@ -50,43 +54,43 @@ public class DebugMarkerManager {
 
             // Shop markers
             if (config.getItemShop() != null) {
-                Position pos = new Position(config.getItemShop().x(), config.getItemShop().y(), config.getItemShop().z());
+                HypixelPosition pos = new HypixelPosition(config.getItemShop().x(), config.getItemShop().y(), config.getItemShop().z());
                 markers.add(createMarker(instance, pos, teamColor + team.getName() + " Item Shop", Material.EMERALD));
             }
             if (config.getTeamShop() != null) {
-                Position pos = new Position(config.getTeamShop().x(), config.getTeamShop().y(), config.getTeamShop().z());
+                HypixelPosition pos = new HypixelPosition(config.getTeamShop().x(), config.getTeamShop().y(), config.getTeamShop().z());
                 markers.add(createMarker(instance, pos, teamColor + team.getName() + " Team Shop", Material.NETHER_STAR));
             }
         }
 
         // Diamond generators
         int diamondIndex = 1;
-        for (Position pos : session.getDiamondGenerators()) {
+        for (HypixelPosition pos : session.getDiamondGenerators()) {
             markers.add(createMarker(instance, pos, "§bDiamond Gen #" + diamondIndex++, Material.DIAMOND_BLOCK));
         }
 
         // Emerald generators
         int emeraldIndex = 1;
-        for (Position pos : session.getEmeraldGenerators()) {
+        for (HypixelPosition pos : session.getEmeraldGenerators()) {
             markers.add(createMarker(instance, pos, "§aEmerald Gen #" + emeraldIndex++, Material.EMERALD_BLOCK));
         }
 
         // Waiting location
         if (session.getWaitingLocation() != null) {
-            Position pos = new Position(session.getWaitingLocation().x(), session.getWaitingLocation().y(), session.getWaitingLocation().z());
+            HypixelPosition pos = new HypixelPosition(session.getWaitingLocation().x(), session.getWaitingLocation().y(), session.getWaitingLocation().z());
             markers.add(createMarker(instance, pos, "§eWaiting Spawn", Material.CLOCK));
         }
 
         // Spectator location
         if (session.getSpectatorLocation() != null) {
-            Position pos = new Position(session.getSpectatorLocation().x(), session.getSpectatorLocation().y(), session.getSpectatorLocation().z());
+            HypixelPosition pos = new HypixelPosition(session.getSpectatorLocation().x(), session.getSpectatorLocation().y(), session.getSpectatorLocation().z());
             markers.add(createMarker(instance, pos, "§7Spectator Spawn", Material.ENDER_EYE));
         }
 
         // Bounds markers (corners)
         if (session.hasBounds()) {
-            markers.add(createMarker(instance, new Position(session.getMinX(), session.getMinY(), session.getMinZ()), "§8Bounds Min", Material.BARRIER));
-            markers.add(createMarker(instance, new Position(session.getMaxX(), session.getMaxY(), session.getMaxZ()), "§8Bounds Max", Material.BARRIER));
+            markers.add(createMarker(instance, new HypixelPosition(session.getMinX(), session.getMinY(), session.getMinZ()), "§8Bounds Min", Material.BARRIER));
+            markers.add(createMarker(instance, new HypixelPosition(session.getMaxX(), session.getMaxY(), session.getMaxZ()), "§8Bounds Max", Material.BARRIER));
         }
 
         playerMarkers.put(playerUuid, markers);
@@ -101,7 +105,7 @@ public class DebugMarkerManager {
         }
     }
 
-    private static Entity createMarker(Instance instance, Position pos, String label, Material headItem) {
+    private static Entity createMarker(Instance instance, HypixelPosition pos, String label, Material headItem) {
         Entity armorStand = new Entity(EntityType.ARMOR_STAND);
 
         ArmorStandMeta meta = (ArmorStandMeta) armorStand.getEntityMeta();
@@ -131,7 +135,7 @@ public class DebugMarkerManager {
     }
 
     public static Entity createSingleMarker(Instance instance, double x, double y, double z, String label) {
-        return createMarker(instance, new Position(x, y, z), label, Material.ARMOR_STAND);
+        return createMarker(instance, new HypixelPosition(x, y, z), label, Material.ARMOR_STAND);
     }
 
     public static void refreshMarkers(UUID playerUuid, AutoSetupSession session, Instance instance) {

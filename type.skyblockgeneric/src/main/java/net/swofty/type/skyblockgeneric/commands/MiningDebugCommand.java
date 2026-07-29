@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CommandParameters(aliases = "mininginfo",
+@CommandParameters(labels = "mininginfo",
         description = "Debug command to display mining handler relationships",
         usage = "/miningdebug",
         permission = Rank.STAFF,

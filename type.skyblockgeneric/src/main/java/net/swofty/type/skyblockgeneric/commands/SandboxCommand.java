@@ -4,10 +4,10 @@ import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-@CommandParameters(aliases = "getsandboxitem",
+@CommandParameters(labels = "getsandboxitem sandbox",
         description = "Gets a sandbox item",
         usage = "/getsandboxitem",
         permission = Rank.DEFAULT,

@@ -7,7 +7,6 @@ import net.swofty.type.skyblockgeneric.item.set.impl.SetEvents;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MushroomSet implements ArmorSet, SetEvents {

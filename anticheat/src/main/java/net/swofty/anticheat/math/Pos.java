@@ -1,6 +1,7 @@
 package net.swofty.anticheat.math;
 
 import lombok.AllArgsConstructor;
+import net.minestom.server.coordinate.Vec;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,6 +64,10 @@ public final class Pos implements Point {
     @Contract(pure = true)
     public @NotNull Pos withView(@NotNull Pos pos) {
         return withView(pos.yaw(), pos.pitch());
+    }
+
+    public static @NotNull Pos fromVec(@NotNull Vec vec) {
+        return new Pos(vec.x(), vec.y(), vec.z());
     }
 
     public static @NotNull Pos fromPoint(@NotNull Point point) {

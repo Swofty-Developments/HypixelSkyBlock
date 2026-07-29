@@ -25,7 +25,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MobGraveyardZombie extends BestiaryMob implements RegionPopulator {
@@ -133,8 +132,8 @@ public class MobGraveyardZombie extends BestiaryMob implements RegionPopulator {
 
     @Override
     public List<Populator> getPopulators() {
-        return Arrays.asList(
-                new Populator(RegionType.GRAVEYARD, 20)
+        return List.of(
+            new Populator(RegionType.GRAVEYARD, 20)
         );
     }
 }

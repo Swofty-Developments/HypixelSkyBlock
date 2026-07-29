@@ -18,9 +18,9 @@ import java.util.function.BiConsumer;
  */
 public class FeatureConfiguration {
 	protected final Map<FeatureType<?>, CombatFeature> combatFeatures = new HashMap<>();
-	
+
 	public FeatureConfiguration() {}
-	
+
 	/**
 	 * Adds the specified feature as the specified type to this configuration.
 	 * This WILL overwrite any previous feature associated with the specified type.
@@ -36,7 +36,7 @@ public class FeatureConfiguration {
 		combatFeatures.put(type, feature);
 		return this;
 	}
-	
+
 	/**
 	 * Gets the feature which has been associated with the specified type in this configuration.
 	 * If there is none present, the default feature for this type will be returned.
@@ -49,7 +49,7 @@ public class FeatureConfiguration {
 	public <T extends CombatFeature> @NotNull T get(FeatureType<T> type) {
 		return (T) combatFeatures.getOrDefault(type, type.defaultFeature());
 	}
-	
+
 	/**
 	 * Gets the feature which has been associated with the specified type in this configuration.
 	 * Will yield null if there is no associated feature.
@@ -62,34 +62,34 @@ public class FeatureConfiguration {
 	<T extends CombatFeature> @Nullable T getDirect(FeatureType<T> type) {
 		return (T) combatFeatures.get(type);
 	}
-	
+
 	public Collection<CombatFeature> listFeatures() {
 		return combatFeatures.values();
 	}
-	
+
 	public Set<FeatureType<?>> listTypes() {
 		return combatFeatures.keySet();
 	}
-	
+
 	public int size() {
 		return combatFeatures.size();
 	}
-	
+
 	void forEach(BiConsumer<FeatureType<?>, CombatFeature> consumer) {
 		combatFeatures.forEach(consumer);
 	}
-	
+
 	FeatureConfiguration overlay() {
 		return new Overlay(this);
 	}
-	
+
 	private static class Overlay extends FeatureConfiguration {
 		private final FeatureConfiguration backing;
-		
+
 		public Overlay(FeatureConfiguration backing) {
 			this.backing = backing;
 		}
-		
+
 		@Override
 		public <T extends CombatFeature> @NotNull T get(FeatureType<T> type) {
 			if (super.combatFeatures.containsKey(type)) {
@@ -99,19 +99,19 @@ public class FeatureConfiguration {
 			}
 		}
 	}
-	
+
 	public static FeatureConfiguration of(FeatureType<?> type1, CombatFeature feature1) {
 		return new FeatureConfiguration()
 				.add(type1, feature1);
 	}
-	
+
 	public static FeatureConfiguration of(FeatureType<?> type1, CombatFeature feature1,
 	                                      FeatureType<?> type2, CombatFeature feature2) {
 		return new FeatureConfiguration()
 				.add(type1, feature1)
 				.add(type2, feature2);
 	}
-	
+
 	public static FeatureConfiguration of(FeatureType<?> type1, CombatFeature feature1,
 	                                      FeatureType<?> type2, CombatFeature feature2,
 	                                      FeatureType<?> type3, CombatFeature feature3) {
@@ -120,7 +120,7 @@ public class FeatureConfiguration {
 				.add(type2, feature2)
 				.add(type3, feature3);
 	}
-	
+
 	public static FeatureConfiguration of(FeatureType<?> type1, CombatFeature feature1,
 	                                      FeatureType<?> type2, CombatFeature feature2,
 	                                      FeatureType<?> type3, CombatFeature feature3,

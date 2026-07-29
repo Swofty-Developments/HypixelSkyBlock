@@ -108,7 +108,6 @@ public class DatapointAuctionStatistics extends SkyBlockDatapoint<DatapointAucti
             MYTHIC_BOUGHT,
             SPECIAL_BOUGHT,
             ULTIMATE_BOUGHT,
-            ;
         }
     }
 }

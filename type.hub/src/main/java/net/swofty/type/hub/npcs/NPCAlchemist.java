@@ -1,5 +1,6 @@
 package net.swofty.type.hub.npcs;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
@@ -10,19 +11,12 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.hub.gui.GUIShopAlchemist;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.Map;
-
-public class NPCAlchemist extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCAlchemist extends HypixelNPC {
     public NPCAlchemist() {
         super(new AnimalConfiguration() {
             @Override
             public String[] holograms(HypixelPlayer player) {
                 return new String[]{"Alchemist", "§e§lCLICK"};
-            }
-
-            @Override
-            public float hologramYOffset() {
-                return 0.1f;
             }
 
             @Override
@@ -62,12 +56,7 @@ public class NPCAlchemist extends HypixelNPC implements net.swofty.type.skyblock
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Map.of("player", player.getUsername()))
+            DialogueSet.ofTranslation("hello", "npcs_hub.alchemist.dialogue.hello", Component.text(player.getUsername()))
         };
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "ALCHEMIST";
     }
 }

@@ -2,16 +2,20 @@ package net.swofty.type.lobby.gui;
 
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.achievement.*;
+import net.swofty.type.generic.achievement.AchievementCategory;
+import net.swofty.type.generic.achievement.AchievementDefinition;
+import net.swofty.type.generic.achievement.AchievementRegistry;
+import net.swofty.type.generic.achievement.AchievementStatisticsService;
+import net.swofty.type.generic.achievement.AchievementType;
+import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
-
-import net.minestom.server.inventory.click.Click;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -158,7 +162,6 @@ public class GUIChallengeAchievements extends HypixelInventoryGUI {
 
         int maxPages = getMaxPages(totalCount);
         if (maxPages > 1) {
-            List<AchievementDefinition> finalAchievements = achievements;
             set(new GUIClickableItem(53) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer player) {

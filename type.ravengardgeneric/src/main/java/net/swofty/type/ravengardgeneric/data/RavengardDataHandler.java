@@ -100,7 +100,6 @@ public class RavengardDataHandler extends DataHandler {
         return datapointValue != null ? datapointValue : datapoint.defaultDatapoint;
     }
 
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> datapointValue = this.datapoints.get(datapoint.key);
         return (R) (datapointValue != null ? type.cast(datapointValue) : type.cast(datapoint.defaultDatapoint));

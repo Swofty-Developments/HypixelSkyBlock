@@ -6,12 +6,11 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import lombok.Getter;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.proxy.FromProxyChannels;
+import net.swofty.commons.protocol.objects.proxy.from.PingServerProtocol;
 import net.swofty.velocity.SkyBlockVelocity;
-import net.swofty.velocity.redis.RedisMessage;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.velocity.testflow.TestFlowManager;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 
 import java.net.InetSocketAddress;
 import java.time.Duration;
@@ -34,7 +33,7 @@ public class GameManager {
         String rootName = isLobby ? "L" : (maxPlayers <= 20 ? "mini" : "mega");
         String shortenedRootName = isLobby ? "L" : (maxPlayers <= 20 ? "m" : "M");
 
-        char letter = (char) (new Random().nextInt(26) + (isLobby ? 'a' : 'A'));
+        char letter = (char) (java.util.concurrent.ThreadLocalRandom.current().nextInt(26) + (isLobby ? 'a' : 'A'));
         String displayName = getNextAvailableDisplayName() + "" + letter;
 
         GameServer server = new GameServer(
@@ -105,16 +104,20 @@ public class GameManager {
                     AtomicBoolean pingSuccess = new AtomicBoolean(false);
                     long startTime = System.currentTimeMillis();
 
-                    RedisMessage.sendMessageToServer(registeredServer.internalID(),
-                            FromProxyChannels.PING_SERVER, new JSONObject()
+                    RedisClient.requestServer(registeredServer.internalID(),
+                            new PingServerProtocol(), new PingServerProtocol.Request()
                     ).thenRun(() -> {
                         pingSuccess.set(true);
                     });
 
                     server.getScheduler().buildTask(SkyBlockVelocity.getPlugin(), () -> {
                         if (!pingSuccess.get()) {
-                            System.out.println("Server " + givenServer.getServerInfo().getName() + " is offline! Removing from list...");
-                            System.out.println("Ping was sent at " + startTime + " and was not received at " + System.currentTimeMillis() + " (" + (System.currentTimeMillis() - startTime) + "ms)");
+                            org.tinylog.Logger.warn(
+                                "Server {} is offline! Removing from list (ping sent at {}, deadline {}ms)",
+                                givenServer.getServerInfo().getName(),
+                                startTime,
+                                System.currentTimeMillis() - startTime
+                            );
                             servers.get(serverType).remove(registeredServer);
 
                             TestFlowManager.handleServerDisconnect(registeredServer.internalID);

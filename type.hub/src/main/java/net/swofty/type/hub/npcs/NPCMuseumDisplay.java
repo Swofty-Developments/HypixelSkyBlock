@@ -42,7 +42,7 @@ public class NPCMuseumDisplay extends HypixelNPC {
 
 			return new String[]{
 					"§b" + username,
-					"§a" + profileName
+					"§eProfile: §a" + profileName
 			};
 		}
 

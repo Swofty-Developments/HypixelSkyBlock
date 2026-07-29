@@ -1,38 +1,41 @@
 package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.ServerType;
-import net.swofty.commons.proxy.ToProxyChannels;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.to.TestFlowServerReadyProtocol;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.velocity.testflow.TestFlowManager;
-import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.UUID;
 
-@ChannelListener(channel = ToProxyChannels.TEST_FLOW_SERVER_READY)
-public class ListenerTestFlowServerReady extends RedisListener {
+public class ListenerTestFlowServerReady implements RedisMessageHandler<
+        TestFlowServerReadyProtocol.Request,
+        TestFlowServerReadyProtocol.Response> {
+
     @Override
-    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
+    public RedisProtocol<TestFlowServerReadyProtocol.Request, TestFlowServerReadyProtocol.Response> protocol() {
+        return new TestFlowServerReadyProtocol();
+    }
+
+    @Override
+    public TestFlowServerReadyProtocol.Response handle(TestFlowServerReadyProtocol.Request message, RedisMessageContext context) {
         try {
-            String testFlowName = message.getString("test_flow_name");
-            ServerType serverType = ServerType.valueOf(message.getString("server_type"));
-            int serverIndex = message.getInt("server_index");
+            String testFlowName = message.testFlowName();
+            ServerType serverType = ServerType.valueOf(message.serverType());
+            int serverIndex = message.serverIndex();
 
-            // Mark the server as ready
-            TestFlowManager.markServerReady(testFlowName, serverType, serverIndex, serverUUID);
+            TestFlowManager.markServerReady(testFlowName, serverType, serverIndex, UUID.fromString(context.origin().id()));
 
-            System.out.println("Server " + serverType.name() + " #" + serverIndex +
-                    " is ready for test flow '" + testFlowName + "' (UUID: " + serverUUID + ")");
+            Logger.info("Server {} #{} is ready for test flow '{}' (UUID: {})",
+                    serverType.name(), serverIndex, testFlowName, UUID.fromString(context.origin().id()));
 
-            return new JSONObject()
-                    .put("success", true)
-                    .put("message", "Server ready status recorded");
+            return new TestFlowServerReadyProtocol.Response(true, "Server ready status recorded", null);
 
         } catch (Exception e) {
-            System.out.println("Failed to process test flow server ready from server " + serverUUID);
-            return new JSONObject()
-                    .put("success", false)
-                    .put("error", e.getMessage());
+            Logger.error(e, "Failed to process test flow server ready from server {}", UUID.fromString(context.origin().id()));
+            return new TestFlowServerReadyProtocol.Response(false, null, e.getMessage());
         }
     }
 }

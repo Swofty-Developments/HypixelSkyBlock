@@ -74,7 +74,7 @@ public enum LuckyBlockType {
     }
 
     public String getColoredName() {
-        return String.format("\u00A7x\u00A7%s\u00A7%s\u00A7%s\u00A7%s\u00A7%s\u00A7%s%s",
+        return String.format("§x§%s§%s§%s§%s§%s§%s%s",
                 Integer.toHexString((color >> 20) & 0xF),
                 Integer.toHexString((color >> 16) & 0xF),
                 Integer.toHexString((color >> 12) & 0xF),

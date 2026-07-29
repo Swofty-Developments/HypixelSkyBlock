@@ -88,7 +88,11 @@ public class GUIPlaySkywars extends HypixelInventoryGUI {
             public void run(InventoryPreClickEvent e, HypixelPlayer player) {
                 player.closeInventory();
 
-                if (!GameQueueValidator.canPlayerQueue(player)) {
+                if (!GameQueueValidator.canPlayerQueue(player, new GameQueueValidator.QueueRequirements(
+                    "SkyWars",
+                    type.getDisplayName(),
+                    type.getTeamSize()
+                ))) {
                     return;
                 }
 

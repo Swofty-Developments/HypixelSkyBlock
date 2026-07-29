@@ -1,11 +1,16 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.skyblockgeneric.item.crafting.ShapedRecipe;
@@ -14,9 +19,8 @@ import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class GUIRecipeBook extends StatelessView {
     private static final int[] CATEGORY_SLOTS = {
@@ -26,7 +30,7 @@ public class GUIRecipeBook extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.recipe.book.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.recipe.book.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -39,8 +43,11 @@ public class GUIRecipeBook extends StatelessView {
         allRecipes.addAll(ShapedRecipe.CACHED_RECIPES);
         allRecipes.addAll(ShapelessRecipe.CACHED_RECIPES);
 
-        layout.slot(51, (_, _) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search"), Material.OAK_SIGN, 1,
-                I18n.lore("gui_sbmenu.recipe.book.search.lore")), (_, c) -> {
+        layout.slot(51, (_, c) -> {
+            Locale l = c.player().getLocale();
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.search", l), Material.OAK_SIGN, 1,
+                I18n.iterable("gui_sbmenu.recipe.book.search.lore"));
+        }, (_, c) -> {
             new HypixelSignGUI(c.player()).open(new String[]{"Enter query", ""}).thenAccept(line -> {
                 if (line == null) {
                     return;
@@ -52,6 +59,7 @@ public class GUIRecipeBook extends StatelessView {
 
         layout.slot(4, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
             StringBuilder missionDisplay = new StringBuilder();
             List<String> missionLore = new ArrayList<>();
             SkyBlockRecipe.getMissionDisplay(missionLore, player.getUuid());
@@ -59,8 +67,8 @@ public class GUIRecipeBook extends StatelessView {
                 missionDisplay.append(missionLore.get(j));
                 if (j < missionLore.size() - 1) missionDisplay.append("\n");
             }
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.info"), Material.BOOK, 1,
-                    I18n.lore("gui_sbmenu.recipe.book.info.lore", Map.of("mission_display", missionDisplay.toString())));
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.info", l), Material.BOOK, 1,
+                I18n.iterable("gui_sbmenu.recipe.book.info.lore", Component.text(missionDisplay.toString())));
         });
 
         for (int i = 0; i < CATEGORY_SLOTS.length && i < SkyBlockRecipe.RecipeType.values().length; i++) {
@@ -76,6 +84,7 @@ public class GUIRecipeBook extends StatelessView {
 
             layout.slot(slot, (s, c) -> {
                 SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+                Locale l = player.getLocale();
                 ArrayList<SkyBlockRecipe> allowedRecipes = new ArrayList<>();
 
                 typeRecipes.forEach(recipe -> {
@@ -96,15 +105,16 @@ public class GUIRecipeBook extends StatelessView {
                 String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
                 String categoryName = StringUtility.toNormalCase(type.name());
-                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", Map.of("category_name", categoryName)),
+                return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Component.text(categoryName)),
                         type.getMaterial(), 1,
-                        I18n.lore("gui_sbmenu.recipe.book.category.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                    I18n.iterable("gui_sbmenu.recipe.book.category.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
             }, (_, c) -> c.push(new GUIRecipeCategory(type), GUIRecipeCategory.createInitialState((SkyBlockPlayer) c.player(), type)));
         }
 
         // Slayer recipes
         layout.slot(32, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            Locale l = player.getLocale();
             SkyBlockRecipe.RecipeType type = SkyBlockRecipe.RecipeType.SLAYER;
 
             ArrayList<SkyBlockRecipe.RecipeType> recipeTypes = new ArrayList<>();
@@ -141,9 +151,9 @@ public class GUIRecipeBook extends StatelessView {
                     completedLoadingBar.length() - formattingCodeLength, maxBarLength));
             String progressBar = completedLoadingBar + uncompletedLoadingBar + "§r §e" + allowedRecipes.size() + "§6/§e" + typeRecipes.size();
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", Map.of("category_name", categoryName)),
+            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.recipe.book.category", l, Component.text(categoryName)),
                     type.getMaterial(), 1,
-                    I18n.lore("gui_sbmenu.recipe.book.category.lore", Map.of("category_name", categoryName, "percent", unlockedPercentage, "progress_bar", progressBar)));
+                I18n.iterable("gui_sbmenu.recipe.book.category.lore", Component.text(categoryName), Component.text(unlockedPercentage), Component.text(progressBar)));
         }, (click, c) -> c.push(new GUIRecipeSlayers()));
     }
 }

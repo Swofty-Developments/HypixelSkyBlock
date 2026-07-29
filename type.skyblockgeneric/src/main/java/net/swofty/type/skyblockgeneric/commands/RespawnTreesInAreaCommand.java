@@ -16,7 +16,7 @@ import net.swofty.type.generic.user.categories.Rank;
 import java.util.List;
 
 @CommandParameters(
-        aliases = "regrowtrees",
+        labels = "regrowtrees",
         description = "Respawns trees in an area with a new seed",
         usage = "/respawntreesinarea <distance> <seed>",
         permission = Rank.STAFF,

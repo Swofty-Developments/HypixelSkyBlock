@@ -7,7 +7,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "transfer",
+@CommandParameters(labels = "transfer sendto",
         description = "Transfers a player to another server",
         usage = "/sendto <server_type>",
         permission = Rank.STAFF,

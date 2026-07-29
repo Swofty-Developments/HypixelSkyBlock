@@ -3,13 +3,13 @@ package net.swofty.type.skyblockgeneric.commands;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(description = "Toggles drop alert",
         usage = "/toggledropalert",
         permission = Rank.DEFAULT,
-        aliases = "dropalert",
+    labels = "dropalert toggledropalert",
         allowsConsole = false)
 public class ToggleDropAlertCommand extends HypixelCommand {
 

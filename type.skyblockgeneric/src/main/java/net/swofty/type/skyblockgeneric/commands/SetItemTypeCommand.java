@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "settype",
+@CommandParameters(labels = "settype",
         description = "Updates the type of a player's Sandbox item",
         usage = "/setitemtype <material>",
         permission = Rank.DEFAULT,

@@ -37,7 +37,7 @@ public class WheatAndFlowersConfiguration extends SkyBlockRegenConfiguration {
     public List<Material> getMineableBlocks(Instance instance, Point point) {
         ArrayList<Material> materials = new ArrayList<>(Collections.singletonList(Material.WHEAT));
 
-        if (CrystalDatabase.getFromAround(HypixelConst.getTypeLoader().getType(), Pos.fromPoint(point), 15)
+        if (CrystalDatabase.getFromAround(HypixelConst.getTypeLoader().getType(), point.asPos(), 15)
                 .stream().anyMatch(crystal -> crystal.itemType == ItemType.FLOWER_CRYSTAL)) {
             materials.addAll(new ArrayList<>(Groups.FLOWERS));
         }

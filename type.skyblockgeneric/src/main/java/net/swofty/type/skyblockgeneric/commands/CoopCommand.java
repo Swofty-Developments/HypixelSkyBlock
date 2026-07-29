@@ -8,16 +8,16 @@ import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyPlayerSet;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
-import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.skyblockgeneric.data.monogdb.CoopDatabase;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@CommandParameters(aliases = "cooperative",
+@CommandParameters(labels = "cooperative coop",
         description = "Primary coop command",
         usage = "/coop",
         permission = Rank.DEFAULT,

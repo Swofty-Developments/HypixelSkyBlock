@@ -1,49 +1,47 @@
 package net.swofty.service.darkauction.endpoints;
 
 import net.swofty.commons.skyblock.auctions.DarkAuctionPhase;
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.ProtocolObject;
+import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.darkauction.PlaceBidProtocol;
 import net.swofty.service.darkauction.DarkAuctionScheduler;
 import net.swofty.service.darkauction.DarkAuctionService;
 import net.swofty.service.darkauction.DarkAuctionState;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import org.tinylog.Logger;
 
 import java.util.UUID;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointPlaceBid implements ServiceEndpoint<
+public class EndpointPlaceBid implements RedisMessageHandler<
         PlaceBidProtocol.PlaceBidMessage,
         PlaceBidProtocol.PlaceBidResponse> {
 
     @Override
-    public ProtocolObject<PlaceBidProtocol.PlaceBidMessage, PlaceBidProtocol.PlaceBidResponse> associatedProtocolObject() {
+    public RedisProtocol<PlaceBidProtocol.PlaceBidMessage, PlaceBidProtocol.PlaceBidResponse> protocol() {
         return new PlaceBidProtocol();
     }
 
     @Override
-    public PlaceBidProtocol.PlaceBidResponse onMessage(
-            ServiceProxyRequest request,
-            PlaceBidProtocol.PlaceBidMessage msg) {
+    public PlaceBidProtocol.PlaceBidResponse handle(PlaceBidProtocol.PlaceBidMessage msg, RedisMessageContext context) {
 
         DarkAuctionState auction = DarkAuctionService.getCurrentAuction();
 
         // Check if there's an active auction
         if (auction == null) {
             Logger.warn("Bid rejected: No active auction");
-            return new PlaceBidProtocol.PlaceBidResponse(false, "No active auction");
+            return new PlaceBidProtocol.PlaceBidResponse(false, "No active auction", null);
         }
 
         // Check if auction ID matches
         if (!auction.getAuctionId().equals(msg.auctionId())) {
             Logger.warn("Bid rejected: Auction ID mismatch");
-            return new PlaceBidProtocol.PlaceBidResponse(false, "Invalid auction ID");
+            return new PlaceBidProtocol.PlaceBidResponse(false, "Invalid auction ID", null);
         }
 
         // Check if we're in bidding phase
         if (auction.getPhase() != DarkAuctionPhase.BIDDING) {
             Logger.warn("Bid rejected: Not in bidding phase (current: {})", auction.getPhase());
-            return new PlaceBidProtocol.PlaceBidResponse(false, "Auction is not in bidding phase");
+            return new PlaceBidProtocol.PlaceBidResponse(false, "Auction is not in bidding phase", null);
         }
 
         // SYNCHRONIZED to prevent race conditions
@@ -53,7 +51,7 @@ public class EndpointPlaceBid implements ServiceEndpoint<
                 Logger.info("Bid rejected: {} tried to bid {} but current bid is {}",
                         msg.playerName(), msg.bidAmount(), auction.getCurrentBid());
                 return new PlaceBidProtocol.PlaceBidResponse(false,
-                        "Bid too low - someone else bid first! Current bid is " + auction.getCurrentBid());
+                        "Bid too low - someone else bid first! Current bid is " + auction.getCurrentBid(), null);
             }
 
             // If there's a previous bidder, queue their refund
@@ -83,7 +81,7 @@ public class EndpointPlaceBid implements ServiceEndpoint<
             // Broadcast BID_PLACED with refund info
             DarkAuctionScheduler.broadcastBidPlaced(auction, previousBidder, previousBid);
 
-            return new PlaceBidProtocol.PlaceBidResponse(true, "Bid accepted");
+            return new PlaceBidProtocol.PlaceBidResponse(true, "Bid accepted", null);
         }
     }
 }

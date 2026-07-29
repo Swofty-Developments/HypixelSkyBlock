@@ -26,15 +26,15 @@ public class ReforgeExpressionEvaluator {
 
     private static String replaceVariables(String expression, Map<String, Double> variables) {
         Matcher matcher = VARIABLE_PATTERN.matcher(expression);
-        StringBuffer result = new StringBuffer();
 
+        StringBuilder result = new StringBuilder();
         while (matcher.find()) {
             String varName = matcher.group(1);
             Double value = variables.get(varName);
             if (value != null) {
                 matcher.appendReplacement(result, value.toString());
             } else {
-                System.err.println("Variable not found: " + varName);
+                Logger.warn("Variable not found: {}", varName);
                 matcher.appendReplacement(result, "0");
             }
         }

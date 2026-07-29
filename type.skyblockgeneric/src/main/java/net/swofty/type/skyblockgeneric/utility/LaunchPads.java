@@ -71,7 +71,7 @@ public enum LaunchPads {
     ),
 
     GRAVEYARD_TO_SPIDERS_DEN(
-        getSlimeBlocksNear(new Pos(-151, 74, -180)),
+        getSlimeBlocksNear(new Pos(-145, 74, -187)),
         ServerType.SKYBLOCK_HUB,
         ServerType.SKYBLOCK_SPIDERS_DEN,
         new Pos(-202.5, 83, -233.5),
@@ -82,13 +82,13 @@ public enum LaunchPads {
             boolean hasRequirement = player.getSkills().getCurrentLevel(SkillCategories.COMBAT) >= 1;
             if (!hasRequirement) {
                 return PlayerHolograms.ExternalPlayerHologram.builder()
-                    .pos(new Pos(-151.5, 76.5, -180.5))
+                    .pos(new Pos(-145, 77, -186))
                     .player(player)
                     .text(new String[]{"§bTravel to:", "§aSpider's Den", "§cRequires Combat Level 1"})
                     .build();
             } else {
                 return PlayerHolograms.ExternalPlayerHologram.builder()
-                    .pos(new Pos(-151.5, 76.5, -180.5))
+                    .pos(new Pos(-145, 77, -187))
                     .player(player)
                     .text(new String[]{"§bTravel to:", "§aSpider's Den"})
                     .build();

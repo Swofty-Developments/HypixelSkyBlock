@@ -57,7 +57,7 @@ public class NPCAdventurer extends HypixelNPC implements net.swofty.type.skybloc
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("hello", "npcs_hub.adventurer.dialogue.hello")
+            DialogueSet.ofTranslation("hello", "npcs_hub.adventurer.dialogue.hello")
         };
     }
 

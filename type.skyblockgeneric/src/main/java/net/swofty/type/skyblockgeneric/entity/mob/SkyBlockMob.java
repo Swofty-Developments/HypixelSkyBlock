@@ -9,7 +9,13 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.*;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityCreature;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Metadata;
+import net.minestom.server.entity.MetadataDef;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.attribute.Attribute;
@@ -42,6 +48,7 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.generic.entity.ai.vanilla.VanillaNavigator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,6 +68,14 @@ public abstract class SkyBlockMob extends EntityCreature {
 
     private Component customName;
     private TextDisplayEntity nameDisplayEntity;
+
+    // Fully self-contained vanilla navigator (own A* + own follow loop + vanilla physics). Every mob
+    // movement goal paths through this instead of Minestom's Navigator.
+    private final VanillaNavigator vanillaNavigator = new VanillaNavigator(this);
+
+    public VanillaNavigator getVanillaNavigator() {
+        return vanillaNavigator;
+    }
 
     public SkyBlockMob(EntityType entityType) {
         super(entityType);
@@ -84,12 +99,13 @@ public abstract class SkyBlockMob extends EntityCreature {
                         + "§f/§a"
                         + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
         );
-        this.set(DataComponents.CUSTOM_NAME, customName); // ARI - could be removed
+        this.set(DataComponents.CUSTOM_NAME, customName);
         nameDisplayEntity = new TextDisplayEntity(customName, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
 
         setAutoViewable(true);
         setAutoViewEntities(true);
         this.addAIGroup(getGoalSelectors(), getTargetSelectors());
+
         onInit();
     }
 
@@ -145,7 +161,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     }
 
     public float getNameDisplayHeightOffset() {
-        return 0.3f;
+        return 0.2f;
     }
 
     public abstract String getDisplayName();
@@ -203,7 +219,7 @@ public abstract class SkyBlockMob extends EntityCreature {
     public void kill() {
         super.kill();
         mobs.remove(this);
-        nameDisplayEntity.kill();
+        nameDisplayEntity.remove();
 
         if (!(getLastDamageSource().getAttacker() instanceof SkyBlockPlayer player)) return;
 
@@ -265,7 +281,10 @@ public abstract class SkyBlockMob extends EntityCreature {
         this.customName = newName;
         this.set(DataComponents.CUSTOM_NAME, customName);
         if (nameDisplayEntity != null) {
-            nameDisplayEntity.editEntityMeta(TextDisplayMeta.class, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
+            nameDisplayEntity.editEntityMeta(TextDisplayMeta.class, meta -> {
+                meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0));
+                meta.setText(newName);
+            });
         }
     }
 
@@ -318,6 +337,9 @@ public abstract class SkyBlockMob extends EntityCreature {
         if (hasCollision()) {
             applyEntityCollision();
         }
+
+        // Drive our own vanilla navigator's path-follow loop.
+        this.vanillaNavigator.tick();
 
         try {
             super.tick(time);

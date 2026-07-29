@@ -1,15 +1,12 @@
 package net.swofty.type.skyblockgeneric.region.mining;
 
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockFace;
 import net.minestom.server.network.packet.client.play.ClientPlayerActionPacket;
-import net.minestom.server.network.packet.server.play.*;
-import net.minestom.server.potion.Potion;
-import net.minestom.server.potion.PotionEffect;
+import net.minestom.server.network.packet.server.play.BlockBreakAnimationPacket;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.skyblockgeneric.event.custom.PlayerDamageSkyBlockBlockEvent;
@@ -62,16 +59,17 @@ public class BreakingTask {
         if (counter >= breakTime) {
             MinecraftServer.getGlobalEventHandler().call(new PlayerBlockBreakEvent(
                     player,
+                player.getInstance(),
                     block.block(),
                     block.block(),
-                    new BlockVec(block.pos()),
+                block.pos().asBlockVec(),
                     BlockFace.BOTTOM));
 
             this.counter = 0;
             // Handle if the player continues to break the block without a release tick
             MinecraftServer.getSchedulerManager().scheduleNextTick(() -> {
-                // Minecraft won't send a cancel digging packet if the player is still holding the block
-                // but our system requires it so we simulate it here
+                // Minecraft won't send a cancel digging packet if the player is still holding the block,
+                // but our system requires it, so we simulate it here
                 HypixelEventHandler.callCustomEvent(new PlayerDamageSkyBlockBlockEvent(
                         player,
                         block.pos(),
@@ -98,7 +96,7 @@ public class BreakingTask {
         int blockId = block.pos().hashCode();
         player.getPlayerConnection().sendPacket(new BlockBreakAnimationPacket(
                 blockId,
-                new BlockVec(block.pos()),
+            block.pos(),
                 (byte) damage
         ));
     }

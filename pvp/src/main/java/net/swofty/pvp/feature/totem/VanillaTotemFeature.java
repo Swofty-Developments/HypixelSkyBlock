@@ -13,7 +13,9 @@ import net.swofty.pvp.damage.DamageTypeInfo;
 import net.swofty.pvp.events.TotemUseEvent;
 import net.swofty.pvp.feature.FeatureType;
 import net.swofty.pvp.feature.config.DefinedFeature;
+import net.swofty.pvp.feature.config.FeatureConfiguration;
 import net.swofty.pvp.feature.food.VanillaFoodFeature;
+import net.swofty.pvp.feature.provider.SoundProvider;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,8 +25,20 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class VanillaTotemFeature implements TotemFeature {
 	public static final DefinedFeature<VanillaTotemFeature> DEFINED = new DefinedFeature<>(
-			FeatureType.TOTEM, configuration -> new VanillaTotemFeature()
+			FeatureType.TOTEM, VanillaTotemFeature::new, FeatureType.SOUND
 	);
+
+	private final FeatureConfiguration configuration;
+	private SoundProvider soundProvider;
+
+	public VanillaTotemFeature(FeatureConfiguration configuration) {
+		this.configuration = configuration;
+	}
+
+	@Override
+	public void initDependencies() {
+		this.soundProvider = configuration.get(FeatureType.SOUND);
+	}
 
 	@Override
 	public boolean tryProtect(LivingEntity entity, DamageType type) {
@@ -50,7 +64,7 @@ public class VanillaTotemFeature implements TotemFeature {
 
 			Random random = ThreadLocalRandom.current();
 			for (ConsumeEffect deathEffect : deathProtection.deathEffects()) {
-				VanillaFoodFeature.applyConsumeEffect(entity, deathEffect, random);
+				VanillaFoodFeature.applyConsumeEffect(entity, deathEffect, random, soundProvider);
 			}
 
 			// Totem particles

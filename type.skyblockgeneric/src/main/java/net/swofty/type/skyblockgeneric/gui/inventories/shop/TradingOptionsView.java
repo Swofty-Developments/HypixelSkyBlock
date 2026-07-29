@@ -22,13 +22,13 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public final class TradingOptionsView implements View<TradingOptionsView.State> {
 
     @Override
     public ViewConfiguration<State> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_shop.trading_options.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_shop.trading_options.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -54,14 +54,15 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
         List<String> lore = new ArrayList<>((existingLoreComponents == null ? List.<Component>of() : existingLoreComponents)
                 .stream().map(StringUtility::getTextFromComponent).toList());
 
+        Locale l = player.getLocale();
         lore.add("");
-        lore.add(I18n.string("gui_shop.trading_options.cost_label"));
+        lore.add(I18n.string("gui_shop.trading_options.cost_label", l));
         lore.addAll(totalPrice.getGUIDisplay());
         lore.add("");
-        lore.add(I18n.string("gui_shop.trading_options.stock_label"));
-        lore.add(I18n.string("gui_shop.trading_options.stock_remaining", Map.of("count", String.valueOf(player.getShoppingData().getStock(item.getItem().toUnderstandable())))));
+        lore.add(I18n.string("gui_shop.trading_options.stock_label", l));
+        lore.add(I18n.string("gui_shop.trading_options.stock_remaining", l, Component.text(String.valueOf(player.getShoppingData().getStock(item.getItem().toUnderstandable())))));
         lore.add("");
-        lore.add(I18n.string("gui_shop.trading_options.click_to_purchase"));
+        lore.add(I18n.string("gui_shop.trading_options.click_to_purchase", l));
 
         Component baseName = itemStack.build().get(DataComponents.CUSTOM_NAME);
         if (baseName == null) {
@@ -76,14 +77,15 @@ public final class TradingOptionsView implements View<TradingOptionsView.State> 
     private void attemptBuy(State state, int amount, ViewContext ctx) {
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
 
+        Locale l = player.getLocale();
         if (!player.getShoppingData().canPurchase(state.item.getItem().toUnderstandable(), amount)) {
-            player.sendMessage(I18n.string("gui_shop.trading_options.max_reached"));
+            player.sendMessage(I18n.string("gui_shop.trading_options.max_reached", l));
             return;
         }
 
         ShopPrice totalPrice = state.stackPrice.multiply(amount);
         if (!totalPrice.canAfford(player)) {
-            player.sendMessage(I18n.string("gui_shop.trading_options.not_enough", Map.of("currency", state.stackPrice.getNamePlural())));
+            player.sendMessage(I18n.string("gui_shop.trading_options.not_enough", l, Component.text(state.stackPrice.getNamePlural())));
             return;
         }
 

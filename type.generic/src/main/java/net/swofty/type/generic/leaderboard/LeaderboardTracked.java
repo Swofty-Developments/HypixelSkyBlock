@@ -3,7 +3,7 @@ package net.swofty.type.generic.leaderboard;
 /**
  * Interface for datapoints that should be tracked on a single leaderboard.
  * Implement this in datapoints that hold simple numeric values (Long, Double, Integer).
- *
+ * <p>
  * Example usage:
  * <pre>
  * public class DatapointLeaderboardLong extends DatapointLong implements LeaderboardTracked {

@@ -7,7 +7,7 @@ import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "sc staffchat",
+@CommandParameters(labels = "sc staffchat",
         description = "Sends a message to staff chat",
         usage = "/sc <message>",
         permission = Rank.STAFF,

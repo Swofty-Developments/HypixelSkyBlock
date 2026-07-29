@@ -6,7 +6,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.tinylog.Logger;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**

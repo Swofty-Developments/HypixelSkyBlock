@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.mission.missions;
 
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -13,9 +12,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionBreakLog extends SkyBlockMission {
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void endMission(CustomBlockBreakEvent event) {
         if (event.getPlayerPlaced()) return;
 
@@ -27,7 +28,7 @@ public class MissionBreakLog extends SkyBlockMission {
         data.endMission(MissionBreakLog.class);
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void startMission(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
         MissionData data = ((SkyBlockPlayer) event.getPlayer()).getMissionData();

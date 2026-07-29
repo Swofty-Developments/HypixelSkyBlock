@@ -87,7 +87,7 @@ public class SwoftyPlayer {
 
     public void sendPingRequest() {
         // Between 1 and 50000000
-        int randomId = new Random().nextInt(50000000) + 1;
+        int randomId = java.util.concurrent.ThreadLocalRandom.current().nextInt(50000000) + 1;
 
         PingRequest request = new PingRequest(randomId);
         pingRequests.offerLast(request);

@@ -16,11 +16,6 @@ public class NPCShania extends HypixelNPC {
             }
 
             @Override
-            public float hologramYOffset() {
-                return 0.4f;
-            }
-
-            @Override
             public EntityType entityType() {
                 return EntityType.COW;
             }

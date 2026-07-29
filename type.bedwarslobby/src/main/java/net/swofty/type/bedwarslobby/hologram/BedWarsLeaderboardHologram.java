@@ -2,10 +2,15 @@ package net.swofty.type.bedwarslobby.hologram;
 
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.bedwars.*;
+import net.swofty.commons.bedwars.BedwarsLeaderboardMode;
+import net.swofty.commons.bedwars.BedwarsLeaderboardPeriod;
+import net.swofty.commons.bedwars.BedwarsLeaderboardView;
+import net.swofty.commons.bedwars.BedwarsLevelUtil;
+import net.swofty.commons.bedwars.BedwarsStatType;
+import net.swofty.commons.bedwars.BedwarsTextAlignment;
 import net.swofty.type.bedwarslobby.hologram.LeaderboardHologramManager.PlayerLeaderboardState;
-import net.swofty.type.bedwarslobby.util.BedwarsNameFormatter;
 import net.swofty.type.generic.HypixelGenericLoader;
+import net.swofty.type.generic.collectibles.bedwars.prestige.BedWarsPrestigeRenderer;
 import net.swofty.type.generic.data.datapoints.DatapointLeaderboardLong;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
 import net.swofty.type.generic.leaderboard.BedWarsLeaderboardAggregator;
@@ -13,11 +18,16 @@ import net.swofty.type.generic.leaderboard.LeaderboardService;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.text.NumberFormat;
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 public enum BedWarsLeaderboardHologram {
@@ -84,7 +94,7 @@ public enum BedWarsLeaderboardHologram {
 
 				if (statType == BedwarsStatType.LEVEL) {
 					int level = BedwarsLevelUtil.calculateLevel(entry.scoreAsLong());
-					String levelBracket = BedwarsLevelColor.constructLevelBrackets(level);
+					String levelBracket = renderEntryLevel(entry.playerUuid(), level);
 					int rank = view == BedwarsLeaderboardView.PLAYERS_AROUND_YOU ? displayRank : entry.rank();
 					lines.add(String.format("§e%d. §f%s %s", rank, levelBracket, paddedName));
 				} else {
@@ -106,7 +116,7 @@ public enum BedWarsLeaderboardHologram {
 			String formattedScore = formatScore(playerScore);
 			if (statType == BedwarsStatType.LEVEL) {
 				int level = BedwarsLevelUtil.calculateLevel(playerScore);
-				lines.add(String.format("§eYou: §f%d. %s", playerEntry.rank(), BedwarsLevelColor.constructLevelBrackets(level)));
+				lines.add(String.format("§eYou: §f%d. %s", playerEntry.rank(), BedWarsPrestigeRenderer.renderBrackets(player, level)));
 			} else {
 				lines.add(String.format("§eYou: §f%d. §7(§a%s§7)", playerEntry.rank(), formattedScore));
 			}
@@ -123,6 +133,15 @@ public enum BedWarsLeaderboardHologram {
 		return lines.toArray(new String[0]);
 	}
 
+	private String renderEntryLevel(UUID uuid, int level) {
+		try {
+			BedWarsDataHandler handler = BedWarsDataHandler.getOfOfflinePlayer(uuid);
+			return BedWarsPrestigeRenderer.renderForData(handler, level, true);
+		} catch (RuntimeException exception) {
+			return BedWarsPrestigeRenderer.renderPreview(null, level, null, null, null);
+		}
+	}
+
 	private List<LeaderboardService.LeaderboardEntry> getPlayersInLobby(HypixelPlayer viewer, String leaderboardKey) {
 		List<LeaderboardService.LeaderboardEntry> lobbyEntries = new ArrayList<>();
 
@@ -131,12 +150,8 @@ public enum BedWarsLeaderboardHologram {
 					lobbyPlayer.getInstance().equals(viewer.getInstance())) {
 				LeaderboardService.LeaderboardEntry entry =
 						LeaderboardService.getPlayerRankEntry(leaderboardKey, lobbyPlayer.getUuid());
-				if (entry != null) {
-					lobbyEntries.add(entry);
-				} else {
-					lobbyEntries.add(new LeaderboardService.LeaderboardEntry(
-							lobbyPlayer.getUuid(), -1, 0));
-				}
+                lobbyEntries.add(Objects.requireNonNullElseGet(entry, () -> new LeaderboardService.LeaderboardEntry(
+                    lobbyPlayer.getUuid(), -1, 0)));
 			}
 		}
 

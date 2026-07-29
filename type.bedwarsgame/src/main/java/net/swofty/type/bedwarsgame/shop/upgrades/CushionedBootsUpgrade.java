@@ -9,9 +9,10 @@ import net.minestom.server.item.Material;
 import net.minestom.server.item.component.EnchantmentList;
 import net.minestom.server.item.enchant.Enchantment;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.type.bedwarsgame.game.Game;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.shop.TeamUpgrade;
+import net.swofty.type.bedwarsgame.shop.TeamUpgradeId;
 import net.swofty.type.bedwarsgame.shop.TeamUpgradeTier;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class CushionedBootsUpgrade extends TeamUpgrade {
 	public CushionedBootsUpgrade() {
 		super(
-				"cushioned_boots",
+			TeamUpgradeId.CUSHIONED_BOOTS,
 				"Cushioned Boots",
 				"Your team permanently gains Feather Falling enchantment on boots.",
 				ItemStack.of(Material.IRON_BOOTS),
@@ -31,7 +32,7 @@ public class CushionedBootsUpgrade extends TeamUpgrade {
 	}
 
 	@Override
-	public void applyEffect(Game game, BedWarsMapsConfig.TeamKey teamName, int level) {
+	public void applyEffect(BedWarsGame game, BedWarsMapsConfig.TeamKey teamName, int level) {
 		game.getPlayers().stream()
 				.filter(p -> teamName.equals(p.getTeamKey()))
 				.forEach(player -> {

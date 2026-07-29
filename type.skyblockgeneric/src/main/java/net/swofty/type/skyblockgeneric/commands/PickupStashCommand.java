@@ -12,7 +12,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandParameters(aliases = "pickupstash",
+@CommandParameters(labels = "pickupstash",
         description = "Pickup items from your stash",
         usage = "/pickupstash [item|material]",
         permission = Rank.DEFAULT,

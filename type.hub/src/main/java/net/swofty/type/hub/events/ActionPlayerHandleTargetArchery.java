@@ -10,8 +10,9 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.TimedActivityHandler;
 import net.swofty.type.skyblockgeneric.targetpractice.PracticeTargets;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointArcheryPractice;
@@ -33,7 +34,7 @@ public class ActionPlayerHandleTargetArchery implements HypixelEventClass {
 
     public ActionPlayerHandleTargetArchery() {}
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void handleOnJoin(PlayerSpawnEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         if (!event.isFirstSpawn()) return;
@@ -42,7 +43,7 @@ public class ActionPlayerHandleTargetArchery implements HypixelEventClass {
     }
 
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, isAsync = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void handleOnArrowHit(ArrowHitBlockEvent event) {
         if (!event.isSkyBlockPlayer()) return;
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getShooter();
@@ -69,7 +70,7 @@ public class ActionPlayerHandleTargetArchery implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void handleOnMove(PlayerMoveEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         boolean isNearArchery = event.getNewPosition().distance(ARCHERY_POSITION) < 0.5;

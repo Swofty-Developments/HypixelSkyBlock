@@ -54,7 +54,7 @@ public class EnchantmentEnderSlayer implements Ench, EnchFromTable, EventBasedEn
         }
 
         return ItemStatistics.empty();
-    };
+    }
 
     @Override
     public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {

@@ -1,0 +1,41 @@
+[
+  {
+    "type": "minecraft:item_display",
+    "position": {
+      "x": 0.0625,
+      "y": 1.125,
+      "z": 0.0625
+    },
+    "rotation": {
+      "yaw": 0.0,
+      "pitch": 0.0
+    },
+    "translation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "scale": {
+      "x": 0.8000001,
+      "y": 0.7999999,
+      "z": 0.8
+    },
+    "leftRotation": {
+      "x": 0.14315604,
+      "y": 0.27953273,
+      "z": -0.12069224,
+      "w": 0.94170135
+    },
+    "rightRotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 1.0
+    },
+    "item": {
+      "id": "minecraft:player_head",
+      "count": 1,
+      "snbt": "{components:{\"minecraft:profile\":{id:[I;1026653912,-261338970,-1604133959,-588724720],properties:[{name:\"textures\",value:\"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGQzMTM1ZjliNWNiZGRiZDczNTRmNmNlZjVhYzljNDMyMDc1MjEwNTg4ZTBhNTQwMjMxMzczYzEwZWM5NWRhMyJ9fX0=\"}]}},count:1,id:\"minecraft:player_head\"}"
+    }
+  }
+]

@@ -5,9 +5,8 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.dungeonhub.tab.DungeonServerModule;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -58,7 +57,7 @@ public class TypeDungeonHubLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new DungeonServerModule(),
+                        new AreaServerModule("tablist.server_info.area.dungeon_hub"),
                         new AccountInformationModule()
                 ));
             }
@@ -86,13 +85,9 @@ public class TypeDungeonHubLoader implements SkyBlockTypeLoader {
         ).toList());
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

@@ -3,7 +3,6 @@ package net.swofty.type.skywarslobby.kit;
 import org.tinylog.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Registry for all SkyWars kits.
@@ -62,19 +61,17 @@ public class SkywarsKitRegistry {
         ensureInitialized();
         return KITS.values().stream()
                 .filter(kit -> kit.isAvailableFor(mode))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
      * Get all kits sorted by rarity (lowest first)
      */
     public static List<SkywarsKit> getKitsSortedByRarity(String mode, boolean lowestFirst) {
-        List<SkywarsKit> kits = getKitsForMode(mode);
-        kits.sort((a, b) -> {
-            int comparison = Integer.compare(a.getRarity().getSortOrder(), b.getRarity().getSortOrder());
-            return lowestFirst ? comparison : -comparison;
-        });
-        return kits;
+        Comparator<SkywarsKit> byRarity = Comparator.comparingInt(k -> k.getRarity().getSortOrder());
+        return getKitsForMode(mode).stream()
+                .sorted(lowestFirst ? byRarity : byRarity.reversed())
+                .toList();
     }
 
     /**
@@ -84,7 +81,7 @@ public class SkywarsKitRegistry {
         ensureInitialized();
         return KITS.values().stream()
                 .filter(SkywarsKit::isDefault)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -94,7 +91,7 @@ public class SkywarsKitRegistry {
         ensureInitialized();
         return KITS.values().stream()
                 .filter(SkywarsKit::isSoulWellDrop)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -106,7 +103,7 @@ public class SkywarsKitRegistry {
         return KITS.values().stream()
                 .filter(SkywarsKit::isSoulWellDrop)
                 .filter(kit -> !ownedKitIds.contains(kit.getId()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -119,7 +116,7 @@ public class SkywarsKitRegistry {
         if (unownedKits.isEmpty()) {
             return null;
         }
-        return unownedKits.get(new Random().nextInt(unownedKits.size()));
+        return unownedKits.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(unownedKits.size()));
     }
 
     /**
@@ -131,19 +128,13 @@ public class SkywarsKitRegistry {
      */
     public static List<SkywarsKit> getKitsSortedByRarity(String mode, boolean lowestFirst,
                                                           boolean ownedFirst, Set<String> ownedKitIds) {
-        List<SkywarsKit> kits = getKitsForMode(mode);
-        kits.sort((a, b) -> {
-            if (ownedFirst) {
-                boolean aOwned = ownedKitIds.contains(a.getId());
-                boolean bOwned = ownedKitIds.contains(b.getId());
-                if (aOwned != bOwned) {
-                    return aOwned ? -1 : 1;
-                }
-            }
-            int comparison = Integer.compare(a.getRarity().getSortOrder(), b.getRarity().getSortOrder());
-            return lowestFirst ? comparison : -comparison;
-        });
-        return kits;
+        Comparator<SkywarsKit> byRarity = Comparator.comparingInt(k -> k.getRarity().getSortOrder());
+        Comparator<SkywarsKit> rarityComparator = lowestFirst ? byRarity : byRarity.reversed();
+        Comparator<SkywarsKit> comparator = ownedFirst
+                ? Comparator.<SkywarsKit, Boolean>comparing(k -> !ownedKitIds.contains(k.getId()))
+                        .thenComparing(rarityComparator)
+                : rarityComparator;
+        return getKitsForMode(mode).stream().sorted(comparator).toList();
     }
 
     /**
@@ -153,7 +144,7 @@ public class SkywarsKitRegistry {
         ensureInitialized();
         return KITS.values().stream()
                 .filter(kit -> kit.getRarity() == rarity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**

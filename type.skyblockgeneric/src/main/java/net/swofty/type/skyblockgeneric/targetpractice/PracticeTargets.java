@@ -1,9 +1,11 @@
 package net.swofty.type.skyblockgeneric.targetpractice;
 
+import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 
 import javax.annotation.Nullable;
 
+@Getter
 public enum PracticeTargets {
     TARGET_1(new Pos(7, 63, -141)),
     TARGET_2(new Pos(7, 62, -145)),
@@ -24,14 +26,10 @@ public enum PracticeTargets {
     ;
 
     private static final PracticeTargets[] VALUES = values();
-    private Pos location;
+    private final Pos location;
 
     PracticeTargets(Pos location) {
         this.location = location;
-    }
-
-    public Pos getLocation() {
-        return location;
     }
 
     public static @Nullable PracticeTargets getFromPosition(Pos pos) {

@@ -2,7 +2,9 @@ package net.swofty.type.skyblockgeneric.entity;
 
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.collision.*;
+import net.minestom.server.collision.CollisionUtils;
+import net.minestom.server.collision.EntityCollisionResult;
+import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
@@ -13,9 +15,9 @@ import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEv
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.event.HypixelEventHandler;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.skyblockgeneric.event.custom.ArrowHitBlockEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -61,7 +63,7 @@ public class ArrowEntityImpl extends LivingEntity {
         super.tick(time);
         final Pos posNow = getPosition();
 
-        Vec diff = Vec.fromPoint(posNow.sub(posBefore));
+        Vec diff = posNow.sub(posBefore).asVec();
         PhysicsResult result = CollisionUtils.handlePhysics(
                 instance, this.getChunk(),
                 this.getBoundingBox(),
@@ -88,7 +90,7 @@ public class ArrowEntityImpl extends LivingEntity {
 
                 var e = new ProjectileCollideWithEntityEvent(
                         this,
-                        Pos.fromPoint(collisionResult.collisionPoint()),
+                    collisionResult.collisionPoint().asPos(),
                         entity
                 );
                 MinecraftServer.getGlobalEventHandler().call(e);
@@ -112,14 +114,14 @@ public class ArrowEntityImpl extends LivingEntity {
 
                 if (!hitBlock.isAir()) {
                     // Fire arrow hit block event
-                    ArrowHitBlockEvent arrowHitBlockEvent = new ArrowHitBlockEvent(shooter, arrowItem, hitBlock, Pos.fromPoint(hitPosition));
+                    ArrowHitBlockEvent arrowHitBlockEvent = new ArrowHitBlockEvent(shooter, arrowItem, hitBlock, hitPosition);
                     HypixelEventHandler.callCustomEvent(arrowHitBlockEvent);
                     hasHit = true;
                 }
             }
 
             // We've hit a block
-            MathUtility.delay(() -> {
+            ScheduleUtility.delay(() -> {
                 if (isDead() || isRemoved()) return;
                 remove();
                 kill();

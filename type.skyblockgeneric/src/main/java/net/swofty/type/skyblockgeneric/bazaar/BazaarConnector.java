@@ -1,8 +1,14 @@
 package net.swofty.type.skyblockgeneric.bazaar;
 
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.protocol.objects.bazaar.BazaarBuyProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarCancelProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetItemProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingOrdersProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarProcessPendingTransactionsProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarSellProtocol;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.protocol.objects.bazaar.*;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
@@ -28,14 +34,14 @@ public class BazaarConnector {
     }
 
     public CompletableFuture<List<BazaarOrder>> getPendingOrders() {
-        var message = new BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage(
+        var message = new BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersMessage(
                 player.getUuid(),
                 getPlayerProfileUUID()
         );
 
-        return bazaarService.<BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersMessage,
-                        BazaarGetPendingOrdersProtocolObject.BazaarGetPendingOrdersResponse>handleRequest(message)
-                .thenApply(response -> response.orders.stream()
+        return bazaarService.<BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersMessage,
+                        BazaarGetPendingOrdersProtocol.BazaarGetPendingOrdersResponse>handleRequest(message)
+                .thenApply(response -> response.orders().stream()
                         .map(order -> new BazaarOrder(
                                 order.orderId(),
                                 order.itemName(),
@@ -48,22 +54,22 @@ public class BazaarConnector {
     }
 
     public CompletableFuture<Boolean> cancelOrder(UUID orderId) {
-        var message = new BazaarCancelProtocolObject.CancelMessage(
+        var message = new BazaarCancelProtocol.CancelMessage(
                 orderId,
                 player.getUuid(),
                 getPlayerProfileUUID()
         );
 
-        return bazaarService.<BazaarCancelProtocolObject.CancelMessage,
-                        BazaarCancelProtocolObject.CancelResponse>handleRequest(message)
-                .thenApply(response -> response.successful);
+        return bazaarService.<BazaarCancelProtocol.CancelMessage,
+                        BazaarCancelProtocol.CancelResponse>handleRequest(message)
+                .thenApply(response -> response.success());
     }
 
     public CompletableFuture<BazaarItemData> getItemData(ItemType itemType) {
-        var message = new BazaarGetItemProtocolObject.BazaarGetItemMessage(itemType.name());
+        var message = new BazaarGetItemProtocol.BazaarGetItemMessage(itemType.name());
 
-        return bazaarService.<BazaarGetItemProtocolObject.BazaarGetItemMessage,
-                        BazaarGetItemProtocolObject.BazaarGetItemResponse>handleRequest(message)
+        return bazaarService.<BazaarGetItemProtocol.BazaarGetItemMessage,
+                        BazaarGetItemProtocol.BazaarGetItemResponse>handleRequest(message)
                 .thenApply(response -> {
                     var buyOrders = response.buyOrders().stream()
                             .map(order -> new MarketOrder(
@@ -104,7 +110,7 @@ public class BazaarConnector {
     }
 
     public CompletableFuture<BazaarResult> createBuyOrder(ItemType itemType, double pricePerUnit, int quantity) {
-        var message = new BazaarBuyProtocolObject.BazaarBuyMessage(
+        var message = new BazaarBuyProtocol.BazaarBuyMessage(
                 itemType.name(),
                 quantity,
                 pricePerUnit,
@@ -112,16 +118,16 @@ public class BazaarConnector {
                 getPlayerProfileUUID()
         );
 
-        return bazaarService.<BazaarBuyProtocolObject.BazaarBuyMessage,
-                        BazaarBuyProtocolObject.BazaarBuyResponse>handleRequest(message)
+        return bazaarService.<BazaarBuyProtocol.BazaarBuyMessage,
+                        BazaarBuyProtocol.BazaarBuyResponse>handleRequest(message)
                 .thenApply(response -> new BazaarResult(
-                        response.successful,
-                        response.successful ? "Buy order created!" : "Failed to create buy order"
+                        response.success(),
+                        response.success() ? "Buy order created!" : "Failed to create buy order"
                 ));
     }
 
     public CompletableFuture<BazaarResult> createSellOrder(ItemType itemType, double pricePerUnit, int quantity) {
-        var message = new BazaarSellProtocolObject.BazaarSellMessage(
+        var message = new BazaarSellProtocol.BazaarSellMessage(
                 itemType.name(),
                 player.getUuid(),
                 getPlayerProfileUUID(),
@@ -129,11 +135,11 @@ public class BazaarConnector {
                 quantity
         );
 
-        return bazaarService.<BazaarSellProtocolObject.BazaarSellMessage,
-                        BazaarSellProtocolObject.BazaarSellResponse>handleRequest(message)
+        return bazaarService.<BazaarSellProtocol.BazaarSellMessage,
+                        BazaarSellProtocol.BazaarSellResponse>handleRequest(message)
                 .thenApply(response -> new BazaarResult(
-                        response.successful,
-                        response.successful ? "Sell order created!" : "Failed to create sell order"
+                        response.success(),
+                        response.success() ? "Sell order created!" : "Failed to create sell order"
                 ));
     }
 
@@ -206,37 +212,37 @@ public class BazaarConnector {
     }
 
     public CompletableFuture<List<PendingTransaction>> getPendingTransactions() {
-        var message = new BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsMessage(
+        var message = new BazaarGetPendingTransactionsProtocol.BazaarGetPendingTransactionsMessage(
                 player.getUuid(),
                 getPlayerProfileUUID()
         );
 
-        return bazaarService.<BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsMessage,
-                        BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsResponse>handleRequest(message)
-                .thenApply(response -> response.transactions.stream()
+        return bazaarService.<BazaarGetPendingTransactionsProtocol.BazaarGetPendingTransactionsMessage,
+                        BazaarGetPendingTransactionsProtocol.BazaarGetPendingTransactionsResponse>handleRequest(message)
+                .thenApply(response -> response.transactions().stream()
                         .map(txInfo -> new PendingTransaction(
-                                txInfo.id,
-                                txInfo.transactionType,
-                                txInfo.transactionData,
-                                txInfo.createdAt
+                                txInfo.id(),
+                                txInfo.transactionType(),
+                                new org.json.JSONObject(txInfo.transactionData()),
+                                txInfo.createdAt()
                         ))
                         .collect(Collectors.toList()));
     }
 
     public CompletableFuture<TransactionProcessResult> processPendingTransactions(List<String> transactionIds) {
-        var message = new BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage(
+        var message = new BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsMessage(
                 player.getUuid(),
                 getPlayerProfileUUID(),
                 transactionIds
         );
 
-        return bazaarService.<BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsMessage,
-                        BazaarProcessPendingTransactionsProtocolObject.BazaarProcessPendingTransactionsResponse>handleRequest(message)
+        return bazaarService.<BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsMessage,
+                        BazaarProcessPendingTransactionsProtocol.BazaarProcessPendingTransactionsResponse>handleRequest(message)
                 .thenApply(response -> new TransactionProcessResult(
-                        response.processedCount,
-                        response.failedCount,
-                        response.successfulTransactionIds,
-                        response.failedTransactionIds
+                        response.processedCount(),
+                        response.failedCount(),
+                        response.successfulTransactionIds(),
+                        response.failedTransactionIds()
                 ));
     }
 
@@ -279,7 +285,7 @@ public class BazaarConnector {
                         failedIds.add(tx.id());
                     }
                 } catch (Exception e) {
-                    System.err.println("Failed to process pending transaction " + tx.id() + ": " + e.getMessage());
+                    org.tinylog.Logger.error(e, "Failed to process pending transaction {}", tx.id());
                     failedIds.add(tx.id());
                 }
             }

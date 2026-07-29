@@ -6,23 +6,28 @@ import net.minestom.server.event.EventNode;
 
 public enum EventNodes {
 
-    // Overarching eventnodes
-    CUSTOM(EventNode.all("custom-listener")),
-    MISSION(EventNode.type("mission-listener", EventFilter.ENTITY)),
-    ENTITY(EventNode.type("entity-listener", EventFilter.ENTITY)),
-    PLAYER(EventNode.type("player-listener", EventFilter.PLAYER).setPriority(2)),
-    PLAYER_DATA(EventNode.type("player-data", EventFilter.PLAYER).setPriority(1)),
-    ITEM(EventNode.type("item-listener", EventFilter.PLAYER)),
-    PING(EventNode.type("ping-listener", EventFilter.ALL)),
-    INVENTORY(EventNode.type("inventory-listener", EventFilter.INVENTORY)),
-    ALL(EventNode.all("all-listener")),
-    // Player nodes
-
-    ;
+    CUSTOM("custom-listener", EventFilter.ALL),
+    MISSION("mission-listener", EventFilter.ENTITY),
+    ENTITY("entity-listener", EventFilter.ENTITY),
+    PLAYER("player-listener", EventFilter.PLAYER),
+    PLAYER_DATA("player-data", EventFilter.PLAYER),
+    ITEM("item-listener", EventFilter.PLAYER),
+    PING("ping-listener", EventFilter.ALL),
+    INVENTORY("inventory-listener", EventFilter.INVENTORY),
+    ALL("all-listener", EventFilter.ALL);
 
     public final EventNode<? extends Event> eventNode;
+    private final String nodeName;
+    private final EventFilter<? extends Event, ?> filter;
 
-    <E extends Event> EventNodes(EventNode<E> eventNode) {
-        this.eventNode = eventNode;
+    <E extends Event> EventNodes(String nodeName, EventFilter<E, ?> filter) {
+        this.nodeName = nodeName;
+        this.filter = filter;
+        this.eventNode = EventNode.event(nodeName, filter, (_) -> true);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <E extends Event> EventNode<E> newNode(String name, int priority) {
+        return EventNode.event(nodeName + "-" + name, (EventFilter<E, ?>) filter, (_) -> true).setPriority(priority);
     }
 }

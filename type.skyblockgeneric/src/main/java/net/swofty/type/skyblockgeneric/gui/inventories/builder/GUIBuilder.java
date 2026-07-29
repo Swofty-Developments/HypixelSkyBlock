@@ -5,17 +5,18 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
-import net.swofty.type.generic.user.HypixelPlayer;
 import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.i18n.I18n;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class GUIBuilder extends HypixelInventoryGUI {
     public GUIBuilder() {
-        super(I18n.string("gui_builder.title"), InventoryType.CHEST_4_ROW);
+        super(I18n.t("gui_builder.title"), InventoryType.CHEST_4_ROW);
     }
     @Override
     public void onOpen(InventoryGUIOpenEvent e) {
@@ -29,9 +30,8 @@ public class GUIBuilder extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_builder.woodworking_button"), Material.OAK_PLANKS, 1,
-                        I18n.lore("gui_builder.woodworking_button.lore"));
+                return TranslatableItemStackCreator.getStack("gui_builder.woodworking_button", Material.OAK_PLANKS, 1,
+                        "gui_builder.woodworking_button.lore");
             }
         });
         set(new GUIClickableItem(12) {
@@ -43,9 +43,8 @@ public class GUIBuilder extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_builder.rocks_bricks_button"), Material.STONE, 1,
-                        I18n.lore("gui_builder.rocks_bricks_button.lore"));
+                return TranslatableItemStackCreator.getStack("gui_builder.rocks_bricks_button", Material.STONE, 1,
+                        "gui_builder.rocks_bricks_button.lore");
             }
         });
         set(new GUIClickableItem(14) {
@@ -57,9 +56,8 @@ public class GUIBuilder extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStack(I18n.string("gui_builder.green_thumb_button"), Material.ROSE_BUSH, 1,
-                        I18n.lore("gui_builder.green_thumb_button.lore"));
+                return TranslatableItemStackCreator.getStack("gui_builder.green_thumb_button", Material.ROSE_BUSH, 1,
+                        "gui_builder.green_thumb_button.lore");
             }
         });
         set(new GUIClickableItem(16) {
@@ -71,9 +69,8 @@ public class GUIBuilder extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p;
-                return ItemStackCreator.getStackHead(I18n.string("gui_builder.variety_button"), "3c2d8e8ec2737b599a48fc07ea58b806969e6021802019992dda32a653794df6", 1,
-                        I18n.lore("gui_builder.variety_button.lore"));
+                return TranslatableItemStackCreator.getStackHead("gui_builder.variety_button", "3c2d8e8ec2737b599a48fc07ea58b806969e6021802019992dda32a653794df6", 1,
+                        "gui_builder.variety_button.lore");
             }
         });
         updateItemStacks(getInventory(), getPlayer());

@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
@@ -9,6 +10,9 @@ import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.swofty.commons.skyblock.item.ItemType;
+import net.swofty.commons.skyblock.item.Rarity;
+import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.RefreshingGUI;
@@ -25,11 +29,8 @@ import net.swofty.type.skyblockgeneric.potion.PotionEffectType;
 import net.swofty.type.skyblockgeneric.potion.PotionModifier;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributePotionData;
 
-import java.util.Map;
+import java.util.Locale;
 
 public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGUI {
 
@@ -48,7 +49,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
     private SkyBlockItem[] potionItems = new SkyBlockItem[3];
 
     public GUIBrewingStand(Instance instance, Point position, SkyBlockBlock block) {
-        super(I18n.string("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_misc.brewing_stand.title"), InventoryType.CHEST_6_ROW);
         this.instance = instance;
         this.blockPosition = position;
         this.block = block;
@@ -69,7 +70,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         setupPotionSlots();
 
         // Set initial animation panes
-        updateAnimationPanes(getBrewingData());
+        updateAnimationPanes(getBrewingData(), e.player());
     }
 
     private void setupIngredientSlot() {
@@ -188,13 +189,14 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         }
 
         // Update animation panes
-        updateAnimationPanes(brewingData);
+        updateAnimationPanes(brewingData, player);
 
         // Toggle animation state
         animationToggle = !animationToggle;
     }
 
-    private void updateAnimationPanes(BlockAttributeBrewingData.BrewingData brewingData) {
+    private void updateAnimationPanes(BlockAttributeBrewingData.BrewingData brewingData, HypixelPlayer player) {
+        Locale l = player.getLocale();
         Material paneMaterial;
         String paneName;
         String[] paneLore;
@@ -202,12 +204,12 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         if (brewingData.isBrewing()) {
             paneMaterial = animationToggle ? Material.RED_STAINED_GLASS_PANE : Material.ORANGE_STAINED_GLASS_PANE;
             long remainingSeconds = brewingData.getRemainingTimeMs() / 1000;
-            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", Map.of("seconds", String.valueOf(remainingSeconds)));
+            paneName = I18n.string("gui_misc.brewing_stand.remaining_time", l, Component.text(String.valueOf(remainingSeconds)));
             paneLore = new String[0];
         } else {
             paneMaterial = Material.LIGHT_BLUE_STAINED_GLASS_PANE;
-            paneName = I18n.string("gui_misc.brewing_stand.place_bottles");
-            paneLore = new String[]{I18n.string("gui_misc.brewing_stand.place_bottles_below")};
+            paneName = I18n.string("gui_misc.brewing_stand.place_bottles", l);
+            paneLore = new String[]{I18n.string("gui_misc.brewing_stand.place_bottles_below", l)};
         }
 
         for (int slot : ANIMATION_SLOTS) {
@@ -246,9 +248,7 @@ public class GUIBrewingStand extends HypixelInventoryGUI implements RefreshingGU
         data.setIngredient(ingredientItem);
 
         SkyBlockItem[] potions = data.getPotionSlots();
-        for (int i = 0; i < potionItems.length; i++) {
-            potions[i] = potionItems[i];
-        }
+        System.arraycopy(potionItems, 0, potions, 0, potionItems.length);
 
         data.setBrewingStartTime(System.currentTimeMillis());
         data.setBrewingDurationSeconds(brewComp.getBrewingTimeSeconds());

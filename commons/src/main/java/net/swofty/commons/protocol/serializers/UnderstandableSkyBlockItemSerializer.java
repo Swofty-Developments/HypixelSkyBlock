@@ -6,6 +6,7 @@ import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.commons.skyblock.item.attribute.ItemAttribute;
 import net.swofty.commons.protocol.Serializer;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,7 @@ public class UnderstandableSkyBlockItemSerializer implements Serializer<Understa
             try {
                 itemKey = ItemType.valueOf(jsonObject.getString("itemKey"));
             } catch (IllegalArgumentException e) {
-                // Handle invalid itemKey
-                System.err.println("Invalid itemKey: " + jsonObject.getString("itemKey"));
+                Logger.warn("Invalid itemKey: {}", jsonObject.getString("itemKey"));
             }
         }
 

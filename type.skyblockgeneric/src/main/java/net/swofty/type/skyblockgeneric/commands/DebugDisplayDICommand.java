@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
 
-@CommandParameters(aliases = "dmgindicdisplaydebugcmd",
+@CommandParameters(labels = "dmgindicdisplaydebugcmd",
         description = "Display damage indic",
         usage = "/dmgindicdisplaydebugcmd <dmg> <crit>",
         permission = Rank.STAFF,

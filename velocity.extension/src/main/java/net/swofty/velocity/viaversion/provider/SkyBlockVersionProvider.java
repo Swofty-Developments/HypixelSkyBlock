@@ -3,13 +3,14 @@ package net.swofty.velocity.viaversion.provider;
 import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import com.viaversion.viaversion.api.protocol.version.VersionProvider;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.stream.IntStream;
-
 import net.swofty.velocity.SkyBlockVelocity;
 import net.swofty.velocity.viaversion.injector.SkyBlockViaInjector;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class SkyBlockVersionProvider implements VersionProvider {
     private static final Method GET_ASSOCIATION = getAssociationMethod();
@@ -18,7 +19,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
         try {
             return Class.forName("com.velocitypowered.proxy.connection.MinecraftConnection").getMethod("getAssociation");
         } catch (NoSuchMethodException | ClassNotFoundException e) {
-            System.out.println("Failed to get association method from Velocity");
+            Logger.warn(e, "Failed to get association method from Velocity");
             return null;
         }
     }
@@ -29,7 +30,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
     }
 
     private ProtocolVersion getBackProtocol(UserConnection user) {
-        return ProtocolVersion.v1_21_11; // backend server version
+        return ProtocolVersion.v26_1; // backend server version
     }
 
     private ProtocolVersion getFrontProtocol(UserConnection user) throws Exception {
@@ -61,7 +62,7 @@ public class SkyBlockVersionProvider implements VersionProvider {
             }
         }
 
-        System.out.println("Panic, no protocol id found for " + playerVersion);
+        Logger.warn("No registered protocol id found for {}, falling back to player version", playerVersion);
         return playerVersion;
     }
 }

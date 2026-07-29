@@ -3,13 +3,13 @@ package net.swofty.service.friend;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
 public class FriendService implements SkyBlockService {
 
-    static void main(String[] args) {
+    static void main() {
         String mongoUri = ConfigProvider.settings().getMongodb();
         new FriendDatabase(null).connect(mongoUri);
 
@@ -24,7 +24,7 @@ public class FriendService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.friend.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.friend.endpoints", RedisMessageHandler.class).toList();
     }
 }

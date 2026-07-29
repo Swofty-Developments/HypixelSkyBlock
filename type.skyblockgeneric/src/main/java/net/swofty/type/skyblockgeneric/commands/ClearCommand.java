@@ -5,12 +5,12 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
+import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "cl",
+@CommandParameters(labels = "cl clear",
         description = "Rid your inventory of useless items",
         usage = "/clear",
         permission = Rank.STAFF,

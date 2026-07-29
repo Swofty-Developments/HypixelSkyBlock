@@ -28,27 +28,15 @@ public abstract class SimpleInteractableItem {
                 new CustomData(CompoundBinaryTag.builder().putString("item", id).build()));
     }
 
-    public void onItemFinishUse(PlayerFinishItemUseEvent event) {
-        // stub
-    }
+    public void onItemFinishUse(PlayerFinishItemUseEvent event) {}
 
-    public void onItemUseOnBlock(PlayerUseItemOnBlockEvent event) {
-        // stub
-    }
+    public void onItemUseOnBlock(PlayerUseItemOnBlockEvent event) {}
 
-    public void onItemUse(PlayerUseItemEvent event) {
-        // stub
-    }
+    public void onItemUse(PlayerUseItemEvent event) {}
 
-    public void onItemDrop(ItemDropEvent event) {
-        // stub
-    }
+    public void onItemDrop(ItemDropEvent event) {}
 
-    public void onItemInteract(PlayerInstanceEvent event) {
-        // stub
-    }
+    public void onItemInteract(PlayerInstanceEvent event) {}
 
-    public void onBlockPlace(PlayerBlockPlaceEvent event) {
-        // stub
-    }
+    public void onBlockPlace(PlayerBlockPlaceEvent event) {}
 }

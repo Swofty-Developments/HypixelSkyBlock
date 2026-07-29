@@ -3,11 +3,20 @@ package net.swofty.service.bazaar;
 import net.swofty.commons.skyblock.bazaar.BuyOrderRefundTransaction;
 import net.swofty.commons.skyblock.bazaar.OrderExpiredBazaarTransaction;
 import net.swofty.commons.skyblock.bazaar.SuccessfulBazaarTransaction;
+import org.tinylog.Logger;
 
-import java.time.*;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class BazaarMarket {
     private static final BazaarMarket INSTANCE = new BazaarMarket();
@@ -120,7 +129,7 @@ public class BazaarMarket {
     }
 
     public void submitDelete(UUID orderId, UUID player, UUID profile) {
-        // Handle refund for cancelled buy order
+        // Handle refund for canceled buy order
         OrderRefundTracker tracker = refundTrackers.remove(orderId);
         if (tracker != null && tracker.accumulatedRefunds > 0) {
             // Issue refund for price improvements already accumulated
@@ -205,9 +214,8 @@ public class BazaarMarket {
                 tracker.recordPartialFill(qty, actualPrice);
             }
 
-            System.out.println("Buy price was: " + b.originalPrice);
-            System.out.println("Sell price was: " + s.originalPrice);
-            System.out.println("Actual price was: " + actualPrice);
+            Logger.debug("Match — buyPrice={} sellPrice={} actualPrice={}",
+                    b.originalPrice, s.originalPrice, actualPrice);
             double priceImprovement = (b.originalPrice - actualPrice) * qty;
             var tx = new SuccessfulBazaarTransaction(
                     item,

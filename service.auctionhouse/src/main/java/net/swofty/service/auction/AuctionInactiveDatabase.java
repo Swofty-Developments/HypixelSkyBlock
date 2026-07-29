@@ -2,11 +2,16 @@ package net.swofty.service.auction;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.client.*;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import net.swofty.service.generic.MongoDB;
 import org.bson.Document;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +22,7 @@ public record AuctionInactiveDatabase(String auctionId) implements MongoDB {
     public static MongoCollection<Document> collection;
 
     @Override
-    public MongoDB connect(String connectionString) {
+    public @NonNull MongoDB connect(@NonNull String connectionString) {
         ConnectionString cs = new ConnectionString(connectionString);
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         client = MongoClients.create(settings);
@@ -28,12 +33,12 @@ public record AuctionInactiveDatabase(String auctionId) implements MongoDB {
     }
 
     @Override
-    public void set(String key, Object value) {
+    public void set(@NonNull String key, Object value) {
         insertOrUpdate(key, value);
     }
 
     @Override
-    public Object get(String key, Object def) {
+    public Object get(@NonNull String key, Object def) {
         Document doc = collection.find(Filters.eq("_id", auctionId)).first();
         if (doc == null) {
             return def;
@@ -56,7 +61,7 @@ public record AuctionInactiveDatabase(String auctionId) implements MongoDB {
     }
 
     @Override
-    public boolean remove(String id) {
+    public boolean remove(@NonNull String id) {
         Document query = new Document("_id", id);
         Document found = collection.find(query).first();
 
@@ -68,7 +73,7 @@ public record AuctionInactiveDatabase(String auctionId) implements MongoDB {
         return true;
     }
 
-    public void insertOrUpdate(String key, Object value) {
+    public void insertOrUpdate(@NonNull String key, Object value) {
         if (exists()) {
             Document query = new Document("_id", auctionId);
             Document found = collection.find(query).first();

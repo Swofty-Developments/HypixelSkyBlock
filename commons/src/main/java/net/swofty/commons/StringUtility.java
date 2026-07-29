@@ -1,5 +1,8 @@
 package net.swofty.commons;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -16,7 +19,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtility {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class StringUtility {
+
 	public static final char[] ALPHABET = {
 			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'X', 'Y', 'Z'
 	};
@@ -245,6 +250,18 @@ public class StringUtility {
 		return roman.toString();
 	}
 
+	/**
+	 * Capitalizes the first letter of the input string and lowercases the rest.
+	 * @param input The string to capitalize.
+	 * @return The input string with the first letter capitalized and the rest lowercased. If the input is null or empty, it returns the input as is.
+	 */
+	public static String capitalize(String input) {
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+		return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+	}
+
 	public static String getTextFromComponent(Component component) {
 		if (component == null)
 			throw new IllegalArgumentException("Component cannot be null");
@@ -254,7 +271,7 @@ public class StringUtility {
 	}
 
 	public static String getAuctionSetupFormattedTime(long millis) {
-		return formatTimeLeft(millis).replaceAll(" ", "")
+		return formatTimeLeft(millis).replace(" ", "")
 				.replaceAll("s$", "");
 	}
 
@@ -342,6 +359,49 @@ public class StringUtility {
 		return result;
 	}
 
+	public static List<String> splitByWordAndLengthKeepLegacyColor(String string, int splitLength) {
+		List<String> result = new ArrayList<>();
+		String lastColorCode = "";
+
+		for (String line : string.split("\n", -1)) {
+			if (line.isEmpty()) {
+				result.add("");
+				continue;
+			}
+
+			StringBuilder currentLine = new StringBuilder(lastColorCode);
+
+			for (String word : line.split(" ")) {
+				if (word.isEmpty()) continue;
+
+				int extraSpace = currentLine.length() == lastColorCode.length() ? 0 : 1;
+
+				if (currentLine.length() + extraSpace + word.length() > splitLength) {
+					if (currentLine.length() > lastColorCode.length()) {
+						result.add(currentLine.toString());
+						currentLine = new StringBuilder(lastColorCode);
+					}
+				} else if (extraSpace == 1) {
+					currentLine.append(' ');
+				}
+
+				currentLine.append(word);
+
+				// this wont work with bold/italic and those but if you need those don't use this method
+				int colorIndex = word.lastIndexOf('§');
+				if (colorIndex != -1 && colorIndex < word.length() - 1) {
+					lastColorCode = "§" + word.charAt(colorIndex + 1);
+				}
+			}
+
+			if (currentLine.length() > lastColorCode.length()) {
+				result.add(currentLine.toString());
+			}
+		}
+
+		return result;
+	}
+
 	public static List<String> splitByNewLine(String string) {
         return new ArrayList<>(Arrays.asList(string.split("\n", -1)));
 	}
@@ -379,6 +439,25 @@ public class StringUtility {
 			};
 		};
 	}
+
+	/**
+	 * Capitalizes the first letter of each word in the input string and lowercases the rest of the letters in each word.
+	 * @param input The string to capitalize.
+	 * @return The input string with the first letter of each word capitalized and the rest lowercased. If the input is null or empty, it returns the input as is.
+	 */
+	public static String capitalizeSentence(String input) {
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+		String[] words = input.split(" ");
+		StringBuilder capitalized = new StringBuilder();
+		for (String word : words) {
+			if (!word.isEmpty()) {
+				capitalized.append(capitalize(word)).append(" ");
+			}
+		}
+		return capitalized.toString().trim();
+  }
 
 	public static long parseDuration(String duration) {
 		long totalMillis = 0;

@@ -2,33 +2,39 @@ package net.swofty.velocity.redis.listeners;
 
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.to.RegisterServerProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
-import org.json.JSONObject;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.UUID;
 
-@ChannelListener(channel = ToProxyChannels.REGISTER_SERVER)
-public class ListenerServerInitialized extends RedisListener {
+public class ListenerServerInitialized implements RedisMessageHandler<
+        RegisterServerProtocol.Request,
+        RegisterServerProtocol.Response> {
+
     @Override
-    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
-        ServerType type = ServerType.valueOf(message.getString("type"));
-        int port = -1;
-        if (message.has("port")) {
-            port = message.getInt("port");
-        }
+    public RedisProtocol<RegisterServerProtocol.Request, RegisterServerProtocol.Response> protocol() {
+        return new RegisterServerProtocol();
+    }
 
-        String host = message.has("host")
-                ? message.getString("host")
-                : ConfigProvider.settings().getHostName(); // fallback to config if not present
+    @Override
+    public RegisterServerProtocol.Response handle(RegisterServerProtocol.Request message, RedisMessageContext context) {
+        ServerType type = ServerType.valueOf(message.type());
+        int port = message.port() != null ? message.port() : -1;
 
-        int maxPlayers = message.getInt("max_players");
+        String host = message.host() != null
+                ? message.host()
+                : ConfigProvider.settings().getHostName();
 
-        GameManager.GameServer server = GameManager.addServer(type, serverUUID, host, port, maxPlayers);
-        return new JSONObject()
-                .put("host", server.registeredServer().getServerInfo().getAddress().getHostString())
-                .put("port", server.registeredServer().getServerInfo().getAddress().getPort());
+        int maxPlayers = message.maxPlayers();
+
+        GameManager.GameServer server = GameManager.addServer(type, UUID.fromString(context.origin().id()), host, port, maxPlayers);
+        return new RegisterServerProtocol.Response(
+                server.registeredServer().getServerInfo().getAddress().getHostString(),
+                server.registeredServer().getServerInfo().getAddress().getPort(),
+                true,
+                null);
     }
 }

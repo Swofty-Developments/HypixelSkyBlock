@@ -9,7 +9,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.goldmine.gui.GUIShopIronForger;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCIronForger extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCIronForger extends HypixelNPC {
 
 	public NPCIronForger() {
 		super(new HumanConfiguration() {
@@ -67,9 +67,4 @@ public class NPCIronForger extends HypixelNPC implements net.swofty.type.skybloc
 						}).build(),
 		};
 	}
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "IRON_FORGER";
-    }
 }

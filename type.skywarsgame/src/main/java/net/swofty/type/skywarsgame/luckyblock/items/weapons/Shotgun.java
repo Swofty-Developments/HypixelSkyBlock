@@ -4,9 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityType;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -83,7 +81,7 @@ public class Shotgun implements LuckyBlockWeapon {
 
             Snowball snowball = new Snowball(holder);
             snowball.setInstance(instance, eyePos);
-            snowball.shootFromRotation(basePitch + pitchOffset, baseYaw + yawOffset, 0, POWER, 0);
+            snowball.shootFromRotation(basePitch + pitchOffset, baseYaw + yawOffset, 0, POWER, 0, 0.0);
         }
 
         return true;

@@ -13,7 +13,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.stream.Stream;
 
-public class NPCSirius extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCSirius extends HypixelNPC {
     private static final long MINIMUM_COINS = 400_000;
 
     public NPCSirius() {
@@ -118,10 +118,5 @@ public class NPCSirius extends HypixelNPC implements net.swofty.type.skyblockgen
                                 "You'll be warped once it starts..."
                         }).build()
         ).toArray(DialogueSet[]::new);
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "SIRIUS";
     }
 }

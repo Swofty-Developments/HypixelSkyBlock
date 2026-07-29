@@ -42,13 +42,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class SkyBlockDataHandler extends DataHandler {
 
     // SkyBlock specific cache
-    public static final Map<UUID, SkyBlockDataHandler> skyBlockCache = new HashMap<>();
+    public static final Map<UUID, SkyBlockDataHandler> skyBlockCache = new ConcurrentHashMap<>();
 
     @Getter
     private UUID currentProfileId;
@@ -165,7 +166,6 @@ public class SkyBlockDataHandler extends DataHandler {
     }
 
     /** Optionally typed getter (casts to the class you pass). */
-    @SuppressWarnings("unchecked")
     public <R extends Datapoint<?>> R get(Data datapoint, Class<R> type) {
         Datapoint<?> dp = datapoints.get(datapoint.key);
         return (R) (dp != null ? type.cast(dp) : type.cast(datapoint.defaultDatapoint));
@@ -322,14 +322,7 @@ public class SkyBlockDataHandler extends DataHandler {
         ISLAND_UUID("island_uuid", false, true, false,
                 DatapointUUID.class, new DatapointUUID("island_uuid", null),
                 (player, datapoint) -> {},
-            (player, datapoint) -> {
-                DatapointUUID islandUuid = (DatapointUUID) datapoint;
-                if (player.getSkyBlockIsland() != null) {
-                    islandUuid.setValue(player.getSkyBlockIsland().getIslandID());
-                } else if (islandUuid.getValue() == null && player.getProfiles() != null) {
-                    islandUuid.setValue(player.getProfiles().getCurrentlySelected());
-                }
-            }),
+                (player, datapoint) -> ((DatapointUUID) datapoint).setValue(player.getSkyBlockIsland().getIslandID())),
 
         IS_COOP("is_coop", false, true, false,
                 DatapointBoolean.class, new DatapointBoolean("is_coop", false)),
@@ -342,6 +335,9 @@ public class SkyBlockDataHandler extends DataHandler {
 
         STORAGE("storage", false, false, false,
                 DatapointStorage.class, new DatapointStorage("storage")),
+
+        WARDROBE("wardrobe", false, false, false,
+            DatapointWardrobe.class, new DatapointWardrobe("wardrobe")),
 
         BACKPACKS("backpacks", false, false, false,
                 DatapointBackpacks.class, new DatapointBackpacks("backpacks")),
@@ -379,6 +375,15 @@ public class SkyBlockDataHandler extends DataHandler {
 
         QUIVER("quiver", false, false, false,
                 DatapointQuiver.class, new DatapointQuiver("quiver")),
+
+        SHIP_STATE("ship_state", false, false, false,
+            DatapointShipState.class, new DatapointShipState("ship_state")),
+
+        TROPHY_FISH("trophy_fish", false, false, false,
+            DatapointTrophyFish.class, new DatapointTrophyFish("trophy_fish")),
+
+        SLAYER("slayer", false, false, false,
+            DatapointSlayer.class, new DatapointSlayer("slayer")),
 
         RACE_BEST_TIME("race_best_time", false, false, false, DatapointMapStringLong.class,
                 new DatapointMapStringLong("race_best_time")),
@@ -469,24 +474,6 @@ public class SkyBlockDataHandler extends DataHandler {
 
         KAT("kat", false, false, false,
                 DatapointKat.class, new DatapointKat("kat")),
-
-        GARDEN_CORE("garden_core", false, true, false,
-            DatapointGardenCore.class, new DatapointGardenCore("garden_core")),
-
-        GARDEN_VISITORS("garden_visitors", false, true, false,
-            DatapointGardenVisitors.class, new DatapointGardenVisitors("garden_visitors")),
-
-        GARDEN_PESTS("garden_pests", false, true, false,
-            DatapointGardenPests.class, new DatapointGardenPests("garden_pests")),
-
-        GARDEN_COMPOSTER("garden_composter", false, true, false,
-            DatapointGardenComposter.class, new DatapointGardenComposter("garden_composter")),
-
-        GARDEN_GREENHOUSE("garden_greenhouse", false, true, false,
-            DatapointGardenGreenhouse.class, new DatapointGardenGreenhouse("garden_greenhouse")),
-
-        GARDEN_PERSONAL("garden_personal", false, false, false,
-            DatapointGardenPersonal.class, new DatapointGardenPersonal("garden_personal")),
 
         STASH("stash", false, false, false,
                 DatapointStash.class, new DatapointStash("stash")),

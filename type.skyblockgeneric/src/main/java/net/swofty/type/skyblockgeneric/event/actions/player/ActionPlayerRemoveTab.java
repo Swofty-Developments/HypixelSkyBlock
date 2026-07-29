@@ -5,18 +5,20 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import net.swofty.type.generic.utility.TeamColorUtility;
 
 public class ActionPlayerRemoveTab implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerSpawnEvent event) {
         Player player = event.getPlayer();
 
@@ -27,23 +29,27 @@ public class ActionPlayerRemoveTab implements HypixelEventClass {
             if (player2.getUuid().equals(player.getUuid())) return;
 
             player2.sendPacket(new TeamsPacket("ZZZZZ" + player.getUsername(), new TeamsPacket.CreateTeamAction(
-                    Component.text(playerRank.getPrefix()),
-                    (byte) 0x01,
-                    TeamsPacket.NameTagVisibility.ALWAYS,
-                    TeamsPacket.CollisionRule.ALWAYS,
-                    playerRank.getTextColor(),
-                    Component.text(playerRank.getPrefix()),
-                    Component.empty(),
+                    new TeamsPacket.Settings(
+                            Component.text(playerRank.getPrefix()),
+                            Component.text(playerRank.getPrefix()),
+                            Component.empty(),
+                            TeamsPacket.NameTagVisibility.ALWAYS,
+                            TeamsPacket.CollisionRule.ALWAYS,
+                            TeamColorUtility.fromNamedColor(playerRank.getTextColor()),
+                            (byte) 0x01
+                    ),
                     new ArrayList<>(Collections.singletonList(player.getUsername()))
             )));
             player.sendPacket(new TeamsPacket("ZZZZZ" + player2.getUsername(), new TeamsPacket.CreateTeamAction(
-                    Component.text(player2Rank.getPrefix()),
-                    (byte) 0x01,
-                    TeamsPacket.NameTagVisibility.ALWAYS,
-                    TeamsPacket.CollisionRule.ALWAYS,
-                    player2Rank.getTextColor(),
-                    Component.text(player2Rank.getPrefix()),
-                    Component.empty(),
+                    new TeamsPacket.Settings(
+                            Component.text(player2Rank.getPrefix()),
+                            Component.text(player2Rank.getPrefix()),
+                            Component.empty(),
+                            TeamsPacket.NameTagVisibility.ALWAYS,
+                            TeamsPacket.CollisionRule.ALWAYS,
+                            TeamColorUtility.fromNamedColor(player2Rank.getTextColor()),
+                            (byte) 0x01
+                    ),
                     new ArrayList<>(Collections.singletonList(player2.getUsername()))
             )));
         });

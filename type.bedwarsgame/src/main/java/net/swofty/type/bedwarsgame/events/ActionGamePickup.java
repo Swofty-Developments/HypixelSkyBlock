@@ -1,28 +1,37 @@
 package net.swofty.type.bedwarsgame.events;
 
 import net.minestom.server.component.DataComponents;
-import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.item.PickupItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.component.CustomData;
+import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.shop.Currency;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.user.ExperienceCause;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
 import org.jetbrains.annotations.Nullable;
 
 public class ActionGamePickup implements HypixelEventClass {
 
-	@HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false)
 	public void run(PickupItemEvent event) {
 		ItemStack itemStack = event.getItemEntity().getItemStack();
 		if (event.getLivingEntity() instanceof BedWarsPlayer player) {
-			// Only allow players on survival mode to pickup items
-			if (player.getGameMode() != GameMode.SURVIVAL) {
+			BedWarsGame game = player.getGame();
+			if (!game.isPlayerCurrentlyPlaying(player.getUuid())) {
 				event.setCancelled(true);
 				return;
+			}
+
+			// Record item pickup to replay
+			if (game != null && game.getReplayManager().isRecording()) {
+				game.getReplayManager().recordItemPickup(
+					event.getItemEntity().getEntityId(),
+					player.getEntityId()
+				);
+				game.getReplayManager().recordEntityDespawn(event.getItemEntity().getEntityId());
 			}
 
 			player.getInventory().addItemStack(itemStack);

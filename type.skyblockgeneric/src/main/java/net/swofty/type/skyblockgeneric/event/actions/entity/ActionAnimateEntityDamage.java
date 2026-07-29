@@ -3,12 +3,13 @@ package net.swofty.type.skyblockgeneric.event.actions.entity;
 import net.minestom.server.event.entity.EntityDamageEvent;
 import net.minestom.server.network.packet.server.play.DamageEventPacket;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionAnimateEntityDamage implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ENTITY, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ENTITY, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(EntityDamageEvent event) {
         event.setAnimation(true);
         event.setCancelled(false);

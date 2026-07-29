@@ -1,7 +1,8 @@
 package net.swofty.type.skyblockgeneric.user;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.timer.Scheduler;
@@ -19,9 +20,7 @@ import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
 import net.swofty.type.skyblockgeneric.darkauction.DarkAuctionHandler;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointGardenCore;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointGardenPersonal;
-import net.swofty.type.skyblockgeneric.garden.GardenData;
+import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.LocationAssociatedMission;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
@@ -30,11 +29,12 @@ import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import java.util.Locale;
+import java.util.Map;
 
 public class SkyBlockScoreboard {
     private static final HypixelScoreboard scoreboard = new HypixelScoreboard();
@@ -50,6 +50,7 @@ public class SkyBlockScoreboard {
             }
 
             for (SkyBlockPlayer player : SkyBlockGenericLoader.getLoadedPlayers()) {
+                Locale l = player.getLocale();
                 SkyBlockDataHandler dataHandler = player.getSkyblockDataHandler();
                 SkyBlockRegion region = player.getRegion();
                 MissionData missionData = player.getMissionData();
@@ -59,55 +60,59 @@ public class SkyBlockScoreboard {
                 }
 
                 List<Component> lines = new ArrayList<>();
-                lines.add(Component.empty()
-                    .append(Component.text(new SimpleDateFormat(I18n.string("scoreboard.common.date_format")).format(new Date()), NamedTextColor.GRAY))
-                    .append(Component.text(" " + HypixelConst.getServerName(), NamedTextColor.DARK_GRAY)));
-                lines.add(Component.text(" ", NamedTextColor.GRAY));
-                lines.add(Component.empty()
-                    .append(Component.text(" ", NamedTextColor.WHITE))
-                    .append(Component.text(SkyBlockCalendar.getMonthName() + " " + StringUtility.ntify(SkyBlockCalendar.getDay()), NamedTextColor.WHITE)));
-                lines.add(Component.empty()
-                    .append(Component.text(" ", NamedTextColor.GRAY))
-                    .append(Component.text(SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()), NamedTextColor.GRAY)));
+                lines.add(I18n.t("scoreboard.common.date_line", Argument.tagResolver(Formatter.date("date", LocalDateTime.now(ZoneId.systemDefault()))), Argument.string("id", HypixelConst.getServerName())));
+                lines.add(Component.space());
+                lines.add(I18n.t("scoreboard.skyblock.calendar_date_line",
+                    Component.text(SkyBlockCalendar.getMonthName()),
+                    Component.text(StringUtility.ntify(SkyBlockCalendar.getDay()))));
+                lines.add(I18n.t("scoreboard.skyblock.calendar_time_line",
+                    Component.text(SkyBlockCalendar.getDisplay(SkyBlockCalendar.getElapsed()))));
                 try {
-                    RegionType type = Objects.requireNonNull(region).getType();
-                    String name = type.getColor() + type.getName();
+                    RegionType type = region.getType();
+                    String name = type.getName();
                     if (type == RegionType.PLAYER_MUSEUM) {
                         name = name.formatted(player.getUsername());
                     }
-                    lines.add(Component.empty()
-                        .append(Component.text(" ⏣ ", NamedTextColor.GRAY))
-                        .append(Component.text(name)));
+                    lines.add(I18n.t("scoreboard.skyblock.region_line",
+                        Component.text(region.getType().getColor() + name)));
                 } catch (NullPointerException ignored) {
-                    lines.add(Component.empty()
-                        .append(Component.text(" ", NamedTextColor.WHITE))
-                        .append(I18n.t("scoreboard.skyblock.region_unknown")));
+                    lines.add(Component.space().append(I18n.t("scoreboard.skyblock.region_unknown")));
                 }
-                lines.add(Component.text(" ", NamedTextColor.GRAY));
+                lines.add(Component.space());
 
-                lines.add(I18n.t("scoreboard.skyblock.purse", Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()))));
-                if (HypixelConst.isGarden()) {
-                    GardenData.GardenCoreData core = dataHandler.get(SkyBlockDataHandler.Data.GARDEN_CORE, DatapointGardenCore.class).getValue();
-                    GardenData.GardenPersonalData personal = dataHandler.get(SkyBlockDataHandler.Data.GARDEN_PERSONAL, DatapointGardenPersonal.class).getValue();
-                    lines.add(Component.text("Copper: ", NamedTextColor.WHITE)
-                        .append(Component.text(StringUtility.commaify(core.getCopper()), NamedTextColor.RED)));
-                    lines.add(Component.text("Sawdust: ", NamedTextColor.WHITE)
-                        .append(Component.text(StringUtility.commaify(personal.getSowdust()), NamedTextColor.DARK_GREEN)));
+                // TODO: make classes / a manager for regions to display scoreboard information.
+                if (region != null && region.getType() == RegionType.ELECTION_ROOM) {
+                    lines.add(I18n.t("scoreboard.skyblock.election_votes_title",
+                        Component.text(String.valueOf(SkyBlockCalendar.getYear()))));
+                    Map<String, Long> totalVotes = ElectionManager.getElectionData().tallyVotes();
+                    long maxVotes = totalVotes.values().stream().mapToLong(Long::longValue).max().orElse(1);
+                    ElectionManager.getElectionData().getCandidates().forEach(candidate -> {
+                        long votes = totalVotes.getOrDefault(candidate.getMayorName(), 0L);
+                        int barLength = maxVotes > 0 ? (int) Math.round((votes * 15.0) / maxVotes) : 0;
+                        String bars = candidate.getColor() + "|".repeat(barLength) + "§f" + "|".repeat(15 - barLength);
+                        lines.add(I18n.t("scoreboard.skyblock.election_candidate_line",
+                            Component.text(bars),
+                            Component.text(candidate.getColoredName())));
+                    });
                 } else {
-                    lines.add(I18n.t("scoreboard.skyblock.bits", Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()))));
+                    lines.add(I18n.t("scoreboard.skyblock.purse_line",
+                        Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.COINS, DatapointDouble.class).getValue()))));
+                    Integer bits = dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue();
+                    if (bits != null && bits > 0) {
+                        lines.add(I18n.t("scoreboard.skyblock.bits_line",
+                            Component.text(StringUtility.commaify(dataHandler.get(SkyBlockDataHandler.Data.BITS, DatapointInteger.class).getValue()))));
+                    }
 
                     if (DarkAuctionHandler.isPlayerInAuction(player.getUuid())
                         && DarkAuctionHandler.getLocalState() != null
                         && DarkAuctionHandler.getLocalState().getPhase() == DarkAuctionPhase.BIDDING
                     ) {
-                        lines.add(Component.text(" ", NamedTextColor.DARK_GRAY));
+                        lines.add(Component.text("§8 "));
                         DarkAuctionHandler.DarkAuctionLocalState auctionState = DarkAuctionHandler.getLocalState();
                         int timeRemaining = DarkAuctionHandler.getTimeLeft().get();
 
-                        lines.add(Component.empty()
-                            .append(I18n.t("scoreboard.skyblock.dark_auction.time_left_label"))
-                            .append(Component.text(String.valueOf(timeRemaining)))
-                            .append(I18n.t("scoreboard.skyblock.dark_auction.time_left_suffix")));
+                        lines.add(I18n.t("scoreboard.skyblock.dark_auction.time_left_line",
+                            Component.text(String.valueOf(timeRemaining))));
                         lines.add(I18n.t("scoreboard.skyblock.dark_auction.current_item_label"));
 
                         String currentItem = auctionState.getCurrentItemType();
@@ -115,58 +120,50 @@ public class SkyBlockScoreboard {
                             try {
                                 ItemType itemType = ItemType.valueOf(currentItem);
                                 SkyBlockItem item = new SkyBlockItem(itemType);
-                                lines.add(Component.empty()
-                                    .append(Component.text(" ", NamedTextColor.WHITE))
-                                    .append(Component.text(item.getDisplayName())));
+                                lines.add(Component.space().append(
+                                    I18n.t("scoreboard.skyblock.dark_auction.current_item_line",
+                                        Component.text(item.getDisplayName()))));
                             } catch (Exception e) {
-                                lines.add(Component.empty()
-                                    .append(Component.text(" ", NamedTextColor.WHITE))
-                                    .append(Component.text(currentItem.replace("_", " "), NamedTextColor.WHITE)));
+                                lines.add(Component.space().append(
+                                    I18n.t("scoreboard.skyblock.dark_auction.current_item_line",
+                                        Component.text(currentItem.replace("_", " ")))));
                             }
                         } else {
-                            lines.add(Component.empty()
-                                .append(Component.text(" ", NamedTextColor.WHITE))
-                                .append(I18n.t("scoreboard.skyblock.dark_auction.waiting")));
+                            lines.add(Component.space().append(I18n.t("scoreboard.skyblock.dark_auction.waiting")));
                         }
                     } else {
                         if (region != null &&
                             !missionData.getActiveMissions(region.getType()).isEmpty()) {
-                            lines.add(Component.text(" ", NamedTextColor.GRAY));
+                            lines.add(Component.space());
                             MissionData.ActiveMission mission = missionData.getActiveMissions(region.getType()).getFirst();
                             SkyBlockMission skyBlockMission = MissionData.getMissionClass(mission.getMissionID());
 
                             if (skyBlockMission instanceof LocationAssociatedMission locationAssociatedMission) {
-                                lines.add(Component.empty()
-                                    .append(I18n.t("scoreboard.skyblock.objective_label"))
-                                    .append(Component.text(" " + BlockUtility.getArrow(
-                                        player.getPosition(),
-                                        locationAssociatedMission.getLocation()
-                                    ))));
+                                lines.add(I18n.t("scoreboard.skyblock.objective_with_arrow", Component.text(BlockUtility.getArrow(
+                                    player.getPosition(),
+                                    locationAssociatedMission.getLocation()
+                                ))));
+                                lines.add(Component.text("§e" + mission));
                             } else {
                                 lines.add(I18n.t("scoreboard.skyblock.objective_label"));
+                                lines.add(Component.text("§e" + mission));
                             }
-                            lines.add(Component.text(String.valueOf(mission), NamedTextColor.YELLOW));
 
                             SkyBlockProgressMission progressMission = missionData.getAsProgressMission(mission.getMissionID());
-                            if (progressMission != null)
-                                lines.add(Component.empty()
-                                    .append(Component.text(" (", NamedTextColor.GRAY))
-                                    .append(Component.text(String.valueOf(mission.getMissionProgress()), NamedTextColor.YELLOW))
-                                    .append(Component.text("/", NamedTextColor.GRAY))
-                                    .append(Component.text(String.valueOf(progressMission.getMaxProgress()), NamedTextColor.GREEN))
-                                    .append(Component.text(")", NamedTextColor.GRAY)));
+                            if (progressMission != null) {
+                                lines.add(I18n.t("scoreboard.skyblock.objective_progress",
+                                    Component.text(String.valueOf(mission.getMissionProgress())),
+                                    Component.text(String.valueOf(progressMission.getMaxProgress()))));
+                            }
                         }
                     }
                 }
 
-                lines.add(Component.text(" ", NamedTextColor.GRAY));
+                lines.add(Component.space());
                 lines.add(I18n.t("scoreboard.common.footer"));
 
-                Component title = Component.empty()
-                    .append(Component.text("  "))
-                    .append(HypixelScoreboard.getSidebarName(I18n.string("scoreboard.skyblock.title_base"), skyblockName, false))
-                    .append(Component.text("  "));
-
+                Component title = Component.text("  ")
+                    .append(Component.text(getSidebarName(skyblockName, false, l)));
                 if (!scoreboard.hasScoreboard(player)) {
                     scoreboard.createScoreboard(player, title);
                 }
@@ -182,4 +179,22 @@ public class SkyBlockScoreboard {
         scoreboard.removeScoreboard(player);
     }
 
+    private static String getSidebarName(int counter, boolean isGuest, Locale locale) {
+        String baseText = I18n.string("scoreboard.skyblock.title_base", locale);
+        String[] colors = {"§f§l", "§6§l", "§e§l"};
+        String endColor = "§a§l";
+        String endText = isGuest ? " GUEST" : "";
+
+        if (counter > 0 && counter <= 8) {
+            return colors[0] + baseText.substring(0, counter - 1) +
+                    colors[1] + baseText.charAt(counter - 1) +
+                    colors[2] + baseText.substring(counter) +
+                    endColor + endText;
+        } else if ((counter >= 9 && counter <= 19) ||
+                (counter >= 25 && counter <= 29)) {
+            return colors[0] + baseText + endColor + endText;
+        } else {
+            return colors[2] + baseText + endColor + endText;
+        }
+    }
 }

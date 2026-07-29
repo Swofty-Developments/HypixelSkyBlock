@@ -3,9 +3,9 @@ package net.swofty.type.skyblockgeneric.data;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.UnderstandableProxyServer;
 import net.swofty.commons.protocol.Serializer;
-import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocolObject;
-import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocolObject;
-import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocolObject;
+import net.swofty.commons.protocol.objects.datamutex.SynchronizeDataProtocol;
+import net.swofty.commons.protocol.objects.datamutex.UnlockDataProtocol;
+import net.swofty.commons.protocol.objects.datamutex.UpdateSynchronizedDataProtocol;
 import net.swofty.proxyapi.ProxyInformation;
 import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.proxyapi.ProxyService;
@@ -63,12 +63,12 @@ public class DataMutexService {
             UUID playerUUID = coopMembers.getFirst();
             Logger.info("Using playerUUID: " + playerUUID + " for synchronization");
 
-            SynchronizeDataProtocolObject.SynchronizeDataRequest request =
-                    new SynchronizeDataProtocolObject.SynchronizeDataRequest(onlineServers, playerUUID, dataType.getKey());
+            SynchronizeDataProtocol.SynchronizeDataRequest request =
+                    new SynchronizeDataProtocol.SynchronizeDataRequest(onlineServers, playerUUID, dataType.getKey());
 
             Logger.info("Sending synchronization request to service...");
 
-            CompletableFuture<SynchronizeDataProtocolObject.SynchronizeDataResponse> syncFuture =
+            CompletableFuture<SynchronizeDataProtocol.SynchronizeDataResponse> syncFuture =
                     service.handleRequest(request);
 
             syncFuture.thenAccept(response -> {
@@ -88,19 +88,19 @@ public class DataMutexService {
                         // Serialize as T
                         String serializedData = ser.serialize(modifiedData);
 
-                        UpdateSynchronizedDataProtocolObject.UpdateDataRequest updateRequest =
-                                new UpdateSynchronizedDataProtocolObject.UpdateDataRequest(
+                        UpdateSynchronizedDataProtocol.UpdateDataRequest updateRequest =
+                                new UpdateSynchronizedDataProtocol.UpdateDataRequest(
                                         onlineServers, playerUUID, dataType.getKey(), serializedData);
 
-                        CompletableFuture<UpdateSynchronizedDataProtocolObject.UpdateDataResponse> updateFuture =
+                        CompletableFuture<UpdateSynchronizedDataProtocol.UpdateDataResponse> updateFuture =
                                 service.handleRequest(updateRequest);
 
                         updateFuture.thenAccept(updateResponse -> {
-                            Logger.info("Update response: success=" + updateResponse.success() + ", message=" + updateResponse.message());
+                            Logger.info("Update response: success=" + updateResponse.success() + ", error=" + updateResponse.error());
 
                             if (!updateResponse.success()) {
                                 // If update fails, unlock the data
-                                Logger.error("Failed to update data: " + updateResponse.message());
+                                Logger.error("Failed to update data: " + updateResponse.error());
                                 unlockData(onlineServers, playerUUID, dataType.getKey());
                                 onFailure.run();
                             } else {
@@ -176,15 +176,15 @@ public class DataMutexService {
         Logger.info("Unlocking data for player " + playerUUID + " on servers: " + serverUUIDs);
 
         // Send unlock request to the mutex service, which will then unlock on all servers
-        service.handleRequest(new UnlockDataProtocolObject.UnlockDataRequest(
+        service.handleRequest(new UnlockDataProtocol.UnlockDataRequest(
                 serverUUIDs, playerUUID, dataKey
         )).thenAccept(response -> {
-            UnlockDataProtocolObject.UnlockDataResponse responseObject = (UnlockDataProtocolObject.UnlockDataResponse) response;
-            Logger.info("Unlock response: success=" + responseObject.success() + ", message=" + responseObject.message());
+            UnlockDataProtocol.UnlockDataResponse responseObject = (UnlockDataProtocol.UnlockDataResponse) response;
+            Logger.info("Unlock response: success=" + responseObject.success() + ", error=" + responseObject.error());
 
             if (!responseObject.success()) {
                 Logger.error("Failed to unlock data for player " + playerUUID +
-                        ", dataKey: " + dataKey + " - " + responseObject.message());
+                        ", dataKey: " + dataKey + " - " + responseObject.error());
             }
         }).exceptionally(throwable -> {
             Logger.error("Error unlocking data: " + throwable.getMessage(), throwable);

@@ -8,8 +8,7 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -18,7 +17,7 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.tabmodules.AccountInformationModule;
 import net.swofty.type.skyblockgeneric.tabmodules.SkyBlockPlayersOnlineModule;
-import net.swofty.type.theend.tab.TheEndServerModule;
+import net.swofty.type.generic.tab.AreaServerModule;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
@@ -59,7 +58,7 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new TheEndServerModule(),
+                        new AreaServerModule("tablist.server_info.area.the_end"),
                         new AccountInformationModule()
                 ));
             }
@@ -97,13 +96,9 @@ public class TypeTheEndLoader implements SkyBlockTypeLoader {
                         .build());
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

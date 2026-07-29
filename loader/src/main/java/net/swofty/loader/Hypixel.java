@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
 import net.minestom.server.timer.TaskSchedule;
@@ -20,13 +19,13 @@ import net.swofty.anticheat.loader.minestom.MinestomLoader;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.TestFlow;
 import net.swofty.commons.config.ConfigProvider;
-import net.swofty.commons.protocol.ProtocolObject;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.to.*;
+import net.swofty.commons.redis.ProxyHeartbeat;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.proxyapi.ProxyAPI;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServerOutboundMessage;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.spark.Spark;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
@@ -37,8 +36,6 @@ import net.swofty.type.generic.i18n.HypixelTranslator;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
@@ -48,11 +45,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -65,6 +66,7 @@ public class Hypixel {
 
     @SneakyThrows
     static void main(String[] args) {
+        System.setProperty("minestom.automatic-component-translation", "true");
         if (args.length == 0 || !ServerType.isServerType(args[0])) {
             Logger.error("Please specify a server type.");
             Arrays.stream(ServerType.values()).forEach(serverType -> Logger.error(serverType.name()));
@@ -79,7 +81,6 @@ public class Hypixel {
                 options.setTracesSampleRate(1.0);
                 options.setProfileSessionSampleRate(1.0);
                 options.setProfileLifecycle(ProfileLifecycle.TRACE);
-                options.getLogs().setEnabled(true);
             });
         }
 
@@ -87,7 +88,7 @@ public class Hypixel {
         long startTime = System.currentTimeMillis();
 
         Map<String, String> options = parseOptionalArgs(args);
-        Integer maxPlayers = options.containsKey("--max-players") ?
+        int maxPlayers = options.containsKey("--max-players") ?
                 Integer.parseInt(options.get("--max-players")) : 20;
 
         // Test flow configuration
@@ -122,23 +123,31 @@ public class Hypixel {
             System.exit(0);
             return;
         }
-        HypixelTypeLoader typeLoader = subTypes.stream().filter(clazz -> {
-            try {
-                ServerType type = clazz.getDeclaredConstructor().newInstance().getType();
-                Logger.info("Found TypeLoader: " + type.name());
-                return type == serverType;
-            } catch (Exception e) {
-                return false;
-            }
-        }).findFirst().orElseThrow(() ->
+
+        HypixelTypeLoader typeLoader = subTypes.stream()
+            .map(clazz -> {
+                try {
+                    HypixelTypeLoader instance = clazz.getDeclaredConstructor().newInstance();
+                    Logger.info("Found TypeLoader: " + instance.getType().name());
+                    return instance;
+                } catch (Exception e) {
+                    return null;
+                }
+            })
+            .filter(Objects::nonNull)
+            .filter(instance -> instance.getType() == serverType)
+            .findFirst()
+            .orElseThrow(() ->
                 new IllegalStateException("No TypeLoader found for server type " + serverType)
-        ).getDeclaredConstructor().newInstance();
+            );
 
         new HypixelGenericLoader(typeLoader).initialize(minecraftServer);
 
         // Initialize TypeLoader
+        SkyBlockGenericLoader skyblockLoader = null;
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            new SkyBlockGenericLoader(typeLoader).initialize(minecraftServer);
+            skyblockLoader = new SkyBlockGenericLoader(typeLoader);
+            skyblockLoader.initialize(minecraftServer);
         }
         if (typeLoader instanceof RavengardTypeLoader) {
             new RavengardGenericLoader(typeLoader).initialize(minecraftServer);
@@ -149,34 +158,43 @@ public class Hypixel {
 
         // Initialize proxy support
         ProxyAPI proxyAPI = new ProxyAPI(ConfigProvider.settings().getRedisUri(), serverUUID);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", ProxyToClient.class)
-                .forEach(proxyAPI::registerFromProxyHandler);
-        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", ServiceToClient.class)
-                .forEach(proxyAPI::registerFromServiceHandler);
-        typeLoader.getProxyRedisListeners().forEach(proxyAPI::registerFromProxyHandler);
-        typeLoader.getServiceRedisListeners().forEach(proxyAPI::registerFromServiceHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis", RedisMessageHandler.class)
+                .forEach(proxyAPI::registerProxyHandler);
+        SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.generic.redis.service", RedisMessageHandler.class)
+                .forEach(proxyAPI::registerServiceHandler);
+        typeLoader.getProxyHandlers().forEach(proxyAPI::registerProxyHandler);
+        typeLoader.getServiceHandlers().forEach(proxyAPI::registerServiceHandler);
         if (typeLoader instanceof SkyBlockTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", ProxyToClient.class)
-                    .forEach(proxyAPI::registerFromProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", ServiceToClient.class)
-                    .forEach(proxyAPI::registerFromServiceHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerProxyHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.skyblockgeneric.redis.service", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerServiceHandler);
         } else if (typeLoader instanceof RavengardTypeLoader) {
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", ProxyToClient.class)
-                    .forEach(proxyAPI::registerFromProxyHandler);
-            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis.service", ServiceToClient.class)
-                    .forEach(proxyAPI::registerFromServiceHandler);
+            SkyBlockGenericLoader.loopThroughPackage("net.swofty.type.ravengardgeneric.redis", RedisMessageHandler.class)
+                    .forEach(proxyAPI::registerProxyHandler);
         }
-        Arrays.stream(ToProxyChannels.values()).forEach(
-                ServerOutboundMessage::registerServerToProxy
-        );
-        List<ProtocolObject> protocolObjects = SkyBlockGenericLoader.loopThroughPackage(
-                "net.swofty.commons.protocol.objects", ProtocolObject.class).toList();
-        protocolObjects.forEach(ServerOutboundMessage::registerFromProtocolObject);
+        RedisProtocol<?, ?>[] toProxyProtocols = {
+                new RequestServerNameProtocol(), new PlayerCountProtocol(),
+                new PlayerHandlerProtocol(), new ProxyIsOnlineProtocol(),
+                new RegisterServerProtocol(), new FinishedWithPlayerProtocol(),
+                new RequestServersProtocol(), new RegisterTestFlowProtocol(),
+                new TestFlowServerReadyProtocol(), new StaffChatProtocol(),
+                new PunishPlayerProtocol()
+        };
+        for (RedisProtocol<?, ?> protocol : toProxyProtocols) {
+            RedisClient.registerResponseProtocol(protocol);
+        }
+        List<RedisProtocol> protocols = SkyBlockGenericLoader.loopThroughPackage(
+                "net.swofty.commons.protocol.objects", RedisProtocol.class)
+                .filter(obj -> !obj.getClass().getPackageName().startsWith("net.swofty.commons.protocol.objects.proxy"))
+                .toList();
+        protocols.forEach(RedisClient::registerResponseProtocol);
         proxyAPI.start();
 
         // Start spark if enabled
         if (ENABLE_SPARK) {
             Spark.enable(Files.createTempDirectory("spark"));
+            Logger.info("Spark has been enabled");
         }
 
         // Ensure all services are running
@@ -187,9 +205,12 @@ public class Hypixel {
                 }
             });
         });
-        typeLoader.afterInitialize(minecraftServer);
 
-        MinestomAdventure.AUTOMATIC_COMPONENT_TRANSLATION = true;
+        typeLoader.afterInitialize(minecraftServer);
+        if (skyblockLoader != null) {
+            skyblockLoader.afterInitialize();
+        }
+
         HypixelTranslator translator = new HypixelTranslator();
         I18n.init(translator);
         GlobalTranslator.translator().addSource(translator);
@@ -209,12 +230,11 @@ public class Hypixel {
             HypixelConst.setMaxPlayers(maxPlayers);
             HypixelConst.setServerUUID(serverUUID);
 
-            ServerOutboundMessage.sendMessageToProxy(
-                    ToProxyChannels.REQUEST_SERVERS_NAME, new JSONObject(),
-                    (response) -> {
+            RedisClient.requestProxy(new RequestServerNameProtocol(),
+                    new RequestServerNameProtocol.Request())
+                    .thenAccept(response -> {
                         if (isTestFlow) {
-                            String serverNameRaw = ((String) response.get("shortened-server-name"))
-                                    .substring(1);
+                            String serverNameRaw = response.shortenedServerName().substring(1);
                             String serverName = "isolated" + serverNameRaw;
                             String shortenedServerName = "i" + serverNameRaw;
 
@@ -224,13 +244,13 @@ public class Hypixel {
                             handleTestFlowRegistration(testFlowName, testFlowHandler, testFlowPlayers,
                                     serverType, testFlowIndex, testFlowTotal, testFlowServerConfigs);
                         } else {
-                            HypixelConst.setServerName((String) response.get("server-name"));
-                            HypixelConst.setShortenedServerName((String) response.get("shortened-server-name"));
+                            HypixelConst.setServerName(response.serverName());
+                            HypixelConst.setShortenedServerName(response.shortenedServerName());
                         }
 
                         Logger.info("Received server name: " + HypixelConst.getServerName());
                     });
-            checkProxyConnected(MinecraftServer.getSchedulerManager());
+            checkProxyConnected();
 
             // Initialize anticheat
             if (ConfigProvider.settings().getIntegrations().isAnticheat()) {
@@ -260,23 +280,14 @@ public class Hypixel {
                     System.exit(0);
                 });
 
-        JSONObject registerMessage = new JSONObject()
-                .put("type", serverType.name())
-                .put("max_players", maxPlayers)
-                .put("host", InetAddress.getLocalHost().getHostName());
-
-        // Add test flow information if this is a test flow server
-        if (isTestFlow) {
-            registerMessage.put("is_test_flow", true)
-                    .put("test_flow_name", testFlowName)
-                    .put("test_flow_index", testFlowIndex)
-                    .put("test_flow_total", testFlowTotal);
-        }
-
-        ServerOutboundMessage.sendMessageToProxy(
-                ToProxyChannels.REGISTER_SERVER,
-                registerMessage,
-                (response) -> startServer.complete(Integer.parseInt(response.get("port").toString())));
+        RedisClient.requestProxy(new RegisterServerProtocol(),
+                new RegisterServerProtocol.Request(
+                        serverType.name(), maxPlayers, InetAddress.getLocalHost().getHostName(), null,
+                        isTestFlow ? true : null,
+                        isTestFlow ? testFlowName : null,
+                        isTestFlow ? testFlowIndex : null,
+                        isTestFlow ? testFlowTotal : null))
+                .thenAccept(response -> startServer.complete(response.port()));
     }
 
     private static void handleTestFlowRegistration(String testFlowName, String handler, String players,
@@ -294,32 +305,19 @@ public class Hypixel {
         if ("0".equals(index)) {
             Logger.info("Registering test flow with proxy: " + testFlowName);
 
-            // Parse server configs and create JSON array
-            JSONArray serverConfigsArray = new JSONArray();
+            List<Map<String, Object>> configList = new java.util.ArrayList<>();
             String[] configs = serverConfigs.split(",");
-
             for (String config : configs) {
                 String[] parts = config.trim().split(":");
                 String type = parts[0];
                 int count = parts.length > 1 ? Integer.parseInt(parts[1]) : 1;
-
-                serverConfigsArray.put(new JSONObject()
-                        .put("type", type)
-                        .put("count", count));
+                configList.add(Map.of("type", type, "count", count));
             }
 
-            JSONObject testFlowMessage = new JSONObject()
-                    .put("test_flow_name", testFlowName)
-                    .put("handler", handler)
-                    .put("players", new JSONArray(playerList))
-                    .put("server_configs", serverConfigsArray);
-
-            ServerOutboundMessage.sendMessageToProxy(
-                    ToProxyChannels.REGISTER_TEST_FLOW,
-                    testFlowMessage,
-                    (response) -> {
+            RedisClient.requestProxy(new RegisterTestFlowProtocol(),
+                    new RegisterTestFlowProtocol.Request(testFlowName, handler, playerList, configList))
+                    .thenAccept(response -> {
                         Logger.info("Test flow registered successfully with proxy");
-                        // Mark this server as ready
                         notifyTestFlowServerReady(testFlowName, serverType, index);
                     });
         } else {
@@ -329,15 +327,9 @@ public class Hypixel {
     }
 
     private static void notifyTestFlowServerReady(String testFlowName, ServerType serverType, String index) {
-        JSONObject readyMessage = new JSONObject()
-                .put("test_flow_name", testFlowName)
-                .put("server_type", serverType.name())
-                .put("server_index", index);
-
-        ServerOutboundMessage.sendMessageToProxy(
-                ToProxyChannels.TEST_FLOW_SERVER_READY,
-                readyMessage,
-                (response) -> {
+        RedisClient.requestProxy(new TestFlowServerReadyProtocol(),
+                new TestFlowServerReadyProtocol.Request(testFlowName, serverType.name(), Integer.parseInt(index)))
+                .thenAccept(response -> {
                     Logger.info("Notified proxy that " + serverType.name() + " server " + index + " is ready for test flow: " + testFlowName);
                 });
     }
@@ -352,32 +344,42 @@ public class Hypixel {
         return options;
     }
 
-    private static void checkProxyConnected(Scheduler scheduler) {
-        scheduler.submitTask(() -> {
-            AtomicBoolean responded = new AtomicBoolean(false);
+    private static final int PROXY_HEARTBEAT_CHECK_SECONDS = 3;
+    private static final int PROXY_HEARTBEAT_MAX_MISSES = 3;
 
+    private static void checkProxyConnected() {
+        ProxyHeartbeat.init(ConfigProvider.settings().getRedisUri());
+
+        ScheduledExecutorService monitor = Executors.newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = new Thread(runnable, "proxy-heartbeat-monitor");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        AtomicInteger missed = new AtomicInteger(0);
+        monitor.scheduleAtFixedRate(() -> {
+            boolean alive;
             try {
-                ServerOutboundMessage.sendMessageToProxy(
-                        ToProxyChannels.PROXY_IS_ONLINE, new JSONObject(), (response) -> {
-                            if (response.get("online").equals(true)) {
-                                responded.set(true);
-                            }
-                        });
+                alive = ProxyHeartbeat.isProxyAlive();
             } catch (Exception e) {
-                MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
-                CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
-                        .execute(() -> System.exit(0));
-                return TaskSchedule.stop();
+                alive = false;
             }
 
-            scheduler.scheduleTask(() -> {
-                if (!responded.get()) {
-                    Logger.error("Proxy did not respond to alive check. Shutting down...");
-                    System.exit(0);
-                }
-            }, TaskSchedule.tick(20), TaskSchedule.stop());
+            if (alive) {
+                missed.set(0);
+                return;
+            }
 
-            return TaskSchedule.seconds(1);
-        }, ExecutionType.TICK_END);
+            int misses = missed.incrementAndGet();
+            Logger.warn("Proxy heartbeat missing ({}/{})", misses, PROXY_HEARTBEAT_MAX_MISSES);
+            if (misses >= PROXY_HEARTBEAT_MAX_MISSES) {
+                Logger.error("Proxy heartbeat absent for ~{}s. Shutting down...",
+                        PROXY_HEARTBEAT_MAX_MISSES * PROXY_HEARTBEAT_CHECK_SECONDS);
+                MinecraftServer.getConnectionManager().getOnlinePlayers()
+                        .forEach(player -> player.kick("§cServer has lost connection to the proxy, please rejoin"));
+                CompletableFuture.delayedExecutor(500, TimeUnit.MILLISECONDS)
+                        .execute(() -> System.exit(0));
+            }
+        }, PROXY_HEARTBEAT_CHECK_SECONDS, PROXY_HEARTBEAT_CHECK_SECONDS, TimeUnit.SECONDS);
     }
 }

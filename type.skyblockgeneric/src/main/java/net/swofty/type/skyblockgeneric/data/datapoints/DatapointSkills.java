@@ -152,7 +152,9 @@ public class DatapointSkills extends SkyBlockDatapoint<DatapointSkills.PlayerSki
          * @param value    The experience value to add to the existing skill.
          */
         public void increase(SkyBlockPlayer player, SkillCategories category, Double value) {
-            setRaw(player, category, getRaw(category) + value);
+            double wisdom = player.getStatistics().allStatistics().getOverall(category.getWisdomStatistic());
+            double modifiedValue = value * (1D + wisdom / 100D);
+            setRaw(player, category, getRaw(category) + modifiedValue);
         }
 
         /**

@@ -1,64 +1,50 @@
 package net.swofty.velocity.redis.listeners;
 
-import net.swofty.commons.proxy.FromProxyChannels;
-import net.swofty.commons.proxy.ToProxyChannels;
+import net.swofty.commons.protocol.RedisProtocol;
+import net.swofty.commons.protocol.objects.proxy.from.BroadcastStaffChatProtocol;
+import net.swofty.commons.protocol.objects.proxy.to.StaffChatProtocol;
 import net.swofty.velocity.gamemanager.GameManager;
-import net.swofty.velocity.redis.ChannelListener;
-import net.swofty.velocity.redis.RedisListener;
-import net.swofty.velocity.redis.RedisMessage;
-import org.json.JSONObject;
+import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.RedisClient;
 
 import java.util.UUID;
 
-@ChannelListener(channel = ToProxyChannels.STAFF_CHAT)
-public class ListenerStaffChat extends RedisListener {
+public class ListenerStaffChat implements RedisMessageHandler<
+        StaffChatProtocol.Request,
+        StaffChatProtocol.Response> {
 
     @Override
-    public JSONObject receivedMessage(JSONObject message, UUID serverUUID) {
-        // Broadcast the staff chat message to all servers
-        broadcastToAllServers(message);
-        return new JSONObject();
+    public RedisProtocol<StaffChatProtocol.Request, StaffChatProtocol.Response> protocol() {
+        return new StaffChatProtocol();
     }
 
-    /**
-     * Broadcasts a staff chat message to all registered game servers.
-     * Used for both chat messages (from servers) and join/leave notifications (from proxy).
-     *
-     * @param message JSON containing "type" ("message", "join", or "leave") and relevant data
-     */
-    public static void broadcastToAllServers(JSONObject message) {
+    @Override
+    public StaffChatProtocol.Response handle(StaffChatProtocol.Request message, RedisMessageContext context) {
+        broadcastToAllServers(new BroadcastStaffChatProtocol.Request(
+                message.type(), message.formattedMessage(), message.uuid()));
+        return new StaffChatProtocol.Response();
+    }
+
+    public static void broadcastToAllServers(BroadcastStaffChatProtocol.Request message) {
         GameManager.getServers().forEach((serverType, serverList) -> {
             serverList.forEach(gameServer -> {
-                RedisMessage.sendMessageToServer(
+                RedisClient.requestServer(
                         gameServer.internalID(),
-                        FromProxyChannels.BROADCAST_STAFF_CHAT,
+                        new BroadcastStaffChatProtocol(),
                         message
                 );
             });
         });
     }
 
-    /**
-     * Convenience method to broadcast a player join notification.
-     *
-     * @param playerUuid The UUID of the player who joined
-     */
     public static void broadcastStaffJoin(UUID playerUuid) {
-        JSONObject message = new JSONObject()
-                .put("type", "join")
-                .put("uuid", playerUuid.toString());
-        broadcastToAllServers(message);
+        broadcastToAllServers(new BroadcastStaffChatProtocol.Request(
+                "join", null, playerUuid.toString()));
     }
 
-    /**
-     * Convenience method to broadcast a player leave notification.
-     *
-     * @param playerUuid The UUID of the player who left
-     */
     public static void broadcastStaffLeave(UUID playerUuid) {
-        JSONObject message = new JSONObject()
-                .put("type", "leave")
-                .put("uuid", playerUuid.toString());
-        broadcastToAllServers(message);
+        broadcastToAllServers(new BroadcastStaffChatProtocol.Request(
+                "leave", null, playerUuid.toString()));
     }
 }

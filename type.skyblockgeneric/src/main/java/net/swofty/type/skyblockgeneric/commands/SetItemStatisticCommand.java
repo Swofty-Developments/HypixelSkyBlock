@@ -15,7 +15,7 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "updateitemstatistic",
+@CommandParameters(labels = "updateitemstatistic",
         description = "Updates the statistic of a player's Sandbox item",
         usage = "/setitemstatistic <statistic> <amount>",
         permission = Rank.DEFAULT,

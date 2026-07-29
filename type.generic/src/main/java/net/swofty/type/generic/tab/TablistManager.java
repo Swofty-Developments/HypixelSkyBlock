@@ -1,10 +1,10 @@
 package net.swofty.type.generic.tab;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
+import net.minestom.server.color.TeamColor;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.timer.ExecutionType;
 import net.minestom.server.timer.Scheduler;
@@ -13,7 +13,15 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -61,27 +69,30 @@ public abstract class TablistManager {
                             String fakeProfileName = getFakeProfileName(slotIndex);
 
                             List<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
+                            TablistSkin skin = entry.registry();
                             properties.add(new PlayerInfoUpdatePacket.Property(
                                 "textures",
-                                entry.registry().getTexture(),
-                                entry.registry().getSignature()));
+                                skin.getTexture(),
+                                skin.getSignature()));
 
                             if (cache.createdTeams.add(teamName)) {
                                 TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(
-                                    Component.text(teamName),
-                                    (byte) 0x01,
-                                    TeamsPacket.NameTagVisibility.ALWAYS,
-                                    TeamsPacket.CollisionRule.ALWAYS,
-                                    NamedTextColor.RED,
-                                    Component.text(teamName),
-                                    Component.empty(),
+                                    new TeamsPacket.Settings(
+                                        Component.text(teamName),
+                                        Component.text(teamName),
+                                        Component.empty(),
+                                        TeamsPacket.NameTagVisibility.ALWAYS,
+                                        TeamsPacket.CollisionRule.ALWAYS,
+                                        TeamColor.RED,
+                                        (byte) 0x01
+                                    ),
                                     new ArrayList<>(Collections.singletonList(fakeProfileName))
                                 ));
 
                                 player.sendPacket(teamPacket);
                             }
 
-                            UUID uuid = UUID.nameUUIDFromBytes((player.getUuid().toString() + "#tab#" + slotIndex)
+                            UUID uuid = UUID.nameUUIDFromBytes((player.getUuid() + "#tab#" + slotIndex)
                                 .getBytes(StandardCharsets.UTF_8));
                             cache.tabEntries.add(uuid);
 

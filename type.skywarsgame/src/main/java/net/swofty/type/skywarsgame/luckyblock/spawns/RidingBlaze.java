@@ -1,7 +1,6 @@
 package net.swofty.type.skywarsgame.luckyblock.spawns;
 
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityProjectile;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.instance.Instance;

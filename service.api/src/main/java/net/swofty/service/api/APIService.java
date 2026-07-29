@@ -9,7 +9,7 @@ import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.api.http.APIResponse;
 import net.swofty.service.api.http.SkyBlockEndpoint;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class APIService implements SkyBlockService {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         int port = 0;
         for (String arg : args) {
             if (arg.startsWith("--port=")) {
@@ -140,8 +140,8 @@ public class APIService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.api.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.api.endpoints", RedisMessageHandler.class).toList();
     }
 }
 

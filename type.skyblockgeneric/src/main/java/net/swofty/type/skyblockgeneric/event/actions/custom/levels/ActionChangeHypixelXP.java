@@ -1,8 +1,9 @@
 package net.swofty.type.skyblockgeneric.event.actions.custom.levels;
 
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.event.actions.player.ActionAddSkyBlockXPToNametag;
 import net.swofty.type.skyblockgeneric.event.custom.SkyBlockXPModificationEvent;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelCause;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class ActionChangeHypixelXP implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = true)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void run(SkyBlockXPModificationEvent event) {
         if (event.getNewXP() <= event.getOldXP()) return;
         SkyBlockPlayer player = event.getPlayer();

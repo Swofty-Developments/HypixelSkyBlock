@@ -3,10 +3,7 @@ package net.swofty.type.generic.data.datapoints;
 import net.swofty.commons.protocol.JacksonSerializer;
 import net.swofty.type.generic.data.Datapoint;
 
-import java.time.Year;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DatapointPresentYear extends Datapoint<DatapointPresentYear.YearData> {
     private static final JacksonSerializer<DatapointPresentYear.YearData> serializer =

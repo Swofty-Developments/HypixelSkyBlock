@@ -8,8 +8,9 @@ import net.swofty.type.generic.chat.StaffChat;
 import net.swofty.type.generic.data.datapoints.DatapointChatType;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.party.PartyManager;
 import net.swofty.type.generic.user.categories.Rank;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class ActionPlayerChat implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerChatEvent event) {
         final SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
         event.setCancelled(true);
@@ -76,9 +77,9 @@ public class ActionPlayerChat implements HypixelEventClass {
                     onlinePlayer.sendMessage(player.getFullDisplayName() + "§f: " + finalMessage);
             else
                 if (rank.equals(Rank.DEFAULT))
-                    onlinePlayer.sendMessage(rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
+                    onlinePlayer.sendMessage(player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§7: " + finalMessage);
                 else
-                    onlinePlayer.sendMessage(rank.getPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
+                    onlinePlayer.sendMessage(player.getLegacyRankPrefix() + StringUtility.getTextFromComponent(player.getName()) + "§f: " + finalMessage);
         });
     }
 }

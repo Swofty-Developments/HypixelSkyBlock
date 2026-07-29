@@ -10,8 +10,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.objects.darkauction.PlaceBidProtocol;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
@@ -267,7 +267,7 @@ public class GUIDarkAuction extends HypixelInventoryGUI implements RefreshingGUI
 
                     darkAuctionService.handleRequest(bidMessage)
                             .thenAccept(response -> {
-                                if (response instanceof PlaceBidProtocol.PlaceBidResponse(boolean success, String message)) {
+                                if (response instanceof PlaceBidProtocol.PlaceBidResponse(boolean success, String message, String error)) {
                                     if (!success) {
                                         sp.sendMessage("§c" + message);
                                     }

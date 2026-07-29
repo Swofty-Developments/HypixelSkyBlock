@@ -6,7 +6,7 @@ import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "displaymissiondata",
+@CommandParameters(labels = "displaymissiondata",
         description = "Displays the mission data of a player",
         usage = "/displaymissiondata",
         permission = Rank.STAFF,

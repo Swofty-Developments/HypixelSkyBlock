@@ -3,15 +3,17 @@ package net.swofty.service.itemtracker;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.config.ConfigProvider;
 import net.swofty.service.generic.SkyBlockService;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
 
 import java.util.List;
 
 public class ItemTrackerService implements SkyBlockService {
     static void main(String[] args) {
-        SkyBlockService.init(new ItemTrackerService());
-
+        // Connect the DB before the service starts handling Redis requests,
+        // otherwise early messages hit a null collection and NPE.
         TrackedItemsDatabase.connect(ConfigProvider.settings().getMongodb());
+
+        SkyBlockService.init(new ItemTrackerService());
     }
 
     @Override
@@ -20,7 +22,7 @@ public class ItemTrackerService implements SkyBlockService {
     }
 
     @Override
-    public List<ServiceEndpoint> getEndpoints() {
-        return loopThroughPackage("net.swofty.service.itemtracker.endpoints", ServiceEndpoint.class).toList();
+    public List<RedisMessageHandler> getEndpoints() {
+        return loopThroughPackage("net.swofty.service.itemtracker.endpoints", RedisMessageHandler.class).toList();
     }
 }

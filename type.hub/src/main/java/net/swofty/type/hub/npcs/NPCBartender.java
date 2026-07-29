@@ -10,7 +10,7 @@ import net.swofty.type.skyblockgeneric.mission.missions.MissionKillZombies;
 import net.swofty.type.skyblockgeneric.mission.missions.MissionTalkToBartender;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-public class NPCBartender extends HypixelNPC implements net.swofty.type.skyblockgeneric.garden.progression.GardenSpokenNpcSource {
+public class NPCBartender extends HypixelNPC {
 
     public NPCBartender() {
         super(new HumanConfiguration() {
@@ -67,14 +67,9 @@ public class NPCBartender extends HypixelNPC implements net.swofty.type.skyblock
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello"),
-                DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk"),
-                DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete")
+            DialogueSet.ofTranslation("quest-hello", "npcs_hub.bartender.dialogue.quest_hello"),
+            DialogueSet.ofTranslation("quest-talk", "npcs_hub.bartender.dialogue.quest_talk"),
+            DialogueSet.ofTranslation("quest-complete", "npcs_hub.bartender.dialogue.quest_complete")
         };
-    }
-
-    @Override
-    public String gardenSpokenNpcId() {
-        return "BARTENDER";
     }
 }

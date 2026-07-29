@@ -4,7 +4,11 @@ import net.kyori.adventure.sound.Sound;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.*;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.LivingEntity;
+import net.minestom.server.entity.Player;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.entity.metadata.projectile.ThrownTridentMeta;
@@ -13,6 +17,7 @@ import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.sound.SoundEvent;
 import net.swofty.pvp.enchantment.EntityGroup;
 import net.swofty.pvp.feature.enchantment.EnchantmentFeature;
+import net.swofty.pvp.feature.provider.SoundProvider;
 import net.swofty.pvp.utils.EntityUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,6 +28,7 @@ public class ThrownTrident extends AbstractArrow {
 	private final ItemStack tridentItem;
 	private boolean damageDone;
 	private boolean hasStartedReturning;
+	private SoundProvider soundProvider;
 
 	public ThrownTrident(@Nullable Entity shooter, ItemStack tridentItem, EnchantmentFeature enchantmentFeature) {
 		super(shooter, EntityType.TRIDENT, enchantmentFeature);
@@ -33,6 +39,13 @@ public class ThrownTrident extends AbstractArrow {
 
 		meta.setHasEnchantmentGlint(!Objects.requireNonNull(tridentItem.get(DataComponents.ENCHANTMENTS))
 				.enchantments().isEmpty());
+
+		soundProvider = SoundProvider.DEFAULT;
+	}
+
+	public ThrownTrident(@Nullable Entity shooter, ItemStack tridentItem, EnchantmentFeature enchantmentFeature, SoundProvider soundProvider) {
+		this(shooter, tridentItem, enchantmentFeature);
+		this.soundProvider = soundProvider;
 	}
 
 	@Override
@@ -57,10 +70,13 @@ public class ThrownTrident extends AbstractArrow {
 						.mul(ServerFlag.SERVER_TICKS_PER_SECOND)));
 
 				if (!hasStartedReturning) {
-					getViewersAsAudience().playSound(Sound.sound(
+					soundProvider.playSound(
+						getViewersAsAudience(),
+						Sound.sound(
 							SoundEvent.ITEM_TRIDENT_RETURN, Sound.Source.NEUTRAL,
 							10.0f, 1.0f
-					), position.x(), position.y(), position.z());
+						), position.x(), position.y(), position.z()
+					);
 					hasStartedReturning = true;
 				}
 			}

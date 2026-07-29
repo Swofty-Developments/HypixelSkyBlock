@@ -1,12 +1,17 @@
 package net.swofty.commons.party;
 
-import net.swofty.commons.protocol.Serializer;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface Party {
-    Serializer<? extends Party> getSerializer();
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = FullParty.class, name = "FullParty"),
+        @JsonSubTypes.Type(value = PendingParty.class, name = "PendingParty")
+})
+public sealed interface Party permits FullParty, PendingParty {
     List<UUID> getParticipants();
 }

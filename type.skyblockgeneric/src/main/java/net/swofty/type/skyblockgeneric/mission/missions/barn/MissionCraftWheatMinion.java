@@ -2,7 +2,6 @@ package net.swofty.type.skyblockgeneric.mission.missions.barn;
 
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.skyblockgeneric.event.custom.ItemCraftEvent;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
@@ -11,9 +10,11 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Map;
 import java.util.Set;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionCraftWheatMinion extends SkyBlockMission {
-    @HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void onCraftEvent(ItemCraftEvent event) {
         MissionData data = event.getPlayer().getMissionData();
 

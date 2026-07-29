@@ -1,22 +1,22 @@
 package net.swofty.type.skyblockgeneric.collection;
 
 import lombok.Data;
-import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
-import org.tinylog.Logger;
 import net.minestom.server.item.Material;
 import net.swofty.commons.YamlFileUtils;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.components.CraftableComponent;
+import net.swofty.type.skyblockgeneric.item.components.EnchantedComponent;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
-import net.swofty.type.skyblockgeneric.utility.RecipeParser;
 import org.jetbrains.annotations.Nullable;
+import org.tinylog.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 public class CollectionLoader {

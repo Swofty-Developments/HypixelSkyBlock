@@ -7,7 +7,7 @@ import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "recomb",
+@CommandParameters(labels = "recomb",
         description = "Recombobulates the item in the players hand",
         usage = "/recombobulate",
         permission = Rank.STAFF,

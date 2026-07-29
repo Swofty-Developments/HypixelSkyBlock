@@ -34,11 +34,16 @@ public enum PlayerHolograms {
 
     private static void addHologram(HypixelPlayer skyBlockPlayer, PlayerHolograms hologramType, String line, double heightOffset) {
         HologramEntity entity = new HologramEntity(line);
-        entity.setInstance(HypixelConst.getInstanceContainer(), hologramType.pos.add(0, -heightOffset, 0));
-        entity.addViewer(skyBlockPlayer);
+        spawnForPlayer(entity, skyBlockPlayer, HypixelConst.getInstanceContainer(), hologramType.pos.add(0, -heightOffset, 0));
 
         entities.computeIfAbsent(skyBlockPlayer, k -> new ArrayList<>())
                 .add(new AbstractMap.SimpleEntry<>(hologramType, entity));
+    }
+
+    private static void spawnForPlayer(HologramEntity entity, HypixelPlayer player, Instance instance, Pos position) {
+        entity.setAutoViewable(false);
+        entity.setInstance(instance, position);
+        entity.addViewer(player);
     }
 
     public static void spawnAll(HypixelPlayer skyBlockPlayer) {
@@ -87,8 +92,7 @@ public enum PlayerHolograms {
                             // Add new hologram
                             HologramEntity entity = new HologramEntity(lines[i]);
                             // Set hologram entity at the correct position considering new spacing and bottom alignment
-                            entity.setInstance(HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
-                            entity.addViewer(skyBlockPlayer);
+                            spawnForPlayer(entity, skyBlockPlayer, HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * 0.3), 0));
                             currentEntities.add(Map.entry(hologram, entity));
                         }
                     }
@@ -113,8 +117,12 @@ public enum PlayerHolograms {
         double startY = hologram.text.length * spacing - spacing;
         for (int i = 0; i < hologram.text.length; i++) {
             HologramEntity entity = new HologramEntity(hologram.text[i]);
-            entity.setInstance(hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(), hologram.pos.add(0, startY - (i * spacing), 0));
-            entity.addViewer(hologram.player);
+            spawnForPlayer(
+                entity,
+                hologram.player,
+                hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
+                hologram.pos.add(0, startY - (i * spacing), 0)
+            );
             entities.add(entity);
         }
 
@@ -169,11 +177,12 @@ public enum PlayerHolograms {
         while (entities.size() < newText.length) {
             int i = entities.size();
             HologramEntity entity = new HologramEntity(newText[i]);
-            entity.setInstance(
+            spawnForPlayer(
+                entity,
+                hologram.player,
                     hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
                     hologram.pos.add(0, startY - (i * spacing), 0)
             );
-            entity.addViewer(hologram.player);
             entities.add(entity);
         }
 
@@ -225,11 +234,12 @@ public enum PlayerHolograms {
                     while (hologramEntities.size() < newLines.length) {
                         int i = hologramEntities.size();
                         HologramEntity entity = new HologramEntity(newLines[i]);
-                        entity.setInstance(
+                        spawnForPlayer(
+                            entity,
+                            hologram.player,
                                 hologram.getInstance() != null ? hologram.getInstance() : HypixelConst.getInstanceContainer(),
                                 hologram.pos.add(0, startY - (i * spacing), 0)
                         );
-                        entity.addViewer(hologram.player);
                         hologramEntities.add(entity);
                     }
 

@@ -31,6 +31,14 @@ public enum ChatColor {
 
     public static final char COLOR_CHAR = '§';
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + '§' + "[0-9A-FK-OR]");
+    private static final java.util.Map<Character, ChatColor> BY_CODE = new java.util.HashMap<>();
+
+    static {
+        for (ChatColor color : values()) {
+            BY_CODE.put(color.code, color);
+        }
+    }
+
     private final int intCode;
     private final char code;
     private final boolean isFormat;
@@ -53,16 +61,10 @@ public enum ChatColor {
             return null;
         }
         for (int i = text.length() - 2; i >= 0; i--) {
-
-            char currentChar = text.charAt(i);
-            if (currentChar == ChatColor.COLOR_CHAR) {
-
-                char colorCode = text.charAt(i + 1);
-                for (ChatColor chatColor : ChatColor.values()) {
-
-                    if (chatColor.getCode() == colorCode) {
-                        return chatColor;
-                    }
+            if (text.charAt(i) == ChatColor.COLOR_CHAR) {
+                ChatColor color = BY_CODE.get(text.charAt(i + 1));
+                if (color != null) {
+                    return color;
                 }
             }
         }

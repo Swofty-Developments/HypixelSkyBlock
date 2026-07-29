@@ -2,7 +2,6 @@ package net.swofty.type.skywarslobby.soulwell;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;

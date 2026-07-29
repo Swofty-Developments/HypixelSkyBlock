@@ -1,0 +1,191 @@
+items:
+  - id: COMMON_HOOK
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: HOOK
+        required_fishing_level: 5
+        tag_bonuses:
+          COMMON: 25
+        texture: d235388f091b7fd13397151fca580fdf9a41c2a0a297f887838710f629aa3fd6
+
+  - id: HOTSPOT_HOOK
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: HOOK
+        required_fishing_level: 20
+        tag_bonuses:
+          HOTSPOT: 100
+        texture: 17415df9f4c8cdabdacd442da80826188e46a3d166f56fd1509bba26faac76dd
+
+  - id: PHANTOM_HOOK
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: HOOK
+        required_fishing_level: 21
+        tag_bonuses:
+          SPOOKY: 100
+        texture: c95eff1654366d5245238ddbfb65a7a7128468a9ce343861fe239e87c14c3f6d
+
+  - id: TREASURE_HOOK
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: HOOK
+        required_fishing_level: 25
+        treasure_only: true
+        texture: 9809753cbab0380c7a1c18925faf9b51e44caadd1e5748542b0f23835f4ef64e
+
+  - id: SPEEDY_LINE
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      FISHING_SPEED: 10
+    components:
+      - id: FISHING_ROD_PART
+        category: LINE
+        required_fishing_level: 5
+        texture: 5cbac3c84e21e65ec88007604c4eba1da391e185544b90252fc16ca695c59b4b
+
+  - id: SHREDDED_LINE
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      DAMAGE: 250
+      FEROCITY: 50
+    components:
+      - id: FISHING_ROD_PART
+        category: LINE
+        required_fishing_level: 20
+        texture: f5424291868be6ae16512641666c5286a740f936e42f96e34987fb6f43d16e6e
+
+  - id: TITAN_LINE
+    material: PLAYER_HEAD
+    rarity: RARE
+    default_statistics:
+      DOUBLE_HOOK_CHANCE: 2
+    components:
+      - id: FISHING_ROD_PART
+        category: LINE
+        required_fishing_level: 35
+        texture: 9a850a4f721bc150bb72b067e5074c8251058a6b9111691da315b393467c1aa9
+
+  - id: JUNK_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        bayou_treasure_to_junk: true
+        texture: d24892a3142d2e130e5feb88b805b83de905489d2ccd1d031b9d7a2922b96500
+
+  - id: PRISMARINE_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        materialized_item_id: PRISMARINE_SHARD
+        texture: b9d2d0fe4c93fbc21309e93d985df37e1133d2ece58d2f96b6be5cffba53c181
+
+  - id: SPONGE_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        materialized_item_id: SPONGE
+        texture: 8b24369807fcf3bd852e6da87ddeca9d38a04f32c78599f4c5823b9522278259
+
+  - id: CHUM_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        materialized_item_id: CHUM
+        texture: d02b855b4acc508086248ff468aaaaba0c0d8deaa2adc0321ed0809e416736ef
+
+  - id: FESTIVE_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        materialized_chance: 0.05
+        texture: 6f5840e5b76a2ed0de1c2280ae8be0edd90d83e5f8408af9f1e92f2db92e0383
+
+  - id: ICY_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        tag_bonuses:
+          WINTER: 200
+        materialized_item_id: ICE
+        texture: 41dfb1861aa0dd49f7bd8a4ecb14fbda35055fbe9b06b4d7be5cdde0fc7cc60e
+
+  - id: STINGY_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 5
+        bait_preservation_chance: 10.0
+        texture: e886d5cac32bd32fc07938908c552b7b27965d92065b3157dfc7ef849281ee9d
+
+  - id: HOTSPOT_SINKER
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_ROD_PART
+        category: SINKER
+        required_fishing_level: 20
+        hotspot_buff_multiplier: 2.0
+        texture: 88891d33b55dd1572814527b9c027ec724909c26281a197d0309fbfa925cbce4
+
+  - id: RUSTY_SHIP_ENGINE
+    material: PLAYER_HEAD
+    rarity: SPECIAL
+    components:
+      - id: FISHING_SHIP_PART
+        slot: ENGINE
+        texture: 53e84793917c890f7f8a2c4078a29e8ba939790498727af9342c2b6f6ac43c9c
+
+  - id: BRONZE_SHIP_ENGINE
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_SHIP_PART
+        slot: ENGINE
+        texture: 9172c1e729e0ca00193ab5d43e893fabedf5a80fc647258176e8502432885925
+
+  - id: BRONZE_SHIP_HELM
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_SHIP_PART
+        slot: HELM
+        texture: 646c5393c3c57742c992c56a7b7a8b98d267538de947c1096fe76341431008f2
+
+  - id: BRONZE_SHIP_HULL
+    material: PLAYER_HEAD
+    rarity: RARE
+    components:
+      - id: FISHING_SHIP_PART
+        slot: HULL
+        texture: a4a7254f1ad8448097d83ddfc790c9f02bc889acbd304b414cee5a13ceadc1e

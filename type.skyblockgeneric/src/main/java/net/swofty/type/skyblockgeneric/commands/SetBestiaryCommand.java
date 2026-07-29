@@ -9,7 +9,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.MobRegistry;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(aliases = "updatebestiary",
+@CommandParameters(labels = "updatebestiary",
         description = "Updates the bestiary of a player",
         usage = "/setbestiary <mob> <amount>",
         permission = Rank.STAFF,

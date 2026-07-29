@@ -25,19 +25,10 @@ public class PotionDataComponent extends SkyBlockItemComponent {
 
         // Add display info
         String prefix = isSplash ? "Splash " : "";
-        String levelDisplay = toRoman(level);
         addInheritedComponent(new ExtraUnderNameComponent(prefix + "Potion"));
     }
 
     public PotionDataComponent(String effectType, int level, int baseDurationSeconds) {
         this(effectType, level, baseDurationSeconds, false, false);
-    }
-
-    private static String toRoman(int level) {
-        String[] romans = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        if (level >= 1 && level <= 10) {
-            return romans[level];
-        }
-        return String.valueOf(level);
     }
 }

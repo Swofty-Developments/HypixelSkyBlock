@@ -5,9 +5,8 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
-import net.swofty.type.crimsonisle.tab.CrimsonIsleServerModule;
+import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.type.generic.tab.AreaServerModule;
 import net.swofty.type.generic.SkyBlockTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -42,9 +41,7 @@ public class TypeCrimsonIsleLoader implements SkyBlockTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> switch (type) {
-                    default -> new Pos(-360.5, 80, -430.5, -180, 0);
-                }, // Spawn position
+            (type) -> new Pos(-360.5, 80, -430.5, -180, 0), // Spawn position
                 true // Announce death messages
         );
     }
@@ -56,7 +53,7 @@ public class TypeCrimsonIsleLoader implements SkyBlockTypeLoader {
                 return new ArrayList<>(List.of(
                         new SkyBlockPlayersOnlineModule(1),
                         new SkyBlockPlayersOnlineModule(2),
-                        new CrimsonIsleServerModule(),
+                        new AreaServerModule("tablist.server_info.area.crimson_isle"),
                         new AccountInformationModule()
                 ));
             }
@@ -84,13 +81,9 @@ public class TypeCrimsonIsleLoader implements SkyBlockTypeLoader {
         ).toList());
     }
 
-    @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return List.of();
-    }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

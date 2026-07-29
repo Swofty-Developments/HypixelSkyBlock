@@ -75,9 +75,12 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             DISABLE_DROP_MESSAGES(false),
             HAS_SPOKEN_TO_BEA(false),
             HAS_SPOKEN_TO_GAVIN(false),
+            HAS_VISITED_DARK_AUCTION(false),
             HAS_SPOKEN_TO_TIA(false),
             HAS_SPOKEN_TO_LIFT_OPERATOR(false),
             HAS_SPOKEN_TO_LAZY_MINER(false),
+            HAS_SPOKEN_TO_BAKER(false),
+            HAS_SPOKEN_TO_FISHERMAN_GERALD(false),
             HAS_SPOKEN_TO_RUSTY(false),
             HAS_SPOKEN_TO_RUSTY_ABOUT_PICKAXE(false),
             HAS_SPOKEN_TO_RUSTY_ABOUT_ABIPHONE(false),
@@ -116,6 +119,12 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
 			AUTO_ACCEPT_QUESTS(false),
             RUSTY_PURCHASE_CONFIRMATION(false),
             RUSTY_SORT_BY_RARITY(false),
+            HAS_SPOKEN_TO_FISHERWOMAN_ENID(false),
+            HAS_SPOKEN_TO_CAPTAIN_BAHA(false),
+            HAS_SPOKEN_TO_RODDY(false),
+            HAS_CAUGHT_FIRST_FISH(false),
+            HAS_UNLOCKED_SHIP(false),
+            HAS_VISITED_BACKWATER_BAYOU(false),
             ;
 
             private final boolean defaultValue;

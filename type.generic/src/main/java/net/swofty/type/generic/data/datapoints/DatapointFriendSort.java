@@ -5,7 +5,7 @@ import net.swofty.type.generic.data.Datapoint;
 import org.json.JSONObject;
 
 public class DatapointFriendSort extends Datapoint<DatapointFriendSort.FriendSortData> {
-    private static final Serializer<FriendSortData> serializer = new Serializer<FriendSortData>() {
+    private static final Serializer<FriendSortData> serializer = new Serializer<>() {
         @Override
         public String serialize(FriendSortData value) {
             JSONObject json = new JSONObject();

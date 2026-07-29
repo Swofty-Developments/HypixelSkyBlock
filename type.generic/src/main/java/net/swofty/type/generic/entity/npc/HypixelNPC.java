@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
@@ -40,13 +42,9 @@ public abstract class HypixelNPC {
     @Getter
     private final NPCConfiguration parameters;
     private final DialogueController dialogueController;
-    @Getter
-    private final String name;
 
     public HypixelNPC(NPCConfiguration configuration) {
         this.parameters = configuration;
-        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        this.name = parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
         this.dialogueController = new DialogueController(this);
     }
 
@@ -102,12 +100,8 @@ public abstract class HypixelNPC {
                     Pos position = config.position(player);
 
                     String username = holograms[holograms.length - 1];
-                    boolean overflowing = username.length() > 16;
-                    if (overflowing) {
-                        username = " ";
-                    }
-
                     Entity entity;
+
                     switch (config) {
                         case HumanConfiguration humanConfig -> entity = new NPCEntityImpl(
                             player,
@@ -116,18 +110,14 @@ public abstract class HypixelNPC {
                             humanConfig.texture(player),
                             humanConfig.signature(player),
                             holograms,
-                            humanConfig,
-                            overflowing);
-                        case VillagerConfiguration villagerConfig -> {
-                            entity = new NPCVillagerEntityImpl(player,
-                                position, username, villagerConfig.profession(), villagerConfig, holograms, overflowing);
-                        }
-                        case AnimalConfiguration animalConfig -> {
-                            entity = new NPCAnimalEntityImpl(player,
-                                position,
-                                username,
-                                animalConfig.entityType(), animalConfig, holograms, overflowing);
-                        }
+                            humanConfig
+                        );
+                        case VillagerConfiguration villagerConfig -> entity = new NPCVillagerEntityImpl(player,
+                            position, username, villagerConfig.profession(), villagerConfig, holograms);
+                        case AnimalConfiguration animalConfig -> entity = new NPCAnimalEntityImpl(player,
+                            position,
+                            username,
+                            animalConfig.entityType(), animalConfig, holograms);
                         default ->
                             throw new IllegalStateException("Unknown NPCConfiguration type: " + config.getClass().getName());
                     }
@@ -201,11 +191,29 @@ public abstract class HypixelNPC {
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message) {
+        sendNPCMessage(player, Component.text(message));
+    }
+
+    public void sendNPCMessage(HypixelPlayer player, Component message) {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
+    public String getName() {
+        String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
+        return parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+    }
+
     public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
-        player.sendMessage("§e[NPC] " + getName() + "§f: " + message);
+        sendNPCMessage(player, Component.text(message), sound);
+    }
+
+    public void sendNPCMessage(HypixelPlayer player, Component message, Sound sound) {
+        player.sendMessage(Component.text()
+            .append(Component.text("[NPC] ", NamedTextColor.YELLOW))
+            .append(Component.text(getName(), NamedTextColor.YELLOW))
+            .append(Component.text(": ", NamedTextColor.WHITE))
+            .append(message)
+            .build());
         player.playSound(sound);
     }
 
@@ -273,23 +281,45 @@ public abstract class HypixelNPC {
     }
 
     @Builder
-    public record DialogueSet(String key, String[] lines, Sound sound) {
+    public record DialogueSet(String key, Component[] lines, Sound sound) {
         public static final DialogueSet[] EMPTY = new DialogueSet[0];
 
+        public static class DialogueSetBuilder {
+            public DialogueSetBuilder lines(Component[] lines) {
+                this.lines = lines;
+                return this;
+            }
+
+            public DialogueSetBuilder lines(String[] lines) {
+                if (lines == null) {
+                    this.lines = null;
+                    return this;
+                }
+
+                Component[] components = new Component[lines.length];
+                for (int i = 0; i < lines.length; i++) {
+                    components[i] = Component.text(lines[i]);
+                }
+                this.lines = components;
+                return this;
+            }
+        }
+
         public static DialogueSet ofTranslation(String key, String translationKey) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey), null);
+            return new DialogueSet(key, I18n.iterable(translationKey), null);
+        }
+
+        public static DialogueSet ofTranslation(String key, String translationKey, Component... args) {
+            return new DialogueSet(key, I18n.iterable(translationKey, args), null);
         }
 
         public static DialogueSet ofTranslation(String key, String translationKey, Sound sound) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey), sound);
+            return new DialogueSet(key, I18n.iterable(translationKey), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), null);
+        public static DialogueSet ofTranslation(String key, String translationKey, Sound sound, Component... args) {
+            return new DialogueSet(key, I18n.iterable(translationKey, args), sound);
         }
 
-        public static DialogueSet ofTranslation(String key, String translationKey, Map<String, String> placeholders, Sound sound) {
-            return new DialogueSet(key, I18n.dialogueLines(translationKey, placeholders), sound);
-        }
     }
 }

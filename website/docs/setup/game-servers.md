@@ -6,7 +6,7 @@ Game servers run the actual gameplay using Minestom. Each server runs as a speci
 
 1. Download `HypixelCore.jar` from the [releases page](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/tag/latest)
 2. Download [`config.yml`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration)
-3. Download [world files](https://files.catbox.moe/of7snu.zip)
+3. Download [world files](https://files.catbox.moe/oybade.zip) (all server worlds + `limbo.schem`; extract into `configuration/`)
 4. Download [`PicoLimbo.jar`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration) and its config
 
 ## Directory Structure
@@ -17,10 +17,6 @@ gameserver/
 ├── configuration/
 │   ├── config.yml
 │   ├── skyblock/
-│   │   ├── islands/
-│   │   │   ├── hypixel_skyblock_hub/
-│   │   │   ├── hypixel_skyblock_island_template/
-│   │   │   └── ... (other islands)
 │   │   ├── collections/
 │   │   ├── items/
 │   │   ├── levels/
@@ -30,9 +26,10 @@ gameserver/
 │   │   └── songs/            # Optional
 │   ├── bedwars/              # BedWars maps (.polar)
 │   ├── murdermystery/        # Murder Mystery maps (.polar)
-│   ├── hypixel_prototype_lobby/
-│   ├── hypixel_bedwars_lobby/
-│   └── hypixel_murder_mystery_lobby/
+│   ├── world/
+│   │   ├── hypixel_bedwars_lobby.polar
+│   │   ├── hypixel_murder_mystery_lobby.polar
+│   │   └── ... (other worlds)
 ```
 
 ## Setup Steps
@@ -40,7 +37,7 @@ gameserver/
 ### 1. Create Directory Structure
 
 ```bash
-mkdir -p gameserver/configuration/skyblock/islands
+mkdir -p gameserver/configuration/world
 ```
 
 ### 2. Configure config.yml
@@ -86,7 +83,7 @@ PicoLimbo handles the limbo state:
 2. Edit the `server.toml` which you can find in the repository configuration folder:
    - Set `method="MODERN"`
    - Set `secret="YOUR_SECRET"` (or FORWARDING_SECRET environment variable by default)
-3. Move the `limbo.polar` file to the same directory, or set polar_file to empty: `polar_file=""`
+3. Move the `limbo.schem` file to the same directory, or set schematic_file to empty: `schematic_file=""`
 4. Keep it running in the background
 
 ### 6. Start a Game Server

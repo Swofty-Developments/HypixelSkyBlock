@@ -1,17 +1,33 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.sbmenu;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.tag.resolver.Formatter;
+import net.kyori.adventure.text.minimessage.translation.Argument;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.Material;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
+import net.swofty.type.generic.data.datapoints.DatapointToggles;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.*;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
+import net.swofty.type.generic.gui.v2.Components;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.StatelessView;
+import net.swofty.type.generic.gui.v2.ViewConfiguration;
+import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.skyblockgeneric.bank.BankInterestCalculator;
+import net.swofty.type.skyblockgeneric.bank.PersonalBankService;
 import net.swofty.type.skyblockgeneric.calendar.CalendarEvent;
 import net.swofty.type.skyblockgeneric.calendar.SkyBlockCalendar;
+import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointBankData;
+import net.swofty.type.skyblockgeneric.gui.inventories.banker.GUIBanker;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.bags.GUIYourBags;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.calendar.GUICalendar;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.collection.GUICollections;
@@ -19,26 +35,28 @@ import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.fasttravel.GUIFast
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.levels.GUISkyBlockLevels;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.profiles.GUIProfileManagement;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.questlog.GUIMissionLog;
-import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipe;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.recipe.GUIRecipeBook;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.skills.GUISkills;
 import net.swofty.type.skyblockgeneric.gui.inventories.sbmenu.storage.GUIStorage;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
 import net.swofty.type.skyblockgeneric.levels.SkyBlockLevelRequirement;
+import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import org.jspecify.annotations.NonNull;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GUISkyBlockMenu extends StatelessView {
 
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(I18n.string("gui_sbmenu.main.title"), InventoryType.CHEST_6_ROW);
+        return ViewConfiguration.translatable("gui_sbmenu.main.title", InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -48,27 +66,26 @@ public class GUISkyBlockMenu extends StatelessView {
 
         layout.slot(13, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+
+            List<Component> lore = new ArrayList<>();
+            lore.add(I18n.t("gui_sbmenu.main.your_profile.view_equipment"));
+            lore.add(Component.space());
+
             PlayerStatistics statistics = player.getStatistics();
-            StringBuilder statsDisplay = new StringBuilder();
             List<String> statNames = new ArrayList<>(List.of("Health", "Defense", "Speed", "Strength", "Intelligence",
-                    "Crit Chance", "Crit Damage", "Swing Range"
+                "Crit Chance", "Crit Damage", "Swing Range"
             ));
             statistics.allStatistics().getOverall().forEach((statistic, value) -> {
                 if (!value.equals(statistic.getBaseAdditiveValue()) || statNames.contains(statistic.getDisplayName())) {
-                    if (statsDisplay.length() > 0) statsDisplay.append("\n");
-                    statsDisplay.append(" ").append(statistic.getFullDisplayName()).append(" §f")
-                            .append(StringUtility.decimalify(value, 2)).append(statistic.getSuffix());
+                    lore.add(Component.text(" " + statistic.getFullDisplayName() + " §f" + (StringUtility.decimalify(value, 2)) + (statistic.getSuffix())));
                 }
             });
 
-            List<String> lore = new ArrayList<>(I18n.lore("gui_sbmenu.main.your_profile.lore",
-                    Map.of("stats_display", statsDisplay.toString())));
+            lore.add(Component.space());
+            lore.add(I18n.t("gui_sbmenu.main.your_profile.view"));
 
-            return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.main.your_profile"),
-                    player.getPlayerSkin(), 1,
-                    lore
-            );
-        }, (click, c) -> {
+            return TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.your_profile", player.getPlayerSkin(), 1, lore);
+        }, (_, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             player.openView(new GUISkyBlockProfile());
         });
@@ -78,19 +95,18 @@ public class GUISkyBlockMenu extends StatelessView {
             SkyBlockLevelRequirement levelRequirement = player.getSkyBlockExperience().getLevel();
             SkyBlockLevelRequirement nextLevel = levelRequirement.getNextLevel();
 
-            return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.main.skyblock_leveling"),
-                    "3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242", 1,
-                    I18n.lore("gui_sbmenu.main.skyblock_leveling.lore", Map.of(
-                            "level_display", levelRequirement.getColor() + String.valueOf(levelRequirement),
-                            "next_level", nextLevel == null ? "§cMAX" : String.valueOf(nextLevel),
-                            "next_level_display", player.getSkyBlockExperience().getNextLevelDisplay()
-                    ))
+            return TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.skyblock_leveling",
+                "3255327dd8e90afad681a19231665bea2bd06065a09d77ac1408837f9e0b242", 1,
+                "gui_sbmenu.main.skyblock_leveling.lore",
+                Component.text(levelRequirement.getColor() + String.valueOf(levelRequirement)),
+                Component.text(nextLevel == null ? "§cMAX" : String.valueOf(nextLevel)),
+                Component.text(player.getSkyBlockExperience().getNextLevelDisplay())
             );
         }, (click, c) -> c.push(new GUISkyBlockLevels()));
 
-        layout.slot(29, (s, c) -> ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.main.your_bags"),
-                "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
-                I18n.lore("gui_sbmenu.main.your_bags.lore")
+        layout.slot(29, (s, c) -> TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.your_bags",
+            "961a918c0c49ba8d053e522cb91abc74689367b4d8aa06bfc1ba9154730985ff", 1,
+            "gui_sbmenu.main.your_bags.lore"
         ), (click, c) -> {
             c.push(new GUIYourBags());
         });
@@ -98,8 +114,8 @@ public class GUISkyBlockMenu extends StatelessView {
         layout.slot(30, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             String selectedPet = player.getPetData().getEnabledPet() == null ? "§cNone" : player.getPetData().getEnabledPet().getDisplayName();
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.pets"), Material.BONE, 1,
-                    I18n.lore("gui_sbmenu.main.pets.lore", Map.of("selected_pet", selectedPet))
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.pets", Material.BONE, 1,
+                "gui_sbmenu.main.pets.lore", Component.text(selectedPet)
             );
         }, (click, c) -> c.push(new GUIPets(), GUIPets.createInitialState((SkyBlockPlayer) c.player())));
 
@@ -107,57 +123,109 @@ public class GUISkyBlockMenu extends StatelessView {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             List<String> missionDisplay = new ArrayList<>();
             SkyBlockRecipe.getMissionDisplay(missionDisplay, player.getUuid());
-            StringBuilder missionDisplayStr = new StringBuilder();
-            for (String line : missionDisplay) {
-                if (missionDisplayStr.length() > 0) missionDisplayStr.append("\n");
-                missionDisplayStr.append(line);
-            }
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.recipe_book"), Material.BOOK, 1,
-                    I18n.lore("gui_sbmenu.main.recipe_book.lore", Map.of("mission_display", missionDisplayStr.toString())));
-        }, (click, c) -> {
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.recipe_book", Material.BOOK, 1,
+                "gui_sbmenu.main.recipe_book.lore", Argument.component("display", Component.text(missionDisplay.get(0))), Argument.component("bar", Component.text(missionDisplay.get(1))));
+        }, (_, c) -> {
             c.push(new GUIRecipeBook());
         });
 
-        layout.slot(25, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.storage"), Material.CHEST, 1,
-                I18n.lore("gui_sbmenu.main.storage.lore")
+        layout.slot(25, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.storage", Material.CHEST, 1,
+            "gui_sbmenu.main.storage.lore"
         ), (click, c) -> c.push(new GUIStorage()));
 
-        layout.slot(23, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.quests"), Material.WRITABLE_BOOK, 1,
-                I18n.lore("gui_sbmenu.main.quests.lore")
+        layout.slot(23, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.quests", Material.WRITABLE_BOOK, 1,
+            "gui_sbmenu.main.quests.lore"
         ), (click, c) -> c.push(new GUIMissionLog()));
 
-        layout.autoUpdating(24, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.calendar"), Material.CLOCK, 1, getCalendarLore()),
-                (click, c) -> c.push(new GUICalendar()), Duration.ofSeconds(1));
+        layout.autoUpdating(24, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.calendar", Material.CLOCK, 1, getCalendarLore(ctx)),
+            (click, c) -> c.push(new GUICalendar()), Duration.ofSeconds(1));
 
-        layout.slot(19, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.skills"), Material.DIAMOND_SWORD, 1,
-                I18n.lore("gui_sbmenu.main.skills.lore")
-        ), (click, c) -> c.push(new GUISkills()));
+        layout.slot(19, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            double average = java.util.Arrays.stream(SkillCategories.values())
+                .filter(category -> category != SkillCategories.RUNECRAFTING && category != SkillCategories.CARPENTRY)
+                .mapToInt(category -> player.getSkills().getCurrentLevel(category))
+                .average().orElse(0);
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.skills", Material.DIAMOND_SWORD, 1,
+                "gui_sbmenu.main.skills.lore", Argument.tagResolver(Formatter.number("avg", average)));
+        }, (click, c) -> c.push(new GUISkills()));
 
         layout.slot(20, (s, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             List<String> collectionDisplay = new ArrayList<>();
             player.getCollection().getDisplay(collectionDisplay);
-            StringBuilder collectionDisplayStr = new StringBuilder();
-            for (String line : collectionDisplay) {
-                if (collectionDisplayStr.length() > 0) collectionDisplayStr.append("\n");
-                collectionDisplayStr.append(line);
-            }
 
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.collections"), Material.PAINTING, 1,
-                    I18n.lore("gui_sbmenu.main.collections.lore", Map.of("collection_display", collectionDisplayStr.toString())));
-        }, (click, c) -> {
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.collections", Material.PAINTING, 1,
+                "gui_sbmenu.main.collections.lore", Argument.component("display", Component.text(collectionDisplay.get(0))), Argument.component("bar", Component.text(collectionDisplay.get(1))));
+        }, (_, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             player.openView(new GUICollections());
         });
 
-        layout.slot(31, (s, c) -> ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.crafting_table"), Material.CRAFTING_TABLE, 1,
-                I18n.lore("gui_sbmenu.main.crafting_table.lore")
-        ), (click, c) -> c.push(new GUICrafting()));
+        layout.slot(31, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.crafting_table", Material.CRAFTING_TABLE, 1,
+            "gui_sbmenu.main.crafting_table.lore"
+        ), (_, c) -> c.push(new GUICrafting()));
 
-        layout.slot(47, (s, c) -> ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.main.fast_travel"),
-                "f151cffdaf303673531a7651b36637cad912ba485643158e548d59b2ead5011", 1,
-                I18n.lore("gui_sbmenu.main.fast_travel.lore")
+        layout.slot(32, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            boolean unlocked = player.getSkyBlockExperience().getLevel().getLevel() >= 5;
+            int color = 0x00f;
+            return TranslatableItemStackCreator.getStack(unlocked ? "gui_sbmenu.main.wardrobe" : "gui_sbmenu.main.wardrobe.locked",
+                unlocked ? Material.LEATHER_CHESTPLATE : Material.GRAY_DYE, 1,
+                unlocked ? "gui_sbmenu.main.wardrobe.lore" : "gui_sbmenu.main.wardrobe.locked.lore").set(DataComponents.DYED_COLOR, NamedTextColor.DARK_PURPLE);
+        }, (_, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            if (player.getSkyBlockExperience().getLevel().getLevel() < 5) {
+                player.sendMessage("§cYou must be SkyBlock Level 5 to use the Wardrobe!");
+                return;
+            }
+            c.push(new GUIWardrobe());
+        });
+
+        layout.autoUpdating(33, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            DatapointBankData.BankData bank = PersonalBankService.data(player);
+            boolean unlocked = PersonalBankService.isUnlocked(player);
+            long remaining = PersonalBankService.remaining(player);
+            String status = !unlocked ? "§cLocked" : remaining == 0 ? "§aAvailable"
+                                                     : "§e" + StringUtility.formatTimeLeft(remaining);
+            double projection = BankInterestCalculator.calculate(bank.getAmount(), bank.getAccountTier(), bank.getMuseumMilestone());
+
+            return ItemStackCreator.getStackHeadSL(I18n.t("gui_sbmenu.main.personal_bank"),
+                "e36e94f6c34a35465fce4a90f2e25976389eb9709a12273574ff70fd4daa6852", 1,
+                List.of(
+                    "§7Contact your Banker from anywhere.",
+                    "§7Cooldown: §e5 minutes", // TODO: show actual cooldown from users data
+                    "",
+                    "§7Banker Status:",
+                    status,
+                    "",
+                    "§7Interest in: §b26 Hours",
+                    // TODO: Co-op
+                    // "§7Co-op Projection: §6452,400 coins §b(0.12%)",
+                    // "§7Last Co-op Interest: §6452,400 coins",
+                    "§7Solo Projection: §644,859.6 coins §b(1.805%)", // TODO: in Solo it probably doesn't say solo but only Projetion
+                    "§7Last Solo Interest: §644,415 coins",
+                    "",
+                    "§8Also accessible via /bank",
+                    "",
+                    "§eClick to open!"));
+        }, (_, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            if (!PersonalBankService.isUnlocked(player) || PersonalBankService.remaining(player) > 0) {
+                player.sendMessage("§cYour Personal Bank is locked or still on cooldown!");
+                return;
+            }
+            new GUIBanker().open(player);
+            DatapointBankData.BankData bank = PersonalBankService.data(player);
+            bank.setLastRemoteBankUse(System.currentTimeMillis());
+            player.getSkyblockDataHandler().get(SkyBlockDataHandler.Data.BANK_DATA, DatapointBankData.class).setValue(bank);
+        }, Duration.ofSeconds(1));
+
+        layout.slot(47, (s, c) -> TranslatableItemStackCreator.getStackHead("gui_sbmenu.main.fast_travel",
+            "35f4b40cef9e017cd4112d26b62557f8c1d5b189da2e99534222bc8cec7d9196", 1,
+            "gui_sbmenu.main.fast_travel.lore"
         ), (click, c) -> {
             SkyBlockPlayer player = (SkyBlockPlayer) c.player();
             if (click.click() instanceof Click.Right) {
@@ -170,64 +238,80 @@ public class GUISkyBlockMenu extends StatelessView {
 
         layout.slot(48, (s, c) -> {
             HypixelPlayer player = c.player();
-            return ItemStackCreator.getStack(I18n.string("gui_sbmenu.main.profile_management"), Material.NAME_TAG, 1,
-                    I18n.lore("gui_sbmenu.main.profile_management.lore", Map.of(
-                            "profile_count", String.valueOf(((SkyBlockPlayer) player).getProfiles().getProfiles().size())
-                    ))
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.profile_management", Material.NAME_TAG, 1,
+                "gui_sbmenu.main.profile_management.lore",
+                Component.text(String.valueOf(((SkyBlockPlayer) player).getProfiles().getProfiles().size()))
             );
-        }, (click, c) -> c.push(new GUIProfileManagement()));
+        }, (_, c) -> c.push(new GUIProfileManagement()));
+
+        layout.slot(50, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.main.settings", Material.REDSTONE_TORCH, 1,
+            "gui_sbmenu.main.settings.lore"), (_, c) -> c.player().sendMessage("§cSkyBlock Settings are not available yet."));
+
+        layout.slot(51, (s, c) -> {
+            SkyBlockPlayer player = (SkyBlockPlayer) c.player();
+            String status = player.isBoosterCookieActive() ? "§aActive" : "§cNot active!";
+            return TranslatableItemStackCreator.getStack("gui_sbmenu.main.booster_cookie", Material.COOKIE, 1,
+                "gui_sbmenu.main.booster_cookie.lore", Component.text(status));
+        }, (_, c) -> c.push(new GUIBoosterCookie()));
     }
 
-    private static @NonNull List<String> getCalendarLore() {
+    private static @NonNull List<Component> getCalendarLore(ViewContext ctx) {
+        Locale l = ctx.player().getLocale();
         List<CalendarEvent> currentEvents = SkyBlockCalendar.getCurrentEvents();
         boolean multipleEvents = currentEvents.size() > 1;
 
         String date = StringUtility.ntify(SkyBlockCalendar.getDay()) + " " + SkyBlockCalendar.getMonthName() + " " + SkyBlockCalendar.getYear();
-        List<String> lore = new ArrayList<>(I18n.lore("gui_sbmenu.main.calendar.lore_header", Map.of("date", date)));
-        lore.add("");
+        List<Component> lore = new ArrayList<>(List.of(I18n.iterable("gui_sbmenu.main.calendar.lore_header", Argument.component("date", Component.text(date)))));
+        lore.add(Component.space());
 
-        if(multipleEvents) {
-            lore.add(I18n.string("gui_sbmenu.main.calendar.current_events"));
+        if (multipleEvents) {
+            lore.add(I18n.t("gui_sbmenu.main.calendar.current_events"));
             for (CalendarEvent event : currentEvents) {
-                lore.add(event.getDisplayName(SkyBlockCalendar.getYear()));
+                lore.add(Component.text(event.getDisplayName(SkyBlockCalendar.getYear())));
             }
         } else if (currentEvents.size() == 1) {
             CalendarEvent currentEvent = currentEvents.getFirst();
-            lore.add(I18n.string("gui_sbmenu.main.calendar.current_event", Map.of("event_name", currentEvent.getDisplayName(SkyBlockCalendar.getYear()))));
+            lore.add(I18n.t("gui_sbmenu.main.calendar.current_event", Component.text(currentEvent.getDisplayName(SkyBlockCalendar.getYear()))));
             long ticksRemaining = getTicksRemaining(currentEvent);
-            lore.add(I18n.string("gui_sbmenu.main.calendar.event_ends_in", Map.of("time_left", StringUtility.formatTimeLeft(ticksRemaining * 50L))));
+            lore.add(I18n.t("gui_sbmenu.main.calendar.event_ends_in", Component.text(StringUtility.formatTimeLeft(ticksRemaining * 50L))));
         } else {
-            lore.add(I18n.string("gui_sbmenu.main.calendar.no_current_events"));
+            lore.add(I18n.t("gui_sbmenu.main.calendar.no_current_events"));
         }
 
-        lore.add(" ");
+        lore.add(Component.space());
 
-        Map<SkyBlockCalendar.EventInfo, CalendarEvent> upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntil(1);
+        Map<SkyBlockCalendar.EventInfo, CalendarEvent> upcomingEvents;
+        if (ctx.player().getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_VISITED_DARK_AUCTION)) {
+            upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntil(1);
+        } else {
+            upcomingEvents = SkyBlockCalendar.getEventsWithDurationUntilSkipSpecific(1, Collections.singletonList(CalendarEvent.DARK_AUCTION));
+        }
+
         if (!upcomingEvents.isEmpty()) {
             Map.Entry<SkyBlockCalendar.EventInfo, CalendarEvent> entry = upcomingEvents.entrySet().iterator().next();
             SkyBlockCalendar.EventInfo info = entry.getKey();
             CalendarEvent event = entry.getValue();
 
-            lore.add(I18n.string("gui_sbmenu.main.calendar.next_event", Map.of("event_name", event.getDisplayName(info.year()))));
-            lore.add(I18n.string("gui_sbmenu.main.calendar.next_event_starting", Map.of("time_left", StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L))));
+            lore.add(I18n.t("gui_sbmenu.main.calendar.next_event", Component.text(event.getDisplayName(info.year()))));
+            lore.add(I18n.t("gui_sbmenu.main.calendar.next_event_starting", Component.text(StringUtility.formatTimeLeft(info.timeUntilBegin() * 50L))));
         } else {
-            lore.add(I18n.string("gui_sbmenu.main.calendar.no_upcoming_events"));
+            lore.add(I18n.t("gui_sbmenu.main.calendar.no_upcoming_events"));
         }
 
-        lore.addAll(I18n.lore("gui_sbmenu.main.calendar.lore_footer"));
+        lore.addAll(List.of(I18n.iterable("gui_sbmenu.main.calendar.lore_footer")));
         return lore;
     }
 
-	private static long getTicksRemaining(CalendarEvent currentEvent) {
-		long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
-		long eventEndTime = 0;
-		for (Long eventStartTime : currentEvent.times()) {
-			if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration().toMillis() / 50) {
-				eventEndTime = eventStartTime + currentEvent.duration().toMillis() / 50;
-				break;
-			}
-		}
-		return eventEndTime - currentElapsedInYear;
-	}
+    private static long getTicksRemaining(CalendarEvent currentEvent) {
+        long currentElapsedInYear = SkyBlockCalendar.getElapsed() % SkyBlockCalendar.YEAR;
+        long eventEndTime = 0;
+        for (Long eventStartTime : currentEvent.times()) {
+            if (currentElapsedInYear >= eventStartTime && currentElapsedInYear < eventStartTime + currentEvent.duration().toMillis() / 50) {
+                eventEndTime = eventStartTime + currentEvent.duration().toMillis() / 50;
+                break;
+            }
+        }
+        return eventEndTime - currentElapsedInYear;
+    }
 
 }

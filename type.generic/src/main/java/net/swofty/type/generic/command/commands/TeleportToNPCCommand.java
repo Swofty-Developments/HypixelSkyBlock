@@ -12,7 +12,7 @@ import net.swofty.type.generic.user.categories.Rank;
 
 @CommandParameters(
     usage = "/tpnpc <npc>",
-    aliases = "tpnpc teleportnpc",
+    labels = "tpnpc teleportnpc",
     permission = Rank.STAFF,
     description = "Teleports you to the specified NPC.",
     allowsConsole = false

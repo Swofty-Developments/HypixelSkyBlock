@@ -36,12 +36,17 @@ build/
 
 
 ### Worlds / Maps ###
+/configuration/world/
 /configuration/skyblock/islands/
 /configuration/hypixel_prototype_lobby/
 /configuration/hypixel_bedwars_lobby/
 /configuration/hypixel_murder_mystery_lobby/
 /configuration/hypixel_skywars_lobby/
+/configuration/skyblock/garden/
 *.polar
+*.schem
+/setup/skyblock-installer
+/configuration/*.schem
 
 ### Logs ###
 /configuration/logs/
@@ -51,7 +56,6 @@ build/
 .gradle/
 /server/proxy/logs/
 /server/proxy/lang/
-/server/proxy/ViaLoader/
 /server/proxy/plugins/
 /server/proxy/forwarding.secret
 /server/proxy/velocity.toml
@@ -60,5 +64,3 @@ build/
 /server/forwarding.secret
 /configuration/config.yml
 /server/proxy/configuration/config.yml
-
-### Resource pack build output ###

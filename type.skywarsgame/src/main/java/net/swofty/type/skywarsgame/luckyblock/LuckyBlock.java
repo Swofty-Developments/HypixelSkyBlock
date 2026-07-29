@@ -1,5 +1,6 @@
 package net.swofty.type.skywarsgame.luckyblock;
 
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
@@ -8,9 +9,9 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.ai.goal.MeleeAttackGoal;
 import net.minestom.server.entity.ai.target.ClosestEntityTarget;
+import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.damage.Damage;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
 import net.minestom.server.instance.Instance;
@@ -23,7 +24,10 @@ import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class LuckyBlock {
     private static final float EXPLOSION_DAMAGE = 6.0f;
@@ -43,15 +47,12 @@ public class LuckyBlock {
     private final Instance instance;
     private final Map<Pos, LuckyBlockType> luckyBlockPositions = new HashMap<>();
     private final Map<Pos, Entity> blockDisplayEntities = new HashMap<>();
+    @Setter
     @Nullable
     private SkywarsGame game;
 
     public LuckyBlock(Instance instance) {
         this.instance = instance;
-    }
-
-    public void setGame(SkywarsGame game) {
-        this.game = game;
     }
 
     @Nullable

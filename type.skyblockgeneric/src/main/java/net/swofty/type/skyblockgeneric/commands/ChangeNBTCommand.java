@@ -13,7 +13,7 @@ import net.swofty.type.generic.user.categories.Rank;
 @CommandParameters(description = "Modifies the NBT of the item in your hand",
         usage = "/changenbt <key> <value>",
         permission = Rank.STAFF,
-        aliases = "editnbt",
+        labels = "editnbt",
         allowsConsole = false)
 public class ChangeNBTCommand extends HypixelCommand {
     @Override

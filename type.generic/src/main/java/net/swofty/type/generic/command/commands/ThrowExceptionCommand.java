@@ -4,7 +4,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.categories.Rank;
 
-@CommandParameters(permission = Rank.STAFF, description = "Throws an exception for testing purposes", usage = "/throwexception", aliases = "throwexception", allowsConsole = true)
+@CommandParameters(permission = Rank.STAFF, description = "Throws an exception for testing purposes", usage = "/throwexception", labels = "throwexception", allowsConsole = true)
 public class ThrowExceptionCommand extends HypixelCommand {
 
 	@Override

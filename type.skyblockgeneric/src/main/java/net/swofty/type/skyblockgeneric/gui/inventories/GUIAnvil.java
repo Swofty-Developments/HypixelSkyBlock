@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.gui.inventories;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.event.inventory.InventoryClickEvent;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -9,6 +10,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.i18n.I18n;
@@ -20,7 +22,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 public class GUIAnvil extends HypixelInventoryGUI {
 
@@ -37,7 +39,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
     private SkyBlockItem sacrificeItem = null;
 
     public GUIAnvil() {
-        super(I18n.string("gui_anvil.title"), InventoryType.CHEST_6_ROW);
+        super(I18n.t("gui_anvil.title"), InventoryType.CHEST_6_ROW);
     }
 
     @Override
@@ -60,8 +62,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         set(new GUIItem(COMBINE_BUTTON_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items"), Material.ANVIL, 1,
-                        I18n.lore("gui_anvil.combine_items.lore"));
+                return TranslatableItemStackCreator.getStack("gui_anvil.combine_items", Material.ANVIL, 1,
+                        "gui_anvil.combine_items.lore");
             }
         });
     }
@@ -70,8 +72,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         set(new GUIItem(RESULT_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(I18n.string("gui_anvil.result_empty"), Material.BARRIER, 1,
-                        I18n.lore("gui_anvil.result_empty.lore"));
+                return TranslatableItemStackCreator.getStack("gui_anvil.result_empty", Material.BARRIER, 1,
+                        "gui_anvil.result_empty.lore");
             }
         });
     }
@@ -265,6 +267,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
     }
 
     private void updateIndicators(boolean isUpgradeValid, boolean isSacrificeValid, boolean canCraft) {
+        Locale l = getPlayer().getLocale();
         Material upgradeMaterial = (canCraft || (isUpgradeValid && !isSacrificeValid))
                 ? Material.LIME_STAINED_GLASS_PANE
                 : Material.RED_STAINED_GLASS_PANE;
@@ -273,11 +276,11 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 ? Material.LIME_STAINED_GLASS_PANE
                 : Material.RED_STAINED_GLASS_PANE;
 
-        ItemStack.Builder upgradeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_upgrade"), upgradeMaterial, 1,
-                I18n.lore("gui_anvil.item_to_upgrade.lore"));
+        ItemStack.Builder upgradeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_upgrade", l), upgradeMaterial, 1,
+            I18n.iterable("gui_anvil.item_to_upgrade.lore"));
 
-        ItemStack.Builder sacrificeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_sacrifice"), sacrificeMaterial, 1,
-                I18n.lore("gui_anvil.item_to_sacrifice.lore"));
+        ItemStack.Builder sacrificeIndicator = ItemStackCreator.getStack(I18n.string("gui_anvil.item_to_sacrifice", l), sacrificeMaterial, 1,
+            I18n.iterable("gui_anvil.item_to_sacrifice.lore"));
 
         for (int slot : UPGRADE_INDICATOR_SLOTS) {
             set(slot, upgradeIndicator);
@@ -302,16 +305,16 @@ public class GUIAnvil extends HypixelInventoryGUI {
                 set(new GUIItem(RESULT_SLOT) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        return ItemStackCreator.getStack(I18n.string("gui_anvil.result_error"), Material.BARRIER, 1,
-                                I18n.lore("gui_anvil.result_error.lore"));
+                        return TranslatableItemStackCreator.getStack("gui_anvil.result_error", Material.BARRIER, 1,
+                                "gui_anvil.result_error.lore");
                     }
                 });
             } else {
                 set(new GUIItem(RESULT_SLOT) {
                     @Override
                     public ItemStack.Builder getItem(HypixelPlayer p) {
-                        return ItemStackCreator.getStack(I18n.string("gui_anvil.result_empty"), Material.BARRIER, 1,
-                                I18n.lore("gui_anvil.result_empty.lore"));
+                        return TranslatableItemStackCreator.getStack("gui_anvil.result_empty", Material.BARRIER, 1,
+                                "gui_anvil.result_empty.lore");
                     }
                 });
             }
@@ -335,8 +338,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
             set(new GUIItem(COMBINE_BUTTON_SLOT) {
                 @Override
                 public ItemStack.Builder getItem(HypixelPlayer p) {
-                    return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items"), Material.ANVIL, 1,
-                            I18n.lore("gui_anvil.combine_items.lore"));
+                    return TranslatableItemStackCreator.getStack("gui_anvil.combine_items", Material.ANVIL, 1,
+                            "gui_anvil.combine_items.lore");
                 }
             });
             return;
@@ -345,16 +348,17 @@ public class GUIAnvil extends HypixelInventoryGUI {
         int levelCost = sacrificeItem.getComponent(AnvilCombinableComponent.class)
                 .applyCostLevels(upgradeItem, sacrificeItem, (SkyBlockPlayer) getPlayer());
 
-        List<String> lore = new ArrayList<>(I18n.lore("gui_anvil.combine_items.lore"));
+        Locale l = getPlayer().getLocale();
+        List<Object> lore = new ArrayList<>(List.of(I18n.iterable("gui_anvil.combine_items.lore")));
 
         if (levelCost > 0) {
             lore.add("");
-            lore.add(I18n.string("gui_anvil.cost_label"));
-            lore.add(I18n.string("gui_anvil.cost_exp_levels", Map.of("cost", String.valueOf(levelCost))));
+            lore.add(I18n.string("gui_anvil.cost_label", l));
+            lore.add(I18n.string("gui_anvil.cost_exp_levels", l, Component.text(String.valueOf(levelCost))));
         }
 
         lore.add("");
-        lore.add(I18n.string("gui_anvil.click_to_combine"));
+        lore.add(I18n.string("gui_anvil.click_to_combine", l));
 
         set(new GUIClickableItem(COMBINE_BUTTON_SLOT) {
             @Override
@@ -365,7 +369,7 @@ public class GUIAnvil extends HypixelInventoryGUI {
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items"), Material.ANVIL, 1, lore);
+                return ItemStackCreator.getStack(I18n.string("gui_anvil.combine_items", l), Material.ANVIL, 1, lore);
             }
         });
     }
@@ -381,7 +385,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         int requiredLevels = component.applyCostLevels(upgradeItem, sacrificeItem, player);
 
         if (player.getLevel() < requiredLevels) {
-            player.sendMessage(I18n.string("gui_anvil.not_enough_levels"));
+            Locale l = player.getLocale();
+            player.sendMessage(I18n.t("gui_anvil.not_enough_levels"));
             return;
         }
 
@@ -408,8 +413,8 @@ public class GUIAnvil extends HypixelInventoryGUI {
         set(new GUIItem(COMBINE_BUTTON_SLOT) {
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                return ItemStackCreator.getStack(I18n.string("gui_anvil.claim_result"), Material.OAK_SIGN, 1,
-                        I18n.lore("gui_anvil.claim_result.lore"));
+                return TranslatableItemStackCreator.getStack("gui_anvil.claim_result", Material.OAK_SIGN, 1,
+                        "gui_anvil.claim_result.lore");
             }
         });
 

@@ -1,13 +1,11 @@
 package net.swofty.type.prototypelobby;
 
-import io.sentry.Sentry;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
-import net.swofty.proxyapi.redis.ProxyToClient;
-import net.swofty.proxyapi.redis.ServiceToClient;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.data.GameDataHandler;
@@ -18,9 +16,16 @@ import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.lobby.LobbyTypeLoader;
-import net.swofty.type.lobby.events.*;
+import net.swofty.type.lobby.events.LobbyAFKEvents;
+import net.swofty.type.lobby.events.LobbyItemEvents;
+import net.swofty.type.lobby.events.LobbyParkourEvents;
+import net.swofty.type.lobby.events.LobbyPlayerJoinEvents;
+import net.swofty.type.lobby.events.LobbyPlayerMove;
+import net.swofty.type.lobby.events.LobbyPlayerSpawnEvents;
+import net.swofty.type.lobby.events.LobbyWorldEvent;
 import net.swofty.type.lobby.item.LobbyItem;
 import net.swofty.type.lobby.item.LobbyItemHandler;
+import net.swofty.type.lobby.item.impl.Collectibles;
 import net.swofty.type.lobby.item.impl.HidePlayers;
 import net.swofty.type.lobby.item.impl.LobbySelector;
 import net.swofty.type.lobby.item.impl.PlayCompass;
@@ -39,7 +44,7 @@ import java.util.Map;
 public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
     private static final LobbyItemHandler itemHandler = new LobbyItemHandler();
     public static LobbyParkourManager parkourManager;
-    private final Pos spawnPoint = new Pos(11.5, 76, 0.5, 90, 0);
+    private final Pos SPAWN_POS = new Pos(11.5, 75, 0.5, 90, 0);
 
     @Override
     public ServerType getType() {
@@ -90,6 +95,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         return Map.of(
                 0, new PlayCompass(),
                 1, new ProfileItem(),
+            4, new Collectibles(),
                 7, new HidePlayers(),
                 8, new LobbySelector()
         );
@@ -118,7 +124,7 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (type) -> spawnPoint,
+            (type) -> SPAWN_POS,
                 false
         );
     }
@@ -130,11 +136,13 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
                 HypixelEventClass.class
         ).toList());
         // Add lobby base events
+        events.add(new LobbyAFKEvents());
         events.add(new LobbyItemEvents());
         events.add(new LobbyPlayerJoinEvents());
+        events.add(new LobbyPlayerSpawnEvents());
         events.add(new LobbyParkourEvents());
-        events.add(new LobbyBlockBreak());
-        events.add(new LobbyPlayerMove(spawnPoint));
+        events.add(new LobbyWorldEvent());
+        events.add(new LobbyPlayerMove(SPAWN_POS));
         return events;
     }
 
@@ -154,16 +162,18 @@ public class TypePrototypeLobbyLoader implements LobbyTypeLoader {
         ).toList();
     }
 
+
     @Override
-    public List<ServiceToClient> getServiceRedisListeners() {
-        return HypixelGenericLoader.loopThroughPackage(
+    @SuppressWarnings("unchecked")
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
+        return (List) HypixelGenericLoader.loopThroughPackage(
                 "net.swofty.type.prototypelobby.redis.service",
-                ServiceToClient.class
+                RedisMessageHandler.class
         ).toList();
     }
 
     @Override
-    public List<ProxyToClient> getProxyRedisListeners() {
+    public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
         return List.of();
     }
 

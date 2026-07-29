@@ -4,15 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionCollectWheat;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmer;
 import net.swofty.type.skyblockgeneric.mission.missions.farmer.MissionTalkToFarmerAgain;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-
-import java.util.List;
 
 public class NPCFarmerRigby extends HypixelNPC {
 
@@ -72,8 +69,8 @@ public class NPCFarmerRigby extends HypixelNPC {
     @Override
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return new DialogueSet[] {
-                DialogueSet.ofTranslation("initial-hello", "npcs_hub.farmer_rigby.dialogue.initial_hello"),
-                DialogueSet.ofTranslation("spoke-again", "npcs_hub.farmer_rigby.dialogue.spoke_again")
+            DialogueSet.ofTranslation("initial-hello", "npcs_hub.farmer_rigby.dialogue.initial_hello"),
+            DialogueSet.ofTranslation("spoke-again", "npcs_hub.farmer_rigby.dialogue.spoke_again")
         };
     }
 

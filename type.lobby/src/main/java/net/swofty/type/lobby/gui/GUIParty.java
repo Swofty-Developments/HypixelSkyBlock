@@ -9,6 +9,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.party.FullParty;
 import net.swofty.type.generic.data.HypixelDataHandler;
+import net.swofty.type.generic.data.datapoints.DatapointAchievementData;
 import net.swofty.type.generic.data.datapoints.DatapointHypixelExperience;
 import net.swofty.type.generic.data.datapoints.DatapointString;
 import net.swofty.type.generic.experience.HypixelExperience;
@@ -368,8 +369,9 @@ public class GUIParty extends HypixelInventoryGUI implements RefreshingGUI {
         HypixelDataHandler account = HypixelDataHandler.getOfOfflinePlayer(memberUuid);
         long xp = account.get(HypixelDataHandler.Data.HYPIXEL_EXPERIENCE, DatapointHypixelExperience.class).getValue();
         int level = HypixelExperience.xpToLevel(xp);
-        // TODO: Get actual achievement points when available
-        int achievementPoints = 0;
+        int achievementPoints = account.get(HypixelDataHandler.Data.ACHIEVEMENT_DATA, DatapointAchievementData.class)
+                .getValue()
+                .getTotalPoints();
 
         // Get skin
         String skinTexture = account.get(HypixelDataHandler.Data.SKIN_TEXTURE, DatapointString.class).getValue();

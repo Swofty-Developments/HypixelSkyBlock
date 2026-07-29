@@ -11,6 +11,9 @@ public enum ServiceType {
     JACOBS_CONTEST,
     ORCHESTRATOR,
     FRIEND,
+    REPLAY,
     PUNISHMENT,
+    ELECTION,
+    GUILD,
     ;
 }

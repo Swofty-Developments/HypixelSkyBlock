@@ -15,8 +15,8 @@ public enum PotatoType {
             "§c+2" + ItemStatistic.STRENGTH.getSymbol() + " Strength §7and §c+2" + ItemStatistic.DAMAGE.getSymbol() + " Damage§7."), Map.of(ItemStatistic.STRENGTH, 2.0, ItemStatistic.DAMAGE, 2.0)),
     ;
 
-    public List<String> display;
-    public Map<ItemStatistic, Double> stats;
+    public final List<String> display;
+    public final Map<ItemStatistic, Double> stats;
 
     PotatoType(List<String> display, Map<ItemStatistic, Double> stats) {
         this.display = display;

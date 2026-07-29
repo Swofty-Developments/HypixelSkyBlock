@@ -154,7 +154,7 @@ public class SkyBlockLevelLoader {
                         builder.withMultiplicativePercentage(stat, value.multiplicativePercentage);
                     }
                 } catch (IllegalArgumentException e) {
-                    System.err.println("Unknown statistic: " + entry.getKey());
+                    Logger.warn("Unknown statistic: {}", entry.getKey());
                 }
             }
         }
@@ -167,7 +167,7 @@ public class SkyBlockLevelLoader {
             CustomLevelAward award = CustomLevelAward.valueOf(data.customAward.toUpperCase());
             return new CustomLevelUnlock(award);
         } catch (IllegalArgumentException e) {
-            System.err.println("Unknown custom award: " + data.customAward);
+            Logger.error("Unknown custom award: {}", data.customAward);
             throw new RuntimeException("Unknown custom award: " + data.customAward);
         }
     }

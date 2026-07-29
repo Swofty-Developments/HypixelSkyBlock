@@ -1,0 +1,42 @@
+items:
+  - id: MITHRIL_NECKLACE
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      mining_speed: 20
+      mining_fortune: 5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mithril Necklace
+      - id: SKULL_HEAD
+        texture: 63dd3a353ad5fa78e242e3a2b2025e99447325f1f3f47d58c191fd3070a1e778
+      - id: STANDARD_ITEM
+        standard_item_type: NECKLACE
+
+  - id: MITHRIL_BELT
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      mining_speed: 20
+      mining_fortune: 5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mithril Belt
+      - id: SKULL_HEAD
+        texture: e75bde4ca856a997f0bbc0d65ee2a2dde215b4020f5ffd5f7fe99f6f1024bd8a
+      - id: STANDARD_ITEM
+        standard_item_type: BELT
+
+  - id: MITHRIL_GAUNTLET
+    material: PLAYER_HEAD
+    rarity: UNCOMMON
+    default_statistics:
+      mining_speed: 20
+      mining_fortune: 5
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Mithril Gauntlet
+      - id: SKULL_HEAD
+        texture: 41fa2b971dca157b742a0e37df5e22d611921456fdec4258dd1ad0fe080edc46
+      - id: STANDARD_ITEM
+        standard_item_type: GLOVES

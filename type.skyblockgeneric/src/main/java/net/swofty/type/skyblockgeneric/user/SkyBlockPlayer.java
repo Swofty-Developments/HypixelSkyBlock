@@ -6,7 +6,10 @@ import lombok.Setter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.PlayerHand;
+import net.minestom.server.entity.RelativeFlags;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.Inventory;
@@ -16,7 +19,8 @@ import net.minestom.server.item.Material;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.swofty.commons.ServerType;
+import net.swofty.commons.StringUtility;
+import net.minestom.server.tag.Tag;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.PlayerShopData;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
@@ -45,8 +49,6 @@ import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.ValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MaxHealthValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.MiningValueUpdateEvent;
-import net.swofty.type.skyblockgeneric.garden.SkyBlockEditableWorldHandle;
-import net.swofty.type.skyblockgeneric.garden.SkyBlockGardenHandle;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.components.AccessoryComponent;
@@ -64,8 +66,10 @@ import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.region.mining.MineableBlock;
 import net.swofty.type.skyblockgeneric.region.mining.handler.SkyBlockMiningHandler;
 import net.swofty.type.skyblockgeneric.skill.skills.RunecraftingSkill;
+import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DeathMessageCreator;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,6 +78,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -96,13 +101,10 @@ public class SkyBlockPlayer extends HypixelPlayer {
     @Setter
     public boolean bypassBuild = false;
     @Setter
-    public boolean hasAuthenticated = true;
-    @Setter
     public boolean speedManaged = false;
     @Setter
     private SkyBlockIsland skyBlockIsland;
-    @Setter
-    private SkyBlockGardenHandle skyBlockGarden;
+    private static final Tag<Integer> fallHeight = Tag.Integer("fallHeight");
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");
 
@@ -112,7 +114,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
 	public SkyBlockDataHandler getSkyblockDataHandler() {
-        return (SkyBlockDataHandler) SkyBlockDataHandler.getUser(this.getUuid());
+        return SkyBlockDataHandler.getUser(this.getUuid());
     }
 
     public DatapointMuseum.MuseumData getMuseumData() {
@@ -139,6 +141,22 @@ public class SkyBlockPlayer extends HypixelPlayer {
         MissionData data = getSkyblockDataHandler().get(SkyBlockDataHandler.Data.MISSION_DATA, DatapointMissionData.class).getValue();
         data.setSkyBlockPlayer(this);
         return data;
+    }
+
+    @Override
+    public @NotNull CompletableFuture<Void> teleport(@NotNull Pos position, @NotNull Vec velocity, long @Nullable [] chunks,
+                                                                              @MagicConstant(flagsFromClass = RelativeFlags.class) int flags,
+                                                                              boolean shouldConfirm) {
+        setFallHeight(position.blockY());
+        return super.teleport(position, velocity, chunks, flags, shouldConfirm);
+    }
+
+    public void setFallHeight(int fallHeight) {
+        setTag(SkyBlockPlayer.fallHeight, fallHeight);
+    }
+
+    public Integer getFallHeight() {
+        return getTag(SkyBlockPlayer.fallHeight);
     }
 
     @Override
@@ -184,31 +202,9 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public boolean isOnIsland() {
-        if (skyBlockIsland == null || HypixelConst.getTypeLoader().getType() != ServerType.SKYBLOCK_ISLAND) {
-            return false;
-        }
-        return getInstance() != null
-            && getInstance() != HypixelConst.getInstanceContainer()
-            && getInstance() != HypixelConst.getEmptyInstance();
-    }
-
-    public boolean isOnGarden() {
-        if (skyBlockGarden == null || HypixelConst.getTypeLoader().getType() != ServerType.SKYBLOCK_GARDEN) {
-            return false;
-        }
         return getInstance() != null
                 && getInstance() != HypixelConst.getInstanceContainer()
                 && getInstance() != HypixelConst.getEmptyInstance();
-    }
-
-    public @Nullable SkyBlockEditableWorldHandle getEditableWorldHandle() {
-        if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_GARDEN && skyBlockGarden != null) {
-            return skyBlockGarden;
-        }
-        if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_ISLAND) {
-            return skyBlockIsland;
-        }
-        return null;
     }
 
     public @Nullable SkyBlockItem getArrow() {
@@ -463,10 +459,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
     }
 
     public @Nullable SkyBlockRegion getRegion() {
-        if (HypixelConst.getTypeLoader().getType() == ServerType.SKYBLOCK_GARDEN) {
-            return SkyBlockRegion.getGardenRegion();
-        }
-        if (getEditableWorldHandle() != null) return SkyBlockRegion.getIslandRegion();
+        if (isOnIsland()) return SkyBlockRegion.getIslandRegion();
         return SkyBlockRegion.getRegionOfPosition(this.getPosition());
     }
 
@@ -558,6 +551,18 @@ public class SkyBlockPlayer extends HypixelPlayer {
 
     public DatapointQuiver.PlayerQuiver getQuiver() {
         return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.QUIVER, DatapointQuiver.class).getValue();
+    }
+
+    public DatapointShipState.ShipState getShipState() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SHIP_STATE, DatapointShipState.class).getValue();
+    }
+
+    public DatapointTrophyFish.TrophyFishData getTrophyFishData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.TROPHY_FISH, DatapointTrophyFish.class).getValue();
+    }
+
+    public DatapointSlayer.SlayerData getSlayerData() {
+        return getSkyblockDataHandler().get(SkyBlockDataHandler.Data.SLAYER, DatapointSlayer.class).getValue();
     }
 
     public DatapointAccessoryBag.PlayerAccessoryBag getAccessoryBag() {
@@ -678,7 +683,7 @@ public class SkyBlockPlayer extends HypixelPlayer {
         if (matcher.find()) {
             sackCategory = matcher.group(2);
         } else {
-            System.out.println("Invalid sack name: " + sack.name());
+            org.tinylog.Logger.warn("Invalid sack name: {}", sack.name());
             return 0;
         }
 

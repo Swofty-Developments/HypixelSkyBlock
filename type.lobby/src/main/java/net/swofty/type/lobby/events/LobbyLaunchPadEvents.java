@@ -7,15 +7,16 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.lobby.launchpad.LaunchPad;
 import net.swofty.type.lobby.launchpad.LaunchPadHandler;
 
 public class LobbyLaunchPadEvents implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, isAsync = true, phase = EventPhase.GAMEPLAY)
     public void run(PlayerMoveEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

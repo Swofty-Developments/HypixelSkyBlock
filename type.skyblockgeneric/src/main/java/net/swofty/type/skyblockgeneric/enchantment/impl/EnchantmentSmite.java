@@ -62,7 +62,7 @@ public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant 
         }
 
         return ItemStatistics.empty();
-    };
+    }
 
     @Override
     public TableLevels getLevelsFromTableToApply(@NotNull SkyBlockPlayer player) {

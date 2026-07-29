@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
  * Handler for utility potions (Night Vision, Fire Resistance, Water Breathing, etc.)
  * These primarily provide visual effects via Minestom and optionally stat bonuses.
  */
-public class UtilityEffectHandler implements PotionEffectHandler {
+public final class UtilityEffectHandler implements PotionEffectHandler {
 
     private final PotionEffectType effectType;
 

@@ -1,5 +1,7 @@
 package net.swofty.type.generic.gui.v2;
 
+import org.jetbrains.annotations.Range;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -23,7 +25,7 @@ public final class Layouts {
         return slots;
     }
 
-    public static List<Integer> border(int from, int to) {
+    public static List<Integer> border(@Range(from = 0, to = 53) int from, @Range(from = 0, to = 53) int to) {
         int startRow = from / 9;
         int endRow = to / 9;
         int startCol = from % 9;
@@ -42,7 +44,7 @@ public final class Layouts {
         return slots;
     }
 
-    public static List<Integer> row(int row) {
+    public static List<Integer> row(@Range(from = 0, to = 5) int row) {
         return IntStream.range(0, 9).map(i -> row * 9 + i).boxed().toList();
     }
 }

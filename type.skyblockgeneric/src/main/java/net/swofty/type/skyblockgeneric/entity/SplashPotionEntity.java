@@ -119,7 +119,7 @@ public class SplashPotionEntity extends Entity {
                 if (entity.getEntityType() == EntityType.ARMOR_STAND) {
                     continue;
                 }
-                teleport(Pos.fromPoint(collisionResult.collisionPoint()));
+                teleport(collisionResult.collisionPoint().asPos());
                 impact();
                 return;
             }

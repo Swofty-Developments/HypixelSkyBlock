@@ -9,17 +9,17 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
-import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.generic.data.datapoints.DatapointToggles;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
+import net.swofty.type.generic.user.HypixelPlayer;
+import net.swofty.type.hub.gui.elizabeth.GUIBitsShop;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.updater.NonPlayerItemUpdater;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
-import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIBitsAbiphone extends HypixelInventoryGUI {
 
@@ -37,7 +37,7 @@ public class GUIBitsAbiphone extends HypixelInventoryGUI {
 
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 if (player.getBits() >= price) {
                     SkyBlockItem skyBlockItem = new SkyBlockItem(item);
                     ItemStack.Builder itemStack = new NonPlayerItemUpdater(skyBlockItem).getUpdatedItem();
@@ -69,13 +69,13 @@ public class GUIBitsAbiphone extends HypixelInventoryGUI {
         set(new GUIClickableItem(14) {
             @Override
             public void run(InventoryPreClickEvent e, HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 new GUIBitsAbicases().open(player);
             }
 
             @Override
             public ItemStack.Builder getItem(HypixelPlayer p) {
-                SkyBlockPlayer player = (SkyBlockPlayer) p; 
+                SkyBlockPlayer player = (SkyBlockPlayer) p;
                 return ItemStackCreator.getStackHead("§5Abicases", "a3c153c391c34e2d328a60839e683a9f82ad3048299d8bc6a39e6f915cc5a", 1,
                         "§7Any expensive Abiphone needs some",
                         "§7accessories!",

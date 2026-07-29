@@ -6,8 +6,9 @@ import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.gui.HypixelAnvilGUI;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
@@ -17,7 +18,7 @@ import net.swofty.type.generic.user.categories.CustomGroups;
 public class ActionPlayerClearCache implements HypixelEventClass {
 
     @SneakyThrows
-    @HypixelEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.DISCONNECT)
     public void run(PlayerDisconnectEvent event) {
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 

@@ -1,16 +1,16 @@
 # Docker Setup
 
-## Quick Install (Linux)
+## Quick Install (Linux / macOS)
 
-The fastest way to get running. A single command launches an interactive installer that handles everything:
+The fastest way to get running. A single command downloads the native installer and launches an interactive TUI that handles everything:
 
 ```bash
 curl -fsSL skyblock-installer.swofty.net | bash
 ```
 
-The installer will:
+This fetches the prebuilt `skyblock-installer` binary for your platform from the [latest release](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/latest), caches it under `~/.cache/skyblock-installer`, and runs it. The installer will:
 
-1. Check and install dependencies (Docker, `gum`, `figlet`)
+1. Verify its dependencies are present (`docker`, `git`, `curl`)
 2. Run a system requirements check
 3. Let you pick which server types and services to run
 4. Generate all configuration and Docker Compose files
@@ -18,7 +18,7 @@ The installer will:
 6. Drop you into a management dashboard
 
 :::alert note
-Requires **Linux** with **Docker** installed. The installer will guide you through Docker setup if it's missing.
+Requires **Docker** with **Compose v2** and a running Docker daemon your user can access. The installer itself is a self-contained Go binary — there are no other runtime dependencies to install.
 :::
 
 ### What You'll See
@@ -35,26 +35,22 @@ The installer walks you through:
 
 ### Management Dashboard
 
-After installation, manage your server anytime:
+To manage an existing install, run the installer again — it detects your installation and offers to open the dashboard:
 
 ```bash
-~/.hypixel-skyblock/install.sh --manage
+curl -fsSL skyblock-installer.swofty.net | bash
 ```
 
-The dashboard provides:
+By default it installs to `~/.hypixel-skyblock`; pass `-dir <path>` to use a different location (`curl -fsSL skyblock-installer.swofty.net | bash -s -- -dir /opt/skyblock`). From the home menu choose **Manage existing installation** to reach the dashboard, which provides:
 
-- **Start/Stop All** - Control all containers at once
-- **Restart Container** - Restart individual containers
-- **View Logs** - Tail logs from any container
-- **Make Admin** - Promote a player to staff rank via the database
-- **Check for Updates** - Pull latest JARs and rebuild
-- **Watch Mode** - Live health monitoring with auto-refresh
-
-You can also run the health monitor directly:
-
-```bash
-~/.hypixel-skyblock/install.sh --watch
-```
+- **Refresh status** - Live view of every container's health
+- **Start all / Stop all** - Control all containers at once
+- **Restart container** - Restart an individual container
+- **Rebuild and update** - Pull the latest JARs and rebuild images
+- **Configure servers/services** - Change which servers and services run
+- **Make player STAFF** - Promote a player to staff rank via the database
+- **View logs** - Tail logs from any container
+- **Fresh reinstall / Uninstall** - Recreate or remove the deployment
 
 ## Manual Setup
 

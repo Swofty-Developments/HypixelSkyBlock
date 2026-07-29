@@ -1,14 +1,10 @@
 package net.swofty.type.skyblockgeneric.mission.missions.thepark.darkthicket;
 
-import net.minestom.server.event.player.PlayerTickEndEvent;
 import net.minestom.server.event.player.PlayerTickEvent;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
-import net.swofty.type.skyblockgeneric.event.custom.CustomBlockBreakEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.mission.MissionData;
-import net.swofty.type.skyblockgeneric.mission.SkyBlockMission;
 import net.swofty.type.skyblockgeneric.mission.SkyBlockProgressMission;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -17,12 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class MissionCollectDarkOakLogs extends SkyBlockProgressMission {
 
 	private final Map<UUID, Long> testTimes = new HashMap<>();
 
-	@HypixelEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
+	@PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
 	public void onTick(PlayerTickEvent event) {
 		SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
 		if (testTimes.containsKey(player.getUuid())) {

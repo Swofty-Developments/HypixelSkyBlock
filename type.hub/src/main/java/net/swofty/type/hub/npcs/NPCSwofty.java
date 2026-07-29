@@ -29,7 +29,7 @@ public class NPCSwofty extends HypixelNPC {
 
             @Override
             public Pos position(HypixelPlayer player) {
-                return new Pos(-34.5, 70, -5.5, 180, 0);
+                return new Pos(0.5, 79, 20.5, 180, 0);
             }
 
             @Override
@@ -50,7 +50,7 @@ public class NPCSwofty extends HypixelNPC {
         return Stream.of(
                 DialogueSet.builder()
                         .key("hello").lines(new String[]{
-                                "Make sure to check out our discord server at discord.gg/paper!",
+                                "Make sure to check out our discord server at https://discord.swofty.net/!",
                                 "Feel free to create a pull request to help us :)"
                         }).build()
         ).toArray(DialogueSet[]::new);

@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface CommandParameters {
     String description() default "";
 
-    String aliases() default "";
+    String labels() default "";
 
     String usage();
 

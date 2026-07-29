@@ -4,11 +4,12 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.ai.GoalSelector;
-import net.minestom.server.entity.pathfinding.Navigator;
 import net.minestom.server.utils.time.Cooldown;
 import net.minestom.server.utils.time.TimeUnit;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
+import net.swofty.type.generic.entity.ai.vanilla.VanillaNavigator;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -53,7 +54,7 @@ public class MeleeAttackWithinRegionGoal extends GoalSelector {
     @Override
     public void start() {
         final Point targetPosition = this.cachedTarget.getPosition();
-        entityCreature.getNavigator().setPathTo(targetPosition);
+        ((SkyBlockMob) entityCreature).getVanillaNavigator().pathTo(targetPosition);
     }
 
     @Override
@@ -89,13 +90,13 @@ public class MeleeAttackWithinRegionGoal extends GoalSelector {
             }
 
             // Move toward the target entity
-            Navigator navigator = entityCreature.getNavigator();
-            final var pathPosition = navigator.getPathPosition();
+            VanillaNavigator navigator = ((SkyBlockMob) entityCreature).getVanillaNavigator();
+            final var pathPosition = navigator.getTargetPosition();
             final var targetPosition = target.getPosition();
-            if (pathPosition == null || !pathPosition.samePoint(targetPosition)) {
+            if (pathPosition == null || !pathPosition.samePoint(targetPosition) || navigator.isComplete()) {
                 if (this.cooldown.isReady(time)) {
                     this.cooldown.refreshLastUpdate(time);
-                    navigator.setPathTo(targetPosition);
+                    navigator.pathTo(targetPosition);
                 }
             }
         }
@@ -109,6 +110,6 @@ public class MeleeAttackWithinRegionGoal extends GoalSelector {
     @Override
     public void end() {
         // Stop following the target
-        entityCreature.getNavigator().setPathTo(null);
+        ((SkyBlockMob) entityCreature).getVanillaNavigator().stop();
     }
 }

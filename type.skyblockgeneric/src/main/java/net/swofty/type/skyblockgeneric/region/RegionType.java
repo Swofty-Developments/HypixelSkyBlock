@@ -3,9 +3,6 @@ package net.swofty.type.skyblockgeneric.region;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.swofty.commons.Songs;
-import net.swofty.type.skyblockgeneric.region.biome.BirchParkBiome;
-import net.swofty.type.skyblockgeneric.region.biome.DarkThicketBiome;
-import net.swofty.type.skyblockgeneric.region.biome.SpruceWoodsBiome;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.BarnConfiguration;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.DwarvenMinesConfiguration;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.GlacialCaveConfiguration;
@@ -26,6 +23,7 @@ import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.Jung
 import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SavannaWoodlandConfiguration;
 import net.swofty.type.skyblockgeneric.region.mining.configurations.thepark.SpruceWoodsConfiguration;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +44,9 @@ public enum RegionType {
 	BUILDERS_HOUSE("Builder's House"),
 	THAUMATURGIST("Thaumaturgist", "§6"),
 	TRADE_CENTER("Trade Center"),
+	ELECTION_ROOM("Election Room"),
 	MOUNTAIN("Mountain"),
-	WILDERNESS("Wilderness", "§2", Songs.WILDERNESS),
+	WILDERNESS("Wilderness", "§2", Songs.ABSTRACT_RINGING),
 	PLAYER_MUSEUM("%s's Museum", "§3"),
 	RUINS("Ruins"),
 	HEXATORUM("Hexatorum", "§d"),
@@ -69,12 +68,12 @@ public enum RegionType {
 	FOREST("Forest", "§2", MineLogsConfiguration.class),
 	FORAGING_CAMP("Foraging Camp", "§2", MineLogsConfiguration.class), // TODO: you can't break everything here though
 
-	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class, BirchParkBiome.class),
-	HOWLING_CAVE("Howling Cave", null, BirchParkBiome.class),
-	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
-	VIKING_LONGHOUSE("Viking Longhouse", "§b", SpruceWoodsConfiguration.class, SpruceWoodsBiome.class),
-	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class, DarkThicketBiome.class),
-	TRIALS_OF_FIRE("Trials of Fire", "§c", null, DarkThicketBiome.class),
+	BIRCH_PARK("Birch Park", "§a", BirchParkConfiguration.class),
+	HOWLING_CAVE("Howling Cave"),
+	SPRUCE_WOODS("Spruce Woods", "§a", SpruceWoodsConfiguration.class),
+	VIKING_LONGHOUSE("Viking Longhouse", "§b", SpruceWoodsConfiguration.class),
+	DARK_THICKET("Dark Thicket", "§a", DarkOakConfiguration.class),
+	TRIALS_OF_FIRE("Trials of Fire", "§c"),
 	SAVANNA_WOODLAND("Savanna Woodland", "§a", SavannaWoodlandConfiguration.class),
 	MELODY_PLATEAU("Melody's Plateau", "§d", SavannaWoodlandConfiguration.class),
 	JUNGLE_ISLAND("Jungle Island", "§a", JungleIslandConfiguration.class),
@@ -112,8 +111,8 @@ public enum RegionType {
 	DRAGONS_NEST("Dragon's Nest", "§5"),
 
 	GOLD_MINE("Gold Mine", "§6", GoldMineConfiguration.class),
-	DEEP_CAVERNS("Deep Caverns", "§b"),
-	GUNPOWDER_MINES("Gunpowder Mines", GunpowderMinesConfiguration.class),
+	DEEP_CAVERNS("Deep Caverns", "§b", GunpowderMinesConfiguration.class, null, Songs.AMBIENT_CAVES),
+	GUNPOWDER_MINES("Gunpowder Mines", "§b", GunpowderMinesConfiguration.class, null, Songs.AMBIENT_CAVES),
 	LAPIS_QUARRY("Lapis Quarry", LapisQuarryConfiguration.class),
 	PIGMENS_DEN("Pigmen's Den", PigmensDenConfiguration.class),
 	SLIMEHILL("Slimehill", SlimehillConfiguration.class),
@@ -131,6 +130,17 @@ public enum RegionType {
 	MURKWATER_LOCH("Murkwater Loch", "§2"),
 	MURKWATER_SHALLOWS("Murkwater Shallows", "§3"),
 	NORTH_WETLANDS("North Wetlands", "§2"),
+
+	// Backwater Bayou
+	BACKWATER_BAYOU("Backwater Bayou", "§2"),
+	CRIMSON_ISLE("Crimson Isle", "§c"),
+	BLAZING_VOLCANO("Blazing Volcano", "§4"),
+	DOJO("Dojo", "§6"),
+	MYSTIC_MARSH("Mystic Marsh", "§2"),
+	SCARLETON("Scarleton", "§c"),
+	BURNING_DESERT("Burning Desert", "§6"),
+	DRAGONTAIL("Dragontail", "§4"),
+	STRONGHOLD("Stronghold", "§4"),
 
 	DWARVEN_VILLAGE("Dwarven Village", DwarvenMinesConfiguration.class),
 	DWARVEN_MINES("Dwarven Mines", "§2", DwarvenMinesConfiguration.class),
@@ -158,22 +168,33 @@ public enum RegionType {
 	private final SkyBlockBiomeConfiguration biomeHandler;
 	private final List<Songs> songs;
 
-	@SneakyThrows
 	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler, Class<? extends SkyBlockBiomeConfiguration> biomeHandler, Songs... songs) {
 		this.name = name;
 		this.color = color;
 
-		if (miningHandler != null)
-			this.miningHandler = miningHandler.getDeclaredConstructor().newInstance();
+		if (miningHandler != null) {
+			try {
+				this.miningHandler = miningHandler.getDeclaredConstructor().newInstance();
+			} catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+			         NoSuchMethodException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		else
 			this.miningHandler = null;
 
-		if (biomeHandler != null)
-			this.biomeHandler = biomeHandler.getDeclaredConstructor().newInstance();
+		if (biomeHandler != null) {
+			try {
+				this.biomeHandler = biomeHandler.getDeclaredConstructor().newInstance();
+			} catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
+			         IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+		}
 		else
 			this.biomeHandler = null;
 
-		this.songs = new ArrayList<>();
+		this.songs = new ArrayList<>(List.of(songs));
 	}
 
 	RegionType(String name, String color, Class<? extends SkyBlockRegenConfiguration> miningHandler) {

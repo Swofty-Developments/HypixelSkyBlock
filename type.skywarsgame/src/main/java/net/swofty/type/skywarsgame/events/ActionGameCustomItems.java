@@ -7,12 +7,13 @@ import net.swofty.type.skywarsgame.TypeSkywarsGameLoader;
 import net.swofty.type.skywarsgame.luckyblock.items.LuckyBlockItemHandler;
 import net.swofty.type.skywarsgame.user.SkywarsPlayer;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.HypixelEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionGameCustomItems implements HypixelEventClass {
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerUseItemOnBlockEvent event) {
         TypeSkywarsGameLoader.getItemHandler().onItemUseOnBlock(event);
 
@@ -21,7 +22,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerUseItemEvent event) {
         TypeSkywarsGameLoader.getItemHandler().onItemUse(event);
 
@@ -30,7 +31,7 @@ public class ActionGameCustomItems implements HypixelEventClass {
         }
     }
 
-    @HypixelEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerBlockPlaceEvent event) {
         TypeSkywarsGameLoader.getItemHandler().onBlockPlace(event);
     }

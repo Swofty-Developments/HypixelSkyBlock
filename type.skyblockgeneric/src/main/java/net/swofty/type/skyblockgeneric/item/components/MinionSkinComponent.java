@@ -5,7 +5,6 @@ import net.minestom.server.color.Color;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.utils.Unit;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import org.jetbrains.annotations.Nullable;

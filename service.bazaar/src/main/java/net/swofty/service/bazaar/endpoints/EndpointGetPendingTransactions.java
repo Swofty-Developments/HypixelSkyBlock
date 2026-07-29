@@ -1,48 +1,43 @@
 package net.swofty.service.bazaar.endpoints;
 
-import net.swofty.commons.impl.ServiceProxyRequest;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocolObject;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsMessage;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocolObject.BazaarGetPendingTransactionsResponse;
-import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocolObject.PendingTransactionInfo;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocol;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocol.BazaarGetPendingTransactionsMessage;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocol.BazaarGetPendingTransactionsResponse;
+import net.swofty.commons.protocol.objects.bazaar.BazaarGetPendingTransactionsProtocol.PendingTransactionInfo;
 import net.swofty.service.bazaar.PendingTransactionsDatabase;
-import net.swofty.service.generic.redis.ServiceEndpoint;
+import net.swofty.commons.redis.RedisMessageHandler;
+import org.tinylog.Logger;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import net.swofty.commons.redis.RedisMessageContext;
 
-public class EndpointGetPendingTransactions implements ServiceEndpoint<
+public class EndpointGetPendingTransactions implements RedisMessageHandler<
         BazaarGetPendingTransactionsMessage,
         BazaarGetPendingTransactionsResponse> {
 
     @Override
-    public BazaarGetPendingTransactionsProtocolObject associatedProtocolObject() {
-        return new BazaarGetPendingTransactionsProtocolObject();
+    public BazaarGetPendingTransactionsProtocol protocol() {
+        return new BazaarGetPendingTransactionsProtocol();
     }
 
     @Override
-    public BazaarGetPendingTransactionsResponse onMessage(
-            ServiceProxyRequest message,
-            BazaarGetPendingTransactionsMessage msg) {
+    public BazaarGetPendingTransactionsResponse handle(BazaarGetPendingTransactionsMessage msg, RedisMessageContext context) {
 
-        // Get pending transactions from database
         List<PendingTransactionsDatabase.PendingTransaction> pendingTransactions =
-                PendingTransactionsDatabase.getPendingTransactions(msg.playerUUID, msg.profileUUID);
+                PendingTransactionsDatabase.getPendingTransactions(msg.playerUUID(), msg.profileUUID());
 
-        // Convert to protocol format
         List<PendingTransactionInfo> transactionInfos = pendingTransactions.stream()
                 .map(pt -> new PendingTransactionInfo(
                         pt.getId(),
                         pt.getTransaction().getClass().getSimpleName(),
-                        pt.getTransaction().toJSON(),
+                        pt.getTransaction().toJSON().toMap(),
                         pt.getCreatedAt()
                 ))
-                .collect(Collectors.toList());
+                .toList();
 
-        System.out.println("Retrieved " + transactionInfos.size() +
-                " pending transactions for player " + msg.playerUUID +
-                " on profile " + msg.profileUUID);
+        Logger.debug("Retrieved {} pending transactions for player {} on profile {}",
+                transactionInfos.size(), msg.playerUUID(), msg.profileUUID());
 
-        return new BazaarGetPendingTransactionsResponse(transactionInfos);
+        return new BazaarGetPendingTransactionsResponse(transactionInfos, true, null);
     }
 }
