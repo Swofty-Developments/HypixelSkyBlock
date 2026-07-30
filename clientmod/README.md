@@ -14,3 +14,5 @@ This is a 26.2 mod meant for the developers of this project to easily capture da
   `nbs-recordings/<name>.nbs` and exports custom instrument sounds.
 - `Keybind K` Copies the texture ID of the hovered player head into the clipboard.
 - `Keybind L` Copies the lore of the hovered item.
+- `Keybind I` Selects the entity under the crosshair and opens a client-only inspector for inbound packets referencing
+  it, its passengers/vehicle, or entities within 1.5 blocks.
