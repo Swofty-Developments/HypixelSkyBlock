@@ -1,13 +1,13 @@
 package net.swofty.type.thefarmingislands.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.ChatColor;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.stream.Stream;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCShepherd extends HypixelNPC {
     public NPCShepherd() {
@@ -42,34 +42,5 @@ public class NPCShepherd extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("fist-interaction").lines(new String[]{
-                                "Hello traveler!",
-                                "Welcome to my keep, my sheep are some of the best in the world.",
-                                "They have regenerative properties that allow for them to regenerate their wool faster than normal!",
-                                "I'm feeling tired today.",
-                                "Could you shear all my sheep at once?",
-                                "I will have a reward if you do so!"
-                        }).build(),
-                DialogueSet.builder()
-                        .key("not-all-sheep-sheared").lines(new String[]{
-                                "You didn't shear enough sheep!"
-                        }).build(),
-                DialogueSet.builder()
-                        .key("all-sheep-sheared").lines(new String[]{
-                                "Thanks for helping me out!",
-                                "Please accept this as a token of my gratitude!",
-                                ChatColor.DARK_PURPLE + "+4 Pelts" + ChatColor.WHITE
-                        }).build(),
-                DialogueSet.builder()
-                        .key("after-shearing-all-sheep").lines(new String[]{
-                                "My sheep are some of the best in the world!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

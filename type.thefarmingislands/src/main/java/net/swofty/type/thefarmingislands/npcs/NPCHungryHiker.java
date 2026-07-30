@@ -1,12 +1,13 @@
 package net.swofty.type.thefarmingislands.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.stream.Stream;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCHungryHiker extends HypixelNPC {
     public NPCHungryHiker() {
@@ -41,47 +42,5 @@ public class NPCHungryHiker extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("first-interaction").lines(new String[]{
-                                "Hello there, stranger!",
-                                "I fell down into this ravine a couple days ago and can't climb out.",
-                                "My friend Jake said he would come get me but he hasn't arrived yet.",
-                                "Could you bring me food until he gets here?",
-                                "Could you get me # of this food?", // TODO: Add food number to dialogue
-                                "The food I want is <food>." // TODO: Add food item to dialogue
-                        }).build(),
-                DialogueSet.builder()
-                        .key("incorrect-food").lines(new String[]{
-                                "This isn't the food I wanted, please get me the correct food.",
-                                "I asked for food that is a <food>." // TODO: Add food item to dialogue
-                        }).build(),
-                DialogueSet.builder()
-                        .key("incorrect-amount").lines(new String[]{
-                                "This isn't the correct amount I asked for.",
-                                "I asked for <amount> of this item." // TODO: Add food number to dialogue
-                        }).build(),
-                DialogueSet.builder()
-                        .key("correct-food-and-amount").lines(new String[]{
-                                "Thanks for the food.",
-                                "This should fill me up for 144 SkyBlock days.",
-                                "Come back before then so I don't perish!"
-                        }).build(),
-                DialogueSet.builder()
-                        .key("finished-quest").lines(new String[]{
-                                "Thanks for the food!",
-                                "I think I see Jake on the edge of the ravine!",
-                                "Thank you for feeding me all these days, meet me at the house near the portal and I will give you something to show my gratitude!"
-                        }).build(),
-                DialogueSet.builder()
-                        .key("after-quest-is-completed-in-his-hut").lines(new String[]{
-                                "Thank you for feeding me all those days.",
-                                "To show my gratitude, please have this!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

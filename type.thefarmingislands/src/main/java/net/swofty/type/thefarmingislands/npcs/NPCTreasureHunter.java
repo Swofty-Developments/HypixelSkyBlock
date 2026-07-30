@@ -1,13 +1,13 @@
 package net.swofty.type.thefarmingislands.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.ChatColor;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.stream.Stream;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCTreasureHunter extends HypixelNPC {
     public NPCTreasureHunter() {
@@ -42,18 +42,5 @@ public class NPCTreasureHunter extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("fist-interaction").lines(new String[]{
-                                "Hello adventurer!",
-                                "I'm the Treasure Hunter, I've been searching for treasure all over this island.",
-                                "Rumor has it that there are rare stones and other valuable bounty hidden in the ground all over the island.",
-                                "Tell you what, for a small price I'll give you the info I know about."
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

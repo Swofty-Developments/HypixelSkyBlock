@@ -9,8 +9,6 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
-import java.util.stream.Stream;
-
 public class NPCTammy extends HypixelNPC {
     public NPCTammy() {
         super(new HumanConfiguration() {
@@ -44,16 +42,5 @@ public class NPCTammy extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("fist-interaction").lines(new String[]{
-                                "Different tiers of animals have different sets of abilities.",
-                                "Different animals also have unique abilities too!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

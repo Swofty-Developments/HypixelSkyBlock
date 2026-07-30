@@ -7,8 +7,6 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.stream.Stream;
-
 public class NPCSpiderTamer extends HypixelNPC {
     public NPCSpiderTamer() {
         super(new HumanConfiguration() {
@@ -45,22 +43,5 @@ public class NPCSpiderTamer extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent event) {
 
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("first-interaction").lines(new String[]{
-                                "Oh...Hi.",
-                                "I like staying here with my spiders, but " + ChatColor.DARK_RED + "Arachne" + ChatColor.WHITE + " started capturing some of them.",
-                                "Can you help?"
-                        }).build(),
-                DialogueSet.builder()
-                        .key("killed-arachne").lines(new String[]{
-                                "Thank you so much...",
-                                "If you want. I can help you get the strength of spiders!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

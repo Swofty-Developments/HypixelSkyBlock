@@ -1,14 +1,13 @@
 package net.swofty.type.thefarmingislands.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.minestom.server.coordinate.Pos;
-import net.swofty.commons.ChatColor;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
-import net.swofty.type.generic.event.custom.NPCInteractEvent;
-import net.swofty.type.generic.user.HypixelPlayer;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.stream.Stream;
+import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
 public class NPCHunterAva extends HypixelNPC {
     public NPCHunterAva() {
@@ -41,22 +40,7 @@ public class NPCHunterAva extends HypixelNPC {
     }
 
     @Override
-    public void onClick(NPCInteractEvent event) {
-        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
-        if (dialogue().isInDialogue(player)) return;
-
-        setDialogue(player, "introduction");
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("introduction").lines(new String[]{
-                                "I'm hunting an " + ChatColor.GOLD + "Elusive" + ChatColor.WHITE + " animal.",
-                                "If you want to hunt animals too, go talk to Trevor!",
-                                "You can find him just past the bridge in his den."
-                        }).build()
-        ).toArray(DialogueSet[]::new);
+    public void onClick(NPCInteractEvent e) {
+        e.player().notImplemented();
     }
 }

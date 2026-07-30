@@ -9,8 +9,6 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
-import java.util.stream.Stream;
-
 public class NPCTalbot extends HypixelNPC { //only there if Finnegan is mayor
     public NPCTalbot() {
         super(new HumanConfiguration() {
@@ -44,15 +42,5 @@ public class NPCTalbot extends HypixelNPC { //only there if Finnegan is mayor
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("").lines(new String[]{
-                                "Hey, I'm Talbot!"
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

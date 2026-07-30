@@ -9,8 +9,6 @@ import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
 
-import java.util.stream.Stream;
-
 public class NPCTrevorTheTrapper extends HypixelNPC {
     public NPCTrevorTheTrapper() {
         super(new HumanConfiguration() {
@@ -44,17 +42,5 @@ public class NPCTrevorTheTrapper extends HypixelNPC {
     @Override
     public void onClick(NPCInteractEvent e) {
         e.player().notImplemented();
-    }
-
-    @Override
-    public DialogueSet[] dialogues(HypixelPlayer player) {
-        return Stream.of(
-                DialogueSet.builder()
-                        .key("fist-interaction").lines(new String[]{
-                                "You will have 10 minutes to find the mob from when you accept the task.",
-                                "Any longer than that and the animal will run away!",
-                                ""
-                        }).build()
-        ).toArray(DialogueSet[]::new);
     }
 }

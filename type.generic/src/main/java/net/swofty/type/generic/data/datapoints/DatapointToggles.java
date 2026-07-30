@@ -114,7 +114,6 @@ public class DatapointToggles extends Datapoint<DatapointToggles.Toggles> {
             HAS_SPOKEN_TO_IKE(false),
             HAS_SPOKEN_TO_EMISSARY_BRAUM(false),
             HAS_SPOKEN_TO_GEO(false),
-            HAS_SPOKEN_TO_ARCHAELOGIST(false),
             PAPER_ICONS(false),
 			LOBBY_SHOW_PLAYERS(true),
 			AUTO_ACCEPT_QUESTS(false),
