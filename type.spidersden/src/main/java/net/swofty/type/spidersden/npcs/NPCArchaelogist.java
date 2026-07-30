@@ -46,6 +46,11 @@ public class NPCArchaelogist extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        if (isInDialogue(player)) return;
+        boolean hasSpokenBefore = player.getToggles().get(DatapointToggles.Toggles.ToggleType.HAS_SPOKEN_TO_ARCHAELOGIST);
+        // TODO: add feat:relics
+        // TODO: pick up random lines
     }
 
     @Override
