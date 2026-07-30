@@ -224,7 +224,7 @@ public enum ItemType {
 
   BEE_MINION_SKIN(Material.PLAYER_HEAD, Rarity.COMMON),
 
-  BEE_PET(Material.PLAYER_HEAD, Rarity.LEGENDARY),
+  BEE_PET(Material.PLAYER_HEAD, Rarity.MYTHIC),
 
   BEHEADED_HORROR(Material.PLAYER_HEAD, Rarity.COMMON),
 

@@ -70,7 +70,7 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
         private HashMap<SkyBlockItem, Boolean> petsMap;
         private PetEntityImpl enabledPetEntityImpl = null;
         private transient List<PetAbility> cachedAbilities;
-        private transient Rarity cachedPetRarity;
+        private transient Rarity cachedPetRarity; // when rarity changes (pet item), we need to update cachedAbilities
 
         public UserPetData() {
             this.petsMap = new HashMap<>();

@@ -105,9 +105,9 @@ public class SkyBlockPlayer extends HypixelPlayer {
     @Setter
     private SkyBlockIsland skyBlockIsland;
     @Setter
-    private transient int killComboCount;
+    private int killComboCount;
     @Setter
-    private transient long lastKillTime;
+    private long lastKillTime;
     private static final Tag<Integer> fallHeight = Tag.Integer("fallHeight");
 
     private static final Pattern SACK_PATTERN = Pattern.compile("^(?:(SMALL|MEDIUM|LARGE|ENCHANTED)_)?(.+?)_SACK$");

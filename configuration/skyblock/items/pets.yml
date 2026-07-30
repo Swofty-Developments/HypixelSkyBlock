@@ -49,14 +49,24 @@ items:
             speed: 0.1
             strength: 0.25
             intelligence: 0.5
+            mining_fortune: 0.2
+            foraging_fortune: 0.2
+            farming_fortune: 0.2
           epic:
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
+            mining_fortune: 0.25
+            foraging_fortune: 0.25
+            farming_fortune: 0.25
+          legendary:
             speed: 0.1
             strength: 0.25
             intelligence: 0.5
             mining_fortune: 0.3
             foraging_fortune: 0.3
             farming_fortune: 0.3
-          legendary:
+          mythic:
             speed: 0.1
             strength: 0.25
             intelligence: 0.5

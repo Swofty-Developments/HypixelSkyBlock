@@ -25,7 +25,8 @@ public class PoweredByPollenAbility implements PetAbility {
         double fortune = PER_LEVEL * level;
 
         return List.of(
-                "§7Grants §6+" + decimalify(fortune, 1) + "☘ Sunflower§7, §6Moonflower§7, and §6Wild Rose Fortune",
+                "§7Grants §6+" + decimalify(fortune, 1) + "☘ Sunflower§7,",
+                "§6Moonflower§7, and §6Wild Rose Fortune",
                 "§7while in §aThe Garden§7."
         );
     }
