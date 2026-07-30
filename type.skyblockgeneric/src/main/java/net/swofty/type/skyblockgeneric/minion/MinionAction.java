@@ -7,6 +7,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.crafting.FurnaceRecipeRegistry;
 import net.swofty.type.skyblockgeneric.item.components.MinionShippingComponent;
 import net.swofty.type.skyblockgeneric.item.components.MinionFuelComponent;
 import net.swofty.type.skyblockgeneric.item.components.SellableComponent;
@@ -38,8 +39,7 @@ public abstract class MinionAction {
 
         for (SkyBlockItem item : items) {
             if (extensionData.hasMinionUpgrade(ItemType.AUTO_SMELTER)) {
-                ItemType smelted = getAutoSmelterResult(item.getAttributeHandler().getPotentialType());
-                if (smelted != null) item = new SkyBlockItem(smelted, item.getAmount());
+                item = FurnaceRecipeRegistry.smelt(item).orElse(item);
             }
             if (outputMultiplier > 1.0) {
                 item.setAmount((int) Math.floor(item.getAmount() * outputMultiplier));
@@ -73,18 +73,4 @@ public abstract class MinionAction {
         }
     }
 
-    private static ItemType getAutoSmelterResult(ItemType input) {
-        if (input == null) return null;
-        return switch (input) {
-            case IRON_ORE -> ItemType.IRON_INGOT;
-            case GOLD_ORE -> ItemType.GOLD_INGOT;
-            case CACTUS -> ItemType.GREEN_DYE;
-            case SAND -> ItemType.GLASS;
-            case OAK_LOG, SPRUCE_LOG, BIRCH_LOG, DARK_OAK_LOG, ACACIA_LOG, JUNGLE_LOG ->
-                    ItemType.CHARCOAL;
-            case COBBLESTONE -> ItemType.STONE;
-            case CLAY_BALL -> ItemType.BRICKS;
-            default -> null;
-        };
-    }
 }

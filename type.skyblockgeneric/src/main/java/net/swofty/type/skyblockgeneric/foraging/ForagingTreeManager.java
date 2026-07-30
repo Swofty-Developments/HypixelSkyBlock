@@ -48,6 +48,7 @@ public final class ForagingTreeManager {
     private static final int[][] FACES = {
             {1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0}, {0, 0, 1}, {0, 0, -1}
     };
+    private static final int[][] TOUCHING_BLOCKS = touchingBlockOffsets();
 
     private static final Map<Instance, Map<BlockPosition, TrackedTree>> TREES = new ConcurrentHashMap<>();
 
@@ -224,8 +225,8 @@ public final class ForagingTreeManager {
             if (!kind.matches(block, woodFamily)) continue;
             blocks.put(current, block);
 
-            for (int[] face : FACES) {
-                queue.addLast(current.add(face[0], face[1], face[2]));
+            for (int[] offset : TOUCHING_BLOCKS) {
+                queue.addLast(current.add(offset[0], offset[1], offset[2]));
             }
         }
 
@@ -292,11 +293,23 @@ public final class ForagingTreeManager {
             if (instance.getBlock(current.asPoint()).isAir()) continue;
 
             selected.add(current);
-            for (int[] face : FACES) {
-                queue.addLast(current.add(face[0], face[1], face[2]));
+            for (int[] offset : TOUCHING_BLOCKS) {
+                queue.addLast(current.add(offset[0], offset[1], offset[2]));
             }
         }
         return selected;
+    }
+
+    private static int[][] touchingBlockOffsets() {
+        List<int[]> offsets = new ArrayList<>(26);
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                for (int z = -1; z <= 1; z++) {
+                    if (x != 0 || y != 0 || z != 0) offsets.add(new int[]{x, y, z});
+                }
+            }
+        }
+        return offsets.toArray(int[][]::new);
     }
 
     private static TreeKind getTreeKind(Block block) {
@@ -408,6 +421,15 @@ public final class ForagingTreeManager {
             return new Pos(x, y, z);
         }
 
+        private Pos hologramPosition() {
+            int rootY = originalBlocks.keySet().stream().mapToInt(BlockPosition::y).min().orElse(0);
+            List<BlockPosition> roots = originalBlocks.keySet().stream()
+                    .filter(position -> position.y == rootY).toList();
+            double x = roots.stream().mapToInt(BlockPosition::x).average().orElse(0) + 0.5;
+            double z = roots.stream().mapToInt(BlockPosition::z).average().orElse(0) + 0.5;
+            return new Pos(x, rootY + 2, z);
+        }
+
         private void updateHologram(Instance instance) {
             int percent = Math.min(100, (int) Math.round(broken.size() * 100.0 / originalBlocks.size()));
             String title = "§2§l" + kind.name() + " TREE §b" + percent + "%";
@@ -416,7 +438,7 @@ public final class ForagingTreeManager {
                     .map(Contribution::name)
                     .reduce((left, right) -> left + "§7, " + right).orElse("§7Unknown");
             String[] lines = {title, contributors};
-            Pos position = center().add(0, 0, 0);
+            Pos position = hologramPosition();
             if (hologram.isEmpty()) {
                 for (int i = 0; i < lines.length; i++) {
                     HologramEntity entity = new HologramEntity(lines[i]);
