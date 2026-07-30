@@ -1,8 +1,6 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
 package net.swofty.commons.skyblock.item;
 
-import java.lang.Exception;
-import java.lang.String;
 import net.minestom.server.item.Material;
 import net.swofty.commons.StringUtility;
 import org.jetbrains.annotations.Nullable;
@@ -1647,6 +1645,8 @@ public enum ItemType {
   FLEXBONE(Material.BONE, Rarity.UNCOMMON),
 
   FLINT(Material.FLINT, Rarity.COMMON),
+
+    FLINT_ARROW(Material.ARROW, Rarity.COMMON),
 
   FLORID_ZOMBIE_SWORD(Material.GOLDEN_SWORD, Rarity.LEGENDARY),
 

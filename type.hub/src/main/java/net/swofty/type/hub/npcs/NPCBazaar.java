@@ -1,5 +1,7 @@
 package net.swofty.type.hub.npcs;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
@@ -50,7 +52,7 @@ public class NPCBazaar extends HypixelNPC {
         if (isInDialogue(player)) return;
         SkyBlockLevelRequirement lvl = player.getSkyBlockExperience().getLevel();
         if (lvl.asInt() >= 7 || player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
-            if (player.isIronman()) new GUISpecialBazaar().open(player);
+            if (player.isIronman()) player.openView(new GUISpecialBazaar());
             else new GUIBazaar(BazaarCategories.FARMING).open(player);
             return;
         }
@@ -60,8 +62,8 @@ public class NPCBazaar extends HypixelNPC {
     public DialogueSet[] dialogues(HypixelPlayer player) {
         return Stream.of(
                 DialogueSet.builder()
-                        .key("hello").lines(new String[]{
-                                "§cYou need SkyBlock Level 7 to access this feature!"
+                        .key("hello").lines(new Component[]{
+                                Component.text("You need SkyBlock Level 7 to access this feature!", NamedTextColor.RED)
                         }).build()
         ).toArray(DialogueSet[]::new);
     }

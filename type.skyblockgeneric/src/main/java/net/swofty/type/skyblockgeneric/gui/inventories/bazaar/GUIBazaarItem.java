@@ -47,8 +47,8 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
         fill(ItemStackCreator.createNamedItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
         Map.Entry<BazaarCategories, BazaarItemSet> bazaarCategory = BazaarCategories.getFromItem(itemType);
-        set(GUIClickableItem.getGoBackItem(30, specialBazaar
-                ? new GUISpecialBazaar() : new GUIBazaarItemSet(bazaarCategory.getKey(), bazaarCategory.getValue())));
+        set(GUIClickableItem.getGoBackItem(30,
+                new GUIBazaarItemSet(bazaarCategory.getKey(), bazaarCategory.getValue())));
 
         if (!specialBazaar) set(new GUIClickableItem(32) {
             @Override
@@ -93,7 +93,7 @@ public class GUIBazaarItem extends HypixelInventoryGUI implements RefreshingGUI 
     public void onOpen(InventoryGUIOpenEvent e) {
         SkyBlockPlayer player = (SkyBlockPlayer) e.player();
         if (player.isIronman() && itemType != ItemType.BOOSTER_COOKIE) {
-            new GUISpecialBazaar().open(player);
+            player.openView(new GUISpecialBazaar());
             return;
         }
         player.getBazaarConnector().getItemStatistics(itemType)

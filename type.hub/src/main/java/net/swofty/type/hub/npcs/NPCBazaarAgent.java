@@ -50,7 +50,7 @@ public class NPCBazaarAgent extends HypixelNPC {
         if (isInDialogue(player)) return;
         SkyBlockLevelRequirement lvl = player.getSkyBlockExperience().getLevel();
         if (lvl.asInt() >= 7 || player.getRank().isEqualOrHigherThan(Rank.STAFF)) {
-            if (player.isIronman()) new GUISpecialBazaar().open(player);
+            if (player.isIronman()) player.openView(new GUISpecialBazaar());
             else new GUIBazaar(BazaarCategories.FARMING).open(player);
             return;
         }

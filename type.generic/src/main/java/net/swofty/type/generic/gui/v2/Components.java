@@ -25,6 +25,10 @@ public final class Components {
     public static final ItemStack.Builder BACK_BUTTON = ItemStack.builder(Material.ARROW)
             .set(DataComponents.CUSTOM_NAME, Component.text("§aGo Back"));
 
+    public static ItemStack.Builder asFiller(Material material) {
+        return FILLER.material(material);
+    }
+
     public static <S> void fill(ViewLayout<S> layout) {
         layout.filler(FILLER);
     }
