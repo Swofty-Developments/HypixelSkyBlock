@@ -27,7 +27,7 @@ features:
     details: Built on Minestom for maximum performance with multi-threaded architecture and virtual threads support.
   - icon: 🏗️
     title: Microservices Architecture
-    details: Modular design with 9 independent services handling auctions, bazaar, parties, and more.
+    details: Modular design with 10 independent services handling auctions, bazaar, parties, and more.
   - icon: 🌐
     title: Scalable
     details: Run multiple game servers across 24 different server types with Redis-based communication.

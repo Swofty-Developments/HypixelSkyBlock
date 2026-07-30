@@ -14,6 +14,7 @@ Services are independent microservices that handle specific features. They commu
 | Data Mutex    | `ServiceDataMutex.jar`    | Distributed data locking     |
 | Dark Auction  | `ServiceDarkAuction.jar`  | Dark auction events          |
 | Orchestrator  | `ServiceOrchestrator.jar` | Game server orchestration    |
+| Store         | `ServiceStore.jar`        | Stripe purchase fulfillment  |
 
 ## Download
 
@@ -33,6 +34,7 @@ services/
 ├── ServiceDataMutex.jar
 ├── ServiceDarkAuction.jar
 ├── ServiceOrchestrator.jar
+├── ServiceStore.jar
 └── configuration/
     └── config.yml    # Same as game servers
 ```
@@ -50,6 +52,7 @@ java -jar ServiceItemTracker.jar
 java -jar ServiceDataMutex.jar
 java -jar ServiceDarkAuction.jar
 java -jar ServiceOrchestrator.jar
+java -jar ServiceStore.jar
 ```
 
 :::alert note
@@ -167,11 +170,35 @@ java -jar ServiceOrchestrator.jar
 - Game map assignment
 - Player rejoining
 
+### Store Service
+
+Fulfills paid Stripe purchases from the web store.
+
+```bash
+java -jar ServiceStore.jar
+```
+
+**MongoDB Collections**:
+
+- `store_purchases` - Checkout orders and fulfillment state
+- `stripe_events` - Stripe webhook idempotency records
+- `store-player-entitlements` - Per-player projection of awarded store goods
+
+**Features**:
+
+- Leases paid purchases before fulfillment
+- Retries failed or interrupted fulfillment with backoff
+- Talks to the Velocity proxy to award ranks, Gold, Gems, boosters, cosmetics, and feature flags
+- Recovers purchases paid while the service was offline
+
+See [Store Payments](/docs/setup/store-payments) for Stripe setup.
+
 ## Required vs Optional Services
 
 ### Required for Core Gameplay
 - **Data Mutex** - Essential for player data integrity
 - **Party** - Needed for party features
+- **Store** - Needed for paid store delivery
 
 ### Required for Economy
 - **Auction House** - For auction functionality
