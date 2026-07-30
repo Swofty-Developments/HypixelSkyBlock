@@ -15,6 +15,9 @@ public interface SkyBlockService {
 
     List<RedisMessageHandler> getEndpoints();
 
+    default void onReady() {
+    }
+
     static void init(SkyBlockService service) {
         new ServiceInitializer(service).init();
     }

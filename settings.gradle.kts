@@ -57,6 +57,7 @@ include(":service.replay")
 include(":service.punishment")
 include(":service.elections")
 include(":service.guild")
+include(":service.store")
 include(":anticheat")
 include(":clientmod")
 
