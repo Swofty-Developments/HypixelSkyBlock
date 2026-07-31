@@ -10,18 +10,21 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.Tuple;
 import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
-import net.swofty.type.generic.tab.EmptyTabModule;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
@@ -71,10 +74,12 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
             @Override
             public List<TablistModule> getModules() {
                 return List.of(
-                        new EmptyTabModule(),
-                        new EmptyTabModule(),
-                        new EmptyTabModule(),
-                        new EmptyTabModule()
+                        new TablistModule() {
+                            @Override
+                            public List<TablistEntry> getEntries(HypixelPlayer player) {
+                                return List.of();
+                            }
+                        }
                 );
             }
         };
@@ -115,5 +120,13 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
     @Override
     public @Nullable CustomWorlds getMainInstance() {
         return CustomWorlds.RAVENGARD_LOBBY;
+    }
+
+    @Override
+    public @NonNull Optional<Tuple<Component, Component>> headerFooter() {
+        return Optional.of(
+                new Tuple<>(
+                        Component.text("§f\uE120\uE121\uE122\uE123\uE124\uE125"),
+                        Component.text("\uE102")));
     }
 }

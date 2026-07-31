@@ -128,27 +128,31 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 if (players.isEmpty())
                     return;
 
-                long ramUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-                ramUsage /= (long) 1e6; // bytes to MB
-                TickMonitor tickMonitor = LAST_TICK.get();
-                double TPS = 1000 / tickMonitor.getTickTime();
 
-                if (TPS < 20) {
-                    HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
-                        player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
-                    });
-                    Logger.error("Server TPS is below 20! TPS: " + TPS);
-                }
+                loader.headerFooter().ifPresentOrElse(headerFooter -> {
+                    Audiences.players().sendPlayerListHeaderAndFooter(headerFooter.getKey(), headerFooter.getValue());
+                }, () -> {
+                    final long ramUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() / (long) 1e6; // bytes to MB
+                    final TickMonitor tickMonitor = LAST_TICK.get();
+                    final double TPS = 1000 / tickMonitor.getTickTime();
 
-                final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
-                        .append(Component.newline())
-                        .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
-                        .append(Component.newline())
-                        .append(Component.text("§7TPS: §8" + TPS))
-                        .append(Component.newline());
-                final Component footer = Component.newline()
-                        .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
-                Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+                    if (TPS < 20) {
+                        HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
+                            player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
+                        });
+                        Logger.error("Server TPS is below 20! TPS: " + TPS);
+                    }
+
+                    final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
+                            .append(Component.newline())
+                            .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
+                            .append(Component.newline())
+                            .append(Component.text("§7TPS: §8" + TPS))
+                            .append(Component.newline());
+                    final Component footer = Component.newline()
+                            .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
+                    Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+                });
             }).repeat(10, TimeUnit.SERVER_TICK).schedule();
         }
 

@@ -1646,7 +1646,7 @@ public enum ItemType {
 
   FLINT(Material.FLINT, Rarity.COMMON),
 
-    FLINT_ARROW(Material.ARROW, Rarity.COMMON),
+  FLINT_ARROW(Material.ARROW, Rarity.COMMON),
 
   FLORID_ZOMBIE_SWORD(Material.GOLDEN_SWORD, Rarity.LEGENDARY),
 
