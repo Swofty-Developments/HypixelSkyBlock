@@ -1,9 +1,11 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
@@ -11,16 +13,21 @@ import java.util.List;
 
 import static net.swofty.commons.StringUtility.decimalify;
 
-public class HoneyHarvesterAbility implements PetAbility {
+public final class HoneyHarvesterAbility {
     private static final double CHANCE_PER_LEVEL = 0.0002;
 
-    @Override
-    public String getName() {
-        return "Honey Harvester";
+    private HoneyHarvesterAbility() {
     }
 
-    @Override
-    public List<String> getDescription(SkyBlockItem instance) {
+    public static PetAbility create() {
+        return PetDsl.ability("Honey Harvester")
+                .description(HoneyHarvesterAbility::descriptionFor)
+                .onCropHarvested(HoneyHarvesterAbility::onCropHarvested)
+                .unimplemented("no game hook for CropHarvested yet")
+                .build();
+    }
+
+    private static List<String> descriptionFor(SkyBlockItem instance) {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
         double chance = CHANCE_PER_LEVEL * level;
@@ -31,9 +38,13 @@ public class HoneyHarvesterAbility implements PetAbility {
         );
     }
 
-    @Override
-    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
-        // TODO: after adding farming api could implement this.
-        return ItemStatistics.empty();
+    private static void onCropHarvested(PetEvent.CropHarvested event) {
+        SkyBlockPlayer player = event.player();
+        Rarity rarity = event.pet().getAttributeHandler().getRarity();
+        int level = event.pet().getAttributeHandler().getPetData().getAsLevel(rarity);
+        double chance = CHANCE_PER_LEVEL * level;
+        if (Math.random() * 100 >= chance) return;
+
+        player.addAndUpdateItem(new SkyBlockItem(ItemType.HONEY_JAR));
     }
 }

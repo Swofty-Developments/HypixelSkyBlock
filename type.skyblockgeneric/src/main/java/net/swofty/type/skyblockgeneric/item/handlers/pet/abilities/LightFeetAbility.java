@@ -1,41 +1,32 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
 import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.FallDamageEventPetAbility;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
-import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
 
 import java.util.List;
 
 import static net.swofty.commons.StringUtility.commaify;
 
-public class LightFeetAbility implements PetAbility, FallDamageEventPetAbility {
-
-    @Override
-    public String getName() {
-        return "Light Feet";
+public final class LightFeetAbility {
+    private LightFeetAbility() {
     }
 
-    @Override
-    public List<String> getDescription(SkyBlockItem instance) {
-        Rarity rarity = instance.getAttributeHandler().getRarity();
-        int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
-
-        return List.of("§7Reduces fall damage by §a" + commaify(level) + "%§7.");
+    public static PetAbility create() {
+        return PetDsl.ability("Light Feet")
+                .description(LightFeetAbility::descriptionFor)
+                .onFallDamage(context -> context.damage(
+                        context.damage() * (1 - reductionFor(context.pet()) / 100)))
+                .build();
     }
 
-    @Override
-    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
-        return ItemStatistics.empty();
+    private static List<String> descriptionFor(SkyBlockItem instance) {
+        return List.of("§7Reduces fall damage by §a" + commaify(reductionFor(instance)) + "%§7.");
     }
 
-    @Override
-    public double onPlayerFallDamage(SkyBlockPlayer player, SkyBlockItem pet, double damage) {
+    private static double reductionFor(SkyBlockItem pet) {
         Rarity rarity = pet.getAttributeHandler().getRarity();
-        int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
-        double reduction = level;
-        return damage * (1 - reduction / 100);
+        return pet.getAttributeHandler().getPetData().getAsLevel(rarity);
     }
 }

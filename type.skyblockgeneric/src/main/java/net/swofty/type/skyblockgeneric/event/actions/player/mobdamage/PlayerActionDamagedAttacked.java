@@ -13,8 +13,7 @@ import net.swofty.type.skyblockgeneric.entity.mob.mobs.slayer.SlayerBossMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamagedByMobValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.DamageEventPetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
@@ -41,25 +40,22 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
                     (SkyBlockPlayer) event.getTarget(), damageDealt.getKey().floatValue(), mob);
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
-            // Handle damage event pets
+            // Handle damage event pets — they may further modify the damage taken
             SkyBlockPlayer damagedPlayer = (SkyBlockPlayer) event.getTarget();
+            float finalDamage = (float) valueEvent.getValue();
             SkyBlockItem pet = damagedPlayer.getPetData().getEnabledPet();
-            if (pet != null) {
-                float finalDamage = (float) valueEvent.getValue();
-                for (PetAbility ability : damagedPlayer.getPetData().getCachedAbilities(pet)) {
-                    if (ability instanceof DamageEventPetAbility e)
-                        e.onPlayerDamagedByMob(damagedPlayer, pet, mob, finalDamage);
-                }
-            }
+            PetEvent.DamagedByMob damageEvent = damagedPlayer.getPetData()
+                    .dispatch(new PetEvent.DamagedByMob(damagedPlayer, pet, mob, finalDamage));
+            finalDamage = (float) damageEvent.damage();
 
-            damagedPlayer.damage(new EntityDamage(mob, (float) valueEvent.getValue()));
+            damagedPlayer.damage(new EntityDamage(mob, finalDamage));
 
             if (mob instanceof SlayerBossMob slayerBoss) {
                 slayerBoss.getAbility().onMeleeHit(slayerBoss, (SkyBlockPlayer) event.getTarget());
             }
 
             new DamageIndicator()
-                    .damage((float) valueEvent.getValue())
+                    .damage(finalDamage)
                     .pos(event.getTarget().getPosition())
                     .critical(damageDealt.getValue())
                     .display(event.getTarget().getInstance());

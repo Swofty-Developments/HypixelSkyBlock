@@ -1,12 +1,12 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
 import net.minestom.server.instance.Instance;
-import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static net.swofty.commons.StringUtility.decimalify;
 
-public class HiveAbility implements PetAbility {
+public final class HiveAbility {
     private static final Integer INTELLIGENCE = 1;
     private static final Integer STRENGTH = 1;
     private static final Integer DEFENSE = 1;
@@ -24,14 +24,17 @@ public class HiveAbility implements PetAbility {
     private static final RarityValue<Double> STRENGTH_BONUSES = new RarityValue<>(0.02, 0.04, 0.04, 0.07, 0.07, 0.07, 0.0);
     private static final RarityValue<Double> DEFENSE_BONUSES = new RarityValue<>(0.01, 0.02, 0.02, 0.04, 0.04, 0.04, 0.0);
 
-
-    @Override
-    public String getName() {
-        return "Hive";
+    private HiveAbility() {
     }
 
-    @Override
-    public List<String> getDescription(SkyBlockItem instance) {
+    public static PetAbility create() {
+        return PetDsl.ability("Hive")
+                .description(HiveAbility::descriptionFor)
+                .statistics(context -> statisticsFor(context.player(), context.pet()))
+                .build();
+    }
+
+    private static List<String> descriptionFor(SkyBlockItem instance) {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
         double perPlayerIntel = INTELLIGENCE + INTELLIGENCE_BONUSES.getForRarity(rarity) * level;
@@ -47,8 +50,7 @@ public class HiveAbility implements PetAbility {
         );
     }
 
-    @Override
-    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
+    private static ItemStatistics statisticsFor(SkyBlockPlayer player, SkyBlockItem pet) {
         var rarity = pet.getAttributeHandler().getRarity();
         int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
 

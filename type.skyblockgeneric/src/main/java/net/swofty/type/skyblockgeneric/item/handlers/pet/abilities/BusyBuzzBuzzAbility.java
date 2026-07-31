@@ -6,6 +6,7 @@ import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.Arrays;
@@ -13,15 +14,18 @@ import java.util.List;
 
 import static net.swofty.commons.StringUtility.decimalify;
 
-public class BusyBuzzBuzzAbility implements PetAbility {
-
-    @Override
-    public String getName() {
-        return "Busy Buzz Buzz";
+public final class BusyBuzzBuzzAbility {
+    private BusyBuzzBuzzAbility() {
     }
 
-    @Override
-    public List<String> getDescription(SkyBlockItem instance) {
+    public static PetAbility create() {
+        return PetDsl.ability("Busy Buzz Buzz")
+                .description(BusyBuzzBuzzAbility::descriptionFor)
+                .statistics(context -> statisticsFor(context.player(), context.pet()))
+                .build();
+    }
+
+    private static List<String> descriptionFor(SkyBlockItem instance) {
         ItemAttributePetData.PetData petData = instance.getAttributeHandler().getPetData();
         var rarity = instance.getAttributeHandler().getRarity();
         int level = petData.getAsLevel(rarity);
@@ -35,8 +39,7 @@ public class BusyBuzzBuzzAbility implements PetAbility {
         );
     }
 
-    @Override
-    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
+    private static ItemStatistics statisticsFor(SkyBlockPlayer player, SkyBlockItem pet) {
         ItemAttributePetData.PetData petData = pet.getAttributeHandler().getPetData();
         var rarity = pet.getAttributeHandler().getRarity();
         int level = petData.getAsLevel(rarity);

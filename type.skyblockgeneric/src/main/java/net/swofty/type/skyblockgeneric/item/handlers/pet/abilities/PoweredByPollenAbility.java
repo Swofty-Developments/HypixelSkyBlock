@@ -4,22 +4,28 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.List;
 
 import static net.swofty.commons.StringUtility.decimalify;
 
-public class PoweredByPollenAbility implements PetAbility {
+public final class PoweredByPollenAbility {
     private static final double PER_LEVEL = 1.6;
 
-    @Override
-    public String getName() {
-        return "Powered by Pollen";
+    private PoweredByPollenAbility() {
     }
 
-    @Override
-    public List<String> getDescription(SkyBlockItem instance) {
+    public static PetAbility create() {
+        return PetDsl.ability("Powered by Pollen")
+                .description(PoweredByPollenAbility::descriptionFor)
+                .statistics(context -> statisticsFor(context.player(), context.pet()))
+                .unimplemented("The Garden region check not implemented")
+                .build();
+    }
+
+    private static List<String> descriptionFor(SkyBlockItem instance) {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
         double fortune = PER_LEVEL * level;
@@ -31,8 +37,7 @@ public class PoweredByPollenAbility implements PetAbility {
         );
     }
 
-    @Override
-    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
+    private static ItemStatistics statisticsFor(SkyBlockPlayer player, SkyBlockItem pet) {
         // TODO: Implement region check — only grant fortune while player is in The Garden
         return ItemStatistics.empty();
     }

@@ -8,9 +8,10 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
+import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
+import net.swofty.type.skyblockgeneric.event.value.events.FallDamageValueUpdateEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.FallDamageEventPetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionPlayerFall implements HypixelEventClass {
@@ -41,15 +42,14 @@ public class ActionPlayerFall implements HypixelEventClass {
             int fallDistance = currentHeight - newPosition.blockY();
             if (fallDistance > 4) {
                 float baseDamage = (float) ((fallDistance * 2) - 4);
-                float finalDamage = baseDamage;
+                FallDamageValueUpdateEvent valueEvent = new FallDamageValueUpdateEvent(player, baseDamage);
+                SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
+                float finalDamage = (float) valueEvent.getValue();
 
                 SkyBlockItem pet = player.getPetData().getEnabledPet();
-                if (pet != null) {
-                    for (PetAbility ability : player.getPetData().getCachedAbilities(pet)) {
-                        if (ability instanceof FallDamageEventPetAbility e)
-                            finalDamage = (float) e.onPlayerFallDamage(player, pet, finalDamage);
-                    }
-                }
+                PetEvent.FallDamage fallDamageEvent = player.getPetData()
+                        .dispatch(new PetEvent.FallDamage(player, pet, finalDamage));
+                finalDamage = (float) fallDamageEvent.damage();
 
                 if (finalDamage > 0)
                     player.damage(DamageType.FALL, finalDamage);

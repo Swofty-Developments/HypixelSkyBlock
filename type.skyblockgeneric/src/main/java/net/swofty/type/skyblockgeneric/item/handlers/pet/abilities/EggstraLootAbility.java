@@ -5,12 +5,12 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
-import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.entity.DroppedItemEntityImpl;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.KillEventPetAbility;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.loottable.SkyBlockLootTable;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
@@ -22,22 +22,38 @@ import java.util.Set;
 
 import static net.swofty.commons.StringUtility.decimalify;
 
-public class EggstraLootAbility implements PetAbility, KillEventPetAbility {
+public final class EggstraLootAbility {
     private static final RarityValue<Double> CHANCE_PER_LEVEL = new RarityValue<>(0.0, 0.0, 0.8, 1.0, 1.0, 1.0, 0.0);
     private static final Set<EntityType> ANIMALS = Set.of(
             EntityType.CHICKEN, EntityType.COW, EntityType.SHEEP,
             EntityType.PIG, EntityType.RABBIT
     );
 
-    @Override
-    public String getName() {
-        return "Eggstra Loot";
+    private EggstraLootAbility() {
     }
 
-    @Override
-    public List<String> getDescription(SkyBlockItem instance) {
-        Rarity rarity = instance.getAttributeHandler().getRarity();
-        int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
+    public static PetAbility create() {
+        return PetDsl.ability("Eggstra Loot")
+                .description(EggstraLootAbility::descriptionFor)
+                .onKill(
+                        context -> context.mob().getEntityType() == EntityType.CHICKEN,
+                        context -> dropItemForPlayer(
+                                context.player(),
+                                new SkyBlockItem(ItemStack.of(Material.EGG)),
+                                1,
+                                context.mob()
+                        )
+                )
+                .onKill(
+                        context -> ANIMALS.contains(context.mob().getEntityType()),
+                        EggstraLootAbility::dropExtraLoot
+                )
+                .build();
+    }
+
+    private static List<String> descriptionFor(SkyBlockItem pet) {
+        Rarity rarity = pet.getAttributeHandler().getRarity();
+        int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
         double chance = CHANCE_PER_LEVEL.getForRarity(rarity) * level;
 
         return Arrays.asList(
@@ -47,42 +63,25 @@ public class EggstraLootAbility implements PetAbility, KillEventPetAbility {
         );
     }
 
-    @Override
-    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
-        return ItemStatistics.empty();
-    }
+    private static void dropExtraLoot(PetEvent.Kill context) {
+        Rarity rarity = context.pet().getAttributeHandler().getRarity();
+        int level = context.pet().getAttributeHandler().getPetData().getAsLevel(rarity);
+        double chance = CHANCE_PER_LEVEL.getForRarity(rarity) * level;
+        if (Math.random() * 100 >= chance) return;
 
-    @Override
-    public void onPlayerKilledMob(SkyBlockPlayer player, SkyBlockItem pet, SkyBlockMob mob) {
-        EntityType entityType = mob.getEntityType();
+        SkyBlockLootTable lootTable = context.mob().getLootTable();
+        if (lootTable == null) return;
 
-        if (entityType == EntityType.CHICKEN) {
-            SkyBlockItem eggItem = new SkyBlockItem(ItemStack.of(Material.EGG));
-            dropItemForPlayer(player, eggItem, 1, mob);
-        }
-
-        if (ANIMALS.contains(entityType)) {
-            Rarity rarity = pet.getAttributeHandler().getRarity();
-            int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
-            double chance = CHANCE_PER_LEVEL.getForRarity(rarity) * level;
-
-            if (Math.random() * 100 < chance) {
-                SkyBlockLootTable lootTable = mob.getLootTable();
-                if (lootTable != null) {
-                    Map<ItemType, SkyBlockLootTable.LootRecord> extraDrops = lootTable.runChances(player);
-                    for (ItemType itemType : extraDrops.keySet()) {
-                        SkyBlockLootTable.LootRecord record = extraDrops.get(itemType);
-                        if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
-                        SkyBlockItem item = new SkyBlockItem(itemType, record.getAmount());
-                        dropItemForPlayer(player, item, record.getAmount(), mob);
-                    }
-                }
-            }
+        Map<ItemType, SkyBlockLootTable.LootRecord> extraDrops = lootTable.runChances(context.player());
+        for (Map.Entry<ItemType, SkyBlockLootTable.LootRecord> entry : extraDrops.entrySet()) {
+            SkyBlockLootTable.LootRecord record = entry.getValue();
+            if (SkyBlockLootTable.LootRecord.isNone(record)) continue;
+            SkyBlockItem item = new SkyBlockItem(entry.getKey(), record.getAmount());
+            dropItemForPlayer(context.player(), item, record.getAmount(), context.mob());
         }
     }
 
-    // same as SkyBlockMob.java:261-277
-    private void dropItemForPlayer(SkyBlockPlayer player, SkyBlockItem item, int amount, SkyBlockMob mob) {
+    private static void dropItemForPlayer(SkyBlockPlayer player, SkyBlockItem item, int amount, SkyBlockMob mob) {
         ItemType type = item.getAttributeHandler().getPotentialType();
         if (type != null && player.canInsertItemIntoSacks(type, amount)) {
             player.getSackItems().increase(type, amount);

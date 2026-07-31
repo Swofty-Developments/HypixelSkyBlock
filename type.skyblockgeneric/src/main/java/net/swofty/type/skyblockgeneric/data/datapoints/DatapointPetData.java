@@ -14,6 +14,7 @@ import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -133,6 +134,15 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
                 cachedPetRarity = currentRarity;
             }
             return cachedAbilities;
+        }
+
+        public <E extends PetEvent> E dispatch(E event) {
+            SkyBlockItem pet = getEnabledPet();
+            if (pet == null) return event;
+            for (PetAbility ability : getCachedAbilities(pet)) {
+                ability.onEvent(event);
+            }
+            return event;
         }
 
         private void refreshCachedAbilities() {
