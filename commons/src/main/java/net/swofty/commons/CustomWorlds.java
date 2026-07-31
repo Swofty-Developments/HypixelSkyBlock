@@ -20,6 +20,7 @@ public enum CustomWorlds {
 	BEDWARS_LOBBY("hypixel_bedwars_lobby"),
 	MURDER_MYSTERY_LOBBY("hypixel_murder_mystery_lobby"),
 	SKYWARS_LOBBY("hypixel_skywars_lobby"),
+    RAVENGARD_LOBBY("hypixel_ravengard_lobby"),
 	MAIN_LOBBY("hypixel_main_lobby"),
 	;
 

@@ -12,7 +12,7 @@ import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.resourcepack.ResourcePackManager;
-import net.swofty.type.ravengardgeneric.resourcepack.TestingPack;
+import net.swofty.type.ravengardgeneric.resourcepack.RavengardPack;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
@@ -56,7 +56,7 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
         HypixelPacketServerListener.register(HypixelConst.getEventHandler());
         HypixelEventHandler.register(HypixelConst.getEventHandler());
 
-        TestingPack testingPack = TestingPack.fromConfig();
+        RavengardPack testingPack = RavengardPack.fromConfig();
         ResourcePackManager packManager = new ResourcePackManager(testingPack);
         HypixelConst.setResourcePackManager(packManager);
         packManager.initialize();

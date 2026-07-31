@@ -12,12 +12,7 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public final class ChunkExportRecorder {
     private static final int CAPTURE_INTERVAL_TICKS = 20;
@@ -146,22 +141,22 @@ public final class ChunkExportRecorder {
 
     private static void captureBlockDisplays(ClientLevel level) {
         for (Entity entity : level.entitiesForRendering()) {
-            if (!(entity instanceof Display.BlockDisplay blockDisplay)) {
+            if (!(entity instanceof Display.BlockDisplay) && !(entity instanceof Display.ItemDisplay)) {
                 continue;
             }
 
-            UUID uuid = blockDisplay.getUUID();
+            UUID uuid = entity.getUUID();
             if (MOVING_ENTITIES.contains(uuid)) {
                 continue;
             }
 
-            if (blockDisplay.getDeltaMovement().lengthSqr() > 0) {
+            if (entity.getDeltaMovement().lengthSqr() > 0) {
                 RECORDED_BLOCK_DISPLAYS.remove(uuid);
                 MOVING_ENTITIES.add(uuid);
                 continue;
             }
 
-            EntityPosition position = new EntityPosition(blockDisplay.getX(), blockDisplay.getY(), blockDisplay.getZ());
+            EntityPosition position = new EntityPosition(entity.getX(), entity.getY(), entity.getZ());
             CapturedEntity previous = RECORDED_BLOCK_DISPLAYS.get(uuid);
             if (previous != null && !previous.position().equals(position)) {
                 RECORDED_BLOCK_DISPLAYS.remove(uuid);
@@ -170,7 +165,7 @@ public final class ChunkExportRecorder {
             }
 
             TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, level.registryAccess());
-            if (blockDisplay.save(output)) {
+            if (entity.save(output)) {
                 RECORDED_BLOCK_DISPLAYS.put(uuid, new CapturedEntity(position, output.buildResult()));
             }
         }

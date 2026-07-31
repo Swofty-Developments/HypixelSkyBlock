@@ -1,17 +1,16 @@
 package net.swofty.type.ravengardlobby;
 
-import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.advancements.AdvancementRoot;
+import net.minestom.server.advancements.AdvancementTab;
+import net.minestom.server.advancements.FrameType;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.instance.InstanceContainer;
-import net.minestom.server.instance.block.Block;
-import net.minestom.server.registry.RegistryKey;
-import net.minestom.server.world.DimensionType;
+import net.minestom.server.item.Material;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.redis.RedisMessageHandler;
-import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.RavengardTypeLoader;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -20,13 +19,15 @@ import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import org.jetbrains.annotations.Nullable;
-import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
+
+    // the tab that is used to detect when player opens the advancement menu
+    public static AdvancementTab detectorTab;
 
     @Override
     public ServerType getType() {
@@ -35,34 +36,28 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
-        RegistryKey<DimensionType> fullbrightDimension = MinecraftServer.getDimensionTypeRegistry().register(
-            Key.key("ravengard", "lobby_fullbright"),
-                DimensionType.builder().ambientLight(1.0f).build()
+        var advancementManager = MinecraftServer.getAdvancementManager();
+
+        // TODO: use recreationmod "/recreation copyadvancements" to make this look the same as theirs.
+        AdvancementRoot root = new AdvancementRoot(
+                Component.text("."),
+                Component.text("."),
+                Material.COMPASS,
+                FrameType.TASK,
+                0f,
+                0f,
+                "minecraft:textures/gui/advancements/backgrounds/stone.png"
         );
 
-        InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer(fullbrightDimension);
-        instance.setTime(6000);
-
-        HypixelConst.setInstanceContainer(MinecraftServer.getInstanceManager().createSharedInstance(instance));
-        int minimapRadiusChunks = 8;
-        for (int chunkX = -minimapRadiusChunks; chunkX <= minimapRadiusChunks; chunkX++) {
-            for (int chunkZ = -minimapRadiusChunks; chunkZ <= minimapRadiusChunks; chunkZ++) {
-                HypixelConst.getInstanceContainer().loadChunk(chunkX, chunkZ).join();
-            }
-        }
-
-        int minimapRadiusBlocks = 128;
-        for (int x = -minimapRadiusBlocks; x <= minimapRadiusBlocks; x++) {
-            for (int z = -minimapRadiusBlocks; z <= minimapRadiusBlocks; z++) {
-                HypixelConst.getInstanceContainer().setBlock(x, 64, z, Block.STONE);
-            }
-        }
-
-        Logger.info("TypeRavengardLobbyLoader initialized with preloaded minimap terrain");
+        detectorTab = advancementManager.createTab(
+                "test:t",
+                root
+        );
     }
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+
     }
 
     @Override
@@ -119,6 +114,6 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
 
     @Override
     public @Nullable CustomWorlds getMainInstance() {
-        return null;
+        return CustomWorlds.RAVENGARD_LOBBY;
     }
 }

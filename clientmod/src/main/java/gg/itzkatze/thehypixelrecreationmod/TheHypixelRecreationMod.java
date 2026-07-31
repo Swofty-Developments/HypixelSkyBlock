@@ -39,6 +39,8 @@ public final class TheHypixelRecreationMod implements ClientModInitializer {
 		SoundNbsRecorderCommand.register();
 		HeldItemDataCommand.register();
 		NearbyEntitiesCommand.register();
+        CopyTabBossbarCommand.register();
+        CopyAdvancementsCommand.register();
 	}
 
 	private static void registerTickHandlers() {
