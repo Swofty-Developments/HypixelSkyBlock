@@ -11,13 +11,13 @@ public final class SpraySchemaRecorderCommand {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> {
-            dispatcher.register(ClientCommands.literal("listensprays")
+            RecreationCommand.register(dispatcher, ClientCommands.literal("listensprays")
                     .executes(_ -> {
                         SpraySchemaRecorder.start();
                         return 1;
                     }));
 
-            dispatcher.register(ClientCommands.literal("listenspraysstop")
+            RecreationCommand.register(dispatcher, ClientCommands.literal("listenspraysstop")
                     .executes(_ -> {
                         if (!SpraySchemaRecorder.isListening()) {
                             ChatUtils.warn("Spray listener is not running.");

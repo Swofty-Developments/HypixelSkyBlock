@@ -25,7 +25,7 @@ public final class GetArmorStandArmorColorsCommand {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> {
-            dispatcher.register(ClientCommands.literal("getarmorstandcolors")
+            RecreationCommand.register(dispatcher, ClientCommands.literal("getarmorstandcolors")
                     .then(ClientCommands.argument("radius", DoubleArgumentType.doubleArg(0))
                             .executes(context -> {
                                 double radius = DoubleArgumentType.getDouble(context, "radius");

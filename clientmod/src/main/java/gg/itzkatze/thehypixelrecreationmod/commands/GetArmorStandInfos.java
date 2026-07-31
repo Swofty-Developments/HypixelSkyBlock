@@ -28,7 +28,7 @@ public final class GetArmorStandInfos {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> {
-            dispatcher.register(
+            RecreationCommand.register(dispatcher,
                     ClientCommands.literal("getarmorstandinfos")
                             .then(ClientCommands.argument("radius", DoubleArgumentType.doubleArg(0))
                                     .executes(context -> {

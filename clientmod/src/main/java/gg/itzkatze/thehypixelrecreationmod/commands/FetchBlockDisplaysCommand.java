@@ -46,7 +46,7 @@ public final class FetchBlockDisplaysCommand {
     }
 
     public static void register() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> RecreationCommand.register(dispatcher,
             ClientCommands.literal("fetchblockdisplays")
                 .then(ClientCommands.argument("area", DoubleArgumentType.doubleArg(0))
                     .executes(context -> execute(

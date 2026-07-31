@@ -1,9 +1,11 @@
 package gg.itzkatze.thehypixelrecreationmod.commands;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import gg.itzkatze.thehypixelrecreationmod.features.worldexport.ChunkExportRecorder;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.network.chat.Component;
 
 public final class ChunkExporterCommand {
@@ -12,23 +14,11 @@ public final class ChunkExporterCommand {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
-                dispatcher.register(ClientCommands.literal("chunkexporter")
+                RecreationCommand.register(dispatcher, ClientCommands.literal("chunkexporter")
                         .then(ClientCommands.literal("start")
-                                .executes(context -> {
-                                    try {
-                                        ChunkExportRecorder.StartResult result = ChunkExportRecorder.start();
-                                        context.getSource().sendFeedback(Component.literal(
-                                                "§aChunk export session started. Captured "
-                                                        + result.initialChunkCount()
-                                                        + " loaded chunks in "
-                                                        + result.dimension()
-                                        ));
-                                        return 1;
-                                    } catch (Exception exception) {
-                                        context.getSource().sendFeedback(Component.literal("§cFailed to start chunk export session: " + exception.getMessage()));
-                                        return 0;
-                                    }
-                                }))
+                                .executes(context -> start(context, ChunkExportRecorder.CaptureMode.CHUNKS))
+                                .then(ClientCommands.literal("block_displays")
+                                        .executes(context -> start(context, ChunkExportRecorder.CaptureMode.BLOCK_DISPLAYS))))
                         .then(ClientCommands.literal("stop")
                                 .then(ClientCommands.argument("name", StringArgumentType.string())
                                         .executes(context -> {
@@ -42,9 +32,11 @@ public final class ChunkExporterCommand {
                                                                 + result.chunkCount()
                                                                 + " chunks, "
                                                                 + result.sectionCount()
-                                                                + " sections, and "
+                                                                + " sections, "
                                                                 + result.blockEntityCount()
-                                                                + " block entities to "
+                                                                + " block entities, and "
+                                                                + result.blockDisplayCount()
+                                                                + " stationary block displays to "
                                                                 + result.path().getFileName()
                                                                 + " and "
                                                                 + result.polarPath().getFileName()
@@ -71,9 +63,39 @@ public final class ChunkExporterCommand {
                                                     + status.dimension()
                                                     + ": "
                                                     + status.chunkCount()
-                                                    + " captured chunks"
+                                                    + " captured chunks, "
+                                                    + status.blockDisplayCount()
+                                                    + " stationary block displays, and "
+                                                    + status.movingEntityCount()
+                                                    + " moving displays excluded (mode: "
+                                                    + status.mode().name().toLowerCase()
+                                                    + ")"
                                     ));
                                     return 1;
                                 }))));
+    }
+
+    private static int start(
+        CommandContext<FabricClientCommandSource> context,
+        ChunkExportRecorder.CaptureMode mode
+    ) {
+        try {
+            ChunkExportRecorder.StartResult result = ChunkExportRecorder.start(mode);
+            context.getSource().sendFeedback(Component.literal(
+                "§aChunk export session started. Captured "
+                    + result.initialChunkCount()
+                    + " loaded chunks and "
+                    + result.initialBlockDisplayCount()
+                    + " block displays in "
+                    + result.dimension()
+                    + " (mode: "
+                    + result.mode().name().toLowerCase()
+                    + ")"
+            ));
+            return 1;
+        } catch (Exception exception) {
+            context.getSource().sendFeedback(Component.literal("§cFailed to start chunk export session: " + exception.getMessage()));
+            return 0;
+        }
     }
 }

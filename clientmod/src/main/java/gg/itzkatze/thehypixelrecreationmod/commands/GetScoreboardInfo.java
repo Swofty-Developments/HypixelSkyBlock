@@ -23,7 +23,7 @@ public final class GetScoreboardInfo {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> {
-            dispatcher.register(
+            RecreationCommand.register(dispatcher,
                     ClientCommands.literal("getscoreboardinfo")
                             .executes(ctx -> {
                                 Minecraft client = Minecraft.getInstance();
