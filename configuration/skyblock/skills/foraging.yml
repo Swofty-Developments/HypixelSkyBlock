@@ -221,6 +221,9 @@ rewards:
   - level: 12
     requirement: 7500
     unlocks:
+      - type: REGION_ACCESS
+        data:
+          region: MOONGLADE_MARSH
       - type: XP
         data:
           amount: 10
@@ -908,6 +911,78 @@ rewards:
       - type: XP
         data:
           amount: 20
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: STRENGTH
+          amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: FORAGING_FORTUNE
+          amount: 4
+
+  - level: 51
+    requirement: 4300000
+    unlocks:
+      - type: XP
+        data:
+          amount: 30
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: STRENGTH
+          amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: FORAGING_FORTUNE
+          amount: 4
+
+  - level: 52
+    requirement: 4600000
+    unlocks:
+      - type: XP
+        data:
+          amount: 30
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: STRENGTH
+          amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: FORAGING_FORTUNE
+          amount: 4
+
+  - level: 53
+    requirement: 4900000
+    unlocks:
+      - type: XP
+        data:
+          amount: 30
+      - type: COINS
+        data:
+          amount: 1000000
+      - type: STATS_BASE
+        data:
+          statistic: STRENGTH
+          amount: 2
+      - type: STATS_BASE
+        data:
+          statistic: FORAGING_FORTUNE
+          amount: 4
+
+  - level: 54
+    requirement: 5200000
+    unlocks:
+      - type: XP
+        data:
+          amount: 30
       - type: COINS
         data:
           amount: 1000000

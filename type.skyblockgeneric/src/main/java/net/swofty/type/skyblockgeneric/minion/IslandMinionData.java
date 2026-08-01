@@ -123,8 +123,11 @@ public class IslandMinionData {
                 percentageSpeedIncrease += 10;
 
             //Handle Minion Fuel
-            ItemType minionFuel = extensionData.getOfType(MinionFuelExtension.class).getItemTypePassedIn();
-            if (minionFuel != null) {
+            MinionFuelExtension fuelExtension = (MinionFuelExtension)
+                    extensionData.getOfType(MinionFuelExtension.class);
+            ItemType minionFuel = fuelExtension.getItemTypePassedIn();
+            if (minionFuel != null && fuelExtension.refresh()
+                    && (minionFuel != ItemType.SOLAR_PANEL || isDaytime())) {
                 percentageSpeedIncrease += (int) new SkyBlockItem(minionFuel).getComponent(MinionFuelComponent.class).getFuelPercentage();
             }
 
@@ -136,6 +139,12 @@ public class IslandMinionData {
             }
 
             return percentageSpeedIncrease;
+        }
+
+        private boolean isDaytime() {
+            if (minionEntity == null || minionEntity.getInstance() == null) return false;
+            long time = Math.floorMod(minionEntity.getInstance().getTime(), 24000);
+            return time < 12000;
         }
 
         public int getBonusRange() {

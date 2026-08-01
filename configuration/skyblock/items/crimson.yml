@@ -7,11 +7,13 @@ items:
         texture: 19b393eb6a5bd65d735aaa3b3cfa993b50f5e536d7a13b535514bd0740d63350
   - id: FLAMES
     material: blaze_powder
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 200.0
       - id: ENCHANTED
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/flames
   - id: GOLD_MAGMAFISH
     material: player_head
     rarity: COMMON

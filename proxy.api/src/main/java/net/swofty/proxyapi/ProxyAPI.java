@@ -1,13 +1,10 @@
 package net.swofty.proxyapi;
 
 import net.swofty.commons.protocol.RedisProtocol;
-import net.swofty.commons.redis.RedisChannels;
-import net.swofty.commons.redis.RedisClient;
-import net.swofty.commons.redis.RedisEndpoint;
-import net.swofty.commons.redis.RedisMessageBus;
-import net.swofty.commons.redis.RedisMessageContext;
-import net.swofty.commons.redis.RedisMessageHandler;
+import net.swofty.commons.redis.*;
 import net.swofty.redisapi.api.RedisAPI;
+import net.swofty.redisapi.api.requests.DataRequestResponder;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -20,6 +17,16 @@ public class ProxyAPI {
         RedisAPI.generateInstance(URI);
         RedisAPI.getInstance().setFilterId(serverUUID.toString());
         RedisClient.identify(RedisEndpoint.server(serverUUID));
+
+        DataRequestResponder.create("player-transfer-data", request -> {
+            UUID playerUuid = UUID.fromString(request.getString("uuid"));
+            PlayerTransferDataCache.put(
+                    playerUuid,
+                    request.getString("account_document"),
+                    request.optString("profile_document", null)
+            );
+            return new JSONObject().put("cached", true);
+        });
     }
 
     public <T, R> void registerProxyHandler(RedisMessageHandler<T, R> handler) {

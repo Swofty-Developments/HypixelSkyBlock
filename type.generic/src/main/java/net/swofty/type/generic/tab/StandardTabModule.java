@@ -30,7 +30,6 @@ public class StandardTabModule extends TablistModule{
 
         // In chunks of 20, load the players into the toShow list.
         // If the page is 1, then use the first 20, if the page is 2, then use the second set of 20, etc.
-
         for (int i = 0; i < players.size(); i++) {
             if (i >= (page - 1) * 20 && i < page * 20) {
                 toShow.add(players.get(i));
@@ -42,9 +41,7 @@ public class StandardTabModule extends TablistModule{
                 continue;
             }
 
-            HypixelPlayer tablistPlayer = toShow.get(x);
-
-            entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
+            entries.add(new TablistEntry(toShow.get(x).getRankDisplayName(), TablistSkinRegistry.GRAY));
         }
 
         return entries;

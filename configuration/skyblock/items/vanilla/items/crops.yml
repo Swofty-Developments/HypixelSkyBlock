@@ -15,21 +15,20 @@ items:
         category: FARMING
         mining_value: 2.0
       - id: SELLABLE
-        value: 3.0
+        value: 4.0
       - id: BREWING_INGREDIENT
         brewing_time_seconds: 20
         effect: CACTUS_BREW
         effect_duration: 0
         effect_amplifier: 0
         alchemy_xp: 10
-
   - id: CARROT
     material: carrot
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
         rules:
-          - conditions:
+          - conditions: null
             drops:
               - item: CARROT
                 chance: 1.0
@@ -39,14 +38,13 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 3.0
-
   - id: COCOA_BEANS
     material: cocoa_beans
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
         rules:
-          - conditions:
+          - conditions: null
             drops:
               - item: COCOA_BEANS
                 chance: 1.0
@@ -62,14 +60,13 @@ items:
         effect_duration: 0
         effect_amplifier: 0
         alchemy_xp: 5
-
   - id: POTATO
     material: potato
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
         rules:
-          - conditions:
+          - conditions: null
             drops:
               - item: POTATO
                 chance: 1.0
@@ -79,7 +76,6 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 3.0
-
   - id: POISONOUS_POTATO
     material: poisonous_potato
     rarity: COMMON
@@ -92,7 +88,6 @@ items:
         effect_duration: 45
         effect_amplifier: 0
         alchemy_xp: 20
-
   - id: MELON_BLOCK
     material: melon
     rarity: COMMON
@@ -105,7 +100,7 @@ items:
               - item: MELON_BLOCK
                 chance: 1.0
                 amount: 1
-          - conditions:
+          - conditions: null
             drops:
               - item: MELON_SLICE
                 chance: 1.0
@@ -131,7 +126,6 @@ items:
             result:
               type: MELON_BLOCK
               amount: 1
-
   - id: MELON_SLICE
     material: melon_slice
     rarity: COMMON
@@ -140,7 +134,6 @@ items:
         value: 2.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Melon
-
   - id: SEEDS
     material: wheat_seeds
     rarity: COMMON
@@ -149,14 +142,13 @@ items:
         value: 3.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Seeds
-
   - id: WHEAT
     material: wheat
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
         rules:
-          - conditions:
+          - conditions: null
             drops:
               - item: WHEAT
                 chance: 1.0
@@ -169,7 +161,6 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 6.0
-
   - id: SUGAR_CANE
     material: sugar_cane
     rarity: COMMON
@@ -179,7 +170,6 @@ items:
         mining_value: 2.0
       - id: SELLABLE
         value: 4.0
-
   - id: PUMPKIN
     material: pumpkin
     rarity: COMMON
@@ -189,7 +179,6 @@ items:
         mining_value: 4.5
       - id: SELLABLE
         value: 10.0
-
   - id: MUSHROOM
     material: BROWN_MUSHROOM
     rarity: COMMON
@@ -199,7 +188,6 @@ items:
         mining_value: 6.0
       - id: SELLABLE
         value: 10.0
-
   - id: RED_MUSHROOM
     rarity: COMMON
     material: RED_MUSHROOM
@@ -209,15 +197,22 @@ items:
         mining_value: 6.0
       - id: SELLABLE
         value: 10.0
-
   - id: APPLE
     rarity: COMMON
     material: APPLE
-
+    components:
+      - id: SELLABLE
+        value: 5.0
   - id: BAMBOO
     rarity: COMMON
     material: BAMBOO
-
+    components:
+      - id: SELLABLE
+        value: 5.0
+      - id: SKULL_HEAD
+        texture: 3ac16b07d3017d159be7ab31185d8490f816aed00fac482f12e33a4d7cfe8f51
+      - id: ITEM_MODEL
+        item_model: minecraft:bamboo
   - id: BEETROOT
     rarity: COMMON
     material: BEETROOT

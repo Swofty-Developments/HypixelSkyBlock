@@ -15,8 +15,7 @@ items:
             drops: [ ]
       - id: PLACEABLE
       - id: SELLABLE
-        value: 3.0
-
+        value: 2.0
   - id: BLACK_STAINED_GLASS
     material: BLACK_STAINED_GLASS
     rarity: COMMON
@@ -52,7 +51,6 @@ items:
             result:
               type: BLACK_STAINED_GLASS
               amount: 8
-
   - id: BLUE_STAINED_GLASS
     material: BLUE_STAINED_GLASS
     rarity: COMMON
@@ -88,7 +86,6 @@ items:
             result:
               type: BLUE_STAINED_GLASS
               amount: 8
-
   - id: BROWN_STAINED_GLASS
     material: BROWN_STAINED_GLASS
     rarity: COMMON
@@ -124,7 +121,6 @@ items:
             result:
               type: BROWN_STAINED_GLASS
               amount: 8
-
   - id: CYAN_STAINED_GLASS
     material: CYAN_STAINED_GLASS
     rarity: COMMON
@@ -160,7 +156,6 @@ items:
             result:
               type: CYAN_STAINED_GLASS
               amount: 8
-
   - id: GRAY_STAINED_GLASS
     material: GRAY_STAINED_GLASS
     rarity: COMMON
@@ -196,7 +191,6 @@ items:
             result:
               type: GRAY_STAINED_GLASS
               amount: 8
-
   - id: GREEN_STAINED_GLASS
     material: GREEN_STAINED_GLASS
     rarity: COMMON
@@ -232,7 +226,6 @@ items:
             result:
               type: GREEN_STAINED_GLASS
               amount: 8
-
   - id: LIGHT_BLUE_STAINED_GLASS
     material: LIGHT_BLUE_STAINED_GLASS
     rarity: COMMON
@@ -268,7 +261,6 @@ items:
             result:
               type: LIGHT_BLUE_STAINED_GLASS
               amount: 8
-
   - id: LIGHT_GRAY_STAINED_GLASS
     material: LIGHT_GRAY_STAINED_GLASS
     rarity: COMMON
@@ -304,7 +296,6 @@ items:
             result:
               type: LIGHT_GRAY_STAINED_GLASS
               amount: 8
-
   - id: LIME_STAINED_GLASS
     material: LIME_STAINED_GLASS
     rarity: COMMON
@@ -340,7 +331,6 @@ items:
             result:
               type: LIME_STAINED_GLASS
               amount: 8
-
   - id: MAGENTA_STAINED_GLASS
     material: MAGENTA_STAINED_GLASS
     rarity: COMMON
@@ -376,7 +366,6 @@ items:
             result:
               type: MAGENTA_STAINED_GLASS
               amount: 8
-
   - id: ORANGE_STAINED_GLASS
     material: ORANGE_STAINED_GLASS
     rarity: COMMON
@@ -412,7 +401,6 @@ items:
             result:
               type: ORANGE_STAINED_GLASS
               amount: 8
-
   - id: PINK_STAINED_GLASS
     material: PINK_STAINED_GLASS
     rarity: COMMON
@@ -448,7 +436,6 @@ items:
             result:
               type: PINK_STAINED_GLASS
               amount: 8
-
   - id: PURPLE_STAINED_GLASS
     material: PURPLE_STAINED_GLASS
     rarity: COMMON
@@ -484,7 +471,6 @@ items:
             result:
               type: PURPLE_STAINED_GLASS
               amount: 8
-
   - id: RED_STAINED_GLASS
     material: RED_STAINED_GLASS
     rarity: COMMON
@@ -520,7 +506,6 @@ items:
             result:
               type: RED_STAINED_GLASS
               amount: 8
-
   - id: WHITE_STAINED_GLASS
     material: WHITE_STAINED_GLASS
     rarity: COMMON
@@ -556,7 +541,6 @@ items:
             result:
               type: WHITE_STAINED_GLASS
               amount: 8
-
   - id: YELLOW_STAINED_GLASS
     material: YELLOW_STAINED_GLASS
     rarity: COMMON

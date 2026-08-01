@@ -6,6 +6,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
@@ -22,11 +23,7 @@ import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -96,7 +93,9 @@ public abstract class HypixelNPC {
 
                     if (!config.visible(player)) return;
 
-                    String[] holograms = config.holograms(player);
+                    String[] holograms = Arrays.stream(config.hologramComponents(player))
+                            .map(component -> LegacyComponentSerializer.legacySection().serialize(component))
+                            .toArray(String[]::new);
                     Pos position = config.position(player);
 
                     String username = holograms[holograms.length - 1];
@@ -136,16 +135,18 @@ public abstract class HypixelNPC {
                     return;
                 }
 
-                Pos npcPosition = config.position(player);
+                Pos npcPosition = entity.getPosition();
                 if (!(entity instanceof NPCViewable npcViewable)) {
-                    Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName());
+                    Logger.error("Entity for NPC {} does not implement NPCViewable, skipping update", npc.getName(player));
                     return;
                 }
                 npcViewable.updateNPC();
 
                 Pos playerPosition = player.getPosition();
                 double entityDistance = playerPosition.distance(npcPosition);
-                boolean isLookingNPC = config.looking(player) && player.getGameMode() != GameMode.SPECTATOR;
+                boolean isLookingNPC = config.looking(player)
+                        && !npcViewable.getMovementController().isMoving()
+                        && player.getGameMode() != GameMode.SPECTATOR;
 
                 // Get inRangeOf list based on entity type
                 List<HypixelPlayer> inRange = npcViewable.getInRangeOf();
@@ -157,17 +158,22 @@ public abstract class HypixelNPC {
 
                     if (isLookingNPC) {
                         if (entityDistance <= LOOK_DISTANCE) {
+                            cache.setLookingAtPlayer(npc);
                             entity.lookAt(player);
-                        } else {
+                        } else if (cache.stopLookingAtPlayer(npc)) {
                             // over the distance, reset back to default rotation
-                            entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                            Pos defaultPosition = config.position(player);
+                            entity.setView(defaultPosition.yaw(), defaultPosition.pitch());
                         }
                     }
                 } else {
                     if (inRange.contains(player)) {
                         inRange.remove(player);
                         entity.updateOldViewer(player);
-                        entity.setView(npcPosition.yaw(), npcPosition.pitch());
+                        if (cache.stopLookingAtPlayer(npc)) {
+                            Pos defaultPosition = config.position(player);
+                            entity.setView(defaultPosition.yaw(), defaultPosition.pitch());
+                        }
                     }
                 }
             });
@@ -184,6 +190,67 @@ public abstract class HypixelNPC {
         registeredNPCs.remove(this);
     }
 
+    /**
+     * Walks this player's copy of the NPC through the supplied points in order.
+     * Calling this again replaces the NPC's current route.
+     */
+    public CompletableFuture<Void> walkPath(HypixelPlayer player, List<Pos> points) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(points, "points");
+
+        PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+        Entity entity = cache == null ? null : cache.get(this);
+        if (!(entity instanceof NPCViewable viewable)) {
+            return CompletableFuture.failedFuture(
+                    new IllegalStateException("NPC " + getName(player) + " is not spawned for " + player.getUsername())
+            );
+        }
+        return viewable.getMovementController().walkPath(points);
+    }
+
+    public CompletableFuture<Void> walkPath(HypixelPlayer player, Pos... points) {
+        return walkPath(player, List.of(points));
+    }
+
+    /**
+     * Walks every currently spawned per-player copy of this NPC.
+     */
+    public CompletableFuture<Void> walkPath(List<Pos> points) {
+        Objects.requireNonNull(points, "points");
+        CompletableFuture<?>[] movements = perPlayerNPCs.values().stream()
+                .map(cache -> cache.get(this))
+                .filter(Objects::nonNull)
+                .map(entity -> ((NPCViewable) entity).getMovementController().walkPath(points))
+                .toArray(CompletableFuture[]::new);
+        return CompletableFuture.allOf(movements);
+    }
+
+    public CompletableFuture<Void> walkPath(Pos... points) {
+        return walkPath(List.of(points));
+    }
+
+    /**
+     * Stops this player's copy of the NPC at its current position.
+     */
+    public void stopWalking(HypixelPlayer player) {
+        PlayerNPCCache cache = perPlayerNPCs.get(player.getUuid());
+        Entity entity = cache == null ? null : cache.get(this);
+        if (entity instanceof NPCViewable viewable) {
+            viewable.getMovementController().stop();
+        }
+    }
+
+    /**
+     * Stops every currently spawned per-player copy of this NPC.
+     */
+    public void stopWalking() {
+        perPlayerNPCs.values().stream()
+                .map(cache -> cache.get(this))
+                .filter(Objects::nonNull)
+                .map(entity -> (NPCViewable) entity)
+                .forEach(viewable -> viewable.getMovementController().stop());
+    }
+
     public void sendNPCMessage(HypixelPlayer player, String message) {
         sendNPCMessage(player, Component.text(message));
     }
@@ -192,9 +259,21 @@ public abstract class HypixelNPC {
         sendNPCMessage(player, message, Sound.sound().type(Key.key("entity.villager.celebrate")).volume(1.0f).pitch(0.8f + new Random().nextFloat() * 0.4f).build());
     }
 
+    public String getName(HypixelPlayer player) {
+        return LegacyComponentSerializer.legacySection().serialize(getNameComponent(player));
+    }
+
+    /**
+     * Compatibility name used by administrative commands.
+     */
     public String getName() {
         String className = getClass().getSimpleName().replace("NPC", "").replace("Villager", "");
-        return parameters.chatName() != null ? parameters.chatName() : className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+        return className.replaceAll("(?<=.)(?=\\p{Lu})", " ");
+    }
+
+    public Component getNameComponent(HypixelPlayer player) {
+        Component name = parameters.chatNameComponent(player);
+        return name != null ? name : Component.text(getName());
     }
 
     public void sendNPCMessage(HypixelPlayer player, String message, Sound sound) {
@@ -204,7 +283,7 @@ public abstract class HypixelNPC {
     public void sendNPCMessage(HypixelPlayer player, Component message, Sound sound) {
         player.sendMessage(Component.text()
             .append(Component.text("[NPC] ", NamedTextColor.YELLOW))
-            .append(Component.text(getName(), NamedTextColor.YELLOW))
+                .append(getNameComponent(player))
             .append(Component.text(": ", NamedTextColor.WHITE))
             .append(message)
             .build());
@@ -256,6 +335,7 @@ public abstract class HypixelNPC {
 
     public static class PlayerNPCCache {
         private final Map<HypixelNPC, Entity> npcs = new ConcurrentHashMap<>();
+        private final Set<HypixelNPC> lookingAtPlayer = ConcurrentHashMap.newKeySet();
 
         public void add(HypixelNPC npc, Entity entity) {
             npcs.put(npc, entity);
@@ -263,6 +343,15 @@ public abstract class HypixelNPC {
 
         public void remove(HypixelNPC npc) {
             npcs.remove(npc);
+            lookingAtPlayer.remove(npc);
+        }
+
+        public void setLookingAtPlayer(HypixelNPC npc) {
+            lookingAtPlayer.add(npc);
+        }
+
+        public boolean stopLookingAtPlayer(HypixelNPC npc) {
+            return lookingAtPlayer.remove(npc);
         }
 
         public Map<HypixelNPC, Entity> getEntityImpls() {

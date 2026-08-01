@@ -15,62 +15,142 @@ items:
         handler_id: SKYBLOCK_MENU_LORE
         is_absolute: true
   - id: AGARIMOO_TONGUE
-    rarity: UNCOMMON
+    rarity: RARE
     material: MUTTON
+    components:
+      - id: SELLABLE
+        value: 5000.0
   - id: ALLIGATOR_SKIN
-    rarity: UNCOMMON
+    rarity: EPIC
     material: GREEN_DYE
+    components:
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/alligator_skin
   - id: RED_CLAW_EGG
     rarity: EPIC
     material: MOOSHROOM_SPAWN_EGG
+    components:
+      - id: ITEM_MODEL
+        item_model: minecraft:mooshroom_spawn_egg
   - id: CROCHET_TIGER_PLUSHIE
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 250000.0
+      - id: SKULL_HEAD
+        texture: f66fb4d9e6ae0c5e61ec6b9131e015fb89792852e195e96864662ba422ef26e2
   - id: NULL_ATOM
     rarity: RARE
     material: OAK_BUTTON
+    components:
+      - id: SELLABLE
+        value: 33333.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/crafts/null_atom
   - id: NULL_OVOID
     rarity: RARE
     material: ENDERMAN_SPAWN_EGG
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/null_ovoid
   - id: NULL_SPHERE
     rarity: UNCOMMON
     material: FIREWORK_STAR
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/null_sphere
   - id: MINOS_RELIC
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 5000000.0
+      - id: SKULL_HEAD
+        texture: 40b4648cbd817c7b5fc654c9c054e360d81bbfe1a00f214657a174e3e0d07d21
   - id: EMPERORS_SKULL
     rarity: UNCOMMON
     material: PLAYER_HEAD
   - id: ANTIQUE_REMEDIES
     rarity: EPIC
     material: AZURE_BLUET
+    components:
+      - id: SELLABLE
+        value: 250000.0
   - id: RUSTY_COIN
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 1000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/junk/rusty_coin
   - id: BRONZE_BOWL
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/bronze_bowl
   - id: GLOSSY_GEMSTONE
     rarity: EPIC
     material: PURPLE_DYE
+    components:
+      - id: SELLABLE
+        value: 200000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/mayor/cole/glossy_gemstone
   - id: LUXURIOUS_SPOOL
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: SKULL_HEAD
+        texture: 94af5f3b50e2dea2687d292cc3a5e42c028b8626e638842fb4f78671debe276c
   - id: TORN_CLOTH
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/torn_cloth
   - id: BROKEN_RADAR
-    rarity: UNCOMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 25000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/broken_radar
   - id: BUSTED_BELT_BUCKLE
-    rarity: UNCOMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 10000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/junk/busted_belt_buckle
   - id: STARLYN_PRIZE
-    rarity: COMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 20000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/starlyn/starlyn_prize
   - id: WILSON_ENGINEERING_PLANS
     rarity: LEGENDARY
     material: PAPER
   - id: ASCENSION_ROPE
-    rarity: UNCOMMON
+    rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/ascension_rope

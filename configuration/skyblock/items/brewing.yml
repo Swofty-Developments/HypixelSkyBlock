@@ -1,5 +1,4 @@
 items:
-  # Brewing Ingredients (sold by Alchemist)
   - id: NETHER_WART
     rarity: COMMON
     material: nether_wart
@@ -12,7 +11,7 @@ items:
         alchemy_xp: 5
       - id: CUSTOM_DROP
         rules:
-          - conditions:
+          - conditions: null
             drops:
               - item: NETHER_WART
                 chance: 1.0
@@ -22,7 +21,6 @@ items:
         mining_value: 4.0
       - id: SELLABLE
         value: 4
-
   - id: SUGAR
     rarity: COMMON
     material: sugar
@@ -45,7 +43,6 @@ items:
               amount: 1
       - id: SELLABLE
         value: 2
-
   - id: RABBIT_FOOT
     rarity: COMMON
     material: rabbit_foot
@@ -57,8 +54,7 @@ items:
         effect_amplifier: 0
         alchemy_xp: 12
       - id: SELLABLE
-        value: 3
-
+        value: 5.0
   - id: GLISTERING_MELON
     rarity: COMMON
     material: glistering_melon_slice
@@ -89,7 +85,6 @@ items:
               amount: 1
       - id: SELLABLE
         value: 3.5
-
   - id: SPIDER_EYE
     rarity: COMMON
     material: spider_eye
@@ -101,8 +96,7 @@ items:
         effect_amplifier: 0
         alchemy_xp: 10
       - id: SELLABLE
-        value: 4
-
+        value: 3.0
   - id: BLAZE_POWDER
     rarity: COMMON
     material: blaze_powder
@@ -125,7 +119,6 @@ items:
               amount: 2
       - id: SELLABLE
         value: 4
-
   - id: GHAST_TEAR
     rarity: UNCOMMON
     material: ghast_tear
@@ -137,8 +130,7 @@ items:
         effect_amplifier: 0
         alchemy_xp: 30
       - id: SELLABLE
-        value: 66
-
+        value: 16.0
   - id: MAGMA_CREAM
     rarity: COMMON
     material: magma_cream
@@ -150,8 +142,7 @@ items:
         effect_amplifier: 0
         alchemy_xp: 10
       - id: SELLABLE
-        value: 6
-
+        value: 8.0
   - id: GOLDEN_CARROT
     rarity: COMMON
     material: golden_carrot
@@ -182,8 +173,6 @@ items:
               amount: 1
       - id: SELLABLE
         value: 4
-
-  # Custom Brewing Items
   - id: BITTER_ICE_TEA
     material: player_head
     rarity: COMMON
@@ -195,9 +184,11 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Bitter Iced Tea
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: 6686bcf808b9a4024a2c9a87a674e8d9c957593c8bf7897c1c9fee19c445be18
   - id: BLACK_COFFEE
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: DECORATION_HEAD
         texture: 194221a0de936bac5ce895f2acad19c64795c18ce5555b971594205bd3ec
@@ -206,6 +197,10 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Black Coffee
       - id: NOT_FINISHED_YET
+      - id: SELLABLE
+        value: 50.0
+      - id: SKULL_HEAD
+        texture: 3553d6799a1388411e6e32ec20e4ee268a58fe1e954782e66c1d93286f38cd40
   - id: CHEAP_COFFEE
     material: player_head
     rarity: COMMON
@@ -217,9 +212,11 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Cheap Coffee
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: a88b212ba4d8ffd300fb5056e45aa4dc25de587e09606d68f87b91b7315ee4d9
   - id: DECENT_COFFEE
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: DECORATION_HEAD
         texture: 7ea0f7757185be9df5b2fc9d85d40642ea4fdb4515f314da18f59c696e5be9
@@ -228,6 +225,8 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Decent Coffee
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: 7ea0f7757185be9df5b2fc9d85d40642ea4fdb4515f314da18f59c696e5be9
   - id: END_PORTAL_FUMES
     material: player_head
     rarity: COMMON
@@ -241,7 +240,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: GABAGOEY_MIXIN
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: DECORATION_HEAD
         texture: 41e813a3a380e3eb201c24b9661f6edb39bdf42a88989f81a90f771997d6f5cd
@@ -250,6 +249,8 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Gabagoey Mixin
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: 41e813a3a380e3eb201c24b9661f6edb39bdf42a88989f81a90f771997d6f5cd
   - id: KNOCKOFF_COLA
     material: player_head
     rarity: COMMON
@@ -259,8 +260,10 @@ items:
       - id: EXTRA_UNDER_NAME
         display: Basic Brew
       - id: CUSTOM_DISPLAY_NAME
-        display_name: KnockOff™ Cola
+        display_name: "KnockOff\u2122 Cola"
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: c14befd4d3797a8a6ab53ceedebab3c12b7b1f03440bf0085010025c35717628
   - id: PULPOUS_ORANGE_JUICE
     material: player_head
     rarity: COMMON
@@ -272,9 +275,11 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Pulpous Orange Juice
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: 61b35f7077ecf98ef3eba0f35d93a9813030f9b8b8e426aeb68dab38f1116
   - id: SPIDER_EGG_MIXIN
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: DECORATION_HEAD
         texture: a5ac5e39ea511af1e7ab1c5956d1615f7ebb6f226a4ed3394c6a0b4c6a6d106f
@@ -283,6 +288,8 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Spider Egg Mixin
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: a5ac5e39ea511af1e7ab1c5956d1615f7ebb6f226a4ed3394c6a0b4c6a6d106f
   - id: TEPID_GREEN_TEA
     material: player_head
     rarity: COMMON
@@ -294,9 +301,11 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Tepid Green Tea
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: d2168dfc513c31b1e1c2d853e8169015381c8378eee224ae6dbb1e12485e9a98
   - id: WOLF_FUR_MIXIN
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: DECORATION_HEAD
         texture: 595231147189ac4b9f53487ce35ba0205bf377f3986c0e5ceb942e77f1c39cc
@@ -305,9 +314,11 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Wolf Fur Mixin
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: 595231147189ac4b9f53487ce35ba0205bf377f3986c0e5ceb942e77f1c39cc
   - id: ZOMBIE_BRAIN_MIXIN
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: DECORATION_HEAD
         texture: dcedb2f4c97016cae7b89e4c6d6978d22ac3476c815c5a09a6792450dd918b6c
@@ -316,9 +327,16 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Zombie Brain Mixin
       - id: NOT_FINISHED_YET
+      - id: SKULL_HEAD
+        texture: fb51318039dd1998fda9a935c32590ffebb66abb7f0008e9568c7fae316a2bf4
   - id: BLAZE_ROD_DISTILLATE
     rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/minion/fuel/distillate/blaze_rod_distillate
   - id: GABAGOOL_DISTILLATE
     rarity: RARE
     material: PLAYER_HEAD
@@ -328,6 +346,11 @@ items:
   - id: MAGMA_CREAM_DISTILLATE
     rarity: RARE
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 5000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/minion/fuel/distillate/magma_cream_distillate
   - id: NETHER_WART_DISTILLATE
     rarity: RARE
     material: PLAYER_HEAD

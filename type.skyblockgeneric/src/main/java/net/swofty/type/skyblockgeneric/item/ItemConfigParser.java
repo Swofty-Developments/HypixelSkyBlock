@@ -17,8 +17,8 @@ import net.swofty.type.skyblockgeneric.fishing.rod.FishingShipPartSlot;
 import net.swofty.type.skyblockgeneric.gems.GemRarity;
 import net.swofty.type.skyblockgeneric.gems.Gemstone;
 import net.swofty.type.skyblockgeneric.item.components.*;
-import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
 import net.swofty.type.skyblockgeneric.item.crafting.SkyBlockRecipe;
+import net.swofty.type.skyblockgeneric.item.handlers.interactable.InteractableRegistry;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
 import net.swofty.type.skyblockgeneric.minion.MinionIngredient;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,14 +90,43 @@ public class ItemConfigParser {
 
 		try {
 			return switch (id.toUpperCase()) {
+				case "ATTRIBUTE_SHARD" -> new AttributeShardComponent(safeConfig.getString("shard_id", null));
 				case "ABILITY" -> {
 					List<String> abilities = safeConfig.getList("abilities", String.class);
 					yield new AbilityComponent(abilities);
+				}
+				case "ITEM_REQUIREMENTS" -> {
+					List<ItemRequirementsComponent.Requirement> requirements = new ArrayList<>();
+					for (Map<String, Object> entry : safeConfig.getMapList("requirements")) {
+						SafeConfig requirement = SafeConfig.of(entry);
+						ItemRequirementsComponent.Type type = requirement.getEnum(
+								"type", ItemRequirementsComponent.Type.class);
+						String category = switch (type) {
+							case SKILL -> requirement.getString("skill", "");
+							case DUNGEON_SKILL, DUNGEON_TIER -> requirement.getString("dungeon", "CATACOMBS");
+							case PENDING -> "";
+						};
+						int level = type == ItemRequirementsComponent.Type.DUNGEON_TIER
+								? requirement.getInt("tier", 0)
+								: requirement.getInt("level", 0);
+						requirements.add(new ItemRequirementsComponent.Requirement(
+								type, category, level, requirement.getString("description", "pending progression")));
+					}
+					yield new ItemRequirementsComponent(requirements);
 				}
 				case "TALISMAN", "ACCESSORY" -> new AccessoryComponent();
 				case "ANVIL_COMBINABLE" -> {
 					String handlerId = safeConfig.getString("handler_id");
 					yield new AnvilCombinableComponent(handlerId);
+				}
+				case "REFORGE_STONE" -> {
+					String reforgeId = safeConfig.getString("reforge");
+					Map<Rarity, Integer> costs = new EnumMap<>(Rarity.class);
+					for (Rarity rarity : Rarity.values()) {
+						int cost = safeConfig.getInt(rarity.name().toLowerCase() + "_cost", 0);
+						costs.put(rarity, cost);
+					}
+					yield new ReforgeStoneComponent(reforgeId, costs);
 				}
 				case "ARMOR" -> new ArmorComponent();
 				case "ARROW" -> new ArrowComponent();
@@ -315,6 +345,10 @@ public class ItemConfigParser {
 						yield null;
 					}
 				}
+				case "ITEM_MODEL" -> {
+					String itemModel = safeConfig.getString("item_model");
+					yield new ItemModelComponent(itemModel);
+				}
 				case "KAT" -> {
 					int reducedDays = safeConfig.getInt("reduced_days");
 					yield new KatComponent(reducedDays);
@@ -352,7 +386,8 @@ public class ItemConfigParser {
 				case "MINION_FUEL" -> {
 					double percentage = safeConfig.getDouble("fuel_percentage");
 					long lastTime = safeConfig.getInt("last_time_ms");
-					yield new MinionFuelComponent(percentage, lastTime);
+					double outputMultiplier = safeConfig.getDouble("output_multiplier", 1.0);
+					yield new MinionFuelComponent(percentage, lastTime, outputMultiplier);
 				}
 				case "MINION_SHIPPING" -> {
 					double percentage = safeConfig.getDouble("percentage");

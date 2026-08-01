@@ -5,14 +5,12 @@ items:
     components:
       - id: SELLABLE
         value: 9.0
-
   - id: BONE
     material: bone
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
-
   - id: BONE_MEAL
     material: bone_meal
     rarity: COMMON
@@ -27,14 +25,14 @@ items:
             result:
               type: BONE_MEAL
               amount: 3
-
+      - id: SELLABLE
+        value: 0.5
   - id: ENDER_PEARL
     material: ender_pearl
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 7.0
-
   - id: EYE_OF_ENDER
     material: ender_eye
     rarity: COMMON
@@ -53,7 +51,6 @@ items:
               amount: 1
       - id: SELLABLE
         value: 15.0
-
   - id: FERMENTED_SPIDER_EYE
     material: fermented_spider_eye
     rarity: COMMON
@@ -80,7 +77,6 @@ items:
         effect_duration: 90
         effect_amplifier: 0
         alchemy_xp: 10
-
   - id: GUNPOWDER
     material: gunpowder
     rarity: COMMON
@@ -93,14 +89,12 @@ items:
         effect_duration: 0
         effect_amplifier: 0
         alchemy_xp: 5
-
   - id: ROTTEN_FLESH
     material: rotten_flesh
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 2.0
-
   - id: SLIME_BALL
     material: slime_ball
     rarity: COMMON
@@ -113,7 +107,6 @@ items:
         effect_duration: 0
         effect_amplifier: 0
         alchemy_xp: 10
-
   - id: SLIME_BLOCK
     material: slime_block
     rarity: COMMON
@@ -136,7 +129,6 @@ items:
             result:
               type: SLIME_BLOCK
               amount: 1
-
   - id: STRING
     material: string
     rarity: COMMON

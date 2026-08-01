@@ -3,8 +3,8 @@ package net.swofty.type.skyblockgeneric.data.datapoints;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.swofty.commons.StringUtility;
-import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.protocol.Serializer;
+import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.leaderboard.MapLeaderboardTracked;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
@@ -116,7 +116,7 @@ public class DatapointCollection extends SkyBlockDatapoint<DatapointCollection.P
             int collected = get(collection.type());
 
             for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
-                if (collected <= reward.requirement()) {
+                if (collected < reward.requirement()) {
                     return reward;
                 }
             }

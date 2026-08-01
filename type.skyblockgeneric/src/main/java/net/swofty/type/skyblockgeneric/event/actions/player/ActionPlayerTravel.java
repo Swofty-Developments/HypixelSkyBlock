@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.sound.SoundEventKeys;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
@@ -34,15 +35,15 @@ public class ActionPlayerTravel implements HypixelEventClass {
         delay.add(player.getUuid());
 
         MinecraftServer.getSchedulerManager().buildTask(() -> delay.remove(player.getUuid()))
-            .delay(Duration.ofMillis(500))
-            .schedule();
+                .delay(Duration.ofMillis(500))
+                .schedule();
 
         Key block = player.getInstance().getBlock(player.getPosition()).key();
         if (block == Block.NETHER_PORTAL.key()) {
             MissionData data = player.getMissionData();
 
             if (!MissionSet.GETTING_STARTED.hasCompleted(player)
-                && !data.isCurrentlyActive(MissionUseTeleporter.class)
+                    && !data.isCurrentlyActive(MissionUseTeleporter.class)
             ) {
                 player.sendMessage("§cYou must complete your starting missions!");
                 return;
@@ -60,11 +61,11 @@ public class ActionPlayerTravel implements HypixelEventClass {
             if (event.getNewPosition().distanceSquared(warp.vector().asPos()) < 2) {
                 player.teleport(warp.pos());
                 player.playSound(
-                    Sound.sound(
-                        Key.key("minecraft:entity.enderman.teleport"),
-                        Sound.Source.PLAYER,
-                        1f, 1f
-                    )
+                        Sound.sound(
+                                SoundEventKeys.ENTITY_ENDERMAN_TELEPORT.key(),
+                                Sound.Source.PLAYER,
+                                1f, 1f
+                        )
                 );
                 player.sendMessage("§dWarped to §b" + LegacyComponentSerializer.legacySection().serialize(warp.text()) + "§d!");
             }

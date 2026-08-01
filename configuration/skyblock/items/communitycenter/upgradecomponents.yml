@@ -13,23 +13,23 @@ items:
         texture: e9469a2f7a98593a4b0bd6383d70fcf105904a930beaa0671a999b1930b94953
   - id: JUMBO_BACKPACK_UPGRADE
     material: player_head
-    rarity: COMMON
+    rarity: SPECIAL
     components:
       - id: SKULL_HEAD
-        texture: b6acfc643f608e16de19335ddca71a828dfb8daca5793eb5bbcb0c7d1559249
+        texture: 6609f1cbaaf69213ea4d682a57550e13703a0cc6372f3abc18d6e3721125731c
       - id: INTERACTABLE
         handler_id: JUMBO_BACKPACK_UPGRADE_INTERACT
   - id: MINION_STORAGE_EXPANDER
     material: player_head
-    rarity: COMMON
+    rarity: SPECIAL
     components:
       - id: SKULL_HEAD
-        texture: f37cae5c51eb1558ea828f58e0dff8e6b7b0b1a183d737eecf714661761
+        texture: 3dc36e24f4119fcf3b5fb3c1a1decf662f9f771562f34a608340f1389b4ef9b6
       - id: CUSTOM_DISPLAY_NAME
         display_name: Minion Storage X-pender
   - id: ULTIMATE_CARROT_CANDY_UPGRADE
     material: player_head
-    rarity: COMMON
+    rarity: SPECIAL
     components:
       - id: SKULL_HEAD
-        texture: bf1c52cb15dc2a7192b155e52241e7819b565f3a6492cc4df127d2a1c42a
+        texture: b1e6f0684ba7d51fb7b0a794e4dfa3da7ce2361bd04a76b37629f01b25b96d00

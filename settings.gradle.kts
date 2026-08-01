@@ -59,3 +59,11 @@ include(":service.elections")
 include(":service.guild")
 include(":service.store")
 include(":anticheat")
+include(":clientmod")
+
+pluginManagement {
+    repositories {
+        maven("https://maven.fabricmc.net/")
+        gradlePluginPortal()
+    }
+}

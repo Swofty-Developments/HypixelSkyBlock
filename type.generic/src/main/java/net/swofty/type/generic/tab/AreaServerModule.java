@@ -36,12 +36,12 @@ public class AreaServerModule extends TablistModule {
     public List<TablistEntry> getEntries(HypixelPlayer player) {
         Locale l = player.getLocale();
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-                new TablistEntry(getCentered(I18n.string("tablist.module.server_info", l)), TablistSkinRegistry.CYAN)
+                new TablistEntry(Component.text(getCentered(I18n.string("tablist.module.server_info", l))), TablistSkinRegistry.CYAN)
         ));
 
-        entries.add(new TablistEntry(I18n.string(areaI18nKey, l), TablistSkinRegistry.GRAY));
+        entries.add(new TablistEntry(I18n.t(areaI18nKey), TablistSkinRegistry.GRAY));
         entries.add(new TablistEntry(
-                I18n.string("tablist.server_info.server_label", l, Component.text(HypixelConst.getServerName())),
+                I18n.t("tablist.server_info.server_label", Component.text(HypixelConst.getServerName())),
                 TablistSkinRegistry.GRAY
         ));
 

@@ -1,6 +1,7 @@
 package net.swofty.type.galatea.npcs;
 
 import net.minestom.server.coordinate.Pos;
+import net.swofty.type.galatea.gui.GUIDavid;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
@@ -39,6 +40,6 @@ public class NPCDavidHunterborough extends HypixelNPC {
 
     @Override
     public void onClick(NPCInteractEvent event) {
-        event.player().notImplemented();
+        event.player().openView(new GUIDavid());
     }
 }

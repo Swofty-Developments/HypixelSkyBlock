@@ -11,16 +11,16 @@ items:
           - FARMLAND
       - id: PLACE_EVENT
         handler_id: CARROT_CRYSTAL_PLACE
-
   - id: COMPOST
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
         texture: ba39df36a6665e9dc33f3413717daefafd1f78b97eef24f3cae9e3bbe3c77b9b
       - id: SELLABLE
         value: 4.0
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/garden/compost
   - id: COMPOST_BUNDLE
     material: player_head
     rarity: COMMON
@@ -30,14 +30,14 @@ items:
       - id: SELLABLE
         value: 10.0
       - id: TRACKED_UNIQUE
-
   - id: DUNG
     material: brown_wool
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SELLABLE
         value: 100.0
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/garden/pests/dung
   - id: FLOWER_CRYSTAL
     material: player_head
     rarity: COMMON
@@ -50,23 +50,24 @@ items:
           - GRASS_BLOCK
       - id: PLACE_EVENT
         handler_id: FLOWER_CRYSTAL_PLACE
-
   - id: HONEY_JAR
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
         texture: d8ecd636150837b0d9d0299b64cd0b5b55a6f99158c94600eb90fc5ba677330d
       - id: SELLABLE
         value: 100.0
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/garden/pests/honey_jar
   - id: PLANT_MATTER
     material: oak_leaves
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SELLABLE
         value: 100.0
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/garden/pests/plant_matter
   - id: POTATO_CRYSTAL
     material: player_head
     rarity: COMMON
@@ -79,7 +80,6 @@ items:
           - FARMLAND
       - id: PLACE_EVENT
         handler_id: POTATO_CRYSTAL_PLACE
-
   - id: PUMPKIN_AND_MELON_CRYSTAL
     material: player_head
     rarity: COMMON
@@ -93,20 +93,23 @@ items:
           - DIRT
       - id: PLACE_EVENT
         handler_id: PUMPKIN_AND_MELON_CRYSTAL_PLACE
-
   - id: ROOKIE_HOE
     material: stone_hoe
     rarity: COMMON
+    components:
+      - id: SELLABLE
+        value: 3.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/rookie_hoe
   - id: TIGHTLY_TIED_HAY_BALE
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: ENCHANTED
       - id: SELLABLE
         value: 1119744.0
       - id: SKULL_HEAD
-        texture: f7c33cd0c14ba830da149907f7a6aae835b6a35aea01e0ce073fb3c59cc46326
-
+        texture: 6d25c5a48cdaefec8dedd53f643bc30a210f51a9e2ff405975d0f8b43218837a
   - id: WHEAT_CRYSTAL
     material: player_head
     rarity: COMMON

@@ -20,6 +20,7 @@ public class ActionPlayerChat implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(PlayerChatEvent event) {
+        if (event.isCancelled()) return;
         final HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         event.setCancelled(true);
 
@@ -67,4 +68,3 @@ public class ActionPlayerChat implements HypixelEventClass {
         });
     }
 }
-

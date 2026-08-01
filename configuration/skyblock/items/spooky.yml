@@ -1,31 +1,30 @@
 items:
   - id: BAT_FIREWORK
     material: firework_rocket
-    rarity: UNCOMMON
+    rarity: RARE
     lore:
-      - "§7Launches a firework that"
-      - "§7explodes into several Bat"
-      - "§7Piñatas, each dropping a bunch"
-      - "§7of candies. Only usable in the"
-      - "§7§bVillage§7."
-      - ""
-      - "§8Cooldown: §a30s"
-      - ""
-      - "§7§8§oBat Piñata drops do not"
-      - "§8§ocount towards leaderboard"
-      - "§8§oprogress!"
+      - "\xA77Launches a firework that"
+      - "\xA77explodes into several Bat"
+      - "\xA77Pi\xF1atas, each dropping a bunch"
+      - "\xA77of candies. Only usable in the"
+      - "\xA77\xA7bVillage\xA77."
+      - ''
+      - "\xA78Cooldown: \xA7a30s"
+      - ''
+      - "\xA77\xA78\xA7oBat Pi\xF1ata drops do not"
+      - "\xA78\xA7ocount towards leaderboard"
+      - "\xA78\xA7oprogress!"
     default_statistics: { }
     components:
       - id: NOT_FINISHED_YET
-
   - id: BLAST_O_LANTERN
     material: player_head
     rarity: UNCOMMON
     lore:
-      - "§7Throwable explosive. Deals §a2"
-      - "§a§7damage to §6Spooky §7enemies"
-      - "§7and §c3,000 §7damage against"
-      - "§7non-scary enemies!"
+      - "\xA77Throwable explosive. Deals \xA7a2"
+      - "\xA7a\xA77damage to \xA76Spooky \xA77enemies"
+      - "\xA77and \xA7c3,000 \xA77damage against"
+      - "\xA77non-scary enemies!"
     default_statistics: { }
     components:
       - id: SKULL_HEAD
@@ -48,88 +47,99 @@ items:
             result:
               type: BLAST_O_LANTERN
               amount: 32
-
   - id: ECTOPLASM
     material: ghast_tear
-    rarity: UNCOMMON
+    rarity: RARE
     lore:
-      - "§7Spooky, yet practical."
+      - "\xA77Spooky, yet practical."
     default_statistics: { }
-
+    components:
+      - id: SELLABLE
+        value: 10000.0
   - id: GREEN_CANDY
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     lore:
-      - "§7Candy can be used to trade with"
-      - "§7the Fear Mongerer during the"
-      - "§7§6Spooky Festival§7!"
+      - "\xA77Candy can be used to trade with"
+      - "\xA77the Fear Mongerer during the"
+      - "\xA77\xA76Spooky Festival\xA77!"
     default_statistics: { }
     components:
       - id: SKULL_HEAD
-        texture: ce0622d01cfdae386cc7dd83427674b422f46d0a57e67a20607e6ca4b9af3b01
-
+        texture: e31c0bd76a655d5d8fea5b06daaf1fb8d8060bf0823ebbc6eb6f99c8ee5a35aa
+      - id: SELLABLE
+        value: 500.0
   - id: HORSEMAN_CANDLE
     material: player_head
-    rarity: RARE
+    rarity: EPIC
     lore:
-      - "§7Used to summon the Headless"
-      - "§7Horseman. This item can only be"
-      - "§7used at night!"
-      - ""
-      - "§7Can be spawned in:"
-      - "§cGraveyard"
-      - "§2Wilderness"
+      - "\xA77Used to summon the Headless"
+      - "\xA77Horseman. This item can only be"
+      - "\xA77used at night!"
+      - ''
+      - "\xA77Can be spawned in:"
+      - "\xA7cGraveyard"
+      - "\xA72Wilderness"
     default_statistics: { }
     components:
       - id: SKULL_HEAD
-        texture: e521cf45ebe321e4860d76fd7b6abd379993c6f2c9d4a19c37bdcb7b11b6b
+        texture: 746f7469b7d9cc34c8990a0add635841917af89ca52cafdde575007d1a8c398e
       - id: NOT_FINISHED_YET
-
   - id: PUMPKIN_GUTS
     material: pumpkin_seeds
-    rarity: COMMON
+    rarity: UNCOMMON
     lore:
-      - "§7Why does Halloween have to be so"
-      - "§7gross?"
+      - "\xA77Why does Halloween have to be so"
+      - "\xA77gross?"
     default_statistics: { }
-
+    components:
+      - id: SELLABLE
+        value: 10000.0
   - id: PURPLE_CANDY
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     lore:
-      - "§7Candy can be used to trade with"
-      - "§7the Fear Mongerer during the"
-      - "§7§6Spooky Festival§7!"
+      - "\xA77Candy can be used to trade with"
+      - "\xA77the Fear Mongerer during the"
+      - "\xA77\xA76Spooky Festival\xA77!"
     default_statistics: { }
     components:
       - id: SKULL_HEAD
-        texture: 95d7aee4e97ad84095f55405ee1305d1fc8554c309edb12a1db863cde9c1ec80
-
+        texture: 91611d874e874e322a1199b3b7b9e934bbb0dbed587ee8fcd6ccc1b07e281651
+      - id: SELLABLE
+        value: 5000.0
   - id: SOUL_FRAGMENT
     material: player_head
-    rarity: RARE
+    rarity: EPIC
     lore:
-      - "§7Dropped by Grim Reaper sea"
-      - "§7creatures during the Spooky"
-      - "§7Festival"
+      - "\xA77Dropped by Grim Reaper sea"
+      - "\xA77creatures during the Spooky"
+      - "\xA77Festival"
     default_statistics: { }
     components:
       - id: SKULL_HEAD
         texture: d1c87454f1ee585b90fdb3a3e40952a5c2f80c0a49dfec62870fdff183967a84
-
+      - id: SELLABLE
+        value: 200000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/soul_fragment
   - id: SPOOKY_SHARD
     material: player_head
-    rarity: RARE
+    rarity: EPIC
     default_statistics: { }
     components:
       - id: SKULL_HEAD
         texture: d884ed1950bb8b198ada8191684400bd6640e03710481c8122b780b9ed1bd98c
-
+      - id: SELLABLE
+        value: 10000.0
   - id: WEREWOLF_SKIN
     material: leather
     rarity: RARE
     lore:
-      - "§7Dropped by Werewolf sea"
-      - "§7creatures during the Spooky"
-      - "§7Festival"
+      - "\xA77Dropped by Werewolf sea"
+      - "\xA77creatures during the Spooky"
+      - "\xA77Festival"
     default_statistics: { }
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/werewolf_skin

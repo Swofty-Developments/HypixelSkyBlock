@@ -8,12 +8,7 @@ import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIMaterial;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.Layouts;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
@@ -21,11 +16,7 @@ import net.swofty.type.skyblockgeneric.user.statistics.StatisticModifier;
 import net.swofty.type.skyblockgeneric.user.statistics.StatisticModifierType;
 import net.swofty.type.skyblockgeneric.user.statistics.StatisticSourceType;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GUIGatheringCategoryStats extends StatelessView {
     private static final int[] DISPLAY_SLOTS = {
@@ -72,7 +63,7 @@ public class GUIGatheringCategoryStats extends StatelessView {
 
     @Override
     public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        layout.filler(Layouts.border(0, 53), Components.FILLER);
+        layout.filler(Layouts.border(0, 53));
         Components.back(layout, 48, ctx);
         Components.close(layout, 49);
 

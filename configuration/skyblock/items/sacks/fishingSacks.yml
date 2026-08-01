@@ -1,24 +1,24 @@
 items:
   - id: SMALL_FISHING_SACK
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aAgarimoo Tongue§7, §aAlligator Skin§7, §aBlue Ring§7, §aBlue'
-      - '§aShark Tooth§7, §aBroken Radar§7, §aBronze Bowl§7, §aBusted Belt'
-      - "§aBuckle§7, §aCan of Worms§7, §aChum§7, §aClay Ball§7, §aEmperor's Skull§7,"
-      - '§aGlowing Mushroom§7, §aHalf-Eaten Mushroom§7, §aInk Sac§7, §aLily'
-      - '§aPad§7, §aNurse Shark Tooth§7, §aOld Leather Boot§7, §aPrismarine'
-      - '§aCrystals§7, §aPrismarine Shard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw'
-      - '§aSalmon§7, §aRusty Coin§7, §aShark Fin§7, §aSponge§7, §aTiger Shark'
-      - '§aTooth§7, §aTorn Cloth§7, §aTropical Fish§7, §aWorm Membrane'
+      - "\xA77Items: \xA7aAgarimoo Tongue\xA77, \xA7aAlligator Skin\xA77, \xA7aBlue Ring\xA77, \xA7aBlue"
+      - "\xA7aShark Tooth\xA77, \xA7aBroken Radar\xA77, \xA7aBronze Bowl\xA77, \xA7aBusted Belt"
+      - "\xA7aBuckle\xA77, \xA7aCan of Worms\xA77, \xA7aChum\xA77, \xA7aClay Ball\xA77, \xA7aEmperor's Skull\xA77,"
+      - "\xA7aGlowing Mushroom\xA77, \xA7aHalf-Eaten Mushroom\xA77, \xA7aInk Sac\xA77, \xA7aLily"
+      - "\xA7aPad\xA77, \xA7aNurse Shark Tooth\xA77, \xA7aOld Leather Boot\xA77, \xA7aPrismarine"
+      - "\xA7aCrystals\xA77, \xA7aPrismarine Shard\xA77, \xA7aPufferfish\xA77, \xA7aRaw Cod\xA77, \xA7aRaw"
+      - "\xA7aSalmon\xA77, \xA7aRusty Coin\xA77, \xA7aShark Fin\xA77, \xA7aSponge\xA77, \xA7aTiger Shark"
+      - "\xA7aTooth\xA77, \xA7aTorn Cloth\xA77, \xA7aTropical Fish\xA77, \xA7aWorm Membrane"
       - ''
-      - '§7Capacity: §e2,240 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e2,240 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: c4fbc77d27dab10de5abf9d0bcc47198f923b0e6c179a3c3983e77f12f7c033e
@@ -73,27 +73,26 @@ items:
             result:
               type: SMALL_FISHING_SACK
               amount: 1
-
   - id: MEDIUM_FISHING_SACK
     material: player_head
     rarity: RARE
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aAgarimoo Tongue§7, §aAlligator Skin§7, §aBlue Ring§7, §aBlue'
-      - '§aShark Tooth§7, §aBroken Radar§7, §aBronze Bowl§7, §aBusted Belt'
-      - "§aBuckle§7, §aCan of Worms§7, §aChum§7, §aClay Ball§7, §aEmperor's Skull§7,"
-      - '§aGlowing Mushroom§7, §aHalf-Eaten Mushroom§7, §aInk Sac§7, §aLily'
-      - '§aPad§7, §aNurse Shark Tooth§7, §aOld Leather Boot§7, §aPrismarine'
-      - '§aCrystals§7, §aPrismarine Shard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw'
-      - '§aSalmon§7, §aRusty Coin§7, §aShark Fin§7, §aSponge§7, §aTiger Shark'
-      - '§aTooth§7, §aTorn Cloth§7, §aTropical Fish§7, §aWorm Membrane'
+      - "\xA77Items: \xA7aAgarimoo Tongue\xA77, \xA7aAlligator Skin\xA77, \xA7aBlue Ring\xA77, \xA7aBlue"
+      - "\xA7aShark Tooth\xA77, \xA7aBroken Radar\xA77, \xA7aBronze Bowl\xA77, \xA7aBusted Belt"
+      - "\xA7aBuckle\xA77, \xA7aCan of Worms\xA77, \xA7aChum\xA77, \xA7aClay Ball\xA77, \xA7aEmperor's Skull\xA77,"
+      - "\xA7aGlowing Mushroom\xA77, \xA7aHalf-Eaten Mushroom\xA77, \xA7aInk Sac\xA77, \xA7aLily"
+      - "\xA7aPad\xA77, \xA7aNurse Shark Tooth\xA77, \xA7aOld Leather Boot\xA77, \xA7aPrismarine"
+      - "\xA7aCrystals\xA77, \xA7aPrismarine Shard\xA77, \xA7aPufferfish\xA77, \xA7aRaw Cod\xA77, \xA7aRaw"
+      - "\xA7aSalmon\xA77, \xA7aRusty Coin\xA77, \xA7aShark Fin\xA77, \xA7aSponge\xA77, \xA7aTiger Shark"
+      - "\xA7aTooth\xA77, \xA7aTorn Cloth\xA77, \xA7aTropical Fish\xA77, \xA7aWorm Membrane"
       - ''
-      - '§7Capacity: §e6,720 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e6,720 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: ff75871c90b94f4fbc167e351d36e8aeae1cc2fec03b16629007f74c989de648
@@ -148,27 +147,26 @@ items:
             result:
               type: MEDIUM_FISHING_SACK
               amount: 1
-
   - id: LARGE_FISHING_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aAgarimoo Tongue§7, §aAlligator Skin§7, §aBlue Ring§7, §aBlue'
-      - '§aShark Tooth§7, §aBroken Radar§7, §aBronze Bowl§7, §aBusted Belt'
-      - "§aBuckle§7, §aCan of Worms§7, §aChum§7, §aClay Ball§7, §aEmperor's Skull§7,"
-      - '§aGlowing Mushroom§7, §aHalf-Eaten Mushroom§7, §aInk Sac§7, §aLily'
-      - '§aPad§7, §aNurse Shark Tooth§7, §aOld Leather Boot§7, §aPrismarine'
-      - '§aCrystals§7, §aPrismarine Shard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw'
-      - '§aSalmon§7, §aRusty Coin§7, §aShark Fin§7, §aSponge§7, §aTiger Shark'
-      - '§aTooth§7, §aTorn Cloth§7, §aTropical Fish§7, §aWorm Membrane'
+      - "\xA77Items: \xA7aAgarimoo Tongue\xA77, \xA7aAlligator Skin\xA77, \xA7aBlue Ring\xA77, \xA7aBlue"
+      - "\xA7aShark Tooth\xA77, \xA7aBroken Radar\xA77, \xA7aBronze Bowl\xA77, \xA7aBusted Belt"
+      - "\xA7aBuckle\xA77, \xA7aCan of Worms\xA77, \xA7aChum\xA77, \xA7aClay Ball\xA77, \xA7aEmperor's Skull\xA77,"
+      - "\xA7aGlowing Mushroom\xA77, \xA7aHalf-Eaten Mushroom\xA77, \xA7aInk Sac\xA77, \xA7aLily"
+      - "\xA7aPad\xA77, \xA7aNurse Shark Tooth\xA77, \xA7aOld Leather Boot\xA77, \xA7aPrismarine"
+      - "\xA7aCrystals\xA77, \xA7aPrismarine Shard\xA77, \xA7aPufferfish\xA77, \xA7aRaw Cod\xA77, \xA7aRaw"
+      - "\xA7aSalmon\xA77, \xA7aRusty Coin\xA77, \xA7aShark Fin\xA77, \xA7aSponge\xA77, \xA7aTiger Shark"
+      - "\xA7aTooth\xA77, \xA7aTorn Cloth\xA77, \xA7aTropical Fish\xA77, \xA7aWorm Membrane"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: f8f68669351a6fc7156ecfe3300ba94efe0766e24bed8785cf64a9f95435134b
@@ -223,25 +221,24 @@ items:
             result:
               type: LARGE_FISHING_SACK
               amount: 1
-
   - id: LARGE_ENCHANTED_FISHING_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7This sack can contain all enchanted versions'
-      - '§7of these materials:'
-      - '§aClay Ball§7, §aCooked Fish§7, §aCooked Salmon§7, §aInk Sac§7,'
-      - '§aLily Pad§7, §aPrismarine Crystals§7, §aPrismarine'
-      - '§aShard§7, §aPufferfish§7, §aRaw Cod§7, §aRaw Salmon§7, §aShark'
-      - '§aFin§7, §aSponge§7, §aTropical Fish§7, §aWet Sponge'
+      - "\xA77This sack can contain all enchanted versions"
+      - "\xA77of these materials:"
+      - "\xA7aClay Ball\xA77, \xA7aCooked Fish\xA77, \xA7aCooked Salmon\xA77, \xA7aInk Sac\xA77,"
+      - "\xA7aLily Pad\xA77, \xA7aPrismarine Crystals\xA77, \xA7aPrismarine"
+      - "\xA7aShard\xA77, \xA7aPufferfish\xA77, \xA7aRaw Cod\xA77, \xA7aRaw Salmon\xA77, \xA7aShark"
+      - "\xA7aFin\xA77, \xA7aSponge\xA77, \xA7aTropical Fish\xA77, \xA7aWet Sponge"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: ee2469de7f75d2e0a8b3b0c734a2b470782b604d1feb0172b4a72a77cb5bbda2

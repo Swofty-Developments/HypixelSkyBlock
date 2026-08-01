@@ -76,7 +76,7 @@ public abstract class AbstractCandidateNPC extends HypixelNPC {
             }
 
             @Override
-            public @NonNull String chatName() {
+            public @NonNull String chatName(HypixelPlayer player) {
                 ElectionData.CandidateData candidateData = getCandidateData(index);
                 if (candidateData == null) return "Mayor ???";
                 String color = candidateData.getColor();

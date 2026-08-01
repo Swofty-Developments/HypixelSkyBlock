@@ -3,7 +3,7 @@ package net.swofty.type.ravengardgeneric.resourcepack;
 import lombok.Getter;
 import net.swofty.commons.config.Settings;
 import net.swofty.packer.HypixelPackBuilder;
-import net.swofty.packer.packs.TestingPackDefinition;
+import net.swofty.packer.packs.ravengard.TestingPackDefinition;
 import net.swofty.type.generic.resourcepack.HypixelResourcePack;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.ravengardgeneric.texturepack.TexturePackManager;

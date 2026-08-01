@@ -12,6 +12,8 @@ items:
         display_name: Abiphone Basic
       - id: SKULL_HEAD
         texture: e471c673a875425428d4b5ecf78a24d86ea65ae6599633e6514bbaafd7fa561f
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/abiphones/abiphone_basic
   - id: ABIPHONE_X_RED
     material: PLAYER_HEAD
     rarity: UNCOMMON

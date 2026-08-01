@@ -2,63 +2,81 @@ items:
   - id: BOOK
     rarity: COMMON
     material: BOOK
-
+    components:
+      - id: SELLABLE
+        value: 12.0
   - id: BOWL
     rarity: COMMON
     material: BOWL
-
+    components:
+      - id: SELLABLE
+        value: 0.5
   - id: BREAD
     rarity: COMMON
     material: BREAD
-
+    components:
+      - id: SELLABLE
+        value: 3.0
   - id: CHARCOAL
     rarity: COMMON
     material: CHARCOAL
-
+    components:
+      - id: SELLABLE
+        value: 1.0
   - id: DRAGON_BREATH
     rarity: COMMON
     material: DRAGON_BREATH
-
   - id: ELDER_GUARDIAN_SPAWN_EGG
     rarity: COMMON
     material: ELDER_GUARDIAN_SPAWN_EGG
-
   - id: ENDER_EYE
     rarity: COMMON
     material: ENDER_EYE
-
   - id: EXPERIENCE_BOTTLE
     rarity: COMMON
     material: EXPERIENCE_BOTTLE
-
   - id: FIREWORK_ROCKET
     rarity: COMMON
     material: FIREWORK_ROCKET
-
+    components:
+      - id: SELLABLE
+        value: 2.0
   - id: GLASS_BOTTLE
     rarity: COMMON
     material: GLASS_BOTTLE
-
+    components:
+      - id: SELLABLE
+        value: 2.0
   - id: LAVA_BUCKET
     rarity: COMMON
     material: LAVA_BUCKET
-
+    components:
+      - id: SELLABLE
+        value: 8.0
   - id: MILK_BUCKET
     rarity: COMMON
     material: MILK_BUCKET
-
+    components:
+      - id: SELLABLE
+        value: 4.0
   - id: PAPER
     rarity: COMMON
     material: PAPER
-
+    components:
+      - id: SELLABLE
+        value: 2.0
   - id: SHEARS
     rarity: COMMON
     material: SHEARS
-
+    components:
+      - id: SELLABLE
+        value: 3.0
   - id: WATER_BOTTLE
     rarity: COMMON
     material: POTION
-
   - id: WATER_BUCKET
     rarity: COMMON
     material: WATER_BUCKET
+    components:
+      - id: SELLABLE
+        value: 4.0

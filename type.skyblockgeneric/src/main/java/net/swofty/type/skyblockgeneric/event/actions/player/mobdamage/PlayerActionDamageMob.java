@@ -15,12 +15,14 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.MathUtility;
-import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.enchantment.SkyBlockEnchantment;
 import net.swofty.type.skyblockgeneric.enchantment.abstr.DamageEventEnchant;
+import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.event.value.SkyBlockValueEvent;
 import net.swofty.type.skyblockgeneric.event.value.events.PlayerDamageMobValueUpdateEvent;
+import net.swofty.type.skyblockgeneric.hunting.AttributeEffectService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.components.ItemRequirementsComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
@@ -39,6 +41,9 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         if (event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
         if (!event.getEntity().getEntityType().equals(EntityType.PLAYER)) return;
         SkyBlockPlayer player = (SkyBlockPlayer) event.getEntity();
+        SkyBlockItem heldItem = new SkyBlockItem(player.getItemInMainHand());
+        if (heldItem.hasComponent(ItemRequirementsComponent.class)
+                && !heldItem.getComponent(ItemRequirementsComponent.class).ensureCanUse(player)) return;
 
         Entity targetEntity = event.getTarget();
         SkyBlockMob mob;
@@ -52,7 +57,7 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         ItemStatistics entityStats = mob.getStatistics();
         Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, targetLivingEntity);
 
-        double damage = hit.getKey();
+        double damage = hit.getKey() * AttributeEffectService.outgoingDamageMultiplier(player.getHuntingData(), mob, false);
         boolean critical = hit.getValue();
 
         PlayerDamageMobValueUpdateEvent valueEvent = new PlayerDamageMobValueUpdateEvent(

@@ -2,21 +2,23 @@ package net.swofty.type.skyblockgeneric.entity;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
+import net.minestom.server.entity.MetadataDef;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
+import net.swofty.type.generic.utility.MathUtility;
+import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.utility.MathUtility;
 import org.jetbrains.annotations.NotNull;
 
 public class PetEntityImpl extends LivingEntity {
@@ -40,10 +42,20 @@ public class PetEntityImpl extends LivingEntity {
         this.url = url;
         this.particle = pet.getComponent(PetComponent.class).getParticleId();
 
-        getEntityMeta().setCustomName(Component.text("§8[§7Lvl" +
-                pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity()) + "§8] "
-                + pet.getAttributeHandler().getRarity().getColor() + player.getUsername() + "'s " +
-                pet.getComponent(PetComponent.class).getPetName()));
+        var attributeHandler = pet.getAttributeHandler();
+        var rarity = attributeHandler.getRarity();
+        var level = attributeHandler.getPetData().getAsLevel(rarity);
+        var petName = pet.getComponent(PetComponent.class).getPetName();
+
+        editEntityMeta(ArmorStandMeta.class, meta -> {
+            meta.set(MetadataDef.CUSTOM_NAME, Component.text("[", NamedTextColor.DARK_GRAY)
+                    .append(Component.text("Lvl" + level, NamedTextColor.GRAY))
+                    .append(Component.text("] ", NamedTextColor.DARK_GRAY))
+                    .append(Component.text(
+                            player.getUsername() + "'s " + petName,
+                            rarity.getColor()
+                    )));
+        });
     }
 
     @Override

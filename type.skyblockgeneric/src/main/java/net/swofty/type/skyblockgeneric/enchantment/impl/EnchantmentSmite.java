@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class EnchantmentSmite implements Ench, EnchFromTable, EventBasedEnchant {
 
-    public static final double[] MULTIPLIERS = new double[]{10, 20, 30, 40, 60, 80, 100};
+    public static final double[] MULTIPLIERS = new double[]{5, 10, 15, 20, 30, 40, 50};
 
     @Override
     public String getDescription(int level) {

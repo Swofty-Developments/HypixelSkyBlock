@@ -2,6 +2,8 @@ package net.swofty.commons;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Getter
@@ -31,7 +33,7 @@ public enum ChatColor {
 
     public static final char COLOR_CHAR = '§';
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + '§' + "[0-9A-FK-OR]");
-    private static final java.util.Map<Character, ChatColor> BY_CODE = new java.util.HashMap<>();
+    private static final Map<Character, ChatColor> BY_CODE = new HashMap<>();
 
     static {
         for (ChatColor color : values()) {

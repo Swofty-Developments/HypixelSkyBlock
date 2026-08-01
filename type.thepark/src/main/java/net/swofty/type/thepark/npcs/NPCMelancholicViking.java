@@ -1,10 +1,10 @@
 package net.swofty.type.thepark.npcs;
 
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.sound.SoundEventKeys;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.entity.npc.configuration.HumanConfiguration;
 import net.swofty.type.generic.event.custom.NPCInteractEvent;
@@ -46,7 +46,7 @@ public class NPCMelancholicViking extends HypixelNPC {
 			}
 
 			@Override
-			public @NonNull String chatName() {
+            public @NonNull String chatName(HypixelPlayer player) {
 				return "§bViking";
 			}
 		});
@@ -92,7 +92,7 @@ public class NPCMelancholicViking extends HypixelNPC {
 						"I wish I could remember what it felt like!",
 						"Sadly, my memory is now my worst enemy.",
 						"Please, help me remember the §bsea§f."
-				}).sound(Sound.sound().type(Key.key("entity.villager.hurt")).pitch(0.5f).volume(0.9f).build()).build(),
+				}).sound(Sound.sound().type(SoundEventKeys.ENTITY_VILLAGER_HURT.key()).pitch(0.5f).volume(0.9f).build()).build(),
 				DialogueSet.builder().key("holding-boat").lines(new String[]{
 						"Wow!",
 						"A boat!",

@@ -16,7 +16,7 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 @CommandParameters(labels = "regions",
     description = "Handles regions across the server",
-    usage = "/signgui <text>",
+        usage = "/regions <text>",
     permission = Rank.STAFF,
     allowsConsole = false)
 public class RegionCommand extends HypixelCommand {

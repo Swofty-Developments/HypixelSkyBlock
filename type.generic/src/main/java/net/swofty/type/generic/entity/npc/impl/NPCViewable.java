@@ -5,6 +5,7 @@ import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
 import net.minestom.server.utils.validate.Check;
+import net.swofty.type.generic.entity.npc.NPCMovementController;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Map;
 public interface NPCViewable {
 
     List<HypixelPlayer> getInRangeOf();
+
+    NPCMovementController getMovementController();
 
     default void updateNPC() {
 

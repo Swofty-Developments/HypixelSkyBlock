@@ -22,7 +22,8 @@ items:
             result:
               type: FINE_AMBER_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/amber/fine_amber_gem
   - id: FINE_AMETHYST_GEM
     material: player_head
     rarity: RARE
@@ -46,7 +47,8 @@ items:
             result:
               type: FINE_AMETHYST_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/amethyst/fine_amethyst_gem
   - id: FINE_JADE_GEM
     material: player_head
     rarity: RARE
@@ -70,7 +72,8 @@ items:
             result:
               type: FINE_JADE_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/jade/fine_jade_gem
   - id: FINE_JASPER_GEM
     material: player_head
     rarity: RARE
@@ -80,7 +83,7 @@ items:
         gemstone: JASPER
         skull_texture: aac15f6fcf2ce963ef4ca71f1a8685adb97eb769e1d11194cbbd2e964a88978c
       - id: SELLABLE
-        value: 19200.0
+        value: 25600.0
       - id: CUSTOM_DISPLAY_NAME
         display_name: Fine Jasper Gemstone
       - id: DEFAULT_CRAFTABLE
@@ -94,7 +97,8 @@ items:
             result:
               type: FINE_JASPER_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/jasper/fine_jasper_gem
   - id: FINE_RUBY_GEM
     material: player_head
     rarity: RARE
@@ -118,7 +122,8 @@ items:
             result:
               type: FINE_RUBY_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/ruby/fine_ruby_gem
   - id: FINE_SAPPHIRE_GEM
     material: player_head
     rarity: RARE
@@ -142,7 +147,8 @@ items:
             result:
               type: FINE_SAPPHIRE_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/sapphire/fine_sapphire_gem
   - id: FINE_TOPAZ_GEM
     material: player_head
     rarity: RARE
@@ -166,7 +172,8 @@ items:
             result:
               type: FINE_TOPAZ_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/topaz/fine_topaz_gem
   - id: FINE_OPAL_GEM
     material: player_head
     rarity: RARE
@@ -190,7 +197,8 @@ items:
             result:
               type: FINE_OPAL_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/gemstones/fine_opal_gem
   - id: FINE_AQUAMARINE_GEM
     material: player_head
     rarity: RARE
@@ -214,7 +222,8 @@ items:
             result:
               type: FINE_AQUAMARINE_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/aquamarine/fine_aquamarine_gem
   - id: FINE_CITRINE_GEM
     material: player_head
     rarity: RARE
@@ -238,7 +247,8 @@ items:
             result:
               type: FINE_CITRINE_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/citrine/fine_citrine_gem
   - id: FINE_ONYX_GEM
     material: player_head
     rarity: RARE
@@ -262,7 +272,8 @@ items:
             result:
               type: FINE_ONYX_GEM
               amount: 1
-
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/onyx/fine_onyx_gem
   - id: FINE_PERIDOT_GEM
     material: player_head
     rarity: RARE
@@ -286,3 +297,5 @@ items:
             result:
               type: FINE_PERIDOT_GEM
               amount: 1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/collections/gemstone/peridot/fine_peridot_gem

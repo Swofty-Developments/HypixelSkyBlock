@@ -97,12 +97,16 @@ public class ItemAttributeHotPotatoBookData extends ItemAttribute<ItemAttributeH
             return appliedItems.getOrDefault(type, 0);
         }
 
+        public int getTotalAmount() {
+            return appliedItems.values().stream().mapToInt(Integer::intValue).sum();
+        }
+
         public boolean hasAppliedItem(ItemType itemType) {
             return appliedItems.containsKey(itemType) && appliedItems.get(itemType) > 0;
         }
 
         public boolean hasAppliedItem() {
-            return appliedItems.values().stream().mapToInt(Integer::intValue).sum() > 0;
+            return getTotalAmount() > 0;
         }
     }
 }

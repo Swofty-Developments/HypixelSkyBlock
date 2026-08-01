@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.instance.SharedInstance;
+import net.minestom.server.world.Difficulty;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.resourcepack.ResourcePackManager;
 
@@ -42,6 +43,9 @@ public class HypixelConst {
     @Getter
     @Setter
     private static int maxPlayers;
+    @Getter
+    @Setter
+    private static Difficulty vanillaDifficulty = Difficulty.NORMAL;
 
     public static boolean isIslandServer() {
         return typeLoader.getType() == ServerType.SKYBLOCK_ISLAND;
