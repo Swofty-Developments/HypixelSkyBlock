@@ -87,10 +87,21 @@ public final class LoadedChunkExporter {
         Instant stoppedAt,
         Map<Long, CompoundTag> chunks
     ) throws IOException {
+        return writeRecordedChunks(context, sessionName, startedAt, stoppedAt, chunks, false);
+    }
+
+    public static ExportResult writeRecordedChunks(
+            SessionContext context,
+            String sessionName,
+            Instant startedAt,
+            Instant stoppedAt,
+            Map<Long, CompoundTag> chunks,
+            boolean replaceExisting
+    ) throws IOException {
         String safeSessionName = sanitizeSessionName(sessionName);
         ExportAccumulator accumulator = new ExportAccumulator();
         Path outputPath = EXPORT_BASE_DIR.resolve(safeSessionName);
-        prepareOutputDirectory(outputPath);
+        prepareOutputDirectory(outputPath, replaceExisting);
         writeVanillaWorld(outputPath, context, chunks, accumulator);
         return new ExportResult(outputPath, chunks.size(), accumulator.sectionCount, accumulator.blockEntityCount);
     }
@@ -279,12 +290,16 @@ public final class LoadedChunkExporter {
         }
     }
 
-    private static void prepareOutputDirectory(Path outputPath) throws IOException {
+    private static void prepareOutputDirectory(Path outputPath, boolean replaceExisting) throws IOException {
         Path regionPath = outputPath.resolve("region");
         if (Files.exists(regionPath)) {
             try (Stream<Path> files = Files.list(regionPath)) {
-                if (files.findAny().isPresent()) {
+                List<Path> existing = files.toList();
+                if (!existing.isEmpty() && !replaceExisting) {
                     throw new IOException("Target save already contains region data: " + outputPath.getFileName());
+                }
+                if (replaceExisting) {
+                    for (Path file : existing) Files.delete(file);
                 }
             }
         }

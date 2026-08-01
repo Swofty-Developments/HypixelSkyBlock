@@ -116,7 +116,7 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (_) -> new Pos(0.5, 65, 0.5, 0, 0),
+                (_) -> new Pos(52.5, 66, 13.5, -180, 0),
                 false
         );
     }
