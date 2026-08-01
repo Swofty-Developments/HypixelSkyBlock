@@ -2,12 +2,9 @@ package net.swofty.type.skyblockgeneric.user.flow;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.network.packet.server.play.UpdateHealthPacket;
 import net.swofty.commons.skyblock.SkyBlockPlayerProfiles;
-import net.swofty.packer.packs.ravengard.TestingTexture;
 import net.swofty.proxyapi.PlayerTransferDataCache;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.data.datapoints.DatapointBoolean;
@@ -31,7 +28,6 @@ import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.warps.TravelScrollIslands;
 import org.bson.Document;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -205,11 +201,6 @@ public final class SkyBlockPlayerDataFlow {
     private static void sendProfileIntro(SkyBlockPlayer player) {
         Thread.startVirtualThread(() -> {
             player.sendMessage("");
-            player.showTitle(Title.title(
-                    Component.text(TestingTexture.FULL_SCREEN_BLACK.toString()),
-                    Component.empty(),
-                    Title.Times.times(Duration.ZERO, Duration.ofMillis(300), Duration.ofSeconds(1))
-            ));
 
             Rank rank = player.getRank();
             if (rank.isStaff()) {

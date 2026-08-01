@@ -8,9 +8,9 @@ import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
+import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
-import net.swofty.type.ravengardgeneric.world.RavengardWorlds;
 import org.tinylog.Logger;
 
 public class ActionPlayerEnterWorld implements HypixelEventClass {
@@ -34,15 +34,13 @@ public class ActionPlayerEnterWorld implements HypixelEventClass {
         // A player who has not picked a class yet starts the tutorial aboard the Nevermore
         boolean tutorial = player.isTutorial() || player.getRavengardClass() == null;
 
-        Instance world = tutorial
-                ? RavengardWorlds.tutorial()
-                : HypixelConst.getInstanceContainer();
+        Instance world = tutorial ? RavengardGenericLoader.tutorialInstance : HypixelConst.getInstanceContainer();
         if (world == null || player.getInstance() == world) {
             return;
         }
 
         Pos spawn = tutorial
-                ? RavengardWorlds.TUTORIAL_SPAWN
+                ? new Pos(25.5, 64, 508.5, -90f, 0f)
                 : HypixelConst.getTypeLoader()
                 .getLoaderValues()
                 .spawnPosition()
