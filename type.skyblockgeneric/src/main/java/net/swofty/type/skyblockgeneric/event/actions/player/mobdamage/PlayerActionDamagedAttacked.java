@@ -3,6 +3,7 @@ package net.swofty.type.skyblockgeneric.event.actions.player.mobdamage;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.damage.EntityDamage;
 import net.minestom.server.event.entity.EntityAttackEvent;
+import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -27,18 +28,19 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
     public void run(EntityAttackEvent event) {
         if (!event.getTarget().getEntityType().equals(EntityType.PLAYER)) return;
 
+        SkyBlockPlayer player = (SkyBlockPlayer) event.getTarget();
+
         if (event.getEntity() instanceof SkyBlockMob mob) {
             if (mob.getLastAttack() + mob.damageCooldown() > System.currentTimeMillis()) return;
             mob.setLastAttack(System.currentTimeMillis());
 
             ItemStatistics mobStatistics = mob.getStatistics();
-            ItemStatistics playerStatistics = ((SkyBlockPlayer) event.getTarget()).getStatistics().allStatistics();
+            ItemStatistics playerStatistics = player.getStatistics().allStatistics();
 
             Map.Entry<Double, Boolean> damageDealt =
                     PlayerStatistics.runPrimaryDamageFormula(mobStatistics, playerStatistics);
 
-            SkyBlockPlayer player = (SkyBlockPlayer) event.getTarget();
-            double baseDefense = playerStatistics.getOverall(net.swofty.commons.skyblock.statistics.ItemStatistic.DEFENSE);
+            double baseDefense = playerStatistics.getOverall(ItemStatistic.DEFENSE);
             double resistance = AttributeEffectService.resistanceDefense(player.getHuntingData(), mob);
             double resistanceMultiplier = (100D + Math.max(0, baseDefense))
                     / (100D + Math.max(0, baseDefense + resistance));
@@ -47,24 +49,23 @@ public class PlayerActionDamagedAttacked implements HypixelEventClass {
             SkyBlockValueEvent.callValueUpdateEvent(valueEvent);
 
             // Handle damage event pets — they may further modify the damage taken
-            SkyBlockPlayer damagedPlayer = (SkyBlockPlayer) event.getTarget();
             float finalDamage = (float) valueEvent.getValue();
-            SkyBlockItem pet = damagedPlayer.getPetData().getEnabledPet();
-            PetEvent.DamagedByMob damageEvent = damagedPlayer.getPetData()
-                    .dispatch(new PetEvent.DamagedByMob(damagedPlayer, pet, mob, finalDamage));
+            SkyBlockItem pet = player.getPetData().getEnabledPet();
+            PetEvent.DamagedByMob damageEvent = player.getPetData()
+                    .dispatch(new PetEvent.DamagedByMob(player, pet, mob, finalDamage));
             finalDamage = (float) damageEvent.damage();
 
-            damagedPlayer.damage(new EntityDamage(mob, finalDamage));
+            player.damage(new EntityDamage(mob, finalDamage));
 
             if (mob instanceof SlayerBossMob slayerBoss) {
-                slayerBoss.getAbility().onMeleeHit(slayerBoss, (SkyBlockPlayer) event.getTarget());
+                slayerBoss.getAbility().onMeleeHit(slayerBoss, player);
             }
 
             new DamageIndicator()
                     .damage(finalDamage)
-                    .pos(event.getTarget().getPosition())
+                    .pos(player.getPosition())
                     .critical(damageDealt.getValue())
-                    .display(event.getTarget().getInstance());
+                    .display(player.getInstance());
         }
     }
 
