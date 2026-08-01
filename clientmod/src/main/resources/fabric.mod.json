@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "thehypixelrecreationmod",
+  "version": "${version}",
+  "name": "TheHypixelRecreationMod",
+  "description": "Development Helper Mod for the Hypixel Skyblock Recreation Project",
+  "authors": [
+    "ItzKatze",
+    "ArikSquad"
+  ],
+  "contact": {
+    "sources": "https://github.com/Swofty-Developments/HypixelSkyBlock"
+  },
+  "license": "AGPL-3.0",
+  "icon": "assets/thehypixelrecreationmod/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "gg.itzkatze.thehypixelrecreationmod.TheHypixelRecreationMod"
+    ]
+  },
+  "mixins": [
+    "thehypixelrecreationmod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": ">=26.2",
+    "java": ">=25",
+    "fabric-api": "*",
+    "hypixel-mod-api": ">=1.0.1"
+  }
+}

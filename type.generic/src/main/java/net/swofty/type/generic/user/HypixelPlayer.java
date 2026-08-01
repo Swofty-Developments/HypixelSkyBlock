@@ -20,19 +20,9 @@ import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.achievement.PlayerAchievementHandler;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.datapoints.DatapointBoolean;
-import net.swofty.type.generic.data.datapoints.DatapointChatType;
-import net.swofty.type.generic.data.datapoints.DatapointInteger;
-import net.swofty.type.generic.data.datapoints.DatapointLocale;
-import net.swofty.type.generic.data.datapoints.DatapointRank;
-import net.swofty.type.generic.data.datapoints.DatapointString;
-import net.swofty.type.generic.data.datapoints.DatapointToggles;
+import net.swofty.type.generic.data.datapoints.*;
 import net.swofty.type.generic.experience.PlayerExperienceHandler;
-import net.swofty.type.generic.gui.v2.StatefulView;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.View;
-import net.swofty.type.generic.gui.v2.ViewNavigator;
-import net.swofty.type.generic.gui.v2.ViewSession;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.quest.PlayerQuestHandler;
 import net.swofty.type.generic.user.categories.Rank;
@@ -207,6 +197,10 @@ public class HypixelPlayer extends Player {
 	public String getFullDisplayName() {
 		return getLegacyRankPrefix() + getUsername();
 	}
+
+    public Component getRankDisplayName() {
+        return getRankPrefix().appendSpace().append(Component.text(getUsername()));
+    }
 
 	public Component getColouredName() {
 		Rank rank = getDataHandler().get(HypixelDataHandler.Data.RANK, DatapointRank.class).getValue();

@@ -7,11 +7,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.commons.skyblock.item.UnderstandableSkyBlockItem;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.generic.i18n.I18n;
@@ -132,7 +128,7 @@ public class GUIStorage extends StatelessView {
             layout.slot(backpackSlot, (s, c) -> {
                 SkyBlockPlayer p = (SkyBlockPlayer) c.player();
                 Locale l = p.getLocale();
-                String itemName = item.getAttributeHandler().getRarity().getColor() +
+                String itemName = item.getAttributeHandler().getRarity().getLegacyColor() +
                         item.getAttributeHandler().getPotentialType().getDisplayName();
                 String slots = String.valueOf(item.getComponent(BackpackComponent.class).getRows() * 9);
                 return ItemStackCreator.getStackHead(I18n.string("gui_sbmenu.storage.backpack_slot", l, Component.text(String.valueOf(slot))),

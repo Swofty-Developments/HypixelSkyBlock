@@ -396,6 +396,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: CUSTOM_AWARD
+          data:
+            customAward: FIG_FORAGING_LEVEL_CAP
 - itemType: TENDER_WOOD
   rewards:
     - amount: 10
@@ -403,6 +406,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: RETIA_BASICA
     - amount: 25
       rewards:
         - type: XP
@@ -413,6 +419,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: RETIA_MELIORA
     - amount: 100
       rewards:
         - type: XP
@@ -426,6 +435,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: RETIA_ROBUSTA
     - amount: 400
       rewards:
         - type: XP
@@ -436,6 +448,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: RETIA_FORTA
     - amount: 800
       rewards:
         - type: XP
@@ -446,6 +461,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: RECIPE_UNLOCK
+          data:
+            unlockedItemType: RETIA_SUPREMA
 - itemType: MANGROVE_LOG
   rewards:
     - amount: 500
@@ -496,6 +514,9 @@ collections:
         - type: XP
           data:
             xp: 4
+        - type: CUSTOM_AWARD
+          data:
+            customAward: MANGROVE_FORAGING_LEVEL_CAP
 - itemType: VINESAP
   rewards:
     - amount: 10

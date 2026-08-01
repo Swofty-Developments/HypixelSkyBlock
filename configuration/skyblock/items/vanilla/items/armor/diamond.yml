@@ -19,6 +19,8 @@ items:
             result:
               type: DIAMOND_HELMET
               amount: 1
+      - id: SELLABLE
+        value: 20.0
     default_statistics:
       defense: 15.0
   - id: DIAMOND_CHESTPLATE
@@ -42,6 +44,8 @@ items:
             result:
               type: DIAMOND_CHESTPLATE
               amount: 1
+      - id: SELLABLE
+        value: 32.0
     default_statistics:
       defense: 40.0
   - id: DIAMOND_LEGGINGS
@@ -65,6 +69,8 @@ items:
             result:
               type: DIAMOND_LEGGINGS
               amount: 1
+      - id: SELLABLE
+        value: 28.0
     default_statistics:
       defense: 30.0
   - id: DIAMOND_BOOTS
@@ -87,5 +93,7 @@ items:
             result:
               type: DIAMOND_BOOTS
               amount: 1
+      - id: SELLABLE
+        value: 16.0
     default_statistics:
       defense: 15.0

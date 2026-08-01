@@ -26,5 +26,7 @@ items:
             result:
               type: BOW
               amount: 1
+      - id: SELLABLE
+        value: 9.0
     default_statistics:
       damage: 30.0

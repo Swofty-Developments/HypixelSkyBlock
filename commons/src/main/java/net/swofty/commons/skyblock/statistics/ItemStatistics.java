@@ -52,6 +52,7 @@ public final class ItemStatistics {
             case VITALITY -> List.of("§7Vitality increases your incoming", "§7healing, including health regen.");
             case MENDING -> List.of("§7Mending increases your outgoing", "§7healing.");
             case SWING_RANGE -> List.of("§7Increases your melee hit range.");
+            case RIFT_DAMAGE -> List.of("§7Damage dealt to enemies in the Rift.");
             case BREAKING_POWER -> List.of("§7Breaking Power allows you to mine", "§7stronger blocks.");
             case MINING_SPEED -> List.of("§7Increases the speed of breaking", "§7mining blocks.");
             case MINING_SPREAD ->

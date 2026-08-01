@@ -34,9 +34,9 @@ public class MinionShippingExtension extends MinionExtension {
         }
     }
 
-    public void addCoins(double coins) {
+    public void addCoins(double coins, int itemCount) {
         heldCoins += coins;
-        itemsSold += 1;
+        itemsSold += itemCount;
     }
 
     @Override
@@ -95,8 +95,14 @@ public class MinionShippingExtension extends MinionExtension {
                     }
 
                     player.addAndUpdateItem(getItemTypePassedIn());
+                    if (heldCoins > 0) {
+                        player.addCoins(heldCoins);
+                        player.sendMessage("§aYou have received §6" + StringUtility.commaify(heldCoins)
+                                + " coins§a from your Minion!");
+                    }
                     setItemTypePassedIn(null);
                     itemsSold = 0;
+                    heldCoins = 0;
                     p.getInventory().setCursorItem(ItemStack.AIR);
                     e.setCancelled(true);
                     minion.getExtensionData().setData(slot, MinionShippingExtension.this);

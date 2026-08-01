@@ -24,10 +24,11 @@ items:
             result:
               type: SPEED_TALISMAN
               amount: 1
-
+      - id: SELLABLE
+        value: 110.0
   - id: SPEED_RING
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       speed: 3.0
     components:
@@ -53,10 +54,11 @@ items:
             result:
               type: SPEED_RING
               amount: 1
-
+      - id: SELLABLE
+        value: 18000.0
   - id: SPEED_ARTIFACT
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: RARE
     default_statistics:
       speed: 5.0
     components:
@@ -82,3 +84,5 @@ items:
             result:
               type: SPEED_ARTIFACT
               amount: 1
+      - id: SELLABLE
+        value: 1400000.0

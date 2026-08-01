@@ -17,22 +17,13 @@ public class ActionCollectionHypixelLevel implements HypixelEventClass {
         if (CollectionCategories.getCategory(event.getItemType()) == null) return;
 
         CollectionCategory.ItemCollection collection = CollectionCategories.getCategory(event.getItemType()).getCollection(event.getItemType());
-        CollectionCategory.ItemCollectionReward newReward = event.getPlayer().getCollection().getReward(collection);
-        CollectionCategory.ItemCollectionReward oldReward = null;
-
+        int newValue = event.getPlayer().getCollection().get(event.getItemType());
         for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
-            if (event.getOldValue() <= reward.requirement()) {
-                oldReward = reward;
-                break;
+            if (event.getOldValue() < reward.requirement() && newValue >= reward.requirement()) {
+                event.getPlayer().getSkyBlockExperience().addExperience(
+                        SkyBlockLevelCause.getCollectionCause(event.getItemType(), collection.getPlacementOf(reward))
+                );
             }
-        }
-
-        if (oldReward == newReward) return;
-
-        if (newReward != null) {
-            event.getPlayer().getSkyBlockExperience().addExperience(
-                    SkyBlockLevelCause.getCollectionCause(event.getItemType(), collection.getPlacementOf(newReward))
-            );
         }
     }
 }

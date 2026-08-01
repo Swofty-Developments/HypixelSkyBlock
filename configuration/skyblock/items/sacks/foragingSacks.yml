@@ -1,23 +1,23 @@
 items:
   - id: SMALL_FORAGING_SACK
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aAcacia Log§7, §aAcacia Sapling§7, §aApple§7, §aBamboo§7, §aBirch'
-      - '§aLog§7, §aBirch Sapling§7, §aDark Oak Log§7, §aDark Oak Sapling§7, §aDeep'
-      - '§aRoot§7, §aFig Log§7, §aFlexbone§7, §aGill Membrane§7, §aJungle Log§7,'
-      - '§aJungle Sapling§7, §aLushlilac§7, §aMangrove Log§7, §aOak Log§7, §aOak'
-      - '§aSapling§7, §aSea Lumies§7, §aSpruce Log§7, §aSpruce Sapling§7, §aStarlyn'
-      - '§aPrize§7, §aStick§7, §aStretching Sticks§7, §aSturdy Bone§7, §aTender'
-      - '§aWood§7, §aVinesap§7, §aWet Water'
+      - "\xA77Items: \xA7aAcacia Log\xA77, \xA7aAcacia Sapling\xA77, \xA7aApple\xA77, \xA7aBamboo\xA77, \xA7aBirch"
+      - "\xA7aLog\xA77, \xA7aBirch Sapling\xA77, \xA7aDark Oak Log\xA77, \xA7aDark Oak Sapling\xA77, \xA7aDeep"
+      - "\xA7aRoot\xA77, \xA7aFig Log\xA77, \xA7aFlexbone\xA77, \xA7aGill Membrane\xA77, \xA7aJungle Log\xA77,"
+      - "\xA7aJungle Sapling\xA77, \xA7aLushlilac\xA77, \xA7aMangrove Log\xA77, \xA7aOak Log\xA77, \xA7aOak"
+      - "\xA7aSapling\xA77, \xA7aSea Lumies\xA77, \xA7aSpruce Log\xA77, \xA7aSpruce Sapling\xA77, \xA7aStarlyn"
+      - "\xA7aPrize\xA77, \xA7aStick\xA77, \xA7aStretching Sticks\xA77, \xA7aSturdy Bone\xA77, \xA7aTender"
+      - "\xA7aWood\xA77, \xA7aVinesap\xA77, \xA7aWet Water"
       - ''
-      - '§7Capacity: §e2,240 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e2,240 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 4f960c639d4004d1882575aeba69f456fb3c744077935714947e19c1306d2733
@@ -71,26 +71,25 @@ items:
             result:
               type: SMALL_FORAGING_SACK
               amount: 1
-
   - id: MEDIUM_FORAGING_SACK
     material: player_head
     rarity: RARE
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aAcacia Log§7, §aAcacia Sapling§7, §aApple§7, §aBamboo§7, §aBirch'
-      - '§aLog§7, §aBirch Sapling§7, §aDark Oak Log§7, §aDark Oak Sapling§7, §aDeep'
-      - '§aRoot§7, §aFig Log§7, §aFlexbone§7, §aGill Membrane§7, §aJungle Log§7,'
-      - '§aJungle Sapling§7, §aLushlilac§7, §aMangrove Log§7, §aOak Log§7, §aOak'
-      - '§aSapling§7, §aSea Lumies§7, §aSpruce Log§7, §aSpruce Sapling§7, §aStarlyn'
-      - '§aPrize§7, §aStick§7, §aStretching Sticks§7, §aSturdy Bone§7, §aTender'
-      - '§aWood§7, §aVinesap§7, §aWet Water'
+      - "\xA77Items: \xA7aAcacia Log\xA77, \xA7aAcacia Sapling\xA77, \xA7aApple\xA77, \xA7aBamboo\xA77, \xA7aBirch"
+      - "\xA7aLog\xA77, \xA7aBirch Sapling\xA77, \xA7aDark Oak Log\xA77, \xA7aDark Oak Sapling\xA77, \xA7aDeep"
+      - "\xA7aRoot\xA77, \xA7aFig Log\xA77, \xA7aFlexbone\xA77, \xA7aGill Membrane\xA77, \xA7aJungle Log\xA77,"
+      - "\xA7aJungle Sapling\xA77, \xA7aLushlilac\xA77, \xA7aMangrove Log\xA77, \xA7aOak Log\xA77, \xA7aOak"
+      - "\xA7aSapling\xA77, \xA7aSea Lumies\xA77, \xA7aSpruce Log\xA77, \xA7aSpruce Sapling\xA77, \xA7aStarlyn"
+      - "\xA7aPrize\xA77, \xA7aStick\xA77, \xA7aStretching Sticks\xA77, \xA7aSturdy Bone\xA77, \xA7aTender"
+      - "\xA7aWood\xA77, \xA7aVinesap\xA77, \xA7aWet Water"
       - ''
-      - '§7Capacity: §e2,240 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e2,240 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 2c14105c7b629cfdeb866a560bab59734aa5cbbe880ed9f50f9044c42afd599d
@@ -144,26 +143,25 @@ items:
             result:
               type: MEDIUM_FORAGING_SACK
               amount: 1
-
   - id: LARGE_FORAGING_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aAcacia Log§7, §aAcacia Sapling§7, §aApple§7, §aBamboo§7, §aBirch'
-      - '§aLog§7, §aBirch Sapling§7, §aDark Oak Log§7, §aDark Oak Sapling§7, §aDeep'
-      - '§aRoot§7, §aFig Log§7, §aFlexbone§7, §aGill Membrane§7, §aJungle Log§7,'
-      - '§aJungle Sapling§7, §aLushlilac§7, §aMangrove Log§7, §aOak Log§7, §aOak'
-      - '§aSapling§7, §aSea Lumies§7, §aSpruce Log§7, §aSpruce Sapling§7, §aStarlyn'
-      - '§aPrize§7, §aStick§7, §aStretching Sticks§7, §aSturdy Bone§7, §aTender'
-      - '§aWood§7, §aVinesap§7, §aWet Water'
+      - "\xA77Items: \xA7aAcacia Log\xA77, \xA7aAcacia Sapling\xA77, \xA7aApple\xA77, \xA7aBamboo\xA77, \xA7aBirch"
+      - "\xA7aLog\xA77, \xA7aBirch Sapling\xA77, \xA7aDark Oak Log\xA77, \xA7aDark Oak Sapling\xA77, \xA7aDeep"
+      - "\xA7aRoot\xA77, \xA7aFig Log\xA77, \xA7aFlexbone\xA77, \xA7aGill Membrane\xA77, \xA7aJungle Log\xA77,"
+      - "\xA7aJungle Sapling\xA77, \xA7aLushlilac\xA77, \xA7aMangrove Log\xA77, \xA7aOak Log\xA77, \xA7aOak"
+      - "\xA7aSapling\xA77, \xA7aSea Lumies\xA77, \xA7aSpruce Log\xA77, \xA7aSpruce Sapling\xA77, \xA7aStarlyn"
+      - "\xA7aPrize\xA77, \xA7aStick\xA77, \xA7aStretching Sticks\xA77, \xA7aSturdy Bone\xA77, \xA7aTender"
+      - "\xA7aWood\xA77, \xA7aVinesap\xA77, \xA7aWet Water"
       - ''
-      - '§7Capacity: §e2,240 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e2,240 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 2c6e24df498ba4a589c259d9fc0d3db348f93cdf26a5fe461571c1da706efaf3
@@ -217,24 +215,23 @@ items:
             result:
               type: LARGE_FORAGING_SACK
               amount: 1
-
   - id: LARGE_ENCHANTED_FORAGING_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7This sack can contain all enchanted versions'
-      - '§7of these materials:'
-      - '§aAcacia Log§7, §aBirch Log§7, §aDark Oak Log§7, §aFig Log§7,'
-      - '§aFigstone§7, §aJungle Log§7, §aMangcore§7, §aMangrove Log§7,'
-      - '§aOak Log§7, §aSpruce Log'
+      - "\xA77This sack can contain all enchanted versions"
+      - "\xA77of these materials:"
+      - "\xA7aAcacia Log\xA77, \xA7aBirch Log\xA77, \xA7aDark Oak Log\xA77, \xA7aFig Log\xA77,"
+      - "\xA7aFigstone\xA77, \xA7aJungle Log\xA77, \xA7aMangcore\xA77, \xA7aMangrove Log\xA77,"
+      - "\xA7aOak Log\xA77, \xA7aSpruce Log"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 35326464c6a79362730d79fe4611b911353c1b3c5144177773591357f1cd5ca1

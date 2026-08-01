@@ -1,7 +1,7 @@
 items:
   - id: BEHEADED_HORROR
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: dbad99ed3c820b7978190ad08a934a68dfa90d9986825da1c97f6f21f49ad626
@@ -12,7 +12,7 @@ items:
         recipe_item: REAPER_MASK
   - id: FOUL_FLESH
     material: charcoal
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 25000.0
@@ -27,7 +27,7 @@ items:
         last_time_ms: 18000000
   - id: REVENANT_CATALYST
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: SKULL_HEAD
         texture: b88cfafa5f03f8aef042a143799e964342df76b7c1eb461f618e398f84a99a63
@@ -35,16 +35,20 @@ items:
         value: 8000.0
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REAPER_FALCHION
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/catalysts/revenant_catalyst
   - id: REVENANT_FLESH
     material: rotten_flesh
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: SELLABLE
         value: 1.0
       - id: ENCHANTED
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/revenant_flesh
   - id: REVENANT_VISCERA
     material: cooked_porkchop
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SELLABLE
         value: 128.0
@@ -68,25 +72,27 @@ items:
             result:
               type: REVENANT_VISCERA
               amount: 1
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/revenant_viscera
   - id: SCYTHE_BLADE
     material: diamond
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: ENCHANTED
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REAPER_SCYTHE
   - id: SHARD_OF_THE_SHREDDED
     material: player_head
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
-        texture: 70c5cc728c869ecf3c6e0979e8aa09c10147ed770417e4ba541aac382f0
+        texture: b10857e872711e7e6925c9ef1115353b47f58ef07eb5c2d565f1f86023e7a284
       - id: TRACKED_UNIQUE
       - id: RIGHT_CLICK_RECIPE
         recipe_item: AXE_OF_THE_SHREDDED
   - id: UNDEAD_CATALYST
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: SKULL_HEAD
         texture: 80625369b0a7b052632db6b926a87670219539922836ac5940be26d34bf14e10
@@ -94,96 +100,151 @@ items:
         value: 2000.0
       - id: RIGHT_CLICK_RECIPE
         recipe_item: REVENANT_FALCHION
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/zombie/catalysts/undead_catalyst
   - id: WARDEN_HEART
     material: player_head
-    rarity: COMMON
+    rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
-        texture: d45f4d139c9e89262ec06b27aaad73fa488ab49290d2ccd685a2554725373c9b
+        texture: 19a3b5fab01dfabf1f8a814440a8ce80de109b135a51aef225c9ee98fe447e0
       - id: TRACKED_UNIQUE
       - id: RIGHT_CLICK_RECIPE
         recipe_item: WARDEN_HELMET
-
   - id: ANCIENT_CLAW
     rarity: RARE
     material: FLINT
-
+    components:
+      - id: SELLABLE
+        value: 200.0
   - id: WOLF_TOOTH
     rarity: UNCOMMON
     material: GHAST_TEAR
-
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/wolf_tooth
   - id: SPIDER_CATALYST
     rarity: RARE
     material: PLAYER_HEAD
-
+    components:
+      - id: SELLABLE
+        value: 2000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/spider_catalyst
   - id: TARANTULA_SILK
     rarity: RARE
     material: COBWEB
-
+    components:
+      - id: SELLABLE
+        value: 128.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/tarantula_silk
   - id: TARANTULA_WEB
     rarity: UNCOMMON
     material: STRING
-
+    components:
+      - id: SELLABLE
+        value: 1.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/tarantula_web
   - id: OVERFLUX_CAPACITOR
     rarity: EPIC
     material: QUARTZ
-
   - id: GRIFFIN_FEATHER
     rarity: RARE
     material: FEATHER
-
+    components:
+      - id: SELLABLE
+        value: 5000.0
   - id: BRAIDED_GRIFFIN_FEATHER
     rarity: EPIC
     material: STRING
-
+    components:
+      - id: SELLABLE
+        value: 1000000.0
   - id: DAEDALUS_STICK
     rarity: LEGENDARY
     material: STICK
-
+    components:
+      - id: SELLABLE
+        value: 1000000.0
   - id: GOLDEN_TOOTH
     rarity: RARE
     material: GOLD_NUGGET
-
+    components:
+      - id: SELLABLE
+        value: 128.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/wolf/golden_tooth
   - id: DIGESTED_MOSQUITO
     rarity: LEGENDARY
     material: ROTTEN_FLESH
-
   - id: TOXIC_ARROW_POISON
     rarity: UNCOMMON
     material: LIME_DYE
-
+    components:
+      - id: SELLABLE
+        value: 2000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/spider/toxic_arrow_poison
   - id: TWILIGHT_ARROW_POISON
     rarity: UNCOMMON
     material: PURPLE_DYE
-
+    components:
+      - id: SELLABLE
+        value: 650.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/twilight_arrow_poison
   - id: BUNDLE_OF_MAGMA_ARROWS
     rarity: EPIC
     material: PLAYER_HEAD
-
   - id: BONZO_FRAGMENT
     rarity: RARE
     material: RED_MUSHROOM
-
+    components:
+      - id: SELLABLE
+        value: 10000.0
   - id: FLEXBONE
-    rarity: COMMON
+    rarity: UNCOMMON
     material: BONE
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/flexbone
   - id: STURDY_BONE
-    rarity: COMMON
+    rarity: RARE
     material: PLAYER_HEAD
-
+    components:
+      - id: SELLABLE
+        value: 200.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/sturdy_bone
   - id: DERELICT_ASHE
     rarity: UNCOMMON
     material: GUNPOWDER
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/blaze/tokens/derelict_ashe
   - id: SUMMONING_EYE
     rarity: EPIC
     material: PLAYER_HEAD
-
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/summoning_eye
   - id: TESSELLATED_ENDER_PEARL
     rarity: LEGENDARY
     material: PLAYER_HEAD
-
+    components:
+      - id: SELLABLE
+        value: 96000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/tessalated_ender_pearl
   - id: SCORCHED_POWER_CRYSTAL
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 350000.0
+      - id: SKULL_HEAD
+        texture: f099d4e25a569e2d018bd8d7e1a40ad2ccbc9bd1fd2ed48688bcc3f62a96213a

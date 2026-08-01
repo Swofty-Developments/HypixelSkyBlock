@@ -8,13 +8,15 @@ import java.util.function.BiFunction;
 
 @Getter
 public class Reforge {
+    private final String id;
     private final String name;
     private final String prefix;
     private final Set<ReforgeType> applicableTypes;
     private final BiFunction<ItemStatistics, Integer, ItemStatistics> calculation;
 
-    public Reforge(String name, String prefix, Set<ReforgeType> applicableTypes,
+    public Reforge(String id, String name, String prefix, Set<ReforgeType> applicableTypes,
                    BiFunction<ItemStatistics, Integer, ItemStatistics> calculation) {
+        this.id = id;
         this.name = name;
         this.prefix = prefix;
         this.applicableTypes = applicableTypes;
@@ -32,7 +34,8 @@ public class Reforge {
     @Override
     public String toString() {
         return "Reforge{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", prefix='" + prefix + '\'' +
                 ", applicableTypes=" + applicableTypes +
                 '}';

@@ -25,10 +25,10 @@ public class GUIProfileSelectMode extends StatelessView {
 
         layout.slot(11, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.mode.classic", Material.GRASS_BLOCK, 1,
                         "gui_sbmenu.profiles.mode.classic.lore"),
-                (click, c) -> c.player().openView(new GUIProfileCreate()));
+                (click, c) -> c.player().openView(new GUIProfileCreate(net.swofty.type.skyblockgeneric.user.ProfileMode.CLASSIC)));
 
         layout.slot(15, (s, c) -> TranslatableItemStackCreator.getStack("gui_sbmenu.profiles.mode.special", Material.BLAZE_POWDER, 1,
                         "gui_sbmenu.profiles.mode.special.lore"),
-            (click, c) -> c.player().sendMessage(I18n.t("gui_sbmenu.profiles.mode.msg.unavailable")));
+            (click, c) -> c.player().openView(new GUIProfileSelectSpecialMode()));
     }
 }

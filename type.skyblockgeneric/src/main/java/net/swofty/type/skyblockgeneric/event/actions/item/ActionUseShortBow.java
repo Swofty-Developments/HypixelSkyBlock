@@ -9,6 +9,7 @@ import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ArrowComponent;
 import net.swofty.type.skyblockgeneric.item.components.BowComponent;
+import net.swofty.type.skyblockgeneric.item.components.ItemRequirementsComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 public class ActionUseShortBow implements HypixelEventClass {
@@ -20,6 +21,11 @@ public class ActionUseShortBow implements HypixelEventClass {
 
         if (type.equals(ItemAnimation.BOW)) {
             SkyBlockItem item = new SkyBlockItem(player.getItemInMainHand());
+            if (item.hasComponent(ItemRequirementsComponent.class)
+                    && !item.getComponent(ItemRequirementsComponent.class).ensureCanUse(player)) {
+                event.setCancelled(true);
+                return;
+            }
             BowComponent bow = item.getComponent(BowComponent.class);
 
             if (!bow.isShouldBeArrow()) {

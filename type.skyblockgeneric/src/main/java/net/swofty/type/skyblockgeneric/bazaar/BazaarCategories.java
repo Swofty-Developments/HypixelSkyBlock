@@ -109,7 +109,9 @@ public enum BazaarCategories {
                     ItemType.GRIFFIN_FEATHER, ItemType.DAEDALUS_STICK, ItemType.ANCIENT_CLAW, ItemType.ENCHANTED_ANCIENT_CLAW)
     ),
     WOODS_AND_FISHES(Material.FISHING_ROD, Material.ORANGE_STAINED_GLASS_PANE, "§6"),
-    ODDITIES(Material.ENCHANTING_TABLE, Material.PINK_STAINED_GLASS_PANE, "§d"),;
+    ODDITIES(Material.ENCHANTING_TABLE, Material.PINK_STAINED_GLASS_PANE, "§d",
+            new BazaarItemSet(ItemType.ATTRIBUTE_SHARD, "Attribute Shards", AttributeBazaarItems.values())),
+    ;
 
     private final Material displayItem;
     private final Material glassItem;

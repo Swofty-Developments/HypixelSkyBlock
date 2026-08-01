@@ -40,7 +40,7 @@ public class ProxyInformation {
     public CompletableFuture<UnderstandableProxyServer> getServerInformation(ProxyPlayer player) {
         CompletableFuture<UnderstandableProxyServer> future = new CompletableFuture<>();
         RedisClient.requestProxy(PROTOCOL,
-                        new RequestServersProtocol.Request("PLAYER_UUID", null, player.getUuid().toString()))
+                        new RequestServersProtocol.Request("PLAYER_UUID", null, player.uuid().toString()))
                 .thenAccept(response -> future.complete(UnderstandableProxyServer.fromJSON(new JSONObject(response.serversList())).getFirst()));
         return future;
     }

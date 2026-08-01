@@ -6,8 +6,8 @@ import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.entity.metadata.other.InteractionMeta;
-import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.generic.entity.hologram.PlayerHolograms;
+import net.swofty.type.skyblockgeneric.data.datapoints.DatapointMuseum;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.museum.MuseumDisplay;
@@ -54,7 +54,7 @@ public class ArmorMuseumDisplayHandler extends MuseumDisplay {
             @Nullable SkyBlockItem leggings = items.stream().filter(item -> item.getAttributeHandler().getPotentialType() == armorSetRegistry.getLeggings()).findFirst().orElse(null);
             @Nullable SkyBlockItem boots = items.stream().filter(item -> item.getAttributeHandler().getPotentialType() == armorSetRegistry.getBoots()).findFirst().orElse(null);
 
-            String armorSetName = helmet.getAttributeHandler().getRarity().getColor() + armorSetRegistry.getDisplayName() + " Set";
+            String armorSetName = helmet.getAttributeHandler().getRarity().getLegacyColor() + armorSetRegistry.getDisplayName() + " Set";
             hologram = PlayerHolograms.ExternalPlayerHologram.builder()
                     .player(player)
                     .text(new String[]{armorSetName})

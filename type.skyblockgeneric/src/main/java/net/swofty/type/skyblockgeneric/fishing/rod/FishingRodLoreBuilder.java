@@ -2,9 +2,6 @@ package net.swofty.type.skyblockgeneric.fishing.rod;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
@@ -14,6 +11,9 @@ import net.swofty.type.skyblockgeneric.item.components.FishingRodMetadataCompone
 import net.swofty.type.skyblockgeneric.item.components.GemstoneComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FishingRodLoreBuilder {
@@ -76,7 +76,7 @@ public final class FishingRodLoreBuilder {
             lore.add("* Co-op Soulbound *");
         }
 
-        lore.add(item.getAttributeHandler().getRarity().getDisplay() + " FISHING ROD");
+        lore.add(item.getAttributeHandler().getRarity().getLegacyDisplay() + " FISHING ROD");
         return new FishingRodLore(item.getDisplayName(), lore);
     }
 

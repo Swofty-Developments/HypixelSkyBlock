@@ -1,18 +1,19 @@
 package net.swofty.type.skyblockgeneric.gui.inventories.fishing;
 
+import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.inventory.InventoryType;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.Layouts;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
+import java.util.Set;
 
 public class GUINavigator extends StatelessView {
 
@@ -28,9 +29,11 @@ public class GUINavigator extends StatelessView {
         boolean inBayou = currentServer == ServerType.SKYBLOCK_BACKWATER_BAYOU;
         boolean unlocked = inBayou || player.getShipState().hasDestination("BACKWATER_BAYOU");
 
-        layout.slots(Layouts.row(0), (_, _) -> Components.FILLER);
-        layout.slots(Layouts.row(5), (_, _) -> Components.FILLER);
-        layout.slots(Layouts.rectangle(9, 45), (_, _) -> Components.FILLER.material(Material.BLUE_STAINED_GLASS_PANE));
+        layout.slots(Layouts.row(0));
+        layout.slots(Layouts.row(5));
+        layout.slots(Layouts.rectangle(9, 45), (_, _) -> ItemStack.builder(Material.BLUE_STAINED_GLASS_PANE)
+                .set(DataComponents.CUSTOM_NAME, Component.space())
+                .set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(true, Set.of())));
         Components.close(layout, 49);
 
         if (inBayou) {

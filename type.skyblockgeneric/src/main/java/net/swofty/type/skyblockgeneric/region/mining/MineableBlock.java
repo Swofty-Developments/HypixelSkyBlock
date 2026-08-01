@@ -32,12 +32,21 @@ public enum MineableBlock {
     // Break time with axe = blockStrength / axe_strength from AxeComponent
     // Vanilla times: Hand=3s, Wooden=1.5s, Stone=0.75s, Iron=0.5s, Diamond=0.4s, Golden=0.25s
     ACACIA_LOG(Material.ACACIA_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    ACACIA_WOOD(Material.ACACIA_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
     BIRCH_LOG(Material.BIRCH_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    BIRCH_WOOD(Material.BIRCH_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
     JUNGLE_LOG(Material.JUNGLE_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    JUNGLE_WOOD(Material.JUNGLE_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
     SPRUCE_LOG(Material.SPRUCE_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    SPRUCE_WOOD(Material.SPRUCE_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    STRIPPED_SPRUCE_LOG(Material.STRIPPED_SPRUCE_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.figForagingBlock()),
+    STRIPPED_SPRUCE_WOOD(Material.STRIPPED_SPRUCE_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.figForagingBlock()),
     DARK_OAK_LOG(Material.DARK_OAK_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
-    MANGROVE_LOG(Material.MANGROVE_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    DARK_OAK_WOOD(Material.DARK_OAK_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    MANGROVE_LOG(Material.MANGROVE_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.mangroveForagingBlock()),
+    MANGROVE_WOOD(Material.MANGROVE_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.mangroveForagingBlock()),
     OAK_LOG(Material.OAK_LOG, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
+    OAK_WOOD(Material.OAK_WOOD, MiningHandlers.axe(60, 60), MiningBlockClassification.foragingBlock()),
 
     // Farming mineable blocks (instant break)
     WHEAT(Material.WHEAT, MiningHandlers.instant(), MiningBlockClassification.wheatBlock()),

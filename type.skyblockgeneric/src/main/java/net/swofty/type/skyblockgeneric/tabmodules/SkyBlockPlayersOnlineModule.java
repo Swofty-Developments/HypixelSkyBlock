@@ -28,7 +28,7 @@ public class SkyBlockPlayersOnlineModule extends TablistModule {
         List<SkyBlockPlayer> players = SkyBlockGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-            new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Component.text(String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
+                new TablistEntry(Component.text(getCentered(I18n.string("tablist.module.players", l, Component.text(String.valueOf(players.size()))))), TablistSkinRegistry.GREEN)
         ));
 
         List<SkyBlockPlayer> toShow = new ArrayList<>();
@@ -49,13 +49,12 @@ public class SkyBlockPlayersOnlineModule extends TablistModule {
 
         for (int x = 0; x < 19; x++) {
             if (x >= toShow.size()) {
-                entries.add(new TablistEntry(" ", TablistSkinRegistry.GRAY));
+                entries.add(getGrayEntry());
                 continue;
             }
 
             SkyBlockPlayer tablistPlayer = toShow.get(x);
-
-            entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
+            entries.add(new TablistEntry(tablistPlayer.getRankDisplayName(), TablistSkinRegistry.GRAY));
         }
 
         return entries;

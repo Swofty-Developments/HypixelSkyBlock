@@ -1,7 +1,7 @@
 items:
   - id: HUB_CASTLE_TRAVEL_SCROLL
     material: PAPER
-    rarity: UNCOMMON
+    rarity: EPIC
     components:
       - id: TRAVEL_SCROLL
         scroll_type: HUB_CASTLE
@@ -43,7 +43,7 @@ items:
         scroll_type: THE_PARK
   - id: HUB_CRYPTS_TRAVEL_SCROLL
     material: PAPER
-    rarity: UNCOMMON
+    rarity: EPIC
     components:
       - id: TRAVEL_SCROLL
         scroll_type: HUB_CRYPTS

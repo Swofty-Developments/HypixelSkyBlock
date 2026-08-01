@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.mongodb.driver.sync)
     // Must match AtlasRedisAPI's Jedis version to avoid conflicts
     implementation(libs.jedis)
+    implementation(libs.atlas.redis)
     implementation(libs.tinylog.api)
     implementation(libs.tinylog.impl)
     implementation(libs.kotlin.stdlib)

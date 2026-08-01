@@ -117,7 +117,7 @@ items:
         value: 4.0
   - id: DIAMOND_HOE
     material: diamond_hoe
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: STANDARD_ITEM
         standard_item_type: HOE

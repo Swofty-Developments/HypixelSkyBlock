@@ -25,8 +25,8 @@ public class ActionSkillLevelUp implements HypixelEventClass {
 		SkyBlockPlayer player = event.getPlayer();
 		SkillCategories skillCategory = event.getSkillCategory();
 
-		int oldLevel = skillCategory.asCategory().getLevel(event.getOldValueRaw());
-		int newLevel = skillCategory.asCategory().getLevel(event.getNewValueRaw());
+		int oldLevel = player.getSkills().getLevelAt(skillCategory, event.getOldValueRaw());
+		int newLevel = player.getSkills().getLevelAt(skillCategory, event.getNewValueRaw());
 
 		if (oldLevel == newLevel) return;
 
@@ -45,7 +45,8 @@ public class ActionSkillLevelUp implements HypixelEventClass {
 		if (reward.unlocks().length != 0) {
 			player.sendMessage(" ");
 			player.sendMessage("  §a§lREWARDS");
-			Arrays.stream(reward.unlocks()).forEach(unlock -> {
+			for (int level = oldLevel + 1; level <= newLevel; level++) {
+				Arrays.stream(skillCategory.asCategory().getReward(level).unlocks()).forEach(unlock -> {
 				switch (unlock.type()) {
 					case XP ->
 							player.sendMessage("    §8+§b" + ((SkillCategory.XPReward) unlock).getXP() + " SkyBlock XP");
@@ -66,7 +67,8 @@ public class ActionSkillLevelUp implements HypixelEventClass {
 				}
 
 				unlock.onUnlock(player);
-			});
+				});
+			}
 		}
 
 		player.sendMessage("§3§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");

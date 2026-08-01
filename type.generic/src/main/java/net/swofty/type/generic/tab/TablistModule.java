@@ -1,5 +1,6 @@
 package net.swofty.type.generic.tab;
 
+import net.kyori.adventure.text.Component;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.util.List;
@@ -8,16 +9,16 @@ public abstract class TablistModule {
 
     public abstract List<TablistEntry> getEntries(HypixelPlayer player);
 
-    // TODO: use Components
-    public record TablistEntry(String content, TablistSkin registry) {}
+    public record TablistEntry(Component content, TablistSkin registry) {
+    }
 
-    public TablistEntry getGrayEntry() {
-        return new TablistEntry(" ", TablistSkinRegistry.GRAY);
+    public static TablistEntry getGrayEntry() {
+        return new TablistEntry(Component.empty(), TablistSkinRegistry.GRAY);
     }
 
     public static List<TablistEntry> fillRestWithGray(List<TablistEntry> entries) {
         for (int i = entries.size(); i < 20; i++) {
-            entries.add(new TablistEntry("§7", TablistSkinRegistry.GRAY));
+            entries.add(getGrayEntry());
         }
 
         return entries;

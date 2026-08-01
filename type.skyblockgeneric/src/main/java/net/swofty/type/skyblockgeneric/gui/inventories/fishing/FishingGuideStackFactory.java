@@ -3,6 +3,8 @@ package net.swofty.type.skyblockgeneric.gui.inventories.fishing;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
@@ -128,11 +130,11 @@ public final class FishingGuideStackFactory {
         if (!lore.isEmpty() && !lore.getLast().isEmpty()) {
             lore.add("");
         }
-        lore.add(ItemType.valueOf(itemId).rarity.getDisplay() + " " + suffix);
+        lore.add(ItemType.valueOf(itemId).rarity.getLegacyDisplay() + " " + suffix);
     }
 
     private static String coloredName(String itemId, String displayName) {
-        return ItemType.valueOf(itemId).rarity.getColor() + displayName;
+        return LegacyComponentSerializer.legacySection().serialize(Component.text(displayName, ItemType.valueOf(itemId).rarity.getColor())); // TODO: components :)
     }
 
     private static String describeTag(String tag) {

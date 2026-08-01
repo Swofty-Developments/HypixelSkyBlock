@@ -27,7 +27,7 @@ public class MainLobbyPlayersOnlineModule extends TablistModule {
         List<HypixelPlayer> players = HypixelGenericLoader.getLoadedPlayers();
 
         ArrayList<TablistEntry> entries = new ArrayList<>(List.of(
-            new TablistEntry(getCentered(I18n.string("tablist.module.players", l, Component.text(String.valueOf(players.size())))), TablistSkinRegistry.GREEN)
+                new TablistEntry(Component.text(getCentered(I18n.string("tablist.module.players", l, Component.text(String.valueOf(players.size()))))), TablistSkinRegistry.GREEN)
         ));
 
         List<HypixelPlayer> toShow = new ArrayList<>();
@@ -47,12 +47,12 @@ public class MainLobbyPlayersOnlineModule extends TablistModule {
 
         for (int x = 0; x < 19; x++) {
             if (x >= toShow.size()) {
-                entries.add(new TablistEntry(" ", TablistSkinRegistry.GRAY));
+                entries.add(getGrayEntry());
                 continue;
             }
 
             HypixelPlayer tablistPlayer = toShow.get(x);
-            entries.add(new TablistEntry(tablistPlayer.getFullDisplayName(), TablistSkinRegistry.GRAY));
+            entries.add(new TablistEntry(tablistPlayer.getRankDisplayName(), TablistSkinRegistry.GRAY));
         }
 
         return entries;

@@ -6,32 +6,19 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.hollowcube.polar.PolarLoader;
-import net.hollowcube.polar.PolarReader;
-import net.hollowcube.polar.PolarWorld;
-import net.hollowcube.polar.PolarWorldAccess;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.nbt.BinaryTag;
-import net.kyori.adventure.nbt.BinaryTagIO;
-import net.kyori.adventure.nbt.BinaryTagTypes;
-import net.kyori.adventure.nbt.CompoundBinaryTag;
-import net.kyori.adventure.nbt.ListBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.adventure.audience.Audiences;
-import net.minestom.server.codec.Transcoder;
 import net.minestom.server.event.server.ServerTickMonitorEvent;
-import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.monitoring.TickMonitor;
-import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.time.TimeUnit;
-import net.minestom.server.world.biome.Biome;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.config.ConfigProvider;
+import net.swofty.proxyapi.ProxyPlayer;
 import net.swofty.type.generic.achievement.AchievementRegistry;
 import net.swofty.type.generic.achievement.AchievementStatisticsService;
 import net.swofty.type.generic.block.BannerBlockHandler;
@@ -40,12 +27,7 @@ import net.swofty.type.generic.block.SignBlockHandler;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.data.GameDataHandlerRegistry;
 import net.swofty.type.generic.data.HypixelDataHandler;
-import net.swofty.type.generic.data.handlers.ArcadeDataHandler;
-import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
-import net.swofty.type.generic.data.handlers.MurderMysteryDataHandler;
-import net.swofty.type.generic.data.handlers.PrototypeLobbyDataHandler;
-import net.swofty.type.generic.data.handlers.ReplayDataHandler;
-import net.swofty.type.generic.data.handlers.SkywarsDataHandler;
+import net.swofty.type.generic.data.handlers.*;
 import net.swofty.type.generic.data.mongodb.AttributeDatabase;
 import net.swofty.type.generic.data.mongodb.BedWarsStatsDatabase;
 import net.swofty.type.generic.data.mongodb.ProfilesDatabase;
@@ -59,21 +41,15 @@ import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.quest.QuestRegistry;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.user.HypixelPlayer;
-import org.jetbrains.annotations.NotNull;
+import net.swofty.type.generic.user.flow.GenericPlayerDataFlow;
+import net.swofty.type.generic.world.HypixelWorldLoader;
 import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 import org.tinylog.Logger;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
@@ -94,38 +70,7 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         // Handle instances
         CustomWorlds mainInstance = loader.getMainInstance();
         if (mainInstance != null) {
-            InstanceContainer temporaryInstance;
-            // If a custom DimensionType is provided, use that
-            if (loader.getDimensionType() != null) {
-                temporaryInstance = instanceManager.createInstanceContainer(loader.getDimensionType());
-            } else {
-                temporaryInstance = instanceManager.createInstanceContainer();
-            }
-
-            byte[] polarBytes = Files.readAllBytes(loader.getMainInstance().getPath());
-            PolarWorld polarWorld = PolarReader.read(polarBytes);
-
-            registerCustomBiomes(polarWorld.userData());
-
-            temporaryInstance.setChunkLoader(new PolarLoader(loader.getMainInstance().getPath(), polarWorld).setWorldAccess(new PolarWorldAccess() {
-                @Override
-                public int getBiomeId(@NotNull String name) {
-                    int id = MinecraftServer.getBiomeRegistry()
-                        .getId(RegistryKey.unsafeOf(name));
-
-                    if (id == -1) {
-                        // this implementation is the same as in the default polar except for this log this
-                        // here. just to be sure
-                        Logger.info("Missing biome " + name + ", falling back to plains");
-                        return MinecraftServer.getBiomeRegistry()
-                            .getId(Biome.PLAINS);
-                    }
-
-                    return id;
-                }
-            }));
-
-            HypixelConst.setInstanceContainer(instanceManager.createSharedInstance(temporaryInstance));
+            HypixelConst.setInstanceContainer(HypixelWorldLoader.load(loader, instanceManager));
         }
         HypixelConst.setEmptyInstance(instanceManager.createSharedInstance(instanceManager.createInstanceContainer()));
         HypixelConst.getEmptyInstance().setBlock(0, 99, 0, Block.BEDROCK);
@@ -183,27 +128,31 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 if (players.isEmpty())
                     return;
 
-                long ramUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-                ramUsage /= (long) 1e6; // bytes to MB
-                TickMonitor tickMonitor = LAST_TICK.get();
-                double TPS = 1000 / tickMonitor.getTickTime();
 
-                if (TPS < 20) {
-                    HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
-                        player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
-                    });
-                    Logger.error("Server TPS is below 20! TPS: " + TPS);
-                }
+                loader.headerFooter().ifPresentOrElse(headerFooter -> {
+                    Audiences.players().sendPlayerListHeaderAndFooter(headerFooter.getKey(), headerFooter.getValue());
+                }, () -> {
+                    final long ramUsage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() / (long) 1e6; // bytes to MB
+                    final TickMonitor tickMonitor = LAST_TICK.get();
+                    final double TPS = 1000 / tickMonitor.getTickTime();
 
-                final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
-                        .append(Component.newline())
-                        .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
-                        .append(Component.newline())
-                        .append(Component.text("§7TPS: §8" + TPS))
-                        .append(Component.newline());
-                final Component footer = Component.newline()
-                        .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
-                Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+                    if (TPS < 20) {
+                        HypixelGenericLoader.getLoadedPlayers().forEach(player -> {
+                            player.getLogHandler().debug("§cServer TPS is below 20! TPS: " + TPS);
+                        });
+                        Logger.error("Server TPS is below 20! TPS: " + TPS);
+                    }
+
+                    final Component header = Component.text("§bYou are playing on §e§lMC.HYPIXEL.NET")
+                            .append(Component.newline())
+                            .append(Component.text("§7RAM USAGE: §8" + ramUsage + " MB"))
+                            .append(Component.newline())
+                            .append(Component.text("§7TPS: §8" + TPS))
+                            .append(Component.newline());
+                    final Component footer = Component.newline()
+                            .append(Component.text("§aRanks, Boosters & MORE! §c§lSTORE.HYPIXEL.NET"));
+                    Audiences.players().sendPlayerListHeaderAndFooter(header, footer);
+                });
             }).repeat(10, TimeUnit.SERVER_TICK).schedule();
         }
 
@@ -228,6 +177,16 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
         AttributeDatabase.connect(mongoClient);
         UserDatabase.connect(mongoClient);
         BedWarsStatsDatabase.connect(mongoClient);
+
+        ProxyPlayer.setTransferPreparation((playerUuid, targetServer) -> CompletableFuture.supplyAsync(() -> {
+            HypixelPlayer player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(playerUuid) instanceof HypixelPlayer hypixelPlayer
+                    ? hypixelPlayer : null;
+            if (player == null) return null;
+            return new org.json.JSONObject()
+                    .put("account_document", net.swofty.proxyapi.PlayerTransferDataCache.encodeDocument(
+                            GenericPlayerDataFlow.saveForTransfer(player)))
+                    .toString();
+        }));
 
         // Initialize leaderboard service (uses Redis for O(log N) leaderboard operations)
         LeaderboardService.connect(ConfigProvider.settings().getRedisUri());
@@ -301,69 +260,6 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                 .filter(player -> player.getInstance() != null)
                 .forEach(player -> players.add((HypixelPlayer) player));
         return players;
-    }
-
-    private void registerCustomBiomes(byte[] userData) throws IOException {
-        if (userData == null || userData.length == 0) {
-            return;
-        }
-
-        CompoundBinaryTag root = BinaryTagIO.reader()
-            .read(new ByteArrayInputStream(userData), BinaryTagIO.Compression.GZIP);
-
-        // this is generated by the HypixelRecreationMod
-        if (!"hypixel:custom_biomes".equals(root.getString("format", ""))) {
-            return;
-        }
-
-        int version = root.getInt("version", 0);
-        if (version != 1) {
-            Logger.warn("Ignoring unsupported custom biome user data version {}", version);
-            return;
-        }
-
-        ListBinaryTag customBiomes = root.getList("custom_biomes", BinaryTagTypes.COMPOUND);
-        int registered = 0;
-        for (BinaryTag biomeTag : customBiomes) {
-            CompoundBinaryTag biomeData = (CompoundBinaryTag) biomeTag;
-            String id = biomeData.getString("id", "");
-            if (id.isBlank()) {
-                Logger.warn("Skipping custom biome entry without id");
-                continue;
-            }
-
-            Key key;
-            try {
-                key = Key.key(id);
-            } catch (IllegalArgumentException exception) {
-                Logger.warn(exception, "Skipping custom biome with invalid id {}", id);
-                continue;
-            }
-
-            if (MinecraftServer.getBiomeRegistry().getId(RegistryKey.unsafeOf(id)) != -1) {
-                continue;
-            }
-
-            BinaryTag definition = biomeData.get("definition");
-            if (!(definition instanceof CompoundBinaryTag)) {
-                Logger.warn("Skipping custom biome {} without compound definition", id);
-                continue;
-            }
-
-            try {
-                Biome biome = Biome.REGISTRY_CODEC.decode(Transcoder.NBT, definition)
-                    .orElseThrow("Failed to decode custom biome " + id);
-                MinecraftServer.getBiomeRegistry().register(key, biome);
-                Logger.info("Registered " + key + " biome.");
-                registered++;
-            } catch (RuntimeException exception) {
-                Logger.warn(exception, "Skipping custom biome {}", id);
-            }
-        }
-
-        if (registered > 0) {
-            Logger.info("Registered {} custom biomes from polar user data", registered);
-        }
     }
 
     public static @Nullable HypixelPlayer getFromUUID(UUID uuid) {
