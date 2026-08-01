@@ -12,16 +12,11 @@ import org.tinylog.Logger;
 
 public class ActionPlayerJoin implements HypixelEventClass {
 
-    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.CONNECT)
+    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
     public void run(AsyncPlayerConfigurationEvent event) {
         RavengardPlayer player = (RavengardPlayer) event.getPlayer();
 
-        Instance mainInstance = HypixelConst.getInstanceContainer();
-        if (mainInstance == null) {
-            mainInstance = HypixelConst.getEmptyInstance();
-        }
-
-        event.setSpawningInstance(mainInstance);
+        event.setSpawningInstance(HypixelConst.getEmptyInstance());
         player.setRespawnPoint(HypixelConst.getTypeLoader()
                 .getLoaderValues()
                 .spawnPosition()
