@@ -14,6 +14,7 @@ import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.AbilityRuntime;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPetData> {
     private static final Serializer serializer = new Serializer<UserPetData>() {
@@ -71,6 +73,7 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
         private HashMap<SkyBlockItem, Boolean> petsMap;
         private PetEntityImpl enabledPetEntityImpl = null;
         private transient List<PetAbility> cachedAbilities;
+        private final transient Map<PetAbility, AbilityRuntime> abilityRuntimes = new HashMap<>();
 
         public UserPetData() {
             this.petsMap = new HashMap<>();
@@ -130,6 +133,10 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
                 cachedAbilities = PetHandler.valueOf(component.getHandlerId().toUpperCase()).getAbilities(pet);
             }
             return cachedAbilities;
+        }
+
+        public AbilityRuntime getAbilityRuntime(PetAbility ability) {
+            return abilityRuntimes.computeIfAbsent(ability, _ -> new AbilityRuntime());
         }
 
         public <E extends PetEvent> E dispatch(E event) {

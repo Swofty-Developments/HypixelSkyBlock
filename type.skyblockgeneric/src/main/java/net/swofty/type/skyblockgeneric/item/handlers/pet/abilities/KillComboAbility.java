@@ -5,7 +5,7 @@ import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.AbilityRuntime;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static net.swofty.commons.StringUtility.commaify;
 
-public final class KillComboAbility {
+public final class KillComboAbility implements PetAbility {
     private static final RarityValue<Integer> MAGIC_FIND_5 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
     private static final RarityValue<Integer> MAGIC_FIND_15 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
     private static final RarityValue<Integer> MAGIC_FIND_25 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
@@ -33,14 +33,16 @@ public final class KillComboAbility {
     }
 
     public static PetAbility create() {
-        return PetDsl.ability("Kill Combo")
-                .description(KillComboAbility::descriptionFor)
-                .statistics(context -> statisticsFor(context.player(), context.pet()))
-                .onKill(KillComboAbility::onKill)
-                .build();
+        return new KillComboAbility();
     }
 
-    private static List<String> descriptionFor(SkyBlockItem instance) {
+    @Override
+    public String getName() {
+        return "Kill Combo";
+    }
+
+    @Override
+    public List<String> getDescription(SkyBlockItem instance) {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
 
@@ -77,12 +79,14 @@ public final class KillComboAbility {
         );
     }
 
-    private static ItemStatistics statisticsFor(SkyBlockPlayer player, SkyBlockItem pet) {
-        if (player.getKillComboCount() <= 0) return ItemStatistics.empty();
+    @Override
+    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
+        AbilityRuntime rt = player.getPetData().getAbilityRuntime(this);
+        int combo = rt.getStacks();
+        if (combo <= 0) return ItemStatistics.empty();
 
         Rarity rarity = pet.getAttributeHandler().getRarity();
         int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
-        int combo = player.getKillComboCount();
 
         double activeDuration = 0;
         for (int i = 0; i < THRESHOLDS.length; i++) {
@@ -92,8 +96,8 @@ public final class KillComboAbility {
         }
 
         if (activeDuration <= 0
-                || System.currentTimeMillis() - player.getLastKillTime() > (long) (activeDuration * 1000)) {
-            player.setKillComboCount(0);
+                || System.currentTimeMillis() - rt.getLastProc() > (long) (activeDuration * 1000)) {
+            rt.setStacks(0);
             return ItemStatistics.empty();
         }
 
@@ -111,18 +115,20 @@ public final class KillComboAbility {
                 .build();
     }
 
-    private static void onKill(PetEvent.Kill kill) {
+    @Override
+    public void onEvent(PetEvent event) {
+        if (!(event instanceof PetEvent.Kill kill)) return;
+
         SkyBlockPlayer player = kill.player();
-        SkyBlockItem pet = kill.pet();
-        player.setKillComboCount(player.getKillComboCount() + 1);
-        player.setLastKillTime(System.currentTimeMillis());
+        AbilityRuntime rt = player.getPetData().getAbilityRuntime(this);
+        rt.setStacks(rt.getStacks() + 1);
+        rt.setLastProc(System.currentTimeMillis());
 
-        Rarity rarity = pet.getAttributeHandler().getRarity();
-
-        if (player.getKillComboCount() >= 10) {
+        Rarity rarity = kill.pet().getAttributeHandler().getRarity();
+        if (rt.getStacks() >= 10) {
             player.addCoins(COINS_10.getForRarity(rarity));
         }
-        if (player.getKillComboCount() >= 30) {
+        if (rt.getStacks() >= 30) {
             player.addCoins(COINS_30.getForRarity(rarity));
         }
     }
