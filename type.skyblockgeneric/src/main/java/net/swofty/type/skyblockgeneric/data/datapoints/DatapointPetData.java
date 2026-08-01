@@ -71,7 +71,6 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
         private HashMap<SkyBlockItem, Boolean> petsMap;
         private PetEntityImpl enabledPetEntityImpl = null;
         private transient List<PetAbility> cachedAbilities;
-        private transient Rarity cachedPetRarity; // when rarity changes (pet item), we need to update cachedAbilities
 
         public UserPetData() {
             this.petsMap = new HashMap<>();
@@ -119,7 +118,6 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
         public void deselectCurrent() {
             petsMap.keySet().forEach(pet -> petsMap.put(pet, false));
             this.cachedAbilities = null;
-            this.cachedPetRarity = null;
         }
 
         public @Nullable SkyBlockItem getEnabledPet() {
@@ -127,11 +125,9 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
         }
 
         public List<PetAbility> getCachedAbilities(SkyBlockItem pet) {
-            Rarity currentRarity = pet.getAttributeHandler().getRarity();
-            if (cachedAbilities == null || cachedPetRarity != currentRarity) {
+            if (cachedAbilities == null) {
                 PetComponent component = pet.getComponent(PetComponent.class);
                 cachedAbilities = PetHandler.valueOf(component.getHandlerId().toUpperCase()).getAbilities(pet);
-                cachedPetRarity = currentRarity;
             }
             return cachedAbilities;
         }
@@ -145,15 +141,14 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
             return event;
         }
 
-        private void refreshCachedAbilities() {
+        // TODO: need to be called by Tier Boost
+        public void refreshCachedAbilities() {
             SkyBlockItem activePet = getEnabledPet();
             if (activePet != null) {
                 PetComponent component = activePet.getComponent(PetComponent.class);
                 this.cachedAbilities = PetHandler.valueOf(component.getHandlerId().toUpperCase()).getAbilities(activePet);
-                this.cachedPetRarity = activePet.getAttributeHandler().getRarity();
             } else {
                 this.cachedAbilities = null;
-                this.cachedPetRarity = null;
             }
         }
 

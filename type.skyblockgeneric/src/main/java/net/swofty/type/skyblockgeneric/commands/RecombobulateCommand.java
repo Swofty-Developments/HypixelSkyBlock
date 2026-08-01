@@ -20,6 +20,10 @@ public class RecombobulateCommand extends HypixelCommand {
 
             ((SkyBlockPlayer) sender).updateItem(PlayerItemOrigin.MAIN_HAND, (item) -> {
                 ItemAttributeHandler itemAttributeHandler = item.getAttributeHandler();
+                if (itemAttributeHandler.isPet()) {
+                    sender.sendMessage("§cPets cannot be recombobulated!");
+                    return;
+                }
                 itemAttributeHandler.setRecombobulated(!itemAttributeHandler.isRecombobulated());
                 sender.sendMessage("§aRecombobulated: §d" + itemAttributeHandler.isRecombobulated());
             });
