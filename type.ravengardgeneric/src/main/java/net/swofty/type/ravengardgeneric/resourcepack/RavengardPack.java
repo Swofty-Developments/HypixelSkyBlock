@@ -3,15 +3,15 @@ package net.swofty.type.ravengardgeneric.resourcepack;
 import lombok.Getter;
 import net.swofty.commons.config.Settings;
 import net.swofty.packer.HypixelPackBuilder;
-import net.swofty.packer.packs.ravengard.TestingPackDefinition;
+import net.swofty.packer.packs.ravengard.RavengardPackDefinition;
 import net.swofty.type.generic.resourcepack.HypixelResourcePack;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.ravengardgeneric.texturepack.TexturePackManager;
 import org.tinylog.Logger;
 import team.unnamed.creative.BuiltResourcePack;
 
-public class TestingPack implements HypixelResourcePack {
-    private static final TestingPackDefinition DEFINITION = TestingPackDefinition.INSTANCE;
+public class RavengardPack implements HypixelResourcePack {
+    private static final RavengardPackDefinition DEFINITION = RavengardPackDefinition.INSTANCE;
 
     @Getter
     private final TexturePackManager texturePackManager = new TexturePackManager();
@@ -19,12 +19,12 @@ public class TestingPack implements HypixelResourcePack {
     private final String packUrl;
     private final String packHash;
 
-    public TestingPack(String serverUrl, String hash) {
+    public RavengardPack(String serverUrl, String hash) {
         this.packHash = hash;
         this.packUrl = serverUrl + "/" + hash + ".zip";
     }
 
-    public static TestingPack fromConfig() {
+    public static RavengardPack fromConfig() {
         Settings.ResourcePackSettings settings = HypixelResourcePack.getConfigFor(DEFINITION.getPackName());
 
         Logger.info("Building resource pack '{}' from {}...", DEFINITION.getPackName(), DEFINITION.getPackDirectory());
@@ -32,7 +32,7 @@ public class TestingPack implements HypixelResourcePack {
         BuiltResourcePack built = builder.build();
         Logger.info("Resource pack '{}' built. Hash: {}", DEFINITION.getPackName(), built.hash());
 
-        return new TestingPack(settings.getServerUrl(), built.hash());
+        return new RavengardPack(settings.getServerUrl(), built.hash());
     }
 
     @Override

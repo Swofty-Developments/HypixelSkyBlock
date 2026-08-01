@@ -11,22 +11,13 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.ravengardgeneric.texturepack.entities.ClientHudMapEntity;
-import net.swofty.type.ravengardgeneric.texturepack.widgets.DefaultHudWidgets;
-import net.swofty.type.ravengardgeneric.texturepack.widgets.HudMapWidget;
-import net.swofty.type.ravengardgeneric.texturepack.widgets.HudMapWidgetContext;
-import net.swofty.type.ravengardgeneric.texturepack.widgets.HudWidgetType;
-import net.swofty.type.ravengardgeneric.texturepack.widgets.HudWidgetRegistry;
+import net.swofty.type.ravengardgeneric.texturepack.widgets.*;
 import org.tinylog.Logger;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -63,7 +54,7 @@ public class TexturePackManager {
                 Thread.startVirtualThread(() -> {
                     try {
                         synchronized (renderLock(player)) {
-                            renderWidgetsFor(player);
+                            // renderWidgetsFor(player);
                         }
                     } catch (Exception e) {
                         Logger.error(e, "Failed to render HUD texture pack for {}", player.getUsername());
@@ -78,7 +69,7 @@ public class TexturePackManager {
         synchronized (renderLock(player)) {
             if (player.getInstance() != null) {
                 try {
-                    renderWidgetsFor(player);
+                    //renderWidgetsFor(player);
                 } catch (Exception e) {
                     Logger.error(e, "Failed to send initial HUD frame for {}", player.getUsername());
                 }
@@ -89,7 +80,7 @@ public class TexturePackManager {
     public void disableFor(HypixelPlayer player) {
         enabledPlayers.remove(player);
         synchronized (renderLock(player)) {
-            destroyAllWidgetEntities(player);
+            //destroyAllWidgetEntities(player);
         }
         renderLocks.remove(player);
     }

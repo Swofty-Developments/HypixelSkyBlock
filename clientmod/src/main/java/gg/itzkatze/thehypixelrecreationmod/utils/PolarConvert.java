@@ -37,49 +37,54 @@ public final class PolarConvert {
     }
 
     public static boolean convertWorldFolderToPolar(Path anvilPath, Path outputPath) throws IOException {
-        convertWorldFolderToPolar(anvilPath, outputPath, null, List.of());
+        convertWorldFolderToPolar(anvilPath, outputPath, null, List.of(), List.of());
         return true;
     }
 
     public static ConversionResult convertWorldFolderToPolar(Path anvilPath, Path outputPath, ClientLevel level) throws IOException {
-        return convertWorldFolderToPolar(anvilPath, outputPath, level, List.of());
+        return convertWorldFolderToPolar(anvilPath, outputPath, level, List.of(), List.of());
     }
 
     public static ConversionResult convertWorldFolderToPolar(
         Path anvilPath,
         Path outputPath,
         ClientLevel level,
-        Map<Long, CompoundTag> sourceChunks
+        Map<Long, CompoundTag> sourceChunks,
+        Collection<CompoundTag> blockDisplays
     ) throws IOException {
-        return convertWorldFolderToPolar(anvilPath, outputPath, level, sourceChunks.values());
+        return convertWorldFolderToPolar(anvilPath, outputPath, level, sourceChunks.values(), blockDisplays);
     }
 
     private static ConversionResult convertWorldFolderToPolar(
         Path anvilPath,
         Path outputPath,
         ClientLevel level,
-        Collection<CompoundTag> sourceChunks
+        Collection<CompoundTag> sourceChunks,
+        Collection<CompoundTag> blockDisplays
     ) throws IOException {
         MinecraftServer.init();
         try {
             PolarWorld polarWorld = AnvilPolar.anvilToPolar(anvilPath, ChunkSelector.all());
             restoreSourceBiomePalettes(polarWorld, sourceChunks);
-            int customBiomeCount = attachCustomBiomeDefinitions(polarWorld, level, sourceChunks);
+            Map<String, Tag> customBiomes = collectCustomBiomeDefinitions(polarWorld, level, sourceChunks);
+            if (!customBiomes.isEmpty() || !blockDisplays.isEmpty()) {
+                polarWorld.userData(writeUserData(customBiomes, blockDisplays));
+            }
             Files.createDirectories(outputPath.getParent());
             Files.write(outputPath, PolarWriter.write(polarWorld));
-            return new ConversionResult(outputPath, customBiomeCount);
+            return new ConversionResult(outputPath, customBiomes.size(), blockDisplays.size());
         } finally {
             MinecraftServer.stopCleanly();
         }
     }
 
-    private static int attachCustomBiomeDefinitions(
+    private static Map<String, Tag> collectCustomBiomeDefinitions(
         PolarWorld polarWorld,
         ClientLevel level,
         Collection<CompoundTag> sourceChunks
     ) throws IOException {
         if (level == null) {
-            return 0;
+            return Map.of();
         }
 
         Set<String> biomeReferences = collectBiomeReferences(sourceChunks);
@@ -88,7 +93,7 @@ public final class PolarConvert {
         }
 
         if (biomeReferences.isEmpty()) {
-            return 0;
+            return Map.of();
         }
 
         var biomeRegistry = level.registryAccess().lookupOrThrow(Registries.BIOME);
@@ -111,12 +116,7 @@ public final class PolarConvert {
             customBiomes.put(biomeReference, encoded);
         }
 
-        if (customBiomes.isEmpty()) {
-            return 0;
-        }
-
-        polarWorld.userData(writeUserData(customBiomes));
-        return customBiomes.size();
+        return customBiomes;
     }
 
     private static void restoreSourceBiomePalettes(PolarWorld polarWorld, Collection<CompoundTag> sourceChunks) {
@@ -286,7 +286,7 @@ public final class PolarConvert {
         return biomeReferences;
     }
 
-    private static byte[] writeUserData(Map<String, Tag> customBiomes) throws IOException {
+    private static byte[] writeUserData(Map<String, Tag> customBiomes, Collection<CompoundTag> blockDisplays) throws IOException {
         CompoundTag root = new CompoundTag();
         root.putString("format", "hypixel:custom_biomes");
         root.putInt("version", 1);
@@ -300,6 +300,10 @@ public final class PolarConvert {
         }
         root.put("custom_biomes", biomes);
 
+        ListTag displays = new ListTag();
+        blockDisplays.stream().map(CompoundTag::copy).forEach(displays::add);
+        root.put("block_displays", displays);
+
         ListTag registry = new ListTag();
         registry.add(StringTag.valueOf("minecraft:worldgen/biome"));
         root.put("registries", registry);
@@ -309,7 +313,7 @@ public final class PolarConvert {
         return outputStream.toByteArray();
     }
 
-    public record ConversionResult(Path path, int customBiomeCount) {
+    public record ConversionResult(Path path, int customBiomeCount, int blockDisplayCount) {
     }
 
     private record SourceBiomeSection(String[] palette, int[] data) {

@@ -1,9 +1,6 @@
 package gg.itzkatze.thehypixelrecreationmod.features;
 
-import gg.itzkatze.thehypixelrecreationmod.utils.ChatUtils;
-import gg.itzkatze.thehypixelrecreationmod.utils.ClipboardUtils;
-import gg.itzkatze.thehypixelrecreationmod.utils.ItemStackUtils;
-import gg.itzkatze.thehypixelrecreationmod.utils.StringUtility;
+import gg.itzkatze.thehypixelrecreationmod.utils.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -74,6 +71,15 @@ public final class CopyCurrentGui {
 
         boolean isBorder = isBorderPattern(fillerSlots, containerSlots.size());
 
+        code.append("import net.kyori.adventure.text.Component;\n");
+        code.append("import net.kyori.adventure.text.format.NamedTextColor;\n");
+        code.append("import net.kyori.adventure.text.format.TextColor;\n");
+        code.append("import net.kyori.adventure.text.format.TextDecoration;\n");
+        code.append("import net.minestom.server.inventory.InventoryType;\n");
+        code.append("import net.minestom.server.item.Material;\n");
+        code.append("import net.swofty.type.generic.gui.inventory.ItemStackCreator;\n");
+        code.append("import net.swofty.type.generic.gui.v2.*;\n");
+        code.append("import net.swofty.type.generic.gui.v2.context.ViewContext;\n\n");
         code.append("public class ").append(className).append(" extends StatelessView {\n\n");
         code.append("    @Override\n");
         code.append("    public ViewConfiguration<DefaultState> configuration() {\n");
@@ -153,34 +159,34 @@ public final class CopyCurrentGui {
 
     private static String generateGUIItem(int slotIndex, ItemStack stack) {
         StringBuilder sb = new StringBuilder();
-        String displayName = ItemStackUtils.getDisplayNameLegacy(stack);
+        Component displayName = stack.getHoverName();
 
-        String cleanName = StringUtility.stripColor(displayName);
+        String cleanName = displayName.getString();
         if (cleanName.trim().isEmpty()) {
             return "";
         }
 
         String material = ItemStackUtils.toMinestomMaterial(stack);
-        List<String> lore = ItemStackUtils.getLoreAsStrings(stack);
+        List<Component> lore = ItemStackUtils.getLore(stack);
         int count = stack.getCount();
         boolean isPlayerHead = stack.is(Items.PLAYER_HEAD);
         String texture = isPlayerHead ? ItemStackUtils.getPlayerHeadTexture(stack) : "";
 
         if (isPlayerHead && !texture.isEmpty()) {
             sb.append("        layout.slot(").append(slotIndex).append(", ItemStackCreator.getStackHead(\n");
-            sb.append("                \"").append(StringUtility.escapeJavaString(displayName)).append("\",\n");
+            sb.append("                ").append(AdventureComponentCode.serialize(displayName)).append(",\n");
             sb.append("                \"").append(StringUtility.escapeJavaString(texture)).append("\",\n");
             sb.append("                ").append(count);
         } else {
             sb.append("        layout.slot(").append(slotIndex).append(", ItemStackCreator.getStack(\n");
-            sb.append("                \"").append(StringUtility.escapeJavaString(displayName)).append("\",\n");
+            sb.append("                ").append(AdventureComponentCode.serialize(displayName)).append(",\n");
             sb.append("                Material.").append(material).append(",\n");
             sb.append("                ").append(count);
         }
 
         if (!lore.isEmpty()) {
-            for (String loreLine : lore) {
-                sb.append(",\n                \"").append(StringUtility.escapeJavaString(loreLine)).append("\"");
+            for (Component loreLine : lore) {
+                sb.append(",\n                ").append(AdventureComponentCode.serialize(loreLine));
             }
         }
 

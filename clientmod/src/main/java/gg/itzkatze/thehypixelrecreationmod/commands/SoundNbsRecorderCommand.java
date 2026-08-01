@@ -11,7 +11,7 @@ public final class SoundNbsRecorderCommand {
     }
 
     public static void register() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> dispatcher.register(
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> RecreationCommand.register(dispatcher,
                 ClientCommands.literal("nbsrecord")
                         .then(ClientCommands.literal("start")
                                 .executes(context -> {

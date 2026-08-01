@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TestingPackDefinition implements PackDefinition {
-    public static final TestingPackDefinition INSTANCE = new TestingPackDefinition();
+public class RavengardPackDefinition implements PackDefinition {
+    public static final RavengardPackDefinition INSTANCE = new RavengardPackDefinition();
 
     @Override
     public String getPackName() {
@@ -18,7 +18,7 @@ public class TestingPackDefinition implements PackDefinition {
 
     @Override
     public String getPackDirectory() {
-        return "configuration/resourcepacks/testingpack";
+        return "configuration/resourcepacks/ravengard";
     }
 
     @Override

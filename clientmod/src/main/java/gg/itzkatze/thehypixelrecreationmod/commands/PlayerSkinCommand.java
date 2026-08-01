@@ -36,7 +36,7 @@ public final class PlayerSkinCommand {
     }
 
     public static void register() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> dispatcher.register(
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> RecreationCommand.register(dispatcher,
                 ClientCommands.literal("getskins")
                         .then(ClientCommands.argument("radius", DoubleArgumentType.doubleArg(0))
                                 .executes(context -> execute(DoubleArgumentType.getDouble(context, "radius"))))

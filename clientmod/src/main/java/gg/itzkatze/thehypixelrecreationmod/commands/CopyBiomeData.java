@@ -15,7 +15,7 @@ public final class CopyBiomeData {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) ->
-                dispatcher.register(ClientCommands.literal("copybiomedata")
+                RecreationCommand.register(dispatcher, ClientCommands.literal("copybiomedata")
                         .executes(context -> {
                             try {
                                 Minecraft client = Minecraft.getInstance();

@@ -28,6 +28,7 @@ public final class TheHypixelRecreationMod implements ClientModInitializer {
 
 	private static void registerCommands() {
 		PlayerSkinCommand.register();
+		RavengardNPCCommand.register();
 		GetArmorStandArmorColorsCommand.register();
 		GetArmorStandInfos.register();
 		GetScoreboardInfo.register();
@@ -38,6 +39,9 @@ public final class TheHypixelRecreationMod implements ClientModInitializer {
 		SpraySchemaRecorderCommand.register();
 		SoundNbsRecorderCommand.register();
 		HeldItemDataCommand.register();
+		NearbyEntitiesCommand.register();
+        CopyTabBossbarCommand.register();
+        CopyAdvancementsCommand.register();
 	}
 
 	private static void registerTickHandlers() {

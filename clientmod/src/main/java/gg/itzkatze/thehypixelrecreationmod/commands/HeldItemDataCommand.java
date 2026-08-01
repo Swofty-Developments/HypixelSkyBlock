@@ -24,9 +24,9 @@ public final class HeldItemDataCommand {
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) -> {
-            dispatcher.register(ClientCommands.literal("helditemdata")
+            RecreationCommand.register(dispatcher, ClientCommands.literal("helditemdata")
                     .executes(context -> inspectHeldItem(context.getSource())));
-            dispatcher.register(ClientCommands.literal("getitemdata")
+            RecreationCommand.register(dispatcher, ClientCommands.literal("getitemdata")
                     .executes(context -> inspectHeldItem(context.getSource())));
         });
     }

@@ -1,5 +1,6 @@
 package net.swofty.type.generic;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.registry.RegistryKey;
@@ -7,14 +8,17 @@ import net.minestom.server.world.DimensionType;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
+import net.swofty.commons.Tuple;
 import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.type.generic.data.GameDataHandler;
 import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 public interface HypixelTypeLoader {
@@ -66,5 +70,10 @@ public interface HypixelTypeLoader {
      */
     @Nullable default RegistryKey<DimensionType> getDimensionType() {
         return null;
+    }
+
+    @NotNull
+    default Optional<Tuple<Component, Component>> headerFooter() {
+        return Optional.empty();
     }
 }
