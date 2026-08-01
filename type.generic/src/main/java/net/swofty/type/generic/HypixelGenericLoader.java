@@ -129,6 +129,10 @@ public record HypixelGenericLoader(HypixelTypeLoader loader) {
                     return;
 
 
+                if (loader.headerFooterPerPlayer()) {
+                    return;
+                }
+
                 loader.headerFooter().ifPresentOrElse(headerFooter -> {
                     Audiences.players().sendPlayerListHeaderAndFooter(headerFooter.getKey(), headerFooter.getValue());
                 }, () -> {

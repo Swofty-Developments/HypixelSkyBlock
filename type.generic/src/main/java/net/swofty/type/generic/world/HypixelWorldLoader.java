@@ -32,7 +32,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public final class HypixelWorldLoader {
+    public static final java.util.function.Predicate<net.minestom.server.entity.Player> LOADED_ONLY =
+            player -> player.getInstance() != null
+                    && net.swofty.type.generic.data.DataHandler.findUser(player.getUuid()).isPresent();
+
     private HypixelWorldLoader() {
+    }
+
+    public static void refreshViewers(net.minestom.server.instance.Instance instance) {
+        if (instance == null) {
+            return;
+        }
+        for (Entity entity : instance.getEntities()) {
+            if (!(entity instanceof net.minestom.server.entity.Player)) {
+                entity.updateViewableRule();
+            }
+        }
     }
 
     public static SharedInstance load(HypixelTypeLoader loader, InstanceManager instanceManager) throws IOException {
@@ -40,11 +55,20 @@ public final class HypixelWorldLoader {
         InstanceContainer source = loader.getDimensionType() == null
                 ? instanceManager.createInstanceContainer()
                 : instanceManager.createInstanceContainer(loader.getDimensionType());
-        PolarWorld polarWorld = PolarReader.read(Files.readAllBytes(world.getPath()));
+        return loadFrom(world.getPath(), source, instanceManager);
+    }
+
+    /**
+     * Loads any polar file into the given container, applying its custom biomes and display
+     * entities the same way the main world does.
+     */
+    public static SharedInstance loadFrom(java.nio.file.Path path, InstanceContainer source,
+                                          InstanceManager instanceManager) throws IOException {
+        PolarWorld polarWorld = PolarReader.read(Files.readAllBytes(path));
 
         CompoundBinaryTag userData = readUserData(polarWorld.userData());
         registerCustomBiomes(userData);
-        source.setChunkLoader(new PolarLoader(world.getPath(), polarWorld).setWorldAccess(new PolarWorldAccess() {
+        source.setChunkLoader(new PolarLoader(path, polarWorld).setWorldAccess(new PolarWorldAccess() {
             @Override
             public int getBiomeId(@NotNull String name) {
                 int id = MinecraftServer.getBiomeRegistry().getId(RegistryKey.unsafeOf(name));
@@ -170,6 +194,9 @@ public final class HypixelWorldLoader {
 
         ListBinaryTag position = data.getList("Pos");
         ListBinaryTag rotation = data.getList("Rotation");
+        entity.setNoGravity(true);
+        entity.setHasPhysics(false);
+        entity.updateViewableRule(LOADED_ONLY);
         entity.setInstance(instance, new Pos(
                 number(position, 0, 0), number(position, 1, 0), number(position, 2, 0),
                 (float) number(rotation, 0, 0), (float) number(rotation, 1, 0)));
