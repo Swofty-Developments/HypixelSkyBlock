@@ -1,0 +1,72 @@
+# Starting gear, from a capture of the Knight inventory.
+# Only the Knight set has been captured; the others carry their own chest asset but placeholder
+# names and defence values until they are.
+items:
+  - id: TUNIC
+    material: leather_chestplate
+    item_model: hypixel_ravengard:item/armor/starter/chestplate/tunic
+    default_statistics:
+      defense: 6.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: EQUIPPABLE
+        asset_id: hypixel_ravengard:knight_starter
+      - id: CLASS_RESTRICTED
+        class: KNIGHT
+
+  - id: WEATHERED_HARNESS
+    material: leather_chestplate
+    item_model: hypixel_ravengard:item/armor/starter/chestplate/weathered_harness
+    default_statistics:
+      defense: 4.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: EQUIPPABLE
+        asset_id: hypixel_ravengard:warrior_starter
+      - id: CLASS_RESTRICTED
+        class: WARRIOR
+
+  - id: REINFORCED_PANTS
+    material: leather_leggings
+    item_model: hypixel_ravengard:item/armor/starter/leggings/reinforced_pants
+    default_statistics:
+      defense: 10.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: EQUIPPABLE
+        asset_id: hypixel_ravengard:starter
+
+  - id: WEATHERED_PANTS
+    material: leather_leggings
+    item_model: hypixel_ravengard:item/armor/starter/leggings/weathered_pants
+    default_statistics:
+      defense: 10.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: EQUIPPABLE
+        asset_id: hypixel_ravengard:starter
+      - id: CLASS_RESTRICTED
+        class: WARRIOR
+
+  - id: OLD_BOOTS
+    material: leather_boots
+    item_model: hypixel_ravengard:item/armor/starter/boots/old_boots
+    default_statistics:
+      defense: 2.0
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: EQUIPPABLE
+        asset_id: hypixel_ravengard:starter
+
+  - id: NECK_SLOT
+    material: white_stained_glass_pane
+    item_model: hypixel_ravengard:gui/sprites/container/slot/slot_brown_necklace
+    components:
+      - id: PLACEHOLDER_SLOT
+        lore_one: Place a compatible item into this slot
+        lore_two: to equip it.
