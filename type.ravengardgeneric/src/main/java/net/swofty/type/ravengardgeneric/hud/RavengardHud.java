@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RavengardHud {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM/dd/yy");
@@ -63,8 +64,7 @@ public final class RavengardHud {
         LAST_SENT.remove(player.getUuid());
     }
 
-    private static final java.util.concurrent.atomic.AtomicInteger TITLE_FRAME =
-            new java.util.concurrent.atomic.AtomicInteger();
+    private static final AtomicInteger TITLE_FRAME = new AtomicInteger();
 
     private static void tick() {
         TITLE_FRAME.incrementAndGet();
@@ -142,7 +142,7 @@ public final class RavengardHud {
     }
 
     private static int clamp9(int value) {
-        return Math.max(0, Math.min(0x1FF, value));
+        return Math.clamp(value, 0, 0x1FF);
     }
 
     private static void refresh(HypixelPlayer player, RavengardHudState state) {
@@ -155,7 +155,7 @@ public final class RavengardHud {
         float staminaFraction = state.getMaxStamina() <= 0
                 ? 0f
                 : state.getStamina() / (float) state.getMaxStamina();
-        staminaFraction = Math.max(0f, Math.min(1f, staminaFraction));
+        staminaFraction = Math.clamp(staminaFraction, 0f, 1f);
         if (player.getExp() != staminaFraction) {
             player.setExp(staminaFraction);
         }

@@ -30,9 +30,8 @@ public class HypixelPackServer {
             }
         }
 
-        Map<String, byte[]> rawPacks = loadRawPacks();
-
         Map<String, BuiltResourcePack> packs = List.of(
+                        RavengardPackDefinition.INSTANCE,
                         SkyblockPackDefinition.INSTANCE
                 ).stream()
                 .map(HypixelPackServer::buildPack)
@@ -44,7 +43,7 @@ public class HypixelPackServer {
 
         ResourcePackServer server = ResourcePackServer.server()
                 .address(host, port)
-                .handler(createRequestHandler(packs, rawPacks))
+                .handler(createRequestHandler(packs))
                 .executor(Executors.newFixedThreadPool(4))
                 .build();
         server.start();
@@ -68,52 +67,16 @@ public class HypixelPackServer {
     private static BuiltResourcePack buildPack(PackDefinition definition) {
         System.out.println("Building resource pack '" + definition.getPackName() + "'...");
         System.out.println("Pack directory: " + definition.getPackDirectory());
-        System.out.println("Textures directory: " + definition.getTexturesDirectory());
 
         BuiltResourcePack built = new HypixelPackBuilder(definition).build();
         System.out.println("Resource pack built. Hash: " + built.hash());
         return built;
     }
 
-    private static Map<String, byte[]> loadRawPacks() {
-        Map<String, byte[]> raw = new java.util.HashMap<>();
-        java.io.File dir = new java.io.File("configuration/resourcepacks");
-        java.io.File[] zips = dir.listFiles((ignored, name) -> name.endsWith(".zip"));
-        if (zips == null) {
-            return raw;
-        }
-
-        for (java.io.File zip : zips) {
-            try {
-                byte[] data = java.nio.file.Files.readAllBytes(zip.toPath());
-                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-1");
-                StringBuilder hash = new StringBuilder();
-                for (byte b : digest.digest(data)) {
-                    hash.append(String.format("%02x", b));
-                }
-                raw.put(hash + ".zip", data);
-                System.out.println("Serving untouched pack " + zip.getName() + " as " + hash + ".zip");
-            } catch (Exception exception) {
-                System.out.println("Failed reading raw pack " + zip.getName() + ": " + exception.getMessage());
-            }
-        }
-        return raw;
-    }
-
-    private static ResourcePackRequestHandler createRequestHandler(Map<String, BuiltResourcePack> packs,
-                                                                   Map<String, byte[]> rawPacks) {
+    private static ResourcePackRequestHandler createRequestHandler(Map<String, BuiltResourcePack> packs) {
         return (request, exchange) -> {
             String path = exchange.getRequestURI().getPath();
             String fileName = path.substring(path.lastIndexOf('/') + 1);
-            byte[] rawPack = rawPacks.get(fileName);
-            if (rawPack != null) {
-                exchange.getResponseHeaders().set("Content-Type", "application/zip");
-                exchange.sendResponseHeaders(200, rawPack.length);
-                try (OutputStream output = exchange.getResponseBody()) {
-                    output.write(rawPack);
-                }
-                return;
-            }
 
             BuiltResourcePack pack = packs.get(fileName);
 

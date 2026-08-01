@@ -1,6 +1,5 @@
 package net.swofty.type.ravengardgeneric.resourcepack;
 
-import lombok.Getter;
 import net.swofty.commons.config.Settings;
 import net.swofty.packer.HypixelPackBuilder;
 import net.swofty.packer.packs.ravengard.RavengardPackDefinition;
@@ -25,15 +24,12 @@ public class RavengardPack implements HypixelResourcePack {
         Settings.ResourcePackSettings settings = HypixelResourcePack.getConfigFor(DEFINITION.getPackName());
 
         try {
-            java.nio.file.Path original = java.nio.file.Path.of("configuration/resourcepacks/ravengard-original.zip");
-            byte[] data = java.nio.file.Files.readAllBytes(original);
-            java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-1");
-            StringBuilder hash = new StringBuilder();
-            for (byte b : digest.digest(data)) {
-                hash.append(String.format("%02x", b));
-            }
-            Logger.info("Serving Hypixel's untouched Ravengard pack, hash: {}", hash);
-            return new RavengardPack(settings.getServerUrl(), hash.toString());
+            Logger.info("Building resource pack '{}' from {}...", DEFINITION.getPackName(), DEFINITION.getPackDirectory());
+            HypixelPackBuilder builder = new HypixelPackBuilder(DEFINITION);
+            BuiltResourcePack built = builder.build();
+            Logger.info("Resource pack '{}' built. Hash: {}", DEFINITION.getPackName(), built.hash());
+
+            return new RavengardPack(settings.getServerUrl(), built.hash());
         } catch (Exception exception) {
             throw new IllegalStateException("Failed reading configuration/resourcepacks/ravengard-original.zip", exception);
         }

@@ -3,6 +3,9 @@ package net.swofty.type.ravengardgeneric;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.instance.Instance;
+import net.swofty.commons.CustomWorlds;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelTypeLoader;
 import net.swofty.type.generic.command.HypixelCommand;
@@ -12,6 +15,7 @@ import net.swofty.type.generic.packet.HypixelPacketClientListener;
 import net.swofty.type.generic.packet.HypixelPacketServerListener;
 import net.swofty.type.generic.redis.RedisOriginServer;
 import net.swofty.type.generic.resourcepack.ResourcePackManager;
+import net.swofty.type.generic.world.HypixelWorldLoader;
 import net.swofty.type.ravengardgeneric.resourcepack.RavengardPack;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -30,9 +34,16 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
     @Getter
     private static MinecraftServer server;
 
+    @Nullable
+    public static Instance tutorialInstance;
+
     @SneakyThrows
     public void initialize(MinecraftServer server) {
         RavengardGenericLoader.server = server;
+
+        if (typeLoader.getType() == ServerType.RAVENGARD_LOBBY) {
+            tutorialInstance = HypixelWorldLoader.load(CustomWorlds.RAVENGARD_TUTORIAL, MinecraftServer.getInstanceManager());
+        }
 
         net.swofty.type.ravengardgeneric.item.RavengardItemRegistry.load();
         connectRegions();

@@ -58,6 +58,10 @@ public final class HypixelWorldLoader {
         return loadFrom(world.getPath(), source, instanceManager);
     }
 
+    public static SharedInstance load(final @NotNull CustomWorlds world, final @NotNull InstanceManager manager) throws IOException {
+        return loadFrom(world.getPath(), manager.createInstanceContainer(), manager);
+    }
+
     /**
      * Loads any polar file into the given container, applying its custom biomes and display
      * entities the same way the main world does.

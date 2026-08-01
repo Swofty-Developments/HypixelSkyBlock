@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import net.swofty.type.ravengardgeneric.gui.RavengardItems;
 
 /**
@@ -14,11 +15,11 @@ import net.swofty.type.ravengardgeneric.gui.RavengardItems;
  */
 public record RavengardKit(String chestId, String legsId, String bootsId) {
 
-    public static final int SLOT_ABILITY_ONE = 1;
-    public static final int SLOT_ABILITY_TWO = 4;
-    public static final int SLOT_CHEST = 6;
-    public static final int SLOT_LEGS = 7;
-    public static final int SLOT_BOOTS = 8;
+    public static final int SLOT_ABILITY_ONE = PlayerInventoryUtils.CRAFT_SLOT_1;
+    public static final int SLOT_ABILITY_TWO = PlayerInventoryUtils.CRAFT_SLOT_4;
+    public static final int SLOT_CHEST = PlayerInventoryUtils.CHESTPLATE_SLOT;
+    public static final int SLOT_LEGS = PlayerInventoryUtils.LEGGINGS_SLOT;
+    public static final int SLOT_BOOTS = PlayerInventoryUtils.BOOTS_SLOT;
     public static final int SLOT_NECK = 9;
 
     /**

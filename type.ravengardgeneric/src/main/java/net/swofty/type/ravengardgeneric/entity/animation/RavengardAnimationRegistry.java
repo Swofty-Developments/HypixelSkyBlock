@@ -5,8 +5,11 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import org.tinylog.Logger;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +34,7 @@ public final class RavengardAnimationRegistry {
 
                 // tutorial NPCs live aboard the Nevermore, not in the lobby world
                 Instance target = "tutorial".equals(clip.world())
-                        ? net.swofty.type.ravengardgeneric.world.RavengardWorlds.tutorial()
+                        ? RavengardGenericLoader.tutorialInstance
                         : instance;
                 if (target == null) {
                     Logger.warn("Skipping '{}': its world is not loaded", name);
@@ -73,8 +76,8 @@ public final class RavengardAnimationRegistry {
     }
 
     private static List<String> clipNames() {
-        try (InputStream stream = new java.io.FileInputStream(
-                new java.io.File(RavengardAnimationClip.ANIMATIONS_DIR, "index.json"))) {
+        try (InputStream stream = new FileInputStream(
+                new File(RavengardAnimationClip.ANIMATIONS_DIR, "index.json"))) {
             if (stream == null) {
                 Logger.warn("No npc_animations/index.json, no animated NPCs will spawn");
                 return List.of();
