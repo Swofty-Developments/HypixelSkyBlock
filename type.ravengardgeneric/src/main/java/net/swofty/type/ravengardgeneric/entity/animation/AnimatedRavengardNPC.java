@@ -1,0 +1,323 @@
+package net.swofty.type.ravengardgeneric.entity.animation;
+
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
+import net.minestom.server.instance.Instance;
+import net.minestom.server.item.Material;
+import net.swofty.type.ravengardgeneric.entity.RavengardNPC;
+import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
+
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.timer.TaskSchedule;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class AnimatedRavengardNPC extends RavengardNPC {
+    private final RavengardAnimationClip clip;
+    private final List<Entity> animatedParts = new ArrayList<>();
+    private final Map<Integer, Pos> homePositions = new HashMap<>();
+    private final Set<UUID> speaking = ConcurrentHashMap.newKeySet();
+
+    private RavengardRoaming roaming;
+    private float baseYaw;
+    private Vec currentOffset = Vec.ZERO;
+    private float lastYaw = Float.NaN;
+    private RavengardAnimationPhase phase = RavengardAnimationPhase.IDLE;
+    private int frame;
+    private int moveFrame;
+
+    public AnimatedRavengardNPC(RavengardAnimationClip clip, Pos position, String name, String bottom) {
+        super(buildConfiguration(clip, position, name, bottom));
+        this.clip = clip;
+    }
+
+    private static Configuration buildConfiguration(RavengardAnimationClip clip, Pos position,
+                                                    String name, String bottom) {
+        Configuration.Builder builder = Configuration.builder()
+                .position(position)
+                .name(name)
+                .bottom(bottom);
+
+        for (RavengardAnimationClip.Part part : clip.parts()) {
+            RavengardAnimationClip.Base base = part.base();
+            double[] offset = base.offset();
+            builder.itemDisplay(new ItemDisplayData(
+                    new Vec(offset[0], offset[1], offset[2]),
+                    Material.LEATHER_BOOTS,
+                    base.model(),
+                    List.of(),
+                    List.of(),
+                    List.of(),
+                    List.of(),
+                    0xFFFFFF,
+                    null,
+                    displayContextName(base.itemDisplayContext()),
+                    new DisplayData(
+                            vec(base.translation()),
+                            vec(base.scale()),
+                            base.leftRotation(),
+                            base.rightRotation(),
+                            0,
+                            clip.interpolationDuration(),
+                            0,
+                            "FIXED",
+                            -1,
+                            0f,
+                            0f,
+                            base.glowColor()
+                    )
+            ));
+        }
+
+        return builder.build();
+    }
+
+    @Override
+    public void spawn(Instance instance) {
+        super.spawn(instance);
+
+        animatedParts.clear();
+        List<Entity> spawned = getEntities();
+        int partCount = clip.parts().size();
+        for (int i = spawned.size() - partCount; i < spawned.size(); i++) {
+            animatedParts.add(spawned.get(i));
+        }
+
+        homePositions.clear();
+        for (Entity entity : spawned) {
+            homePositions.put(entity.getEntityId(), entity.getPosition());
+        }
+
+        baseYaw = getConfiguration().getPosition().yaw();
+        if (clip.walkSpeed() > 0) {
+            roaming = new RavengardRoaming(
+                    getConfiguration().getPosition(),
+                    clip.roamRadius(),
+                    clip.walkSpeed(),
+                    RavengardRoaming.MIN_PAUSE_TICKS,
+                    RavengardRoaming.MAX_PAUSE_TICKS);
+            roaming.setInstance(instance);
+        }
+    }
+
+    @Override
+    public void onClick(RavengardPlayer player) {
+        org.tinylog.Logger.info("NPC '{}' clicked by {} (dialogue={}, lines={})",
+                clip.name(), player.getUsername(), clip.dialogue() != null,
+                clip.dialogue() == null ? 0 : clip.dialogue().lines().size());
+        play(RavengardAnimationPhase.TALK);
+        speakTo(player);
+    }
+
+    private void speakTo(RavengardPlayer player) {
+        RavengardAnimationClip.Dialogue dialogue = clip.dialogue();
+        if (dialogue == null || dialogue.lines().isEmpty()) {
+            return;
+        }
+        if (!speaking.add(player.getUuid())) {
+            return;
+        }
+
+        try {
+            scheduleLines(player, dialogue);
+        } catch (Exception exception) {
+            speaking.remove(player.getUuid());
+            throw exception;
+        }
+    }
+
+    private void scheduleLines(RavengardPlayer player, RavengardAnimationClip.Dialogue dialogue) {
+        List<RavengardAnimationClip.Line> lines = dialogue.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            RavengardAnimationClip.Line line = lines.get(i);
+            boolean last = i == lines.size() - 1;
+            Runnable send = () -> {
+                if (player.isOnline()) {
+                    player.sendMessage(format(dialogue.speaker(), line));
+                }
+                if (last) {
+                    speaking.remove(player.getUuid());
+                    onDialogueComplete(player);
+                }
+            };
+
+            // the scheduler rejects a zero tick delay, so the opening line goes out inline
+            int delayTicks = Math.max(0, line.delay()) * 20;
+            if (delayTicks <= 0) {
+                send.run();
+            } else {
+                MinecraftServer.getSchedulerManager().buildTask(send)
+                        .delay(TaskSchedule.tick(delayTicks)).schedule();
+            }
+        }
+    }
+
+    private void onDialogueComplete(RavengardPlayer player) {
+        if (!player.isOnline() || !"select_class".equals(clip.onComplete())) {
+            return;
+        }
+        net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
+                .push(new net.swofty.type.ravengardgeneric.gui.GUISelectClass());
+    }
+
+    private static String format(String speaker, RavengardAnimationClip.Line line) {
+        String prefix = "";
+        if (line.index() != null && line.total() != null) {
+            String indexColor = line.index().equals(line.total()) ? "§a" : "§7";
+            prefix = "§7[" + indexColor + line.index() + "§7/§a" + line.total() + "§7] ";
+        }
+        return prefix + "§d" + speaker + "§f: " + line.text();
+    }
+
+    public void play(RavengardAnimationPhase target) {
+        phase = target;
+        frame = 0;
+    }
+
+    public void tick() {
+        if (animatedParts.isEmpty()) {
+            return;
+        }
+
+        boolean exhausted = true;
+        for (int i = 0; i < animatedParts.size() && i < clip.parts().size(); i++) {
+            List<RavengardAnimationClip.Frame> frames = clip.parts().get(i).phase(phase);
+            if (frames == null || frames.isEmpty()) {
+                continue;
+            }
+
+            int index = phase.looping() ? frame % frames.size() : Math.min(frame, frames.size() - 1);
+            if (frame < frames.size() - 1) {
+                exhausted = false;
+            }
+
+            RavengardAnimationClip.Frame current = frames.get(index);
+            Entity entity = animatedParts.get(i);
+            entity.editEntityMeta(ItemDisplayMeta.class, meta -> {
+                meta.setTransformationInterpolationDuration(clip.interpolationDuration());
+                meta.setTransformationInterpolationStartDelta(0);
+                if (current.translation() != null) {
+                    meta.setTranslation(rotateOffset(vec(current.translation())));
+                }
+                if (current.leftRotation() != null) {
+                    meta.setLeftRotation(rotateRig(current.leftRotation()));
+                }
+            });
+        }
+
+        applyMovement();
+
+        if (phase != RavengardAnimationPhase.TALK) {
+            RavengardAnimationPhase desired = isWalking()
+                    ? RavengardAnimationPhase.WALK
+                    : RavengardAnimationPhase.IDLE;
+            if (desired != phase) {
+                play(desired);
+            }
+        }
+
+        frame++;
+        if (!phase.looping() && exhausted) {
+            play(RavengardAnimationPhase.IDLE);
+        }
+    }
+
+    private void applyMovement() {
+        if (roaming == null) {
+            return;
+        }
+
+        Vec next = roaming.advance(currentOffset);
+        boolean moved = !next.equals(currentOffset);
+        currentOffset = next;
+
+        if (!moved && lastYaw == roaming.yaw()) {
+            return;
+        }
+        lastYaw = roaming.yaw();
+
+        for (Entity entity : getEntities()) {
+            Pos home = homePositions.get(entity.getEntityId());
+            if (home == null) {
+                continue;
+            }
+            entity.teleport(new Pos(
+                    home.x() + currentOffset.x(),
+                    home.y() + currentOffset.y(),
+                    home.z() + currentOffset.z(),
+                    roaming.yaw(),
+                    home.pitch()));
+        }
+    }
+
+    public boolean isWalking() {
+        return roaming != null && roaming.isMoving();
+    }
+
+    private double facingRadians() {
+        if (roaming == null) {
+            return 0.0;
+        }
+        return Math.toRadians(normalise(roaming.yaw() - baseYaw));
+    }
+
+    private float[] rotateRig(float[] rotation) {
+        double theta = facingRadians();
+        if (theta == 0.0) {
+            return rotation;
+        }
+
+        float sin = (float) Math.sin(theta / 2.0);
+        float cos = (float) Math.cos(theta / 2.0);
+
+        float rx = rotation[0], ry = rotation[1], rz = rotation[2], rw = rotation[3];
+        return new float[]{
+                cos * rx + sin * rz,
+                cos * ry + sin * rw,
+                cos * rz - sin * rx,
+                cos * rw - sin * ry
+        };
+    }
+
+    private Vec rotateOffset(Vec translation) {
+        double theta = facingRadians();
+        if (theta == 0.0) {
+            return translation;
+        }
+
+        double sin = Math.sin(theta);
+        double cos = Math.cos(theta);
+        return new Vec(
+                translation.x() * cos + translation.z() * sin,
+                translation.y(),
+                -translation.x() * sin + translation.z() * cos);
+    }
+
+    private static float normalise(float degrees) {
+        return ((degrees + 540f) % 360f) - 180f;
+    }
+
+    private static Vec vec(float[] values) {
+        if (values == null || values.length < 3) {
+            return Vec.ZERO;
+        }
+        return new Vec(values[0], values[1], values[2]);
+    }
+
+    private static String displayContextName(int ordinal) {
+        ItemDisplayMeta.DisplayContext[] values = ItemDisplayMeta.DisplayContext.values();
+        if (ordinal < 0 || ordinal >= values.length) {
+            return "HEAD";
+        }
+        return values[ordinal].name();
+    }
+}
