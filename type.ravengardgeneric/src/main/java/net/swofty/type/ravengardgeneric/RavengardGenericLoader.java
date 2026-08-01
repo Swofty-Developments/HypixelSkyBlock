@@ -34,6 +34,11 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
     public void initialize(MinecraftServer server) {
         RavengardGenericLoader.server = server;
 
+        net.swofty.type.ravengardgeneric.item.RavengardItemRegistry.load();
+        connectRegions();
+        net.swofty.type.ravengardgeneric.region.RavengardRegion.cacheRegions();
+        net.swofty.type.ravengardgeneric.region.RavengardRegionTracker.start();
+
         loopThroughPackage("net.swofty.type.ravengardgeneric.event.actions", HypixelEventClass.class)
                 .forEach(HypixelEventHandler::registerEventMethods);
 
@@ -77,12 +82,28 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
         });
     }
 
+    private static void connectRegions() {
+        try {
+            com.mongodb.ConnectionString connection = new com.mongodb.ConnectionString(
+                    net.swofty.commons.config.ConfigProvider.settings().getMongodb());
+            com.mongodb.MongoClientSettings settings = com.mongodb.MongoClientSettings.builder()
+                    .applyConnectionString(connection).build();
+            net.swofty.type.ravengardgeneric.data.monogdb.RavengardRegionDatabase
+                    .connect(com.mongodb.client.MongoClients.create(settings));
+        } catch (Exception exception) {
+            Logger.warn(exception, "Could not connect the Ravengard region collection; "
+                    + "only built-in regions will be available");
+        }
+    }
+
     public static List<RavengardPlayer> getLoadedPlayers() {
         List<RavengardPlayer> players = new ArrayList<>();
         MinecraftServer.getConnectionManager().getOnlinePlayers()
                 .stream()
                 .filter(player -> player instanceof RavengardPlayer)
                 .filter(player -> player.getInstance() != null)
+                .filter(player -> net.swofty.type.generic.data.DataHandler
+                        .findUser(player.getUuid()).isPresent())
                 .forEach(player -> players.add((RavengardPlayer) player));
         return players;
     }
