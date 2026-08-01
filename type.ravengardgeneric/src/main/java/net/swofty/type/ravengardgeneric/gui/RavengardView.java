@@ -22,7 +22,9 @@ public abstract class RavengardView extends StatelessView {
         return InventoryType.CHEST_6_ROW;
     }
 
-    /** Glyph shown in the panel header; each menu has its own. */
+    /**
+     * Glyph shown in the panel header; each menu has its own.
+     */
     protected int panelIcon() {
         return PANEL_ICON;
     }

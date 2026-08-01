@@ -1,5 +1,7 @@
 package net.swofty.type.ravengardgeneric.gui;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
@@ -111,5 +113,15 @@ public class GUIRavengardMenu extends RavengardView {
                     .blankLine()
                     .lore("§eClick to change!"));
         }
+    }
+
+    @Override
+    public void onOpen(DefaultState state, ViewContext ctx) {
+        if (((RavengardPlayer) ctx.player()).isTutorial()) {
+            ctx.player().sendMessage(Component.text("You must select a class to open this menu!", NamedTextColor.RED));
+            ctx.backOrClose();
+            return;
+        }
+        super.onOpen(state, ctx);
     }
 }
