@@ -127,10 +127,14 @@ public class AnimatedRavengardNPC extends RavengardNPC {
     private void openShop(RavengardPlayer player) {
         net.swofty.type.ravengardgeneric.shop.RavengardShop shop =
                 net.swofty.type.ravengardgeneric.shop.RavengardShopRegistry.get(clip.shop());
-        if (shop != null) {
-            net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
-                    .push(new net.swofty.type.ravengardgeneric.gui.GUIShop(shop));
+        if (shop == null) {
+            return;
         }
+        if (clip.shopLine() != null && clip.dialogue() != null) {
+            player.sendMessage("§d" + clip.dialogue().speaker() + "§f: " + clip.shopLine());
+        }
+        net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
+                .push(new net.swofty.type.ravengardgeneric.gui.GUIShop(shop));
     }
 
     /**

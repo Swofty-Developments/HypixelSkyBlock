@@ -39,6 +39,7 @@ public final class RavengardAnimationClip {
     private String world;
     private String onComplete;
     private String shop;
+    private String shopLine;
 
     public double[] position() {
         return position == null ? new double[]{0, 0, 0} : position;
@@ -63,6 +64,11 @@ public final class RavengardAnimationClip {
 
     public String shop() {
         return shop;
+    }
+
+    /** An unnumbered line some shopkeepers say as their shop opens, captured without an index. */
+    public String shopLine() {
+        return shopLine;
     }
 
     public Dialogue dialogue() {
