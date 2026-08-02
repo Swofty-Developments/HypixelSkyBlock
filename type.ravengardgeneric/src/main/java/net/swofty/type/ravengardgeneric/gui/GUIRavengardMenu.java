@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.commons.ServerType;
 import net.swofty.type.ravengardgeneric.classes.RavengardAbility;
 import net.swofty.type.ravengardgeneric.classes.RavengardClass;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
@@ -26,7 +27,7 @@ public class GUIRavengardMenu extends RavengardView {
 
     @Override
     protected String title() {
-        return "Main Menu";
+        return "󏀈§f󏿳Main MenuMain Menu";
     }
 
     @Override
@@ -35,12 +36,19 @@ public class GUIRavengardMenu extends RavengardView {
                 ? player.getRavengardClass()
                 : null;
 
-        place(layout, SLOT_FIGHT, RavengardItems.button(RavengardButton.TEXT_FIGHT)
+        RavengardItems.Builder fight = RavengardItems.button(RavengardButton.TEXT_FIGHT)
                 .label("Join the Fight!")
                 .lore("§7Jump into the action and fight",
                         "§7against other players and monsters!")
                 .blankLine()
-                .lore("§eClick to join!"));
+                .lore("§eClick to join!")
+                .origin(SLOT_FIGHT);
+        for (int slot : fight.sprite().coveredSlots(SLOT_FIGHT)) {
+            layout.slot(slot, fight.toBuilder(), (_, viewCtx) -> {
+                viewCtx.player().closeInventory();
+                viewCtx.player().sendTo(ServerType.RAVENGARD_DUNGEON);
+            });
+        }
 
         RavengardButton statue = playerClass == null ? null : RavengardButton.statueFor(playerClass);
         if (statue != null) {
