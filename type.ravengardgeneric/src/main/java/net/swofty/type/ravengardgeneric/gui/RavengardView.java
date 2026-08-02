@@ -12,7 +12,9 @@ import net.swofty.type.generic.gui.v2.ViewLayout;
 public abstract class RavengardView extends StatelessView {
     private static final int PANEL_GLYPH = 0xF00F;
     private static final int PANEL_ICON = 0xE237;
-    private static final int PANEL_LEAD_SPACE = -8192;
+    // captured titles use space(-4088) after the panel glyph; anything else shifts the
+    // icon and title text off the visible panel
+    private static final int PANEL_LEAD_SPACE = -4088;
     private static final int PANEL_TRAIL_SPACE = -13;
     private static final TextColor TITLE_COLOR = TextColor.color(0xFEFD1A);
 
