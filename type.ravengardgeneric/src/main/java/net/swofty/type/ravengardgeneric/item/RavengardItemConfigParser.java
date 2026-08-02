@@ -41,10 +41,21 @@ public final class RavengardItemConfigParser {
             type.setDisplayName(String.valueOf(config.get("display_name")));
         }
 
+        if (config.get("value") != null) {
+            type.setValue(Integer.parseInt(config.get("value").toString()));
+        }
         Map<String, Object> statistics = (Map<String, Object>) config.get("default_statistics");
         if (statistics != null) {
-            statistics.forEach((key, value) ->
-                    type.getStatistics().put(key, Double.parseDouble(value.toString())));
+            statistics.forEach((key, value) -> {
+                if ("value".equals(key)) {
+                    type.setValue((int) Double.parseDouble(value.toString()));
+                    return;
+                }
+                var statistic = net.swofty.type.ravengardgeneric.item.statistics.RavengardItemStatistic.fromKey(key);
+                if (statistic != null) {
+                    type.getStatistics().withBase(statistic, Double.parseDouble(value.toString()));
+                }
+            });
         }
 
         List<Map<String, Object>> components = (List<Map<String, Object>>) config.get("components");

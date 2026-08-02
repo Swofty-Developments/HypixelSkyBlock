@@ -72,7 +72,14 @@ public final class RavengardItem {
     }
 
     public static List<Component> loreOf(RavengardItemType type) {
-        return type.component(PlaceholderSlotComponent.class) != null ? placeholderLore(type) : lore(type);
+        return loreOf(type, false);
+    }
+
+    /** Shop menus include the crown value line; the item itself never carries it. */
+    public static List<Component> loreOf(RavengardItemType type, boolean shopContext) {
+        return type.component(PlaceholderSlotComponent.class) != null
+                ? placeholderLore(type)
+                : lore(type, shopContext);
     }
 
     private static ItemStack.Builder build(RavengardItemType type, RavengardPlayer owner, boolean tracked) {
@@ -100,7 +107,7 @@ public final class RavengardItem {
             builder = component.apply(builder, type);
         }
 
-        List<Component> lore = placeholder ? placeholderLore(type) : lore(type);
+        List<Component> lore = placeholder ? placeholderLore(type) : lore(type, false);
         if (!lore.isEmpty()) {
             builder.set(DataComponents.LORE, lore);
         }
@@ -139,7 +146,7 @@ public final class RavengardItem {
         return name.toString();
     }
 
-    private static List<Component> lore(RavengardItemType type) {
+    private static List<Component> lore(RavengardItemType type, boolean shopContext) {
         List<Component> lore = new ArrayList<>();
 
         StringBuilder tags = new StringBuilder();
@@ -153,9 +160,9 @@ public final class RavengardItem {
         lore.add(Component.empty());
 
         boolean stats = false;
-        stats |= stat(lore, 0xE22F, type.statistic("damage"), "Damage");
-        stats |= stat(lore, 0xE233, type.statistic("attack_speed"), "Attack Speed");
-        stats |= stat(lore, DEFENSE_ICON, type.statistic("defense"), "Defense");
+        for (var statistic : net.swofty.type.ravengardgeneric.item.statistics.RavengardItemStatistic.values()) {
+            stats |= stat(lore, statistic.getIconGlyph(), type.statistic(statistic), statistic.getDisplayName());
+        }
         if (stats) {
             lore.add(Component.empty());
         }
@@ -171,9 +178,8 @@ public final class RavengardItem {
             lore.add(Component.empty());
         }
 
-        double value = type.statistic("value");
-        if (value > 0) {
-            lore.add(crowns((int) value, " Crowns"));
+        if (shopContext && type.getValue() > 0) {
+            lore.add(crowns(type.getValue(), " Crowns"));
             lore.add(Component.empty());
         }
 

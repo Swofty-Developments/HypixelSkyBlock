@@ -104,7 +104,7 @@ public class GUIShopSell extends RavengardView {
         }
         ItemStack stack = player.getInventory().getItemStack(click.slot());
         RavengardItemType type = typeOf(stack);
-        if (type == null || type.statistic("value") <= 0) {
+        if (type == null || type.getValue() <= 0) {
             return false;
         }
         player.getInventory().setItemStack(click.slot(), ItemStack.AIR);
@@ -129,9 +129,9 @@ public class GUIShopSell extends RavengardView {
         if (type == null) {
             return;
         }
-        int value = (int) type.statistic("value");
+        int value = type.getValue();
 
-        List<Component> lore = new ArrayList<>(RavengardItem.loreOf(type));
+        List<Component> lore = new ArrayList<>(RavengardItem.loreOf(type, true));
         lore.add(Component.empty());
         lore.add(Component.text("Selling for ").color(NamedTextColor.YELLOW)
                 .decoration(TextDecoration.ITALIC, false)
@@ -162,7 +162,7 @@ public class GUIShopSell extends RavengardView {
         for (ItemStack stack : staged) {
             RavengardItemType type = typeOf(stack);
             if (type != null) {
-                total += (int) type.statistic("value");
+                total += type.getValue();
             }
         }
         staged.clear();

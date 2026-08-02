@@ -18,7 +18,10 @@ public class RavengardItemType {
     private RavengardRarity rarity = RavengardRarity.COMMON;
     private String itemModel;
     private String displayName;
-    private final Map<String, Double> statistics = new HashMap<>();
+    private final net.swofty.type.ravengardgeneric.item.statistics.RavengardItemStatistics statistics =
+            net.swofty.type.ravengardgeneric.item.statistics.RavengardItemStatistics.empty();
+    /** Crown value, shown in shop context only. */
+    private int value;
     private final List<RavengardItemComponent> components = new ArrayList<>();
 
     /** Set by the CLASS_RESTRICTED component; empty means any class may hold the item. */
@@ -30,8 +33,8 @@ public class RavengardItemType {
         this.id = id;
     }
 
-    public double statistic(String key) {
-        return statistics.getOrDefault(key, 0.0);
+    public double statistic(net.swofty.type.ravengardgeneric.item.statistics.RavengardItemStatistic statistic) {
+        return statistics.get(statistic);
     }
 
     public boolean usableBy(RavengardClass value) {

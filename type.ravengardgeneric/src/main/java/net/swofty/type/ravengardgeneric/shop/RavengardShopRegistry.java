@@ -23,16 +23,18 @@ public final class RavengardShopRegistry {
             for (File file : YamlFileUtils.getYamlFiles(SHOPS_DIR)) {
                 Map<String, Object> data = YamlFileUtils.loadYaml(file);
                 String id = String.valueOf(data.get("id"));
-                List<RavengardShop.Entry> stock = new ArrayList<>();
-                for (Map<String, Object> entry : (List<Map<String, Object>>) data.getOrDefault("stock", List.of())) {
-                    stock.add(new RavengardShop.Entry(
-                            ((Number) entry.get("slot")).intValue(),
+                List<Integer> shelf = new ArrayList<>();
+                for (Object slot : (List<Object>) data.getOrDefault("shelf_slots", List.of())) {
+                    shelf.add(((Number) slot).intValue());
+                }
+                List<RavengardShop.PoolEntry> pool = new ArrayList<>();
+                for (Map<String, Object> entry : (List<Map<String, Object>>) data.getOrDefault("pool", List.of())) {
+                    pool.add(new RavengardShop.PoolEntry(
                             String.valueOf(entry.get("item")),
-                            entry.get("price") instanceof Number price ? price.intValue() : 0,
-                            Boolean.TRUE.equals(entry.get("out_of_stock"))));
+                            ((Number) entry.get("price")).intValue()));
                 }
                 SHOPS.put(id, new RavengardShop(id, String.valueOf(data.get("title")),
-                        String.valueOf(data.get("banner")), List.copyOf(stock)));
+                        String.valueOf(data.get("banner")), List.copyOf(shelf), List.copyOf(pool)));
             }
             Logger.info("Loaded {} Ravengard shops", SHOPS.size());
         } catch (Exception exception) {
