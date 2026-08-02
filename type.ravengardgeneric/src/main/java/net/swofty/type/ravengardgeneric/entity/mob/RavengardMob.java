@@ -58,6 +58,20 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private float rigYaw;
     private static final float MAX_TURN_PER_TICK = 25f;
 
+    /**
+     * The captured knight charge: a sprint at roughly three times walk speed for a handful of
+     * ticks that always ends in the purple slash. Range and cooldown are not observable.
+     */
+    private static final String CHARGE_ANIMATION = "attack_purple";
+    private static final double CHARGE_MIN_RANGE = 3.0;
+    private static final double CHARGE_MAX_RANGE = 7.0;
+    private static final double CHARGE_HIT_RANGE = 2.4;
+    private static final double CHARGE_SPEED_MULTIPLIER = 3.0;
+    private static final int CHARGE_TICKS = 8;
+    private static final int CHARGE_COOLDOWN_TICKS = 100;
+    private int chargeTicksLeft;
+    private int chargeCooldown;
+
     public RavengardMob(RavengardMobClip clip, Pos position) {
         super(EntityType.ZOMBIE);
         this.clip = clip;
@@ -84,12 +98,17 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
 
     @Override
     public void attack(Entity target, boolean swingHand) {
-        if (dying || attackCooldown > 0) return;
+        if (dying || attackCooldown > 0 || chargeTicksLeft > 0) return;
         attackCooldown = ATTACK_COOLDOWN_TICKS;
-        List<String> options = clip.attackAnimations();
+        List<String> options = new ArrayList<>(clip.attackAnimations());
+        options.remove(CHARGE_ANIMATION);
         if (!options.isEmpty()) {
             startOneShot(options.get(ThreadLocalRandom.current().nextInt(options.size())));
         }
+        hit(target);
+    }
+
+    private void hit(Entity target) {
         if (target instanceof LivingEntity living) {
             living.damage(net.minestom.server.entity.damage.DamageType.MOB_ATTACK, PLAYER_DAMAGE_PER_HIT);
             Vec away = living.getPosition().sub(position).asVec().withY(0);
@@ -98,6 +117,36 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
                 living.setVelocity(new Vec(away.x() * KNOCKBACK_HORIZONTAL, KNOCKBACK_VERTICAL,
                         away.z() * KNOCKBACK_HORIZONTAL));
             }
+        }
+    }
+
+    private void tickCharge() {
+        if (dying || clip.animation(CHARGE_ANIMATION) == null) return;
+        if (chargeCooldown > 0) chargeCooldown--;
+        Entity target = getTarget();
+        var speed = getAttribute(net.minestom.server.entity.attribute.Attribute.MOVEMENT_SPEED);
+        double base = Math.max(0.15, clip.walkSpeed() * 2);
+        if (chargeTicksLeft > 0) {
+            chargeTicksLeft--;
+            boolean arrived = target != null && !target.isRemoved()
+                    && position.distance(target.getPosition()) <= CHARGE_HIT_RANGE;
+            if (arrived || chargeTicksLeft == 0) {
+                chargeTicksLeft = 0;
+                speed.setBaseValue(base);
+                startOneShot(CHARGE_ANIMATION);
+                attackCooldown = ATTACK_COOLDOWN_TICKS;
+                if (arrived) {
+                    hit(target);
+                }
+            }
+            return;
+        }
+        if (target == null || target.isRemoved() || attackCooldown > 0 || chargeCooldown > 0) return;
+        double distance = position.distance(target.getPosition());
+        if (distance >= CHARGE_MIN_RANGE && distance <= CHARGE_MAX_RANGE) {
+            chargeTicksLeft = CHARGE_TICKS;
+            chargeCooldown = CHARGE_COOLDOWN_TICKS;
+            speed.setBaseValue(base * CHARGE_SPEED_MULTIPLIER);
         }
     }
 
@@ -236,6 +285,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         if (flashTicksLeft > 0 && --flashTicksLeft == 0) {
             retint(BASE_COLOR);
         }
+        tickCharge();
 
         RavengardMobClip.Animation animation = clip.animation(currentAnimation);
         if (!oneShot) {
