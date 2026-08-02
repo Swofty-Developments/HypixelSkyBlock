@@ -60,7 +60,7 @@ public final class RavengardProfiles {
 
     public static void announce(RavengardPlayer player) {
         RavengardProfile profile = ensure(player);
-        player.sendMessage("Profile ID: " + profile.getId());
+        player.sendMessage("§7Profile ID: " + profile.getId());
     }
 
     public static void create(RavengardPlayer player) {
@@ -76,7 +76,7 @@ public final class RavengardProfiles {
         RavengardProfileDatabase.save(profile);
 
         player.sendMessage("Successfully created profile!");
-        player.sendMessage("Profile ID: " + profile.getId());
+        player.sendMessage("§7Profile ID: " + profile.getId());
 
         activate(player, profile);
     }
@@ -92,7 +92,7 @@ public final class RavengardProfiles {
         }
 
         saveActive(player);
-        player.sendMessage("Profile ID: " + profile.getId());
+        player.sendMessage("§7Profile ID: " + profile.getId());
         activate(player, profile);
     }
 
@@ -116,7 +116,7 @@ public final class RavengardProfiles {
             return;
         }
         player.setSelectedProfile(null);
-        player.sendMessage("Profile ID: " + remaining.getFirst().getId());
+        player.sendMessage("§7Profile ID: " + remaining.getFirst().getId());
         activate(player, remaining.getFirst());
     }
 
