@@ -16,7 +16,6 @@ import java.util.List;
 public class GUIAbilityPage extends RavengardView {
     private static final int PANEL_ICON = 0xE23D;
     private static final int[] ABILITY_SLOTS = {4, 11, 15, 22, 29, 33, 40};
-    private static final int SLOT_BACK = 45;
 
     private final int abilitySlot;
 
@@ -35,7 +34,7 @@ public class GUIAbilityPage extends RavengardView {
     }
 
     @Override
-    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+    protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         if (!(ctx.player() instanceof RavengardPlayer player)) {
             return;
         }
@@ -69,12 +68,6 @@ public class GUIAbilityPage extends RavengardView {
             place(layout, ABILITY_SLOTS[index], button);
         }
 
-        RavengardItems.Builder back = RavengardItems.button(RavengardButton.BACK)
-                .label("Go Back")
-                .lore("§7Return to the previous menu.")
-                .blankLine()
-                .lore("§eClick to go back!")
-                .origin(SLOT_BACK);
-        layout.slot(SLOT_BACK, back.toBuilder(), (click, viewContext) -> viewContext.backOrClose());
+        backButton(layout);
     }
 }

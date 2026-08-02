@@ -31,7 +31,7 @@ public class GUIRavengardMenu extends RavengardView {
     }
 
     @Override
-    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+    protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         RavengardClass playerClass = ctx.player() instanceof RavengardPlayer player
                 ? player.getRavengardClass()
                 : null;
@@ -43,12 +43,10 @@ public class GUIRavengardMenu extends RavengardView {
                 .blankLine()
                 .lore("§eClick to join!")
                 .origin(SLOT_FIGHT);
-        for (int slot : fight.sprite().coveredSlots(SLOT_FIGHT)) {
-            layout.slot(slot, fight.toBuilder(), (_, viewCtx) -> {
-                viewCtx.player().closeInventory();
-                viewCtx.player().sendTo(ServerType.RAVENGARD_DUNGEON);
-            });
-        }
+        interactive(layout, SLOT_FIGHT, fight, (_, viewCtx) -> {
+            viewCtx.player().closeInventory();
+            viewCtx.player().sendTo(ServerType.RAVENGARD_DUNGEON);
+        });
 
         RavengardButton statue = playerClass == null ? null : RavengardButton.statueFor(playerClass);
         if (statue != null) {
@@ -61,11 +59,9 @@ public class GUIRavengardMenu extends RavengardView {
                 profile.lore(profileLore).blankLine();
             }
 
-            profile.lore("§eClick to change profile!").origin(SLOT_STATUE);
-            for (int slot : statue.coveredSlots(SLOT_STATUE)) {
-                layout.slot(slot, profile.toBuilder(), (click, viewCtx) ->
-                        net.swofty.type.generic.gui.v2.ViewNavigator.get(viewCtx.player()).push(new GUIProfiles()));
-            }
+            interactive(layout, SLOT_STATUE, profile.lore("§eClick to change profile!"),
+                    (click, viewCtx) -> net.swofty.type.generic.gui.v2.ViewNavigator
+                            .get(viewCtx.player()).push(new GUIProfiles()));
         }
 
         place(layout, SLOT_LOCKBOX, RavengardItems.button(RavengardButton.CHEST)
@@ -126,11 +122,9 @@ public class GUIRavengardMenu extends RavengardView {
                     .blankLine()
                     .lore("§eClick to change!")
                     .origin(slots[index]);
-            for (int slot : button.sprite().coveredSlots(slots[index])) {
-                layout.slot(slot, button.toBuilder(), (click, viewCtx) ->
-                        net.swofty.type.generic.gui.v2.ViewNavigator.get(viewCtx.player())
-                                .push(new GUIAbilityPage(page)));
-            }
+            interactive(layout, slots[index], button, (click, viewCtx) ->
+                    net.swofty.type.generic.gui.v2.ViewNavigator.get(viewCtx.player())
+                            .push(new GUIAbilityPage(page)));
         }
     }
 

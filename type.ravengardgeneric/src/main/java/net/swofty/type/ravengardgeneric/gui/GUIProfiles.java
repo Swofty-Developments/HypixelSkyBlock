@@ -17,7 +17,6 @@ public class GUIProfiles extends RavengardView {
     private static final int PANEL_ICON = 0xE238;
     /** The five profile columns of the captured menu, statues spanning rows two to four. */
     private static final int[] COLUMN_ORIGINS = {18, 20, 22, 24, 26};
-    private static final int SLOT_BACK = 45;
 
     @Override
     protected String title() {
@@ -30,7 +29,7 @@ public class GUIProfiles extends RavengardView {
     }
 
     @Override
-    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+    protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         if (!(ctx.player() instanceof RavengardPlayer player)) {
             return;
         }
@@ -47,13 +46,7 @@ public class GUIProfiles extends RavengardView {
             }
         }
 
-        RavengardItems.Builder back = RavengardItems.button(RavengardButton.BACK)
-                .label("Go Back")
-                .lore("§7Return to the previous menu.")
-                .blankLine()
-                .lore("§eClick to go back!")
-                .origin(SLOT_BACK);
-        layout.slot(SLOT_BACK, back.toBuilder(), (click, viewContext) -> viewContext.backOrClose());
+        backButton(layout);
     }
 
     private void placeProfile(ViewLayout<DefaultState> layout, int origin, RavengardProfile profile,
@@ -83,8 +76,7 @@ public class GUIProfiles extends RavengardView {
             button.lore("§eLeft-Click to select!", "§cRight-Click to delete!");
         }
 
-        for (int slot : statue.coveredSlots(origin)) {
-            layout.slot(slot, button.toBuilder(), (click, viewContext) -> {
+        interactive(layout, origin, button, (click, viewContext) -> {
                 if (!(viewContext.player() instanceof RavengardPlayer target)) {
                     return;
                 }
@@ -97,7 +89,6 @@ public class GUIProfiles extends RavengardView {
                     RavengardProfiles.select(target, profile.getId());
                 }
             });
-        }
     }
 
     private void placeCreate(ViewLayout<DefaultState> layout, int origin) {
@@ -107,13 +98,11 @@ public class GUIProfiles extends RavengardView {
                 .lore("§eClick to create!")
                 .origin(origin);
 
-        for (int slot : RavengardButton.ADD.coveredSlots(origin)) {
-            layout.slot(slot, button.toBuilder(), (click, viewContext) -> {
-                if (viewContext.player() instanceof RavengardPlayer target) {
-                    target.closeInventory();
-                    RavengardProfiles.create(target);
-                }
-            });
-        }
+        interactive(layout, origin, button, (click, viewContext) -> {
+            if (viewContext.player() instanceof RavengardPlayer target) {
+                target.closeInventory();
+                RavengardProfiles.create(target);
+            }
+        });
     }
 }

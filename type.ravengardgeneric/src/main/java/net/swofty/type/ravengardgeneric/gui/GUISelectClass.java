@@ -45,7 +45,7 @@ public class GUISelectClass extends RavengardView {
     }
 
     @Override
-    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+    protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         for (Option option : Option.values()) {
             RavengardItems.Builder button = RavengardItems.button(option.statue)
                     .hoverColor(option.offset)
@@ -54,13 +54,11 @@ public class GUISelectClass extends RavengardView {
                     .blankLine()
                     .lore("§eClick to select!");
 
-            for (int slot : option.statue.coveredSlots(option.slot)) {
-                layout.slot(slot, button.toBuilder(), (click, viewContext) -> {
-                    if (click.player() instanceof RavengardPlayer player) {
-                        RavengardSelection.choose(player, option.value);
-                    }
-                });
-            }
+            interactive(layout, option.slot, button, (click, viewContext) -> {
+                if (click.player() instanceof RavengardPlayer player) {
+                    RavengardSelection.choose(player, option.value);
+                }
+            });
         }
     }
 }
