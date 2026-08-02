@@ -178,7 +178,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
             List<RavengardAnimationClip.Frame> frames = clipParts.get(i).phase(
                     attacking ? net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.TALK
                               : net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.IDLE);
-            Pos partPos = position.add(rotateOffset(partOffsets.get(i), yaw - (float) clip.yaw())).withYaw(yaw);
+            Pos partPos = position.add(rotateOffset(partOffsets.get(i), yaw - (float) clip.yaw()));
             if (moved || attacking) {
                 part.teleport(partPos);
             }
