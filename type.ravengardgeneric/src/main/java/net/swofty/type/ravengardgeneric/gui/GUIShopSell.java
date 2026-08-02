@@ -9,6 +9,8 @@ import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.gui.v2.DefaultState;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.ViewNavigator;
+import net.swofty.type.generic.gui.v2.ViewSession;
+import net.swofty.type.generic.gui.v2.context.ClickContext;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.ravengardgeneric.item.RavengardItem;
 import net.swofty.type.ravengardgeneric.item.RavengardItemRegistry;
@@ -21,8 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The sell side of a shop: the grid lists the player's sellable items at their crown value, one
- * click sells a single item and the sell items button clears the lot.
+ * The sell side of a shop. Clicking a sellable item in the inventory stages it into the grid at
+ * the top, clicking a staged item takes it back, and the sell items button sells everything
+ * staged for its crown value. Items still staged when the menu closes go back to the inventory.
  */
 public class GUIShopSell extends RavengardView {
     private static final int PANEL_ICON = 0xE23C;
@@ -31,9 +34,16 @@ public class GUIShopSell extends RavengardView {
             22, 23, 24, 25, 26, 31, 32, 33, 34, 35};
 
     private final RavengardShop shop;
+    private final List<ItemStack> staged;
+    private boolean handedOver;
 
     public GUIShopSell(RavengardShop shop) {
+        this(shop, new ArrayList<>());
+    }
+
+    private GUIShopSell(RavengardShop shop, List<ItemStack> staged) {
         this.shop = shop;
+        this.staged = staged;
     }
 
     @Override
@@ -59,7 +69,10 @@ public class GUIShopSell extends RavengardView {
                                 "§7help you on your adventures!")
                         .blankLine()
                         .lore("§eClick to buy!"),
-                (click, viewContext) -> ViewNavigator.get(viewContext.player()).push(new GUIShop(shop)));
+                (click, viewContext) -> {
+                    returnStaged(viewContext);
+                    ViewNavigator.get(viewContext.player()).push(new GUIShop(shop));
+                });
 
         place(layout, GUIShop.SLOT_SELL, RavengardItems.button(RavengardButton.SELL)
                 .label("Sell")
@@ -68,91 +81,102 @@ public class GUIShopSell extends RavengardView {
                 .blankLine()
                 .lore("§aYou are here!"));
 
-        if (!(ctx.player() instanceof RavengardPlayer player)) {
-            return;
-        }
-
-        List<Integer> sellable = sellableSlots(player);
-        for (int index = 0; index < GRID.length && index < sellable.size(); index++) {
-            placeSellable(layout, player, GRID[index], sellable.get(index));
+        for (int index = 0; index < GRID.length && index < staged.size(); index++) {
+            placeStaged(layout, GRID[index], index);
         }
 
         interactive(layout, SLOT_TEXT_SELL, RavengardItems.button(RavengardButton.TEXT_SELL)
                         .label("Sell Items")
                         .blankLine()
-                        .lore("§eClick to sell everything shown!"),
-                (click, viewContext) -> {
-                    if (!(viewContext.player() instanceof RavengardPlayer target)) {
-                        return;
-                    }
-                    int total = 0;
-                    for (int slot : sellableSlots(target)) {
-                        RavengardItemType type = typeOf(target.getInventory().getItemStack(slot));
-                        if (type != null) {
-                            total += (int) type.statistic("value");
-                            target.getInventory().setItemStack(slot, ItemStack.AIR);
-                        }
-                    }
-                    if (total > 0) {
-                        RavengardProfiles.addCrowns(target, total);
-                        target.sendMessage(Component.text("You sold your items for ")
-                                .color(NamedTextColor.GREEN)
-                                .append(RavengardItem.crowns(total, ""))
-                                .append(Component.text("!").color(NamedTextColor.GREEN)));
-                    }
-                    ViewNavigator.get(target).push(new GUIShopSell(shop));
-                });
+                        .lore("§eClick to sell everything above!"),
+                (click, viewContext) -> sellStaged(viewContext));
     }
 
-    private void placeSellable(ViewLayout<DefaultState> layout, RavengardPlayer player,
-                               int gridSlot, int inventorySlot) {
-        ItemStack stack = player.getInventory().getItemStack(inventorySlot);
+    @Override
+    public boolean onBottomClick(ClickContext<DefaultState> click, ViewContext ctx) {
+        if (!(ctx.player() instanceof RavengardPlayer player) || staged.size() >= GRID.length) {
+            return false;
+        }
+        ItemStack stack = player.getInventory().getItemStack(click.slot());
+        RavengardItemType type = typeOf(stack);
+        if (type == null || type.statistic("value") <= 0) {
+            return false;
+        }
+        player.getInventory().setItemStack(click.slot(), ItemStack.AIR);
+        List<ItemStack> next = new ArrayList<>(staged);
+        next.add(stack);
+        handedOver = true;
+        ViewNavigator.get(player).push(new GUIShopSell(shop, next));
+        return false;
+    }
+
+    @Override
+    public void onClose(DefaultState state, ViewContext ctx, ViewSession.CloseReason reason) {
+        if (reason != ViewSession.CloseReason.REPLACED || !handedOver) {
+            returnStaged(ctx);
+        }
+        super.onClose(state, ctx, reason);
+    }
+
+    private void placeStaged(ViewLayout<DefaultState> layout, int gridSlot, int index) {
+        ItemStack stack = staged.get(index);
         RavengardItemType type = typeOf(stack);
         if (type == null) {
             return;
         }
         int value = (int) type.statistic("value");
 
-        List<Component> lore = new ArrayList<>(stack.get(DataComponents.LORE, List.of()));
+        List<Component> lore = new ArrayList<>(RavengardItem.loreOf(type));
         lore.add(Component.empty());
-        lore.add(Component.text("Click to sell for ").color(NamedTextColor.YELLOW)
+        lore.add(Component.text("Selling for ").color(NamedTextColor.YELLOW)
                 .decoration(TextDecoration.ITALIC, false)
                 .append(Component.text("\uD83D\uDC51").color(NamedTextColor.WHITE))
                 .append(Component.text(String.valueOf(value)).color(TextColor.color(0xFFCE47)))
-                .append(Component.text("!").color(NamedTextColor.YELLOW)));
+                .append(Component.text("! Click to take back.").color(NamedTextColor.YELLOW)));
 
         ItemStack.Builder display = RavengardItem.displayBuilder(type);
         display.set(DataComponents.LORE, lore);
 
         layout.slot(gridSlot, display, (click, viewContext) -> {
-            if (!(viewContext.player() instanceof RavengardPlayer target)) {
+            if (!(viewContext.player() instanceof RavengardPlayer player)) {
                 return;
             }
-            RavengardItemType current = typeOf(target.getInventory().getItemStack(inventorySlot));
-            if (current == null) {
-                return;
-            }
-            target.getInventory().setItemStack(inventorySlot, ItemStack.AIR);
-            RavengardProfiles.addCrowns(target, value);
-            target.sendMessage(Component.text("You sold ").color(NamedTextColor.GREEN)
-                    .append(Component.text(current.getDisplayName()).color(NamedTextColor.WHITE))
-                    .append(Component.text(" for ").color(NamedTextColor.GREEN))
-                    .append(RavengardItem.crowns(value, ""))
-                    .append(Component.text("!").color(NamedTextColor.GREEN)));
-            ViewNavigator.get(target).push(new GUIShopSell(shop));
+            List<ItemStack> next = new ArrayList<>(staged);
+            ItemStack removed = next.remove(index);
+            player.getInventory().addItemStack(removed);
+            handedOver = true;
+            ViewNavigator.get(player).push(new GUIShopSell(shop, next));
         });
     }
 
-    /** Inventory slots holding a registry item with a crown value, skipping displays and panes. */
-    private static List<Integer> sellableSlots(RavengardPlayer player) {
-        List<Integer> slots = new ArrayList<>();
-        for (int slot = 0; slot < player.getInventory().getSize(); slot++) {
-            RavengardItemType type = typeOf(player.getInventory().getItemStack(slot));
-            if (type != null && type.statistic("value") > 0) {
-                slots.add(slot);
+    private void sellStaged(ViewContext ctx) {
+        if (!(ctx.player() instanceof RavengardPlayer player) || staged.isEmpty()) {
+            return;
+        }
+        int total = 0;
+        for (ItemStack stack : staged) {
+            RavengardItemType type = typeOf(stack);
+            if (type != null) {
+                total += (int) type.statistic("value");
             }
         }
-        return slots;
+        staged.clear();
+        if (total > 0) {
+            RavengardProfiles.addCrowns(player, total);
+            player.sendMessage(Component.text("You sold your items for ").color(NamedTextColor.GREEN)
+                    .append(RavengardItem.crowns(total, ""))
+                    .append(Component.text("!").color(NamedTextColor.GREEN)));
+        }
+        handedOver = true;
+        ViewNavigator.get(player).push(new GUIShopSell(shop));
+    }
+
+    private void returnStaged(ViewContext ctx) {
+        if (staged.isEmpty() || !(ctx.player() instanceof RavengardPlayer player)) {
+            return;
+        }
+        staged.forEach(stack -> player.getInventory().addItemStack(stack));
+        staged.clear();
     }
 
     private static RavengardItemType typeOf(ItemStack stack) {

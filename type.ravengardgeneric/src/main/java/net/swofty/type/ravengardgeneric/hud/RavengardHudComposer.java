@@ -111,6 +111,8 @@ public final class RavengardHudComposer {
                 .replace("${stamina}", state.staminaText())
                 .replace("${clock}", state.getClock())
                 .replace("${location}", state.getLocation())
+                .replace("${crowns}", String.valueOf(state.getCrowns()))
+                .replace("${players}", String.valueOf(state.getPlayerCount()))
                 .replace("${date}", state.getDate())
                 .replace("${server}", state.getServerId())
                 .replace("#860794", String.format("#%06X", mapTint(state)))
