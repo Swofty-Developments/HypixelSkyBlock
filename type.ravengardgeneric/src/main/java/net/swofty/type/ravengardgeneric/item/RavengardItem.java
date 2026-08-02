@@ -1,6 +1,5 @@
 package net.swofty.type.ravengardgeneric.item;
 
-import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -8,10 +7,12 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponent;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.component.CustomData;
 import net.minestom.server.item.component.TooltipDisplay;
 import net.swofty.type.ravengardgeneric.classes.RavengardClass;
 import net.swofty.type.ravengardgeneric.data.monogdb.RavengardTrackedItemsDatabase;
+import net.swofty.type.ravengardgeneric.item.attribute.attributes.ItemAttributeItemId;
+import net.swofty.type.ravengardgeneric.item.attribute.attributes.ItemAttributeStatBoost;
+import net.swofty.type.ravengardgeneric.item.attribute.attributes.ItemAttributeUniqueTrackedId;
 import net.swofty.type.ravengardgeneric.item.components.PlaceholderSlotComponent;
 import net.swofty.type.ravengardgeneric.item.components.StandardItemComponent;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
@@ -57,6 +58,9 @@ public final class RavengardItem {
         return of(id, null);
     }
 
+    private static final TextColor STAR_COLOR = TextColor.color(0xF0F05C);
+    private static final TextColor BOOST_COLOR = TextColor.color(0xA3A3C2);
+
     public static ItemStack of(String id, RavengardPlayer owner) {
         RavengardItemType type = RavengardItemRegistry.get(id);
         return type == null ? ItemStack.AIR : of(type, owner);
@@ -64,11 +68,19 @@ public final class RavengardItem {
 
     /** A display copy for menus: identical tooltip, but no tracked uuid is minted. */
     public static ItemStack.Builder displayBuilder(RavengardItemType type) {
-        return build(type, null, false);
+        return build(type, null, false, 1.0);
     }
 
     public static ItemStack of(RavengardItemType type, RavengardPlayer owner) {
-        return build(type, owner, true).build();
+        return of(type, owner, 1.0);
+    }
+
+    /**
+     * A starred roll: every statistic is multiplied by the boost, the name gains the yellow star
+     * and each boosted stat line shows the multiplier, exactly as the copied captures do.
+     */
+    public static ItemStack of(RavengardItemType type, RavengardPlayer owner, double boost) {
+        return build(type, owner, true, boost).build();
     }
 
     public static List<Component> loreOf(RavengardItemType type) {
@@ -79,10 +91,11 @@ public final class RavengardItem {
     public static List<Component> loreOf(RavengardItemType type, boolean shopContext) {
         return type.component(PlaceholderSlotComponent.class) != null
                 ? placeholderLore(type)
-                : lore(type, shopContext);
+                : lore(type, shopContext, 1.0);
     }
 
-    private static ItemStack.Builder build(RavengardItemType type, RavengardPlayer owner, boolean tracked) {
+    private static ItemStack.Builder build(RavengardItemType type, RavengardPlayer owner,
+                                           boolean tracked, double boost) {
         ItemStack.Builder builder = ItemStack.builder(type.getMaterial());
 
         if (type.getItemModel() != null) {
@@ -90,16 +103,22 @@ public final class RavengardItem {
         }
 
         boolean placeholder = type.component(PlaceholderSlotComponent.class) != null;
-        builder.set(DataComponents.CUSTOM_NAME, Component.text(displayName(type))
-                .color(placeholder ? NamedTextColor.GRAY : NamedTextColor.WHITE)
-                .decoration(TextDecoration.ITALIC, false));
+        Component name = Component.text(displayName(type))
+                .color(placeholder ? NamedTextColor.GRAY
+                        : TextColor.color(type.getRarity().getNameColor()))
+                .decoration(TextDecoration.ITALIC, false);
+        if (boosted(boost)) {
+            name = name.append(Component.text(" "))
+                    .append(Component.text("⭐").color(STAR_COLOR));
+        }
+        builder.set(DataComponents.CUSTOM_NAME, name);
 
         if (!placeholder) {
             builder.set(DataComponents.UNBREAKABLE, net.minestom.server.utils.Unit.INSTANCE);
             builder.set(DataComponents.TOOLTIP_DISPLAY, new TooltipDisplay(false, HIDDEN));
             builder.set(DataComponents.TOOLTIP_STYLE, type.getRarity().tooltipStyle());
             if (tracked) {
-                builder.set(DataComponents.CUSTOM_DATA, new CustomData(customData(type, owner)));
+                applyTrackedAttributes(builder, type, owner, boost);
             }
         }
 
@@ -107,11 +126,23 @@ public final class RavengardItem {
             builder = component.apply(builder, type);
         }
 
-        List<Component> lore = placeholder ? placeholderLore(type) : lore(type, false);
+        List<Component> lore = placeholder ? placeholderLore(type) : lore(type, false, boost);
         if (!lore.isEmpty()) {
             builder.set(DataComponents.LORE, lore);
         }
         return builder;
+    }
+
+    private static boolean boosted(double boost) {
+        return boost > 1.0001;
+    }
+
+    private static String boostText(double boost) {
+        String text = String.valueOf(boost);
+        if (text.endsWith(".0")) {
+            text = text.substring(0, text.length() - 2);
+        }
+        return text;
     }
 
     /**
@@ -119,16 +150,18 @@ public final class RavengardItem {
      * minted uuid, recorded to the tracker so the item has a history. The distinct uuid is also
      * what stops two of them stacking.
      */
-    private static CompoundBinaryTag customData(RavengardItemType type, RavengardPlayer owner) {
+    private static void applyTrackedAttributes(ItemStack.Builder builder, RavengardItemType type,
+                                               RavengardPlayer owner, double boost) {
         UUID itemUuid = UUID.randomUUID();
         String trackedId = type.getRarity().name() + "_" + type.getId();
         RavengardTrackedItemsDatabase.record(itemUuid, trackedId,
                 owner == null ? null : owner.getUuid(),
                 owner == null ? null : owner.getSelectedProfile());
-        return CompoundBinaryTag.builder()
-                .putString("id", trackedId)
-                .putString("uuid", itemUuid.toString())
-                .build();
+        new ItemAttributeItemId().apply(builder, trackedId);
+        new ItemAttributeUniqueTrackedId().apply(builder, itemUuid.toString());
+        if (boosted(boost)) {
+            new ItemAttributeStatBoost().apply(builder, boost);
+        }
     }
 
     private static String displayName(RavengardItemType type) {
@@ -146,7 +179,7 @@ public final class RavengardItem {
         return name.toString();
     }
 
-    private static List<Component> lore(RavengardItemType type, boolean shopContext) {
+    private static List<Component> lore(RavengardItemType type, boolean shopContext, double boost) {
         List<Component> lore = new ArrayList<>();
 
         StringBuilder tags = new StringBuilder();
@@ -161,7 +194,10 @@ public final class RavengardItem {
 
         boolean stats = false;
         for (var statistic : net.swofty.type.ravengardgeneric.item.statistics.RavengardItemStatistic.values()) {
-            stats |= stat(lore, statistic.getIconGlyph(), type.statistic(statistic), statistic.getDisplayName());
+            boolean scaled = statistic.isBoostable() && boosted(boost);
+            stats |= stat(lore, statistic.getIconGlyph(),
+                    type.statistic(statistic) * (scaled ? boost : 1.0),
+                    statistic.getDisplayName(), scaled ? boost : 0);
         }
         if (stats) {
             lore.add(Component.empty());
@@ -198,16 +234,23 @@ public final class RavengardItem {
         return lore;
     }
 
-    private static boolean stat(List<Component> lore, int icon, double amount, String label) {
+    private static boolean stat(List<Component> lore, int icon, double amount, String label, double boost) {
         if (amount <= 0) {
             return false;
         }
-        String value = amount == Math.floor(amount) ? String.valueOf((int) amount) : String.valueOf(amount);
-        lore.add(Component.text(new String(Character.toChars(icon)) + value)
+        double rounded = Math.round(amount * 100.0) / 100.0;
+        String value = rounded == Math.floor(rounded)
+                ? String.valueOf((int) rounded) : String.valueOf(rounded);
+        Component line = Component.text(new String(Character.toChars(icon)) + value)
                 .color(DEFENSE_COLOR)
                 .decoration(TextDecoration.ITALIC, false)
                 .append(Component.text(" "))
-                .append(Component.text(label).color(NamedTextColor.WHITE)));
+                .append(Component.text(label).color(NamedTextColor.WHITE));
+        if (boost > 0) {
+            line = line.append(Component.text(" "))
+                    .append(Component.text("(+" + boostText(boost) + "x)").color(BOOST_COLOR));
+        }
+        lore.add(line);
         return true;
     }
 

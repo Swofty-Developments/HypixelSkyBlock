@@ -136,7 +136,7 @@ public class GUIShop extends RavengardView {
             player.sendMessage("§cThat item is out of stock!");
             return;
         }
-        player.getInventory().addItemStack(RavengardItem.of(type, player));
+        player.getInventory().addItemStack(RavengardItem.of(type, player, entry.boost()));
         player.sendMessage(Component.text("You bought ").color(NamedTextColor.GREEN)
                 .append(Component.text(type.getDisplayName() == null ? entry.item() : type.getDisplayName())
                         .color(NamedTextColor.WHITE))

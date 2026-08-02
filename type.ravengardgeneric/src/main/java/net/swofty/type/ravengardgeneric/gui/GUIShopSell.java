@@ -188,12 +188,6 @@ public class GUIShopSell extends RavengardView {
         if (stack.isAir()) {
             return null;
         }
-        var data = stack.get(DataComponents.CUSTOM_DATA);
-        if (data == null) {
-            return null;
-        }
-        String id = data.nbt().getString("id", "");
-        int split = id.indexOf('_');
-        return split < 0 ? null : RavengardItemRegistry.get(id.substring(split + 1));
+        return new net.swofty.type.ravengardgeneric.item.attribute.RavengardItemAttributeHandler(stack).getType();
     }
 }

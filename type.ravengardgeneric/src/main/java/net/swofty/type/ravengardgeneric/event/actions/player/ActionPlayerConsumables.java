@@ -1,6 +1,5 @@
 package net.swofty.type.ravengardgeneric.event.actions.player;
 
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.player.PlayerUseItemEvent;
 import net.minestom.server.item.ItemStack;
 import net.swofty.type.generic.event.EventNodes;
@@ -8,8 +7,8 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.ravengardgeneric.classes.RavengardAbilityService;
-import net.swofty.type.ravengardgeneric.item.RavengardItemRegistry;
 import net.swofty.type.ravengardgeneric.item.RavengardItemType;
+import net.swofty.type.ravengardgeneric.item.attribute.RavengardItemAttributeHandler;
 import net.swofty.type.ravengardgeneric.item.components.StandardItemComponent;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 
@@ -29,13 +28,7 @@ public class ActionPlayerConsumables implements HypixelEventClass {
             return;
         }
         ItemStack stack = event.getItemStack();
-        var data = stack.get(DataComponents.CUSTOM_DATA);
-        if (data == null) {
-            return;
-        }
-        String id = data.nbt().getString("id", "");
-        int split = id.indexOf('_');
-        RavengardItemType type = split < 0 ? null : RavengardItemRegistry.get(id.substring(split + 1));
+        RavengardItemType type = new RavengardItemAttributeHandler(stack).getType();
         if (type == null) {
             return;
         }

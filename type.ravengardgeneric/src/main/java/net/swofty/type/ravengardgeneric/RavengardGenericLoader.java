@@ -47,6 +47,7 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
 
         net.swofty.type.ravengardgeneric.item.RavengardItemRegistry.load();
         net.swofty.type.ravengardgeneric.shop.RavengardShopRegistry.load();
+        net.swofty.type.ravengardgeneric.item.attribute.RavengardItemAttribute.registerItemAttributes();
         net.swofty.type.ravengardgeneric.entity.mob.RavengardMob.startTicking();
         connectRegions();
         net.swofty.type.ravengardgeneric.region.RavengardRegion.cacheRegions();

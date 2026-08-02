@@ -57,5 +57,5 @@ pool:
     price: 33
   - item: WAR_BOW
     price: 30
-  - item: WAR_TORN_GREAT_AXE
+  - item: WAR_GREAT_AXE
     price: 55

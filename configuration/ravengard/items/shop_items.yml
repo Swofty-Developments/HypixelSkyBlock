@@ -1,13 +1,13 @@
 # Generated from captured shop menus.
 items:
   - id: IRON_HALBERD
-    rarity: UNCOMMON
+    rarity: COMMON
     material: golden_sword
     display_name: 'Iron Halberd'
     item_model: hypixel_ravengard:item/weapons/halberds/iron/iron_halberd
-    value: 7
+    value: 5
     default_statistics:
-      damage: 52
+      damage: 40
       attack_speed: 1
     components:
       - id: STANDARD_ITEM
@@ -98,14 +98,14 @@ items:
         standard_item_type: HAMMER
       - id: CLASS_RESTRICTED
         classes: [WARRIOR]
-  - id: WAR_TORN_GREAT_AXE
-    rarity: COMMON
+  - id: WAR_GREAT_AXE
+    rarity: UNCOMMON
     material: iron_axe
     display_name: 'War-Torn Great Axe'
     item_model: hypixel_ravengard:item/weapons/axes/war_torn/war_torn_great_axe
-    value: 3
+    value: 5
     default_statistics:
-      damage: 51
+      damage: 60
       attack_speed: 1
     components:
       - id: STANDARD_ITEM
@@ -289,13 +289,13 @@ items:
       - id: CLASS_RESTRICTED
         classes: [KNIGHT, WARRIOR]
   - id: LIGHT_BOOTS
-    rarity: COMMON
+    rarity: UNCOMMON
     material: leather_boots
     display_name: 'Light Boots'
     item_model: hypixel_ravengard:item/armor/light/boots/light_boots
-    value: 6
+    value: 8
     default_statistics:
-      defense: 11
+      defense: 13
     components:
       - id: STANDARD_ITEM
         standard_item_type: BOOTS
@@ -696,3 +696,70 @@ items:
         standard_item_type: BOOTS
       - id: CLASS_RESTRICTED
         classes: [KNIGHT]
+
+  # Verified against copied item NBT dumps from live Ravengard.
+  - id: RUSTY_GREAT_AXE
+    rarity: COMMON
+    material: wooden_axe
+    display_name: 'Rusty Great Axe'
+    item_model: hypixel_ravengard:item/weapons/axes/rusty/rusty_great_axe
+    value: 0
+    default_statistics:
+      damage: 45
+      attack_speed: 0.9
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: GREATAXE
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: IRON_GREAT_AXE
+    rarity: COMMON
+    material: iron_axe
+    display_name: 'Iron Great Axe'
+    item_model: hypixel_ravengard:item/weapons/axes/iron/iron_great_axe
+    value: 3
+    default_statistics:
+      damage: 56
+      attack_speed: 1
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: GREATAXE
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: STUDDED_CHESTPLATE
+    rarity: COMMON
+    material: iron_chestplate
+    display_name: 'Studded Chestplate'
+    item_model: hypixel_ravengard:item/armor/studded/chestplate/studded_chestplate
+    value: 3
+    default_statistics:
+      defense: 10
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT, WARRIOR]
+  - id: TOPAZ_GEMSTONE
+    rarity: COMMON
+    material: stick
+    display_name: 'Topaz Gemstone'
+    item_model: hypixel_ravengard:item/gameplay/trinkets/topaz
+    value: 6
+    description:
+      - 'A smooth topaz gemstone.'
+      - 'The stone looks a little faded.'
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: TRINKET
+  - id: RUBY_JEWEL
+    rarity: COMMON
+    material: stick
+    display_name: 'Ruby Jewel'
+    item_model: hypixel_ravengard:item/gameplay/trinkets/ruby
+    value: 5
+    description:
+      - 'A beautiful deep red jewel.'
+      - 'Seems a little faded.'
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: TRINKET

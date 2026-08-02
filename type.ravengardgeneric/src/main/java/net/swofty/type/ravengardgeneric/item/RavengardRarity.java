@@ -5,16 +5,18 @@ import lombok.Getter;
 /** Item rarities, each with its pack tag glyph and tooltip style. */
 @Getter
 public enum RavengardRarity {
-    COMMON(0xE203),
-    UNCOMMON(0xE21C),
-    RARE(0xE218),
-    EPIC(0xE208),
-    LEGENDARY(0xE211);
+    COMMON(0xE203, 0xFFFFFF),
+    UNCOMMON(0xE21C, 0x30AC35),
+    RARE(0xE218, 0x5555FF),
+    EPIC(0xE208, 0xAA00AA),
+    LEGENDARY(0xE211, 0xFFAA00);
 
     private final int tagGlyph;
+    private final int nameColor;
 
-    RavengardRarity(int tagGlyph) {
+    RavengardRarity(int tagGlyph, int nameColor) {
         this.tagGlyph = tagGlyph;
+        this.nameColor = nameColor;
     }
 
     public String tooltipStyle() {

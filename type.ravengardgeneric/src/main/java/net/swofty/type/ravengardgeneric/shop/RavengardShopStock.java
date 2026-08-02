@@ -46,9 +46,17 @@ public final class RavengardShopStock {
         return shelf;
     }
 
+    /**
+     * Boost rolls seen in copied item NBT: 1.03, 1.1 and 1.12 on shop-bought gear. The values
+     * are captured; how often a shelf entry rolls one is not, so a quarter of entries star.
+     */
+    private static final double[] BOOSTS = {1.03, 1.05, 1.1, 1.12};
+    private static final double BOOST_CHANCE = 0.25;
+
     private static Shelf roll(RavengardShop shop, long cycle) {
+        Random random = new Random(Objects.hash(shop.id(), cycle));
         List<RavengardShop.PoolEntry> pool = new ArrayList<>(shop.pool());
-        Collections.shuffle(pool, new Random(Objects.hash(shop.id(), cycle)));
+        Collections.shuffle(pool, random);
 
         List<Entry> entries = new ArrayList<>();
         List<Integer> slots = shop.shelfSlots();
@@ -56,7 +64,9 @@ public final class RavengardShopStock {
             // pools smaller than the shelf repeat, the way the alchemist's five slots carry
             // duplicates of its three items
             RavengardShop.PoolEntry picked = pool.get(index % pool.size());
-            entries.add(new Entry(slots.get(index), picked.item(), picked.price(), STOCK_PER_ENTRY));
+            double boost = random.nextDouble() < BOOST_CHANCE
+                    ? BOOSTS[random.nextInt(BOOSTS.length)] : 1.0;
+            entries.add(new Entry(slots.get(index), picked.item(), picked.price(), STOCK_PER_ENTRY, boost));
         }
         return new Shelf(cycle, List.copyOf(entries));
     }
@@ -76,13 +86,19 @@ public final class RavengardShopStock {
         private final int slot;
         private final String item;
         private final int price;
+        private final double boost;
         private int remaining;
 
-        Entry(int slot, String item, int price, int remaining) {
+        Entry(int slot, String item, int price, int remaining, double boost) {
             this.slot = slot;
             this.item = item;
             this.price = price;
             this.remaining = remaining;
+            this.boost = boost;
+        }
+
+        public double boost() {
+            return boost;
         }
 
         public int slot() {
