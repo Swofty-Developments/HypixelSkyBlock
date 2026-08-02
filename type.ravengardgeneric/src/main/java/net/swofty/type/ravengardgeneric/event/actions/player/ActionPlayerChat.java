@@ -81,6 +81,7 @@ public class ActionPlayerChat implements HypixelEventClass {
         return icon + " "
                 + player.getLegacyRankPrefix()
                 + StringUtility.getTextFromComponent(player.getName())
-                + messageColor + " " + level + ": " + message;
+                // the level is bold gold; a colour code after it drops the bold again
+                + messageColor + " §6§l" + level + messageColor + ": " + message;
     }
 }
