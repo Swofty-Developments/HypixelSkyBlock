@@ -115,15 +115,22 @@ public class GUIRavengardMenu extends RavengardView {
             return;
         }
 
-        List<RavengardAbility> abilities = playerClass.getAbilities();
+        List<RavengardAbility> abilities = playerClass.defaultAbilities();
         int[] slots = {SLOT_ABILITY_ONE, SLOT_ABILITY_TWO};
         for (int index = 0; index < slots.length && index < abilities.size(); index++) {
             RavengardAbility ability = abilities.get(index);
-            place(layout, slots[index], RavengardItems.button(ability)
-                    .label("Ability " + (index + 1) + " - " + ability.getDisplayName())
-                    .lore(ability.getHighlightedDescription())
+            final int page = index + 1;
+            RavengardItems.Builder button = RavengardItems.button(ability)
+                    .label("Ability " + page + " - " + ability.getDisplayName())
+                    .lore(ability.getWrappedDescription())
                     .blankLine()
-                    .lore("§eClick to change!"));
+                    .lore("§eClick to change!")
+                    .origin(slots[index]);
+            for (int slot : button.sprite().coveredSlots(slots[index])) {
+                layout.slot(slot, button.toBuilder(), (click, viewCtx) ->
+                        net.swofty.type.generic.gui.v2.ViewNavigator.get(viewCtx.player())
+                                .push(new GUIAbilityPage(page)));
+            }
         }
     }
 

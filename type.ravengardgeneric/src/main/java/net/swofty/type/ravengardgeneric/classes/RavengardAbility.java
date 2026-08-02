@@ -129,7 +129,8 @@ public enum RavengardAbility implements RavengardSprite {
             lines[index] = "§7" + description[index]
                     .replaceAll("([+-]?\\d+(?:\\.\\d+)? ?HP)", "§c$1§7")
                     .replaceAll("(\\d+(?:\\.\\d+)?%)", "§a$1§7")
-                    .replaceAll("(\\d+ seconds?)", "§e$1§7");
+                    .replaceAll("(\\d+ seconds?)", "§e$1§7")
+                    .replaceAll("(\\d+(?:-block| blocks?))", "§a$1§7");
         }
         return lines;
     }
@@ -150,6 +151,37 @@ public enum RavengardAbility implements RavengardSprite {
             case LACERATE -> 0xE023; case SHADOWS -> 0xE022; case SWIFT -> 0xE027;
             case POISON_DAGGER -> 0xE024;
         };
+    }
+
+    /**
+     * The highlighted description wrapped the way the captured tooltips wrap, roughly
+     * thirty-six visible characters to a line, each continuation reopening in gray.
+     */
+    public String[] getWrappedDescription() {
+        java.util.List<String> lines = new java.util.ArrayList<>();
+        for (String highlighted : getHighlightedDescription()) {
+            StringBuilder current = new StringBuilder();
+            int visible = 0;
+            for (String word : highlighted.split(" ")) {
+                int wordVisible = word.replaceAll("\u00a7.", "").length();
+                if (visible > 0 && visible + 1 + wordVisible > 36) {
+                    lines.add(current.toString());
+                    current = new StringBuilder("\u00a77").append(word);
+                    visible = wordVisible;
+                    continue;
+                }
+                if (visible > 0) {
+                    current.append(' ');
+                    visible++;
+                }
+                current.append(word);
+                visible += wordVisible;
+            }
+            if (!current.isEmpty()) {
+                lines.add(current.toString());
+            }
+        }
+        return lines.toArray(new String[0]);
     }
 
     public int getCooldownTicks() {
