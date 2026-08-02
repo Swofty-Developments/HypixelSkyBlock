@@ -111,7 +111,10 @@ public class AnimatedRavengardNPC extends RavengardNPC {
 
     @Override
     public void onClick(RavengardPlayer player) {
-        play(RavengardAnimationPhase.TALK);
+        // a click mid-speech advances the dialogue; the talk cycle keeps playing from where it is
+        if (phase != RavengardAnimationPhase.TALK) {
+            play(RavengardAnimationPhase.TALK);
+        }
         advanceDialogue(player);
     }
 
