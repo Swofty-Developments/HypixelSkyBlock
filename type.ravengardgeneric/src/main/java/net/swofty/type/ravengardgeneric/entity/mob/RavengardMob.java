@@ -65,7 +65,9 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
      * The captured knight charge: a sprint at roughly three times walk speed for a handful of
      * ticks that always ends in the purple slash. Range and cooldown are not observable.
      */
-    private static final String CHARGE_ANIMATION = "attack_purple";
+    private String chargeAnimation() {
+        return clip.animation("charge") != null ? "charge" : "attack_purple";
+    }
     private static final double CHARGE_MIN_RANGE = 3.0;
     private static final double CHARGE_MAX_RANGE = 7.0;
     private static final double CHARGE_HIT_RANGE = 2.4;
@@ -104,7 +106,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         if (dying || attackCooldown > 0 || chargeTicksLeft > 0) return;
         attackCooldown = ATTACK_COOLDOWN_TICKS;
         List<String> options = new ArrayList<>(clip.attackAnimations());
-        options.remove(CHARGE_ANIMATION);
+        options.remove(chargeAnimation());
         if (!options.isEmpty()) {
             startOneShot(options.get(ThreadLocalRandom.current().nextInt(options.size())));
         }
@@ -124,7 +126,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     }
 
     private void tickCharge() {
-        if (dying || clip.animation(CHARGE_ANIMATION) == null) return;
+        if (dying || clip.animation(chargeAnimation()) == null) return;
         if (chargeCooldown > 0) chargeCooldown--;
         Entity target = getTarget();
         var speed = getAttribute(net.minestom.server.entity.attribute.Attribute.MOVEMENT_SPEED);
@@ -136,7 +138,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
             if (arrived || chargeTicksLeft == 0) {
                 chargeTicksLeft = 0;
                 speed.setBaseValue(base);
-                startOneShot(CHARGE_ANIMATION);
+                startOneShot(chargeAnimation());
                 attackCooldown = ATTACK_COOLDOWN_TICKS;
                 if (arrived) {
                     hit(target);
