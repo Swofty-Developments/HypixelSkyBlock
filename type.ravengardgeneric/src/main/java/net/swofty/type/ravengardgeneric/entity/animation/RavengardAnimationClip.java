@@ -40,6 +40,7 @@ public final class RavengardAnimationClip {
     private String onComplete;
     private String shop;
     private String shopLine;
+    private double health;
 
     public double[] position() {
         return position == null ? new double[]{0, 0, 0} : position;
@@ -69,6 +70,23 @@ public final class RavengardAnimationClip {
     /** An unnumbered line some shopkeepers say as their shop opens, captured without an index. */
     public String shopLine() {
         return shopLine;
+    }
+
+    public double health() {
+        return health;
+    }
+
+    /** Mob clips live in their own directory beside the npc animations. */
+    public static RavengardAnimationClip loadMob(String name) {
+        return CACHE.computeIfAbsent("mob:" + name, key -> {
+            java.io.File file = new java.io.File("./configuration/ravengard/mobs", name + ".json");
+            try (InputStream stream = new java.io.FileInputStream(file)) {
+                return GSON.fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8),
+                        RavengardAnimationClip.class);
+            } catch (Exception exception) {
+                throw new IllegalStateException("Failed to load mob clip " + key, exception);
+            }
+        });
     }
 
     public Dialogue dialogue() {
