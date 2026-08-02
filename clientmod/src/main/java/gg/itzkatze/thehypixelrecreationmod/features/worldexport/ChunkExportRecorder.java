@@ -198,7 +198,9 @@ public final class ChunkExportRecorder {
                 continue;
             }
 
-            if (entity.getDeltaMovement().lengthSqr() > 0) {
+            // servers send no-op move and motion packets for stationary displays, so only real
+            // displacement counts as movement: anything under a hundredth of a block is noise
+            if (entity.getDeltaMovement().lengthSqr() > 1.0E-6) {
                 RECORDED_BLOCK_DISPLAYS.remove(uuid);
                 MOVING_ENTITIES.add(uuid);
                 continue;
@@ -206,7 +208,7 @@ public final class ChunkExportRecorder {
 
             EntityPosition position = new EntityPosition(entity.getX(), entity.getY(), entity.getZ());
             CapturedEntity previous = RECORDED_BLOCK_DISPLAYS.get(uuid);
-            if (previous != null && !previous.position().equals(position)) {
+            if (previous != null && previous.position().distanceSqr(position) > 1.0E-4) {
                 RECORDED_BLOCK_DISPLAYS.remove(uuid);
                 MOVING_ENTITIES.add(uuid);
                 continue;
@@ -367,5 +369,11 @@ public final class ChunkExportRecorder {
     }
 
     private record EntityPosition(double x, double y, double z) {
+        double distanceSqr(EntityPosition other) {
+            double dx = x - other.x;
+            double dy = y - other.y;
+            double dz = z - other.z;
+            return dx * dx + dy * dy + dz * dz;
+        }
     }
 }
