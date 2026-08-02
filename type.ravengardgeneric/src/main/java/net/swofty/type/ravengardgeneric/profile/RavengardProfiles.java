@@ -1,6 +1,8 @@
 package net.swofty.type.ravengardgeneric.profile;
 
+import net.kyori.adventure.nbt.TagStringIO;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.instance.Instance;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
@@ -62,6 +64,7 @@ public final class RavengardProfiles {
         RavengardProfile profile = ensure(player);
         player.sendMessage("§8Profile ID: " + profile.getId());
         player.sendMessage("       ");
+        restoreInventory(player, profile);
     }
 
     public static void create(RavengardPlayer player) {
@@ -135,6 +138,7 @@ public final class RavengardProfiles {
         profile.setLevel(player.getRavengardLevel());
         profile.setTutorial(player.isTutorial());
         profile.setPlaytimeSeconds(profile.getPlaytimeSeconds() + endSession(player));
+        snapshotInventory(player, profile);
         RavengardProfileDatabase.save(profile);
         beginSession(player);
     }
@@ -153,17 +157,9 @@ public final class RavengardProfiles {
         applyToWorkingCopy(player, profile);
         beginSession(player);
 
-        player.sendMessage("§7Restoring default equipment...");
-        player.getInventory().clear();
+        restoreInventory(player, profile);
 
         RavengardClass profileClass = profile.getProfileClass();
-        if (profileClass != null) {
-            RavengardSelection.giveKit(player, profileClass);
-        } else {
-            RavengardSelection.giveAccessorySlots(player);
-        }
-        RavengardMenuItem.give(player);
-
         player.closeInventory();
         Instance target = profile.isTutorial() || profileClass == null
                 ? RavengardGenericLoader.tutorialInstance
@@ -178,6 +174,51 @@ public final class RavengardProfiles {
                 player.setInstance(target, spawn);
             }
         }
+    }
+
+    /** Writes every occupied slot into the profile as item nbt. */
+    public static void snapshotInventory(RavengardPlayer player, RavengardProfile profile) {
+        profile.getInventory().clear();
+        for (int slot = 0; slot < player.getInventory().getSize(); slot++) {
+            ItemStack stack = player.getInventory().getItemStack(slot);
+            if (stack.isAir()) {
+                continue;
+            }
+            try {
+                profile.getInventory().put(slot, TagStringIO.tagStringIO().asString(stack.toItemNBT()));
+            } catch (Exception exception) {
+                Logger.warn(exception, "Could not serialize inventory slot {} for {}", slot, player.getUsername());
+            }
+        }
+    }
+
+    /**
+     * Rebuilds the player's inventory from the profile: the saved slots when it has them, the
+     * class defaults when it has never saved any.
+     */
+    public static void restoreInventory(RavengardPlayer player, RavengardProfile profile) {
+        player.getInventory().clear();
+        if (!profile.getInventory().isEmpty()) {
+            profile.getInventory().forEach((slot, snbt) -> {
+                try {
+                    player.getInventory().setItemStack(slot,
+                            ItemStack.fromItemNBT(TagStringIO.tagStringIO().asCompound(snbt)));
+                } catch (Exception exception) {
+                    Logger.warn(exception, "Could not restore inventory slot {} for {}", slot, player.getUsername());
+                }
+            });
+            RavengardMenuItem.give(player);
+            return;
+        }
+
+        player.sendMessage("§7Restoring default equipment...");
+        RavengardClass profileClass = profile.getProfileClass();
+        if (profileClass != null) {
+            RavengardSelection.giveKit(player, profileClass);
+        } else {
+            RavengardSelection.giveAccessorySlots(player);
+        }
+        RavengardMenuItem.give(player);
     }
 
     private static void applyToWorkingCopy(RavengardPlayer player, RavengardProfile profile) {

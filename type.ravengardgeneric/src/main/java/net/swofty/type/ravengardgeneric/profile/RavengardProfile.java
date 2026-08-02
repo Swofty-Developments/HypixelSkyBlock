@@ -5,6 +5,8 @@ import lombok.Setter;
 import net.swofty.type.ravengardgeneric.classes.RavengardClass;
 import org.bson.Document;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -20,6 +22,7 @@ public class RavengardProfile {
     private boolean tutorial = true;
     private long playtimeSeconds;
     private long created;
+    private final Map<Integer, String> inventory = new HashMap<>();
 
     public RavengardProfile(UUID id, UUID owner) {
         this.id = id;
@@ -38,6 +41,9 @@ public class RavengardProfile {
         document.put("tutorial", tutorial);
         document.put("playtime_seconds", playtimeSeconds);
         document.put("created", created);
+        Document inventoryDocument = new Document();
+        inventory.forEach((slot, snbt) -> inventoryDocument.put(String.valueOf(slot), snbt));
+        document.put("inventory", inventoryDocument);
         return document;
     }
 
@@ -55,6 +61,10 @@ public class RavengardProfile {
                 ? number.longValue() : 0L;
         profile.created = document.get("created") instanceof Number number
                 ? number.longValue() : System.currentTimeMillis();
+        if (document.get("inventory") instanceof Document inventoryDocument) {
+            inventoryDocument.forEach((slot, snbt) ->
+                    profile.inventory.put(Integer.parseInt(slot), (String) snbt));
+        }
         return profile;
     }
 
