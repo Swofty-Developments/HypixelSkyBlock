@@ -1,10 +1,11 @@
 package net.swofty.type.ravengarddungeon;
 
 import com.google.gson.Gson;
-import net.hollowcube.polar.PolarLoader;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.swofty.commons.CustomWorlds;
 import net.swofty.commons.ServerType;
@@ -17,10 +18,11 @@ import net.swofty.type.generic.entity.npc.HypixelNPC;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.tab.TablistManager;
 import net.swofty.type.generic.tab.TablistModule;
+import net.swofty.type.generic.world.HypixelWorldLoader;
 import net.swofty.type.ravengarddungeon.config.RavengardDungeonConfig;
-import net.swofty.type.ravengarddungeon.events.ActionPlayerJoin;
 import net.swofty.type.ravengarddungeon.game.RavengardDungeonGame;
 import net.swofty.type.ravengarddungeon.user.RavengardDungeonPlayer;
+import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
@@ -31,8 +33,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
-    private static final Path CONFIGURATION = Path.of("./configuration/ravengard/dungeon1.json");
+    private static final Path CONFIGURATION = Path.of("./configuration/ravengard/dungeon_1.json");
 
+    @Getter
     private static RavengardDungeonGame game;
     private RavengardDungeonConfig config;
 
@@ -52,19 +55,16 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
         if (!Files.isRegularFile(polarPath)) {
             throw new IllegalStateException("Ravengard dungeon map not found: " + polarPath);
         }
-        InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer();
+        InstanceContainer temp = MinecraftServer.getInstanceManager().createInstanceContainer();
+        final Instance instance;
         try {
-            instance.setChunkLoader(new PolarLoader(polarPath));
-        } catch (IOException exception) {
-            throw new IllegalStateException("Could not load Ravengard dungeon map: " + polarPath, exception);
+            instance = HypixelWorldLoader.loadFrom(polarPath, temp, MinecraftServer.getInstanceManager());
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not load Ravengard dungeon map: " + polarPath);
         }
         game = new RavengardDungeonGame(instance, config);
         MinecraftServer.getConnectionManager().setPlayerProvider((connection, profile) ->
                 new RavengardDungeonPlayer(connection, profile));
-    }
-
-    public static RavengardDungeonGame getGame() {
-        return game;
     }
 
     @Override
@@ -94,7 +94,10 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public List<HypixelEventClass> getTraditionalEvents() {
-        return List.of(new ActionPlayerJoin());
+        return RavengardGenericLoader.loopThroughPackage(
+                "net.swofty.type.ravengarddungeon.events",
+                HypixelEventClass.class
+        ).toList();
     }
 
     @Override

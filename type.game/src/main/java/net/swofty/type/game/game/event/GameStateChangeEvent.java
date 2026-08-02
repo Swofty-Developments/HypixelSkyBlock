@@ -1,5 +1,6 @@
 package net.swofty.type.game.game.event;
 
+import net.swofty.type.game.game.Game;
 import net.swofty.type.game.game.GameState;
 
 /**
@@ -7,13 +8,13 @@ import net.swofty.type.game.game.GameState;
  * Listen to this for game lifecycle management.
  */
 public record GameStateChangeEvent(
-	String gameId,
+        Game<?> game,
 	GameState previousState,
 	GameState newState
 ) implements GameEvent {
 	@Override
-	public String getGameId() {
-		return gameId;
+    public Game<?> getGame() {
+        return game;
 	}
 
 	/**

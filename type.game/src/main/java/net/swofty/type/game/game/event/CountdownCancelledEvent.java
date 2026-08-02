@@ -1,11 +1,13 @@
 package net.swofty.type.game.game.event;
 
+import net.swofty.type.game.game.Game;
+
 public record CountdownCancelledEvent(
-	String gameId,
+        Game<?> game,
 	String reason
 ) implements GameEvent {
 	@Override
-	public String getGameId() {
-		return gameId;
+    public Game<?> getGame() {
+        return game;
 	}
 }

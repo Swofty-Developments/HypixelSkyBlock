@@ -10,15 +10,7 @@ import net.swofty.type.game.game.team.GameTeam;
 import net.swofty.type.game.game.team.TeamManager;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -162,7 +154,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
                 playerTeams.put(player.getUuid(), targetTeam.getId());
 
                 eventDispatcher.accept(new PlayerAssignedTeamEvent<>(
-                    gameId,
+                        this,
                     player.getServerPlayer(),
                     targetTeam
                 ));
@@ -188,7 +180,7 @@ public abstract class AbstractTeamGame<P extends GameParticipant, T extends Game
 
             eventDispatcher.accept(
                 new GameTeamWinConditionEvent<>(
-                    gameId,
+                        this,
                     Optional.ofNullable(winner)
                 )
             );

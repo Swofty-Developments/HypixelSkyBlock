@@ -3,19 +3,18 @@ package net.swofty.type.ravengarddungeon.events;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.swofty.commons.ServerType;
 import net.swofty.type.game.game.Game;
-import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.ravengarddungeon.TypeRavengardDungeonLoader;
 import net.swofty.type.ravengarddungeon.user.RavengardDungeonPlayer;
 
 public class ActionPlayerJoin implements HypixelEventClass {
-    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.PLAYER, phase = EventPhase.GAMEPLAY)
     public void run(AsyncPlayerConfigurationEvent event) {
         RavengardDungeonPlayer player = (RavengardDungeonPlayer) event.getPlayer();
-        event.setSpawningInstance(HypixelConst.getEmptyInstance());
         ScheduleUtility.delay(() -> {
             if (!player.isOnline()) return;
             Game.JoinResult result = TypeRavengardDungeonLoader.getGame().join(player);
@@ -23,6 +22,6 @@ public class ActionPlayerJoin implements HypixelEventClass {
                 player.sendMessage("§cCould not enter the dungeon: " + reason);
                 player.sendTo(ServerType.RAVENGARD_LOBBY);
             }
-        }, 1);
+        }, 20);
     }
 }

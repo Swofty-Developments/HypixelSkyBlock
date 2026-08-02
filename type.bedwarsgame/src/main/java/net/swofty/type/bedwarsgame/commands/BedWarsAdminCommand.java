@@ -111,14 +111,14 @@ public class BedWarsAdminCommand extends HypixelCommand {
                 BedWarsTeam team = game.getTeam(winnerKey.name()).orElse(null);
                 game.getEventDispatcher().accept(
                     new GameTeamWinConditionEvent<>(
-                        game.getGameId(),
+                            game,
                         Optional.ofNullable(team)
                     )
                 );
             } else {
                 game.getEventDispatcher().accept(
                     new GameTeamWinConditionEvent<>(
-                        game.getGameId(),
+                            game,
                         Optional.empty()
                     )
                 );
@@ -140,7 +140,7 @@ public class BedWarsAdminCommand extends HypixelCommand {
 
             game.getEventDispatcher().accept(
                 new GameTeamWinConditionEvent<>(
-                    game.getGameId(),
+                        game,
                     Optional.empty()
                 )
             );

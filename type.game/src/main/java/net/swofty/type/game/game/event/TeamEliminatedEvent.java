@@ -1,6 +1,7 @@
 package net.swofty.type.game.game.event;
 
 import net.swofty.type.game.game.AbstractTeamGame;
+import net.swofty.type.game.game.Game;
 import net.swofty.type.game.game.team.GameTeam;
 
 public record TeamEliminatedEvent<T extends GameTeam>(
@@ -8,7 +9,7 @@ public record TeamEliminatedEvent<T extends GameTeam>(
         T team
 ) implements GameEvent {
     @Override
-    public String getGameId() {
-        return game.getGameId();
+    public Game<?> getGame() {
+        return game;
     }
 }

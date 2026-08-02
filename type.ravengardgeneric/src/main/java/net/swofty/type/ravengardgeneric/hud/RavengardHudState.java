@@ -21,6 +21,8 @@ public class RavengardHudState {
     private int portalCount;
     private int playerCount;
     private int killCount;
+    private boolean dungeon;
+    private boolean spectating;
 
     private double worldX;
     private double worldZ;

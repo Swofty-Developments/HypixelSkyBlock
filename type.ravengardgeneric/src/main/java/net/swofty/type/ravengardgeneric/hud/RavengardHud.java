@@ -5,6 +5,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.scoreboard.Sidebar;
 import net.minestom.server.timer.TaskSchedule;
+import net.swofty.commons.ServerType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
@@ -101,6 +102,7 @@ public final class RavengardHud {
     }
 
     private static final String FULLSCREEN_TILES = "\uE120\uE121\uE122\uE123\uE124\uE125";
+    private static final String DUNGEON_TILES = "\uE110\uE111\uE112\uE113\uE114\uE115";
     private static final String PLAYER_MARKER = "\uE102";
     private static final double TAB_MAP_ORIGIN_X = 226.69;
     private static final double TAB_MAP_ORIGIN_Z = 217.21;
@@ -118,7 +120,7 @@ public final class RavengardHud {
         int tint = (iconX << 15) | (iconY << 6) | rotation;
 
         Component header = Component.empty()
-                .append(Component.text(FULLSCREEN_TILES)
+                .append(Component.text(state.isDungeon() ? DUNGEON_TILES : FULLSCREEN_TILES)
                         .color(net.kyori.adventure.text.format.NamedTextColor.WHITE)
                         .shadowColor(net.kyori.adventure.text.format.ShadowColor.shadowColor(0)))
                 .append(Component.newline())
@@ -146,6 +148,8 @@ public final class RavengardHud {
     }
 
     private static void refresh(HypixelPlayer player, RavengardHudState state) {
+        boolean dungeon = HypixelConst.getTypeLoader().getType() == ServerType.RAVENGARD_DUNGEON;
+        state.setDungeon(dungeon);
         float fraction = player.getAttributeValue(Attribute.MAX_HEALTH) <= 0
                 ? 1f
                 : player.getHealth() / (float) player.getAttributeValue(Attribute.MAX_HEALTH);
@@ -182,15 +186,19 @@ public final class RavengardHud {
             state.setCrowns(ravengardPlayer.getCrowns());
             net.swofty.type.ravengardgeneric.region.RavengardRegion region =
                     ravengardPlayer.getRegion();
-            state.setLocation(region != null ? region.getType().getDisplayName() : "Ravenport");
+            if (!dungeon) {
+                state.setLocation(region != null ? region.getType().getDisplayName() : "Ravenport");
+            }
         }
 
         state.setWorldX(player.getPosition().x());
         state.setWorldZ(player.getPosition().z());
         state.setYaw(player.getPosition().yaw());
-        state.setClock(LocalTime.now().format(CLOCK_FORMAT));
+        if (!dungeon) {
+            state.setClock(LocalTime.now().format(CLOCK_FORMAT));
+            state.setPlayerCount(MinecraftServer.getConnectionManager().getOnlinePlayers().size());
+        }
         state.setDate(LocalDate.now().format(DATE_FORMAT));
-        state.setPlayerCount(MinecraftServer.getConnectionManager().getOnlinePlayers().size());
         if (state.getServerId().isEmpty()) {
             state.setServerId(HypixelConst.getShortenedServerName());
         }

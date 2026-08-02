@@ -3,7 +3,9 @@ package net.swofty.type.ravengardgeneric.hud;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.tinylog.Logger;
 
@@ -39,6 +41,15 @@ public final class RavengardHudComposer {
     public static Map<RavengardHudLayer, Component> compose(RavengardHudState state) {
         Map<RavengardHudLayer, Component> layers = new EnumMap<>(RavengardHudLayer.class);
         for (RavengardHudLayer layer : RavengardHudLayer.values()) {
+            if (layer == RavengardHudLayer.MINIMAP_TILES && state.isDungeon()) {
+                layers.put(layer, Component.text("\uE110\uE111\uE112\uE113\uE114\uE115")
+                        .color(TextColor.color(mapTint(state))));
+                continue;
+            }
+            if (layer == RavengardHudLayer.STATS && state.isDungeon()) {
+                layers.put(layer, dungeonStats(state));
+                continue;
+            }
             if ("team_5".equals(layer.getTeamName())) {
                 layers.put(layer, spellSlots(state));
                 continue;
@@ -50,6 +61,36 @@ public final class RavengardHudComposer {
             layers.put(layer, render(template, state));
         }
         return layers;
+    }
+
+    private static Component dungeonStats(RavengardHudState state) {
+        Component result = Component.empty();
+        if (!state.isSpectating()) {
+            result = result.append(tripled(Component.text(state.healthText(), TextColor.color(0xFEFD04))))
+                    .append(tripled(Component.text(state.staminaText(), TextColor.color(0xFEFD06))));
+        }
+        Component activity = Component.empty()
+                .append(Component.text("\uE002" + state.getClock() + "  "))
+                .append(Component.text("\uE003" + state.getKillCount() + "  "))
+                .append(Component.text("\uE004" + state.getPlayerCount() + "  "))
+                .append(Component.text("\uE005" + state.getTeamCount() + "  "))
+                .append(Component.text("\uE00E" + state.getPortalCount()))
+                .color(TextColor.color(0xFEFD08));
+        result = result.append(tripled(activity));
+        if (state.isSpectating()) {
+            result = result.append(tripled(Component.text("\uE00FSPECTATING", TextColor.color(0xFEFD0A))));
+        }
+        Component date = Component.text(state.getDate() + " ", TextColor.color(0xFEFD10))
+                .append(Component.text(state.getServerId(), TextColor.color(0xFEFD12)));
+        return result.append(date.font(Key.key("minecraft:-full")))
+                .append(date.font(Key.key("minecraft:default")));
+    }
+
+    private static Component tripled(Component component) {
+        return Component.empty()
+                .append(component.font(Key.key("minecraft:-half")))
+                .append(component.font(Key.key("minecraft:default")))
+                .append(component.font(Key.key("minecraft:-half")));
     }
 
     // structure taken from the captured team_5 line: per slot a spell background glyph whose tint
