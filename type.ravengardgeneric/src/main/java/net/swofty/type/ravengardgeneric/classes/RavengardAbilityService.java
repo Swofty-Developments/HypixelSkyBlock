@@ -69,6 +69,15 @@ public final class RavengardAbilityService {
                 .put(ability, System.currentTimeMillis() + seconds * 1000L);
     }
 
+    /** A consumable's heal on the display scale, instant or spread over the given seconds. */
+    public static void consumeHeal(RavengardPlayer player, int displayAmount, int seconds) {
+        if (seconds <= 0) {
+            heal(player, displayAmount);
+        } else {
+            healOverTime(player, displayAmount, seconds);
+        }
+    }
+
     private static void heal(RavengardPlayer player, int displayAmount) {
         float max = (float) player.getAttributeValue(Attribute.MAX_HEALTH);
         player.setHealth(Math.min(max, player.getHealth() + displayAmount / DISPLAY_SCALE));
