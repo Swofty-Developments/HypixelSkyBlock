@@ -24,6 +24,7 @@ public final class RavengardSelection {
                 .color(NamedTextColor.GREEN));
 
         giveKit(player, value);
+        net.swofty.type.ravengardgeneric.profile.RavengardProfiles.saveActive(player);
 
         player.setInstance(HypixelConst.getInstanceContainer(), MAIN_WORLD_SPAWN);
     }

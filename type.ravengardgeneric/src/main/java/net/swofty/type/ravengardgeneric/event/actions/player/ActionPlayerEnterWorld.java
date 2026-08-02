@@ -31,6 +31,8 @@ public class ActionPlayerEnterWorld implements HypixelEventClass {
                 .setBaseValue(RavengardHudState.VANILLA_HEARTS_HEALTH);
         player.setHealth(RavengardHudState.VANILLA_HEARTS_HEALTH);
 
+        net.swofty.type.ravengardgeneric.profile.RavengardProfiles.announce(player);
+
         // A player who has not picked a class yet starts the tutorial aboard the Nevermore
         boolean tutorial = player.isTutorial() || player.getRavengardClass() == null;
 

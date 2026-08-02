@@ -55,6 +55,30 @@ public class RavengardPlayer extends HypixelPlayer {
         return RavengardRegion.getRegionOfPosition(getPosition());
     }
 
+    public @Nullable java.util.UUID getSelectedProfile() {
+        RavengardDataHandler handler = getRavengardDataHandler();
+        if (handler == null) {
+            return null;
+        }
+        String value = handler
+                .get(RavengardDataHandler.Data.SELECTED_PROFILE, DatapointRavengardString.class)
+                .getValue();
+        try {
+            return value == null || value.isEmpty() ? null : java.util.UUID.fromString(value);
+        } catch (IllegalArgumentException exception) {
+            return null;
+        }
+    }
+
+    public void setSelectedProfile(@Nullable java.util.UUID value) {
+        RavengardDataHandler handler = getRavengardDataHandler();
+        if (handler == null) {
+            return;
+        }
+        handler.get(RavengardDataHandler.Data.SELECTED_PROFILE, DatapointRavengardString.class)
+                .setValue(value == null ? "" : value.toString());
+    }
+
     public boolean isTutorial() {
         RavengardDataHandler handler = getRavengardDataHandler();
         if (handler == null) {

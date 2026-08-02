@@ -61,7 +61,11 @@ public class GUIRavengardMenu extends RavengardView {
                 profile.lore(profileLore).blankLine();
             }
 
-            place(layout, SLOT_STATUE, profile.lore("§eClick to change profile!"));
+            profile.lore("§eClick to change profile!").origin(SLOT_STATUE);
+            for (int slot : statue.coveredSlots(SLOT_STATUE)) {
+                layout.slot(slot, profile.toBuilder(), (click, viewCtx) ->
+                        net.swofty.type.generic.gui.v2.ViewNavigator.get(viewCtx.player()).push(new GUIProfiles()));
+            }
         }
 
         place(layout, SLOT_LOCKBOX, RavengardItems.button(RavengardButton.CHEST)

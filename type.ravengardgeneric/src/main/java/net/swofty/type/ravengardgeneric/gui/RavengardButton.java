@@ -19,6 +19,8 @@ public enum RavengardButton implements RavengardSprite {
     STATUE_HUNTER("statue_hunter", 0xF21D, 42, 37, 1, 3),
     STATUE_KNIGHT("statue_knight", 0xF21E, 42, 37, 1, 3),
     STATUE_WARRIOR("statue_warrior", 0xF21F, 42, 37, 1, 3),
+    TEXT_CANCEL("text_cancel", 0xF220, 46, 31, 3, 1),
+    TEXT_CONFIRM("text_confirm", 0xF221, 46, 31, 3, 1),
     TEXT_FIGHT("text_fight", 0xF224, 46, 33, 3, 1),
     TROPHY("trophy", 0xF229, 42, 35, 2, 2);
 

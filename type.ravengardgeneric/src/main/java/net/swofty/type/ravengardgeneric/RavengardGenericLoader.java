@@ -99,8 +99,9 @@ public record RavengardGenericLoader(HypixelTypeLoader typeLoader) {
                     net.swofty.commons.config.ConfigProvider.settings().getMongodb());
             com.mongodb.MongoClientSettings settings = com.mongodb.MongoClientSettings.builder()
                     .applyConnectionString(connection).build();
-            net.swofty.type.ravengardgeneric.data.monogdb.RavengardRegionDatabase
-                    .connect(com.mongodb.client.MongoClients.create(settings));
+            com.mongodb.client.MongoClient client = com.mongodb.client.MongoClients.create(settings);
+            net.swofty.type.ravengardgeneric.data.monogdb.RavengardRegionDatabase.connect(client);
+            net.swofty.type.ravengardgeneric.data.monogdb.RavengardProfileDatabase.connect(client);
         } catch (Exception exception) {
             Logger.warn(exception, "Could not connect the Ravengard region collection; "
                     + "only built-in regions will be available");
