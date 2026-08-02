@@ -122,7 +122,14 @@ public final class RavengardSessionLogger {
         if (!active) {
             return;
         }
+        try {
+            tickInternal();
+        } catch (RuntimeException exception) {
+            ChatUtils.error("Ravengard session logger tick failed: " + exception);
+        }
+    }
 
+    private static void tickInternal() {
         Minecraft client = Minecraft.getInstance();
         if (client.level == null) {
             StopResult result = stop();
@@ -165,7 +172,11 @@ public final class RavengardSessionLogger {
     }
 
     private static String rigModel(Entity entity) {
-        for (SynchedEntityData.DataValue<?> value : entity.getEntityData().getNonDefaultValues()) {
+        List<SynchedEntityData.DataValue<?>> values = entity.getEntityData().getNonDefaultValues();
+        if (values == null) {
+            return null;
+        }
+        for (SynchedEntityData.DataValue<?> value : values) {
             if (value.value() instanceof ItemStack stack && !stack.isEmpty()) {
                 var model = stack.get(DataComponents.ITEM_MODEL);
                 if (model != null && model.toString().startsWith(RIG_MODEL_PREFIX)) {
@@ -188,8 +199,11 @@ public final class RavengardSessionLogger {
                 + " uuid=" + entity.getUUID()
                 + " pos=vec3(" + entity.getX() + "," + entity.getY() + "," + entity.getZ() + ")");
         writeLine("#   reason: " + reason);
-        for (SynchedEntityData.DataValue<?> value : entity.getEntityData().getNonDefaultValues()) {
-            writeLine("#   data " + value.id() + " = " + formatValue(value.value()));
+        List<SynchedEntityData.DataValue<?>> values = entity.getEntityData().getNonDefaultValues();
+        if (values != null) {
+            for (SynchedEntityData.DataValue<?> value : values) {
+                writeLine("#   data " + value.id() + " = " + formatValue(value.value()));
+            }
         }
 
         for (Entity passenger : entity.getPassengers()) {
@@ -234,8 +248,10 @@ public final class RavengardSessionLogger {
                     .append(",\"z\":").append(fmt(entity.getZ()))
                     .append(",\"yaw\":").append(fmt(entity.getYRot()));
 
-            if (entity instanceof Display display) {
-                for (SynchedEntityData.DataValue<?> value : display.getEntityData().getNonDefaultValues()) {
+            List<SynchedEntityData.DataValue<?>> displayValues =
+                    entity instanceof Display display ? display.getEntityData().getNonDefaultValues() : null;
+            if (displayValues != null) {
+                for (SynchedEntityData.DataValue<?> value : displayValues) {
                     Object raw = value.value();
                     if (raw instanceof Vector3fc vector) {
                         json.append(",\"d").append(value.id()).append("\":[")
