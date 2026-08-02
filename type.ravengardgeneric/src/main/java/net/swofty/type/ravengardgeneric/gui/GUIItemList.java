@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class GUIItemList extends RavengardView {
-    private static final int PANEL_ICON = 0xE238;
+    private static final int PANEL_ICON = 0xE236;
     private static final int PAGE_SIZE = 36;
     private static final int SLOT_PREVIOUS = 45;
     private static final int SLOT_NEXT = 53;
