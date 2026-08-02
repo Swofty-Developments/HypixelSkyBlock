@@ -47,19 +47,34 @@ public abstract class RavengardView extends StatelessView {
     }
 
     /**
-     * Where the invisible sticks go. Every captured menu keeps one in its first free slot, and
-     * the shop sell screen fills every unused slot with them.
+     * Menus that stage items from the player's own inventory fill every free slot with sticks,
+     * as the captured sell screen does, so the client cannot predict item moves into them.
      */
-    protected int[] stickSlots() {
-        return new int[]{0};
+    protected boolean stagesFromInventory() {
+        return false;
     }
 
     @Override
     public final void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        for (int slot : stickSlots()) {
-            layout.slot(slot, chromeStick());
-        }
         content(layout, state, ctx);
+
+        // every captured menu keeps an invisible stick in its first free slot
+        java.util.Set<Integer> occupied = layout.occupiedSlots();
+        int size = inventoryType().getSize();
+        if (stagesFromInventory()) {
+            for (int slot = 0; slot < size; slot++) {
+                if (!occupied.contains(slot)) {
+                    layout.slot(slot, chromeStick());
+                }
+            }
+            return;
+        }
+        for (int slot = 0; slot < size; slot++) {
+            if (!occupied.contains(slot)) {
+                layout.slot(slot, chromeStick());
+                return;
+            }
+        }
     }
 
     @Override

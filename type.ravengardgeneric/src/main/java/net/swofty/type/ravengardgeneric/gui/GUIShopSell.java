@@ -57,8 +57,8 @@ public class GUIShopSell extends RavengardView {
     }
 
     @Override
-    protected int[] stickSlots() {
-        return new int[]{3, 12, 18, 20, 21, 28, 29, 30, 37, 38, 39, 45, 46, 47, 48, 49, 53};
+    protected boolean stagesFromInventory() {
+        return true;
     }
 
     @Override
