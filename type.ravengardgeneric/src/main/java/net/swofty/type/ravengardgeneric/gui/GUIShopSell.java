@@ -57,6 +57,11 @@ public class GUIShopSell extends RavengardView {
     }
 
     @Override
+    protected int[] stickSlots() {
+        return new int[]{3, 12, 18, 20, 21, 28, 29, 30, 37, 38, 39, 45, 46, 47, 48, 49, 53};
+    }
+
+    @Override
     protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         place(layout, GUIShop.SLOT_BANNER, RavengardItems.button(GUIShop.banner(shop))
                 .label(shop.title())

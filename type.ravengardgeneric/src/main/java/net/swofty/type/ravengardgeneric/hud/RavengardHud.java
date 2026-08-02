@@ -179,8 +179,7 @@ public final class RavengardHud {
         state.setAbilityTwo(abilityTwo);
 
         if (player instanceof net.swofty.type.ravengardgeneric.user.RavengardPlayer ravengardPlayer) {
-            state.setCrowns(net.swofty.type.ravengardgeneric.profile.RavengardProfiles
-                    .getCachedCrowns(ravengardPlayer));
+            state.setCrowns(ravengardPlayer.getCrowns());
             net.swofty.type.ravengardgeneric.region.RavengardRegion region =
                     ravengardPlayer.getRegion();
             state.setLocation(region != null ? region.getType().getDisplayName() : "Ravenport");

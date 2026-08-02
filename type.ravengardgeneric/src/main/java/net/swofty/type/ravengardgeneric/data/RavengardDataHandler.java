@@ -189,6 +189,11 @@ public class RavengardDataHandler extends DataHandler {
                 DatapointRavengardBoolean.class,
                 new DatapointRavengardBoolean("ravengard_is_tutorial", true)
         ),
+        CROWNS(
+                "ravengard_crowns",
+                DatapointRavengardInteger.class,
+                new DatapointRavengardInteger("ravengard_crowns", 0)
+        ),
         SELECTED_PROFILE(
                 "ravengard_selected_profile",
                 DatapointRavengardString.class,

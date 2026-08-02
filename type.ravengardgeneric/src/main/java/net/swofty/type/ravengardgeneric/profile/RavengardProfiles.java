@@ -23,7 +23,6 @@ public final class RavengardProfiles {
     public static final Pos TUTORIAL_SPAWN = new Pos(25.5, 64, 508.5, -90f, 0f);
 
     private static final Map<UUID, Long> SESSION_STARTED = new ConcurrentHashMap<>();
-    private static final Map<UUID, Integer> CROWNS_CACHE = new ConcurrentHashMap<>();
 
     private RavengardProfiles() {
     }
@@ -39,7 +38,6 @@ public final class RavengardProfiles {
     public static RavengardProfile ensure(RavengardPlayer player) {
         RavengardProfile selected = RavengardProfileDatabase.byId(player.getSelectedProfile());
         if (selected != null && selected.getOwner().equals(player.getUuid())) {
-            CROWNS_CACHE.put(player.getUuid(), selected.getCrowns());
             beginSession(player);
             return selected;
         }
@@ -139,6 +137,7 @@ public final class RavengardProfiles {
         profile.setProfileClass(player.getRavengardClass());
         profile.setLevel(player.getRavengardLevel());
         profile.setTutorial(player.isTutorial());
+        profile.setCrowns(player.getCrowns());
         profile.setPlaytimeSeconds(profile.getPlaytimeSeconds() + endSession(player));
         snapshotInventory(player, profile);
         RavengardProfileDatabase.save(profile);
@@ -148,7 +147,6 @@ public final class RavengardProfiles {
     public static void endSessionAndSave(RavengardPlayer player) {
         saveActive(player);
         SESSION_STARTED.remove(player.getUuid());
-        CROWNS_CACHE.remove(player.getUuid());
     }
 
     /**
@@ -194,38 +192,25 @@ public final class RavengardProfiles {
     }
 
     public static int getCrowns(RavengardPlayer player) {
-        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
-        return profile == null ? 0 : profile.getCrowns();
+        return player.getCrowns();
     }
 
     public static void setCrowns(RavengardPlayer player, int amount) {
-        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
-        if (profile == null) {
-            return;
-        }
-        profile.setCrowns(amount);
-        CROWNS_CACHE.put(player.getUuid(), amount);
-        RavengardProfileDatabase.save(profile);
+        player.setCrowns(amount);
+        saveActive(player);
     }
 
     public static void addCrowns(RavengardPlayer player, int amount) {
-        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
-        if (profile == null) {
-            return;
-        }
-        profile.setCrowns(profile.getCrowns() + amount);
-        CROWNS_CACHE.put(player.getUuid(), profile.getCrowns());
-        RavengardProfileDatabase.save(profile);
+        player.setCrowns(player.getCrowns() + amount);
+        saveActive(player);
     }
 
     public static boolean tryPurchase(RavengardPlayer player, int price) {
-        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
-        if (profile == null || profile.getCrowns() < price) {
+        if (player.getCrowns() < price) {
             return false;
         }
-        profile.setCrowns(profile.getCrowns() - price);
-        CROWNS_CACHE.put(player.getUuid(), profile.getCrowns());
-        RavengardProfileDatabase.save(profile);
+        player.setCrowns(player.getCrowns() - price);
+        saveActive(player);
         return true;
     }
 
@@ -274,13 +259,8 @@ public final class RavengardProfiles {
         RavengardMenuItem.give(player);
     }
 
-    /** The last known crown balance, kept in memory so the hud can read it every tick. */
-    public static int getCachedCrowns(RavengardPlayer player) {
-        return CROWNS_CACHE.getOrDefault(player.getUuid(), 0);
-    }
-
     private static void applyToWorkingCopy(RavengardPlayer player, RavengardProfile profile) {
-        CROWNS_CACHE.put(player.getUuid(), profile.getCrowns());
+        player.setCrowns(profile.getCrowns());
         player.setRavengardClass(profile.getProfileClass());
         player.setRavengardLevel(profile.getLevel());
         player.setTutorial(profile.isTutorial());

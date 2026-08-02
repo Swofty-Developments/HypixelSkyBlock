@@ -98,6 +98,25 @@ public class RavengardPlayer extends HypixelPlayer {
         handler.get(RavengardDataHandler.Data.IS_TUTORIAL, DatapointRavengardBoolean.class).setValue(value);
     }
 
+    public int getCrowns() {
+        RavengardDataHandler handler = getRavengardDataHandler();
+        if (handler == null) {
+            return 0;
+        }
+        Integer value = handler
+                .get(RavengardDataHandler.Data.CROWNS, DatapointRavengardInteger.class)
+                .getValue();
+        return value == null ? 0 : value;
+    }
+
+    public void setCrowns(int value) {
+        RavengardDataHandler handler = getRavengardDataHandler();
+        if (handler == null) {
+            return;
+        }
+        handler.get(RavengardDataHandler.Data.CROWNS, DatapointRavengardInteger.class).setValue(value);
+    }
+
     public void setRavengardLevel(int value) {
         RavengardDataHandler handler = getRavengardDataHandler();
         if (handler == null) {

@@ -46,9 +46,19 @@ public abstract class RavengardView extends StatelessView {
         return PANEL_ICON;
     }
 
+    /**
+     * Where the invisible sticks go. Every captured menu keeps one in its first free slot, and
+     * the shop sell screen fills every unused slot with them.
+     */
+    protected int[] stickSlots() {
+        return new int[]{0};
+    }
+
     @Override
     public final void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        layout.slot(0, chromeStick());
+        for (int slot : stickSlots()) {
+            layout.slot(slot, chromeStick());
+        }
         content(layout, state, ctx);
     }
 
