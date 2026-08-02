@@ -46,10 +46,16 @@ public class ActionPlayerMenuItem implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onClick(InventoryPreClickEvent event) {
-        String model = event.getClickedItem().get(net.minestom.server.component.DataComponents.ITEM_MODEL);
-        if (model != null && model.startsWith("hypixel_ravengard:gui/sprites/container/slot/")) {
-            event.setCancelled(true);
-            return;
+        // display-only items in the player's own inventory: the accessory slot panes and the
+        // ability buttons living in the crafting grid. scoped to the player inventory so the
+        // same models stay clickable as menu buttons.
+        if (event.getInventory() instanceof net.minestom.server.inventory.PlayerInventory) {
+            String model = event.getClickedItem().get(net.minestom.server.component.DataComponents.ITEM_MODEL);
+            if (model != null && (model.startsWith("hypixel_ravengard:gui/sprites/container/slot/")
+                    || model.startsWith("hypixel_ravengard:ui/menu/button/"))) {
+                event.setCancelled(true);
+                return;
+            }
         }
         if (RavengardMenuItem.isMenuItem(event.getClickedItem()) || event.getSlot() == RavengardMenuItem.SLOT) {
             event.setCancelled(true);
