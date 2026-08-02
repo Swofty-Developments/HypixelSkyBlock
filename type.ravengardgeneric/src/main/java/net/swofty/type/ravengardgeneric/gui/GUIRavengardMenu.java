@@ -27,7 +27,7 @@ public class GUIRavengardMenu extends RavengardView {
 
     @Override
     protected String title() {
-        return "󏀈§f󏿳Main MenuMain Menu";
+        return "Main Menu";
     }
 
     @Override
