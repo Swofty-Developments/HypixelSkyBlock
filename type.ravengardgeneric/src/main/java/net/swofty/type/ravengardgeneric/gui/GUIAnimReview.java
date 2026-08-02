@@ -63,10 +63,16 @@ public class GUIAnimReview extends RavengardView {
             return;
         }
 
+        layout.slot(53, item(Material.BARRIER, "§cAll mobs", "§eClick to go back!"),
+                (click, viewContext) -> {
+                    if (viewContext.player() instanceof RavengardPlayer player) {
+                        ViewNavigator.get(player).push(new GUIAnimReview(null));
+                    }
+                });
         List<String> clips = collated().getOrDefault(mob, List.of());
         int slot = 0;
         for (String clipName : clips) {
-            if (slot >= 54) break;
+            if (slot >= 45) break;
             layout.slot(slot++, item(Material.PAPER, "§f" + clipName,
                             "§7Raw capture replay.",
                             "§eClick to review on the stage!"),

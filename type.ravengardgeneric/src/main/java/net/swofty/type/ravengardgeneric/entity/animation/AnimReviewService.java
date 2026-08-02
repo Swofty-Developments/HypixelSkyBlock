@@ -37,12 +37,16 @@ public final class AnimReviewService {
     }
 
     public static void start(RavengardPlayer player, String clipName) {
-        stop(player);
         RavengardReviewClip clip = RavengardReviewClip.load(clipName);
-        Session session = new Session(player, clip);
-        SESSIONS.put(player.getUuid(), session);
-        session.spawn();
-        ensureTicking();
+        Session existing = SESSIONS.get(player.getUuid());
+        if (existing != null) {
+            existing.swap(clip);
+        } else {
+            Session session = new Session(player, clip);
+            SESSIONS.put(player.getUuid(), session);
+            session.spawn();
+            ensureTicking();
+        }
         player.sendMessage("§aReviewing §f" + clipName + "§a (" + clip.frames().size()
                 + " ticks). Swing or use the hotbar controls; §f/animreview mark <name>§a saves a range.");
     }
@@ -67,9 +71,9 @@ public final class AnimReviewService {
 
     public static final class Session {
         private final RavengardPlayer player;
-        private final RavengardReviewClip clip;
+        private RavengardReviewClip clip;
         private final List<Entity> parts = new ArrayList<>();
-        private final float[][] lastSent;
+        private float[][] lastSent;
         private final Map<String, int[]> marks = new LinkedHashMap<>();
         private Pos anchor;
         private double[] rootBase;
@@ -108,6 +112,27 @@ public final class AnimReviewService {
             player.setGameMode(net.minestom.server.entity.GameMode.CREATIVE);
             player.teleport(stage);
             anchor = stage.add(0, 0, 4);
+            giveControls();
+            spawnParts();
+        }
+
+        void swap(RavengardReviewClip next) {
+            parts.forEach(Entity::remove);
+            parts.clear();
+            clip = next;
+            tick = 0;
+            accumulator = 0;
+            paused = true;
+            markStart = -1;
+            reviewYaw = 0;
+            spawnParts();
+        }
+
+        private void spawnParts() {
+            lastSent = new float[clip.parts().size()][];
+            rootBase = null;
+            marks.clear();
+            loadMarks();
             for (double[] root : clip.root()) {
                 if (root != null) {
                     rootBase = root;
@@ -132,13 +157,29 @@ public final class AnimReviewService {
                     meta.setTransformationInterpolationDuration(1);
                     meta.setPosRotInterpolationDuration(2);
                     meta.setViewRange(part.viewRange());
+                    // the stage floats in unlit void chunks, so light the rig explicitly
+                    meta.setBrightness(15, 15);
                 });
                 double[] off = part.offset();
                 display.setInstance(player.getInstance(), anchor.add(off[0], off[1], off[2]));
                 parts.add(display);
             }
-            giveControls();
             resync(0);
+        }
+
+        private void loadMarks() {
+            File file = new File(MARKS_DIR, clip.name() + ".json");
+            if (!file.exists()) return;
+            try (java.io.FileReader reader = new java.io.FileReader(file)) {
+                var doc = new com.google.gson.Gson().fromJson(reader, com.google.gson.JsonObject.class);
+                var stored = doc.getAsJsonObject("marks");
+                if (stored == null) return;
+                for (String key : stored.keySet()) {
+                    var range = stored.getAsJsonArray(key);
+                    marks.put(key, new int[]{range.get(0).getAsInt(), range.get(1).getAsInt()});
+                }
+            } catch (Exception ignored) {
+            }
         }
 
         void remove() {
@@ -171,7 +212,7 @@ public final class AnimReviewService {
             inventory.setItemStack(5, control(Material.SLIME_BALL, "speed", "§bCycle speed"));
             inventory.setItemStack(6, control(Material.COMPASS, "rotate", "§dRotate rig 45°"));
             inventory.setItemStack(7, control(Material.EMERALD, "markstart", "§aSet mark start here"));
-            inventory.setItemStack(8, control(Material.BOOK, "marks", "§6List marks"));
+            inventory.setItemStack(8, control(Material.NETHER_STAR, "picker", "§dPick mob / capture"));
         }
 
         private static ItemStack control(Material material, String action, String name) {
@@ -200,6 +241,8 @@ public final class AnimReviewService {
                             + "§a. Scrub to the end and run §f/animreview mark <name>§a.");
                 }
                 case "marks" -> listMarks();
+                case "picker" -> net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
+                        .push(new net.swofty.type.ravengardgeneric.gui.GUIAnimReview(clip.mob()));
             }
         }
 
