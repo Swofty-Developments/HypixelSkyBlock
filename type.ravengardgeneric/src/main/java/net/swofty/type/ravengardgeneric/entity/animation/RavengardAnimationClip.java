@@ -76,19 +76,6 @@ public final class RavengardAnimationClip {
         return health;
     }
 
-    /** Mob clips live in their own directory beside the npc animations. */
-    public static RavengardAnimationClip loadMob(String name) {
-        return CACHE.computeIfAbsent("mob:" + name, key -> {
-            java.io.File file = new java.io.File("./configuration/ravengard/mobs", name + ".json");
-            try (InputStream stream = new java.io.FileInputStream(file)) {
-                return GSON.fromJson(new InputStreamReader(stream, StandardCharsets.UTF_8),
-                        RavengardAnimationClip.class);
-            } catch (Exception exception) {
-                throw new IllegalStateException("Failed to load mob clip " + key, exception);
-            }
-        });
-    }
-
     public Dialogue dialogue() {
         return dialogue;
     }

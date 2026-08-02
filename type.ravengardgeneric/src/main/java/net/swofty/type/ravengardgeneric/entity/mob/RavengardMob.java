@@ -3,6 +3,8 @@ package net.swofty.type.ravengardgeneric.entity.mob;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
@@ -15,32 +17,28 @@ import net.minestom.server.entity.metadata.display.TextDisplayMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.component.DataComponents;
-import net.swofty.type.generic.HypixelGenericLoader;
-import net.swofty.type.generic.entity.InteractionEntity;
-import net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationClip;
+import net.swofty.type.ravengardgeneric.entity.animation.RavengardMobClip;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * A combat mob driven by a captured rig: the clip's idle and attack tracks animate the parts,
- * it chases the nearest player and swings when in reach, and the captured ten square health bar
- * floats above it, draining as it takes hits.
- */
 public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private static final List<RavengardMob> MOBS = new CopyOnWriteArrayList<>();
     private static final TextColor BAR_FULL = TextColor.color(0x5FEC7B);
     private static final TextColor BAR_EMPTY = TextColor.color(0x3D3D3D);
     private static final int BAR_SEGMENTS = 10;
-    private static final double CHASE_RANGE = 14;
-    private static final double ATTACK_RANGE = 2.4;
     private static final float PLAYER_DAMAGE_PER_HIT = 8f;
-    private static final int HIT_DAMAGE = 20;
     private static final int ATTACK_COOLDOWN_TICKS = 30;
+    private static final int FLASH_TICKS = 9;
+    private static final int FLASH_COLOR = 0xFF6666;
+    private static final int BASE_COLOR = 0xFFFFFF;
+    private static final double KNOCKBACK_HORIZONTAL = 0.79 * 20;
+    private static final double KNOCKBACK_VERTICAL = 0.50 * 20;
 
-    private final RavengardAnimationClip clip;
+    private final RavengardMobClip clip;
     private final List<Entity> parts = new ArrayList<>();
     private final List<Vec> partOffsets = new ArrayList<>();
     private LivingEntity healthBar;
@@ -49,11 +47,16 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private Pos position;
     private double health;
     private final double maxHealth;
+    private String currentAnimation = "idle";
+    private boolean oneShot;
     private int frame;
     private float[][] lastSentRotation;
-    private int attackTicksLeft;
+    private int[] partDuration;
+    private int attackCooldown;
+    private int flashTicksLeft;
+    private boolean dying;
 
-    public RavengardMob(RavengardAnimationClip clip, Pos position) {
+    public RavengardMob(RavengardMobClip clip, Pos position) {
         super(EntityType.ZOMBIE);
         this.clip = clip;
         this.position = position;
@@ -66,38 +69,88 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         getAttribute(net.minestom.server.entity.attribute.Attribute.MAX_HEALTH)
                 .setBaseValue((float) maxHealth);
         setHealth((float) maxHealth);
-        addAIGroup(
-                List.of(new net.minestom.server.entity.ai.goal.MeleeAttackGoal(this, 1.8,
-                        java.time.Duration.ofMillis(1500))),
-                List.of(new net.minestom.server.entity.ai.target.LastEntityDamagerTarget(this, 16),
-                        new net.minestom.server.entity.ai.target.ClosestEntityTarget(this, 14,
-                                entity -> entity instanceof Player)));
+        if (clip.walkSpeed() > 0) {
+            addAIGroup(
+                    List.of(new net.minestom.server.entity.ai.goal.MeleeAttackGoal(this, 1.8,
+                            java.time.Duration.ofMillis(1500))),
+                    List.of(new net.minestom.server.entity.ai.target.LastEntityDamagerTarget(this, 16),
+                            new net.minestom.server.entity.ai.target.ClosestEntityTarget(this, 14,
+                                    entity -> entity instanceof Player)));
+        }
     }
 
-    /** MeleeAttackGoal path: play the captured swing and hurt the target. */
     @Override
     public void attack(Entity target, boolean swingHand) {
-        if (attackTicksLeft <= 0) {
-            attackTicksLeft = attackFrames();
-            frame = 0;
+        if (dying || attackCooldown > 0) return;
+        attackCooldown = ATTACK_COOLDOWN_TICKS;
+        List<String> options = clip.attackAnimations();
+        if (!options.isEmpty()) {
+            startOneShot(options.get(ThreadLocalRandom.current().nextInt(options.size())));
         }
-        if (target instanceof net.minestom.server.entity.LivingEntity living) {
+        if (target instanceof LivingEntity living) {
             living.damage(net.minestom.server.entity.damage.DamageType.MOB_ATTACK, PLAYER_DAMAGE_PER_HIT);
+            Vec away = living.getPosition().sub(position).asVec().withY(0);
+            if (away.lengthSquared() > 1e-6) {
+                away = away.normalize();
+                living.setVelocity(new Vec(away.x() * KNOCKBACK_HORIZONTAL, KNOCKBACK_VERTICAL,
+                        away.z() * KNOCKBACK_HORIZONTAL));
+            }
         }
     }
 
-    /** Damage from any source drains the captured bar; vanilla handles the knockback. */
     @Override
     public boolean damage(net.minestom.server.registry.RegistryKey<net.minestom.server.entity.damage.DamageType> type, float amount) {
+        if (dying) return false;
+        flash();
+        if (getHealth() - amount <= 0) {
+            health = 0;
+            updateBar();
+            beginDeath();
+            return true;
+        }
         boolean applied = super.damage(type, amount);
         health = getHealth();
-        if (healthBar != null) {
-            healthBar.editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(barText()));
-        }
-        if (health <= 0) {
+        updateBar();
+        return applied;
+    }
+
+    private void beginDeath() {
+        dying = true;
+        getAIGroups().clear();
+        getNavigator().setPathTo(null);
+        if (clip.animation("death") != null) {
+            startOneShot("death");
+        } else {
             removeRig();
         }
-        return applied;
+    }
+
+    private void startOneShot(String animation) {
+        if (clip.animation(animation) == null) return;
+        currentAnimation = animation;
+        oneShot = true;
+        frame = 0;
+    }
+
+    private void flash() {
+        flashTicksLeft = FLASH_TICKS;
+        retint(FLASH_COLOR);
+    }
+
+    private void retint(int rgb) {
+        for (int i = 0; i < parts.size() && i < clip.parts().size(); i++) {
+            RavengardMobClip.Part part = clip.parts().get(i);
+            final int index = i;
+            parts.get(index).editEntityMeta(ItemDisplayMeta.class, meta ->
+                    meta.setItemStack(partItem(part, rgb)));
+        }
+    }
+
+    private static ItemStack partItem(RavengardMobClip.Part part, int rgb) {
+        return ItemStack.builder(Material.LEATHER_BOOTS)
+                .set(DataComponents.ITEM_MODEL, part.model())
+                .set(DataComponents.DYED_COLOR, new Color(rgb))
+                .build();
     }
 
     public static List<RavengardMob> mobs() {
@@ -107,32 +160,32 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     public void spawnMob(Instance instance) {
         this.instance = instance;
         this.lastSentRotation = new float[clip.parts().size()][];
+        this.partDuration = new int[clip.parts().size()];
         setInstance(instance, position);
-        for (RavengardAnimationClip.Part part : clip.parts()) {
-            RavengardAnimationClip.Base base = part.base();
+        for (RavengardMobClip.Part part : clip.parts()) {
             Entity display = new Entity(EntityType.ITEM_DISPLAY);
             display.setNoGravity(true);
             display.editEntityMeta(ItemDisplayMeta.class, meta -> {
-                meta.setItemStack(ItemStack.builder(Material.LEATHER_BOOTS)
-                        .set(DataComponents.ITEM_MODEL, base.model()).build());
+                meta.setItemStack(partItem(part, BASE_COLOR));
                 ItemDisplayMeta.DisplayContext[] contexts = ItemDisplayMeta.DisplayContext.values();
-                int contextOrdinal = base.itemDisplayContext();
+                int contextOrdinal = part.context();
                 meta.setDisplayContext(contexts[contextOrdinal >= 0 && contextOrdinal < contexts.length
                         ? contextOrdinal : 0]);
-                meta.setTranslation(vec(base.translation()));
-                meta.setScale(vec(base.scale()));
-                meta.setLeftRotation(base.leftRotation());
-                meta.setRightRotation(base.rightRotation());
-                meta.setTransformationInterpolationDuration(clip.interpolationDuration());
+                if (part.translation() != null) meta.setTranslation(vec(part.translation()));
+                meta.setScale(vec(part.scale()));
+                if (part.leftRotation() != null) meta.setLeftRotation(part.leftRotation());
+                meta.setRightRotation(part.rightRotation());
+                meta.setTransformationInterpolationDuration(1);
                 meta.setPosRotInterpolationDuration(2);
-                meta.setViewRange((float) base.viewRange());
+                meta.setViewRange(part.viewRange());
             });
-            double[] off = base.offset();
+            double[] off = part.offset();
             Vec offset = new Vec(off[0], off[1], off[2]);
             display.setInstance(instance, position.add(offset));
             parts.add(display);
             partOffsets.add(offset);
         }
+        java.util.Arrays.fill(partDuration, 1);
 
         healthBar = new LivingEntity(EntityType.TEXT_DISPLAY);
         healthBar.setNoGravity(true);
@@ -148,10 +201,16 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         MOBS.add(this);
     }
 
+    private void updateBar() {
+        if (healthBar != null) {
+            healthBar.editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(barText()));
+        }
+    }
+
     private Component barText() {
         int full = (int) Math.ceil(BAR_SEGMENTS * Math.max(0, health) / maxHealth);
-        return Component.text("\u25A0".repeat(full)).color(BAR_FULL)
-                .append(Component.text("\u25A0".repeat(BAR_SEGMENTS - full)).color(BAR_EMPTY));
+        return Component.text("■".repeat(full)).color(BAR_FULL)
+                .append(Component.text("■".repeat(BAR_SEGMENTS - full)).color(BAR_EMPTY));
     }
 
     public void removeRig() {
@@ -161,57 +220,80 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         remove();
     }
 
-    /** Glues the rig, bar and animations onto wherever the creature's pathfinding took it. */
     public void tickRig() {
-        if (instance == null || isDead()) {
+        if (instance == null || isRemoved()) {
             return;
         }
         Pos previous = position;
         position = getPosition();
-        boolean attacking = attackTicksLeft > 0;
         boolean moved = !previous.samePoint(position);
         float yaw = position.yaw();
 
-        List<RavengardAnimationClip.Part> clipParts = clip.parts();
-        for (int i = 0; i < parts.size() && i < clipParts.size(); i++) {
-            Entity part = parts.get(i);
-            List<RavengardAnimationClip.Frame> frames = clipParts.get(i).phase(
-                    attacking ? net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.TALK
-                              : net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.IDLE);
-            Pos partPos = position.add(rotateOffset(partOffsets.get(i), yaw - (float) clip.yaw()));
-            if (moved || attacking) {
-                part.teleport(partPos);
-            }
-            if (frames != null && !frames.isEmpty()) {
-                final RavengardAnimationClip.Frame animationFrame = frames.get(frame % frames.size());
-                final float[] rotated = rotateRig(i, animationFrame.leftRotation(), yaw);
-                final float finalYaw = yaw;
-                part.editEntityMeta(ItemDisplayMeta.class, meta -> {
-                    meta.setTransformationInterpolationStartDelta(0);
-                    meta.setTranslation(rotateTranslation(vec(animationFrame.translation()), finalYaw - (float) clip.yaw()));
-                    meta.setLeftRotation(rotated);
-                });
+        if (attackCooldown > 0) attackCooldown--;
+        if (flashTicksLeft > 0 && --flashTicksLeft == 0) {
+            retint(BASE_COLOR);
+        }
+
+        RavengardMobClip.Animation animation = clip.animation(currentAnimation);
+        if (!oneShot) {
+            String desired = moved && clip.animation("walk") != null ? "walk" : "idle";
+            if (!desired.equals(currentAnimation)) {
+                currentAnimation = desired;
+                frame = 0;
+                animation = clip.animation(desired);
             }
         }
-        if (moved || attacking) {
+        if (animation == null || animation.frames().isEmpty()) {
+            return;
+        }
+        if (frame >= animation.frames().size()) {
+            if (animation.loop()) {
+                frame = 0;
+            } else if (dying) {
+                removeRig();
+                return;
+            } else {
+                oneShot = false;
+                currentAnimation = moved && clip.animation("walk") != null ? "walk" : "idle";
+                frame = 0;
+                animation = clip.animation(currentAnimation);
+                if (animation == null || animation.frames().isEmpty()) return;
+            }
+        }
+
+        Map<String, RavengardMobClip.Keyframe> keyframes = animation.frames().get(frame);
+        for (int i = 0; i < parts.size() && i < clip.parts().size(); i++) {
+            Entity part = parts.get(i);
+            if ((moved || oneShot) && !dying) {
+                part.teleport(position.add(rotateOffset(partOffsets.get(i), yaw)));
+            }
+            RavengardMobClip.Keyframe keyframe = keyframes.get(String.valueOf(i));
+            if (keyframe == null) continue;
+            final int index = i;
+            final float finalYaw = yaw;
+            part.editEntityMeta(ItemDisplayMeta.class, meta -> {
+                Integer duration = keyframe.duration();
+                if (duration != null && duration != partDuration[index]) {
+                    partDuration[index] = duration;
+                    meta.setTransformationInterpolationDuration(duration);
+                }
+                meta.setTransformationInterpolationStartDelta(0);
+                if (keyframe.translation() != null) {
+                    meta.setTranslation(rotateOffset(vec(keyframe.translation()), finalYaw));
+                }
+                if (keyframe.leftRotation() != null) {
+                    meta.setLeftRotation(rotateRig(index, keyframe.leftRotation(), finalYaw));
+                }
+                if (keyframe.scale() != null) {
+                    meta.setScale(vec(keyframe.scale()));
+                }
+            });
+        }
+        if ((moved || oneShot) && !dying) {
             healthBar.teleport(position.add(0, 2.25, 0));
         }
 
         frame++;
-        if (attacking) {
-            attackTicksLeft--;
-            if (attackTicksLeft <= 0) frame = 0;
-        }
-    }
-
-    private int attackFrames() {
-        int max = 0;
-        for (RavengardAnimationClip.Part part : clip.parts()) {
-            List<RavengardAnimationClip.Frame> frames = part.phase(
-                    net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.TALK);
-            if (frames != null) max = Math.max(max, frames.size());
-        }
-        return Math.max(1, max);
     }
 
     private static Vec vec(float[] values) {
@@ -225,23 +307,13 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
                 -offset.x() * sin + offset.z() * cos);
     }
 
-    private static Vec rotateTranslation(Vec translation, float yaw) {
-        return rotateOffset(translation, yaw);
-    }
-
-    /**
-     * Same composition the NPC rig uses: the yaw delta from the captured facing applied to both
-     * quaternion and translation with one sign convention, so the body turns as one piece.
-     */
     private float[] rotateRig(int part, float[] rotation, float yaw) {
-        double theta = Math.toRadians(yaw - clip.yaw()) / 2.0;
+        double theta = Math.toRadians(yaw) / 2.0;
         float sin = (float) Math.sin(theta), cos = (float) Math.cos(theta);
         float rx = rotation[0], ry = rotation[1], rz = rotation[2], rw = rotation[3];
         float[] composed = {cos * rx + sin * rz, cos * ry + sin * rw,
                 cos * rz - sin * rx, cos * rw - sin * ry};
 
-        // q and -q are one pose, but the client lerps raw components, so a sign flip between
-        // consecutive sends plays as a full spin; keep every part on the hemisphere it last used
         float[] last = lastSentRotation[part];
         if (last != null) {
             float dot = last[0] * composed[0] + last[1] * composed[1]
