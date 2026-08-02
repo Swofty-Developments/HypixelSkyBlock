@@ -49,12 +49,10 @@ public class GUISelectClass extends RavengardView {
         for (Option option : Option.values()) {
             RavengardItems.Builder button = RavengardItems.button(option.statue)
                     .hoverColor(option.offset)
-                    .label("§a" + option.value.getDisplayName());
-
-            String[] profileLore = option.value.profileLore();
-            if (profileLore != null) {
-                button.blankLine().lore(profileLore);
-            }
+                    .label("§a" + option.value.getDisplayName())
+                    .lore(option.value.selectLore())
+                    .blankLine()
+                    .lore("§eClick to select!");
 
             for (int slot : option.statue.coveredSlots(option.slot)) {
                 layout.slot(slot, button.toBuilder(), (click, viewContext) -> {

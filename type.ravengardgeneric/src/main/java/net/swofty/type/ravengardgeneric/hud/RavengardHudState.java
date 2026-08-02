@@ -11,6 +11,8 @@ public class RavengardHudState {
     private int health = 160;
     private int maxHealth = 160;
     private int stamina = 100;
+    private int abilityOne;
+    private int abilityTwo;
     private int maxStamina = 100;
 
     private String clock = "00:00";

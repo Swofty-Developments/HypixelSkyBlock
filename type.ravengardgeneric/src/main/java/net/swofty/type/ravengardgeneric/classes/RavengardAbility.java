@@ -134,6 +134,24 @@ public enum RavengardAbility implements RavengardSprite {
         return lines;
     }
 
+    /** Glyph of this ability's ui/spell texture, drawn in the bottom hud's two spell slots. */
+    public int getHudCodePoint() {
+        return switch (this) {
+            case SENTINEL -> 0xE034; case PROVOKE -> 0xE032; case SHIELD_BASH -> 0xE035;
+            case RALLY -> 0xE031; case WOUND -> 0xE036; case RECOVERY -> 0xE033;
+            case DIRECT_HIT -> 0xE030;
+            case WAR_CRY -> 0xE04D; case ARMOR_BREAK -> 0xE037; case BOLSTER -> 0xE038;
+            case COOL_OFF -> 0xE039; case RUSH -> 0xE04C; case OVERPOWER -> 0xE04A;
+            case CARNAGE -> 0xE04B;
+            case EAGLE_EYE -> 0xE02A; case RAPID_FIRE -> 0xE02F; case POISON_ARROW -> 0xE050;
+            case IMMOBILIZE -> 0xE02C; case MED_KIT -> 0xE02D; case DOUBLE_SHOT -> 0xE029;
+            case POWER_SHOT -> 0xE02E;
+            case PRECISE_ACCURACY -> 0xE025; case SHADOW_STEP -> 0xE026; case HEAL_WOUNDS -> 0xE021;
+            case LACERATE -> 0xE023; case SHADOWS -> 0xE022; case SWIFT -> 0xE027;
+            case POISON_DAGGER -> 0xE024;
+        };
+    }
+
     public int getCooldownTicks() {
         return cooldownSeconds * 20;
     }

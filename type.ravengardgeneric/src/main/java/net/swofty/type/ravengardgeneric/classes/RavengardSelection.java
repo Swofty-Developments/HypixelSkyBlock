@@ -10,7 +10,7 @@ import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 import java.util.List;
 
 public final class RavengardSelection {
-    public static final Pos MAIN_WORLD_SPAWN = new Pos(47.5, 61, 121.5);
+    public static final Pos MAIN_WORLD_SPAWN = new Pos(47.5, 61, 121.5, 180f, 0f);
 
     private RavengardSelection() {
     }
@@ -29,6 +29,17 @@ public final class RavengardSelection {
         player.setInstance(HypixelConst.getInstanceContainer(), MAIN_WORLD_SPAWN);
     }
 
+    /**
+     * Every profile has the four accessory slot panes, class or not -- a fresh tutorial inventory
+     * on the live server carries them already.
+     */
+    public static void giveAccessorySlots(RavengardPlayer player) {
+        player.getInventory().setItemStack(RavengardKit.SLOT_NECK, RavengardItem.of("NECK_SLOT"));
+        player.getInventory().setItemStack(RavengardKit.SLOT_EARRING, RavengardItem.of("EARRING_SLOT"));
+        player.getInventory().setItemStack(RavengardKit.SLOT_BELT, RavengardItem.of("BELT_SLOT"));
+        player.getInventory().setItemStack(RavengardKit.SLOT_RING, RavengardItem.of("RING_SLOT"));
+    }
+
     public static void giveKit(RavengardPlayer player, RavengardClass value) {
         RavengardKit kit = RavengardKit.forClass(value);
         if (kit == null) {
@@ -39,7 +50,7 @@ public final class RavengardSelection {
         player.getInventory().setItemStack(RavengardKit.SLOT_CHEST, RavengardItem.of(kit.chestId()));
         player.getInventory().setItemStack(RavengardKit.SLOT_LEGS, RavengardItem.of(kit.legsId()));
         player.getInventory().setItemStack(RavengardKit.SLOT_BOOTS, RavengardItem.of(kit.bootsId()));
-        player.getInventory().setItemStack(RavengardKit.SLOT_NECK, RavengardItem.of("NECK_SLOT"));
+        giveAccessorySlots(player);
 
         List<RavengardAbility> abilities = value.defaultAbilities();
         int[] slots = {RavengardKit.SLOT_ABILITY_ONE, RavengardKit.SLOT_ABILITY_TWO};

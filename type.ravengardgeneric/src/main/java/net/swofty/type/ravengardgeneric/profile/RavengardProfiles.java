@@ -70,12 +70,12 @@ public final class RavengardProfiles {
         }
 
         saveActive(player);
-        player.sendMessage("Creating profile...");
+        player.sendMessage("§7Creating profile...");
 
         RavengardProfile profile = new RavengardProfile(UUID.randomUUID(), player.getUuid());
         RavengardProfileDatabase.save(profile);
 
-        player.sendMessage("Successfully created profile!");
+        player.sendMessage("§7Successfully created profile!");
         player.sendMessage("§7Profile ID: " + profile.getId());
 
         activate(player, profile);
@@ -104,7 +104,7 @@ public final class RavengardProfiles {
 
         boolean wasSelected = profileId.equals(player.getSelectedProfile());
         RavengardProfileDatabase.delete(profileId);
-        player.sendMessage("Successfully deleted profile!");
+        player.sendMessage("§7Successfully deleted profile!");
 
         if (!wasSelected) {
             return;
@@ -149,12 +149,14 @@ public final class RavengardProfiles {
         applyToWorkingCopy(player, profile);
         beginSession(player);
 
-        player.sendMessage("Restoring default equipment...");
+        player.sendMessage("§7Restoring default equipment...");
         player.getInventory().clear();
 
         RavengardClass profileClass = profile.getProfileClass();
         if (profileClass != null) {
             RavengardSelection.giveKit(player, profileClass);
+        } else {
+            RavengardSelection.giveAccessorySlots(player);
         }
         RavengardMenuItem.give(player);
 

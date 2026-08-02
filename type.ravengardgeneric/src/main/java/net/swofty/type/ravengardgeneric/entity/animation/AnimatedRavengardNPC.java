@@ -25,7 +25,7 @@ public class AnimatedRavengardNPC extends RavengardNPC {
     private final RavengardAnimationClip clip;
     private final List<Entity> animatedParts = new ArrayList<>();
     private final Map<Integer, Pos> homePositions = new HashMap<>();
-    private final Set<UUID> speaking = ConcurrentHashMap.newKeySet();
+    private final Map<UUID, DialogueSession> dialogueSessions = new ConcurrentHashMap<>();
 
     private RavengardRoaming roaming;
     private float baseYaw;
@@ -111,54 +111,59 @@ public class AnimatedRavengardNPC extends RavengardNPC {
 
     @Override
     public void onClick(RavengardPlayer player) {
-        org.tinylog.Logger.info("NPC '{}' clicked by {} (dialogue={}, lines={})",
-                clip.name(), player.getUsername(), clip.dialogue() != null,
-                clip.dialogue() == null ? 0 : clip.dialogue().lines().size());
         play(RavengardAnimationPhase.TALK);
-        speakTo(player);
+        advanceDialogue(player);
     }
 
-    private void speakTo(RavengardPlayer player) {
+    /**
+     * One click starts the dialogue; each further click during it skips ahead, sending the next
+     * line immediately instead of waiting out its delay.
+     */
+    private void advanceDialogue(RavengardPlayer player) {
         RavengardAnimationClip.Dialogue dialogue = clip.dialogue();
         if (dialogue == null || dialogue.lines().isEmpty()) {
             return;
         }
-        if (!speaking.add(player.getUuid())) {
+
+        DialogueSession session = dialogueSessions.get(player.getUuid());
+        if (session == null) {
+            sendLine(player, dialogue, 0);
+            return;
+        }
+        if (session.pending != null) {
+            session.pending.cancel();
+        }
+        sendLine(player, dialogue, session.nextLine);
+    }
+
+    private void sendLine(RavengardPlayer player, RavengardAnimationClip.Dialogue dialogue, int index) {
+        List<RavengardAnimationClip.Line> lines = dialogue.lines();
+        if (!player.isOnline() || index >= lines.size()) {
+            dialogueSessions.remove(player.getUuid());
             return;
         }
 
-        try {
-            scheduleLines(player, dialogue);
-        } catch (Exception exception) {
-            speaking.remove(player.getUuid());
-            throw exception;
+        player.sendMessage(format(dialogue.speaker(), lines.get(index)));
+
+        if (index == lines.size() - 1) {
+            dialogueSessions.remove(player.getUuid());
+            onDialogueComplete(player);
+            return;
         }
+
+        DialogueSession session = new DialogueSession();
+        session.nextLine = index + 1;
+        int delayTicks = Math.max(1, lines.get(index + 1).delay() * 20);
+        session.pending = MinecraftServer.getSchedulerManager()
+                .buildTask(() -> sendLine(player, dialogue, session.nextLine))
+                .delay(TaskSchedule.tick(delayTicks))
+                .schedule();
+        dialogueSessions.put(player.getUuid(), session);
     }
 
-    private void scheduleLines(RavengardPlayer player, RavengardAnimationClip.Dialogue dialogue) {
-        List<RavengardAnimationClip.Line> lines = dialogue.lines();
-        for (int i = 0; i < lines.size(); i++) {
-            RavengardAnimationClip.Line line = lines.get(i);
-            boolean last = i == lines.size() - 1;
-            Runnable send = () -> {
-                if (player.isOnline()) {
-                    player.sendMessage(format(dialogue.speaker(), line));
-                }
-                if (last) {
-                    speaking.remove(player.getUuid());
-                    onDialogueComplete(player);
-                }
-            };
-
-            // the scheduler rejects a zero tick delay, so the opening line goes out inline
-            int delayTicks = Math.max(0, line.delay()) * 20;
-            if (delayTicks <= 0) {
-                send.run();
-            } else {
-                MinecraftServer.getSchedulerManager().buildTask(send)
-                        .delay(TaskSchedule.tick(delayTicks)).schedule();
-            }
-        }
+    private static final class DialogueSession {
+        private int nextLine;
+        private net.minestom.server.timer.Task pending;
     }
 
     private void onDialogueComplete(RavengardPlayer player) {

@@ -46,6 +46,11 @@ public class ActionPlayerMenuItem implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false)
     public void onClick(InventoryPreClickEvent event) {
+        String model = event.getClickedItem().get(net.minestom.server.component.DataComponents.ITEM_MODEL);
+        if (model != null && model.startsWith("hypixel_ravengard:gui/sprites/container/slot/")) {
+            event.setCancelled(true);
+            return;
+        }
         if (RavengardMenuItem.isMenuItem(event.getClickedItem()) || event.getSlot() == RavengardMenuItem.SLOT) {
             event.setCancelled(true);
         }

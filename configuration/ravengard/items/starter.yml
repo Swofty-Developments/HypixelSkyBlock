@@ -70,3 +70,30 @@ items:
       - id: PLACEHOLDER_SLOT
         lore_one: Place a compatible item into this slot
         lore_two: to equip it.
+
+  - id: EARRING_SLOT
+    material: white_stained_glass_pane
+    display_name: Earring Slot
+    item_model: hypixel_ravengard:gui/sprites/container/slot/slot_brown_earring
+    components:
+      - id: PLACEHOLDER_SLOT
+        lore_one: Place a compatible item into this slot
+        lore_two: to equip it.
+
+  - id: BELT_SLOT
+    material: white_stained_glass_pane
+    display_name: Belt Slot
+    item_model: hypixel_ravengard:gui/sprites/container/slot/slot_brown_belt
+    components:
+      - id: PLACEHOLDER_SLOT
+        lore_one: Place a compatible item into this slot
+        lore_two: to equip it.
+
+  - id: RING_SLOT
+    material: white_stained_glass_pane
+    display_name: Ring Slot
+    item_model: hypixel_ravengard:gui/sprites/container/slot/slot_brown_ring
+    components:
+      - id: PLACEHOLDER_SLOT
+        lore_one: Place a compatible item into this slot
+        lore_two: to equip it.

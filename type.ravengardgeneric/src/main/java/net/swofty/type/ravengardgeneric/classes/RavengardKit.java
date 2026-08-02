@@ -20,7 +20,15 @@ public record RavengardKit(String chestId, String legsId, String bootsId) {
     public static final int SLOT_CHEST = PlayerInventoryUtils.CHESTPLATE_SLOT;
     public static final int SLOT_LEGS = PlayerInventoryUtils.LEGGINGS_SLOT;
     public static final int SLOT_BOOTS = PlayerInventoryUtils.BOOTS_SLOT;
+    /**
+     * The four accessory panes fill the top-left of the storage grid. Only the neck slot's
+     * position is captured (the recorder truncates the player inventory at ten slots); the other
+     * three follow it along the top row.
+     */
     public static final int SLOT_NECK = 9;
+    public static final int SLOT_EARRING = 10;
+    public static final int SLOT_BELT = 11;
+    public static final int SLOT_RING = 12;
 
     /**
      * Sprite offsets for an ability sitting in a crafting slot. Captured, because these are

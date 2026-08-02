@@ -163,6 +163,21 @@ public final class RavengardHud {
             player.setLevel(0);
         }
 
+        int abilityOne = 0;
+        int abilityTwo = 0;
+        if (player instanceof net.swofty.type.ravengardgeneric.user.RavengardPlayer ravengardPlayer
+                && !ravengardPlayer.isTutorial()) {
+            net.swofty.type.ravengardgeneric.classes.RavengardClass playerClass =
+                    ravengardPlayer.getRavengardClass();
+            if (playerClass != null) {
+                var abilities = playerClass.defaultAbilities();
+                if (!abilities.isEmpty()) abilityOne = abilities.getFirst().getHudCodePoint();
+                if (abilities.size() > 1) abilityTwo = abilities.get(1).getHudCodePoint();
+            }
+        }
+        state.setAbilityOne(abilityOne);
+        state.setAbilityTwo(abilityTwo);
+
         state.setWorldX(player.getPosition().x());
         state.setWorldZ(player.getPosition().z());
         state.setYaw(player.getPosition().yaw());

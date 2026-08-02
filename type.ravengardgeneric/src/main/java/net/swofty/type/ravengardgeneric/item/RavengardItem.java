@@ -29,8 +29,9 @@ public final class RavengardItem {
         if (type.getItemModel() != null) {
             builder.set(DataComponents.ITEM_MODEL, type.getItemModel());
         }
+        boolean placeholder = type.component(PlaceholderSlotComponent.class) != null;
         builder.set(DataComponents.CUSTOM_NAME, Component.text(displayName(type))
-                .color(NamedTextColor.WHITE)
+                .color(placeholder ? NamedTextColor.GRAY : NamedTextColor.WHITE)
                 .decoration(TextDecoration.ITALIC, false));
 
         for (RavengardItemComponent component : type.getComponents()) {

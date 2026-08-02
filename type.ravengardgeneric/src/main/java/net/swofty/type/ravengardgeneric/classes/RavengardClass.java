@@ -21,6 +21,36 @@ public enum RavengardClass {
         this.icon = icon;
     }
 
+    /** Class description and primary weapon, verbatim from the captured Select Class menu. */
+    public String[] selectLore() {
+        return switch (this) {
+            case KNIGHT -> new String[]{
+                    "§7A tank class specializing in defense.",
+                    "§7Knights can protect themselves and",
+                    "§7teammates against incoming damage.",
+                    "",
+                    "§7Primary weapon: §fSword and Shield"};
+            case WARRIOR -> new String[]{
+                    "§7A heavy damage dealer.",
+                    "§7Uses two-handed weapons to deal",
+                    "§7devastating damage.",
+                    "",
+                    "§7Primary weapon: §fGreat Axe"};
+            case HUNTER -> new String[]{
+                    "§7Specializes in ranged combat.",
+                    "§7Hunters are known for using traps",
+                    "§7to keep enemies at bay.",
+                    "",
+                    "§7Primary weapon: §fBow"};
+            case ASSASSIN -> new String[]{
+                    "§7A stealth-focused class adept at",
+                    "§7sneaking.",
+                    "",
+                    "§7Primary weapon: §fDaggers"};
+            case SORCERER -> new String[0];
+        };
+    }
+
     /**
      * Profile-statue tooltip, verbatim from the captured menu. Only the Assassin screen was
      * captured, so the rest return null and their lore lines are left out rather than invented.

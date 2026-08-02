@@ -39,6 +39,10 @@ public final class RavengardHudComposer {
     public static Map<RavengardHudLayer, Component> compose(RavengardHudState state) {
         Map<RavengardHudLayer, Component> layers = new EnumMap<>(RavengardHudLayer.class);
         for (RavengardHudLayer layer : RavengardHudLayer.values()) {
+            if ("team_5".equals(layer.getTeamName())) {
+                layers.put(layer, spellSlots(state));
+                continue;
+            }
             String template = TEMPLATES.get(layer.getTeamName());
             if (template == null) {
                 continue;
@@ -46,6 +50,34 @@ public final class RavengardHudComposer {
             layers.put(layer, render(template, state));
         }
         return layers;
+    }
+
+    // structure taken from the captured team_5 line: per slot a spell background glyph whose tint
+    // id addresses the slot, with the ability's ui/spell glyph as a child
+    private static final int SPELL_BACKGROUND = 0xE020;
+    private static final int SLOT_ONE_BACKGROUND = 0xFEFBFF;
+    private static final int SLOT_ONE_ICON = 0xFEFB00;
+    private static final int SLOT_TWO_BACKGROUND = 0xFEFCFF;
+    private static final int SLOT_TWO_ICON = 0xFEFC00;
+
+    private static Component spellSlots(RavengardHudState state) {
+        if (state.getAbilityOne() == 0 && state.getAbilityTwo() == 0) {
+            return Component.empty();
+        }
+        Component line = Component.empty();
+        if (state.getAbilityOne() != 0) {
+            line = line.append(Component.text(new String(Character.toChars(SPELL_BACKGROUND)))
+                    .color(net.kyori.adventure.text.format.TextColor.color(SLOT_ONE_BACKGROUND))
+                    .append(Component.text(new String(Character.toChars(state.getAbilityOne())))
+                            .color(net.kyori.adventure.text.format.TextColor.color(SLOT_ONE_ICON))));
+        }
+        if (state.getAbilityTwo() != 0) {
+            line = line.append(Component.text(new String(Character.toChars(SPELL_BACKGROUND)))
+                    .color(net.kyori.adventure.text.format.TextColor.color(SLOT_TWO_BACKGROUND))
+                    .append(Component.text(new String(Character.toChars(state.getAbilityTwo())))
+                            .color(net.kyori.adventure.text.format.TextColor.color(SLOT_TWO_ICON))));
+        }
+        return line;
     }
 
     private static final double MAP_SCALE = 4.0;
