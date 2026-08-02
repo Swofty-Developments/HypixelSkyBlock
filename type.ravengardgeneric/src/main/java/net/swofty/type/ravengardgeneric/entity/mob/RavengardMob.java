@@ -51,7 +51,10 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private boolean oneShot;
     private int frame;
     private float[][] lastSentRotation;
+    private float[][] localRotation;
+    private float[][] localTranslation;
     private int[] partDuration;
+    private float lastAppliedYaw = Float.NaN;
     private int attackCooldown;
     private int flashTicksLeft;
     private boolean dying;
@@ -211,8 +214,18 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
 
     public void spawnMob(Instance instance) {
         this.instance = instance;
-        this.lastSentRotation = new float[clip.parts().size()][];
-        this.partDuration = new int[clip.parts().size()];
+        int partCount = clip.parts().size();
+        this.lastSentRotation = new float[partCount][];
+        this.partDuration = new int[partCount];
+        this.localRotation = new float[partCount][];
+        this.localTranslation = new float[partCount][];
+        for (int i = 0; i < partCount; i++) {
+            RavengardMobClip.Part part = clip.parts().get(i);
+            localRotation[i] = part.leftRotation() != null
+                    ? part.leftRotation().clone() : new float[]{0, 0, 0, 1};
+            localTranslation[i] = part.translation() != null
+                    ? part.translation().clone() : new float[]{0, 0, 0};
+        }
         setInstance(instance, position);
         for (RavengardMobClip.Part part : clip.parts()) {
             Entity display = new Entity(EntityType.ITEM_DISPLAY);
@@ -285,6 +298,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         if (flashTicksLeft > 0 && --flashTicksLeft == 0) {
             retint(BASE_COLOR);
         }
+        updateTarget();
         tickCharge();
 
         RavengardMobClip.Animation animation = clip.animation(currentAnimation);
@@ -314,6 +328,12 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
             }
         }
 
+        // parts only receive keyframes when the capture animated them, so a facing change
+        // re-sends every part's current pose composed with the new yaw or the rig turns piecemeal
+        boolean turned = Float.isNaN(lastAppliedYaw)
+                || Math.abs(wrapDegrees(yaw - lastAppliedYaw)) > 0.25f;
+        lastAppliedYaw = yaw;
+
         Map<String, RavengardMobClip.Keyframe> keyframes = animation.frames().get(frame);
         for (int i = 0; i < parts.size() && i < clip.parts().size(); i++) {
             Entity part = parts.get(i);
@@ -321,24 +341,25 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
                 part.teleport(position.add(rotateOffset(partOffsets.get(i), yaw)));
             }
             RavengardMobClip.Keyframe keyframe = keyframes.get(String.valueOf(i));
-            if (keyframe == null) continue;
+            if (keyframe != null) {
+                if (keyframe.translation() != null) localTranslation[i] = keyframe.translation();
+                if (keyframe.leftRotation() != null) localRotation[i] = keyframe.leftRotation();
+            }
+            if (keyframe == null && !turned) continue;
             final int index = i;
             final float finalYaw = yaw;
+            final RavengardMobClip.Keyframe finalKeyframe = keyframe;
             part.editEntityMeta(ItemDisplayMeta.class, meta -> {
-                Integer duration = keyframe.duration();
+                Integer duration = finalKeyframe == null ? null : finalKeyframe.duration();
                 if (duration != null && duration != partDuration[index]) {
                     partDuration[index] = duration;
                     meta.setTransformationInterpolationDuration(duration);
                 }
                 meta.setTransformationInterpolationStartDelta(0);
-                if (keyframe.translation() != null) {
-                    meta.setTranslation(rotateOffset(vec(keyframe.translation()), finalYaw));
-                }
-                if (keyframe.leftRotation() != null) {
-                    meta.setLeftRotation(rotateRig(index, keyframe.leftRotation(), finalYaw));
-                }
-                if (keyframe.scale() != null) {
-                    meta.setScale(vec(keyframe.scale()));
+                meta.setTranslation(rotateOffset(vec(localTranslation[index]), finalYaw));
+                meta.setLeftRotation(rotateRig(index, localRotation[index], finalYaw));
+                if (finalKeyframe != null && finalKeyframe.scale() != null) {
+                    meta.setScale(vec(finalKeyframe.scale()));
                 }
             });
         }
@@ -348,6 +369,43 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
 
         frame++;
     }
+
+    private static float wrapDegrees(float degrees) {
+        while (degrees > 180) degrees -= 360;
+        while (degrees < -180) degrees += 360;
+        return degrees;
+    }
+
+    /**
+     * The melee goal keeps its own cached target and never writes the creature's, so the rig
+     * would have nothing to face once pathfinding stops beside the player.
+     */
+    private void updateTarget() {
+        if (dying || clip.walkSpeed() <= 0) return;
+        Entity target = getTarget();
+        if (target != null && (target.isRemoved()
+                || target.getPosition().distanceSquared(position) > CHASE_LOSE_RANGE * CHASE_LOSE_RANGE)) {
+            setTarget(null);
+            target = null;
+        }
+        if (target == null) {
+            Player nearest = null;
+            double best = CHASE_ACQUIRE_RANGE * CHASE_ACQUIRE_RANGE;
+            for (Player player : instance.getPlayers()) {
+                double distance = player.getPosition().distanceSquared(position);
+                if (distance < best) {
+                    best = distance;
+                    nearest = player;
+                }
+            }
+            if (nearest != null) {
+                setTarget(nearest);
+            }
+        }
+    }
+
+    private static final double CHASE_ACQUIRE_RANGE = 14;
+    private static final double CHASE_LOSE_RANGE = 20;
 
     private float updateRigYaw(Pos previous, boolean moved) {
         if (dying) return rigYaw;
