@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class GUIItemList extends RavengardView {
-    private static final int PANEL_ICON = 0xE236;
     private static final int PAGE_SIZE = 36;
     private static final int SLOT_PREVIOUS = 45;
     private static final int SLOT_NEXT = 53;
@@ -44,8 +43,8 @@ public class GUIItemList extends RavengardView {
     }
 
     @Override
-    protected int panelIcon() {
-        return PANEL_ICON;
+    protected boolean usesChrome() {
+        return false;
     }
 
     @Override
@@ -67,10 +66,7 @@ public class GUIItemList extends RavengardView {
         }
 
         if (current > 0) {
-            interactive(layout, SLOT_PREVIOUS, RavengardItems.button(RavengardButton.BACK)
-                            .label("§aPrevious Page")
-                            .blankLine()
-                            .lore("§ePage " + current + " of " + pages),
+            layout.slot(SLOT_PREVIOUS, arrow("§aPrevious Page", current, pages),
                     (click, viewContext) -> {
                         if (viewContext.player() instanceof RavengardPlayer player) {
                             ViewNavigator.get(player).push(new GUIItemList(filter, current - 1));
@@ -78,15 +74,20 @@ public class GUIItemList extends RavengardView {
                     });
         }
         if (current < pages - 1) {
-            interactive(layout, SLOT_NEXT, RavengardItems.button(RavengardButton.ADD)
-                            .label("§aNext Page")
-                            .blankLine()
-                            .lore("§ePage " + (current + 2) + " of " + pages),
+            layout.slot(SLOT_NEXT, arrow("§aNext Page", current + 2, pages),
                     (click, viewContext) -> {
                         if (viewContext.player() instanceof RavengardPlayer player) {
                             ViewNavigator.get(player).push(new GUIItemList(filter, current + 1));
                         }
                     });
         }
+    }
+
+    private static net.minestom.server.item.ItemStack.Builder arrow(String label, int page, int pages) {
+        return net.minestom.server.item.ItemStack.builder(net.minestom.server.item.Material.ARROW)
+                .customName(net.kyori.adventure.text.Component.text(label)
+                        .decoration(net.kyori.adventure.text.format.TextDecoration.ITALIC, false))
+                .lore(net.kyori.adventure.text.Component.text("§ePage " + page + " of " + pages)
+                        .decoration(net.kyori.adventure.text.format.TextDecoration.ITALIC, false));
     }
 }

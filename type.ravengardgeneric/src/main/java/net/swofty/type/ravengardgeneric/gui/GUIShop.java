@@ -84,17 +84,20 @@ public class GUIShop extends RavengardView {
 
     private void placeStock(ViewLayout<DefaultState> layout, int slot) {
         layout.autoUpdating(slot,
-                (state2, ctx2) -> renderStock(slot),
+                (state2, ctx2) -> renderStock(slot, ctx2),
                 (click, viewContext) -> buy(slot, viewContext),
                 java.time.Duration.ofSeconds(1));
     }
 
-    private ItemStack.Builder renderStock(int slot) {
+    private ItemStack.Builder renderStock(int slot, ViewContext ctx) {
         var entry = net.swofty.type.ravengardgeneric.shop.RavengardShopStock.shelf(shop).at(slot);
         RavengardItemType type = entry == null ? null : RavengardItemRegistry.get(entry.item());
         if (type == null) {
             return ItemStack.builder(net.minestom.server.item.Material.AIR);
         }
+
+        boolean wrongClass = ctx.player() instanceof RavengardPlayer viewer
+                && !type.usableBy(viewer.getRavengardClass());
 
         ItemStack.Builder display = RavengardItem.displayBuilder(type);
         List<Component> lore = new ArrayList<>(RavengardItem.loreOf(type, true));
@@ -102,6 +105,10 @@ public class GUIShop extends RavengardView {
         if (!entry.inStock()) {
             display.set(DataComponents.ITEM_MODEL, type.getItemModel() + "_greyed");
             lore.add(Component.text("Out of stock!").color(NamedTextColor.RED)
+                    .decoration(TextDecoration.ITALIC, false));
+        } else if (wrongClass) {
+            display.set(DataComponents.ITEM_MODEL, type.getItemModel() + "_greyed");
+            lore.add(Component.text("Your class cannot use this item!").color(NamedTextColor.RED)
                     .decoration(TextDecoration.ITALIC, false));
         } else {
             lore.add(Component.text("Click to buy for ").color(NamedTextColor.YELLOW)

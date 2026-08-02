@@ -57,6 +57,9 @@ public abstract class RavengardView extends StatelessView {
     @Override
     public final void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
         content(layout, state, ctx);
+        if (!usesChrome()) {
+            return;
+        }
 
         // every captured menu keeps an invisible stick in its first free slot
         java.util.Set<Integer> occupied = layout.occupiedSlots();
@@ -77,9 +80,15 @@ public abstract class RavengardView extends StatelessView {
         }
     }
 
+    /** Menus without a captured panel render as the pack's plain themed chest. */
+    protected boolean usesChrome() {
+        return true;
+    }
+
     @Override
     public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>(chrome(title()), inventoryType());
+        return new ViewConfiguration<>(usesChrome() ? chrome(title())
+                : Component.text(title()), inventoryType());
     }
 
     /** The invisible stick every captured menu holds in slot zero. */
