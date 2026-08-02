@@ -3,6 +3,7 @@
 # names and defence values until they are.
 items:
   - id: TUNIC
+    rarity: COMMON
     material: leather_chestplate
     item_model: hypixel_ravengard:item/armor/starter/chestplate/tunic
     default_statistics:
@@ -16,6 +17,7 @@ items:
         class: KNIGHT
 
   - id: WEATHERED_HARNESS
+    rarity: COMMON
     material: leather_chestplate
     item_model: hypixel_ravengard:item/armor/starter/chestplate/weathered_harness
     default_statistics:
@@ -29,6 +31,7 @@ items:
         class: WARRIOR
 
   - id: REINFORCED_PANTS
+    rarity: COMMON
     material: leather_leggings
     item_model: hypixel_ravengard:item/armor/starter/leggings/reinforced_pants
     default_statistics:
@@ -38,8 +41,11 @@ items:
         standard_item_type: LEGGINGS
       - id: EQUIPPABLE
         asset_id: hypixel_ravengard:starter
+      - id: CLASS_RESTRICTED
+        class: KNIGHT
 
   - id: WEATHERED_PANTS
+    rarity: COMMON
     material: leather_leggings
     item_model: hypixel_ravengard:item/armor/starter/leggings/weathered_pants
     default_statistics:
@@ -53,6 +59,7 @@ items:
         class: WARRIOR
 
   - id: OLD_BOOTS
+    rarity: COMMON
     material: leather_boots
     item_model: hypixel_ravengard:item/armor/starter/boots/old_boots
     default_statistics:

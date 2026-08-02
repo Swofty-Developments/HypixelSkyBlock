@@ -15,6 +15,7 @@ import java.util.Map;
 public class RavengardItemType {
     private final String id;
     private Material material;
+    private RavengardRarity rarity = RavengardRarity.COMMON;
     private String itemModel;
     private String displayName;
     private final Map<String, Double> statistics = new HashMap<>();

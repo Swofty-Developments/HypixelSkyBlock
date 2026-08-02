@@ -30,6 +30,7 @@ public final class RavengardItemConfigParser {
         if (config.get("item_model") != null) {
             type.setItemModel(String.valueOf(config.get("item_model")));
         }
+        type.setRarity(RavengardRarity.fromKey((String) config.get("rarity")));
         if (config.get("display_name") != null) {
             type.setDisplayName(String.valueOf(config.get("display_name")));
         }

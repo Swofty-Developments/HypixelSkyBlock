@@ -21,6 +21,17 @@ public enum RavengardClass {
         this.icon = icon;
     }
 
+    /** The class's small tag glyph from the pack's font/tags textures, used on item tooltips. */
+    public int getTagGlyph() {
+        return switch (this) {
+            case KNIGHT -> 0xE210;
+            case WARRIOR -> 0xE21E;
+            case HUNTER -> 0xE221;
+            case ASSASSIN -> 0xE200;
+            case SORCERER -> 0xE224;
+        };
+    }
+
     /** Class description and primary weapon, verbatim from the captured Select Class menu. */
     public String[] selectLore() {
         return switch (this) {
