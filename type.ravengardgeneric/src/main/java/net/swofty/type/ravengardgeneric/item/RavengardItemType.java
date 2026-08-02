@@ -21,8 +21,10 @@ public class RavengardItemType {
     private final Map<String, Double> statistics = new HashMap<>();
     private final List<RavengardItemComponent> components = new ArrayList<>();
 
-    /** Set by the CLASS_RESTRICTED component; null means any class may hold the item. */
-    private RavengardClass restrictedTo;
+    /** Set by the CLASS_RESTRICTED component; empty means any class may hold the item. */
+    private final java.util.Set<RavengardClass> restrictedTo = new java.util.HashSet<>();
+    private final List<String> description = new ArrayList<>();
+    private String effect;
 
     public RavengardItemType(String id) {
         this.id = id;
@@ -33,7 +35,7 @@ public class RavengardItemType {
     }
 
     public boolean usableBy(RavengardClass value) {
-        return restrictedTo == null || restrictedTo == value;
+        return restrictedTo.isEmpty() || restrictedTo.contains(value);
     }
 
     public <T extends RavengardItemComponent> T component(Class<T> type) {

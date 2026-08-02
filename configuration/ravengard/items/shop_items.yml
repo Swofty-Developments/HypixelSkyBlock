@@ -1,0 +1,463 @@
+# Generated from captured shop menus.
+items:
+  - id: IRON_HALBERD
+    rarity: UNCOMMON
+    material: golden_sword
+    display_name: 'Iron Halberd'
+    item_model: hypixel_ravengard:item/weapons/halberds/iron/iron_halberd
+    default_statistics:
+      damage: 52
+      attack_speed: 1
+      value: 7
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HALBERD
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT, WARRIOR]
+  - id: RUSTY_GREATSWORD
+    rarity: COMMON
+    material: wooden_sword
+    display_name: 'Rusty Great Sword'
+    item_model: hypixel_ravengard:item/weapons/greatswords/rusty/rusty_greatsword
+    default_statistics:
+      damage: 32
+      attack_speed: 1.2
+      value: 1
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: GREATSWORD
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT, WARRIOR]
+  - id: STEEL_GREAT_AXE
+    rarity: UNCOMMON
+    material: iron_axe
+    display_name: 'Steel Great Axe'
+    item_model: hypixel_ravengard:item/weapons/axes/steel/steel_great_axe
+    default_statistics:
+      damage: 74
+      attack_speed: 0.9
+      value: 7
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: GREATAXE
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: BARBARIAN_GREAT_AXE
+    rarity: UNCOMMON
+    material: stone_axe
+    display_name: 'Barbarian Great Axe'
+    item_model: hypixel_ravengard:item/weapons/axes/barbarian/barbarian_great_axe
+    default_statistics:
+      damage: 80
+      attack_speed: 1.2
+      value: 12
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: GREATAXE
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: RUSTY_HALBERD
+    rarity: COMMON
+    material: golden_sword
+    display_name: 'Rusty Halberd'
+    item_model: hypixel_ravengard:item/weapons/halberds/rusty/rusty_halberd
+    default_statistics:
+      damage: 35
+      attack_speed: 1
+      value: 2
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HALBERD
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT, WARRIOR]
+  - id: BALLISTIC_WAR_HAMMER
+    rarity: UNCOMMON
+    material: iron_axe
+    display_name: 'Ballistic War Hammer'
+    item_model: hypixel_ravengard:item/weapons/war_hammers/ballistic/ballistic_war_hammer
+    default_statistics:
+      damage: 66
+      attack_speed: 0.7
+      value: 13
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HAMMER
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: IRON_WAR_HAMMER
+    rarity: COMMON
+    material: stone_axe
+    display_name: 'Iron War Hammer'
+    item_model: hypixel_ravengard:item/weapons/war_hammers/iron/iron_war_hammer
+    default_statistics:
+      damage: 60
+      attack_speed: 0.7
+      value: 3
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: HAMMER
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: WAR_TORN_GREAT_AXE
+    rarity: COMMON
+    material: iron_axe
+    display_name: 'War-Torn Great Axe'
+    item_model: hypixel_ravengard:item/weapons/axes/war_torn/war_torn_great_axe
+    default_statistics:
+      damage: 51
+      attack_speed: 1
+      value: 3
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: GREATAXE
+      - id: CLASS_RESTRICTED
+        classes: [WARRIOR]
+  - id: IRON_DAGGER
+    rarity: UNCOMMON
+    material: iron_sword
+    display_name: 'Iron Dagger'
+    item_model: hypixel_ravengard:item/weapons/daggers/iron/iron_dagger
+    default_statistics:
+      damage: 33
+      attack_speed: 2.8
+      value: 4
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: DAGGER
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN]
+  - id: WAR_BOW
+    rarity: UNCOMMON
+    material: bow
+    display_name: 'War Bow'
+    item_model: hypixel_ravengard:item/weapons/bows/war/war_bow
+    default_statistics:
+      damage: 40
+      attack_speed: 0
+      value: 8
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: CLASS_RESTRICTED
+        classes: [HUNTER]
+  - id: HUNTING_KNIFE
+    rarity: UNCOMMON
+    material: diamond_sword
+    display_name: 'Hunting Knife'
+    item_model: hypixel_ravengard:item/weapons/knives/hunting/hunting_knife
+    default_statistics:
+      damage: 20
+      attack_speed: 2.5
+      value: 8
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: KNIFE
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER]
+  - id: ELM_BOW
+    rarity: UNCOMMON
+    material: bow
+    display_name: 'Elm Bow'
+    item_model: hypixel_ravengard:item/weapons/bows/elm/elm_bow
+    default_statistics:
+      damage: 38
+      attack_speed: 0
+      value: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOW
+      - id: CLASS_RESTRICTED
+        classes: [HUNTER]
+  - id: IRON_KNIFE
+    rarity: UNCOMMON
+    material: iron_sword
+    display_name: 'Iron Knife'
+    item_model: hypixel_ravengard:item/weapons/knives/iron/iron_knife
+    default_statistics:
+      damage: 18
+      attack_speed: 2.5
+      value: 9
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: KNIFE
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER]
+  - id: STEEL_MACE
+    rarity: UNCOMMON
+    material: iron_sword
+    display_name: 'Steel Mace'
+    item_model: hypixel_ravengard:item/weapons/maces/steel/steel_mace
+    default_statistics:
+      damage: 32
+      attack_speed: 0.9
+      value: 12
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: MACE
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT]
+  - id: SPIKED_MACE
+    rarity: UNCOMMON
+    material: iron_sword
+    display_name: 'Spiked Mace'
+    item_model: hypixel_ravengard:item/weapons/maces/spiked/spiked_mace
+    default_statistics:
+      damage: 28
+      attack_speed: 0.9
+      value: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: MACE
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT]
+  - id: STILETTO_DAGGER
+    rarity: UNCOMMON
+    material: iron_sword
+    display_name: 'Stiletto Dagger'
+    item_model: hypixel_ravengard:item/weapons/daggers/stiletto/stiletto_dagger
+    default_statistics:
+      damage: 35
+      attack_speed: 3
+      value: 8
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: DAGGER
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN]
+  - id: STEEL_SWORD
+    rarity: UNCOMMON
+    material: diamond_sword
+    display_name: 'Steel Sword'
+    item_model: hypixel_ravengard:item/weapons/swords/steel/steel_sword
+    default_statistics:
+      damage: 45
+      attack_speed: 1.5
+      value: 7
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT]
+  - id: CAPTAINS_SWORD
+    rarity: UNCOMMON
+    material: iron_sword
+    display_name: 'Captain Sword'
+    item_model: hypixel_ravengard:item/weapons/swords/captains/captains_sword
+    default_statistics:
+      damage: 37
+      attack_speed: 2
+      value: 8
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: SWORD
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT]
+  - id: WEATHERED_PANTS
+    rarity: COMMON
+    material: leather_leggings
+    display_name: 'Weathered Pants'
+    item_model: hypixel_ravengard:item/armor/starter/leggings/weathered_pants
+    default_statistics:
+      defense: 4
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER, WARRIOR]
+  - id: LEATHER_TUNIC
+    rarity: COMMON
+    material: leather_chestplate
+    display_name: 'Leather Tunic'
+    item_model: hypixel_ravengard:item/armor/leather/chestplate/leather_tunic
+    default_statistics:
+      defense: 6
+      value: 1
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+  - id: STUDDED_BREECHES
+    rarity: COMMON
+    material: leather_leggings
+    display_name: 'Studded Breeches'
+    item_model: hypixel_ravengard:item/armor/studded/leggings/studded_breeches
+    default_statistics:
+      defense: 12
+      value: 4
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT, WARRIOR]
+  - id: LIGHT_BOOTS
+    rarity: COMMON
+    material: leather_boots
+    display_name: 'Light Boots'
+    item_model: hypixel_ravengard:item/armor/light/boots/light_boots
+    default_statistics:
+      defense: 11
+      value: 6
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER]
+  - id: ROGUE_COAT
+    rarity: UNCOMMON
+    material: leather_chestplate
+    display_name: 'Rogue Coat'
+    item_model: hypixel_ravengard:item/armor/rogue/chestplate/rogue_coat
+    default_statistics:
+      defense: 13
+      value: 19
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN]
+  - id: DOUBLET
+    rarity: UNCOMMON
+    material: leather_chestplate
+    display_name: 'Doublet'
+    item_model: hypixel_ravengard:item/armor/doublet
+    default_statistics:
+      defense: 12
+      value: 3
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER, KNIGHT]
+  - id: PADDED_TUNIC
+    rarity: UNCOMMON
+    material: leather_chestplate
+    display_name: 'Padded Tunic'
+    item_model: hypixel_ravengard:item/armor/padded_leather/chestplate/padded_tunic
+    default_statistics:
+      defense: 14
+      value: 6
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: CLASS_RESTRICTED
+        classes: [HUNTER, KNIGHT]
+  - id: QUILTED_LEGGINGS
+    rarity: UNCOMMON
+    material: leather_leggings
+    display_name: 'Quilted Leggings'
+    item_model: hypixel_ravengard:item/armor/quilted/leggings/quilted_leggings
+    default_statistics:
+      defense: 14
+      value: 8
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER]
+  - id: KNIGHTS_HAUBERK
+    rarity: UNCOMMON
+    material: chainmail_chestplate
+    display_name: 'Knight''s Hauberk'
+    item_model: hypixel_ravengard:item/armor/knights/chestplate/knights_hauberk
+    default_statistics:
+      defense: 27
+      value: 19
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CHESTPLATE
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT]
+  - id: LIGHT_LEGGINGS
+    rarity: UNCOMMON
+    material: leather_leggings
+    display_name: 'Light Leggings'
+    item_model: hypixel_ravengard:item/armor/light/leggings/light_leggings
+    default_statistics:
+      defense: 15
+      value: 9
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: CLASS_RESTRICTED
+        classes: [ASSASSIN, HUNTER]
+  - id: PADDED_LEGGINGS
+    rarity: COMMON
+    material: leather_leggings
+    display_name: 'Padded Leggings'
+    item_model: hypixel_ravengard:item/armor/padded_leather/leggings/padded_leggings
+    default_statistics:
+      defense: 12
+      value: 4
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: LEGGINGS
+      - id: CLASS_RESTRICTED
+        classes: [HUNTER, KNIGHT]
+  - id: SOLDIERS_SABATONS
+    rarity: COMMON
+    material: iron_boots
+    display_name: 'Soldier''s Sabatons'
+    item_model: hypixel_ravengard:item/armor/soldier/boots/soldiers_sabatons
+    default_statistics:
+      defense: 16
+      value: 5
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: CLASS_RESTRICTED
+        classes: [KNIGHT]
+  - id: MARKSMAN_BOOTS
+    rarity: UNCOMMON
+    material: iron_boots
+    display_name: 'Marksman Boots'
+    item_model: hypixel_ravengard:item/armor/marksman/boots/marksman_boots
+    default_statistics:
+      defense: 12
+      value: 14
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: BOOTS
+      - id: CLASS_RESTRICTED
+        classes: [HUNTER]
+  - id: BANDAGE
+    rarity: UNCOMMON
+    material: paper
+    display_name: 'Bandage'
+    item_model: hypixel_ravengard:item/consumables/bandage
+    default_statistics:
+      value: 6
+    description:
+      - 'A strong bandage that restores a'
+      - 'moderate amount of health over time.'
+    effect: 'Heals +80 HP over 5 seconds.'
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CONSUMABLE
+  - id: APPLE
+    rarity: COMMON
+    material: apple
+    display_name: 'Apple'
+    item_model: hypixel_ravengard:item/consumables/apple
+    default_statistics:
+      value: 4
+    description:
+      - 'A common fruit that restores a small'
+      - 'amount of health when consumed.'
+    effect: 'Heals +30 HP over 4 seconds.'
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CONSUMABLE
+  - id: HEALTH
+    rarity: UNCOMMON
+    material: paper
+    display_name: 'Health Potion'
+    item_model: hypixel_ravengard:item/consumables/potions/health
+    default_statistics:
+      value: 8
+    description:
+      - 'A potent alchemical concoction that'
+      - 'restores a medium amount of health'
+      - 'when consumed.'
+    effect: 'Heals +120 HP over 2 seconds.'
+    components:
+      - id: STANDARD_ITEM
+        standard_item_type: CONSUMABLE

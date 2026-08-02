@@ -23,6 +23,7 @@ public class RavengardProfile {
     private long playtimeSeconds;
     private long created;
     private final Map<Integer, String> inventory = new HashMap<>();
+    private final java.util.Set<String> intros = new java.util.HashSet<>();
 
     public RavengardProfile(UUID id, UUID owner) {
         this.id = id;
@@ -41,6 +42,7 @@ public class RavengardProfile {
         document.put("tutorial", tutorial);
         document.put("playtime_seconds", playtimeSeconds);
         document.put("created", created);
+        document.put("intros", new java.util.ArrayList<>(intros));
         Document inventoryDocument = new Document();
         inventory.forEach((slot, snbt) -> inventoryDocument.put(String.valueOf(slot), snbt));
         document.put("inventory", inventoryDocument);
@@ -61,6 +63,9 @@ public class RavengardProfile {
                 ? number.longValue() : 0L;
         profile.created = document.get("created") instanceof Number number
                 ? number.longValue() : System.currentTimeMillis();
+        if (document.get("intros") instanceof java.util.List<?> introList) {
+            introList.forEach(name -> profile.intros.add(String.valueOf(name)));
+        }
         if (document.get("inventory") instanceof Document inventoryDocument) {
             inventoryDocument.forEach((slot, snbt) ->
                     profile.inventory.put(Integer.parseInt(slot), (String) snbt));

@@ -1,0 +1,79 @@
+id: blacksmith
+title: Blacksmith
+banner: blacksmith
+stock:
+  - slot: 4
+    item: IRON_HALBERD
+    price: 55
+  - slot: 5
+    item: RUSTY_GREATSWORD
+    price: 21
+  - slot: 6
+    item: STEEL_GREAT_AXE
+    price: 95
+  - slot: 7
+    item: BARBARIAN_GREAT_AXE
+    price: 130
+  - slot: 8
+    item: RUSTY_HALBERD
+    price: 25
+  - slot: 13
+    item: BALLISTIC_WAR_HAMMER
+    price: 62
+  - slot: 14
+    item: IRON_WAR_HAMMER
+    price: 4
+  - slot: 15
+    item: WAR_TORN_GREAT_AXE
+    price: 28
+  - slot: 16
+    item: RUSTY_HALBERD
+    price: 34
+  - slot: 17
+    item: IRON_DAGGER
+    price: 38
+    out_of_stock: true
+  - slot: 22
+    item: WAR_BOW
+    price: 50
+    out_of_stock: true
+  - slot: 23
+    item: WAR_BOW
+    price: 30
+    out_of_stock: true
+  - slot: 24
+    item: HUNTING_KNIFE
+    price: 35
+    out_of_stock: true
+  - slot: 25
+    item: ELM_BOW
+    price: 42
+    out_of_stock: true
+  - slot: 26
+    item: IRON_KNIFE
+    price: 22
+    out_of_stock: true
+  - slot: 31
+    item: STEEL_MACE
+    price: 70
+    out_of_stock: true
+  - slot: 32
+    item: SPIKED_MACE
+    price: 28
+    out_of_stock: true
+  - slot: 33
+    item: STILETTO_DAGGER
+    price: 33
+    out_of_stock: true
+  - slot: 34
+    item: STEEL_SWORD
+    price: 55
+    out_of_stock: true
+  - slot: 35
+    item: CAPTAINS_SWORD
+    price: 55
+    out_of_stock: true
+  - slot: 40
+    item: IRON_KNIFE
+    price: 15
+    out_of_stock: true

@@ -1,0 +1,136 @@
+package net.swofty.type.ravengardgeneric.gui;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.minestom.server.component.DataComponents;
+import net.minestom.server.item.ItemStack;
+import net.swofty.type.generic.gui.v2.DefaultState;
+import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.ViewNavigator;
+import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.type.ravengardgeneric.item.RavengardItem;
+import net.swofty.type.ravengardgeneric.item.RavengardItemRegistry;
+import net.swofty.type.ravengardgeneric.item.RavengardItemType;
+import net.swofty.type.ravengardgeneric.profile.RavengardProfiles;
+import net.swofty.type.ravengardgeneric.shop.RavengardShop;
+import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The buy side of a shop, rebuilt from captures: banner top left, stock in the grid, the stock
+ * refresh hourglass, and the buy and sell tabs down the left edge.
+ */
+public class GUIShop extends RavengardView {
+    private static final int PANEL_ICON = 0xE23B;
+    static final int SLOT_BANNER = 0;
+    static final int SLOT_HOURGLASS = 19;
+    static final int SLOT_BUY = 27;
+    static final int SLOT_SELL = 36;
+    /** Stock refresh runs on a fixed quarter hour cycle; only the countdown is displayed. */
+    private static final long REFRESH_MILLIS = 15 * 60 * 1000;
+
+    private final RavengardShop shop;
+
+    public GUIShop(RavengardShop shop) {
+        this.shop = shop;
+    }
+
+    @Override
+    protected String title() {
+        return shop.title();
+    }
+
+    @Override
+    protected int panelIcon() {
+        return PANEL_ICON;
+    }
+
+    @Override
+    protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        place(layout, SLOT_BANNER, RavengardItems.button(banner(shop))
+                .label(shop.title())
+                .lore("§7Buy and sell items to help you on.",
+                        "§7your adventures!"));
+
+        for (RavengardShop.Entry entry : shop.stock()) {
+            placeStock(layout, entry);
+        }
+
+        long untilRefresh = REFRESH_MILLIS - (System.currentTimeMillis() % REFRESH_MILLIS);
+        place(layout, SLOT_HOURGLASS, RavengardItems.button(RavengardButton.HOURGLASS)
+                .label("Stock Refresh")
+                .lore("§7This shop's stock will refresh in:",
+                        "§e" + (untilRefresh / 60000) + "m " + (untilRefresh / 1000 % 60) + "s"));
+
+        place(layout, SLOT_BUY, RavengardItems.button(RavengardButton.BUY)
+                .label("Buy")
+                .lore("§7Purchase items from this shop to",
+                        "§7help you on your adventures!")
+                .blankLine()
+                .lore("§aYou are here!"));
+
+        interactive(layout, SLOT_SELL, RavengardItems.button(RavengardButton.SELL)
+                        .label("Sell")
+                        .lore("§7Sell items from your inventory for",
+                                "§7some extra cash!")
+                        .blankLine()
+                        .lore("§eClick to sell!"),
+                (click, viewContext) -> ViewNavigator.get(viewContext.player()).push(new GUIShopSell(shop)));
+    }
+
+    private void placeStock(ViewLayout<DefaultState> layout, RavengardShop.Entry entry) {
+        RavengardItemType type = RavengardItemRegistry.get(entry.item());
+        if (type == null) {
+            return;
+        }
+
+        ItemStack.Builder display = RavengardItem.displayBuilder(type);
+        List<Component> lore = new ArrayList<>(RavengardItem.loreOf(type));
+        lore.add(Component.empty());
+        if (entry.outOfStock()) {
+            display.set(DataComponents.ITEM_MODEL, type.getItemModel() + "_greyed");
+            lore.add(Component.text("Out of stock!").color(NamedTextColor.RED)
+                    .decoration(TextDecoration.ITALIC, false));
+        } else {
+            lore.add(Component.text("Click to buy for ").color(NamedTextColor.YELLOW)
+                    .decoration(TextDecoration.ITALIC, false)
+                    .append(Component.text("\uD83D\uDC51").color(NamedTextColor.WHITE))
+                    .append(Component.text(String.valueOf(entry.price())).color(TextColor.color(0xFFCE47)))
+                    .append(Component.text("!").color(NamedTextColor.YELLOW)));
+        }
+        display.set(DataComponents.LORE, lore);
+
+        layout.slot(entry.slot(), display, (click, viewContext) -> {
+            if (!(viewContext.player() instanceof RavengardPlayer player)) {
+                return;
+            }
+            if (entry.outOfStock()) {
+                player.sendMessage("§cThat item is out of stock!");
+                return;
+            }
+            if (!RavengardProfiles.tryPurchase(player, entry.price())) {
+                player.sendMessage("§cYou don't have enough Crowns!");
+                return;
+            }
+            player.getInventory().addItemStack(RavengardItem.of(type, player));
+            player.sendMessage(Component.text("You bought ").color(NamedTextColor.GREEN)
+                    .append(Component.text(type.getDisplayName() == null ? entry.item() : type.getDisplayName())
+                            .color(NamedTextColor.WHITE))
+                    .append(Component.text(" for ").color(NamedTextColor.GREEN))
+                    .append(RavengardItem.crowns(entry.price(), ""))
+                    .append(Component.text("!").color(NamedTextColor.GREEN)));
+        });
+    }
+
+    static RavengardButton banner(RavengardShop shop) {
+        return switch (shop.banner()) {
+            case "armorer" -> RavengardButton.BANNER_ARMORER;
+            case "alchemist" -> RavengardButton.BANNER_ALCHEMIST;
+            default -> RavengardButton.BANNER_BLACKSMITH;
+        };
+    }
+}

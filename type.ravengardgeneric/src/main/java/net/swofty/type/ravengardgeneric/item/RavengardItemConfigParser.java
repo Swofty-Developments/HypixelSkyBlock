@@ -31,6 +31,12 @@ public final class RavengardItemConfigParser {
             type.setItemModel(String.valueOf(config.get("item_model")));
         }
         type.setRarity(RavengardRarity.fromKey((String) config.get("rarity")));
+        if (config.get("description") instanceof List<?> descriptionLines) {
+            descriptionLines.forEach(line -> type.getDescription().add(String.valueOf(line)));
+        }
+        if (config.get("effect") != null) {
+            type.setEffect(String.valueOf(config.get("effect")));
+        }
         if (config.get("display_name") != null) {
             type.setDisplayName(String.valueOf(config.get("display_name")));
         }
@@ -55,7 +61,7 @@ public final class RavengardItemConfigParser {
                 type.getComponents().add(component);
 
                 if (component instanceof ClassRestrictedComponent restricted) {
-                    type.setRestrictedTo(restricted.getRestrictedTo());
+                    type.getRestrictedTo().addAll(restricted.getRestrictedTo());
                 }
             }
         }

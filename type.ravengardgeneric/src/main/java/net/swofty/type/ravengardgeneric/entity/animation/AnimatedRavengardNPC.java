@@ -111,11 +111,26 @@ public class AnimatedRavengardNPC extends RavengardNPC {
 
     @Override
     public void onClick(RavengardPlayer player) {
+        // once the introduction has been heard, shopkeepers go straight to their shop
+        if (clip.shop() != null && dialogueSessions.get(player.getUuid()) == null
+                && net.swofty.type.ravengardgeneric.profile.RavengardProfiles.hasIntro(player, clip.name())) {
+            openShop(player);
+            return;
+        }
         // a click mid-speech advances the dialogue; the talk cycle keeps playing from where it is
         if (phase != RavengardAnimationPhase.TALK) {
             play(RavengardAnimationPhase.TALK);
         }
         advanceDialogue(player);
+    }
+
+    private void openShop(RavengardPlayer player) {
+        net.swofty.type.ravengardgeneric.shop.RavengardShop shop =
+                net.swofty.type.ravengardgeneric.shop.RavengardShopRegistry.get(clip.shop());
+        if (shop != null) {
+            net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
+                    .push(new net.swofty.type.ravengardgeneric.gui.GUIShop(shop));
+        }
     }
 
     /**
@@ -170,11 +185,18 @@ public class AnimatedRavengardNPC extends RavengardNPC {
     }
 
     private void onDialogueComplete(RavengardPlayer player) {
-        if (!player.isOnline() || !"select_class".equals(clip.onComplete())) {
+        if (!player.isOnline()) {
             return;
         }
-        net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
-                .push(new net.swofty.type.ravengardgeneric.gui.GUISelectClass());
+        if (clip.shop() != null) {
+            net.swofty.type.ravengardgeneric.profile.RavengardProfiles.markIntro(player, clip.name());
+            openShop(player);
+            return;
+        }
+        if ("select_class".equals(clip.onComplete())) {
+            net.swofty.type.generic.gui.v2.ViewNavigator.get(player)
+                    .push(new net.swofty.type.ravengardgeneric.gui.GUISelectClass());
+        }
     }
 
     private static String format(String speaker, RavengardAnimationClip.Line line) {

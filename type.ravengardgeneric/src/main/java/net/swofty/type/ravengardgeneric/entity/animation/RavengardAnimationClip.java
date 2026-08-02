@@ -38,6 +38,7 @@ public final class RavengardAnimationClip {
     private Dialogue dialogue;
     private String world;
     private String onComplete;
+    private String shop;
 
     public double[] position() {
         return position == null ? new double[]{0, 0, 0} : position;
@@ -58,6 +59,10 @@ public final class RavengardAnimationClip {
 
     public String onComplete() {
         return onComplete;
+    }
+
+    public String shop() {
+        return shop;
     }
 
     public Dialogue dialogue() {

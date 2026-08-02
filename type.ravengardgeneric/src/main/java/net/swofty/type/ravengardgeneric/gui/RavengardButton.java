@@ -9,6 +9,13 @@ import lombok.Getter;
 @Getter
 public enum RavengardButton implements RavengardSprite {
     ADD("add", 0xF201, 48, 52, 1, 3),
+    BANNER_ALCHEMIST("alchemist", 0xF22C, 33, 11, 3, 2),
+    BANNER_ARMORER("armorer", 0xF22D, 33, 11, 3, 2),
+    BANNER_BLACKSMITH("blacksmith", 0xF22E, 33, 11, 3, 2),
+    BUY("buy", 0xF203, 42, 32, 1, 1),
+    HOURGLASS("hourglass", 0xF22F, 48, 33, 1, 1),
+    SELL("sell", 0xF218, 42, 31, 1, 1),
+    TEXT_SELL("text_sell", 0xF230, 48, 36, 3, 1),
     BACK("back", 0xF202, 48, 37, 1, 1),
     BAG("bag", 0xF206, 51, 32, 2, 2),
     BOOK("book", 0xF205, 51, 45, 3, 2),

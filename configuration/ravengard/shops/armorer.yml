@@ -1,0 +1,61 @@
+id: armorer
+title: Armorer
+banner: armorer
+stock:
+  - slot: 4
+    item: LEATHER_TUNIC
+    price: 6
+  - slot: 5
+    item: STUDDED_BREECHES
+    price: 12
+  - slot: 6
+    item: STUDDED_BREECHES
+    price: 20
+  - slot: 7
+    item: LIGHT_BOOTS
+    price: 10
+    out_of_stock: true
+  - slot: 8
+    item: ROGUE_COAT
+    price: 20
+    out_of_stock: true
+  - slot: 13
+    item: DOUBLET
+    price: 18
+    out_of_stock: true
+  - slot: 14
+    item: PADDED_TUNIC
+    price: 17
+    out_of_stock: true
+  - slot: 15
+    item: QUILTED_LEGGINGS
+    price: 19
+    out_of_stock: true
+  - slot: 16
+    item: KNIGHTS_HAUBERK
+    price: 30
+    out_of_stock: true
+  - slot: 17
+    item: LIGHT_LEGGINGS
+    price: 20
+    out_of_stock: true
+  - slot: 22
+    item: PADDED_LEGGINGS
+    price: 10
+    out_of_stock: true
+  - slot: 23
+    item: SOLDIERS_SABATONS
+    price: 10
+    out_of_stock: true
+  - slot: 24
+    item: MARKSMAN_BOOTS
+    price: 25
+    out_of_stock: true
+  - slot: 25
+    item: PADDED_TUNIC
+    price: 11
+    out_of_stock: true
+  - slot: 26
+    item: SOLDIERS_SABATONS
+    price: 18
+    out_of_stock: true

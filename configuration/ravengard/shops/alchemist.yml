@@ -1,0 +1,19 @@
+id: alchemist
+title: Alchemist
+banner: alchemist
+stock:
+  - slot: 4
+    item: BANDAGE
+    price: 24
+  - slot: 5
+    item: APPLE
+    price: 6
+  - slot: 6
+    item: HEALTH
+    price: 45
+  - slot: 7
+    item: HEALTH
+    price: 30
+  - slot: 8
+    item: BANDAGE
+    price: 12

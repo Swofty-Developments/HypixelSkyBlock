@@ -176,6 +176,44 @@ public final class RavengardProfiles {
         }
     }
 
+    public static boolean hasIntro(RavengardPlayer player, String npc) {
+        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
+        return profile != null && profile.getIntros().contains(npc);
+    }
+
+    public static void markIntro(RavengardPlayer player, String npc) {
+        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
+        if (profile == null) {
+            return;
+        }
+        profile.getIntros().add(npc);
+        RavengardProfileDatabase.save(profile);
+    }
+
+    public static int getCrowns(RavengardPlayer player) {
+        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
+        return profile == null ? 0 : profile.getCrowns();
+    }
+
+    public static void addCrowns(RavengardPlayer player, int amount) {
+        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
+        if (profile == null) {
+            return;
+        }
+        profile.setCrowns(profile.getCrowns() + amount);
+        RavengardProfileDatabase.save(profile);
+    }
+
+    public static boolean tryPurchase(RavengardPlayer player, int price) {
+        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
+        if (profile == null || profile.getCrowns() < price) {
+            return false;
+        }
+        profile.setCrowns(profile.getCrowns() - price);
+        RavengardProfileDatabase.save(profile);
+        return true;
+    }
+
     /** Writes every occupied slot into the profile as item nbt. */
     public static void snapshotInventory(RavengardPlayer player, RavengardProfile profile) {
         profile.getInventory().clear();
