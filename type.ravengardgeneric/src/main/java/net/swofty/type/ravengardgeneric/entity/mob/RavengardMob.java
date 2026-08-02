@@ -55,11 +55,14 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private int attackCooldown;
     private int flashTicksLeft;
     private boolean dying;
+    private float rigYaw;
+    private static final float MAX_TURN_PER_TICK = 25f;
 
     public RavengardMob(RavengardMobClip clip, Pos position) {
         super(EntityType.ZOMBIE);
         this.clip = clip;
         this.position = position;
+        this.rigYaw = position.yaw();
         this.maxHealth = clip.health() <= 0 ? 100 : clip.health();
         this.health = maxHealth;
         setInvisible(true);
@@ -227,7 +230,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         Pos previous = position;
         position = getPosition();
         boolean moved = !previous.samePoint(position);
-        float yaw = position.yaw();
+        float yaw = updateRigYaw(previous, moved);
 
         if (attackCooldown > 0) attackCooldown--;
         if (flashTicksLeft > 0 && --flashTicksLeft == 0) {
@@ -294,6 +297,34 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         }
 
         frame++;
+    }
+
+    private float updateRigYaw(Pos previous, boolean moved) {
+        if (dying) return rigYaw;
+        Float desired = null;
+        Entity target = getTarget();
+        if (target != null && !target.isRemoved()) {
+            double dx = target.getPosition().x() - position.x();
+            double dz = target.getPosition().z() - position.z();
+            if (dx * dx + dz * dz > 1e-4) {
+                desired = (float) Math.toDegrees(Math.atan2(-dx, dz));
+            }
+        } else if (moved) {
+            double dx = position.x() - previous.x();
+            double dz = position.z() - previous.z();
+            if (dx * dx + dz * dz > 1e-6) {
+                desired = (float) Math.toDegrees(Math.atan2(-dx, dz));
+            }
+        }
+        if (desired != null) {
+            float delta = desired - rigYaw;
+            while (delta > 180) delta -= 360;
+            while (delta < -180) delta += 360;
+            rigYaw += Math.clamp(delta, -MAX_TURN_PER_TICK, MAX_TURN_PER_TICK);
+            while (rigYaw > 180) rigYaw -= 360;
+            while (rigYaw < -180) rigYaw += 360;
+        }
+        return rigYaw;
     }
 
     private static Vec vec(float[] values) {
