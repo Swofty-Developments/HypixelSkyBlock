@@ -45,6 +45,7 @@ public final class TheHypixelRecreationMod implements ClientModInitializer {
         CopyTabBossbarCommand.register();
         CopyAdvancementsCommand.register();
 		LogPacketsCommand.register();
+		RavengardSessionCommand.register();
 		HudCaptureCommand.register();
 	}
 
@@ -53,6 +54,7 @@ public final class TheHypixelRecreationMod implements ClientModInitializer {
 			ChunkExportRecorder.tick();
 			SpraySchemaRecorder.tick();
 			EntityPacketLogger.tick();
+			gg.itzkatze.thehypixelrecreationmod.features.packetlog.RavengardSessionLogger.tick();
 			GuiCaptureRecorder.tick(net.minecraft.client.Minecraft.getInstance());
 		});
 	}

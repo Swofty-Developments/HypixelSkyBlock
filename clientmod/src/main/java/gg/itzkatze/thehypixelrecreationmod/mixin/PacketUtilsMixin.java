@@ -2,6 +2,7 @@ package gg.itzkatze.thehypixelrecreationmod.mixin;
 
 import gg.itzkatze.thehypixelrecreationmod.features.hudcapture.HudCaptureRecorder;
 import gg.itzkatze.thehypixelrecreationmod.features.packetlog.EntityPacketLogger;
+import gg.itzkatze.thehypixelrecreationmod.features.packetlog.RavengardSessionLogger;
 import net.minecraft.network.PacketListener;
 import net.minecraft.network.PacketProcessor;
 import net.minecraft.network.protocol.Packet;
@@ -26,6 +27,7 @@ public abstract class PacketUtilsMixin {
     ) {
         if (listener instanceof ClientGamePacketListener) {
             EntityPacketLogger.record(packet);
+            RavengardSessionLogger.record(packet);
             HudCaptureRecorder.record(packet);
         }
     }
