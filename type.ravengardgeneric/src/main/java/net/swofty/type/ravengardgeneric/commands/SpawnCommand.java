@@ -35,7 +35,7 @@ public class SpawnCommand extends HypixelCommand {
             }
             RavengardAnimationClip clip = RavengardAnimationClip.loadMob(name);
             RavengardMob mob = new RavengardMob(clip, player.getPosition());
-            mob.spawn(player.getInstance());
+            mob.spawnMob(player.getInstance());
             player.sendMessage("§aSpawned §f" + name + "§a.");
         }, mobArg);
     }

@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * it chases the nearest player and swings when in reach, and the captured ten square health bar
  * floats above it, draining as it takes hits.
  */
-public class RavengardMob {
+public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private static final List<RavengardMob> MOBS = new CopyOnWriteArrayList<>();
     private static final TextColor BAR_FULL = TextColor.color(0x5FEC7B);
     private static final TextColor BAR_EMPTY = TextColor.color(0x3D3D3D);
@@ -44,7 +44,6 @@ public class RavengardMob {
     private final List<Entity> parts = new ArrayList<>();
     private final List<Vec> partOffsets = new ArrayList<>();
     private LivingEntity healthBar;
-    private InteractionEntity hitbox;
     private Instance instance;
 
     private Pos position;
@@ -52,22 +51,61 @@ public class RavengardMob {
     private final double maxHealth;
     private int frame;
     private int attackTicksLeft;
-    private int attackCooldown;
-    private Vec knockback = Vec.ZERO;
 
     public RavengardMob(RavengardAnimationClip clip, Pos position) {
+        super(EntityType.ZOMBIE);
         this.clip = clip;
         this.position = position;
         this.maxHealth = clip.health() <= 0 ? 100 : clip.health();
         this.health = maxHealth;
+        setInvisible(true);
+        setSilent(true);
+        getAttribute(net.minestom.server.entity.attribute.Attribute.MOVEMENT_SPEED)
+                .setBaseValue(Math.max(0.15, clip.walkSpeed() * 2));
+        getAttribute(net.minestom.server.entity.attribute.Attribute.MAX_HEALTH)
+                .setBaseValue((float) maxHealth);
+        setHealth((float) maxHealth);
+        addAIGroup(
+                List.of(new net.minestom.server.entity.ai.goal.MeleeAttackGoal(this, 1.8,
+                        java.time.Duration.ofMillis(1500))),
+                List.of(new net.minestom.server.entity.ai.target.LastEntityDamagerTarget(this, 16),
+                        new net.minestom.server.entity.ai.target.ClosestEntityTarget(this, 14,
+                                entity -> entity instanceof Player)));
+    }
+
+    /** MeleeAttackGoal path: play the captured swing and hurt the target. */
+    @Override
+    public void attack(Entity target, boolean swingHand) {
+        if (attackTicksLeft <= 0) {
+            attackTicksLeft = attackFrames();
+            frame = 0;
+        }
+        if (target instanceof net.minestom.server.entity.LivingEntity living) {
+            living.damage(net.minestom.server.entity.damage.DamageType.MOB_ATTACK, PLAYER_DAMAGE_PER_HIT);
+        }
+    }
+
+    /** Damage from any source drains the captured bar; vanilla handles the knockback. */
+    @Override
+    public boolean damage(net.minestom.server.registry.RegistryKey<net.minestom.server.entity.damage.DamageType> type, float amount) {
+        boolean applied = super.damage(type, amount);
+        health = getHealth();
+        if (healthBar != null) {
+            healthBar.editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(barText()));
+        }
+        if (health <= 0) {
+            removeRig();
+        }
+        return applied;
     }
 
     public static List<RavengardMob> mobs() {
         return MOBS;
     }
 
-    public void spawn(Instance instance) {
+    public void spawnMob(Instance instance) {
         this.instance = instance;
+        setInstance(instance, position);
         for (RavengardAnimationClip.Part part : clip.parts()) {
             RavengardAnimationClip.Base base = part.base();
             Entity display = new Entity(EntityType.ITEM_DISPLAY);
@@ -105,9 +143,6 @@ public class RavengardMob {
         });
         healthBar.setInstance(instance, position.add(0, 2.25, 0));
 
-        hitbox = new InteractionEntity(0.9f, 2.0f, (player, event) -> hit(player));
-        hitbox.setInstance(instance, position);
-
         MOBS.add(this);
     }
 
@@ -117,67 +152,24 @@ public class RavengardMob {
                 .append(Component.text("\u25A0".repeat(BAR_SEGMENTS - full)).color(BAR_EMPTY));
     }
 
-    public void hit(Player player) {
-        if (health <= 0) {
-            return;
-        }
-        health -= HIT_DAMAGE;
-        Vec away = position.sub(player.getPosition()).asVec().withY(0);
-        if (away.lengthSquared() > 0.001) {
-            knockback = away.normalize().mul(0.45).withY(0.1);
-        }
-        healthBar.editEntityMeta(TextDisplayMeta.class, meta -> meta.setText(barText()));
-        if (health <= 0) {
-            remove();
-        }
-    }
-
-    public void remove() {
+    public void removeRig() {
         parts.forEach(Entity::remove);
         if (healthBar != null) healthBar.remove();
-        if (hitbox != null) hitbox.remove();
         MOBS.remove(this);
+        remove();
     }
 
-    public void tick() {
-        if (instance == null || health <= 0) {
+    /** Glues the rig, bar and animations onto wherever the creature's pathfinding took it. */
+    public void tickRig() {
+        if (instance == null || isDead()) {
             return;
         }
-
-        Player target = nearestPlayer();
+        Pos previous = position;
+        position = getPosition();
         boolean attacking = attackTicksLeft > 0;
-        boolean moved = false;
+        boolean moved = !previous.samePoint(position);
         float yaw = position.yaw();
 
-        if (!attacking && target != null) {
-            double distance = position.distance(target.getPosition());
-            Vec toTarget = target.getPosition().sub(position).asVec().withY(0);
-            if (toTarget.lengthSquared() > 0.01) {
-                yaw = (float) Math.toDegrees(Math.atan2(-toTarget.x(), toTarget.z()));
-            }
-            if (distance <= ATTACK_RANGE && attackCooldown <= 0) {
-                attackTicksLeft = attackFrames();
-                attackCooldown = ATTACK_COOLDOWN_TICKS;
-                frame = 0;
-                target.damage(net.minestom.server.entity.damage.DamageType.MOB_ATTACK, PLAYER_DAMAGE_PER_HIT);
-            } else if (distance > ATTACK_RANGE && distance <= CHASE_RANGE && clip.walkSpeed() > 0) {
-                Vec step = toTarget.normalize().mul(clip.walkSpeed());
-                position = position.add(step.x(), 0, step.z()).withYaw(yaw);
-                moved = true;
-            } else {
-                position = position.withYaw(yaw);
-            }
-        }
-
-        if (knockback.lengthSquared() > 0.001) {
-            position = position.add(knockback.x(), 0, knockback.z());
-            knockback = knockback.mul(0.6);
-            moved = true;
-        }
-
-        if (attackCooldown > 0) attackCooldown--;
-
-        String phase = attacking ? "talk" : "idle";
         List<RavengardAnimationClip.Part> clipParts = clip.parts();
         for (int i = 0; i < parts.size() && i < clipParts.size(); i++) {
             Entity part = parts.get(i);
@@ -201,7 +193,6 @@ public class RavengardMob {
         }
         if (moved || attacking) {
             healthBar.teleport(position.add(0, 2.25, 0));
-            hitbox.teleport(position);
         }
 
         frame++;
@@ -219,20 +210,6 @@ public class RavengardMob {
             if (frames != null) max = Math.max(max, frames.size());
         }
         return Math.max(1, max);
-    }
-
-    private Player nearestPlayer() {
-        Player nearest = null;
-        double best = CHASE_RANGE * CHASE_RANGE;
-        for (var player : HypixelGenericLoader.getLoadedPlayers()) {
-            if (player.getInstance() != instance) continue;
-            double distance = player.getPosition().distanceSquared(position);
-            if (distance < best) {
-                best = distance;
-                nearest = player;
-            }
-        }
-        return nearest;
     }
 
     private static Vec vec(float[] values) {
@@ -261,7 +238,7 @@ public class RavengardMob {
         MinecraftServer.getSchedulerManager()
                 .buildTask(() -> MOBS.forEach(mob -> {
                     try {
-                        mob.tick();
+                        mob.tickRig();
                     } catch (Exception ignored) {
                     }
                 }))
