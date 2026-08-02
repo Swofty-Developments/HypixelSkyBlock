@@ -31,6 +31,7 @@ public class AnimatedRavengardNPC extends RavengardNPC {
     private float baseYaw;
     private Vec currentOffset = Vec.ZERO;
     private float lastYaw = Float.NaN;
+    private final Map<Integer, float[]> lastSentRotation = new HashMap<>();
     private RavengardAnimationPhase phase = RavengardAnimationPhase.IDLE;
     private int frame;
     private int moveFrame;
@@ -236,6 +237,7 @@ public class AnimatedRavengardNPC extends RavengardNPC {
 
             RavengardAnimationClip.Frame current = frames.get(index);
             Entity entity = animatedParts.get(i);
+            final int partIndex = i;
             entity.editEntityMeta(ItemDisplayMeta.class, meta -> {
                 meta.setTransformationInterpolationDuration(clip.interpolationDuration());
                 meta.setTransformationInterpolationStartDelta(0);
@@ -243,7 +245,7 @@ public class AnimatedRavengardNPC extends RavengardNPC {
                     meta.setTranslation(rotateOffset(vec(current.translation())));
                 }
                 if (current.leftRotation() != null) {
-                    meta.setLeftRotation(rotateRig(current.leftRotation()));
+                    meta.setLeftRotation(continuous(partIndex, rotateRig(current.leftRotation())));
                 }
             });
         }
@@ -302,6 +304,19 @@ public class AnimatedRavengardNPC extends RavengardNPC {
             return 0.0;
         }
         return Math.toRadians(normalise(roaming.yaw() - baseYaw));
+    }
+
+    private float[] continuous(int part, float[] rotation) {
+        float[] last = lastSentRotation.get(part);
+        if (last != null) {
+            float dot = last[0] * rotation[0] + last[1] * rotation[1]
+                    + last[2] * rotation[2] + last[3] * rotation[3];
+            if (dot < 0) {
+                for (int i = 0; i < 4; i++) rotation[i] = -rotation[i];
+            }
+        }
+        lastSentRotation.put(part, rotation);
+        return rotation;
     }
 
     private float[] rotateRig(float[] rotation) {

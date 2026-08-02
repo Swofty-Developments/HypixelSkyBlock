@@ -50,6 +50,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
     private double health;
     private final double maxHealth;
     private int frame;
+    private float[][] lastSentRotation;
     private int attackTicksLeft;
 
     public RavengardMob(RavengardAnimationClip clip, Pos position) {
@@ -105,6 +106,7 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
 
     public void spawnMob(Instance instance) {
         this.instance = instance;
+        this.lastSentRotation = new float[clip.parts().size()][];
         setInstance(instance, position);
         for (RavengardAnimationClip.Part part : clip.parts()) {
             RavengardAnimationClip.Base base = part.base();
@@ -176,17 +178,17 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
             List<RavengardAnimationClip.Frame> frames = clipParts.get(i).phase(
                     attacking ? net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.TALK
                               : net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationPhase.IDLE);
-            Pos partPos = position.add(rotateOffset(partOffsets.get(i), yaw)).withYaw(yaw);
+            Pos partPos = position.add(rotateOffset(partOffsets.get(i), yaw - (float) clip.yaw())).withYaw(yaw);
             if (moved || attacking) {
                 part.teleport(partPos);
             }
             if (frames != null && !frames.isEmpty()) {
                 final RavengardAnimationClip.Frame animationFrame = frames.get(frame % frames.size());
-                final float[] rotated = rotateRig(animationFrame.leftRotation(), yaw);
+                final float[] rotated = rotateRig(i, animationFrame.leftRotation(), yaw);
                 final float finalYaw = yaw;
                 part.editEntityMeta(ItemDisplayMeta.class, meta -> {
                     meta.setTransformationInterpolationStartDelta(0);
-                    meta.setTranslation(rotateTranslation(vec(animationFrame.translation()), finalYaw));
+                    meta.setTranslation(rotateTranslation(vec(animationFrame.translation()), finalYaw - (float) clip.yaw()));
                     meta.setLeftRotation(rotated);
                 });
             }
@@ -227,11 +229,29 @@ public class RavengardMob extends net.minestom.server.entity.EntityCreature {
         return rotateOffset(translation, yaw);
     }
 
-    private static float[] rotateRig(float[] rotation, float yaw) {
-        double theta = Math.toRadians(-yaw) / 2.0;
+    /**
+     * Same composition the NPC rig uses: the yaw delta from the captured facing applied to both
+     * quaternion and translation with one sign convention, so the body turns as one piece.
+     */
+    private float[] rotateRig(int part, float[] rotation, float yaw) {
+        double theta = Math.toRadians(yaw - clip.yaw()) / 2.0;
         float sin = (float) Math.sin(theta), cos = (float) Math.cos(theta);
         float rx = rotation[0], ry = rotation[1], rz = rotation[2], rw = rotation[3];
-        return new float[]{cos * rx + sin * rz, cos * ry + sin * rw, cos * rz - sin * rx, cos * rw - sin * ry};
+        float[] composed = {cos * rx + sin * rz, cos * ry + sin * rw,
+                cos * rz - sin * rx, cos * rw - sin * ry};
+
+        // q and -q are one pose, but the client lerps raw components, so a sign flip between
+        // consecutive sends plays as a full spin; keep every part on the hemisphere it last used
+        float[] last = lastSentRotation[part];
+        if (last != null) {
+            float dot = last[0] * composed[0] + last[1] * composed[1]
+                    + last[2] * composed[2] + last[3] * composed[3];
+            if (dot < 0) {
+                for (int i = 0; i < 4; i++) composed[i] = -composed[i];
+            }
+        }
+        lastSentRotation[part] = composed;
+        return composed;
     }
 
     public static void startTicking() {
