@@ -178,7 +178,7 @@ public final class RavengardItem {
             lore.add(Component.empty());
         }
 
-        if (shopContext && type.getValue() > 0) {
+        if (type.getValue() > 0) {
             lore.add(crowns(type.getValue(), " Crowns"));
             lore.add(Component.empty());
         }
