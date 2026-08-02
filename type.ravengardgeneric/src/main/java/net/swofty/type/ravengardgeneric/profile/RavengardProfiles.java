@@ -195,6 +195,15 @@ public final class RavengardProfiles {
         return profile == null ? 0 : profile.getCrowns();
     }
 
+    public static void setCrowns(RavengardPlayer player, int amount) {
+        RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
+        if (profile == null) {
+            return;
+        }
+        profile.setCrowns(amount);
+        RavengardProfileDatabase.save(profile);
+    }
+
     public static void addCrowns(RavengardPlayer player, int amount) {
         RavengardProfile profile = RavengardProfileDatabase.byId(player.getSelectedProfile());
         if (profile == null) {
