@@ -1,10 +1,12 @@
 package net.swofty.type.game.game.event;
 
+import net.swofty.type.game.game.Game;
+
 public record GameWinConditionEvent(
-	String gameId
+        Game<?> game
 ) implements GameEvent {
 	@Override
-	public String getGameId() {
-		return gameId;
+    public Game<?> getGame() {
+        return game;
 	}
 }

@@ -334,7 +334,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
             }
 
             eventDispatcher.accept(new BedDestroyedEvent(
-                gameId,
+                    this,
                 teamKey,
                 destroyer
             ));
@@ -567,7 +567,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         team.addPlayer(playerId);
         playerTeams.put(playerId, team.getId());
         getPlayer(playerId).ifPresent(player -> eventDispatcher.accept(new PlayerAssignedTeamEvent<>(
-            gameId, player.getServerPlayer(), team
+                this, player.getServerPlayer(), team
         )));
     }
 
@@ -578,6 +578,6 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
     }
 
     public void forceGameEnd() {
-        HypixelEventHandler.callCustomEvent(new GameTeamWinConditionEvent<BedWarsTeam>(gameId, Optional.empty()));
+        HypixelEventHandler.callCustomEvent(new GameTeamWinConditionEvent<BedWarsTeam>(this, Optional.empty()));
     }
 }

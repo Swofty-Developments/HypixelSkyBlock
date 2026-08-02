@@ -13,8 +13,8 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.PlayerPostJoinGameEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.party.PartyManager;
 
 import java.util.Random;
@@ -25,7 +25,7 @@ public class PlayerJoinGameListener implements HypixelEventClass {
     @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onPlayerJoinGame(PlayerPostJoinGameEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.player();
-        BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.getGameId());
+        BedWarsGame game = (BedWarsGame) event.game();
 
         HypixelPosition waiting = game.getMapEntry().getConfiguration().getLocations().getWaiting();
 
@@ -42,8 +42,8 @@ public class PlayerJoinGameListener implements HypixelEventClass {
         HypixelPosition spec = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setRespawnPoint(new Pos(spec.x(), spec.y(), spec.z()));
 
-        player.setGameId(event.getGameId());
-        String randomLetters = UUID.randomUUID().toString().replaceAll("-", "")
+        player.setGameId(event.game().getGameId());
+        String randomLetters = UUID.randomUUID().toString().replace("-", "")
             .substring(0, new Random().nextInt(10) + 4);
         player.setDisplayName(Component.text(randomLetters, NamedTextColor.WHITE, TextDecoration.OBFUSCATED));
 

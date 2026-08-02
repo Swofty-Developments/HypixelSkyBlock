@@ -30,6 +30,7 @@ import org.tinylog.Logger;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 public final class HypixelWorldLoader {
     public static final java.util.function.Predicate<net.minestom.server.entity.Player> LOADED_ONLY =
@@ -66,7 +67,7 @@ public final class HypixelWorldLoader {
      * Loads any polar file into the given container, applying its custom biomes and display
      * entities the same way the main world does.
      */
-    public static SharedInstance loadFrom(java.nio.file.Path path, InstanceContainer source,
+    public static SharedInstance loadFrom(Path path, InstanceContainer source,
                                           InstanceManager instanceManager) throws IOException {
         PolarWorld polarWorld = PolarReader.read(Files.readAllBytes(path));
 

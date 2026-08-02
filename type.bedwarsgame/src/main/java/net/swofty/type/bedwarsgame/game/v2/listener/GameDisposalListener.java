@@ -6,16 +6,16 @@ import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.game.game.event.GameDisposeEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class GameDisposalListener implements HypixelEventClass {
     private static final int MAX_UNREGISTER_ATTEMPTS = 120;
 
     @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameDispose(GameDisposeEvent event) {
-        BedWarsGame disposedGame = TypeBedWarsGameLoader.getGameById(event.gameId());
-        TypeBedWarsGameLoader.getGames().removeIf(game -> game.getGameId().equals(event.gameId()));
+        BedWarsGame disposedGame = (BedWarsGame) event.game();
+        TypeBedWarsGameLoader.getGames().removeIf(game -> game.getGameId().equals(event.game().getGameId()));
 
         if (disposedGame != null) {
             disposedGame.getSwappageManager().stop();

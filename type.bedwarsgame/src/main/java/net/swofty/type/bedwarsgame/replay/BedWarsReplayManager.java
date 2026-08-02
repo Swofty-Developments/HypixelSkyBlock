@@ -9,7 +9,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ItemEntity;
-import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.network.NetworkBuffer;
@@ -42,12 +42,7 @@ import net.swofty.type.generic.HypixelConst;
 import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -137,7 +132,7 @@ public class BedWarsReplayManager {
 
         // Serialize and upload map, get the hash
         String mapName = game.getMapEntry().getName();
-        InstanceContainer instance = game.getInstance();
+        final Instance instance = game.getInstance();
         String mapHash = serializeAndUploadMap(instance, mapName, centerChunkX, centerChunkZ);
 
         // Start recording session
@@ -548,7 +543,7 @@ public class BedWarsReplayManager {
     private static final int MAP_CHUNK_RADIUS = 8; // this is a max limit.
 
 
-    private String serializeAndUploadMap(InstanceContainer instance, String mapName, int centerChunkX, int centerChunkZ) {
+    private String serializeAndUploadMap(Instance instance, String mapName, int centerChunkX, int centerChunkZ) {
         try {
             MapSerializer.SerializedMap serializedMap = MapSerializer.serializeRegion(
                 instance, centerChunkX, centerChunkZ, MAP_CHUNK_RADIUS
