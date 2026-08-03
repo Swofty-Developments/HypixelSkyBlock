@@ -63,8 +63,12 @@ public final class DungeonDoor extends DungeonInteractable {
     private static void spawnDoorway(Instance instance,
                                      List<RavengardDungeonConfig.DungeonObject> cluster) {
         DungeonDoor door = new DungeonDoor(instance);
+        boolean axisAlongX = cluster.size() < 2
+                || Math.abs(cluster.get(1).x() - cluster.get(0).x())
+                        >= Math.abs(cluster.get(1).z() - cluster.get(0).z());
         for (RavengardDungeonConfig.DungeonObject object : cluster) {
-            Pos pos = new Pos(object.x(), object.y(), object.z(), object.yaw(), 0f);
+            float closedYaw = closedYaw(object.yaw(), axisAlongX);
+            Pos pos = new Pos(object.x(), object.y(), object.z(), closedYaw, 0f);
             Entity display = door.spawnDisplay(pos, LEAF_MODEL);
             door.leaves.add(new Leaf(display, pos, 1));
 
@@ -81,6 +85,21 @@ public final class DungeonDoor extends DungeonInteractable {
         }
     }
 
+    private static float closedYaw(float configYaw, boolean axisAlongX) {
+        float[] options = axisAlongX ? new float[]{90f, 270f} : new float[]{0f, 180f};
+        float normalized = ((configYaw % 360f) + 360f) % 360f;
+        float best = options[0];
+        float bestDelta = 360f;
+        for (float option : options) {
+            float delta = Math.abs(((normalized - option + 540f) % 360f) - 180f);
+            if (delta < bestDelta) {
+                bestDelta = delta;
+                best = option;
+            }
+        }
+        return best;
+    }
+
     @Override
     public String castLabel() {
         return "Opening Door";
@@ -94,9 +113,48 @@ public final class DungeonDoor extends DungeonInteractable {
                 .delay(TaskSchedule.tick(OPEN_DURATION_TICKS)).schedule();
     }
 
+    private final List<net.minestom.server.coordinate.Point> clearedBarriers = new ArrayList<>();
+
+    private void toggleBarriers(boolean open) {
+        if (open) {
+            double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE;
+            double minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
+            double baseY = Double.MAX_VALUE;
+            for (Leaf leaf : leaves) {
+                minX = Math.min(minX, leaf.closedPos().x());
+                maxX = Math.max(maxX, leaf.closedPos().x());
+                minZ = Math.min(minZ, leaf.closedPos().z());
+                maxZ = Math.max(maxZ, leaf.closedPos().z());
+                baseY = Math.min(baseY, leaf.closedPos().y() - 1.5);
+            }
+            for (int blockX = (int) Math.floor(minX - 0.6); blockX <= (int) Math.floor(maxX + 0.6); blockX++) {
+                for (int blockZ = (int) Math.floor(minZ - 0.6); blockZ <= (int) Math.floor(maxZ + 0.6); blockZ++) {
+                    for (int blockY = (int) baseY; blockY <= (int) baseY + 3; blockY++) {
+                        try {
+                            if (instance.getBlock(blockX, blockY, blockZ)
+                                    == net.minestom.server.instance.block.Block.BARRIER) {
+                                instance.setBlock(blockX, blockY, blockZ,
+                                        net.minestom.server.instance.block.Block.AIR);
+                                clearedBarriers.add(new net.minestom.server.coordinate.Vec(blockX, blockY, blockZ));
+                            }
+                        } catch (Exception ignored) {
+                        }
+                    }
+                }
+            }
+        } else {
+            for (var point : clearedBarriers) {
+                instance.setBlock(point.blockX(), point.blockY(), point.blockZ(),
+                        net.minestom.server.instance.block.Block.BARRIER);
+            }
+            clearedBarriers.clear();
+        }
+    }
+
     private void swing(boolean open) {
         opened = open;
         swinging = true;
+        toggleBarriers(open);
         for (int step = 1; step <= SWING_TICKS; step++) {
             int tick = step;
             MinecraftServer.getSchedulerManager().buildTask(() -> {

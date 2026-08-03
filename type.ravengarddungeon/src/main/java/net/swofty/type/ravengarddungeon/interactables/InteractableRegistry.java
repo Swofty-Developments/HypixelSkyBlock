@@ -17,7 +17,6 @@ import java.util.function.Consumer;
 
 public final class InteractableRegistry {
     private static final double MAX_DISTANCE = 4.5;
-    private static final double LOOK_DOT = 0.95;
     private static final int CHANNEL_TICKS = 18;
 
     private static final Map<Integer, DungeonInteractable> BY_INTERACTION = new ConcurrentHashMap<>();
@@ -102,16 +101,39 @@ public final class InteractableRegistry {
     }
 
     private static boolean isLookingAt(Player player, DungeonInteractable interactable) {
-        if (interactable.getInteraction().getInstance() != player.getInstance()) {
+        Entity interaction = interactable.getInteraction();
+        if (interaction.getInstance() != player.getInstance()) {
             return false;
         }
         Pos eye = player.getPosition().add(0, player.getEyeHeight(), 0);
-        Pos focus = interactable.focusPoint();
-        if (eye.distance(focus) > MAX_DISTANCE) {
+        if (eye.distance(interactable.focusPoint()) > MAX_DISTANCE) {
             return false;
         }
-        Vec toward = Vec.fromPoint(focus.sub(eye)).normalize();
-        return toward.dot(player.getPosition().direction()) >= LOOK_DOT;
+        var meta = (net.minestom.server.entity.metadata.other.InteractionMeta) interaction.getEntityMeta();
+        double half = meta.getWidth() / 2.0 + 0.35;
+        double height = meta.getHeight() + 0.5;
+        Pos base = interaction.getPosition();
+        Vec direction = player.getPosition().direction();
+        double minX = base.x() - half, maxX = base.x() + half;
+        double minY = base.y() - 0.25, maxY = base.y() + height;
+        double minZ = base.z() - half, maxZ = base.z() + half;
+        double tMin = 0, tMax = MAX_DISTANCE + 1;
+        double[][] axes = {
+                {direction.x(), eye.x(), minX, maxX},
+                {direction.y(), eye.y(), minY, maxY},
+                {direction.z(), eye.z(), minZ, maxZ},
+        };
+        for (double[] axis : axes) {
+            if (Math.abs(axis[0]) < 1e-9) {
+                if (axis[1] < axis[2] || axis[1] > axis[3]) return false;
+                continue;
+            }
+            double t1 = (axis[2] - axis[1]) / axis[0];
+            double t2 = (axis[3] - axis[1]) / axis[0];
+            tMin = Math.max(tMin, Math.min(t1, t2));
+            tMax = Math.min(tMax, Math.max(t1, t2));
+        }
+        return tMin <= tMax;
     }
 
     private static void bar(Player player, DungeonInteractable target, float progress) {
