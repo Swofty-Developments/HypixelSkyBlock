@@ -216,8 +216,12 @@ public final class DungeonInstanceRegistry {
         instance.whenReady().thenRun(() -> player.scheduler().scheduleNextTick(() -> {
             net.minestom.server.coordinate.Pos spawn;
             if (aerial) {
-                double[] center = boundsCenter(instance);
-                spawn = new net.minestom.server.coordinate.Pos(center[0], 140, center[1], 0, 90);
+                // hover over the start room, which always exists; the bounds centre
+                // of an organic layout can be a void pocket
+                var start = instance.getGenerated().dungeon().getStartRoom();
+                spawn = new net.minestom.server.coordinate.Pos(
+                        start.originX() + start.getFootprintWidth() / 2.0, 150,
+                        start.originZ() + start.getFootprintDepth() / 2.0, 0, 90);
                 player.setGameMode(net.minestom.server.entity.GameMode.CREATIVE);
             } else {
                 spawn = instance.getGenerated().spawn().withY(67);
