@@ -127,10 +127,17 @@ public final class RavengardDungeonGenerator {
                         // executor and the client renders unlit sections as invisible,
                         // so lighting is part of readiness
                         Thread.startVirtualThread(() -> {
+                            long lightingStarted = System.currentTimeMillis();
                             try {
                                 net.minestom.server.instance.LightingChunk.relight(instance,
                                         new ArrayList<>(instance.getChunks()));
-                            } catch (Exception ignored) {
+                                org.tinylog.Logger.info("Dungeon relight of {} chunks took {}ms",
+                                        instance.getChunks().size(),
+                                        System.currentTimeMillis() - lightingStarted);
+                            } catch (Exception exception) {
+                                org.tinylog.Logger.error(exception,
+                                        "Dungeon relight failed after {}ms",
+                                        System.currentTimeMillis() - lightingStarted);
                             }
                             future.complete(null);
                         })))

@@ -205,9 +205,11 @@ public final class DungeonInstanceRegistry {
         return null;
     }
 
+    private static final Set<UUID> PENDING_TELEPORTS = ConcurrentHashMap.newKeySet();
+
     public static void sendPlayerIn(net.minestom.server.entity.Player player, DungeonInstance instance) {
-        if (instance.getPlayers().contains(player.getUuid()) && !instance.whenReady().isDone()) {
-            player.sendMessage("§7Your dungeon is still being stamped, hold on...");
+        if (!PENDING_TELEPORTS.add(player.getUuid())) {
+            player.sendMessage("§7Your dungeon is still being prepared, hold on...");
             return;
         }
         instance.markPlayerJoined(player.getUuid());
@@ -226,10 +228,18 @@ public final class DungeonInstanceRegistry {
             } else {
                 spawn = instance.getGenerated().spawn().withY(67);
             }
-            player.setInstance(instance.getInstance(), spawn);
-            player.sendMessage("§aEntered dungeon §f" + instance.getGameId().toString().substring(0, 8)
-                    + "§a (" + instance.getGenerated().dungeon().getRoomCount() + " rooms, mode "
-                    + instance.getMode() + ").");
+            try {
+                if (player.getInstance() == instance.getInstance()) {
+                    player.teleport(spawn);
+                } else {
+                    player.setInstance(instance.getInstance(), spawn);
+                }
+                player.sendMessage("§aEntered dungeon §f" + instance.getGameId().toString().substring(0, 8)
+                        + "§a (" + instance.getGenerated().dungeon().getRoomCount() + " rooms, mode "
+                        + instance.getMode() + ").");
+            } finally {
+                PENDING_TELEPORTS.remove(player.getUuid());
+            }
         }));
     }
 
