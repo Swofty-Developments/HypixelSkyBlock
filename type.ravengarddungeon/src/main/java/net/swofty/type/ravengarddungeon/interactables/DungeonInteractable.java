@@ -42,6 +42,10 @@ public abstract class DungeonInteractable {
         return "Opening";
     }
 
+    public boolean allowReactivation() {
+        return false;
+    }
+
     public void remove() {
         InteractableRegistry.unregister(this);
         if (interaction != null) {

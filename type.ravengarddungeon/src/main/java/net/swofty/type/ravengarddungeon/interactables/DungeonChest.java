@@ -33,7 +33,24 @@ public final class DungeonChest extends DungeonInteractable {
         super(instance);
         this.base = base;
         this.random = random;
-        this.interaction = spawnInteraction(base, 1.1f, 1.1f);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = 0; dy <= 2; dy++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    int blockX = (int) Math.floor(base.x()) + dx;
+                    int blockY = (int) Math.floor(base.y()) + dy;
+                    int blockZ = (int) Math.floor(base.z()) + dz;
+                    try {
+                        if (instance.getBlock(blockX, blockY, blockZ)
+                                == net.minestom.server.instance.block.Block.BARRIER) {
+                            instance.setBlock(blockX, blockY, blockZ,
+                                    net.minestom.server.instance.block.Block.AIR);
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+        }
+        this.interaction = spawnInteraction(base, 1.3f, 1.2f);
         this.bottom = spawnDisplay(base.add(0, 0.5, 0), BOTTOM_MODEL);
         this.lid = spawnDisplay(base.add(0, 0.5, 0), TOP_MODEL);
     }

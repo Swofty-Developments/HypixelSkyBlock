@@ -50,7 +50,8 @@ public final class InteractableRegistry {
 
     public static void onClick(Player player, Entity target) {
         DungeonInteractable interactable = BY_INTERACTION.get(target == null ? -1 : target.getEntityId());
-        if (interactable == null || interactable.isOpened()) {
+        if (interactable == null
+                || (interactable.isOpened() && !interactable.allowReactivation())) {
             return;
         }
         Channel current = CHANNELS.get(player.getUuid());
@@ -80,7 +81,8 @@ public final class InteractableRegistry {
         for (Map.Entry<UUID, Channel> entry : CHANNELS.entrySet()) {
             Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(entry.getKey());
             Channel channel = entry.getValue();
-            if (player == null || channel.target().isOpened()
+            if (player == null
+                    || (channel.target().isOpened() && !channel.target().allowReactivation())
                     || !isLookingAt(player, channel.target())) {
                 org.tinylog.Logger.info("Channel cancel: player={} opened={} looking={}",
                         player != null,

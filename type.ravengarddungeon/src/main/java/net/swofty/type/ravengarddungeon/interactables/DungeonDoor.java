@@ -77,7 +77,7 @@ public final class DungeonDoor extends DungeonInteractable {
             door.leaves.add(new Leaf(display, pos, closedYaw == referenceYaw ? 1 : -1));
 
             Pos base = pos.sub(0, 1.5, 0);
-            Entity hitbox = door.spawnInteraction(base, 1.05f, 3f);
+            Entity hitbox = door.spawnInteraction(base, 1.7f, 3f);
             door.hitboxes.add(hitbox);
             door.hitboxHomes.add(base);
             if (door.interaction == null) {
@@ -106,15 +106,18 @@ public final class DungeonDoor extends DungeonInteractable {
 
     @Override
     public String castLabel() {
-        return "Opening Door";
+        return opened ? "Closing Door" : "Opening Door";
+    }
+
+    @Override
+    public boolean allowReactivation() {
+        return true;
     }
 
     @Override
     public void open(Player player) {
-        if (opened || swinging) return;
-        swing(true);
-        MinecraftServer.getSchedulerManager().buildTask(() -> swing(false))
-                .delay(TaskSchedule.tick(OPEN_DURATION_TICKS)).schedule();
+        if (swinging) return;
+        swing(!opened);
     }
 
     private final List<net.minestom.server.coordinate.Point> clearedBarriers = new ArrayList<>();
