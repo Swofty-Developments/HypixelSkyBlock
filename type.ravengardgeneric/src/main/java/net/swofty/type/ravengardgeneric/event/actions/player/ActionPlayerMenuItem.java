@@ -20,6 +20,10 @@ public class ActionPlayerMenuItem implements HypixelEventClass {
         if (!(event.getPlayer() instanceof RavengardPlayer player)) {
             return;
         }
+        if (net.swofty.type.generic.HypixelConst.getTypeLoader().getType()
+                == net.swofty.commons.ServerType.RAVENGARD_DUNGEON) {
+            return;
+        }
         RavengardMenuItem.give(player);
     }
 
