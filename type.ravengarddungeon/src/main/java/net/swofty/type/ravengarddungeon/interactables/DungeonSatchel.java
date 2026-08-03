@@ -92,6 +92,11 @@ public final class DungeonSatchel extends DungeonInteractable {
     }
 
     @Override
+    public String castLabel() {
+        return "Searching Body";
+    }
+
+    @Override
     public void open(Player player) {
         opened = true;
         if (skullTask != null) {

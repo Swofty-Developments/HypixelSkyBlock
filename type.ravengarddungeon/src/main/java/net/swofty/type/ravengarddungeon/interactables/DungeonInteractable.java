@@ -38,6 +38,10 @@ public abstract class DungeonInteractable {
         return true;
     }
 
+    public String castLabel() {
+        return "Opening";
+    }
+
     public void remove() {
         InteractableRegistry.unregister(this);
         if (interaction != null) {

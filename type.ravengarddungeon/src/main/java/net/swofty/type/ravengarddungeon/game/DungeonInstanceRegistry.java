@@ -228,16 +228,14 @@ public final class DungeonInstanceRegistry {
 
     private static Integer groundAt(net.minestom.server.instance.Instance instance,
                                     double x, double z) {
+        var template = net.swofty.type.ravengarddungeon.generator.DungeonTemplate.get();
+        int blockX = (int) Math.floor(x), blockZ = (int) Math.floor(z);
         for (int y = 75; y >= 60; y--) {
-            try {
-                if (!instance.getBlock((int) Math.floor(x), y, (int) Math.floor(z)).isAir()) {
-                    if (instance.getBlock((int) Math.floor(x), y + 1, (int) Math.floor(z)).isAir()
-                            && instance.getBlock((int) Math.floor(x), y + 2, (int) Math.floor(z)).isAir()) {
-                        return y + 1;
-                    }
-                    return null;
+            if (template.blockAt(blockX, y, blockZ) != net.minestom.server.instance.block.Block.AIR) {
+                if (template.blockAt(blockX, y + 1, blockZ) == net.minestom.server.instance.block.Block.AIR
+                        && template.blockAt(blockX, y + 2, blockZ) == net.minestom.server.instance.block.Block.AIR) {
+                    return y + 1;
                 }
-            } catch (Exception exception) {
                 return null;
             }
         }

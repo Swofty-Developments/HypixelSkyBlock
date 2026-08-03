@@ -48,6 +48,11 @@ public final class DungeonChest extends DungeonInteractable {
     }
 
     @Override
+    public String castLabel() {
+        return "Opening Chest";
+    }
+
+    @Override
     public void open(Player player) {
         opened = true;
         double radians = Math.toRadians(base.yaw());

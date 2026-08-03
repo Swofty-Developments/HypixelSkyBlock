@@ -53,7 +53,7 @@ public final class InteractableRegistry {
         Channel current = CHANNELS.get(player.getUuid());
         if (current == null || current.target() != interactable) {
             CHANNELS.put(player.getUuid(), new Channel(interactable, 0f));
-            bar(player, 0f);
+            bar(player, interactable, 0f);
         }
     }
 
@@ -92,7 +92,7 @@ public final class InteractableRegistry {
                 channel.target().open(player);
             } else {
                 CHANNELS.put(entry.getKey(), new Channel(channel.target(), progress));
-                bar(player, progress);
+                bar(player, channel.target(), progress);
             }
         }
     }
@@ -110,13 +110,15 @@ public final class InteractableRegistry {
         return toward.dot(player.getPosition().direction()) >= LOOK_DOT;
     }
 
-    private static void bar(Player player, float progress) {
+    private static void bar(Player player, DungeonInteractable target, float progress) {
         BossBar bar = BARS.computeIfAbsent(player.getUuid(), ignored -> {
             BossBar created = BossBar.bossBar(Component.empty(), 0f,
                     BossBar.Color.BLUE, BossBar.Overlay.PROGRESS);
             player.showBossBar(created);
             return created;
         });
+        bar.name(net.kyori.adventure.text.Component.text(target.castLabel(),
+                net.kyori.adventure.text.format.TextColor.color(0xFEFD02)));
         bar.progress(Math.min(1f, progress));
     }
 

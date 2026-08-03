@@ -63,21 +63,10 @@ public final class DungeonDoor extends DungeonInteractable {
     private static void spawnDoorway(Instance instance,
                                      List<RavengardDungeonConfig.DungeonObject> cluster) {
         DungeonDoor door = new DungeonDoor(instance);
-        double axisX = 0, axisZ = 0;
-        if (cluster.size() >= 2) {
-            axisX = cluster.get(1).x() - cluster.get(0).x();
-            axisZ = cluster.get(1).z() - cluster.get(0).z();
-        }
         for (RavengardDungeonConfig.DungeonObject object : cluster) {
             Pos pos = new Pos(object.x(), object.y(), object.z(), object.yaw(), 0f);
             Entity display = door.spawnDisplay(pos, LEAF_MODEL);
-            int sign = 1;
-            if (cluster.size() >= 2) {
-                double along = (object.x() - cluster.get(0).x()) * axisX
-                        + (object.z() - cluster.get(0).z()) * axisZ;
-                sign = along > 0 ? -1 : 1;
-            }
-            door.leaves.add(new Leaf(display, pos, sign));
+            door.leaves.add(new Leaf(display, pos, 1));
 
             Pos base = pos.sub(0, 1.5, 0);
             Entity hitbox = door.spawnInteraction(base, 1.05f, 3f);
@@ -90,6 +79,11 @@ public final class DungeonDoor extends DungeonInteractable {
                 InteractableRegistry.registerExtraInteraction(door, hitbox);
             }
         }
+    }
+
+    @Override
+    public String castLabel() {
+        return "Opening Door";
     }
 
     @Override
