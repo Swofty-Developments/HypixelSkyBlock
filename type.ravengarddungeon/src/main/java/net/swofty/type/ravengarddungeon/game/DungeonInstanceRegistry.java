@@ -30,6 +30,7 @@ public final class DungeonInstanceRegistry {
         private final String mode;
         private final long seed;
         private final InstanceContainer instance;
+        private final net.minestom.server.instance.SharedInstance shared;
         private final CompletableFuture<Void> ready;
         private final RavengardDungeonGenerator.GeneratedDungeon generated;
         private final Set<UUID> players = ConcurrentHashMap.newKeySet();
@@ -57,11 +58,13 @@ public final class DungeonInstanceRegistry {
         }
 
         private DungeonInstance(String mode, long seed, InstanceContainer instance,
+                                net.minestom.server.instance.SharedInstance shared,
                                 RavengardDungeonGenerator.GeneratedDungeon generated,
                                 CompletableFuture<Void> ready) {
             this.mode = mode;
             this.seed = seed;
             this.instance = instance;
+            this.shared = shared;
             this.generated = generated;
             this.ready = ready;
         }
@@ -78,7 +81,12 @@ public final class DungeonInstanceRegistry {
             return seed;
         }
 
-        public InstanceContainer getInstance() {
+        /** The instance players actually join, sharing the container's chunks. */
+        public net.minestom.server.instance.Instance getInstance() {
+            return shared;
+        }
+
+        public InstanceContainer getContainer() {
             return instance;
         }
 
@@ -172,14 +180,18 @@ public final class DungeonInstanceRegistry {
 
         RavengardDungeonGenerator.GeneratedDungeon generated =
                 RavengardDungeonGenerator.generate(seed, roomCount);
-        // every static world on this stack runs on the default DynamicChunk and
-        // renders fine; LightingChunk's computed light payload is the one thing
-        // generated instances did differently and the client never rendered them
-        InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer();
+        // the skyblock island recipe: fullbright dimension, container for the
+        // blocks, shared instance for the players
+        var dimensionKey = MinecraftServer.getDimensionTypeRegistry()
+                .getKey(net.kyori.adventure.key.Key.key("ravengard:dungeon"));
+        InstanceContainer instance = MinecraftServer.getInstanceManager()
+                .createInstanceContainer(dimensionKey);
+        net.minestom.server.instance.SharedInstance shared =
+                MinecraftServer.getInstanceManager().createSharedInstance(instance);
         CompletableFuture<Void> ready = RavengardDungeonGenerator.stamp(generated, instance);
 
         DungeonInstance dungeonInstance = new DungeonInstance(
-                mode.startsWith("ADMIN") ? "ADMIN" : "STANDARD", seed, instance, generated, ready);
+                mode.startsWith("ADMIN") ? "ADMIN" : "STANDARD", seed, instance, shared, generated, ready);
         INSTANCES.put(dungeonInstance.getGameId(), dungeonInstance);
         return dungeonInstance;
     }

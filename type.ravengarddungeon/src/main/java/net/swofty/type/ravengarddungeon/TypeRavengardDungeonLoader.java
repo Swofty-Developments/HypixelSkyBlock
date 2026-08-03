@@ -69,6 +69,13 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        // same recipe as skyblock islands: a fullbright dimension renders on the
+        // client without any light data, which runtime-built instances lack
+        MinecraftServer.getDimensionTypeRegistry().register(
+                net.kyori.adventure.key.Key.key("ravengard:dungeon"),
+                net.minestom.server.world.DimensionType.builder()
+                        .ambientLight(1)
+                        .build());
         net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.startExpiryTask();
         net.swofty.type.ravengarddungeon.game.DungeonMinimapIcons.register();
         net.swofty.type.ravengarddungeon.game.DungeonTabMap.register();
