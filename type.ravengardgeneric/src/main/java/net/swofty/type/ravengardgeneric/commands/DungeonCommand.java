@@ -21,6 +21,9 @@ import java.util.concurrent.ThreadLocalRandom;
         usage = "/dungeon <join|list|generate [seed] [rooms]>",
         permission = Rank.STAFF, allowsConsole = false)
 public class DungeonCommand extends HypixelCommand {
+    /** Set by the dungeon server so joining an instance hosted locally skips the proxy hop. */
+    public static volatile java.util.function.BiFunction<RavengardPlayer, String, Boolean> localJoin;
+
     private static final ProxyService ORCHESTRATOR = new ProxyService(ServiceType.ORCHESTRATOR);
     private static final int DEFAULT_ADMIN_ROOMS = 24;
 
@@ -100,6 +103,9 @@ public class DungeonCommand extends HypixelCommand {
     }
 
     private static void adminJoin(RavengardPlayer player, String instanceId) {
+        if (localJoin != null && localJoin.apply(player, instanceId)) {
+            return;
+        }
         ORCHESTRATOR.handleRequest(new ListGamesProtocol.ListGamesMessage(ServerType.RAVENGARD_DUNGEON))
                 .thenAccept(response -> {
                     if (!(response instanceof ListGamesProtocol.ListGamesResponse listing)

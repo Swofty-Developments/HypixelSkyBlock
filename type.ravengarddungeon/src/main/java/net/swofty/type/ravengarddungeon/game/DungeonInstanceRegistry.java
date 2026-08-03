@@ -135,6 +135,48 @@ public final class DungeonInstanceRegistry {
         return Math.max(0, MAX_INSTANCES - INSTANCES.size());
     }
 
+    public static DungeonInstance findByIdPrefix(String prefix) {
+        for (DungeonInstance instance : INSTANCES.values()) {
+            if (instance.getGameId().toString().equals(prefix)
+                    || instance.getGameId().toString().startsWith(prefix)) {
+                return instance;
+            }
+        }
+        return null;
+    }
+
+    public static void sendPlayerIn(net.minestom.server.entity.Player player, DungeonInstance instance) {
+        instance.markPlayerJoined(player.getUuid());
+        player.sendMessage("§7Preparing your dungeon (seed §f" + instance.getSeed() + "§7)...");
+        boolean aerial = instance.getMode().equals("ADMIN");
+        instance.whenReady().thenRun(() -> player.scheduler().scheduleNextTick(() -> {
+            net.minestom.server.coordinate.Pos spawn;
+            if (aerial) {
+                double[] center = boundsCenter(instance);
+                spawn = new net.minestom.server.coordinate.Pos(center[0], 140, center[1], 0, 90);
+                player.setGameMode(net.minestom.server.entity.GameMode.CREATIVE);
+            } else {
+                spawn = instance.getGenerated().spawn().withY(67);
+            }
+            player.setInstance(instance.getInstance(), spawn);
+            player.sendMessage("§aEntered dungeon §f" + instance.getGameId().toString().substring(0, 8)
+                    + "§a (" + instance.getGenerated().dungeon().getRoomCount() + " rooms, mode "
+                    + instance.getMode() + ").");
+        }));
+    }
+
+    public static double[] boundsCenter(DungeonInstance instance) {
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
+        int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
+        for (var placement : instance.getGenerated().dungeon().getPlacements()) {
+            minX = Math.min(minX, placement.originX());
+            maxX = Math.max(maxX, placement.originX() + placement.getFootprintWidth());
+            minZ = Math.min(minZ, placement.originZ());
+            maxZ = Math.max(maxZ, placement.originZ() + placement.getFootprintDepth());
+        }
+        return new double[]{(minX + maxX) / 2.0, (minZ + maxZ) / 2.0};
+    }
+
     public static void startExpiryTask() {
         MinecraftServer.getSchedulerManager().buildTask(() -> {
             for (DungeonInstance instance : INSTANCES.values()) {

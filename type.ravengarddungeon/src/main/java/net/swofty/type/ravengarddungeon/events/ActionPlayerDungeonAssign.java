@@ -35,35 +35,7 @@ public class ActionPlayerDungeonAssign implements HypixelEventClass {
             player.sendMessage("§cYour dungeon instance no longer exists.");
             return;
         }
-        instance.markPlayerJoined(player.getUuid());
-        player.sendMessage("§7Preparing your dungeon (seed §f" + instance.getSeed() + "§7)...");
-        boolean aerial = instance.getMode().equals("ADMIN");
-        instance.whenReady().thenRun(() -> player.scheduler().scheduleNextTick(() -> {
-            Pos spawn;
-            if (aerial) {
-                double[] center = boundsCenter(instance);
-                spawn = new Pos(center[0], 140, center[1], 0, 90);
-                player.setGameMode(net.minestom.server.entity.GameMode.CREATIVE);
-            } else {
-                spawn = instance.getGenerated().spawn().withY(67);
-            }
-            player.setInstance(instance.getInstance(), spawn);
-            player.sendMessage("§aEntered dungeon §f" + instance.getGameId().toString().substring(0, 8)
-                    + "§a (" + instance.getGenerated().dungeon().getRoomCount() + " rooms, mode "
-                    + instance.getMode() + ").");
-        }));
-    }
-
-    private static double[] boundsCenter(DungeonInstanceRegistry.DungeonInstance instance) {
-        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
-        int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
-        for (var placement : instance.getGenerated().dungeon().getPlacements()) {
-            minX = Math.min(minX, placement.originX());
-            maxX = Math.max(maxX, placement.originX() + placement.getFootprintWidth());
-            minZ = Math.min(minZ, placement.originZ());
-            maxZ = Math.max(maxZ, placement.originZ() + placement.getFootprintDepth());
-        }
-        return new double[]{(minX + maxX) / 2.0, (minZ + maxZ) / 2.0};
+        DungeonInstanceRegistry.sendPlayerIn(player, instance);
     }
 
     @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.DISCONNECT)

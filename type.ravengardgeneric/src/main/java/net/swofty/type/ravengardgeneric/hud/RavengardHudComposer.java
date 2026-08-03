@@ -46,8 +46,9 @@ public final class RavengardHudComposer {
         Map<RavengardHudLayer, Component> layers = new EnumMap<>(RavengardHudLayer.class);
         for (RavengardHudLayer layer : RavengardHudLayer.values()) {
             if (layer == RavengardHudLayer.MINIMAP_TILES && state.isDungeon()) {
-                layers.put(layer, Component.text("\uE110\uE111\uE112\uE113\uE114\uE115")
-                        .color(TextColor.color(mapTint(state))));
+                // generated dungeons have no pre-rendered map image; the live room
+                // icons on the marker line carry the map instead
+                layers.put(layer, Component.empty());
                 continue;
             }
             if (layer == RavengardHudLayer.STATS && state.isDungeon()) {

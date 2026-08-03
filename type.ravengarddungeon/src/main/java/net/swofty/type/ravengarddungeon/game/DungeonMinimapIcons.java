@@ -9,7 +9,7 @@ import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
 import java.util.UUID;
 
 public final class DungeonMinimapIcons {
-    private static final double MAP_SCALE = 4.0;
+    private static final double MAP_SCALE = 0.75;
     private static final double VISIBLE_RANGE_PIXELS = 124;
     private static final String ROOM_ICON = "";
     private static final String CURRENT_ROOM_ICON = "";
