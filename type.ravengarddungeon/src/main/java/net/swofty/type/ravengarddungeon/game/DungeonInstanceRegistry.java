@@ -205,24 +205,48 @@ public final class DungeonInstanceRegistry {
     }
 
     private static void spawnInteractables(DungeonInstance dungeonInstance) {
-        var config = net.swofty.type.ravengarddungeon.TypeRavengardDungeonLoader.getGame().getConfig();
-        net.swofty.type.ravengarddungeon.interactables.DungeonDoor.spawnAll(
-                dungeonInstance.getInstance(), config.objects());
+        try {
+            var config = net.swofty.type.ravengarddungeon.TypeRavengardDungeonLoader.getGame().getConfig();
+            var container = dungeonInstance.getContainer();
 
-        java.util.Random random = new java.util.Random(dungeonInstance.getSeed() * 31L + 7L);
-        var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
-        for (int index = 1; index < placements.size(); index++) {
-            if (random.nextDouble() >= 0.3) continue;
-            var placement = placements.get(index);
-            double centerX = placement.originX() + placement.getFootprintWidth() / 2.0;
-            double centerZ = placement.originZ() + placement.getFootprintDepth() / 2.0;
-            Integer ground = groundAt(dungeonInstance.getInstance(), centerX, centerZ);
-            if (ground == null) continue;
-            float yaw = new float[]{0f, 90f, 180f, 270f}[random.nextInt(4)];
-            net.swofty.type.ravengarddungeon.interactables.DungeonChest.spawn(
-                    dungeonInstance.getInstance(),
-                    new net.minestom.server.coordinate.Pos(centerX, ground, centerZ, yaw, 0f),
-                    random);
+            java.util.Set<Long> chunks = new java.util.HashSet<>();
+            for (var object : config.objects()) {
+                if (object.type().equals("door_1") || object.type().equals("door_1_top")) {
+                    chunks.add((((long) ((int) object.x() >> 4)) << 32)
+                            | (((int) object.z() >> 4) & 0xFFFFFFFFL));
+                }
+            }
+            java.util.List<CompletableFuture<?>> loads = new java.util.ArrayList<>();
+            for (long key : chunks) {
+                loads.add(container.loadChunk((int) (key >> 32), (int) key));
+            }
+            var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
+            java.util.Random random = new java.util.Random(dungeonInstance.getSeed() * 31L + 7L);
+            java.util.List<net.minestom.server.coordinate.Pos> chestSpots = new java.util.ArrayList<>();
+            for (int index = 1; index < placements.size(); index++) {
+                if (random.nextDouble() >= 0.3) continue;
+                var placement = placements.get(index);
+                double centerX = placement.originX() + placement.getFootprintWidth() / 2.0;
+                double centerZ = placement.originZ() + placement.getFootprintDepth() / 2.0;
+                Integer ground = groundAt(dungeonInstance.getInstance(), centerX, centerZ);
+                if (ground == null) continue;
+                float yaw = new float[]{0f, 90f, 180f, 270f}[random.nextInt(4)];
+                chestSpots.add(new net.minestom.server.coordinate.Pos(centerX, ground, centerZ, yaw, 0f));
+                loads.add(container.loadChunk((int) centerX >> 4, (int) centerZ >> 4));
+            }
+
+            CompletableFuture.allOf(loads.toArray(new CompletableFuture[0])).join();
+            net.swofty.type.ravengarddungeon.interactables.DungeonDoor.spawnAll(
+                    dungeonInstance.getInstance(), config.objects());
+            for (var spot : chestSpots) {
+                net.swofty.type.ravengarddungeon.interactables.DungeonChest.spawn(
+                        dungeonInstance.getInstance(), spot,
+                        new java.util.Random(dungeonInstance.getSeed() ^ spot.hashCode()));
+            }
+            org.tinylog.Logger.info("Spawned interactables: {} door chunks loaded, {} chests",
+                    chunks.size(), chestSpots.size());
+        } catch (Exception exception) {
+            org.tinylog.Logger.error(exception, "Failed to spawn dungeon interactables");
         }
     }
 
