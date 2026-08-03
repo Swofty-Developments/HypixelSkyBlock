@@ -66,6 +66,11 @@ public final class DungeonSatchel extends DungeonInteractable {
     }
 
     @Override
+    public boolean openOnLook() {
+        return false;
+    }
+
+    @Override
     public void open(Player player) {
         opened = true;
         if (skullTask != null) {

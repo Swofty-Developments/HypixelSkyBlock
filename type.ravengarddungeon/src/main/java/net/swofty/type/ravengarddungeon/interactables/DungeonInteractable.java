@@ -34,6 +34,10 @@ public abstract class DungeonInteractable {
 
     public abstract void open(Player player);
 
+    public boolean openOnLook() {
+        return true;
+    }
+
     public void remove() {
         InteractableRegistry.unregister(this);
         if (interaction != null) {

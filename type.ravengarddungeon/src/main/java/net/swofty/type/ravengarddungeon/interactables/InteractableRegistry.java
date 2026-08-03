@@ -37,6 +37,10 @@ public final class InteractableRegistry {
         BY_INTERACTION.put(interactable.getInteraction().getEntityId(), interactable);
     }
 
+    public static void registerExtraInteraction(DungeonInteractable interactable, Entity extra) {
+        BY_INTERACTION.put(extra.getEntityId(), interactable);
+    }
+
     public static void unregister(DungeonInteractable interactable) {
         INTERACTABLES.remove(interactable);
         if (interactable.getInteraction() != null) {
@@ -56,6 +60,8 @@ public final class InteractableRegistry {
         float progress = PROGRESS.merge(player.getUuid(), CLICK_BOOST, Float::sum);
         if (progress >= 1f) {
             complete(player, interactable);
+        } else {
+            bar(player, progress);
         }
     }
 
@@ -84,10 +90,10 @@ public final class InteractableRegistry {
             }
             float progress = PROGRESS.merge(player.getUuid(),
                     LOOK_FILL_PER_TICK, Float::sum);
-            if (progress >= 1f) {
+            if (progress >= 1f && target.openOnLook()) {
                 complete(player, target);
             } else {
-                bar(player, progress);
+                bar(player, Math.min(1f, progress));
             }
         }
     }
