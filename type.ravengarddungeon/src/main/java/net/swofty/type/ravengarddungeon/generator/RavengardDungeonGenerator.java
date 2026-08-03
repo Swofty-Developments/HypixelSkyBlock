@@ -4,10 +4,12 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.batch.AbsoluteBlockBatch;
 import net.minestom.server.instance.block.Block;
-import net.swofty.dungeons.ravengard.RavengardDungeonLayout;
-import net.swofty.dungeons.ravengard.RavengardDungeonLayout.OpenSocket;
-import net.swofty.dungeons.ravengard.RavengardDungeonLayout.Placement;
+import net.swofty.dungeons.ravengard.Direction;
+import net.swofty.dungeons.ravengard.RavengardDungeon;
+import net.swofty.dungeons.ravengard.RavengardDungeon.PlacedSocket;
+import net.swofty.dungeons.ravengard.RavengardDungeon.RoomPlacement;
 import net.swofty.dungeons.ravengard.RavengardRoomCatalog;
+import net.swofty.dungeons.ravengard.Rotation;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -19,57 +21,59 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class RavengardDungeonGenerator {
     private static final Path CATALOG_PATH = Path.of("./configuration/ravengard/dungeon_rooms.json");
-    private static final Block PLUG = Block.POLISHED_BLACKSTONE_BRICKS;
-    private static final Map<String, Block> ROTATED = new ConcurrentHashMap<>();
+    private static final Block DOOR_PLUG = Block.POLISHED_BLACKSTONE_BRICKS;
+    private static final Map<String, Block> ROTATED_BLOCKS = new ConcurrentHashMap<>();
+    private static final String[] CARDINAL_PROPERTIES = {"north", "east", "south", "west"};
 
     private static RavengardRoomCatalog catalog;
 
     public record PlacedObject(String category, String type, double x, double y, double z, double yaw) {
     }
 
-    public record GeneratedDungeon(RavengardDungeonLayout layout, List<PlacedObject> objects,
+    public record GeneratedDungeon(RavengardDungeon dungeon, List<PlacedObject> objects,
                                    Pos spawn, long seed) {
     }
 
-    public static synchronized RavengardRoomCatalog catalog() {
+    public static synchronized RavengardRoomCatalog getCatalog() {
         if (catalog == null) {
             catalog = RavengardRoomCatalog.load(CATALOG_PATH);
         }
         return catalog;
     }
 
-    public static GeneratedDungeon generate(long seed, int targetRooms) {
-        RavengardDungeonLayout layout = RavengardDungeonLayout.generate(catalog(), seed, targetRooms);
+    public static GeneratedDungeon generate(long seed, int targetRoomCount) {
+        RavengardDungeon dungeon = RavengardDungeon.generate(getCatalog(), seed, targetRoomCount);
 
         List<PlacedObject> objects = new ArrayList<>();
-        for (Placement placement : layout.placements()) {
-            for (RavengardRoomCatalog.ObjectSpawn spawn : placement.room().objects()) {
-                objects.add(new PlacedObject(spawn.category(), spawn.type(),
-                        placement.worldX(spawn.x(), spawn.z()), spawn.y(),
-                        placement.worldZ(spawn.x(), spawn.z()),
-                        (spawn.yaw() + placement.rotation()) % 360));
+        for (RoomPlacement placement : dungeon.getPlacements()) {
+            for (RavengardRoomCatalog.RoomObject object : placement.room().getObjects()) {
+                objects.add(new PlacedObject(object.getCategory(), object.getType(),
+                        placement.getWorldX(object.getX(), object.getZ()), object.getY(),
+                        placement.getWorldZ(object.getX(), object.getZ()),
+                        (object.getYaw() + placement.rotation().getDegrees()) % 360));
             }
         }
 
-        Placement start = layout.start();
-        Pos spawn = new Pos(start.originX() + start.footprintWidth() / 2.0, 66,
-                start.originZ() + start.footprintDepth() / 2.0);
-        return new GeneratedDungeon(layout, objects, spawn, seed);
+        RoomPlacement start = dungeon.getStartRoom();
+        Pos spawn = new Pos(start.originX() + start.getFootprintWidth() / 2.0, 66,
+                start.originZ() + start.getFootprintDepth() / 2.0);
+        return new GeneratedDungeon(dungeon, objects, spawn, seed);
     }
 
-    public static CompletableFuture<Void> stamp(GeneratedDungeon dungeon, Instance instance) {
+    public static CompletableFuture<Void> stamp(GeneratedDungeon generated, Instance instance) {
         DungeonTemplate template = DungeonTemplate.get();
-        int floorY = catalog().floorY(), roofY = catalog().roofY();
+        int floorY = getCatalog().getFloorY(), roofY = getCatalog().getRoofY();
 
         AbsoluteBlockBatch batch = new AbsoluteBlockBatch();
-        for (Placement placement : dungeon.layout().placements()) {
-            RavengardRoomCatalog.Room room = placement.room();
-            int width = placement.footprintWidth(), depth = placement.footprintDepth();
-            for (int localX = -1; localX <= width; localX++) {
-                for (int localZ = -1; localZ <= depth; localZ++) {
-                    int[] source = placement.unrotateLocal(localX, localZ);
-                    int sourceX = room.x0() + source[0];
-                    int sourceZ = room.z0() + source[1];
+        for (RoomPlacement placement : generated.dungeon().getPlacements()) {
+            RavengardRoomCatalog.DungeonRoom room = placement.room();
+            int footprintWidth = placement.getFootprintWidth();
+            int footprintDepth = placement.getFootprintDepth();
+            for (int localX = -1; localX <= footprintWidth; localX++) {
+                for (int localZ = -1; localZ <= footprintDepth; localZ++) {
+                    int[] source = placement.toSourceFrame(localX, localZ);
+                    int sourceX = room.getMinX() + source[0];
+                    int sourceZ = room.getMinZ() + source[1];
                     int targetX = placement.originX() + localX;
                     int targetZ = placement.originZ() + localZ;
                     for (int y = floorY; y <= roofY; y++) {
@@ -81,8 +85,8 @@ public final class RavengardDungeonGenerator {
                 }
             }
         }
-        for (OpenSocket socket : dungeon.layout().sealedSockets()) {
-            plug(batch, socket);
+        for (PlacedSocket socket : generated.dungeon().getSealedSockets()) {
+            plugDoorway(batch, socket);
         }
 
         CompletableFuture<Void> future = new CompletableFuture<>();
@@ -90,66 +94,64 @@ public final class RavengardDungeonGenerator {
         return future;
     }
 
-    private static final String[] CARDINALS = {"north", "east", "south", "west"};
-
-    private static Block rotate(Block block, int rotation) {
-        if (rotation == 0) return block;
+    private static Block rotate(Block block, Rotation rotation) {
+        if (rotation == Rotation.NONE) return block;
         Map<String, String> properties = block.properties();
         if (properties.isEmpty()) return block;
         String cacheKey = block.stateId() + ":" + rotation;
-        Block cached = ROTATED.get(cacheKey);
+        Block cached = ROTATED_BLOCKS.get(cacheKey);
         if (cached != null) return cached;
 
-        int steps = rotation / 90;
+        int quarterTurns = rotation.getQuarterTurns();
         Map<String, String> rotated = new HashMap<>(properties);
         String facing = properties.get("facing");
         if (facing != null) {
             int index = cardinalIndex(facing);
-            if (index >= 0) rotated.put("facing", CARDINALS[(index + steps) % 4]);
+            if (index >= 0) rotated.put("facing", CARDINAL_PROPERTIES[(index + quarterTurns) % 4]);
         }
         String axis = properties.get("axis");
-        if (axis != null && steps % 2 == 1) {
+        if (axis != null && rotation.swapsAxes()) {
             if (axis.equals("x")) rotated.put("axis", "z");
             else if (axis.equals("z")) rotated.put("axis", "x");
         }
-        String spin = properties.get("rotation");
-        if (spin != null) {
-            rotated.put("rotation", String.valueOf((Integer.parseInt(spin) + steps * 4) % 16));
+        String standingRotation = properties.get("rotation");
+        if (standingRotation != null) {
+            rotated.put("rotation",
+                    String.valueOf((Integer.parseInt(standingRotation) + quarterTurns * 4) % 16));
         }
-        boolean directionalKeys = properties.containsKey("north") || properties.containsKey("east");
-        if (directionalKeys) {
+        if (properties.containsKey("north") || properties.containsKey("east")) {
             for (int i = 0; i < 4; i++) {
-                String value = properties.get(CARDINALS[i]);
+                String value = properties.get(CARDINAL_PROPERTIES[i]);
                 if (value != null) {
-                    rotated.put(CARDINALS[(i + steps) % 4], value);
+                    rotated.put(CARDINAL_PROPERTIES[(i + quarterTurns) % 4], value);
                 }
             }
         }
         Block result = block.withProperties(rotated);
-        ROTATED.put(cacheKey, result);
+        ROTATED_BLOCKS.put(cacheKey, result);
         return result;
     }
 
     private static int cardinalIndex(String side) {
         for (int i = 0; i < 4; i++) {
-            if (CARDINALS[i].equals(side)) return i;
+            if (CARDINAL_PROPERTIES[i].equals(side)) return i;
         }
         return -1;
     }
 
-    private static void plug(AbsoluteBlockBatch batch, OpenSocket socket) {
-        int worldX = socket.worldX();
-        int worldZ = socket.worldZ();
-        int baseY = (int) Math.floor(socket.y()) - 1;
-        String side = socket.worldSide();
-        boolean alongX = side.equals("north") || side.equals("south");
+    private static void plugDoorway(AbsoluteBlockBatch batch, PlacedSocket socket) {
+        int worldX = socket.getWorldX();
+        int worldZ = socket.getWorldZ();
+        int baseY = (int) Math.floor(socket.getY()) - 1;
+        Direction side = socket.getWorldSide();
+        boolean alongX = side == Direction.NORTH || side == Direction.SOUTH;
         for (int depth = 0; depth <= 1; depth++) {
-            int shift = side.equals("east") || side.equals("south") ? depth : -depth;
+            int shift = side == Direction.EAST || side == Direction.SOUTH ? depth : -depth;
             for (int spread = -2; spread <= 2; spread++) {
                 for (int y = baseY; y <= baseY + 5; y++) {
                     int x = alongX ? worldX + spread : worldX + shift;
                     int z = alongX ? worldZ + shift : worldZ + spread;
-                    batch.setBlock(x, y, z, PLUG);
+                    batch.setBlock(x, y, z, DOOR_PLUG);
                 }
             }
         }

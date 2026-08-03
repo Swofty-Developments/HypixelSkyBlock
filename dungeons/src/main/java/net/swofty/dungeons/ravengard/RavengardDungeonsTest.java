@@ -9,7 +9,7 @@ public class RavengardDungeonsTest {
         Path catalog = Path.of(args.length > 2 ? args[2] : "./configuration/ravengard/dungeon_rooms.json");
 
         long started = System.currentTimeMillis();
-        RavengardDungeonLayout layout = RavengardDungeonLayout.generate(
+        RavengardDungeon layout = RavengardDungeon.generate(
                 RavengardRoomCatalog.load(catalog), seed, rooms);
 
         System.out.println("Generated dungeon: \n" + layout);

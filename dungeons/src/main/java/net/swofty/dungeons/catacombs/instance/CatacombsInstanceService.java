@@ -1,7 +1,7 @@
 package net.swofty.dungeons.catacombs.instance;
 
 import net.swofty.dungeons.DungeonRoomType;
-import net.swofty.dungeons.SkyBlockDungeon;
+import net.swofty.dungeons.CatacombsDungeon;
 import net.swofty.dungeons.catacombs.CatacombsAPI;
 import net.swofty.dungeons.catacombs.CatacombsFloorDefinition;
 import net.swofty.dungeons.catacombs.boss.state.BossFightController;
@@ -22,7 +22,7 @@ public final class CatacombsInstanceService {
     public CatacombsInstance create(CatacombsFloorDefinition floor,
                                     Map<UUID, DungeonClassKit> kits,
                                     Path mapOutput) throws IOException {
-        SkyBlockDungeon dungeon = CatacombsAPI.generator(floor).generate().join();
+        CatacombsDungeon dungeon = CatacombsAPI.generator(floor).generate().join();
         Map<Integer, DungeonRoomEncounter> encounters = encounters(floor, dungeon);
         CatacombsRunState runState = CatacombsRunState.start(new CatacombsRunConfig(
                 floor,
@@ -39,10 +39,10 @@ public final class CatacombsInstanceService {
                 new BossFightController(floor.boss()), kits, encounters, renderedMap);
     }
 
-    private Map<Integer, DungeonRoomEncounter> encounters(CatacombsFloorDefinition floor, SkyBlockDungeon dungeon) {
+    private Map<Integer, DungeonRoomEncounter> encounters(CatacombsFloorDefinition floor, CatacombsDungeon dungeon) {
         Map<Integer, DungeonRoomEncounter> encounters = new HashMap<>();
         int roomId = 0;
-        for (SkyBlockDungeon.DungeonRoom room : dungeon.getRooms().values()) {
+        for (CatacombsDungeon.DungeonRoom room : dungeon.getRooms().values()) {
             List<DungeonMobDefinition> mobs = switch (room.getRoomType()) {
                 case MINI_BOSS -> CatacombsAPI.mobs(floor.floor(), DungeonMobRole.MINIBOSS).stream().limit(1).toList();
                 case PUZZLE -> CatacombsAPI.mobs(floor.floor(), DungeonMobRole.PUZZLE).stream().limit(1).toList();
@@ -61,7 +61,7 @@ public final class CatacombsInstanceService {
         return encounters;
     }
 
-    private int estimateSecrets(CatacombsFloorDefinition floor, SkyBlockDungeon dungeon) {
+    private int estimateSecrets(CatacombsFloorDefinition floor, CatacombsDungeon dungeon) {
         int baseRooms = (int) dungeon.getRooms().values().stream()
                 .filter(room -> room.getRoomType() == DungeonRoomType.BASE)
                 .count();

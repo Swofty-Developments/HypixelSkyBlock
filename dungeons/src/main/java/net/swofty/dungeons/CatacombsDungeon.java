@@ -9,11 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class SkyBlockDungeon {
+public class CatacombsDungeon extends GameDungeon {
+    @Override
+    public int getRoomCount() {
+        return rooms.size();
+    }
+
     private Map<Map.Entry<Integer, Integer>, DungeonRoom> rooms = new HashMap<>();
     private List<DungeonDoor> doors = new ArrayList<>();
 
-    public SkyBlockDungeon setRoom(int x, int y, DungeonRoom room) {
+    public CatacombsDungeon setRoom(int x, int y, DungeonRoom room) {
         rooms.put(Map.entry(x, y), room);
         return this;
     }

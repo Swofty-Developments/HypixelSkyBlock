@@ -3,7 +3,7 @@ package net.swofty.dungeons.catacombs;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.swofty.dungeons.GeneratorService;
-import net.swofty.dungeons.SkyBlockDungeon;
+import net.swofty.dungeons.CatacombsDungeon;
 import net.swofty.dungeons.catacombs.classes.DungeonClassDefinition;
 import net.swofty.dungeons.catacombs.classes.DungeonClassRegistry;
 import net.swofty.dungeons.catacombs.classes.DungeonClassType;
@@ -85,7 +85,7 @@ public final class CatacombsAPI {
         return CatacombsGenerator.generator(definition);
     }
 
-    public static DungeonMapRenderResult renderMap(SkyBlockDungeon dungeon, Path outputPath) throws IOException {
+    public static DungeonMapRenderResult renderMap(CatacombsDungeon dungeon, Path outputPath) throws IOException {
         return MAP_RENDERER.renderPng(dungeon, outputPath);
     }
 
