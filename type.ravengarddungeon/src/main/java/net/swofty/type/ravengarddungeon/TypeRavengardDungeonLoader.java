@@ -69,8 +69,35 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
-        MinecraftServer.getCommandManager().register(
-                new net.swofty.type.ravengarddungeon.commands.GenDungeonCommand().getCommand());
+        startOrchestratorHeartbeat();
+    }
+
+    private void startOrchestratorHeartbeat() {
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            java.util.List<net.swofty.type.game.game.GameObject> games = new java.util.ArrayList<>();
+            for (var instance : net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.all()) {
+                net.swofty.type.game.game.GameObject game = new net.swofty.type.game.game.GameObject();
+                game.setGameId(instance.getGameId());
+                game.setType(ServerType.RAVENGARD_DUNGEON);
+                game.setMap("generated");
+                game.setGameTypeName(instance.getMode());
+                game.setAcceptingJoins(instance.isAcceptingJoins());
+                game.setInvolvedPlayers(new java.util.ArrayList<>(instance.getPlayers()));
+                game.setDisconnectedPlayers(java.util.List.of());
+                games.add(game);
+            }
+            var heartbeat = new net.swofty.commons.protocol.objects.orchestrator.GameHeartbeatProtocol.HeartbeatMessage(
+                    net.swofty.type.generic.HypixelConst.getServerUUID(),
+                    net.swofty.type.generic.HypixelConst.getShortenedServerName(),
+                    getType(),
+                    net.swofty.type.generic.HypixelConst.getMaxPlayers(),
+                    MinecraftServer.getConnectionManager().getOnlinePlayers().size(),
+                    games,
+                    java.util.List.of(),
+                    net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.remainingSlots());
+            new net.swofty.proxyapi.ProxyService(ServiceType.ORCHESTRATOR).handleRequest(heartbeat);
+        }).delay(net.minestom.server.timer.TaskSchedule.seconds(5))
+                .repeat(net.minestom.server.timer.TaskSchedule.seconds(1)).schedule();
     }
 
     @Override
@@ -114,7 +141,8 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
-        return List.of();
+        return List.of(new net.swofty.type.ravengarddungeon.redis.DungeonInstantiateGameHandler(),
+                new net.swofty.type.generic.redis.service.GameInformationHandler());
     }
 
     @Override
