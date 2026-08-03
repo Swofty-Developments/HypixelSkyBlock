@@ -34,6 +34,10 @@ public class RavengardDungeonGame extends AbstractGame<RavengardDungeonPlayer> {
         this.config = config;
     }
 
+    public RavengardDungeonConfig getConfig() {
+        return config;
+    }
+
     @Override
     public Game.JoinResult join(RavengardDungeonPlayer player) {
         Game.JoinResult result = super.join(player);

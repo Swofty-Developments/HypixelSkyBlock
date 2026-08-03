@@ -199,8 +199,49 @@ public final class DungeonInstanceRegistry {
 
         DungeonInstance dungeonInstance = new DungeonInstance(
                 mode.startsWith("ADMIN") ? "ADMIN" : "STANDARD", seed, instance, shared, generated, ready);
+        ready.thenRun(() -> spawnInteractables(dungeonInstance));
         INSTANCES.put(dungeonInstance.getGameId(), dungeonInstance);
         return dungeonInstance;
+    }
+
+    private static void spawnInteractables(DungeonInstance dungeonInstance) {
+        var config = net.swofty.type.ravengarddungeon.TypeRavengardDungeonLoader.getGame().getConfig();
+        net.swofty.type.ravengarddungeon.interactables.DungeonDoor.spawnAll(
+                dungeonInstance.getInstance(), config.objects());
+
+        java.util.Random random = new java.util.Random(dungeonInstance.getSeed() * 31L + 7L);
+        var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
+        for (int index = 1; index < placements.size(); index++) {
+            if (random.nextDouble() >= 0.3) continue;
+            var placement = placements.get(index);
+            double centerX = placement.originX() + placement.getFootprintWidth() / 2.0;
+            double centerZ = placement.originZ() + placement.getFootprintDepth() / 2.0;
+            Integer ground = groundAt(dungeonInstance.getInstance(), centerX, centerZ);
+            if (ground == null) continue;
+            float yaw = new float[]{0f, 90f, 180f, 270f}[random.nextInt(4)];
+            net.swofty.type.ravengarddungeon.interactables.DungeonChest.spawn(
+                    dungeonInstance.getInstance(),
+                    new net.minestom.server.coordinate.Pos(centerX, ground, centerZ, yaw, 0f),
+                    random);
+        }
+    }
+
+    private static Integer groundAt(net.minestom.server.instance.Instance instance,
+                                    double x, double z) {
+        for (int y = 75; y >= 60; y--) {
+            try {
+                if (!instance.getBlock((int) Math.floor(x), y, (int) Math.floor(z)).isAir()) {
+                    if (instance.getBlock((int) Math.floor(x), y + 1, (int) Math.floor(z)).isAir()
+                            && instance.getBlock((int) Math.floor(x), y + 2, (int) Math.floor(z)).isAir()) {
+                        return y + 1;
+                    }
+                    return null;
+                }
+            } catch (Exception exception) {
+                return null;
+            }
+        }
+        return null;
     }
 
     public static DungeonInstance get(UUID gameId) {
