@@ -11,8 +11,8 @@ import java.util.UUID;
 public final class DungeonMinimapIcons {
     private static final double MAP_SCALE = 0.75;
     private static final double VISIBLE_RANGE_PIXELS = 124;
-    private static final String ROOM_ICON = "";
-    private static final String CURRENT_ROOM_ICON = "";
+    private static final double TILE_SIZE_PIXELS = 13;
+    private static final String ROOM_TILE = "";
 
     private DungeonMinimapIcons() {
     }
@@ -39,21 +39,30 @@ public final class DungeonMinimapIcons {
 
         Component icons = Component.empty();
         for (RoomPlacement placement : dungeonInstance.getGenerated().dungeon().getPlacements()) {
-            double centerX = placement.originX() + placement.getFootprintWidth() / 2.0;
-            double centerZ = placement.originZ() + placement.getFootprintDepth() / 2.0;
-            double offsetX = (centerX - state.getWorldX()) * MAP_SCALE;
-            double offsetZ = (centerZ - state.getWorldZ()) * MAP_SCALE;
-            if (Math.abs(offsetX) > VISIBLE_RANGE_PIXELS || Math.abs(offsetZ) > VISIBLE_RANGE_PIXELS) {
+            double leftPixels = (placement.originX() - state.getWorldX()) * MAP_SCALE;
+            double topPixels = (placement.originZ() - state.getWorldZ()) * MAP_SCALE;
+            double widthPixels = placement.getFootprintWidth() * MAP_SCALE;
+            double depthPixels = placement.getFootprintDepth() * MAP_SCALE;
+            if (leftPixels > VISIBLE_RANGE_PIXELS || leftPixels + widthPixels < -VISIBLE_RANGE_PIXELS
+                    || topPixels > VISIBLE_RANGE_PIXELS || topPixels + depthPixels < -VISIBLE_RANGE_PIXELS) {
                 continue;
             }
-            boolean inside = state.getWorldX() >= placement.originX()
-                    && state.getWorldX() < placement.originX() + placement.getFootprintWidth()
-                    && state.getWorldZ() >= placement.originZ()
-                    && state.getWorldZ() < placement.originZ() + placement.getFootprintDepth();
-            int packedX = clamp9((int) Math.round((offsetX + 128) * 2));
-            int packedZ = clamp9((int) Math.round((offsetZ + 128) * 2));
-            icons = icons.append(Component.text(inside ? CURRENT_ROOM_ICON : ROOM_ICON)
-                    .color(TextColor.color((packedX << 15) | (packedZ << 6))));
+            int columns = Math.max(1, (int) Math.ceil(widthPixels / TILE_SIZE_PIXELS));
+            int rowCount = Math.max(1, (int) Math.ceil(depthPixels / TILE_SIZE_PIXELS));
+            for (int column = 0; column < columns; column++) {
+                for (int row = 0; row < rowCount; row++) {
+                    double centerX = leftPixels + (column + 0.5) * (widthPixels / columns);
+                    double centerZ = topPixels + (row + 0.5) * (depthPixels / rowCount);
+                    if (Math.abs(centerX) > VISIBLE_RANGE_PIXELS
+                            || Math.abs(centerZ) > VISIBLE_RANGE_PIXELS) {
+                        continue;
+                    }
+                    int packedX = clamp9((int) Math.round((centerX + 128) * 2));
+                    int packedZ = clamp9((int) Math.round((centerZ + 128) * 2));
+                    icons = icons.append(Component.text(ROOM_TILE)
+                            .color(TextColor.color((packedX << 15) | (packedZ << 6))));
+                }
+            }
         }
         return icons;
     }
