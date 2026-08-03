@@ -220,31 +220,14 @@ public final class DungeonInstanceRegistry {
             for (long key : chunks) {
                 loads.add(container.loadChunk((int) (key >> 32), (int) key));
             }
-            var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
-            java.util.Random random = new java.util.Random(dungeonInstance.getSeed() * 31L + 7L);
-            java.util.List<net.minestom.server.coordinate.Pos> chestSpots = new java.util.ArrayList<>();
-            for (int index = 1; index < placements.size(); index++) {
-                if (random.nextDouble() >= 0.3) continue;
-                var placement = placements.get(index);
-                double centerX = placement.originX() + placement.getFootprintWidth() / 2.0;
-                double centerZ = placement.originZ() + placement.getFootprintDepth() / 2.0;
-                Integer ground = groundAt(dungeonInstance.getInstance(), centerX, centerZ);
-                if (ground == null) continue;
-                float yaw = new float[]{0f, 90f, 180f, 270f}[random.nextInt(4)];
-                chestSpots.add(new net.minestom.server.coordinate.Pos(centerX, ground, centerZ, yaw, 0f));
-                loads.add(container.loadChunk((int) centerX >> 4, (int) centerZ >> 4));
-            }
-
             CompletableFuture.allOf(loads.toArray(new CompletableFuture[0])).join();
             net.swofty.type.ravengarddungeon.interactables.DungeonDoor.spawnAll(
                     dungeonInstance.getInstance(), config.objects());
-            for (var spot : chestSpots) {
-                net.swofty.type.ravengarddungeon.interactables.DungeonChest.spawn(
-                        dungeonInstance.getInstance(), spot,
-                        new java.util.Random(dungeonInstance.getSeed() ^ spot.hashCode()));
-            }
-            org.tinylog.Logger.info("Spawned interactables: {} door chunks loaded, {} chests",
-                    chunks.size(), chestSpots.size());
+
+            int chests = net.swofty.type.ravengarddungeon.interactables.DungeonChest
+                    .convertDecorChests(dungeonInstance.getInstance(), dungeonInstance.getSeed());
+            org.tinylog.Logger.info("Spawned interactables: {} door chunks loaded, {} chests converted",
+                    chunks.size(), chests);
         } catch (Exception exception) {
             org.tinylog.Logger.error(exception, "Failed to spawn dungeon interactables");
         }

@@ -18,8 +18,6 @@ public final class DungeonDoor extends DungeonInteractable {
     private static final int OPEN_DURATION_TICKS = 100;
 
     private final List<Leaf> leaves = new ArrayList<>();
-    private final List<Entity> hitboxes = new ArrayList<>();
-    private final List<Pos> hitboxHomes = new ArrayList<>();
     private boolean swinging;
 
     private record Leaf(Entity display, Pos closedPos, int swingSign) {
@@ -67,6 +65,9 @@ public final class DungeonDoor extends DungeonInteractable {
                 || Math.abs(cluster.get(1).x() - cluster.get(0).x())
                         >= Math.abs(cluster.get(1).z() - cluster.get(0).z());
         Float referenceYaw = null;
+        double sumX = 0, sumY = 0, sumZ = 0;
+        double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE;
+        double minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
         for (RavengardDungeonConfig.DungeonObject object : cluster) {
             float closedYaw = closedYaw(object.yaw(), axisAlongX);
             if (referenceYaw == null) {
@@ -75,18 +76,15 @@ public final class DungeonDoor extends DungeonInteractable {
             Pos pos = new Pos(object.x(), object.y(), object.z(), closedYaw, 0f);
             Entity display = door.spawnDisplay(pos, LEAF_MODEL);
             door.leaves.add(new Leaf(display, pos, closedYaw == referenceYaw ? 1 : -1));
-
-            Pos base = pos.sub(0, 1.5, 0);
-            Entity hitbox = door.spawnInteraction(base, 1.7f, 3f);
-            door.hitboxes.add(hitbox);
-            door.hitboxHomes.add(base);
-            if (door.interaction == null) {
-                door.interaction = hitbox;
-                InteractableRegistry.register(door);
-            } else {
-                InteractableRegistry.registerExtraInteraction(door, hitbox);
-            }
+            sumX += object.x(); sumY += object.y(); sumZ += object.z();
+            minX = Math.min(minX, object.x()); maxX = Math.max(maxX, object.x());
+            minZ = Math.min(minZ, object.z()); maxZ = Math.max(maxZ, object.z());
         }
+        double span = Math.max(maxX - minX, maxZ - minZ);
+        float width = (float) Math.max(2.2, span + 1.6);
+        Pos center = new Pos(sumX / cluster.size(), sumY / cluster.size() - 1.5, sumZ / cluster.size());
+        door.interaction = door.spawnInteraction(center, width, 3.2f);
+        InteractableRegistry.register(door);
     }
 
     private static float closedYaw(float configYaw, boolean axisAlongX) {
@@ -173,10 +171,6 @@ public final class DungeonDoor extends DungeonInteractable {
                 }
                 if (tick == SWING_TICKS) {
                     swinging = false;
-                    for (int index = 0; index < hitboxes.size(); index++) {
-                        Pos home = hitboxHomes.get(index);
-                        hitboxes.get(index).teleport(open ? home.sub(0, 500, 0) : home);
-                    }
                 }
             }).delay(TaskSchedule.tick(step)).schedule();
         }
