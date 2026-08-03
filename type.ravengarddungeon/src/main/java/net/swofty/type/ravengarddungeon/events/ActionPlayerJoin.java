@@ -17,6 +17,11 @@ public class ActionPlayerJoin implements HypixelEventClass {
         RavengardDungeonPlayer player = (RavengardDungeonPlayer) event.getPlayer();
         ScheduleUtility.delay(() -> {
             if (!player.isOnline()) return;
+            for (var instance : net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.all()) {
+                if (instance.getPlayers().contains(player.getUuid())) {
+                    return;
+                }
+            }
             Game.JoinResult result = TypeRavengardDungeonLoader.getGame().join(player);
             if (result instanceof Game.JoinResult.Denied(String reason)) {
                 player.sendMessage("§cCould not enter the dungeon: " + reason);

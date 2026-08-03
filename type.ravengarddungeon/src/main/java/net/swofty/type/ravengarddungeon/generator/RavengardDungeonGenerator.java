@@ -89,8 +89,29 @@ public final class RavengardDungeonGenerator {
             plugDoorway(batch, socket);
         }
 
+        // batches only land in loaded chunks, and a fresh instance has none
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
+        int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
+        for (RoomPlacement placement : generated.dungeon().getPlacements()) {
+            minX = Math.min(minX, placement.originX() - 2);
+            maxX = Math.max(maxX, placement.originX() + placement.getFootprintWidth() + 2);
+            minZ = Math.min(minZ, placement.originZ() - 2);
+            maxZ = Math.max(maxZ, placement.originZ() + placement.getFootprintDepth() + 2);
+        }
+        List<CompletableFuture<?>> chunkLoads = new ArrayList<>();
+        for (int chunkX = minX >> 4; chunkX <= (maxX >> 4); chunkX++) {
+            for (int chunkZ = minZ >> 4; chunkZ <= (maxZ >> 4); chunkZ++) {
+                chunkLoads.add(instance.loadChunk(chunkX, chunkZ));
+            }
+        }
+
         CompletableFuture<Void> future = new CompletableFuture<>();
-        batch.apply(instance, applied -> future.complete(null));
+        CompletableFuture.allOf(chunkLoads.toArray(new CompletableFuture[0]))
+                .thenRun(() -> batch.apply(instance, applied -> future.complete(null)))
+                .exceptionally(throwable -> {
+                    future.completeExceptionally(throwable);
+                    return null;
+                });
         return future;
     }
 

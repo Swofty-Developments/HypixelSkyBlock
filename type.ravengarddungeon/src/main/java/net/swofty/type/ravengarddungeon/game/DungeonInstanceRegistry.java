@@ -146,6 +146,10 @@ public final class DungeonInstanceRegistry {
     }
 
     public static void sendPlayerIn(net.minestom.server.entity.Player player, DungeonInstance instance) {
+        if (instance.getPlayers().contains(player.getUuid()) && !instance.whenReady().isDone()) {
+            player.sendMessage("§7Your dungeon is still being stamped, hold on...");
+            return;
+        }
         instance.markPlayerJoined(player.getUuid());
         player.sendMessage("§7Preparing your dungeon (seed §f" + instance.getSeed() + "§7)...");
         boolean aerial = instance.getMode().equals("ADMIN");
