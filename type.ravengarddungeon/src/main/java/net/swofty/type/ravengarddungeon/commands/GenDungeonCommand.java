@@ -61,10 +61,16 @@ public class GenDungeonCommand extends HypixelCommand {
             long took = System.currentTimeMillis() - started;
             player.scheduler().scheduleNextTick(() -> {
                 player.setInstance(instance, dungeon.spawn().withY(67));
-                player.sendMessage("§aGenerated §f" + dungeon.placements().size()
+                player.sendMessage("§aGenerated §f" + dungeon.layout().placements().size()
                         + "§a rooms (§f" + dungeon.objects().size() + "§a objects, §f"
-                        + dungeon.sealedSockets().size() + "§a sealed doors) in §f"
+                        + dungeon.layout().sealedSockets().size() + "§a sealed doors) in §f"
                         + took + "ms§a. Seed §f" + dungeon.seed() + "§a.");
+                for (String line : dungeon.layout().toString().split("\n")) {
+                    if (!line.isBlank()) {
+                        player.sendMessage(net.kyori.adventure.text.Component.text(line)
+                                .font(net.kyori.adventure.key.Key.key("minecraft", "uniform")));
+                    }
+                }
             });
         });
     }

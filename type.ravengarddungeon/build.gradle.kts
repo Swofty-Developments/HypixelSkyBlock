@@ -15,6 +15,7 @@ java {
 
 dependencies {
     implementation(project(":type.ravengardgeneric"))
+    implementation(project(":dungeons"))
     implementation(project(":type.game"))
     implementation(project(":type.generic"))
     implementation(project(":commons"))

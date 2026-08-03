@@ -1,4 +1,4 @@
-package net.swofty.type.ravengarddungeon.generator;
+package net.swofty.dungeons.ravengard;
 
 import com.google.gson.Gson;
 
@@ -6,24 +6,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public final class DungeonRoomCatalog {
-    private static final Path CATALOG = Path.of("./configuration/ravengard/dungeon_rooms.json");
-    private static DungeonRoomCatalog instance;
-
+public final class RavengardRoomCatalog {
     private String source;
     private int floorY;
     private int roofY;
     private List<Room> rooms;
 
-    public static DungeonRoomCatalog get() {
-        if (instance == null) {
-            try {
-                instance = new Gson().fromJson(Files.readString(CATALOG), DungeonRoomCatalog.class);
-            } catch (Exception exception) {
-                throw new IllegalStateException("Could not load " + CATALOG, exception);
-            }
+    public static RavengardRoomCatalog load(Path path) {
+        try {
+            return new Gson().fromJson(Files.readString(path), RavengardRoomCatalog.class);
+        } catch (Exception exception) {
+            throw new IllegalStateException("Could not load room catalog " + path, exception);
         }
-        return instance;
     }
 
     public String source() {
@@ -47,7 +41,6 @@ public final class DungeonRoomCatalog {
         private int x0, z0, x1, z1;
         private int w, h;
         private String color;
-        private int markerY;
         private boolean letterTile;
         private List<Socket> sockets;
         private List<ObjectSpawn> objects;
@@ -102,6 +95,17 @@ public final class DungeonRoomCatalog {
         private double x, y, z;
         private double width;
 
+        public Socket() {
+        }
+
+        public Socket(String side, double x, double y, double z, double width) {
+            this.side = side;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.width = width;
+        }
+
         public String side() {
             return side;
         }
@@ -122,7 +126,7 @@ public final class DungeonRoomCatalog {
             return width;
         }
 
-        public String opposite() {
+        public static String oppositeOf(String side) {
             return switch (side) {
                 case "north" -> "south";
                 case "south" -> "north";
