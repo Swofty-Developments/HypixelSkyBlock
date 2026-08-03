@@ -144,6 +144,7 @@ public final class RavengardDungeonGenerator {
         CompletableFuture<Void> future = new CompletableFuture<>();
         CompletableFuture.allOf(chunkLoads.toArray(new CompletableFuture[0]))
                 .thenRun(() -> batch.apply(instance, applied -> {
+                    fillLight(instance);
                     probeSpawnChunk(generated, instance);
                     future.complete(null);
                 }))
@@ -232,6 +233,24 @@ public final class RavengardDungeonGenerator {
         }
         org.tinylog.Logger.info("Materialized light for {} sections in {}ms",
                 sectionsTouched, System.currentTimeMillis() - started);
+    }
+
+    /** The polar worlds ship baked light and the client renders them; sections
+     * with no light data at all are skipped by this client's mesher, so the
+     * generated layout is lit full-bright the way a dungeon interior plays. */
+    private static void fillLight(Instance instance) {
+        byte[] fullBright = new byte[2048];
+        java.util.Arrays.fill(fullBright, (byte) 0xFF);
+        int sections = 0;
+        for (var chunk : instance.getChunks()) {
+            for (int sectionY = chunk.getMinSection(); sectionY < chunk.getMaxSection(); sectionY++) {
+                var section = chunk.getSection(sectionY);
+                section.skyLight().set(fullBright);
+                section.blockLight().set(fullBright);
+                sections++;
+            }
+        }
+        org.tinylog.Logger.info("Filled full-bright light for {} sections", sections);
     }
 
     private static void probeSpawnChunk(GeneratedDungeon generated, Instance instance) {
