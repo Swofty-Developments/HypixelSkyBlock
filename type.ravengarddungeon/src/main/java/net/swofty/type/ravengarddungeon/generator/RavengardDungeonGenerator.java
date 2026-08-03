@@ -69,20 +69,37 @@ public final class RavengardDungeonGenerator {
             RavengardRoomCatalog.DungeonRoom room = placement.room();
             int footprintWidth = placement.getFootprintWidth();
             int footprintDepth = placement.getFootprintDepth();
-            // dilate the footprint mask by one block so the seam half around the
-            // room's true shape travels with it, without dragging neighbours along
+            // stamp the raw footprint mask; a blanket dilation ring would drag
+            // slivers of whatever neighboured this room in the template into the
+            // gaps between generated rooms, so the seam half is carried only in
+            // front of door apertures where the corridor floor actually lives
             boolean[][] cut = new boolean[footprintWidth + 2][footprintDepth + 2];
             placement.forEachMaskCell((localX, localZ) -> {
-                for (int dx = -1; dx <= 1; dx++) {
-                    for (int dz = -1; dz <= 1; dz++) {
-                        int cutX = localX + dx + 1, cutZ = localZ + dz + 1;
+                int cutX = localX + 1, cutZ = localZ + 1;
+                if (cutX >= 0 && cutX < footprintWidth + 2
+                        && cutZ >= 0 && cutZ < footprintDepth + 2) {
+                    cut[cutX][cutZ] = true;
+                }
+            });
+            for (RavengardRoomCatalog.DoorSocket socket : room.getSockets()) {
+                Direction worldSide = socket.getSide().rotated(placement.rotation());
+                double[] center = placement.toPlacementFrame(socket.getX(), socket.getZ());
+                int normalX = switch (worldSide) { case EAST -> 1; case WEST -> -1; default -> 0; };
+                int normalZ = switch (worldSide) { case SOUTH -> 1; case NORTH -> -1; default -> 0; };
+                int alongX = normalZ == 0 ? 0 : 1;
+                int alongZ = normalX == 0 ? 0 : 1;
+                int halfSpan = (int) Math.ceil(socket.getWidth() / 2) + 1;
+                for (int along = -halfSpan; along <= halfSpan; along++) {
+                    for (int outward = 0; outward <= 1; outward++) {
+                        int cutX = (int) Math.round(center[0]) + alongX * along + normalX * outward + 1;
+                        int cutZ = (int) Math.round(center[1]) + alongZ * along + normalZ * outward + 1;
                         if (cutX >= 0 && cutX < footprintWidth + 2
                                 && cutZ >= 0 && cutZ < footprintDepth + 2) {
                             cut[cutX][cutZ] = true;
                         }
                     }
                 }
-            });
+            }
             for (int localX = -1; localX <= footprintWidth; localX++) {
                 for (int localZ = -1; localZ <= footprintDepth; localZ++) {
                     if (!cut[localX + 1][localZ + 1]) continue;
@@ -139,6 +156,8 @@ public final class RavengardDungeonGenerator {
                                         "Dungeon relight failed after {}ms",
                                         System.currentTimeMillis() - lightingStarted);
                             }
+                            materializeLight(instance);
+                            probeSpawnChunk(generated, instance);
                             future.complete(null);
                         })))
                 .exceptionally(throwable -> {
@@ -146,6 +165,47 @@ public final class RavengardDungeonGenerator {
                     return null;
                 });
         return future;
+    }
+
+    private static void materializeLight(Instance instance) {
+        long started = System.currentTimeMillis();
+        int sectionsTouched = 0;
+        for (var chunk : instance.getChunks()) {
+            for (int sectionY = chunk.getMinSection(); sectionY < chunk.getMaxSection(); sectionY++) {
+                var section = chunk.getSection(sectionY);
+                section.skyLight().array();
+                section.blockLight().array();
+                sectionsTouched++;
+            }
+        }
+        org.tinylog.Logger.info("Materialized light for {} sections in {}ms",
+                sectionsTouched, System.currentTimeMillis() - started);
+    }
+
+    private static void probeSpawnChunk(GeneratedDungeon generated, Instance instance) {
+        try {
+            int chunkX = generated.spawn().blockX() >> 4;
+            int chunkZ = generated.spawn().blockZ() >> 4;
+            var chunk = instance.getChunk(chunkX, chunkZ);
+            if (chunk == null) {
+                org.tinylog.Logger.warn("Probe: spawn chunk {},{} not loaded", chunkX, chunkZ);
+                return;
+            }
+            StringBuilder report = new StringBuilder();
+            for (int sectionY = chunk.getMinSection(); sectionY < chunk.getMaxSection(); sectionY++) {
+                var section = chunk.getSection(sectionY);
+                int blocks = section.blockPalette().count();
+                if (blocks == 0) continue;
+                report.append(String.format("[y%d blocks=%d sky=%d blk=%d] ",
+                        sectionY, blocks,
+                        section.skyLight().array().length,
+                        section.blockLight().array().length));
+            }
+            org.tinylog.Logger.info("Probe chunk {},{} class={} sections: {}",
+                    chunkX, chunkZ, chunk.getClass().getSimpleName(), report);
+        } catch (Exception exception) {
+            org.tinylog.Logger.error(exception, "Probe failed");
+        }
     }
 
     private static Block rotate(Block block, Rotation rotation) {
