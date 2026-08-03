@@ -2,7 +2,6 @@ package net.swofty.type.ravengarddungeon.game;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.InstanceContainer;
-import net.minestom.server.instance.LightingChunk;
 import net.swofty.type.ravengarddungeon.generator.RavengardDungeonGenerator;
 
 import java.util.ArrayList;
@@ -173,8 +172,10 @@ public final class DungeonInstanceRegistry {
 
         RavengardDungeonGenerator.GeneratedDungeon generated =
                 RavengardDungeonGenerator.generate(seed, roomCount);
+        // every static world on this stack runs on the default DynamicChunk and
+        // renders fine; LightingChunk's computed light payload is the one thing
+        // generated instances did differently and the client never rendered them
         InstanceContainer instance = MinecraftServer.getInstanceManager().createInstanceContainer();
-        instance.setChunkSupplier(LightingChunk::new);
         CompletableFuture<Void> ready = RavengardDungeonGenerator.stamp(generated, instance);
 
         DungeonInstance dungeonInstance = new DungeonInstance(

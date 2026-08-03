@@ -143,27 +143,10 @@ public final class RavengardDungeonGenerator {
 
         CompletableFuture<Void> future = new CompletableFuture<>();
         CompletableFuture.allOf(chunkLoads.toArray(new CompletableFuture[0]))
-                .thenRun(() -> batch.apply(instance, applied ->
-                        // lazy lighting on a fresh two thousand chunk layout floods the
-                        // executor and the client renders unlit sections as invisible,
-                        // so lighting is part of readiness
-                        Thread.startVirtualThread(() -> {
-                            long lightingStarted = System.currentTimeMillis();
-                            try {
-                                net.minestom.server.instance.LightingChunk.relight(instance,
-                                        new ArrayList<>(instance.getChunks()));
-                                org.tinylog.Logger.info("Dungeon relight of {} chunks took {}ms",
-                                        instance.getChunks().size(),
-                                        System.currentTimeMillis() - lightingStarted);
-                            } catch (Exception exception) {
-                                org.tinylog.Logger.error(exception,
-                                        "Dungeon relight failed after {}ms",
-                                        System.currentTimeMillis() - lightingStarted);
-                            }
-                            materializeLight(instance);
-                            probeSpawnChunk(generated, instance);
-                            future.complete(null);
-                        })))
+                .thenRun(() -> batch.apply(instance, applied -> {
+                    probeSpawnChunk(generated, instance);
+                    future.complete(null);
+                }))
                 .exceptionally(throwable -> {
                     future.completeExceptionally(throwable);
                     return null;
