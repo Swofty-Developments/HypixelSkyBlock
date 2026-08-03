@@ -109,35 +109,26 @@ public final class InteractableRegistry {
         if (interaction.getInstance() != player.getInstance()) {
             return false;
         }
-        Pos eye = player.getPosition().add(0, player.getEyeHeight(), 0);
-        if (eye.distance(interactable.focusPoint()) > MAX_DISTANCE) {
+        var meta = (net.minestom.server.entity.metadata.other.InteractionMeta) interaction.getEntityMeta();
+        Pos base = interaction.getPosition();
+        Vec center = new Vec(base.x(), base.y() + meta.getHeight() / 2.0, base.z());
+        Vec eye = new Vec(player.getPosition().x(),
+                player.getPosition().y() + player.getEyeHeight(),
+                player.getPosition().z());
+        Vec toCenter = center.sub(eye);
+        double distance = toCenter.length();
+        if (distance > MAX_DISTANCE) {
             return false;
         }
-        var meta = (net.minestom.server.entity.metadata.other.InteractionMeta) interaction.getEntityMeta();
-        double half = meta.getWidth() / 2.0 + 0.35;
-        double height = meta.getHeight() + 0.5;
-        Pos base = interaction.getPosition();
         Vec direction = player.getPosition().direction();
-        double minX = base.x() - half, maxX = base.x() + half;
-        double minY = base.y() - 0.25, maxY = base.y() + height;
-        double minZ = base.z() - half, maxZ = base.z() + half;
-        double tMin = 0, tMax = MAX_DISTANCE + 1;
-        double[][] axes = {
-                {direction.x(), eye.x(), minX, maxX},
-                {direction.y(), eye.y(), minY, maxY},
-                {direction.z(), eye.z(), minZ, maxZ},
-        };
-        for (double[] axis : axes) {
-            if (Math.abs(axis[0]) < 1e-9) {
-                if (axis[1] < axis[2] || axis[1] > axis[3]) return false;
-                continue;
-            }
-            double t1 = (axis[2] - axis[1]) / axis[0];
-            double t2 = (axis[3] - axis[1]) / axis[0];
-            tMin = Math.max(tMin, Math.min(t1, t2));
-            tMax = Math.min(tMax, Math.max(t1, t2));
+        double along = toCenter.dot(direction);
+        if (along < -0.5) {
+            return false;
         }
-        return tMin <= tMax;
+        Vec closest = eye.add(direction.mul(Math.max(0, along)));
+        double miss = closest.sub(center).length();
+        double radius = Math.max(meta.getWidth(), meta.getHeight()) / 2.0 + 0.9;
+        return miss <= radius;
     }
 
     private static void bar(Player player, DungeonInteractable target, float progress) {

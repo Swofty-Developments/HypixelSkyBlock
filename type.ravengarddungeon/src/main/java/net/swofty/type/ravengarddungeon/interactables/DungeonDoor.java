@@ -66,11 +66,15 @@ public final class DungeonDoor extends DungeonInteractable {
         boolean axisAlongX = cluster.size() < 2
                 || Math.abs(cluster.get(1).x() - cluster.get(0).x())
                         >= Math.abs(cluster.get(1).z() - cluster.get(0).z());
+        Float referenceYaw = null;
         for (RavengardDungeonConfig.DungeonObject object : cluster) {
             float closedYaw = closedYaw(object.yaw(), axisAlongX);
+            if (referenceYaw == null) {
+                referenceYaw = closedYaw;
+            }
             Pos pos = new Pos(object.x(), object.y(), object.z(), closedYaw, 0f);
             Entity display = door.spawnDisplay(pos, LEAF_MODEL);
-            door.leaves.add(new Leaf(display, pos, 1));
+            door.leaves.add(new Leaf(display, pos, closedYaw == referenceYaw ? 1 : -1));
 
             Pos base = pos.sub(0, 1.5, 0);
             Entity hitbox = door.spawnInteraction(base, 1.05f, 3f);
@@ -161,7 +165,7 @@ public final class DungeonDoor extends DungeonInteractable {
                 double fraction = open ? (double) tick / SWING_TICKS
                         : (double) (SWING_TICKS - tick) / SWING_TICKS;
                 for (Leaf leaf : leaves) {
-                    float yaw = (float) (leaf.closedPos().yaw() + 105.0 * fraction * leaf.swingSign());
+                    float yaw = (float) (leaf.closedPos().yaw() + 90.0 * fraction * leaf.swingSign());
                     leaf.display().teleport(leaf.closedPos().withYaw(yaw));
                 }
                 if (tick == SWING_TICKS) {
