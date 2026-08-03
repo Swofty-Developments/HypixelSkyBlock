@@ -45,8 +45,20 @@ public final class DungeonMinimapIcons {
                     .color(TextColor.color(packed))
                     .shadowColor(ShadowColor.shadowColor(0)));
         }
+        // the template's own marker draws before the tiles and ends up under
+        // them, so a live marker rides after the map: centred, real yaw
+        float yaw = state.getYaw();
+        while (yaw < 0) {
+            yaw += 360f;
+        }
+        int rotation = ((int) Math.round(yaw / (360.0 / 64.0))) & 0x3F;
+        tiles = tiles.append(Component.text(PLAYER_MARKER)
+                .color(TextColor.color((256 << 15) | (256 << 6) | rotation))
+                .shadowColor(ShadowColor.shadowColor(0)));
         return tiles;
     }
+
+    private static final String PLAYER_MARKER = "\uE102";
 
     private static int clamp12(int value) {
         return Math.clamp(value, 0, 0xFFF);

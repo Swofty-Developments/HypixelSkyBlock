@@ -106,8 +106,10 @@ public final class RavengardHud {
     private static final String FULLSCREEN_TILES = "\uE120\uE121\uE122\uE123\uE124\uE125";
     private static final String DUNGEON_TILES = "\uE110\uE111\uE112\uE113\uE114\uE115";
     private static final String PLAYER_MARKER = "\uE102";
-    private static final double TAB_MAP_ORIGIN_X = 226.69;
-    private static final double TAB_MAP_ORIGIN_Z = 217.21;
+    // map pixels equal world coordinates on the crypt canvas (verified against
+    // a live hypixel capture), so the packed value is world + canvas centre
+    private static final double TAB_MAP_ORIGIN_X = 256.0;
+    private static final double TAB_MAP_ORIGIN_Z = 256.0;
     private static final double YAW_PER_STEP = 360.0 / 64.0;
 
     private static final Map<java.util.UUID, Component> LAST_TAB_HEADER = new ConcurrentHashMap<>();
