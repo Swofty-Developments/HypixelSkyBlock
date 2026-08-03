@@ -9,8 +9,10 @@ import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
 import java.util.UUID;
 
 public final class DungeonMinimapIcons {
-    private static final int TILE = 13;
-    private static final double VISIBLE_RANGE_PIXELS = 136;
+    /** The crypt segment tiles: with the city-base layout the world keeps the
+     * blueprint's coordinates, so Hypixel's own map art lines up verbatim.
+     * Each glyph's colour packs the player position that pans the mosaic. */
+    private static final String SEGMENT_TILES = "";
 
     private DungeonMinimapIcons() {
     }
@@ -24,57 +26,29 @@ public final class DungeonMinimapIcons {
         if (uuid == null) {
             return null;
         }
-        DungeonInstanceRegistry.DungeonInstance dungeonInstance = null;
+        boolean inDungeon = false;
         for (DungeonInstanceRegistry.DungeonInstance candidate : DungeonInstanceRegistry.all()) {
             if (candidate.getPlayers().contains(uuid)) {
-                dungeonInstance = candidate;
+                inDungeon = true;
                 break;
             }
         }
-        if (dungeonInstance == null) {
+        if (!inDungeon) {
             return null;
         }
 
-        int currentRoom = dungeonInstance.roomIndexAt(state.getWorldX(), state.getWorldZ());
-        if (currentRoom >= 0) {
-            dungeonInstance.getVisitedRooms().add(currentRoom);
+        int packed = (clamp12((int) Math.round((state.getWorldX() + 512) * 4)) << 12)
+                | clamp12((int) Math.round((state.getWorldZ() + 512) * 4));
+        Component tiles = Component.empty();
+        for (int index = 0; index < SEGMENT_TILES.length(); index++) {
+            tiles = tiles.append(Component.text(SEGMENT_TILES.charAt(index))
+                    .color(TextColor.color(packed))
+                    .shadowColor(ShadowColor.shadowColor(0)));
         }
-
-        Component icons = Component.empty();
-        var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
-        for (int index = 0; index < placements.size(); index++) {
-            var placement = placements.get(index);
-            DungeonMapGlyphs.RoomArt art = DungeonMapGlyphs.artFor(
-                    placement.room().getId(), placement.rotation().getDegrees());
-            if (art == null) {
-                continue;
-            }
-            for (int row = 0; row < art.rows(); row++) {
-                for (int col = 0; col < art.cols(); col++) {
-                    Integer codepoint = art.tiles().get(row).get(col);
-                    if (codepoint == null) {
-                        continue;
-                    }
-                    double tileCenterX = placement.originX() + col * TILE + TILE / 2.0;
-                    double tileCenterZ = placement.originZ() + row * TILE + TILE / 2.0;
-                    double offsetX = tileCenterX - state.getWorldX();
-                    double offsetZ = tileCenterZ - state.getWorldZ();
-                    if (Math.abs(offsetX) > VISIBLE_RANGE_PIXELS
-                            || Math.abs(offsetZ) > VISIBLE_RANGE_PIXELS) {
-                        continue;
-                    }
-                    int packedX = clamp9((int) Math.round((offsetX + 128) * 2));
-                    int packedZ = clamp9((int) Math.round((offsetZ + 128) * 2));
-                    icons = icons.append(Component.text(Character.toString(codepoint))
-                            .color(TextColor.color((packedX << 15) | (packedZ << 6)))
-                            .shadowColor(ShadowColor.shadowColor(0)));
-                }
-            }
-        }
-        return icons;
+        return tiles;
     }
 
-    private static int clamp9(int value) {
-        return Math.clamp(value, 0, 0x1FF);
+    private static int clamp12(int value) {
+        return Math.clamp(value, 0, 0xFFF);
     }
 }

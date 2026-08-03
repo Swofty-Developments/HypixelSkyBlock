@@ -60,6 +60,57 @@ public final class RavengardDungeonGenerator {
         return new GeneratedDungeon(dungeon, objects, spawn, seed);
     }
 
+    /** City-base generation only needs the swapped slot interiors restamped;
+     * everything else is the loaded blueprint itself. */
+    public static CompletableFuture<Void> stampSwaps(GeneratedDungeon generated, Instance instance) {
+        DungeonTemplate template = DungeonTemplate.get();
+        int floorY = getCatalog().getFloorY(), roofY = getCatalog().getRoofY();
+        List<RoomPlacement> swaps = generated.dungeon().getSwaps();
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        if (swaps.isEmpty()) {
+            future.complete(null);
+            return future;
+        }
+
+        AbsoluteBlockBatch batch = new AbsoluteBlockBatch();
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
+        int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
+        for (RoomPlacement placement : swaps) {
+            RavengardRoomCatalog.DungeonRoom room = placement.room();
+            placement.forEachMaskCell((localX, localZ) -> {
+                int[] source = placement.toSourceFrame(localX, localZ);
+                int sourceX = room.getMinX() + source[0];
+                int sourceZ = room.getMinZ() + source[1];
+                int targetX = placement.originX() + localX;
+                int targetZ = placement.originZ() + localZ;
+                for (int y = floorY; y <= roofY; y++) {
+                    batch.setBlock(targetX, y, targetZ,
+                            rotate(template.blockAt(sourceX, y, sourceZ), placement.rotation()));
+                }
+            });
+            minX = Math.min(minX, placement.originX() - 1);
+            maxX = Math.max(maxX, placement.originX() + placement.getFootprintWidth() + 1);
+            minZ = Math.min(minZ, placement.originZ() - 1);
+            maxZ = Math.max(maxZ, placement.originZ() + placement.getFootprintDepth() + 1);
+        }
+        List<CompletableFuture<?>> chunkLoads = new ArrayList<>();
+        for (int chunkX = minX >> 4; chunkX <= (maxX >> 4); chunkX++) {
+            for (int chunkZ = minZ >> 4; chunkZ <= (maxZ >> 4); chunkZ++) {
+                chunkLoads.add(instance.loadChunk(chunkX, chunkZ));
+            }
+        }
+        CompletableFuture.allOf(chunkLoads.toArray(new CompletableFuture[0]))
+                .thenRun(() -> batch.apply(instance, applied -> {
+                    org.tinylog.Logger.info("Stamped {} room swaps", swaps.size());
+                    future.complete(null);
+                }))
+                .exceptionally(throwable -> {
+                    future.completeExceptionally(throwable);
+                    return null;
+                });
+        return future;
+    }
+
     public static CompletableFuture<Void> stamp(GeneratedDungeon generated, Instance instance) {
         DungeonTemplate template = DungeonTemplate.get();
         int floorY = getCatalog().getFloorY(), roofY = getCatalog().getRoofY();

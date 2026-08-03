@@ -7,8 +7,11 @@ import net.swofty.dungeons.ravengard.RavengardRoomCatalog.DungeonRoom;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -115,7 +118,96 @@ public final class RavengardDungeon extends GameDungeon {
         return Math.clamp(radius, 90, 320);
     }
 
+    /** Slot swaps chosen for this seed: the placement sits at its slot's
+     * original city position with a different room's interior stamped in. */
+    private final List<RoomPlacement> swaps = new ArrayList<>();
+
+    public List<RoomPlacement> getSwaps() {
+        return swaps;
+    }
+
+    /**
+     * The blueprint is a fixed city; outlined rooms are swappable slots cut into
+     * it. Generation keeps every slot at its original position and permutes
+     * rooms between slots whose footprints match under rotation.
+     */
     public static RavengardDungeon generate(RavengardRoomCatalog catalog, long seed, int targetRoomCount) {
+        RavengardDungeon dungeon = new RavengardDungeon(seed);
+        Random random = new Random(seed);
+        List<DungeonRoom> rooms = catalog.getRooms();
+
+        DungeonRoom citadel = catalog.getCitadel();
+        if (citadel != null) {
+            dungeon.placements.add(new RoomPlacement(citadel, Rotation.NONE,
+                    citadel.getMinX(), citadel.getMinZ()));
+        }
+
+        Map<String, List<DungeonRoom>> shapeGroups = new HashMap<>();
+        for (DungeonRoom room : rooms) {
+            shapeGroups.computeIfAbsent(canonicalShape(room), key -> new ArrayList<>()).add(room);
+        }
+
+        Map<String, RoomPlacement> chosen = new HashMap<>();
+        for (List<DungeonRoom> group : shapeGroups.values()) {
+            List<DungeonRoom> shuffled = new ArrayList<>(group);
+            Collections.shuffle(shuffled, random);
+            for (int index = 0; index < group.size(); index++) {
+                DungeonRoom slot = group.get(index);
+                DungeonRoom pick = shuffled.get(index);
+                Rotation rotation = rotationBetween(pick, slot);
+                if (rotation == null) {
+                    pick = slot;
+                    rotation = Rotation.NONE;
+                }
+                RoomPlacement placement = new RoomPlacement(pick, rotation,
+                        slot.getMinX(), slot.getMinZ());
+                chosen.put(slot.getId(), placement);
+                if (pick != slot) {
+                    dungeon.swaps.add(placement);
+                }
+            }
+        }
+        for (DungeonRoom slot : rooms) {
+            dungeon.placements.add(chosen.get(slot.getId()));
+        }
+        return dungeon;
+    }
+
+    private static String canonicalShape(DungeonRoom room) {
+        String best = null;
+        for (Rotation rotation : Rotation.values()) {
+            String shape = shapeKey(room, rotation);
+            if (best == null || shape.compareTo(best) < 0) {
+                best = shape;
+            }
+        }
+        return best;
+    }
+
+    private static String shapeKey(DungeonRoom room, Rotation rotation) {
+        List<long[]> cells = new ArrayList<>();
+        RoomPlacement frame = new RoomPlacement(room, rotation, 0, 0);
+        frame.forEachMaskCell((x, z) -> cells.add(new long[]{x, z}));
+        cells.sort((a, b) -> a[0] != b[0] ? Long.compare(a[0], b[0]) : Long.compare(a[1], b[1]));
+        StringBuilder key = new StringBuilder();
+        for (long[] cell : cells) {
+            key.append(cell[0]).append(',').append(cell[1]).append(';');
+        }
+        return key.toString();
+    }
+
+    /** Rotation that maps {@code pick}'s mask exactly onto {@code slot}'s. */
+    private static Rotation rotationBetween(DungeonRoom pick, DungeonRoom slot) {
+        String slotShape = shapeKey(slot, Rotation.NONE);
+        for (Rotation rotation : Rotation.values()) {
+            if (shapeKey(pick, rotation).equals(slotShape)) {
+                return rotation;
+            }
+        }
+        return null;
+    }
+
+    public static RavengardDungeon generatePacked(RavengardRoomCatalog catalog, long seed, int targetRoomCount) {
         targetRoomCount = Math.min(targetRoomCount, catalog.getRooms().size());
         RavengardDungeon best = null;
         for (int attempt = 0; attempt < 6; attempt++) {

@@ -181,14 +181,21 @@ public final class DungeonInstanceRegistry {
         RavengardDungeonGenerator.GeneratedDungeon generated =
                 RavengardDungeonGenerator.generate(seed, roomCount);
         // the skyblock island recipe: fullbright dimension, container for the
-        // blocks, shared instance for the players
+        // blocks, shared instance for the players. The blueprint city IS the
+        // dungeon; only swapped slot interiors get restamped on top of it.
         var dimensionKey = MinecraftServer.getDimensionTypeRegistry()
                 .getKey(net.kyori.adventure.key.Key.key("ravengard:dungeon"));
         InstanceContainer instance = MinecraftServer.getInstanceManager()
                 .createInstanceContainer(dimensionKey);
-        net.minestom.server.instance.SharedInstance shared =
-                MinecraftServer.getInstanceManager().createSharedInstance(instance);
-        CompletableFuture<Void> ready = RavengardDungeonGenerator.stamp(generated, instance);
+        net.minestom.server.instance.SharedInstance shared;
+        try {
+            shared = net.swofty.type.generic.world.HypixelWorldLoader.loadFrom(
+                    java.nio.file.Path.of("./configuration/ravengard/dungeon_1.polar"),
+                    instance, MinecraftServer.getInstanceManager());
+        } catch (java.io.IOException exception) {
+            throw new IllegalStateException("Could not load dungeon city base", exception);
+        }
+        CompletableFuture<Void> ready = RavengardDungeonGenerator.stampSwaps(generated, instance);
 
         DungeonInstance dungeonInstance = new DungeonInstance(
                 mode.startsWith("ADMIN") ? "ADMIN" : "STANDARD", seed, instance, shared, generated, ready);
