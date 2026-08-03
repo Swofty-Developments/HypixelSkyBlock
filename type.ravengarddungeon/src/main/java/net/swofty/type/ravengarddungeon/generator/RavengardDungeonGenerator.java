@@ -108,7 +108,8 @@ public final class RavengardDungeonGenerator {
                     int sourceZ = room.getMinZ() + source[1];
                     int targetX = placement.originX() + localX;
                     int targetZ = placement.originZ() + localZ;
-                    for (int y = floorY; y <= roofY; y++) {
+                    int roomRoofY = room.getRoofY() != null ? room.getRoofY() : roofY;
+                    for (int y = floorY; y <= roomRoofY; y++) {
                         Block block = template.blockAt(sourceX, y, sourceZ);
                         if (block != Block.AIR) {
                             batch.setBlock(targetX, y, targetZ, rotate(block, placement.rotation()));

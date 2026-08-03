@@ -221,8 +221,10 @@ public final class DungeonInstanceRegistry {
                 // hover over the start room, which always exists; the bounds centre
                 // of an organic layout can be a void pocket
                 var start = instance.getGenerated().dungeon().getStartRoom();
+                Integer startRoof = start.room().getRoofY();
+                double hoverY = (startRoof != null ? startRoof : 97) + 40;
                 spawn = new net.minestom.server.coordinate.Pos(
-                        start.originX() + start.getFootprintWidth() / 2.0, 150,
+                        start.originX() + start.getFootprintWidth() / 2.0, hoverY,
                         start.originZ() + start.getFootprintDepth() / 2.0, 0, 90);
                 player.setGameMode(net.minestom.server.entity.GameMode.CREATIVE);
             } else {

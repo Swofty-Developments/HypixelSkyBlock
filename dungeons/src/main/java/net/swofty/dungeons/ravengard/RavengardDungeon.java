@@ -136,18 +136,26 @@ public final class RavengardDungeon extends GameDungeon {
         Random random = new Random(seed);
         List<DungeonRoom> roomPool = catalog.getRooms();
 
-        List<DungeonRoom> hubRooms = roomPool.stream()
-                .filter(room -> room.getSockets().size() >= 3)
-                .toList();
-        DungeonRoom startRoom = hubRooms.get(random.nextInt(hubRooms.size()));
-
         Set<Long> occupiedCells = new HashSet<>();
         List<PlacedSocket> openSockets = new ArrayList<>();
         Set<String> usedRoomIds = new HashSet<>();
 
-        dungeon.place(new RoomPlacement(startRoom, Rotation.NONE,
-                        -startRoom.getWidth() / 2, -startRoom.getDepth() / 2),
-                occupiedCells, openSockets, usedRoomIds);
+        DungeonRoom citadel = catalog.getCitadel();
+        if (citadel != null) {
+            // the blueprint keeps one towering structure at the heart of every
+            // map; it anchors the layout and its doors seed the room growth
+            dungeon.place(new RoomPlacement(citadel, Rotation.NONE,
+                            -citadel.getWidth() / 2, -citadel.getDepth() / 2),
+                    occupiedCells, openSockets, usedRoomIds);
+        } else {
+            List<DungeonRoom> hubRooms = roomPool.stream()
+                    .filter(room -> room.getSockets().size() >= 3)
+                    .toList();
+            DungeonRoom startRoom = hubRooms.get(random.nextInt(hubRooms.size()));
+            dungeon.place(new RoomPlacement(startRoom, Rotation.NONE,
+                            -startRoom.getWidth() / 2, -startRoom.getDepth() / 2),
+                    occupiedCells, openSockets, usedRoomIds);
+        }
 
         growByDoors(dungeon, roomPool, occupiedCells, openSockets, usedRoomIds, random, targetRoomCount);
         // door growth alone leaves voids between arms; the source map is a solid

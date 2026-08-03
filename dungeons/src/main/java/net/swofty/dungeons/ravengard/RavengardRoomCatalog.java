@@ -14,6 +14,7 @@ public final class RavengardRoomCatalog {
     private int floorY;
     private int roofY;
     private List<DungeonRoom> rooms;
+    private DungeonRoom citadel;
 
     public static RavengardRoomCatalog load(Path path) {
         try {
@@ -21,6 +22,10 @@ public final class RavengardRoomCatalog {
         } catch (Exception exception) {
             throw new IllegalStateException("Could not load room catalog " + path, exception);
         }
+    }
+
+    public DungeonRoom getCitadel() {
+        return citadel;
     }
 
     public List<DungeonRoom> getRooms() {
@@ -35,6 +40,7 @@ public final class RavengardRoomCatalog {
         @SerializedName("x1") private int maxX;
         @SerializedName("z1") private int maxZ;
         @SerializedName("w") private int width;
+        private Integer roofY;
         @SerializedName("h") private int depth;
         private String color;
         private boolean letterTile;
