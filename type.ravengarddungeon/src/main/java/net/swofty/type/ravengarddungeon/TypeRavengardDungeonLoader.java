@@ -69,6 +69,8 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        MinecraftServer.getCommandManager().register(
+                new net.swofty.type.ravengarddungeon.commands.GenDungeonCommand().getCommand());
     }
 
     @Override
