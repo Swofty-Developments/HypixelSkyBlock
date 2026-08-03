@@ -120,6 +120,9 @@ public final class RavengardDungeonGenerator {
         for (PlacedSocket socket : generated.dungeon().getSealedSockets()) {
             plugDoorway(batch, socket);
         }
+        for (RoomPlacement placement : generated.dungeon().getPlacements()) {
+            sealOpenBorders(batch, placement, template, floorY);
+        }
 
         // batches only land in loaded chunks, and a fresh instance has none
         int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
@@ -165,6 +168,71 @@ public final class RavengardDungeonGenerator {
                     return null;
                 });
         return future;
+    }
+
+    private static void sealOpenBorders(AbsoluteBlockBatch batch, RoomPlacement placement,
+                                        DungeonTemplate template, int floorY) {
+        RavengardRoomCatalog.DungeonRoom room = placement.room();
+        int footprintWidth = placement.getFootprintWidth();
+        int footprintDepth = placement.getFootprintDepth();
+        boolean[][] mask = new boolean[footprintWidth][footprintDepth];
+        placement.forEachMaskCell((localX, localZ) -> {
+            if (localX >= 0 && localX < footprintWidth && localZ >= 0 && localZ < footprintDepth) {
+                mask[localX][localZ] = true;
+            }
+        });
+
+        java.util.Set<Long> doorCells = new java.util.HashSet<>();
+        for (RavengardRoomCatalog.DoorSocket socket : room.getSockets()) {
+            double[] center = placement.toPlacementFrame(socket.getX(), socket.getZ());
+            int reach = (int) Math.ceil(socket.getWidth() / 2) + 2;
+            for (int dx = -reach; dx <= reach; dx++) {
+                for (int dz = -reach; dz <= reach; dz++) {
+                    doorCells.add((((long) ((int) Math.round(center[0]) + dx)) << 32)
+                            | (((int) Math.round(center[1]) + dz) & 0xFFFFFFFFL));
+                }
+            }
+        }
+
+        Map<Block, Integer> wallSamples = new HashMap<>();
+        List<int[]> openCells = new ArrayList<>();
+        for (int localX = 0; localX < footprintWidth; localX++) {
+            for (int localZ = 0; localZ < footprintDepth; localZ++) {
+                if (!mask[localX][localZ]) continue;
+                boolean border = localX == 0 || localZ == 0
+                        || localX == footprintWidth - 1 || localZ == footprintDepth - 1
+                        || !mask[localX - 1][localZ] || !mask[localX + 1 == footprintWidth ? localX : localX + 1][localZ]
+                        || !mask[localX][localZ - 1] || !mask[localX][localZ + 1 == footprintDepth ? localZ : localZ + 1];
+                if (!border) continue;
+                int[] source = placement.toSourceFrame(localX, localZ);
+                int sourceX = room.getMinX() + source[0];
+                int sourceZ = room.getMinZ() + source[1];
+                int solid = 0;
+                for (int y = 65; y <= 80; y++) {
+                    if (template.blockAt(sourceX, y, sourceZ) != Block.AIR) solid++;
+                }
+                if (solid >= 3) {
+                    Block sample = template.blockAt(sourceX, 70, sourceZ);
+                    if (sample != Block.AIR && sample.isSolid()) {
+                        wallSamples.merge(sample, 1, Integer::sum);
+                    }
+                } else if (!doorCells.contains((((long) localX) << 32) | (localZ & 0xFFFFFFFFL))) {
+                    openCells.add(new int[]{localX, localZ, sourceX, sourceZ});
+                }
+            }
+        }
+        if (openCells.isEmpty()) return;
+        Block wall = wallSamples.entrySet().stream()
+                .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
+                .orElse(Block.POLISHED_BLACKSTONE_BRICKS);
+        for (int[] cell : openCells) {
+            for (int y = floorY + 4; y <= 84; y++) {
+                if (template.blockAt(cell[2], y, cell[3]) == Block.AIR) {
+                    batch.setBlock(placement.originX() + cell[0], y,
+                            placement.originZ() + cell[1], wall);
+                }
+            }
+        }
     }
 
     private static void materializeLight(Instance instance) {

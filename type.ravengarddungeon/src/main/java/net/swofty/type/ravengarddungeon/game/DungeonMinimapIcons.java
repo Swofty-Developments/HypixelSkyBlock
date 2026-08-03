@@ -43,9 +43,6 @@ public final class DungeonMinimapIcons {
         Component icons = Component.empty();
         var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
         for (int index = 0; index < placements.size(); index++) {
-            if (!dungeonInstance.getVisitedRooms().contains(index)) {
-                continue;
-            }
             var placement = placements.get(index);
             DungeonMapGlyphs.RoomArt art = DungeonMapGlyphs.artFor(
                     placement.room().getId(), placement.rotation().getDegrees());

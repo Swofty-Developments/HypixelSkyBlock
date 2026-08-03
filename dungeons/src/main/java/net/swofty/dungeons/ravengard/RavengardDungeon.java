@@ -116,6 +116,7 @@ public final class RavengardDungeon extends GameDungeon {
     }
 
     public static RavengardDungeon generate(RavengardRoomCatalog catalog, long seed, int targetRoomCount) {
+        targetRoomCount = Math.min(targetRoomCount, catalog.getRooms().size());
         RavengardDungeon best = null;
         for (int attempt = 0; attempt < 6; attempt++) {
             RavengardDungeon dungeon = generateAttempt(catalog, seed + attempt * 1000003L, targetRoomCount);
