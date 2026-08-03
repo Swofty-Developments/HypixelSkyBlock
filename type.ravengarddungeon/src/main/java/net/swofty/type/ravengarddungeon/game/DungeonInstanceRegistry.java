@@ -237,10 +237,35 @@ public final class DungeonInstanceRegistry {
                 player.sendMessage("§aEntered dungeon §f" + instance.getGameId().toString().substring(0, 8)
                         + "§a (" + instance.getGenerated().dungeon().getRoomCount() + " rooms, mode "
                         + instance.getMode() + ").");
+                scheduleChunkRefresh(player, instance);
             } finally {
                 PENDING_TELEPORTS.remove(player.getUuid());
             }
         }));
+    }
+
+    /** Chunk sections that reach the client while a resource reload is in flight
+     * are silently dropped from its renderer and a client-side rebuild cannot
+     * recover them, so the world is re-sent once the player has settled in. */
+    private static void scheduleChunkRefresh(net.minestom.server.entity.Player player,
+                                             DungeonInstance instance) {
+        player.scheduler().buildTask(() -> {
+            if (player.getInstance() != instance.getInstance()) {
+                return;
+            }
+            int viewDistance = net.minestom.server.MinecraftServer.getChunkViewDistance() + 2;
+            int playerChunkX = player.getPosition().chunkX();
+            int playerChunkZ = player.getPosition().chunkZ();
+            int sent = 0;
+            for (var chunk : instance.getInstance().getChunks()) {
+                if (Math.abs(chunk.getChunkX() - playerChunkX) <= viewDistance
+                        && Math.abs(chunk.getChunkZ() - playerChunkZ) <= viewDistance) {
+                    chunk.sendChunk(player);
+                    sent++;
+                }
+            }
+            org.tinylog.Logger.info("Refreshed {} chunks for {}", sent, player.getUsername());
+        }).delay(net.minestom.server.timer.TaskSchedule.tick(40)).schedule();
     }
 
     public static double[] boundsCenter(DungeonInstance instance) {
