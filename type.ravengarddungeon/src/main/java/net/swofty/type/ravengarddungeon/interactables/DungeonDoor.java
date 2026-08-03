@@ -86,7 +86,7 @@ public final class DungeonDoor extends DungeonInteractable {
     }
 
     private static float closedYaw(float configYaw, boolean axisAlongX) {
-        float[] options = axisAlongX ? new float[]{90f, 270f} : new float[]{0f, 180f};
+        float[] options = axisAlongX ? new float[]{0f, 180f} : new float[]{90f, 270f};
         float normalized = ((configYaw % 360f) + 360f) % 360f;
         float best = options[0];
         float bestDelta = 360f;

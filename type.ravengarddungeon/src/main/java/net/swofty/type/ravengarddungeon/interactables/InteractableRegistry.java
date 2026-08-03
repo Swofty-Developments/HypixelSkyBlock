@@ -82,6 +82,10 @@ public final class InteractableRegistry {
             Channel channel = entry.getValue();
             if (player == null || channel.target().isOpened()
                     || !isLookingAt(player, channel.target())) {
+                org.tinylog.Logger.info("Channel cancel: player={} opened={} looking={}",
+                        player != null,
+                        channel.target().isOpened(),
+                        player != null && isLookingAt(player, channel.target()));
                 CHANNELS.remove(entry.getKey());
                 if (player != null) {
                     hideBar(player);
