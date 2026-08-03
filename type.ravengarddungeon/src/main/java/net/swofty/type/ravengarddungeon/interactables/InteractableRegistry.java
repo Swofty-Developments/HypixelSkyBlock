@@ -113,7 +113,7 @@ public final class InteractableRegistry {
     private static void bar(Player player, float progress) {
         BossBar bar = BARS.computeIfAbsent(player.getUuid(), ignored -> {
             BossBar created = BossBar.bossBar(Component.empty(), 0f,
-                    BossBar.Color.WHITE, BossBar.Overlay.PROGRESS);
+                    BossBar.Color.BLUE, BossBar.Overlay.PROGRESS);
             player.showBossBar(created);
             return created;
         });

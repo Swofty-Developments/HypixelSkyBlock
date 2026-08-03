@@ -39,7 +39,8 @@ public final class DungeonSatchel extends DungeonInteractable {
     }
 
     public static DungeonSatchel spawn(Instance instance, Pos position) {
-        Pos base = position.withY(groundY(instance, position) + 0.5);
+        Pos base = position.withY(groundY(instance, position) + 0.5)
+                .withPitch(0f).withYaw(0f);
         DungeonSatchel satchel = new DungeonSatchel(instance, base);
         instance.sendGroupedPacket(new ParticlePacket(Particle.CAMPFIRE_COSY_SMOKE,
                 base.x(), base.y(), base.z(), 0.25f, 0.2f, 0.25f, 0.01f, 14));
