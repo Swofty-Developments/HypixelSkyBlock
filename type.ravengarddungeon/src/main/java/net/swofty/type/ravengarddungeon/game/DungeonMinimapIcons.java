@@ -1,6 +1,7 @@
 package net.swofty.type.ravengarddungeon.game;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.ShadowColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudComposer;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
@@ -8,12 +9,8 @@ import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
 import java.util.UUID;
 
 public final class DungeonMinimapIcons {
-    private static final double MAP_SCALE = 0.75;
-    private static final double VISIBLE_RANGE_PIXELS = 124;
-    private static final double BLOCKS_PER_TILE = 13 / MAP_SCALE;
-    private static final String TILE_UNSEEN = "\uE131";
-    private static final String TILE_SEEN = "\uE132";
-    private static final String TILE_HERE = "\uE133";
+    private static final int TILE = 13;
+    private static final double VISIBLE_RANGE_PIXELS = 136;
 
     private DungeonMinimapIcons() {
     }
@@ -44,20 +41,38 @@ public final class DungeonMinimapIcons {
         }
 
         Component icons = Component.empty();
-        for (DungeonInstanceRegistry.DungeonInstance.MapTile tile
-                : dungeonInstance.getMapTiles(BLOCKS_PER_TILE)) {
-            double offsetX = (tile.worldX() - state.getWorldX()) * MAP_SCALE;
-            double offsetZ = (tile.worldZ() - state.getWorldZ()) * MAP_SCALE;
-            if (Math.abs(offsetX) > VISIBLE_RANGE_PIXELS || Math.abs(offsetZ) > VISIBLE_RANGE_PIXELS) {
+        var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
+        for (int index = 0; index < placements.size(); index++) {
+            if (!dungeonInstance.getVisitedRooms().contains(index)) {
                 continue;
             }
-            String glyph = tile.roomIndex() == currentRoom ? TILE_HERE
-                    : dungeonInstance.getVisitedRooms().contains(tile.roomIndex()) ? TILE_SEEN
-                    : TILE_UNSEEN;
-            int packedX = clamp9((int) Math.round((offsetX + 128) * 2));
-            int packedZ = clamp9((int) Math.round((offsetZ + 128) * 2));
-            icons = icons.append(Component.text(glyph)
-                    .color(TextColor.color((packedX << 15) | (packedZ << 6))));
+            var placement = placements.get(index);
+            DungeonMapGlyphs.RoomArt art = DungeonMapGlyphs.artFor(
+                    placement.room().getId(), placement.rotation().getDegrees());
+            if (art == null) {
+                continue;
+            }
+            for (int row = 0; row < art.rows(); row++) {
+                for (int col = 0; col < art.cols(); col++) {
+                    Integer codepoint = art.tiles().get(row).get(col);
+                    if (codepoint == null) {
+                        continue;
+                    }
+                    double tileCenterX = placement.originX() + col * TILE + TILE / 2.0;
+                    double tileCenterZ = placement.originZ() + row * TILE + TILE / 2.0;
+                    double offsetX = tileCenterX - state.getWorldX();
+                    double offsetZ = tileCenterZ - state.getWorldZ();
+                    if (Math.abs(offsetX) > VISIBLE_RANGE_PIXELS
+                            || Math.abs(offsetZ) > VISIBLE_RANGE_PIXELS) {
+                        continue;
+                    }
+                    int packedX = clamp9((int) Math.round((offsetX + 128) * 2));
+                    int packedZ = clamp9((int) Math.round((offsetZ + 128) * 2));
+                    icons = icons.append(Component.text(Character.toString(codepoint))
+                            .color(TextColor.color((packedX << 15) | (packedZ << 6)))
+                            .shadowColor(ShadowColor.shadowColor(0)));
+                }
+            }
         }
         return icons;
     }

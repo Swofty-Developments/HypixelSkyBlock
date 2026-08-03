@@ -8,16 +8,11 @@ import net.minestom.server.entity.Player;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudComposer;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
 
-import java.util.List;
 import java.util.UUID;
 
 public final class DungeonTabMap {
-    private static final double MAP_SCALE = 0.75;
-    private static final double BLOCKS_PER_TILE = 13 / MAP_SCALE;
+    private static final int TILE = 13;
     private static final int MAP_CENTER = 256;
-    private static final String TILE_UNSEEN = "";
-    private static final String TILE_SEEN = "";
-    private static final String TILE_HERE = "";
     private static final String PLAYER_MARKER = "";
     private static final String TEAMMATE_MARKER = "";
     private static final double YAW_PER_STEP = 360.0 / 64.0;
@@ -45,30 +40,41 @@ public final class DungeonTabMap {
             return null;
         }
 
-        List<DungeonInstanceRegistry.DungeonInstance.MapTile> tiles =
-                dungeonInstance.getMapTiles(BLOCKS_PER_TILE);
-        if (tiles.isEmpty()) {
-            return null;
-        }
+        var placements = dungeonInstance.getGenerated().dungeon().getPlacements();
         double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE;
         double minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
-        for (DungeonInstanceRegistry.DungeonInstance.MapTile tile : tiles) {
-            minX = Math.min(minX, tile.worldX());
-            maxX = Math.max(maxX, tile.worldX());
-            minZ = Math.min(minZ, tile.worldZ());
-            maxZ = Math.max(maxZ, tile.worldZ());
+        for (var placement : placements) {
+            minX = Math.min(minX, placement.originX());
+            maxX = Math.max(maxX, placement.originX() + placement.getFootprintWidth());
+            minZ = Math.min(minZ, placement.originZ());
+            maxZ = Math.max(maxZ, placement.originZ() + placement.getFootprintDepth());
         }
         double centerX = (minX + maxX) / 2, centerZ = (minZ + maxZ) / 2;
 
-        int currentRoom = dungeonInstance.roomIndexAt(state.getWorldX(), state.getWorldZ());
         Component header = Component.empty();
-        for (DungeonInstanceRegistry.DungeonInstance.MapTile tile : tiles) {
-            String glyph = tile.roomIndex() == currentRoom ? TILE_HERE
-                    : dungeonInstance.getVisitedRooms().contains(tile.roomIndex()) ? TILE_SEEN
-                    : TILE_UNSEEN;
-            header = header.append(Component.text(glyph)
-                    .color(TextColor.color(packed(tile.worldX(), tile.worldZ(), centerX, centerZ, 0)))
-                    .shadowColor(ShadowColor.shadowColor(0)));
+        for (int index = 0; index < placements.size(); index++) {
+            if (!dungeonInstance.getVisitedRooms().contains(index)) {
+                continue;
+            }
+            var placement = placements.get(index);
+            DungeonMapGlyphs.RoomArt art = DungeonMapGlyphs.artFor(
+                    placement.room().getId(), placement.rotation().getDegrees());
+            if (art == null) {
+                continue;
+            }
+            for (int row = 0; row < art.rows(); row++) {
+                for (int col = 0; col < art.cols(); col++) {
+                    Integer codepoint = art.tiles().get(row).get(col);
+                    if (codepoint == null) {
+                        continue;
+                    }
+                    double tileCenterX = placement.originX() + col * TILE + TILE / 2.0;
+                    double tileCenterZ = placement.originZ() + row * TILE + TILE / 2.0;
+                    header = header.append(Component.text(Character.toString(codepoint))
+                            .color(TextColor.color(packed(tileCenterX, tileCenterZ, centerX, centerZ, 0)))
+                            .shadowColor(ShadowColor.shadowColor(0)));
+                }
+            }
         }
         header = header.append(Component.newline());
 
@@ -92,8 +98,8 @@ public final class DungeonTabMap {
     }
 
     private static int packed(double worldX, double worldZ, double centerX, double centerZ, int rotation) {
-        int mapX = clamp9((int) Math.round(MAP_CENTER + (worldX - centerX) * MAP_SCALE));
-        int mapZ = clamp9((int) Math.round(MAP_CENTER + (worldZ - centerZ) * MAP_SCALE));
+        int mapX = clamp9((int) Math.round(MAP_CENTER + (worldX - centerX)));
+        int mapZ = clamp9((int) Math.round(MAP_CENTER + (worldZ - centerZ)));
         return (mapX << 15) | (mapZ << 6) | rotation;
     }
 
