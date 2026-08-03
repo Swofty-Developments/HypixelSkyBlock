@@ -24,6 +24,8 @@ public final class DungeonInstanceRegistry {
     private DungeonInstanceRegistry() {
     }
 
+    public static final long EMPTY_LIFETIME_MILLIS = 30_000;
+
     public static final class DungeonInstance {
         private final UUID gameId = UUID.randomUUID();
         private final String mode;
@@ -32,6 +34,28 @@ public final class DungeonInstanceRegistry {
         private final CompletableFuture<Void> ready;
         private final RavengardDungeonGenerator.GeneratedDungeon generated;
         private final Set<UUID> players = ConcurrentHashMap.newKeySet();
+        private volatile long emptySince = System.currentTimeMillis();
+
+        public void markPlayerJoined(UUID player) {
+            players.add(player);
+            emptySince = 0;
+        }
+
+        public void markPlayerLeft(UUID player) {
+            if (players.remove(player) && players.isEmpty()) {
+                emptySince = System.currentTimeMillis();
+            }
+        }
+
+        public long getRemainingLifeSeconds() {
+            if (!players.isEmpty() || emptySince == 0) return -1;
+            return Math.max(0, (EMPTY_LIFETIME_MILLIS - (System.currentTimeMillis() - emptySince)) / 1000);
+        }
+
+        public boolean isExpired() {
+            return players.isEmpty() && emptySince > 0
+                    && System.currentTimeMillis() - emptySince > EMPTY_LIFETIME_MILLIS;
+        }
 
         private DungeonInstance(String mode, long seed, InstanceContainer instance,
                                 RavengardDungeonGenerator.GeneratedDungeon generated,
@@ -111,11 +135,14 @@ public final class DungeonInstanceRegistry {
         return Math.max(0, MAX_INSTANCES - INSTANCES.size());
     }
 
-    public static void removeIfEmpty(UUID gameId) {
-        DungeonInstance dungeonInstance = INSTANCES.get(gameId);
-        if (dungeonInstance != null && dungeonInstance.getPlayers().isEmpty()) {
-            INSTANCES.remove(gameId);
-            MinecraftServer.getInstanceManager().unregisterInstance(dungeonInstance.getInstance());
-        }
+    public static void startExpiryTask() {
+        MinecraftServer.getSchedulerManager().buildTask(() -> {
+            for (DungeonInstance instance : INSTANCES.values()) {
+                if (instance.isExpired()) {
+                    INSTANCES.remove(instance.getGameId());
+                    MinecraftServer.getInstanceManager().unregisterInstance(instance.getInstance());
+                }
+            }
+        }).repeat(net.minestom.server.timer.TaskSchedule.seconds(1)).schedule();
     }
 }

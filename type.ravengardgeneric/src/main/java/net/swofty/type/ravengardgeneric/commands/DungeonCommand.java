@@ -32,6 +32,7 @@ public class DungeonCommand extends HypixelCommand {
             if (player.getRank().isStaff()) {
                 player.sendMessage("§e/dungeon list §7- every dungeon server and its instances");
                 player.sendMessage("§e/dungeon admin generate [seed] [rooms] §7- dedicated instance");
+                player.sendMessage("§e/dungeon admin join <instance> §7- fly over an instance");
             }
         });
 
@@ -49,21 +50,86 @@ public class DungeonCommand extends HypixelCommand {
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender, Rank.STAFF)) return;
-            queue((RavengardPlayer) sender,
+            adminGenerate((RavengardPlayer) sender,
                     "ADMIN:" + ThreadLocalRandom.current().nextLong() + ":" + DEFAULT_ADMIN_ROOMS);
         }, ArgumentType.Literal("admin"), ArgumentType.Literal("generate"));
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender, Rank.STAFF)) return;
-            queue((RavengardPlayer) sender,
+            adminGenerate((RavengardPlayer) sender,
                     "ADMIN:" + context.get(seedArg) + ":" + DEFAULT_ADMIN_ROOMS);
         }, ArgumentType.Literal("admin"), ArgumentType.Literal("generate"), seedArg);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender, Rank.STAFF)) return;
-            queue((RavengardPlayer) sender,
+            adminGenerate((RavengardPlayer) sender,
                     "ADMIN:" + context.get(seedArg) + ":" + context.get(roomsArg));
         }, ArgumentType.Literal("admin"), ArgumentType.Literal("generate"), seedArg, roomsArg);
+
+        var instanceArg = ArgumentType.Word("instance");
+        command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender, Rank.STAFF)) return;
+            adminJoin((RavengardPlayer) sender, context.get(instanceArg));
+        }, ArgumentType.Literal("admin"), ArgumentType.Literal("join"), instanceArg);
+    }
+
+    private static void adminGenerate(RavengardPlayer player, String mode) {
+        player.sendMessage("§7Allocating a dungeon instance...");
+        GetServerForMapProtocol.GetServerForMapMessage request =
+                new GetServerForMapProtocol.GetServerForMapMessage(
+                        ServerType.RAVENGARD_DUNGEON, null, mode, 1);
+        ORCHESTRATOR.handleRequest(request).thenAccept(response -> {
+            if (!(response instanceof GetServerForMapProtocol.GetServerForMapResponse(
+                    UnderstandableProxyServer server, String gameId, boolean success, String error))
+                    || server == null || gameId == null) {
+                String reason = response instanceof GetServerForMapProtocol.GetServerForMapResponse r
+                        && r.error() != null ? r.error() : "no servers available";
+                player.sendMessage("§cCould not allocate an instance: " + reason);
+                return;
+            }
+            player.sendMessage("§aInstance §f" + gameId + "§a created on §f" + server.shortName()
+                    + "§a. It self-destructs after 30s with nobody inside.");
+            player.sendMessage(net.kyori.adventure.text.Component
+                    .text("§e§l[CLICK TO JOIN] §7or run /dungeon admin join " + gameId.substring(0, 8))
+                    .clickEvent(net.kyori.adventure.text.event.ClickEvent
+                            .runCommand("/dungeon admin join " + gameId)));
+        }).exceptionally(throwable -> {
+            player.sendMessage("§cAllocation failed: " + throwable.getMessage());
+            return null;
+        });
+    }
+
+    private static void adminJoin(RavengardPlayer player, String instanceId) {
+        ORCHESTRATOR.handleRequest(new ListGamesProtocol.ListGamesMessage(ServerType.RAVENGARD_DUNGEON))
+                .thenAccept(response -> {
+                    if (!(response instanceof ListGamesProtocol.ListGamesResponse listing)
+                            || !listing.success()) {
+                        player.sendMessage("§cFailed to look the instance up.");
+                        return;
+                    }
+                    for (ListGamesProtocol.ServerGames server : listing.servers()) {
+                        for (ListGamesProtocol.GameSummary game : server.games()) {
+                            if (!game.gameId().equals(instanceId)
+                                    && !game.gameId().startsWith(instanceId)) continue;
+                            UnderstandableProxyServer proxy = new UnderstandableProxyServer(
+                                    server.shortName(),
+                                    java.util.UUID.fromString(server.serverUuid()),
+                                    ServerType.RAVENGARD_DUNGEON, -1,
+                                    new java.util.ArrayList<>(), server.maxPlayers(),
+                                    server.shortName());
+                            ORCHESTRATOR.handleRequest(new ChooseGameProtocol.ChooseGameMessage(
+                                    player.getUuid(), proxy, game.gameId())).thenRun(() -> {
+                                player.sendMessage("§aSending you to §f" + server.shortName() + "§a!");
+                                player.asProxyPlayer().transferToWithIndication(proxy.uuid());
+                            });
+                            return;
+                        }
+                    }
+                    player.sendMessage("§cNo instance found matching §f" + instanceId + "§c.");
+                }).exceptionally(throwable -> {
+                    player.sendMessage("§cLookup failed: " + throwable.getMessage());
+                    return null;
+                });
     }
 
     private boolean permissionCheck(net.minestom.server.command.CommandSender sender, Rank rank) {
@@ -123,10 +189,12 @@ public class DungeonCommand extends HypixelCommand {
                                 + " players§7, §f" + (server.remainingGameSlots() == null
                                 ? "?" : server.remainingGameSlots()) + "§7 free instance slots");
                         for (ListGamesProtocol.GameSummary game : server.games()) {
+                            String expiry = game.map() != null && game.map().startsWith("empty:")
+                                    ? " §c(dies in " + game.map().substring(6) + "s)" : "";
                             player.sendMessage("  §8- §f" + game.gameId().substring(0, 8)
                                     + " §7" + game.gameTypeName()
                                     + " §f" + game.playerCount() + " players "
-                                    + (game.acceptingJoins() ? "§aopen" : "§cclosed"));
+                                    + (game.acceptingJoins() ? "§aopen" : "§cclosed") + expiry);
                         }
                         if (server.games().isEmpty()) {
                             player.sendMessage("  §8- §7no instances");

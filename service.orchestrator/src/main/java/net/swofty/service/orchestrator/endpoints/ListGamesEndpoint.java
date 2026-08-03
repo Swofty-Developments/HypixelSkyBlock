@@ -34,7 +34,7 @@ public class ListGamesEndpoint implements RedisMessageHandler
                         game.game().isAcceptingJoins()));
             }
             servers.add(new ListGamesProtocol.ServerGames(server.shortName(),
-                    server.onlinePlayers(), server.maxPlayers(),
+                    server.uuid().toString(), server.onlinePlayers(), server.maxPlayers(),
                     server.remainingGameSlots(), games));
         }
         return new ListGamesProtocol.ListGamesResponse(servers, true, null);

@@ -69,6 +69,7 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public void afterInitialize(MinecraftServer server) {
+        net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.startExpiryTask();
         startOrchestratorHeartbeat();
     }
 
@@ -79,7 +80,8 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
                 net.swofty.type.game.game.GameObject game = new net.swofty.type.game.game.GameObject();
                 game.setGameId(instance.getGameId());
                 game.setType(ServerType.RAVENGARD_DUNGEON);
-                game.setMap("generated");
+                game.setMap(instance.getPlayers().isEmpty()
+                        ? "empty:" + instance.getRemainingLifeSeconds() : "generated");
                 game.setGameTypeName(instance.getMode());
                 game.setAcceptingJoins(instance.isAcceptingJoins());
                 game.setInvolvedPlayers(new java.util.ArrayList<>(instance.getPlayers()));
@@ -141,8 +143,12 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
 
     @Override
     public List<RedisMessageHandler<?, ?>> getProxyHandlers() {
-        return List.of(new net.swofty.type.ravengarddungeon.redis.DungeonInstantiateGameHandler(),
-                new net.swofty.type.generic.redis.service.GameInformationHandler());
+        return List.of();
+    }
+
+    @Override
+    public List<RedisMessageHandler<?, ?>> getServiceHandlers() {
+        return List.of(new net.swofty.type.ravengarddungeon.redis.DungeonInstantiateGameHandler());
     }
 
     @Override

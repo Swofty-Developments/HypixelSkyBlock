@@ -29,7 +29,7 @@ public class ListGamesProtocol extends RedisProtocol
     public record GameSummary(String gameId, String gameTypeName, String map,
                               int playerCount, boolean acceptingJoins) { }
 
-    public record ServerGames(String shortName, int onlinePlayers, int maxPlayers,
+    public record ServerGames(String shortName, String serverUuid, int onlinePlayers, int maxPlayers,
                               Integer remainingGameSlots, List<GameSummary> games) { }
 
     public record ListGamesResponse(List<ServerGames> servers, boolean success, String error) { }
