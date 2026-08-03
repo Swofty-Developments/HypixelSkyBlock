@@ -17,9 +17,9 @@ import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 import java.util.concurrent.ThreadLocalRandom;
 
 @CommandParameters(labels = "dungeon",
-        description = "Ravengard dungeon queueing and administration",
-        usage = "/dungeon <join|list|admin generate [seed] [rooms]>",
-        permission = Rank.DEFAULT, allowsConsole = false)
+        description = "Ravengard dungeon administration",
+        usage = "/dungeon <join|list|generate [seed] [rooms]>",
+        permission = Rank.STAFF, allowsConsole = false)
 public class DungeonCommand extends HypixelCommand {
     private static final ProxyService ORCHESTRATOR = new ProxyService(ServiceType.ORCHESTRATOR);
     private static final int DEFAULT_ADMIN_ROOMS = 24;
@@ -27,21 +27,21 @@ public class DungeonCommand extends HypixelCommand {
     @Override
     public void registerUsage(MinestomCommand command) {
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
             RavengardPlayer player = (RavengardPlayer) sender;
             player.sendMessage("§e/dungeon join §7- queue into a dungeon");
-            if (player.getRank().isStaff()) {
-                player.sendMessage("§e/dungeon list §7- every dungeon server and its instances");
-                player.sendMessage("§e/dungeon admin generate [seed] [rooms] §7- dedicated instance");
-                player.sendMessage("§e/dungeon admin join <instance> §7- fly over an instance");
-            }
+            player.sendMessage("§e/dungeon join <instance> §7- fly over an instance");
+            player.sendMessage("§e/dungeon list §7- every dungeon server and its instances");
+            player.sendMessage("§e/dungeon generate [seed] [rooms] §7- dedicated instance");
         });
 
         command.addSyntax((sender, context) -> {
+            if (!permissionCheck(sender)) return;
             queue((RavengardPlayer) sender, "STANDARD");
         }, ArgumentType.Literal("join"));
 
         command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender, Rank.STAFF)) return;
+            if (!permissionCheck(sender)) return;
             list((RavengardPlayer) sender);
         }, ArgumentType.Literal("list"));
 
@@ -49,28 +49,28 @@ public class DungeonCommand extends HypixelCommand {
         ArgumentNumber<Integer> roomsArg = ArgumentType.Integer("rooms").min(3).max(120);
 
         command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender, Rank.STAFF)) return;
+            if (!permissionCheck(sender)) return;
             adminGenerate((RavengardPlayer) sender,
                     "ADMIN:" + ThreadLocalRandom.current().nextLong() + ":" + DEFAULT_ADMIN_ROOMS);
-        }, ArgumentType.Literal("admin"), ArgumentType.Literal("generate"));
+        }, ArgumentType.Literal("generate"));
 
         command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender, Rank.STAFF)) return;
+            if (!permissionCheck(sender)) return;
             adminGenerate((RavengardPlayer) sender,
                     "ADMIN:" + context.get(seedArg) + ":" + DEFAULT_ADMIN_ROOMS);
-        }, ArgumentType.Literal("admin"), ArgumentType.Literal("generate"), seedArg);
+        }, ArgumentType.Literal("generate"), seedArg);
 
         command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender, Rank.STAFF)) return;
+            if (!permissionCheck(sender)) return;
             adminGenerate((RavengardPlayer) sender,
                     "ADMIN:" + context.get(seedArg) + ":" + context.get(roomsArg));
-        }, ArgumentType.Literal("admin"), ArgumentType.Literal("generate"), seedArg, roomsArg);
+        }, ArgumentType.Literal("generate"), seedArg, roomsArg);
 
         var instanceArg = ArgumentType.Word("instance");
         command.addSyntax((sender, context) -> {
-            if (!permissionCheck(sender, Rank.STAFF)) return;
+            if (!permissionCheck(sender)) return;
             adminJoin((RavengardPlayer) sender, context.get(instanceArg));
-        }, ArgumentType.Literal("admin"), ArgumentType.Literal("join"), instanceArg);
+        }, ArgumentType.Literal("join"), instanceArg);
     }
 
     private static void adminGenerate(RavengardPlayer player, String mode) {
@@ -90,9 +90,9 @@ public class DungeonCommand extends HypixelCommand {
             player.sendMessage("§aInstance §f" + gameId + "§a created on §f" + server.shortName()
                     + "§a. It self-destructs after 30s with nobody inside.");
             player.sendMessage(net.kyori.adventure.text.Component
-                    .text("§e§l[CLICK TO JOIN] §7or run /dungeon admin join " + gameId.substring(0, 8))
+                    .text("§e§l[CLICK TO JOIN] §7or run /dungeon join " + gameId.substring(0, 8))
                     .clickEvent(net.kyori.adventure.text.event.ClickEvent
-                            .runCommand("/dungeon admin join " + gameId)));
+                            .runCommand("/dungeon join " + gameId)));
         }).exceptionally(throwable -> {
             player.sendMessage("§cAllocation failed: " + throwable.getMessage());
             return null;
@@ -130,15 +130,6 @@ public class DungeonCommand extends HypixelCommand {
                     player.sendMessage("§cLookup failed: " + throwable.getMessage());
                     return null;
                 });
-    }
-
-    private boolean permissionCheck(net.minestom.server.command.CommandSender sender, Rank rank) {
-        RavengardPlayer player = (RavengardPlayer) sender;
-        if (!player.getRank().isEqualOrHigherThan(rank)) {
-            player.sendMessage("§cYou do not have permission to use this command.");
-            return false;
-        }
-        return true;
     }
 
     private static void queue(RavengardPlayer player, String mode) {
