@@ -69,8 +69,23 @@ public final class RavengardDungeonGenerator {
             RavengardRoomCatalog.DungeonRoom room = placement.room();
             int footprintWidth = placement.getFootprintWidth();
             int footprintDepth = placement.getFootprintDepth();
+            // dilate the footprint mask by one block so the seam half around the
+            // room's true shape travels with it, without dragging neighbours along
+            boolean[][] cut = new boolean[footprintWidth + 2][footprintDepth + 2];
+            placement.forEachMaskCell((localX, localZ) -> {
+                for (int dx = -1; dx <= 1; dx++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        int cutX = localX + dx + 1, cutZ = localZ + dz + 1;
+                        if (cutX >= 0 && cutX < footprintWidth + 2
+                                && cutZ >= 0 && cutZ < footprintDepth + 2) {
+                            cut[cutX][cutZ] = true;
+                        }
+                    }
+                }
+            });
             for (int localX = -1; localX <= footprintWidth; localX++) {
                 for (int localZ = -1; localZ <= footprintDepth; localZ++) {
+                    if (!cut[localX + 1][localZ + 1]) continue;
                     int[] source = placement.toSourceFrame(localX, localZ);
                     int sourceX = room.getMinX() + source[0];
                     int sourceZ = room.getMinZ() + source[1];

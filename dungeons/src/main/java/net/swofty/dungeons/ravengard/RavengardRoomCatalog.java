@@ -38,11 +38,24 @@ public final class RavengardRoomCatalog {
         @SerializedName("h") private int depth;
         private String color;
         private boolean letterTile;
+        private List<int[]> mask;
         private List<DoorSocket> sockets;
         private List<RoomObject> objects;
 
         public List<DoorSocket> getSockets() {
             return sockets == null ? List.of() : sockets;
+        }
+
+        /** Footprint rows as [rowZ, startX, endX] runs; falls back to the full box. */
+        public List<int[]> getMask() {
+            if (mask != null && !mask.isEmpty()) {
+                return mask;
+            }
+            List<int[]> full = new java.util.ArrayList<>();
+            for (int rowZ = 0; rowZ < depth; rowZ++) {
+                full.add(new int[]{rowZ, 0, width - 1});
+            }
+            return full;
         }
 
         public List<RoomObject> getObjects() {

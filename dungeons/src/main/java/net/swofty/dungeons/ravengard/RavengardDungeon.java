@@ -64,6 +64,16 @@ public final class RavengardDungeon extends GameDungeon {
             };
         }
 
+        /** Visits every mask cell of this placement in placement-local coordinates. */
+        public void forEachMaskCell(java.util.function.BiConsumer<Integer, Integer> visitor) {
+            for (int[] run : room.getMask()) {
+                for (int sourceX = run[1]; sourceX <= run[2]; sourceX++) {
+                    double[] local = toPlacementFrame(sourceX, run[0]);
+                    visitor.accept((int) Math.round(local[0]), (int) Math.round(local[1]));
+                }
+            }
+        }
+
         public double getWorldX(double sourceX, double sourceZ) {
             return originX + toPlacementFrame(sourceX, sourceZ)[0];
         }
@@ -217,11 +227,14 @@ public final class RavengardDungeon extends GameDungeon {
                        List<PlacedSocket> openSockets, Set<String> usedRoomIds) {
         placements.add(placement);
         usedRoomIds.add(placement.room().getId());
-        for (int x = placement.originX() - 1; x <= placement.originX() + placement.getFootprintWidth(); x++) {
-            for (int z = placement.originZ() - 1; z <= placement.originZ() + placement.getFootprintDepth(); z++) {
-                occupiedCells.add(cellKey(x, z));
+        placement.forEachMaskCell((localX, localZ) -> {
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    occupiedCells.add(cellKey(placement.originX() + localX + dx,
+                            placement.originZ() + localZ + dz));
+                }
             }
-        }
+        });
         for (DoorSocket socket : placement.room().getSockets()) {
             openSockets.add(new PlacedSocket(placement, socket));
         }
@@ -251,12 +264,14 @@ public final class RavengardDungeon extends GameDungeon {
     }
 
     private static boolean fits(RoomPlacement placement, Set<Long> occupiedCells) {
-        for (int x = placement.originX(); x < placement.originX() + placement.getFootprintWidth(); x++) {
-            for (int z = placement.originZ(); z < placement.originZ() + placement.getFootprintDepth(); z++) {
-                if (occupiedCells.contains(cellKey(x, z))) return false;
+        boolean[] blocked = {false};
+        placement.forEachMaskCell((localX, localZ) -> {
+            if (!blocked[0] && occupiedCells.contains(
+                    cellKey(placement.originX() + localX, placement.originZ() + localZ))) {
+                blocked[0] = true;
             }
-        }
-        return true;
+        });
+        return !blocked[0];
     }
 
     private static long cellKey(int x, int z) {
