@@ -13,9 +13,6 @@ import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.ravengardgeneric.item.RavengardItem;
-import net.swofty.type.ravengardgeneric.item.RavengardItemRegistry;
-import net.swofty.type.ravengardgeneric.item.RavengardItemType;
 
 import java.util.List;
 import java.util.Random;
@@ -68,12 +65,11 @@ public final class DungeonChest extends DungeonInteractable {
 
         Inventory inventory = new Inventory(InventoryType.CHEST_3_ROW,
                 Component.text(TITLE_GLYPHS, NamedTextColor.WHITE));
-        List<RavengardItemType> pool = RavengardItemRegistry.all();
+        double distance = Math.hypot(base.x(), base.z());
         int rolls = 2 + random.nextInt(2);
-        for (int roll = 0; roll < rolls && !pool.isEmpty(); roll++) {
-            RavengardItemType type = pool.get(random.nextInt(pool.size()));
+        for (int roll = 0; roll < rolls; roll++) {
             inventory.setItemStack(LOOT_SLOTS[random.nextInt(LOOT_SLOTS.length)],
-                    RavengardItem.of(type.getId()));
+                    DungeonLoot.roll(random, distance));
         }
         InteractableRegistry.watchClose(inventory, closer -> explode());
         MinecraftServer.getSchedulerManager().buildTask(() -> player.openInventory(inventory))

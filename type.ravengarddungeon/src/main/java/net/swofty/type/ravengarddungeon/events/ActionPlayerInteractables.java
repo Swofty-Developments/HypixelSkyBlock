@@ -14,6 +14,9 @@ public class ActionPlayerInteractables implements HypixelEventClass {
     @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = true, phase = EventPhase.GAMEPLAY)
     public void onInteract(PlayerEntityInteractEvent event) {
         if (event.getHand() != PlayerHand.MAIN) return;
+        org.tinylog.Logger.info("Interact click: entity {} type {} resolved {}",
+                event.getTarget().getEntityId(), event.getTarget().getEntityType(),
+                InteractableRegistry.byInteraction(event.getTarget()) != null);
         InteractableRegistry.onClick(event.getPlayer(), event.getTarget());
     }
 

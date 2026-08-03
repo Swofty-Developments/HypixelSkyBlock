@@ -39,6 +39,10 @@ public final class InteractableRegistry {
         BY_INTERACTION.put(extra.getEntityId(), interactable);
     }
 
+    public static DungeonInteractable byInteraction(Entity entity) {
+        return entity == null ? null : BY_INTERACTION.get(entity.getEntityId());
+    }
+
     public static void unregister(DungeonInteractable interactable) {
         if (interactable.getInteraction() != null) {
             BY_INTERACTION.remove(interactable.getInteraction().getEntityId());

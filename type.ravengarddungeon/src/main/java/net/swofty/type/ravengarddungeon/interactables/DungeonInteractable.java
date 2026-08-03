@@ -68,6 +68,7 @@ public abstract class DungeonInteractable {
             meta.setItemStack(modelStack(model));
             meta.setPosRotInterpolationDuration(2);
             meta.setViewRange(4096f);
+            meta.setBrightnessOverride(7340144);
         });
         display.setInstance(instance, position);
         return display;

@@ -13,11 +13,7 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
-import net.swofty.type.ravengardgeneric.item.RavengardItem;
-import net.swofty.type.ravengardgeneric.item.RavengardItemRegistry;
-import net.swofty.type.ravengardgeneric.item.RavengardItemType;
 
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -106,12 +102,11 @@ public final class DungeonSatchel extends DungeonInteractable {
 
         Inventory inventory = new Inventory(InventoryType.CHEST_5_ROW, Component.text("Dead Body"));
         Random random = ThreadLocalRandom.current();
-        List<RavengardItemType> pool = RavengardItemRegistry.all();
+        double distance = Math.hypot(base.x(), base.z());
         int rolls = 1 + random.nextInt(3);
-        for (int roll = 0; roll < rolls && !pool.isEmpty(); roll++) {
-            RavengardItemType type = pool.get(random.nextInt(pool.size()));
+        for (int roll = 0; roll < rolls; roll++) {
             inventory.setItemStack(LOOT_SLOTS[random.nextInt(LOOT_SLOTS.length)],
-                    RavengardItem.of(type.getId()));
+                    DungeonLoot.roll(random, distance));
         }
         InteractableRegistry.watchClose(inventory, closer -> {
             instance.sendGroupedPacket(new ParticlePacket(Particle.POOF,
