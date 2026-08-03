@@ -66,7 +66,6 @@ public abstract class DungeonInteractable {
         display.setNoGravity(true);
         display.editEntityMeta(ItemDisplayMeta.class, meta -> {
             meta.setItemStack(modelStack(model));
-            meta.setDisplayContext(ItemDisplayMeta.DisplayContext.HEAD);
             meta.setPosRotInterpolationDuration(2);
             meta.setViewRange(4096f);
         });
