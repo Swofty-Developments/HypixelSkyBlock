@@ -144,7 +144,10 @@ public final class RavengardDungeon extends GameDungeon {
 
         Map<String, List<DungeonRoom>> shapeGroups = new HashMap<>();
         for (DungeonRoom room : rooms) {
-            shapeGroups.computeIfAbsent(canonicalShape(room), key -> new ArrayList<>()).add(room);
+            // the outline colour is the room's role class in the blueprint;
+            // interiors only permute between rooms of the same class
+            shapeGroups.computeIfAbsent(room.getColor() + "|" + canonicalShape(room),
+                    key -> new ArrayList<>()).add(room);
         }
 
         Map<String, RoomPlacement> chosen = new HashMap<>();

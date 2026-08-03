@@ -77,17 +77,30 @@ public final class RavengardDungeonGenerator {
         int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
         for (RoomPlacement placement : swaps) {
             RavengardRoomCatalog.DungeonRoom room = placement.room();
+            // the outer shell, walls and doors, belongs to the city; only the
+            // interior swaps, so door positions never move between variants
+            int footprintWidth = placement.getFootprintWidth();
+            int footprintDepth = placement.getFootprintDepth();
+            boolean[][] mask = new boolean[footprintWidth][footprintDepth];
             placement.forEachMaskCell((localX, localZ) -> {
-                int[] source = placement.toSourceFrame(localX, localZ);
-                int sourceX = room.getMinX() + source[0];
-                int sourceZ = room.getMinZ() + source[1];
-                int targetX = placement.originX() + localX;
-                int targetZ = placement.originZ() + localZ;
-                for (int y = floorY; y <= roofY; y++) {
-                    batch.setBlock(targetX, y, targetZ,
-                            rotate(template.blockAt(sourceX, y, sourceZ), placement.rotation()));
+                if (localX >= 0 && localX < footprintWidth && localZ >= 0 && localZ < footprintDepth) {
+                    mask[localX][localZ] = true;
                 }
             });
+            for (int localX = 0; localX < footprintWidth; localX++) {
+                for (int localZ = 0; localZ < footprintDepth; localZ++) {
+                    if (!interiorCell(mask, localX, localZ, footprintWidth, footprintDepth)) continue;
+                    int[] source = placement.toSourceFrame(localX, localZ);
+                    int sourceX = room.getMinX() + source[0];
+                    int sourceZ = room.getMinZ() + source[1];
+                    int targetX = placement.originX() + localX;
+                    int targetZ = placement.originZ() + localZ;
+                    for (int y = floorY; y <= roofY; y++) {
+                        batch.setBlock(targetX, y, targetZ,
+                                rotate(template.blockAt(sourceX, y, sourceZ), placement.rotation()));
+                    }
+                }
+            }
             minX = Math.min(minX, placement.originX() - 1);
             maxX = Math.max(maxX, placement.originX() + placement.getFootprintWidth() + 1);
             minZ = Math.min(minZ, placement.originZ() - 1);
@@ -204,6 +217,20 @@ public final class RavengardDungeonGenerator {
                     return null;
                 });
         return future;
+    }
+
+    /** Cells at least two blocks inside the mask edge: the interior. */
+    private static boolean interiorCell(boolean[][] mask, int x, int z, int width, int depth) {
+        if (x < 0 || z < 0 || x >= width || z >= depth || !mask[x][z]) return false;
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                int nx = x + dx, nz = z + dz;
+                if (nx < 0 || nz < 0 || nx >= width || nz >= depth || !mask[nx][nz]) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private static void sealOpenBorders(AbsoluteBlockBatch batch, RoomPlacement placement,
