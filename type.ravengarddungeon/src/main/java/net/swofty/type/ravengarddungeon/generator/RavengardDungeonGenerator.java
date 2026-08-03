@@ -122,7 +122,18 @@ public final class RavengardDungeonGenerator {
 
         CompletableFuture<Void> future = new CompletableFuture<>();
         CompletableFuture.allOf(chunkLoads.toArray(new CompletableFuture[0]))
-                .thenRun(() -> batch.apply(instance, applied -> future.complete(null)))
+                .thenRun(() -> batch.apply(instance, applied ->
+                        // lazy lighting on a fresh two thousand chunk layout floods the
+                        // executor and the client renders unlit sections as invisible,
+                        // so lighting is part of readiness
+                        Thread.startVirtualThread(() -> {
+                            try {
+                                net.minestom.server.instance.LightingChunk.relight(instance,
+                                        new ArrayList<>(instance.getChunks()));
+                            } catch (Exception ignored) {
+                            }
+                            future.complete(null);
+                        })))
                 .exceptionally(throwable -> {
                     future.completeExceptionally(throwable);
                     return null;
