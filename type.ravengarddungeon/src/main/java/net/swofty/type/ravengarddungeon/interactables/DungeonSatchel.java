@@ -52,39 +52,23 @@ public final class DungeonSatchel extends DungeonInteractable {
 
     private void riseSkull() {
         if (opened) return;
-        int count = 2 + ThreadLocalRandom.current().nextInt(2);
-        for (int index = 0; index < count; index++) {
-            double jitterX = ThreadLocalRandom.current().nextDouble(-0.25, 0.25);
-            double jitterZ = ThreadLocalRandom.current().nextDouble(-0.25, 0.25);
-            int startDelay = ThreadLocalRandom.current().nextInt(6);
-            Entity skull = spawnSkull(base.add(jitterX, 0.15, jitterZ));
-            for (int step = 1; step <= 10; step++) {
-                int tick = step;
-                MinecraftServer.getSchedulerManager().buildTask(() ->
-                        skull.teleport(base.add(jitterX, 0.15 + 0.1 * tick, jitterZ))
-                ).delay(TaskSchedule.tick(startDelay + step * 2)).schedule();
+        java.util.concurrent.ThreadLocalRandom random = java.util.concurrent.ThreadLocalRandom.current();
+        for (int burst = 0; burst < 3; burst++) {
+            double jitterX = random.nextDouble(-0.25, 0.25);
+            double jitterZ = random.nextDouble(-0.25, 0.25);
+            for (int height = 0; height < 4; height++) {
+                int delay = burst * 3 + height * 4 + 1;
+                double y = 0.2 + height * 0.28;
+                MinecraftServer.getSchedulerManager().buildTask(() -> {
+                    if (opened) return;
+                    instance.sendGroupedPacket(new ParticlePacket(
+                            Particle.DUST.withColor(new net.minestom.server.color.Color(255, 30, 30))
+                                    .withScale(0.7f),
+                            base.x() + jitterX, base.y() + y, base.z() + jitterZ,
+                            0.03f, 0.05f, 0.03f, 0f, 2));
+                }).delay(TaskSchedule.tick(delay)).schedule();
             }
-            MinecraftServer.getSchedulerManager().buildTask(skull::remove)
-                    .delay(TaskSchedule.tick(startDelay + 24)).schedule();
         }
-    }
-
-    private Entity spawnSkull(Pos position) {
-        Entity skull = new Entity(net.minestom.server.entity.EntityType.ITEM_DISPLAY);
-        skull.setNoGravity(true);
-        skull.editEntityMeta(ItemDisplayMeta.class, meta -> {
-            meta.setItemStack(net.minestom.server.item.ItemStack
-                    .builder(net.minestom.server.item.Material.STICK)
-                    .set(net.minestom.server.component.DataComponents.ITEM_MODEL, SKULL_MODEL)
-                    .set(net.minestom.server.component.DataComponents.DYED_COLOR,
-                            net.kyori.adventure.text.format.TextColor.color(0xFF2020))
-                    .build());
-            meta.setDisplayContext(ItemDisplayMeta.DisplayContext.HEAD);
-            meta.setScale(new net.minestom.server.coordinate.Vec(0.3, 0.3, 0.3));
-            meta.setPosRotInterpolationDuration(2);
-        });
-        skull.setInstance(instance, position);
-        return skull;
     }
 
     private static double groundY(Instance instance, Pos position) {

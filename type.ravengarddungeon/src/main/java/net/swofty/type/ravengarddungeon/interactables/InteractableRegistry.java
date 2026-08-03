@@ -10,30 +10,28 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.timer.TaskSchedule;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public final class InteractableRegistry {
     private static final double MAX_DISTANCE = 4.5;
-    private static final double LOOK_DOT = 0.97;
-    private static final float LOOK_FILL_PER_TICK = 0.07f;
-    private static final float CLICK_BOOST = 0.34f;
+    private static final double LOOK_DOT = 0.95;
+    private static final int CHANNEL_TICKS = 18;
 
-    private static final List<DungeonInteractable> INTERACTABLES = new CopyOnWriteArrayList<>();
-    private static final Map<UUID, Float> PROGRESS = new ConcurrentHashMap<>();
-    private static final Map<UUID, BossBar> BARS = new ConcurrentHashMap<>();
     private static final Map<Integer, DungeonInteractable> BY_INTERACTION = new ConcurrentHashMap<>();
+    private static final Map<UUID, Channel> CHANNELS = new ConcurrentHashMap<>();
+    private static final Map<UUID, BossBar> BARS = new ConcurrentHashMap<>();
     private static final Map<Inventory, Consumer<Player>> CLOSE_HANDLERS = new ConcurrentHashMap<>();
+
+    private record Channel(DungeonInteractable target, float progress) {
+    }
 
     private InteractableRegistry() {
     }
 
     public static void register(DungeonInteractable interactable) {
-        INTERACTABLES.add(interactable);
         BY_INTERACTION.put(interactable.getInteraction().getEntityId(), interactable);
     }
 
@@ -42,26 +40,20 @@ public final class InteractableRegistry {
     }
 
     public static void unregister(DungeonInteractable interactable) {
-        INTERACTABLES.remove(interactable);
         if (interactable.getInteraction() != null) {
             BY_INTERACTION.remove(interactable.getInteraction().getEntityId());
         }
     }
 
-    public static DungeonInteractable byInteraction(Entity entity) {
-        return entity == null ? null : BY_INTERACTION.get(entity.getEntityId());
-    }
-
     public static void onClick(Player player, Entity target) {
-        DungeonInteractable interactable = byInteraction(target);
+        DungeonInteractable interactable = BY_INTERACTION.get(target == null ? -1 : target.getEntityId());
         if (interactable == null || interactable.isOpened()) {
             return;
         }
-        float progress = PROGRESS.merge(player.getUuid(), CLICK_BOOST, Float::sum);
-        if (progress >= 1f) {
-            complete(player, interactable);
-        } else {
-            bar(player, progress);
+        Channel current = CHANNELS.get(player.getUuid());
+        if (current == null || current.target() != interactable) {
+            CHANNELS.put(player.getUuid(), new Channel(interactable, 0f));
+            bar(player, 0f);
         }
     }
 
@@ -82,60 +74,40 @@ public final class InteractableRegistry {
     }
 
     private static void tick() {
-        for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
-            DungeonInteractable target = targetOf(player);
-            if (target == null) {
-                fade(player);
+        for (Map.Entry<UUID, Channel> entry : CHANNELS.entrySet()) {
+            Player player = MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(entry.getKey());
+            Channel channel = entry.getValue();
+            if (player == null || channel.target().isOpened()
+                    || !isLookingAt(player, channel.target())) {
+                CHANNELS.remove(entry.getKey());
+                if (player != null) {
+                    hideBar(player);
+                }
                 continue;
             }
-            float progress = PROGRESS.merge(player.getUuid(),
-                    LOOK_FILL_PER_TICK, Float::sum);
-            if (progress >= 1f && target.openOnLook()) {
-                complete(player, target);
+            float progress = channel.progress() + 1f / CHANNEL_TICKS;
+            if (progress >= 1f) {
+                CHANNELS.remove(entry.getKey());
+                hideBar(player);
+                channel.target().open(player);
             } else {
-                bar(player, Math.min(1f, progress));
+                CHANNELS.put(entry.getKey(), new Channel(channel.target(), progress));
+                bar(player, progress);
             }
         }
     }
 
-    private static void complete(Player player, DungeonInteractable interactable) {
-        PROGRESS.remove(player.getUuid());
-        hideBar(player);
-        if (!interactable.isOpened()) {
-            interactable.open(player);
+    private static boolean isLookingAt(Player player, DungeonInteractable interactable) {
+        if (interactable.getInteraction().getInstance() != player.getInstance()) {
+            return false;
         }
-    }
-
-    private static DungeonInteractable targetOf(Player player) {
         Pos eye = player.getPosition().add(0, player.getEyeHeight(), 0);
-        Vec look = player.getPosition().direction();
-        DungeonInteractable best = null;
-        double bestDistance = MAX_DISTANCE;
-        for (DungeonInteractable interactable : INTERACTABLES) {
-            if (interactable.isOpened()) continue;
-            if (interactable.getInteraction().getInstance() != player.getInstance()) continue;
-            Pos focus = interactable.focusPoint();
-            double distance = eye.distance(focus);
-            if (distance > bestDistance) continue;
-            Vec toward = Vec.fromPoint(focus.sub(eye)).normalize();
-            if (toward.dot(look) < LOOK_DOT) continue;
-            best = interactable;
-            bestDistance = distance;
+        Pos focus = interactable.focusPoint();
+        if (eye.distance(focus) > MAX_DISTANCE) {
+            return false;
         }
-        return best;
-    }
-
-    private static void fade(Player player) {
-        Float progress = PROGRESS.get(player.getUuid());
-        if (progress == null) return;
-        float next = progress - LOOK_FILL_PER_TICK * 2;
-        if (next <= 0f) {
-            PROGRESS.remove(player.getUuid());
-            hideBar(player);
-        } else {
-            PROGRESS.put(player.getUuid(), next);
-            bar(player, next);
-        }
+        Vec toward = Vec.fromPoint(focus.sub(eye)).normalize();
+        return toward.dot(player.getPosition().direction()) >= LOOK_DOT;
     }
 
     private static void bar(Player player, float progress) {
