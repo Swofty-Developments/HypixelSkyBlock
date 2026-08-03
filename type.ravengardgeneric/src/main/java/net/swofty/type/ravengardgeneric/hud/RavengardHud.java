@@ -99,6 +99,8 @@ public final class RavengardHud {
                 MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid) == null);
         LAST_SENT.keySet().removeIf(uuid ->
                 MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid) == null);
+        LAST_TAB_HEADER.keySet().removeIf(uuid ->
+                MinecraftServer.getConnectionManager().getOnlinePlayerByUuid(uuid) == null);
     }
 
     private static final String FULLSCREEN_TILES = "\uE120\uE121\uE122\uE123\uE124\uE125";
@@ -108,11 +110,15 @@ public final class RavengardHud {
     private static final double TAB_MAP_ORIGIN_Z = 217.21;
     private static final double YAW_PER_STEP = 360.0 / 64.0;
 
+    private static final Map<java.util.UUID, Component> LAST_TAB_HEADER = new ConcurrentHashMap<>();
+
     private static void sendTabMap(HypixelPlayer player, RavengardHudState state) {
         if (state.isDungeon() && RavengardHudComposer.dungeonTabMap != null) {
             Component dungeonHeader = RavengardHudComposer.dungeonTabMap.apply(state);
             if (dungeonHeader != null) {
-                player.sendPlayerListHeaderAndFooter(dungeonHeader, Component.empty());
+                if (!dungeonHeader.equals(LAST_TAB_HEADER.put(player.getUuid(), dungeonHeader))) {
+                    player.sendPlayerListHeaderAndFooter(dungeonHeader, Component.empty());
+                }
                 return;
             }
         }
