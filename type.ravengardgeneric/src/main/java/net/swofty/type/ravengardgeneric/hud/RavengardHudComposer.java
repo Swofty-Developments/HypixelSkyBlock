@@ -20,6 +20,9 @@ public final class RavengardHudComposer {
     /** Dungeon servers plug live minimap icons in here; the packed colour on each
      * glyph carries its offset from the player, decoded by the pack's text shader. */
     public static volatile java.util.function.Function<RavengardHudState, Component> dungeonMinimapIcons;
+    /** Dungeon servers plug the fullscreen tab-map composer in here; glyph colours
+     * carry absolute positions on the 512px map canvas centred on the layout. */
+    public static volatile java.util.function.Function<RavengardHudState, Component> dungeonTabMap;
 
     private static final Gson GSON = new Gson();
     private static final Map<String, String> TEMPLATES = new HashMap<>();

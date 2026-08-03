@@ -109,6 +109,13 @@ public final class RavengardHud {
     private static final double YAW_PER_STEP = 360.0 / 64.0;
 
     private static void sendTabMap(HypixelPlayer player, RavengardHudState state) {
+        if (state.isDungeon() && RavengardHudComposer.dungeonTabMap != null) {
+            Component dungeonHeader = RavengardHudComposer.dungeonTabMap.apply(state);
+            if (dungeonHeader != null) {
+                player.sendPlayerListHeaderAndFooter(dungeonHeader, Component.empty());
+                return;
+            }
+        }
         int iconX = clamp9((int) Math.round(state.getWorldX() + TAB_MAP_ORIGIN_X));
         int iconY = clamp9((int) Math.round(state.getWorldZ() + TAB_MAP_ORIGIN_Z));
 

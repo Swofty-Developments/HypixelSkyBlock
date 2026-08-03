@@ -71,6 +71,7 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
     public void afterInitialize(MinecraftServer server) {
         net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.startExpiryTask();
         net.swofty.type.ravengarddungeon.game.DungeonMinimapIcons.register();
+        net.swofty.type.ravengarddungeon.game.DungeonTabMap.register();
         net.swofty.type.ravengardgeneric.commands.DungeonCommand.localJoin = (player, instanceId) -> {
             var instance = net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.findByIdPrefix(instanceId);
             if (instance == null) {
