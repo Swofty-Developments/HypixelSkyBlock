@@ -19,6 +19,7 @@ public final class RavengardDungeon extends GameDungeon {
     private final List<RoomPlacement> placements = new ArrayList<>();
     private final List<PlacedSocket> sealedSockets = new ArrayList<>();
     private final long seed;
+    private int layoutRadius = 320;
 
     private RavengardDungeon(long seed) {
         this.seed = seed;
@@ -101,6 +102,19 @@ public final class RavengardDungeon extends GameDungeon {
         }
     }
 
+    private static int layoutRadiusFor(RavengardRoomCatalog catalog, int targetRoomCount) {
+        long totalArea = 0;
+        for (DungeonRoom room : catalog.getRooms()) {
+            for (int[] run : room.getMask()) {
+                totalArea += run[2] - run[1] + 1;
+            }
+        }
+        double averageRoomArea = totalArea / (double) Math.max(1, catalog.getRooms().size());
+        double neededArea = targetRoomCount * averageRoomArea * 1.6;
+        int radius = (int) Math.ceil(Math.sqrt(neededArea) / 2) + 20;
+        return Math.clamp(radius, 90, 320);
+    }
+
     public static RavengardDungeon generate(RavengardRoomCatalog catalog, long seed, int targetRoomCount) {
         RavengardDungeon best = null;
         for (int attempt = 0; attempt < 6; attempt++) {
@@ -117,6 +131,7 @@ public final class RavengardDungeon extends GameDungeon {
 
     private static RavengardDungeon generateAttempt(RavengardRoomCatalog catalog, long seed, int targetRoomCount) {
         RavengardDungeon dungeon = new RavengardDungeon(seed);
+        dungeon.layoutRadius = layoutRadiusFor(catalog, targetRoomCount);
         Random random = new Random(seed);
         List<DungeonRoom> roomPool = catalog.getRooms();
 
@@ -133,94 +148,88 @@ public final class RavengardDungeon extends GameDungeon {
                         -startRoom.getWidth() / 2, -startRoom.getDepth() / 2),
                 occupiedCells, openSockets, usedRoomIds);
 
+        growByDoors(dungeon, roomPool, occupiedCells, openSockets, usedRoomIds, random, targetRoomCount);
+        // door growth alone leaves voids between arms; the source map is a solid
+        // fabric, so pack the remainder flush against existing walls, then let
+        // door growth resume whenever new sockets appear
+        int stall = 0;
+        while (dungeon.placements.size() < targetRoomCount && stall < 400) {
+            boolean placedFlush = wallFill(dungeon, roomPool, occupiedCells, openSockets, usedRoomIds, random);
+            if (!placedFlush) {
+                stall++;
+                continue;
+            }
+            stall = 0;
+            growByDoors(dungeon, roomPool, occupiedCells, openSockets, usedRoomIds, random, targetRoomCount);
+        }
+        dungeon.sealedSockets.addAll(openSockets);
+        return dungeon;
+    }
+
+    private static void growByDoors(RavengardDungeon dungeon, List<DungeonRoom> roomPool,
+                                    Set<Long> occupiedCells, List<PlacedSocket> openSockets,
+                                    Set<String> usedRoomIds, Random random, int targetRoomCount) {
         while (dungeon.placements.size() < targetRoomCount && !openSockets.isEmpty()) {
             PlacedSocket sourceSocket = openSockets.remove(random.nextInt(openSockets.size()));
             Direction requiredSide = sourceSocket.getWorldSide().getOpposite();
-
-            List<RoomPlacement> candidatePlacements = new ArrayList<>();
-            List<DoorSocket> candidateEntrances = new ArrayList<>();
-            boolean allowReuse = usedRoomIds.size() >= roomPool.size() / 2;
+            List<RoomPlacement> candidates = new ArrayList<>();
+            List<DoorSocket> entrances = new ArrayList<>();
             for (DungeonRoom room : roomPool) {
-                if (!allowReuse && usedRoomIds.contains(room.getId())) continue;
                 for (DoorSocket entrance : room.getSockets()) {
                     if (Math.abs(entrance.getY() - sourceSocket.getY()) > 1.5) continue;
                     for (Rotation rotation : Rotation.values()) {
                         if (entrance.getSide().rotated(rotation) != requiredSide) continue;
                         RoomPlacement candidate = alignToSocket(sourceSocket, room, entrance, rotation);
-                        if (fits(candidate, occupiedCells)) {
-                            candidatePlacements.add(candidate);
-                            candidateEntrances.add(entrance);
+                        if (fits(candidate, occupiedCells, dungeon.layoutRadius)) {
+                            candidates.add(candidate);
+                            entrances.add(entrance);
                         }
                     }
                 }
             }
-            if (candidatePlacements.isEmpty()) {
+            if (candidates.isEmpty()) {
                 dungeon.sealedSockets.add(sourceSocket);
                 continue;
             }
-            // dead end rooms starve the layout when few sockets stay open, so while
-            // the dungeon still needs to grow, prefer rooms that add new doorways
-            boolean needsGrowth = openSockets.size() < 4
-                    && dungeon.placements.size() + openSockets.size() < targetRoomCount;
-            if (needsGrowth) {
-                List<Integer> growing = new ArrayList<>();
-                for (int index = 0; index < candidatePlacements.size(); index++) {
-                    if (candidatePlacements.get(index).room().getSockets().size() >= 2) {
-                        growing.add(index);
-                    }
-                }
-                if (!growing.isEmpty()) {
-                    int growthPick = growing.get(random.nextInt(growing.size()));
-                    RoomPlacement picked = candidatePlacements.get(growthPick);
-                    DoorSocket pickedEntrance = candidateEntrances.get(growthPick);
-                    dungeon.place(picked, occupiedCells, openSockets, usedRoomIds);
-                    openSockets.removeIf(open -> open.placement() == picked && open.socket() == pickedEntrance);
-                    continue;
-                }
-            }
-            int pickedIndex = random.nextInt(candidatePlacements.size());
-            RoomPlacement picked = candidatePlacements.get(pickedIndex);
-            DoorSocket pickedEntrance = candidateEntrances.get(pickedIndex);
+            int pickedIndex = pickSnug(candidates, occupiedCells, random);
+            RoomPlacement picked = candidates.get(pickedIndex);
+            DoorSocket pickedEntrance = entrances.get(pickedIndex);
             dungeon.place(picked, occupiedCells, openSockets, usedRoomIds);
             openSockets.removeIf(open -> open.placement() == picked && open.socket() == pickedEntrance);
         }
-        // second chance: fizzled layouts revisit their sealed doorways with the
-        // whole pool available before giving up
-        if (dungeon.placements.size() < targetRoomCount && !dungeon.sealedSockets.isEmpty()) {
-            openSockets.addAll(dungeon.sealedSockets);
-            dungeon.sealedSockets.clear();
-            usedRoomIds.clear();
-            while (dungeon.placements.size() < targetRoomCount && !openSockets.isEmpty()) {
-                PlacedSocket sourceSocket = openSockets.remove(random.nextInt(openSockets.size()));
-                Direction requiredSide = sourceSocket.getWorldSide().getOpposite();
-                List<RoomPlacement> retryPlacements = new ArrayList<>();
-                List<DoorSocket> retryEntrances = new ArrayList<>();
-                for (DungeonRoom room : roomPool) {
-                    for (DoorSocket entrance : room.getSockets()) {
-                        if (Math.abs(entrance.getY() - sourceSocket.getY()) > 1.5) continue;
-                        for (Rotation rotation : Rotation.values()) {
-                            if (entrance.getSide().rotated(rotation) != requiredSide) continue;
-                            RoomPlacement candidate = alignToSocket(sourceSocket, room, entrance, rotation);
-                            if (fits(candidate, occupiedCells)) {
-                                retryPlacements.add(candidate);
-                                retryEntrances.add(entrance);
-                            }
-                        }
-                    }
-                }
-                if (retryPlacements.isEmpty()) {
-                    dungeon.sealedSockets.add(sourceSocket);
-                    continue;
-                }
-                int retryPick = random.nextInt(retryPlacements.size());
-                RoomPlacement picked = retryPlacements.get(retryPick);
-                DoorSocket pickedEntrance = retryEntrances.get(retryPick);
-                dungeon.place(picked, occupiedCells, openSockets, usedRoomIds);
-                openSockets.removeIf(open -> open.placement() == picked && open.socket() == pickedEntrance);
-            }
+    }
+
+    /** One attempt at packing a room flush against an existing wall (two block seam). */
+    private static boolean wallFill(RavengardDungeon dungeon, List<DungeonRoom> roomPool,
+                                    Set<Long> occupiedCells, List<PlacedSocket> openSockets,
+                                    Set<String> usedRoomIds, Random random) {
+        RoomPlacement host = dungeon.placements.get(random.nextInt(dungeon.placements.size()));
+        DungeonRoom room = roomPool.get(random.nextInt(roomPool.size()));
+        Rotation rotation = Rotation.values()[random.nextInt(4)];
+        RoomPlacement probe = new RoomPlacement(room, rotation, 0, 0);
+        int side = random.nextInt(4);
+        int lateral = random.nextInt(Math.max(1, side < 2
+                ? host.getFootprintWidth() + probe.getFootprintWidth()
+                : host.getFootprintDepth() + probe.getFootprintDepth()));
+        RoomPlacement candidate = switch (side) {
+            case 0 -> new RoomPlacement(room, rotation,
+                    host.originX() - probe.getFootprintWidth() + lateral,
+                    host.originZ() - DOOR_SEAM_WIDTH - probe.getFootprintDepth() + 1);
+            case 1 -> new RoomPlacement(room, rotation,
+                    host.originX() - probe.getFootprintWidth() + lateral,
+                    host.originZ() + host.getFootprintDepth() - 1 + DOOR_SEAM_WIDTH);
+            case 2 -> new RoomPlacement(room, rotation,
+                    host.originX() - DOOR_SEAM_WIDTH - probe.getFootprintWidth() + 1,
+                    host.originZ() - probe.getFootprintDepth() + lateral);
+            default -> new RoomPlacement(room, rotation,
+                    host.originX() + host.getFootprintWidth() - 1 + DOOR_SEAM_WIDTH,
+                    host.originZ() - probe.getFootprintDepth() + lateral);
+        };
+        if (!fits(candidate, occupiedCells, dungeon.layoutRadius)) {
+            return false;
         }
-        dungeon.sealedSockets.addAll(openSockets);
-        return dungeon;
+        dungeon.place(candidate, occupiedCells, openSockets, usedRoomIds);
+        return true;
     }
 
     private void place(RoomPlacement placement, Set<Long> occupiedCells,
@@ -263,11 +272,46 @@ public final class RavengardDungeon extends GameDungeon {
         };
     }
 
-    private static boolean fits(RoomPlacement placement, Set<Long> occupiedCells) {
+    /**
+     * Chooses among fitting candidates by how tightly they hug what is already
+     * built: candidates whose border touches the most occupied cells score
+     * highest, which packs the fabric like the source map instead of snaking.
+     */
+    private static int pickSnug(List<RoomPlacement> candidates, Set<Long> occupiedCells, Random random) {
+        int bestScore = -1;
+        List<Integer> best = new ArrayList<>();
+        for (int index = 0; index < candidates.size(); index++) {
+            RoomPlacement candidate = candidates.get(index);
+            int[] contact = {0};
+            candidate.forEachMaskCell((localX, localZ) -> {
+                int worldX = candidate.originX() + localX;
+                int worldZ = candidate.originZ() + localZ;
+                for (int dx = -2; dx <= 2; dx += 4) {
+                    if (occupiedCells.contains(cellKey(worldX + dx, worldZ))) contact[0]++;
+                }
+                for (int dz = -2; dz <= 2; dz += 4) {
+                    if (occupiedCells.contains(cellKey(worldX, worldZ + dz))) contact[0]++;
+                }
+            });
+            if (contact[0] > bestScore) {
+                bestScore = contact[0];
+                best.clear();
+                best.add(index);
+            } else if (contact[0] == bestScore) {
+                best.add(index);
+            }
+        }
+        return best.get(random.nextInt(best.size()));
+    }
+
+    private static boolean fits(RoomPlacement placement, Set<Long> occupiedCells, int layoutRadius) {
         boolean[] blocked = {false};
         placement.forEachMaskCell((localX, localZ) -> {
-            if (!blocked[0] && occupiedCells.contains(
-                    cellKey(placement.originX() + localX, placement.originZ() + localZ))) {
+            if (blocked[0]) return;
+            int worldX = placement.originX() + localX;
+            int worldZ = placement.originZ() + localZ;
+            if (Math.abs(worldX) > layoutRadius || Math.abs(worldZ) > layoutRadius
+                    || occupiedCells.contains(cellKey(worldX, worldZ))) {
                 blocked[0] = true;
             }
         });

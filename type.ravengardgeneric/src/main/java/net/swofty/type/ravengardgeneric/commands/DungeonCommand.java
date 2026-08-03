@@ -25,7 +25,7 @@ public class DungeonCommand extends HypixelCommand {
     public static volatile java.util.function.BiFunction<RavengardPlayer, String, Boolean> localJoin;
 
     private static final ProxyService ORCHESTRATOR = new ProxyService(ServiceType.ORCHESTRATOR);
-    private static final int DEFAULT_ADMIN_ROOMS = 24;
+    private static final int DEFAULT_ADMIN_ROOMS = 150;
 
     @Override
     public void registerUsage(MinestomCommand command) {
@@ -49,7 +49,7 @@ public class DungeonCommand extends HypixelCommand {
         }, ArgumentType.Literal("list"));
 
         ArgumentNumber<Long> seedArg = ArgumentType.Long("seed");
-        ArgumentNumber<Integer> roomsArg = ArgumentType.Integer("rooms").min(3).max(120);
+        ArgumentNumber<Integer> roomsArg = ArgumentType.Integer("rooms").min(3).max(200);
 
         command.addSyntax((sender, context) -> {
             if (!permissionCheck(sender)) return;

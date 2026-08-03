@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class DungeonInstanceRegistry {
     public static final int MAX_INSTANCES = 4;
-    private static final int STANDARD_ROOM_COUNT = 24;
+    private static final int STANDARD_ROOM_COUNT = 120;
     private static final int STANDARD_MAX_PLAYERS = 5;
 
     private static final Map<UUID, DungeonInstance> INSTANCES = new ConcurrentHashMap<>();
@@ -97,6 +97,66 @@ public final class DungeonInstanceRegistry {
 
         public boolean isAcceptingJoins() {
             return mode.equals("STANDARD") && players.size() < STANDARD_MAX_PLAYERS;
+        }
+
+        public record MapTile(double worldX, double worldZ, int roomIndex) {
+        }
+
+        private volatile List<MapTile> mapTiles;
+        private final Set<Integer> visitedRooms = ConcurrentHashMap.newKeySet();
+
+        public Set<Integer> getVisitedRooms() {
+            return visitedRooms;
+        }
+
+        /** Fixed world-grid mosaic of the layout, one tile per grid cell a room covers. */
+        public List<MapTile> getMapTiles(double blocksPerTile) {
+            if (mapTiles == null) {
+                synchronized (this) {
+                    if (mapTiles == null) {
+                        List<MapTile> tiles = new ArrayList<>();
+                        var placements = generated.dungeon().getPlacements();
+                        java.util.Map<Long, Integer> grid = new java.util.HashMap<>();
+                        for (int index = 0; index < placements.size(); index++) {
+                            var placement = placements.get(index);
+                            final int roomIndex = index;
+                            placement.forEachMaskCell((localX, localZ) -> {
+                                long gridX = Math.round((placement.originX() + localX) / blocksPerTile);
+                                long gridZ = Math.round((placement.originZ() + localZ) / blocksPerTile);
+                                grid.putIfAbsent((gridX << 32) | (gridZ & 0xFFFFFFFFL), roomIndex);
+                            });
+                        }
+                        for (var entry : grid.entrySet()) {
+                            long key = entry.getKey();
+                            tiles.add(new MapTile((key >> 32) * blocksPerTile,
+                                    ((int) key) * blocksPerTile, entry.getValue()));
+                        }
+                        mapTiles = tiles;
+                    }
+                }
+            }
+            return mapTiles;
+        }
+
+        /** Index of the placement whose footprint contains the position, or -1. */
+        public int roomIndexAt(double worldX, double worldZ) {
+            var placements = generated.dungeon().getPlacements();
+            for (int index = 0; index < placements.size(); index++) {
+                var placement = placements.get(index);
+                int localX = (int) Math.floor(worldX) - placement.originX();
+                int localZ = (int) Math.floor(worldZ) - placement.originZ();
+                if (localX < 0 || localZ < 0 || localX >= placement.getFootprintWidth()
+                        || localZ >= placement.getFootprintDepth()) {
+                    continue;
+                }
+                int[] source = placement.toSourceFrame(localX, localZ);
+                for (int[] run : placement.room().getMask()) {
+                    if (run[0] == source[1] && source[0] >= run[1] && source[0] <= run[2]) {
+                        return index;
+                    }
+                }
+            }
+            return -1;
         }
     }
 

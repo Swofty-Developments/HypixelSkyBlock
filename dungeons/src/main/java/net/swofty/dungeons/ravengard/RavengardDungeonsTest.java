@@ -12,6 +12,21 @@ public class RavengardDungeonsTest {
         RavengardDungeon layout = RavengardDungeon.generate(
                 RavengardRoomCatalog.load(catalog), seed, rooms);
 
+        if (args.length > 3 && args[3].equals("--json")) {
+            StringBuilder json = new StringBuilder("{\"placements\":[");
+            boolean first = true;
+            for (var placement : layout.getPlacements()) {
+                if (!first) json.append(',');
+                first = false;
+                json.append("{\"room\":\"").append(placement.room().getId())
+                        .append("\",\"rotation\":").append(placement.rotation().getDegrees())
+                        .append(",\"x\":").append(placement.originX())
+                        .append(",\"z\":").append(placement.originZ()).append('}');
+            }
+            json.append("]}");
+            System.out.println(json);
+            return;
+        }
         System.out.println("Generated dungeon: \n" + layout);
         System.out.println((System.currentTimeMillis() - started) + "ms");
     }

@@ -2,7 +2,6 @@ package net.swofty.type.ravengarddungeon.game;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import net.swofty.dungeons.ravengard.RavengardDungeon.RoomPlacement;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudComposer;
 import net.swofty.type.ravengardgeneric.hud.RavengardHudState;
 
@@ -11,8 +10,10 @@ import java.util.UUID;
 public final class DungeonMinimapIcons {
     private static final double MAP_SCALE = 0.75;
     private static final double VISIBLE_RANGE_PIXELS = 124;
-    private static final double TILE_SIZE_PIXELS = 13;
-    private static final String ROOM_TILE = "";
+    private static final double BLOCKS_PER_TILE = 13 / MAP_SCALE;
+    private static final String TILE_UNSEEN = "\uE131";
+    private static final String TILE_SEEN = "\uE132";
+    private static final String TILE_HERE = "\uE133";
 
     private DungeonMinimapIcons() {
     }
@@ -37,32 +38,26 @@ public final class DungeonMinimapIcons {
             return null;
         }
 
+        int currentRoom = dungeonInstance.roomIndexAt(state.getWorldX(), state.getWorldZ());
+        if (currentRoom >= 0) {
+            dungeonInstance.getVisitedRooms().add(currentRoom);
+        }
+
         Component icons = Component.empty();
-        for (RoomPlacement placement : dungeonInstance.getGenerated().dungeon().getPlacements()) {
-            double leftPixels = (placement.originX() - state.getWorldX()) * MAP_SCALE;
-            double topPixels = (placement.originZ() - state.getWorldZ()) * MAP_SCALE;
-            double widthPixels = placement.getFootprintWidth() * MAP_SCALE;
-            double depthPixels = placement.getFootprintDepth() * MAP_SCALE;
-            if (leftPixels > VISIBLE_RANGE_PIXELS || leftPixels + widthPixels < -VISIBLE_RANGE_PIXELS
-                    || topPixels > VISIBLE_RANGE_PIXELS || topPixels + depthPixels < -VISIBLE_RANGE_PIXELS) {
+        for (DungeonInstanceRegistry.DungeonInstance.MapTile tile
+                : dungeonInstance.getMapTiles(BLOCKS_PER_TILE)) {
+            double offsetX = (tile.worldX() - state.getWorldX()) * MAP_SCALE;
+            double offsetZ = (tile.worldZ() - state.getWorldZ()) * MAP_SCALE;
+            if (Math.abs(offsetX) > VISIBLE_RANGE_PIXELS || Math.abs(offsetZ) > VISIBLE_RANGE_PIXELS) {
                 continue;
             }
-            int columns = Math.max(1, (int) Math.ceil(widthPixels / TILE_SIZE_PIXELS));
-            int rowCount = Math.max(1, (int) Math.ceil(depthPixels / TILE_SIZE_PIXELS));
-            for (int column = 0; column < columns; column++) {
-                for (int row = 0; row < rowCount; row++) {
-                    double centerX = leftPixels + (column + 0.5) * (widthPixels / columns);
-                    double centerZ = topPixels + (row + 0.5) * (depthPixels / rowCount);
-                    if (Math.abs(centerX) > VISIBLE_RANGE_PIXELS
-                            || Math.abs(centerZ) > VISIBLE_RANGE_PIXELS) {
-                        continue;
-                    }
-                    int packedX = clamp9((int) Math.round((centerX + 128) * 2));
-                    int packedZ = clamp9((int) Math.round((centerZ + 128) * 2));
-                    icons = icons.append(Component.text(ROOM_TILE)
-                            .color(TextColor.color((packedX << 15) | (packedZ << 6))));
-                }
-            }
+            String glyph = tile.roomIndex() == currentRoom ? TILE_HERE
+                    : dungeonInstance.getVisitedRooms().contains(tile.roomIndex()) ? TILE_SEEN
+                    : TILE_UNSEEN;
+            int packedX = clamp9((int) Math.round((offsetX + 128) * 2));
+            int packedZ = clamp9((int) Math.round((offsetZ + 128) * 2));
+            icons = icons.append(Component.text(glyph)
+                    .color(TextColor.color((packedX << 15) | (packedZ << 6))));
         }
         return icons;
     }
