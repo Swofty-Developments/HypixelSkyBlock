@@ -24,6 +24,7 @@ public class RavengardHudState {
     private boolean dungeon;
     private boolean spectating;
 
+    private java.util.UUID playerUuid;
     private double worldX;
     private double worldZ;
     private float yaw;

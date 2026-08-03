@@ -70,6 +70,7 @@ public class TypeRavengardDungeonLoader implements RavengardTypeLoader {
     @Override
     public void afterInitialize(MinecraftServer server) {
         net.swofty.type.ravengarddungeon.game.DungeonInstanceRegistry.startExpiryTask();
+        net.swofty.type.ravengarddungeon.game.DungeonMinimapIcons.register();
         startOrchestratorHeartbeat();
     }
 

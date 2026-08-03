@@ -17,6 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class RavengardHudComposer {
+    /** Dungeon servers plug live minimap icons in here; the packed colour on each
+     * glyph carries its offset from the player, decoded by the pack's text shader. */
+    public static volatile java.util.function.Function<RavengardHudState, Component> dungeonMinimapIcons;
+
     private static final Gson GSON = new Gson();
     private static final Map<String, String> TEMPLATES = new HashMap<>();
 
@@ -58,7 +62,15 @@ public final class RavengardHudComposer {
             if (template == null) {
                 continue;
             }
-            layers.put(layer, render(template, state));
+            Component rendered = render(template, state);
+            if (layer == RavengardHudLayer.PLAYER_MARKER && state.isDungeon()
+                    && dungeonMinimapIcons != null) {
+                Component icons = dungeonMinimapIcons.apply(state);
+                if (icons != null) {
+                    rendered = rendered.append(icons);
+                }
+            }
+            layers.put(layer, rendered);
         }
         return layers;
     }

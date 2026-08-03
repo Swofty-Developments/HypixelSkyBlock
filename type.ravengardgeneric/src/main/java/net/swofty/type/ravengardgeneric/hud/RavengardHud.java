@@ -191,6 +191,7 @@ public final class RavengardHud {
             }
         }
 
+        state.setPlayerUuid(player.getUuid());
         state.setWorldX(player.getPosition().x());
         state.setWorldZ(player.getPosition().z());
         state.setYaw(player.getPosition().yaw());
