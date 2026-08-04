@@ -61,9 +61,9 @@ public class BedWarsLobbyScoreboard {
 				StringBuilder progressBar = new StringBuilder();
 				for (int i = 0; i < 10; i++) {
 					if (i < filledSquares) {
-						progressBar.append("§b■");
+						progressBar.append("<aqua>■</aqua>"); // TODO: wasting bandwidth.
 					} else {
-						progressBar.append("§7■");
+						progressBar.append("<gray>■</gray>");
 					}
 				}
 
@@ -86,7 +86,11 @@ public class BedWarsLobbyScoreboard {
 					Component.text(progressBar.toString()))));
 				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.tokens_line", Argument.tagResolver(Formatter.number("tokens", tokens))));
-				lines.add(I18n.t("scoreboard.bedwars_lobby.tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets))));
+				if (tickets <= 75) {
+					lines.add(I18n.t("scoreboard.bedwars_lobby.slumber_tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets)), Argument.numeric("tickets_max", 75)));
+				} else {
+					lines.add(I18n.t("scoreboard.bedwars_lobby.tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets))));
+				}
 				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.total_kills_label", Argument.tagResolver(Formatter.number("total_kills", totalKills))));
 				lines.add(I18n.t("scoreboard.bedwars_lobby.total_wins_label", Argument.tagResolver(Formatter.number("total_wins", totalWins))));

@@ -28,7 +28,6 @@ import net.minestom.server.utils.chunk.ChunkCache;
 import net.minestom.server.utils.chunk.ChunkUtils;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.pvp.player.CombatPlayer;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.game.game.GameParticipant;
@@ -49,11 +48,10 @@ import java.util.function.Function;
 
 /**
  * Represents a player in the BedWars game mode.
- * This class extends HypixelPlayer and implements CombatPlayer for combat-related functionalities.
- * CombatPlayer implementation based on <a href="https://github.com/TogAr2/MinestomPvP/blob/master/src/main/java/io/github/togar2/pvp/player/CombatPlayerImpl.java">CombatPlayerImpl</a>
+ * This class extends HypixelPlayer with BedWars-specific state and presentation.
  */
 @SuppressWarnings("UnstableApiUsage")
-public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GameParticipant {
+public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 
 	private boolean velocityUpdate = false;
 	private PhysicsResult previousPhysicsResult = null;
@@ -160,7 +158,6 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		hypixelXpThisGame = 0;
 	}
 
-	@Override
 	public Player getServerPlayer() {
 		return this;
 	}
@@ -249,12 +246,10 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 		});
 	}
 
-	@Override
 	public void setVelocityNoUpdate(Function<Vec, Vec> function) {
 		velocity = function.apply(velocity);
 	}
 
-	@Override
 	public void sendImmediateVelocityUpdate() {
 		if (velocityUpdate) {
 			velocityUpdate = false;

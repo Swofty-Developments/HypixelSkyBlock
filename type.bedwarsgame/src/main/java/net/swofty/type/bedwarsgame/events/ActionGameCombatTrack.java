@@ -1,20 +1,20 @@
 package net.swofty.type.bedwarsgame.events;
 
+import io.github.term4.polyp.api.event.damage.DamageAppliedEvent;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
-import net.swofty.pvp.events.FinalDamageEvent;
 import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 public class ActionGameCombatTrack implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.ENTITY, requireDataLoaded = false)
-    public void run(FinalDamageEvent event) {
-        if (!(event.getEntity() instanceof BedWarsPlayer victim)) {
+    public void run(DamageAppliedEvent event) {
+        if (!(event.target() instanceof BedWarsPlayer victim)) {
             return;
         }
 
@@ -23,7 +23,7 @@ public class ActionGameCombatTrack implements HypixelEventClass {
             return;
         }
 
-        if (event.getDamage().getAttacker() instanceof BedWarsPlayer attacker) {
+        if (event.source() instanceof BedWarsPlayer attacker) {
             if (!victim.equals(attacker) && !isSameTeam(victim, attacker)) {
                 BedWarsCombatTracker.recordAttack(victim, attacker);
             }
@@ -39,4 +39,3 @@ public class ActionGameCombatTrack implements HypixelEventClass {
         return team1.equals(team2);
     }
 }
-

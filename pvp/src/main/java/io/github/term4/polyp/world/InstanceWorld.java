@@ -1,11 +1,7 @@
 package io.github.term4.polyp.world;
 
-import net.minestom.server.collision.Aerodynamics;
-import net.minestom.server.collision.BoundingBox;
-import net.minestom.server.collision.CollisionUtils;
-import net.minestom.server.collision.EntityCollisionResult;
-import net.minestom.server.collision.PhysicsResult;
-import net.minestom.server.collision.PhysicsUtils;
+import net.kyori.adventure.sound.Sound;
+import net.minestom.server.collision.*;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -21,7 +17,6 @@ import net.minestom.server.tag.TagHandler;
 import net.minestom.server.utils.PacketSendingUtils;
 import net.minestom.server.utils.chunk.ChunkCache;
 import net.minestom.server.world.DimensionType;
-import net.kyori.adventure.sound.Sound;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,13 +26,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /** A {@link MechanicsWorld} over a plain Minestom {@link Instance}: every operation delegates 1:1, behavior identical. */
-public final class InstanceWorld implements MechanicsWorld {
+public class InstanceWorld implements MechanicsWorld {
 
     private final Instance instance;
     // world metadata, NOT the instance's tags: world scope stays distinct even on a plain instance
     private final TagHandler tags = TagHandler.newHandler();
 
-    InstanceWorld(Instance instance) {
+    protected InstanceWorld(Instance instance) {
         this.instance = instance;
     }
 
