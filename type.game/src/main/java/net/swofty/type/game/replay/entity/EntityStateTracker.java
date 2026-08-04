@@ -3,15 +3,7 @@ package net.swofty.type.game.replay.entity;
 import net.swofty.type.game.replay.recordable.Recordable;
 import net.swofty.type.game.replay.recordable.RecordableType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class EntityStateTracker {
     private final Map<Integer, Map<StateType, TreeMap<Integer, Recordable>>> states = new HashMap<>();
@@ -28,6 +20,7 @@ public class EntityStateTracker {
         SNEAKING(RecordableType.PLAYER_SNEAK),
         SPRINTING(RecordableType.PLAYER_SPRINT),
         GAMEMODE(RecordableType.PLAYER_GAMEMODE),
+        TEAM(RecordableType.PLAYER_TEAM),
         MOUNT(RecordableType.ENTITY_MOUNT),
         METADATA(RecordableType.ENTITY_METADATA),
         ;
@@ -173,6 +166,7 @@ public class EntityStateTracker {
             case PLAYER_SNEAK -> StateType.SNEAKING;
             case PLAYER_SPRINT -> StateType.SPRINTING;
             case PLAYER_GAMEMODE -> StateType.GAMEMODE;
+            case PLAYER_TEAM -> StateType.TEAM;
             case ENTITY_MOUNT -> StateType.MOUNT;
             case ENTITY_METADATA -> StateType.METADATA;
             default -> null;

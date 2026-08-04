@@ -47,6 +47,7 @@ public class ReplayLoadProtocolObject extends RedisProtocol<
             Map<UUID, String> players,
             Map<String, List<UUID>> teams,
             Map<String, TeamInfo> teamInfo,
+            Map<UUID, PlayerInfo> playerInfo,
             String winnerId,
             String winnerType,
             long dataSize,
@@ -55,6 +56,18 @@ public class ReplayLoadProtocolObject extends RedisProtocol<
     ) {}
 
     public record TeamInfo(String name, String colorCode, int color) {}
+
+    public record PlayerInfo(
+            int entityId,
+            String textureValue,
+            String textureSignature,
+            String displayName,
+            String prefix,
+            String suffix,
+            int nameColor,
+            String teamId
+    ) {
+    }
 
     public record DataChunk(
             int chunkIndex,

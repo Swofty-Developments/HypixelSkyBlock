@@ -99,23 +99,27 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 .<ReplayLoadProtocolObject.LoadRequest, ReplayLoadProtocolObject.LoadResponse>handleRequest(request)
                 .join();
 
-            Logger.info("shit is happening");
             if (!response.success()) {
                 Logger.error("Response failed: " + response.errorMessage());
                 return;
             }
 
-            Logger.info("shit is happening");
             if (response.metadata() == null) {
                 Logger.error("Response is missing metadata.");
                 return;
             }
 
-            Logger.info("shit is happening");
             ReplayLoadProtocolObject.ReplayMetadata protoMetadata = response.metadata();
             Map<String, ReplayMetadata.TeamInfo> teamInfo = new HashMap<>();
             protoMetadata.teamInfo().forEach((teamId, info) ->
                 teamInfo.put(teamId, new ReplayMetadata.TeamInfo(info.name(), info.colorCode(), info.color())));
+            Map<UUID, ReplayMetadata.PlayerInfo> playerInfo = new HashMap<>();
+            if (protoMetadata.playerInfo() != null) {
+                protoMetadata.playerInfo().forEach((uuid, info) -> playerInfo.put(uuid, new ReplayMetadata.PlayerInfo(
+                        info.entityId(), info.textureValue(), info.textureSignature(), info.displayName(),
+                        info.prefix(), info.suffix(), info.nameColor(), info.teamId()
+                )));
+            }
 
             ReplayMetadata metadata = ReplayMetadata.builder()
                 .replayId(protoMetadata.replayId())
@@ -132,13 +136,13 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 .players(protoMetadata.players())
                 .teams(protoMetadata.teams())
                 .teamInfo(teamInfo)
+                    .playerInfo(playerInfo)
                 .winnerId(protoMetadata.winnerId())
                 .dataSize(protoMetadata.dataSize())
                 .mapCenterX(protoMetadata.mapCenterX())
                 .mapCenterZ(protoMetadata.mapCenterZ())
                 .build();
 
-            Logger.info("shit is happening");
             ReplayData replayData = new ReplayData();
             if (response.dataChunks() != null && !response.dataChunks().isEmpty()) {
                 ReplayData.IntegrityReport integrityReport = replayData.loadFromProtocolChunks(
@@ -150,7 +154,6 @@ public class PlayerJoinEvent implements HypixelEventClass {
                     player.sendMessage("§cSome moments may be missing. " + ReplayError.REPLAY_INCOMPLETE.format());
                 }
             }
-            Logger.info("shit is happening");
 
             // Load map data
             loadMapData(metadata.getMapHash(), instance, player);
@@ -177,21 +180,16 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
             }
 
-            Logger.info("teleportingplayer");
             player.teleport(spawnPos);
 
-            Logger.info("opening session");
             ReplaySession session = new ReplaySession(metadata, instance, replayData);
-            Logger.info("adding viewer");
             session.addViewer(player);
-            Logger.info("registering session");
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
 
             if (startTick > 0) {
                 session.seekTo(startTick);
             }
 
-            Logger.info("playing session?");
             session.play();
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
@@ -205,15 +203,12 @@ public class PlayerJoinEvent implements HypixelEventClass {
         }
 
         try {
-            Logger.info("request init");
             ProxyService replayService = new ProxyService(ServiceType.REPLAY);
             var request = new ReplayMapLoadProtocolObject.MapLoadRequest(mapHash);
 
             ReplayMapLoadProtocolObject.MapLoadResponse response = replayService
                 .<ReplayMapLoadProtocolObject.MapLoadRequest, ReplayMapLoadProtocolObject.MapLoadResponse>handleRequest(request)
                 .join();
-
-            Logger.info("request sent");
 
             if (!response.success() || !response.found()) {
                 Logger.warn("Map {} not found in replay service", mapHash);

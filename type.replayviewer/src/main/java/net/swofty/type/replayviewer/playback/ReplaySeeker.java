@@ -53,6 +53,7 @@ public class ReplaySeeker {
             session.getDynamicTextManager().cleanup();
             session.getNpcManager().cleanup();
             session.getStateTracker().clear();
+            session.resetCurrentTeams();
 
             List<Recordable> recordables = data.getRecordablesBetween(0, targetTick);
             applyPersistentRecordables(session, recordables);

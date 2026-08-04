@@ -5,11 +5,7 @@ import lombok.Setter;
 import net.swofty.commons.ServerType;
 import net.swofty.type.game.replay.ReplayMetadata;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 @Getter
@@ -27,6 +23,7 @@ public class RecordingSession {
 	private final Map<UUID, String> players;
 	private final Map<String, List<UUID>> teams;
 	private final Map<String, ReplayMetadata.TeamInfo> teamInfo;
+	private final Map<UUID, ReplayMetadata.PlayerInfo> playerInfo;
 
 	@Setter
 	private long endTime;
@@ -56,7 +53,8 @@ public class RecordingSession {
 		double mapCenterZ,
 		Map<UUID, String> players,
 		Map<String, List<UUID>> teams,
-		Map<String, ReplayMetadata.TeamInfo> teamInfo
+		Map<String, ReplayMetadata.TeamInfo> teamInfo,
+		Map<UUID, ReplayMetadata.PlayerInfo> playerInfo
 	) {
 		this.replayId = replayId;
 		this.gameId = gameId;
@@ -71,6 +69,7 @@ public class RecordingSession {
 		this.players = new HashMap<>(players);
 		this.teams = new HashMap<>(teams);
 		this.teamInfo = new HashMap<>(teamInfo);
+		this.playerInfo = new HashMap<>(playerInfo);
 		this.lastDataTime = System.currentTimeMillis();
 	}
 

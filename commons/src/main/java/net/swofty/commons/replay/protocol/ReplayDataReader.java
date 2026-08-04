@@ -201,6 +201,7 @@ public class ReplayDataReader implements AutoCloseable {
         // Convert back from radians * 160 to degrees
         float yaw = (float) (yawBits / 160.0 * 180.0 / Math.PI);
         float pitch = (float) (pitchBits / 160.0 * 180.0 / Math.PI);
+        if (pitch > 180.0f) pitch -= 360.0f;
 
         return new float[]{yaw, pitch};
     }

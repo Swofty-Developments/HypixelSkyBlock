@@ -41,6 +41,12 @@ public class ActionGameDeath implements HypixelEventClass {
 
     public static void death(BedWarsPlayer player, BedWarsGame game, Consumer<Component> deathMessageConsumer, boolean voidDeath) {
         BedWarsDeathResult deathResult = BedWarsDeathHandler.calculateDeath(player, game, voidDeath);
+        Component deathMessage = BedWarsDeathHandler.createDeathMessage(deathResult);
+        game.getReplayManager().recordPlayerDeath(
+                player,
+                deathResult.getKillCreditPlayer(),
+                net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText().serialize(deathMessage)
+        );
         HypixelPosition position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setVelocity(Vec.ZERO); // Stop any momentum the player had before death
         if (!deathResult.isFinalKill()) {
@@ -87,7 +93,6 @@ public class ActionGameDeath implements HypixelEventClass {
         TeamKey teamKey = player.getTeamKey();
         boolean bedExists = teamKey != null && game.isBedAlive(teamKey);
 
-        Component deathMessage = BedWarsDeathHandler.createDeathMessage(deathResult);
         handleDeathTypeActions(deathResult, game);
         deathMessageConsumer.accept(deathMessage);
 

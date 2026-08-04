@@ -69,7 +69,8 @@ public class ReplayRecorder {
 		String mapHash,
 		Map<UUID, String> players,
 		Map<String, List<UUID>> teams,
-		Map<String, ReplayStartProtocolObject.TeamInfo> teamInfo
+		Map<String, ReplayStartProtocolObject.TeamInfo> teamInfo,
+		Map<UUID, ReplayStartProtocolObject.PlayerInfo> playerInfo
 	) {
 		recording = true;
 		currentTick = 0;
@@ -88,7 +89,8 @@ public class ReplayRecorder {
 			mapCenterZ,
 			players,
 			teams,
-			teamInfo
+				teamInfo,
+				playerInfo
 		);
 
 		serviceSender.accept(startMessage);

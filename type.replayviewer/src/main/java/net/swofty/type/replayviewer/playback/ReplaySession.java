@@ -42,6 +42,7 @@ public class ReplaySession {
     private final Set<Player> viewers = ConcurrentHashMap.newKeySet();
     private final Map<UUID, ReplayScoreboard> viewerScoreboards = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> viewerSpectating = new ConcurrentHashMap<>();
+    private final Map<String, List<UUID>> currentTeams = new HashMap<>();
     private final ReplayMetadata metadata;
     private final InstanceContainer instance;
 
@@ -77,6 +78,7 @@ public class ReplaySession {
         this.replayData = replayData;
         this.entityManager = new ReplayEntityManager(instance);
         this.stateTracker = new EntityStateTracker();
+        resetCurrentTeams();
 
         this.droppedItemManager = new DroppedItemManager(this);
         this.dynamicTextManager = new DynamicTextManager(this);
@@ -152,6 +154,16 @@ public class ReplaySession {
         PlayerNameTag tag = new PlayerNameTag(entryName, prefix, suffix, nameColor);
         playerNameTags.put(entityId, tag);
         sendNameTagTeam(entityId, tag, null);
+    }
+
+    public void applyPlayerTeam(UUID playerUuid, String teamId) {
+        currentTeams.values().forEach(players -> players.remove(playerUuid));
+        currentTeams.computeIfAbsent(teamId, ignored -> new ArrayList<>()).add(playerUuid);
+    }
+
+    void resetCurrentTeams() {
+        currentTeams.clear();
+        metadata.getTeams().forEach((teamId, players) -> currentTeams.put(teamId, new ArrayList<>(players)));
     }
 
     public void autoFollowForViewer(Player viewer) {
@@ -540,7 +552,7 @@ public class ReplaySession {
         if (entityUuid == null) return;
 
         String teamId = null;
-        for (Map.Entry<String, List<UUID>> entry : metadata.getTeams().entrySet()) {
+        for (Map.Entry<String, List<UUID>> entry : currentTeams.entrySet()) {
             if (entry.getValue().contains(entityUuid)) {
                 teamId = entry.getKey();
                 break;

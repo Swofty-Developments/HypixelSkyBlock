@@ -59,6 +59,7 @@ public class RecordablePlayer {
             case PLAYER_SKIN -> playPlayerSkin((RecordablePlayerSkin) recordable, session);
             case PLAYER_DISPLAY_NAME -> playPlayerDisplayName((RecordablePlayerDisplayName) recordable, session);
             case PLAYER_HEALTH -> playPlayerHealth((RecordablePlayerHealth) recordable, session);
+            case PLAYER_TEAM -> playPlayerTeam((RecordablePlayerTeam) recordable, session);
             case PLAYER_CHAT -> playPlayerChat((RecordablePlayerChat) recordable, session);
             case PARTICLE -> playParticle((RecordableParticle) recordable, session);
             case SOUND -> playSound((RecordableSound) recordable, session);
@@ -118,14 +119,17 @@ public class RecordablePlayer {
 
         if (type == EntityType.PLAYER) {
             var skinData = session.getStateTracker().getSkin(rec.getEntityId());
+            var playerInfo = session.getMetadata().getPlayerInfo() != null
+                    ? session.getMetadata().getPlayerInfo().get(rec.getEntityUuid())
+                    : null;
             String displayName = session.getMetadata().getPlayers().get(rec.getEntityUuid());
             if (displayName == null) displayName = "Player";
 
             ReplayPlayerEntity playerEntity =
                 new ReplayPlayerEntity(
                     displayName,
-                    skinData != null ? skinData.textureValue() : null,
-                    skinData != null ? skinData.textureSignature() : null,
+                        skinData != null ? skinData.textureValue() : playerInfo != null ? playerInfo.textureValue() : null,
+                        skinData != null ? skinData.textureSignature() : playerInfo != null ? playerInfo.textureSignature() : null,
                     rec.getEntityUuid(),
                     rec.getEntityId()
                 );
@@ -133,6 +137,11 @@ public class RecordablePlayer {
                 playerEntity.setAutoViewable(false);
             }
             session.getEntityManager().spawnEntity(rec.getEntityId(), playerEntity, pos);
+            if (playerInfo != null) {
+                session.applyPlayerDisplayName(
+                        rec.getEntityId(), playerInfo.displayName(), playerInfo.prefix(), playerInfo.suffix(), playerInfo.nameColor()
+                );
+            }
         } else {
             ReplayEntity entity = new ReplayEntity(type, rec.getEntityId(), rec.getEntityUuid());
             if (session.isRebuildingState()) {
@@ -275,6 +284,7 @@ public class RecordablePlayer {
         Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
         if (entity instanceof ReplayPlayerEntity player) {
             player.takeVisualDamage();
+            player.setPose(net.minestom.server.entity.EntityPose.DYING);
         }
     }
 
@@ -287,6 +297,16 @@ public class RecordablePlayer {
 
     private static void playPlayerRespawn(RecordablePlayerRespawn rec, ReplaySession session) {
         Pos pos = new Pos(rec.getX(), rec.getY(), rec.getZ(), rec.getYaw(), rec.getPitch());
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof LivingEntity livingEntity) {
+            livingEntity.setHealth(20.0f);
+            livingEntity.setPose(net.minestom.server.entity.EntityPose.STANDING);
+            livingEntity.setInvisible(false);
+            livingEntity.setSneaking(false);
+            livingEntity.setSprinting(false);
+        }
+        session.getStateTracker().trackHealth(rec.getEntityId(), 20.0f, 20.0f);
+        session.updateBelowNameScore(rec.getEntityId(), 20);
         session.getEntityManager().updateEntityPosition(rec.getEntityId(), pos);
     }
 
@@ -345,6 +365,10 @@ public class RecordablePlayer {
         }
     }
 
+    private static void playPlayerTeam(RecordablePlayerTeam rec, ReplaySession session) {
+        session.applyPlayerTeam(rec.getPlayerUuid(), rec.getTeamId());
+    }
+
     private static void playPlayerChat(RecordablePlayerChat rec, ReplaySession session) {
         String playerName = session.getEntityDisplayName(rec.getEntityId());
         String message = rec.isShout()
@@ -365,7 +389,9 @@ public class RecordablePlayer {
         session.getStateTracker().trackHealth(rec.getEntityId(), rec.getHealth(), rec.getMaxHealth());
         Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.setHealth(rec.getHealth());
+            if (rec.getHealth() > 0.0f) {
+                livingEntity.setHealth(rec.getHealth());
+            }
             if (previous != null && rec.getHealth() < previous.health() && livingEntity instanceof ReplayPlayerEntity player) {
                 player.takeVisualDamage();
             }
@@ -568,7 +594,7 @@ public class RecordablePlayer {
             return "§7";
         }
 
-        for (Map.Entry<String, List<UUID>> entry : session.getMetadata().getTeams().entrySet()) {
+        for (Map.Entry<String, List<UUID>> entry : session.getCurrentTeams().entrySet()) {
             if (!entry.getValue().contains(playerUuid)) {
                 continue;
             }

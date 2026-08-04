@@ -7,17 +7,11 @@ import net.swofty.type.game.replay.ReplayVersion;
 import org.bson.Document;
 import org.tinylog.Logger;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class ReplaySessionManager {
 	private final ReplayDatabase database;
@@ -45,11 +39,12 @@ public class ReplaySessionManager {
 		double mapCenterZ,
 		Map<UUID, String> players,
 		Map<String, List<UUID>> teams,
-		Map<String, ReplayMetadata.TeamInfo> teamInfo
+		Map<String, ReplayMetadata.TeamInfo> teamInfo,
+		Map<UUID, ReplayMetadata.PlayerInfo> playerInfo
 	) {
 		RecordingSession session = new RecordingSession(
 			replayId, gameId, serverType, serverId, gameTypeName, mapName, mapHash,
-			startTime, mapCenterX, mapCenterZ, players, teams, teamInfo
+				startTime, mapCenterX, mapCenterZ, players, teams, teamInfo, playerInfo
 		);
 
 		activeSessions.put(replayId, session);
@@ -164,6 +159,19 @@ public class ReplaySessionManager {
 			);
 		});
 		doc.append("teamInfo", teamInfo);
+
+		Document playerInfo = new Document();
+		session.getPlayerInfo().forEach((uuid, info) -> playerInfo.append(uuid.toString(), new Document()
+				.append("entityId", info.entityId())
+				.append("textureValue", info.textureValue())
+				.append("textureSignature", info.textureSignature())
+				.append("displayName", info.displayName())
+				.append("prefix", info.prefix())
+				.append("suffix", info.suffix())
+				.append("nameColor", info.nameColor())
+				.append("teamId", info.teamId())
+		));
+		doc.append("playerInfo", playerInfo);
 
 		// Winner
 		if (session.getWinnerId() != null) {

@@ -27,6 +27,7 @@ public class ReplayMetadata {
 	private Map<UUID, String> players;
 	private Map<String, List<UUID>> teams;
 	private Map<String, TeamInfo> teamInfo;
+	private Map<UUID, PlayerInfo> playerInfo;
 	private String winnerId;
 	private double mapCenterX;
 	private double mapCenterZ;
@@ -36,6 +37,18 @@ public class ReplayMetadata {
 		String name,
 		String colorCode,
 		int color // RGB int
+	) {
+	}
+
+	public record PlayerInfo(
+			int entityId,
+			String textureValue,
+			String textureSignature,
+			String displayName,
+			String prefix,
+			String suffix,
+			int nameColor,
+			String teamId
 	) {
 	}
 }

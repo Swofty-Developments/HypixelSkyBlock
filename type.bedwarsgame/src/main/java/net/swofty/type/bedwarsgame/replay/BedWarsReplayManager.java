@@ -108,6 +108,7 @@ public class BedWarsReplayManager {
         // Collect team info
         Map<String, List<UUID>> teams = new HashMap<>();
         Map<String, ReplayStartProtocolObject.TeamInfo> teamInfo = new HashMap<>();
+        Map<UUID, ReplayStartProtocolObject.PlayerInfo> playerInfo = new HashMap<>();
 
         for (BedWarsTeam team : game.getTeams()) {
             String teamId = team.getTeamKey().name();
@@ -118,6 +119,22 @@ public class BedWarsReplayManager {
                 team.getName(),
                 team.getColorCode(),
                 team.getTeamKey().rgb()
+            ));
+        }
+
+        for (BedWarsPlayer player : game.getPlayers()) {
+            BedWarsTeam team = game.getTeam(player.getTeamKey().name()).orElse(null);
+            String prefix = team != null ? team.getColorCode() + "§l" + team.firstLetter() + team.getColorCode() + " " : "";
+            var skin = player.getSkin();
+            playerInfo.put(player.getUuid(), new ReplayStartProtocolObject.PlayerInfo(
+                    player.getEntityId(),
+                    skin != null ? skin.textures() : null,
+                    skin != null ? skin.signature() : null,
+                    player.getUsername(),
+                    prefix,
+                    "",
+                    team != null ? team.getTeamKey().rgb() : -1,
+                    team != null ? team.getTeamKey().name() : null
             ));
         }
 
@@ -134,7 +151,8 @@ public class BedWarsReplayManager {
             mapHash,
             players,
             teams,
-            teamInfo
+                teamInfo,
+                playerInfo
         );
 
         // Register dispatchers
@@ -161,7 +179,7 @@ public class BedWarsReplayManager {
 
     private void recordInitialPlayerStates() {
         for (BedWarsPlayer player : game.getPlayers()) {
-            recordPlayerAppearance(player);
+            recorder.record(new RecordablePlayerHealth(player.getEntityId(), player.getHealth(), 20.0f));
         }
     }
 
@@ -190,6 +208,14 @@ public class BedWarsReplayManager {
         recorder.record(new RecordablePlayerHealth(
             entityId, player.getHealth(), 20.0f
         ));
+    }
+
+    public void recordPlayerTeam(BedWarsPlayer player) {
+        if (!recording) return;
+        recorder.record(new RecordablePlayerTeam(
+                player.getEntityId(), player.getUuid(), player.getTeamKey().name()
+        ));
+        recordPlayerAppearance(player);
     }
 
     public void recordPlayerHealth(BedWarsPlayer player) {
@@ -244,6 +270,25 @@ public class BedWarsReplayManager {
             deathCause,
             finalKillFlag
         ));
+    }
+
+    public void recordPlayerDeath(BedWarsPlayer victim, BedWarsPlayer killer, String deathMessage) {
+        if (!recording) return;
+        recorder.record(new RecordablePlayerDeath(
+                victim.getEntityId(),
+                killer != null ? killer.getEntityId() : -1,
+                deathMessage
+        ));
+    }
+
+    public void recordPlayerRespawn(BedWarsPlayer player) {
+        if (!recording) return;
+        Pos position = player.getPosition();
+        recorder.record(new RecordablePlayerRespawn(
+                player.getEntityId(),
+                position.x(), position.y(), position.z(), position.yaw(), position.pitch()
+        ));
+        recorder.record(new RecordablePlayerHealth(player.getEntityId(), player.getHealth(), 20.0f));
     }
 
     /**

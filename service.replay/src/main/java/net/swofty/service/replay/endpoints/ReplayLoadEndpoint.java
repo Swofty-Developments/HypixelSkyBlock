@@ -2,17 +2,13 @@ package net.swofty.service.replay.endpoints;
 
 import net.swofty.commons.ServerType;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
-import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.replay.ReplayService;
 import org.bson.Document;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ReplayLoadEndpoint implements RedisMessageHandler<
     ReplayLoadProtocolObject.LoadRequest,
@@ -110,6 +106,24 @@ public class ReplayLoadEndpoint implements RedisMessageHandler<
             });
         }
 
+        Map<UUID, ReplayLoadProtocolObject.PlayerInfo> playerInfo = new HashMap<>();
+        Document playerInfoDoc = doc.get("playerInfo", Document.class);
+        if (playerInfoDoc != null) {
+            playerInfoDoc.forEach((uuid, value) -> {
+                Document info = (Document) value;
+                playerInfo.put(UUID.fromString(uuid), new ReplayLoadProtocolObject.PlayerInfo(
+                        info.getInteger("entityId", -1),
+                        info.getString("textureValue"),
+                        info.getString("textureSignature"),
+                        info.getString("displayName"),
+                        info.getString("prefix"),
+                        info.getString("suffix"),
+                        info.getInteger("nameColor", -1),
+                        info.getString("teamId")
+                ));
+            });
+        }
+
         String mapHash = doc.getString("mapHash");
         String winnerId = doc.getString("winnerId");
         String winnerType = doc.getString("winnerType");
@@ -129,6 +143,7 @@ public class ReplayLoadEndpoint implements RedisMessageHandler<
             players,
             teams,
             teamInfo,
+                playerInfo,
             winnerId,
             winnerType,
             doc.getLong("dataSize"),

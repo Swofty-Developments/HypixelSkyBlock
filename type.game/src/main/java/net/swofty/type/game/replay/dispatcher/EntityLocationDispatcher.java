@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class EntityLocationDispatcher implements ReplayDispatcher {
     private ReplayRecorder recorder;
-    private Instance instance;
+    private final Instance instance;
 
     private final Map<Integer, CachedLocation> lastLocations = new HashMap<>();
 
@@ -62,8 +62,13 @@ public class EntityLocationDispatcher implements ReplayDispatcher {
         return Math.abs(cached.x - x) > POSITION_THRESHOLD ||
                 Math.abs(cached.y - y) > POSITION_THRESHOLD ||
                 Math.abs(cached.z - z) > POSITION_THRESHOLD ||
-                Math.abs(cached.yaw - yaw) > ROTATION_THRESHOLD ||
-                Math.abs(cached.pitch - pitch) > ROTATION_THRESHOLD;
+                angularDistance(cached.yaw, yaw) > ROTATION_THRESHOLD ||
+                angularDistance(cached.pitch, pitch) > ROTATION_THRESHOLD;
+    }
+
+    private float angularDistance(float first, float second) {
+        float difference = Math.abs(first - second) % 360.0f;
+        return Math.min(difference, 360.0f - difference);
     }
 
     @Override

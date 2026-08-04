@@ -1,14 +1,15 @@
 package net.swofty.service.replay.endpoints;
 
 import net.swofty.commons.protocol.objects.replay.ReplayStartProtocolObject;
-import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.commons.redis.RedisMessageContext;
+import net.swofty.commons.redis.RedisMessageHandler;
 import net.swofty.service.replay.ReplayService;
 import net.swofty.type.game.replay.ReplayMetadata;
 import org.tinylog.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ReplayStartEndpoint implements RedisMessageHandler<
         ReplayStartProtocolObject.StartMessage,
@@ -28,6 +29,14 @@ public class ReplayStartEndpoint implements RedisMessageHandler<
                     teamInfo.put(teamId, new ReplayMetadata.TeamInfo(info.name(), info.colorCode(), info.color()))
             );
 
+            Map<UUID, ReplayMetadata.PlayerInfo> playerInfo = new HashMap<>();
+            if (msg.playerInfo() != null) {
+                msg.playerInfo().forEach((uuid, info) -> playerInfo.put(uuid, new ReplayMetadata.PlayerInfo(
+                        info.entityId(), info.textureValue(), info.textureSignature(), info.displayName(),
+                        info.prefix(), info.suffix(), info.nameColor(), info.teamId()
+                )));
+            }
+
             ReplayService.getSessionManager().startSession(
                     msg.replayId(),
                     msg.gameId(),
@@ -41,7 +50,8 @@ public class ReplayStartEndpoint implements RedisMessageHandler<
                     msg.mapCenterZ(),
                     msg.players(),
                     msg.teams(),
-                    teamInfo
+                    teamInfo,
+                    playerInfo
             );
 
             Logger.info("Started replay session {} for game {} with {} players",

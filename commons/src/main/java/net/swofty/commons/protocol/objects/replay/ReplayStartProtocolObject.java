@@ -36,10 +36,23 @@ public class ReplayStartProtocolObject extends RedisProtocol<
             double mapCenterZ,
             Map<UUID, String> players,
             Map<String, List<UUID>> teams,
-            Map<String, TeamInfo> teamInfo
+            Map<String, TeamInfo> teamInfo,
+            Map<UUID, PlayerInfo> playerInfo
     ) {}
 
     public record StartResponse(boolean success, String message) {}
 
     public record TeamInfo(String name, String colorCode, int color) {}
+
+    public record PlayerInfo(
+            int entityId,
+            String textureValue,
+            String textureSignature,
+            String displayName,
+            String prefix,
+            String suffix,
+            int nameColor,
+            String teamId
+    ) {
+    }
 }
