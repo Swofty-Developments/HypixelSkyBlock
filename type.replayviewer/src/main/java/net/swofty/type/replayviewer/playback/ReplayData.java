@@ -9,20 +9,12 @@ import net.swofty.type.game.replay.recordable.RecordableType;
 import org.tinylog.Logger;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ReplayData {
-    // Tick -> List of recordables at that tick
-    private final Map<Integer, List<Recordable>> recordablesByTick = new TreeMap<>();
-
-    // All recordables in order
-    private final List<Recordable> allRecordables = new ArrayList<>();
+    private static final int MAX_REPLAY_TICKS = 20 * 60 * 60 * 24;
+    private final List<List<Recordable>> recordablesByTick = new ArrayList<>();
+    private final NavigableSet<Integer> populatedTicks = new TreeSet<>();
 
     // Block change history for reverting
     private final TreeMap<Integer, List<BlockChangeEntry>> blockChanges = new TreeMap<>();
@@ -102,29 +94,37 @@ public class ReplayData {
     }
 
     private void loadRecordables(byte[] data) throws IOException {
-        ReplayDataReader reader = new ReplayDataReader(data);
+        try (ReplayDataReader reader = new ReplayDataReader(data)) {
+            while (reader.available() > 0) {
+                int tick = reader.readVarInt();
+                int typeId = reader.readUnsignedByte();
 
-        while (reader.available() > 0) {
-            int tick = reader.readVarInt();
-            int typeId = reader.readUnsignedByte();
+                RecordableType type = RecordableType.byId(typeId);
+                if (type == null) {
+                    throw new IOException("Unknown recordable type: " + typeId);
+                }
 
-            RecordableType type = RecordableType.byId(typeId);
-            if (type == null) {
-                throw new IOException("Unknown recordable type: " + typeId);
-            }
+                Recordable recordable = type.createAndRead(reader);
+                recordable.setTick(tick);
 
-            Recordable recordable = type.createAndRead(reader);
-            recordable.setTick(tick);
+                if (tick < 0 || tick > MAX_REPLAY_TICKS) {
+                    throw new IOException("Invalid recordable tick: " + tick);
+                }
+                ensureTickCapacity(tick);
+                List<Recordable> tickRecordables = recordablesByTick.get(tick);
+                if (tickRecordables == null) {
+                    tickRecordables = new ArrayList<>();
+                    recordablesByTick.set(tick, tickRecordables);
+                    populatedTicks.add(tick);
+                }
+                tickRecordables.add(recordable);
 
-            allRecordables.add(recordable);
-            recordablesByTick.computeIfAbsent(tick, k -> new ArrayList<>()).add(recordable);
-
-            // Track block changes for reverting
-            if (type == RecordableType.BLOCK_CHANGE) {
-                var bc = (RecordableBlockChange) recordable;
-                blockChanges.computeIfAbsent(tick, k -> new ArrayList<>())
-                        .add(new BlockChangeEntry(bc.getX(), bc.getY(), bc.getZ(),
-                                bc.getPreviousBlockStateId(), bc.getBlockStateId()));
+                if (type == RecordableType.BLOCK_CHANGE) {
+                    var bc = (RecordableBlockChange) recordable;
+                    blockChanges.computeIfAbsent(tick, k -> new ArrayList<>())
+                            .add(new BlockChangeEntry(bc.getX(), bc.getY(), bc.getZ(),
+                                    bc.getPreviousBlockStateId(), bc.getBlockStateId()));
+                }
             }
         }
     }
@@ -133,7 +133,9 @@ public class ReplayData {
      * Gets all recordables at a specific tick.
      */
     public List<Recordable> getRecordablesAt(int tick) {
-        return recordablesByTick.getOrDefault(tick, Collections.emptyList());
+        if (tick < 0 || tick >= recordablesByTick.size()) return Collections.emptyList();
+        List<Recordable> recordables = recordablesByTick.get(tick);
+        return recordables != null ? recordables : Collections.emptyList();
     }
 
     /**
@@ -141,8 +143,9 @@ public class ReplayData {
      */
     public List<Recordable> getRecordablesBetween(int startTick, int endTick) {
         List<Recordable> result = new ArrayList<>();
-        for (int tick = startTick; tick <= endTick; tick++) {
-            result.addAll(getRecordablesAt(tick));
+        if (startTick > endTick) return result;
+        for (int tick : populatedTicks.subSet(startTick, true, endTick, true)) {
+            result.addAll(recordablesByTick.get(tick));
         }
         return result;
     }
@@ -162,15 +165,20 @@ public class ReplayData {
      * Gets all ticks that have recordables.
      */
     public Set<Integer> getAllTicks() {
-        return recordablesByTick.keySet();
+        return Collections.unmodifiableSet(populatedTicks);
     }
 
     /**
      * Gets the highest tick number.
      */
     public int getMaxTick() {
-        if (recordablesByTick.isEmpty()) return 0;
-        return ((TreeMap<Integer, ?>) recordablesByTick).lastKey();
+        return populatedTicks.isEmpty() ? 0 : populatedTicks.last();
+    }
+
+    private void ensureTickCapacity(int tick) {
+        while (recordablesByTick.size() <= tick) {
+            recordablesByTick.add(null);
+        }
     }
 
     /**

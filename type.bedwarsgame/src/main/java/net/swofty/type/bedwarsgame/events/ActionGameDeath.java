@@ -40,9 +40,12 @@ public class ActionGameDeath implements HypixelEventClass {
     }
 
     public static void death(BedWarsPlayer player, BedWarsGame game, Consumer<Component> deathMessageConsumer, boolean voidDeath) {
+        BedWarsDeathResult deathResult = BedWarsDeathHandler.calculateDeath(player, game, voidDeath);
         HypixelPosition position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setVelocity(Vec.ZERO); // Stop any momentum the player had before death
-        player.teleport(new Pos(position.x(), position.y(), position.z()));
+        if (!deathResult.isFinalKill()) {
+            player.teleport(new Pos(position.x(), position.y(), position.z()));
+        }
         BedWarsGame.literalSetupSpectator(player);
 
         Integer pickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
@@ -73,7 +76,6 @@ public class ActionGameDeath implements HypixelEventClass {
             }
         }
 
-        BedWarsDeathResult deathResult = BedWarsDeathHandler.calculateDeath(player, game, voidDeath);
         if (deathResult.deathType() == BedWarsDeathType.VOID) {
             if (player.allowsPersistentProgress())
                 player.getAchievementHandler().completeAchievement("bedwars.its_dark_down_there");
@@ -141,9 +143,7 @@ public class ActionGameDeath implements HypixelEventClass {
 
         BedWarsStatsRecorder.recordDeath(victim, game.getGameType());
 
-        if (creditPlayer != null) {
-            game.getReplayManager().recordKill(creditPlayer, victim, result.deathType(), result.isFinalKill());
-        }
+        game.getReplayManager().recordKill(creditPlayer, victim, result.deathType(), result.isFinalKill());
 
         if (result.isFinalKill() && creditPlayer != null) {
             if (creditPlayer.allowsPersistentProgress())

@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
+import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 
@@ -83,7 +84,7 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
         }
 
         lines.add("§fGame: §aBedWars");
-        lines.add("§fMode: §a" + gameType);
+        lines.add("§fMode: §a" + formatMode(gameType));
         lines.add("§7 ");
 
         String mapName = session.getMetadata().getMapName();
@@ -93,6 +94,14 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
         lines.add("§ewww.hypixel.net");
 
         return lines;
+    }
+
+    private String formatMode(String mode) {
+        try {
+            return BedWarsGameType.valueOf(mode.toUpperCase()).getDisplayName();
+        } catch (IllegalArgumentException ignored) {
+            return mode.replace('_', ' ');
+        }
     }
 
 }

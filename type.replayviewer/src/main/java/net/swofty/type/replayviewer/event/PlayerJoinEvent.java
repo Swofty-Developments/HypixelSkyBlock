@@ -16,8 +16,9 @@ import net.swofty.type.game.replay.ReplayError;
 import net.swofty.type.game.replay.ReplayMetadata;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.EventPhase;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
@@ -36,7 +37,7 @@ import java.util.concurrent.CompletableFuture;
 public class PlayerJoinEvent implements HypixelEventClass {
 
     @SneakyThrows
-    @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false)
+    @PhasedEvent(node = EventNodes.ALL, phase = EventPhase.CONNECT)
     public void run(AsyncPlayerConfigurationEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
 
@@ -72,13 +73,8 @@ public class PlayerJoinEvent implements HypixelEventClass {
             Pos spawnPos = new Pos(session.getMetadata().getMapCenterX(), 100, session.getMetadata().getMapCenterZ());
             event.getPlayer().setRespawnPoint(spawnPos);
 
-            CompletableFuture.runAsync(() -> {
-                ScheduleUtility.delay(() -> {
-                    session.addViewer(player);
-                    player.teleport(spawnPos);
-                    player.sendMessage("§aJoined existing replay session.");
-                }, 20);
-            });
+            TypeReplayViewerLoader.registerSession(player.getUuid(), session);
+            player.setRespawnPoint(spawnPos);
             return;
         }
 
@@ -88,7 +84,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
         event.setSpawningInstance(instance);
         event.getPlayer().setRespawnPoint(new Pos(0, 100, 0));
 
-        CompletableFuture.runAsync(() -> ScheduleUtility.delay(() -> loadReplay(player, replayId, instance), 20));
+        CompletableFuture.runAsync(() -> loadReplay(player, replayId, instance));
     }
 
     private void loadReplay(Player player, UUID replayId, InstanceContainer instance) {
@@ -103,14 +99,19 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 .<ReplayLoadProtocolObject.LoadRequest, ReplayLoadProtocolObject.LoadResponse>handleRequest(request)
                 .join();
 
+            Logger.info("shit is happening");
             if (!response.success()) {
+                Logger.error("Response failed: " + response.errorMessage());
                 return;
             }
 
+            Logger.info("shit is happening");
             if (response.metadata() == null) {
+                Logger.error("Response is missing metadata.");
                 return;
             }
 
+            Logger.info("shit is happening");
             ReplayLoadProtocolObject.ReplayMetadata protoMetadata = response.metadata();
             Map<String, ReplayMetadata.TeamInfo> teamInfo = new HashMap<>();
             protoMetadata.teamInfo().forEach((teamId, info) ->
@@ -137,6 +138,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 .mapCenterZ(protoMetadata.mapCenterZ())
                 .build();
 
+            Logger.info("shit is happening");
             ReplayData replayData = new ReplayData();
             if (response.dataChunks() != null && !response.dataChunks().isEmpty()) {
                 ReplayData.IntegrityReport integrityReport = replayData.loadFromProtocolChunks(
@@ -148,6 +150,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
                     player.sendMessage("§cSome moments may be missing. " + ReplayError.REPLAY_INCOMPLETE.format());
                 }
             }
+            Logger.info("shit is happening");
 
             // Load map data
             loadMapData(metadata.getMapHash(), instance, player);
@@ -174,15 +177,21 @@ public class PlayerJoinEvent implements HypixelEventClass {
                 spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
             }
 
+            Logger.info("teleportingplayer");
             player.teleport(spawnPos);
 
-            ReplaySession session = new ReplaySession(player, metadata, instance, replayData);
+            Logger.info("opening session");
+            ReplaySession session = new ReplaySession(metadata, instance, replayData);
+            Logger.info("adding viewer");
+            session.addViewer(player);
+            Logger.info("registering session");
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
 
             if (startTick > 0) {
                 session.seekTo(startTick);
             }
 
+            Logger.info("playing session?");
             session.play();
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
@@ -196,12 +205,15 @@ public class PlayerJoinEvent implements HypixelEventClass {
         }
 
         try {
+            Logger.info("request init");
             ProxyService replayService = new ProxyService(ServiceType.REPLAY);
             var request = new ReplayMapLoadProtocolObject.MapLoadRequest(mapHash);
 
             ReplayMapLoadProtocolObject.MapLoadResponse response = replayService
                 .<ReplayMapLoadProtocolObject.MapLoadRequest, ReplayMapLoadProtocolObject.MapLoadResponse>handleRequest(request)
                 .join();
+
+            Logger.info("request sent");
 
             if (!response.success() || !response.found()) {
                 Logger.warn("Map {} not found in replay service", mapHash);
@@ -215,8 +227,15 @@ public class PlayerJoinEvent implements HypixelEventClass {
             }
 
             // Deserialize and apply map
-            MapDeserializer.loadMap(instance, response.compressedData());
-            Logger.info("Loaded map {} ({} bytes)", mapHash, response.compressedData().length);
+            MapDeserializer.loadMap(instance, response.compressedData())
+                    .whenComplete((ignored, throwable) -> {
+                        if (throwable != null) {
+                            Logger.error(throwable, "Failed to load map");
+                            return;
+                        }
+
+                        Logger.info("Loaded map {} ({} bytes)", mapHash, response.compressedData().length);
+                    });
         } catch (Exception e) {
             Logger.error(e, "Failed to load map {}", mapHash);
             player.sendMessage("§eFailed to load map: " + e.getMessage());

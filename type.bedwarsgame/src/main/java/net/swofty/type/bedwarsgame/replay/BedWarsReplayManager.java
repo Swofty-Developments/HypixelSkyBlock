@@ -497,14 +497,10 @@ public class BedWarsReplayManager {
             ));
         }
 
-        // Record NPC display name (last line of holograms is typically the name)
-        String displayName = holograms.length > 0 ? holograms[holograms.length - 1] : npcType;
-        recorder.record(new RecordableNpcDisplayName(entityId, displayName, "", "", -1, true));
+        recorder.record(new RecordableNpcDisplayName(entityId, npcType, "", "", -1, false));
 
-        // Record hologram text lines
-        if (holograms.length > 1) {
-            List<String> textLines = new ArrayList<>(Arrays.asList(holograms).subList(0, holograms.length - 1));
-            recorder.record(new RecordableNpcTextLine(entityId, textLines, 2.5, 0));
+        if (holograms.length > 0) {
+            recorder.record(new RecordableNpcTextLine(entityId, Arrays.asList(holograms), 1.8, 0));
         }
     }
 

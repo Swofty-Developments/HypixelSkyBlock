@@ -18,6 +18,7 @@ import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.potion.Potion;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.utils.inventory.PlayerInventoryUtils;
+import net.swofty.type.game.replay.entity.EntityStateTracker;
 import net.swofty.type.game.replay.recordable.*;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
@@ -54,6 +55,7 @@ public class RecordablePlayer {
             case PLAYER_ARM_SWING -> playPlayerArmSwing((RecordablePlayerArmSwing) recordable, session);
             case PLAYER_DEATH -> playPlayerDeath((RecordablePlayerDeath) recordable, session);
             case PLAYER_RESPAWN -> playPlayerRespawn((RecordablePlayerRespawn) recordable, session);
+            case PLAYER_GAMEMODE -> playPlayerGamemode((RecordablePlayerGamemode) recordable, session);
             case PLAYER_SKIN -> playPlayerSkin((RecordablePlayerSkin) recordable, session);
             case PLAYER_DISPLAY_NAME -> playPlayerDisplayName((RecordablePlayerDisplayName) recordable, session);
             case PLAYER_HEALTH -> playPlayerHealth((RecordablePlayerHealth) recordable, session);
@@ -112,6 +114,7 @@ public class RecordablePlayer {
         // Determine entity type
         EntityType type = EntityType.fromId(rec.getEntityTypeId());
         if (type == null) type = EntityType.PLAYER;
+        if (type == EntityType.ARMOR_STAND) return;
 
         if (type == EntityType.PLAYER) {
             var skinData = session.getStateTracker().getSkin(rec.getEntityId());
@@ -269,7 +272,17 @@ public class RecordablePlayer {
     }
 
     private static void playPlayerDeath(RecordablePlayerDeath rec, ReplaySession session) {
-        // TODO: death
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity instanceof ReplayPlayerEntity player) {
+            player.takeVisualDamage();
+        }
+    }
+
+    private static void playPlayerGamemode(RecordablePlayerGamemode rec, ReplaySession session) {
+        Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
+        if (entity != null) {
+            entity.setInvisible(rec.getGamemode() == 3);
+        }
     }
 
     private static void playPlayerRespawn(RecordablePlayerRespawn rec, ReplaySession session) {
@@ -348,10 +361,14 @@ public class RecordablePlayer {
     }
 
     private static void playPlayerHealth(RecordablePlayerHealth rec, ReplaySession session) {
+        EntityStateTracker.HealthData previous = session.getStateTracker().getHealth(rec.getEntityId());
         session.getStateTracker().trackHealth(rec.getEntityId(), rec.getHealth(), rec.getMaxHealth());
         Entity entity = session.getEntityManager().getEntity(rec.getEntityId());
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.setHealth(rec.getHealth());
+            if (previous != null && rec.getHealth() < previous.health() && livingEntity instanceof ReplayPlayerEntity player) {
+                player.takeVisualDamage();
+            }
         }
 
         session.updateBelowNameScore(rec.getEntityId(), (int) rec.getHealth());
@@ -394,21 +411,21 @@ public class RecordablePlayer {
         }
 
         String deathMessage = switch (rec.getDeathCause()) {
-            case 0 -> "§7" + victim + " died.";
+            case 0 -> victim + "§7 died.";
             case 1 -> killer != null
-                ? "§7" + victim + " was killed by " + killer + "§7."
-                : "§7" + victim + " died.";
-            case 2 -> "§7" + victim + " fell into the void.";
+                    ? victim + "§7 was killed by " + killer + "§7."
+                    : victim + "§7 died.";
+            case 2 -> victim + "§7 fell into the void.";
             case 3 -> killer != null
-                ? "§7" + victim + " was knocked into the void by " + killer + "§7."
-                : "§7" + victim + " fell into the void.";
+                    ? victim + "§7 was knocked into the void by " + killer + "§7."
+                    : victim + "§7 fell into the void.";
             case 4 -> killer != null
-                ? "§7" + victim + " was shot by " + killer + "§7."
-                : "§7" + victim + " died.";
+                    ? victim + "§7 was shot by " + killer + "§7."
+                    : victim + "§7 died.";
             case 5 -> killer != null
-                ? "§7" + victim + " was slain by " + killer + "§7's entity."
-                : "§7" + victim + " died.";
-            default -> "§7" + victim + " died.";
+                    ? victim + "§7 was slain by " + killer + "§7's entity."
+                    : victim + "§7 died.";
+            default -> victim + "§7 died.";
         };
 
         String message = rec.getFinalKill() != 0 ? deathMessage + " §b§lFINAL KILL!" : deathMessage;

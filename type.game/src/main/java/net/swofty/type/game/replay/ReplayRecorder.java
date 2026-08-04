@@ -35,6 +35,7 @@ public class ReplayRecorder {
 	private final Consumer<Object> serviceSender;
 
 	private final ConcurrentLinkedQueue<Recordable> buffer = new ConcurrentLinkedQueue<>();
+	private final AtomicInteger bufferedCount = new AtomicInteger();
 	private final AtomicInteger batchIndex = new AtomicInteger(0);
 
 	@Getter
@@ -115,8 +116,9 @@ public class ReplayRecorder {
 
 		recordable.setTick(currentTick);
 		buffer.offer(recordable);
+		int count = bufferedCount.incrementAndGet();
 
-		if (buffer.size() >= BATCH_SIZE) {
+		if (count >= BATCH_SIZE) {
 			sendBatch();
 		}
 	}
@@ -127,9 +129,10 @@ public class ReplayRecorder {
 		for (Recordable recordable : recordables) {
 			recordable.setTick(currentTick);
 			buffer.offer(recordable);
+			bufferedCount.incrementAndGet();
 		}
 
-		if (buffer.size() >= BATCH_SIZE) {
+		if (bufferedCount.get() >= BATCH_SIZE) {
 			sendBatch();
 		}
 	}
@@ -145,6 +148,7 @@ public class ReplayRecorder {
 		Recordable r;
 		while ((r = buffer.poll()) != null) {
 			toSend.add(r);
+			bufferedCount.decrementAndGet();
 		}
 
 		if (toSend.isEmpty()) return;
@@ -172,7 +176,10 @@ public class ReplayRecorder {
 				batchMessage.batchIndex(), toSend.size(), data.length, compressedData.length);
 
 		} catch (IOException e) {
-			toSend.forEach(buffer::offer);
+			toSend.forEach(recordable -> {
+				buffer.offer(recordable);
+				bufferedCount.incrementAndGet();
+			});
 			Logger.error(e, "Failed to serialize recordables");
 		}
 	}
@@ -224,7 +231,7 @@ public class ReplayRecorder {
 	 * @return The number of recordables in the buffer
 	 */
 	public int getRecordableCount() {
-		return buffer.size();
+		return bufferedCount.get();
 	}
 
 	/**
@@ -238,6 +245,7 @@ public class ReplayRecorder {
 		Recordable r;
 		while ((r = buffer.poll()) != null) {
 			toFlush.add(r);
+			bufferedCount.decrementAndGet();
 		}
 
 		if (toFlush.isEmpty()) return null;

@@ -67,7 +67,6 @@ public class ReplaySession {
     public static final short[] SKIP_PRESETS = {1, 5, 10, 30, 60};
 
     public ReplaySession(
-            Player initialViewer,
             ReplayMetadata metadata,
             InstanceContainer instance,
             ReplayData replayData
@@ -85,7 +84,6 @@ public class ReplaySession {
 
         ReplaySeeker.rebuildStateAtTick(this, 0);
 
-        addViewer(initialViewer);
     }
 
     public void addViewer(Player viewer) {
@@ -335,7 +333,7 @@ public class ReplaySession {
         npcManager.tick();
 
         // TODO: move this to update even when it's not playing, because now we can't ever see paused state
-        updateActionBar();
+        if (tick % 5 == 0) updateActionBar();
     }
 
     private void updateActionBar() {

@@ -1,10 +1,6 @@
 package net.swofty.type.bedwarsgame.replay;
 
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EquipmentSlot;
-import net.minestom.server.entity.ItemEntity;
-import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.*;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.potion.PotionEffect;
@@ -12,21 +8,11 @@ import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import net.swofty.type.game.replay.ReplayRecorder;
 import net.swofty.type.game.replay.dispatcher.ReplayDispatcher;
-import net.swofty.type.game.replay.recordable.RecordableEntityAnimation;
-import net.swofty.type.game.replay.recordable.RecordableEntityDespawn;
-import net.swofty.type.game.replay.recordable.RecordableEntityEffect;
-import net.swofty.type.game.replay.recordable.RecordableEntityEquipment;
-import net.swofty.type.game.replay.recordable.RecordableEntitySpawn;
-import net.swofty.type.game.replay.recordable.RecordablePlayerArmSwing;
-import net.swofty.type.game.replay.recordable.RecordablePlayerHandItem;
-import net.swofty.type.game.replay.recordable.RecordablePlayerSneak;
-import net.swofty.type.game.replay.recordable.RecordablePlayerSprint;
+import net.swofty.type.game.replay.recordable.*;
+import net.swofty.type.generic.entity.hologram.HologramEntity;
+import net.swofty.type.generic.entity.npc.impl.NPCViewable;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class EntityLifecycleDispatcher implements ReplayDispatcher {
     private ReplayRecorder recorder;
@@ -54,14 +40,14 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
 
         for (Entity entity : instance.getEntities()) {
             // Skip item entities - they are tracked separately via dropped item system
-            if (entity instanceof ItemEntity) continue;
+            if (isReplayManagedExternally(entity)) continue;
 
             recordEntitySpawn(entity);
             trackedEntities.add(entity.getEntityId());
 
             if (entity instanceof Player player) {
                 playerStates.put(entity.getEntityId(), new PlayerState(
-                    player.isSneaking(), player.isSprinting()
+                        player.isSneaking(), player.isSprinting(), (byte) player.getGameMode().ordinal()
                 ));
                 recordAllEquipment(player);
                 recordAllEffects(player);
@@ -79,7 +65,7 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
         // Check for new entities and state changes
         for (Entity entity : instance.getEntities()) {
             // Skip item entities - they are tracked separately via dropped item system
-            if (entity instanceof ItemEntity) continue;
+            if (isReplayManagedExternally(entity)) continue;
 
             int entityId = entity.getEntityId();
             currentEntities.add(entityId);
@@ -90,7 +76,7 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
 
                 if (entity instanceof Player player) {
                     playerStates.put(entityId, new PlayerState(
-                        player.isSneaking(), player.isSprinting()
+                            player.isSneaking(), player.isSprinting(), (byte) player.getGameMode().ordinal()
                     ));
                     recordAllEquipment(player);
                     recordAllEffects(player);
@@ -143,6 +129,10 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
         if (entity instanceof Player player) {
             recordHeldItem(entity.getEntityId(), player.getItemInMainHand());
         }
+    }
+
+    private boolean isReplayManagedExternally(Entity entity) {
+        return entity instanceof ItemEntity || entity instanceof HologramEntity || entity instanceof NPCViewable;
     }
 
     private void recordAllEquipment(LivingEntity entity) {
@@ -241,21 +231,28 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
         PlayerState current = playerStates.get(entityId);
 
         if (current == null) {
-            current = new PlayerState(false, false);
+            current = new PlayerState(false, false, (byte) player.getGameMode().ordinal());
             playerStates.put(entityId, current);
         }
 
         // Check sneaking
         if (player.isSneaking() != current.sneaking) {
             recorder.record(new RecordablePlayerSneak(entityId, player.isSneaking()));
-            playerStates.put(entityId, new PlayerState(player.isSneaking(), current.sprinting));
+            playerStates.put(entityId, new PlayerState(player.isSneaking(), current.sprinting, current.gamemode));
             current = playerStates.get(entityId);
         }
 
         // Check sprinting
         if (player.isSprinting() != current.sprinting) {
             recorder.record(new RecordablePlayerSprint(entityId, player.isSprinting()));
-            playerStates.put(entityId, new PlayerState(current.sneaking, player.isSprinting()));
+            playerStates.put(entityId, new PlayerState(current.sneaking, player.isSprinting(), current.gamemode));
+            current = playerStates.get(entityId);
+        }
+
+        byte gamemode = (byte) player.getGameMode().ordinal();
+        if (gamemode != current.gamemode) {
+            recorder.record(new RecordablePlayerGamemode(entityId, gamemode));
+            playerStates.put(entityId, new PlayerState(current.sneaking, current.sprinting, gamemode));
         }
     }
 
@@ -303,6 +300,6 @@ public class EntityLifecycleDispatcher implements ReplayDispatcher {
         return "EntityLifecycle";
     }
 
-    private record PlayerState(boolean sneaking, boolean sprinting) {
+    private record PlayerState(boolean sneaking, boolean sprinting, byte gamemode) {
     }
 }

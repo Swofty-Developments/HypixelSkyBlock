@@ -8,8 +8,6 @@ import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
 import net.swofty.type.game.replay.recordable.bedwars.RecordableTeamElimination;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public enum RecordableType {
@@ -62,17 +60,16 @@ public enum RecordableType {
 
 	// NPC events (140-149)
 	NPC_DISPLAY_NAME(140, RecordableNpcDisplayName::new),
-	NPC_TEXT_LINE(141, RecordableNpcTextLine::new),
+	NPC_TEXT_LINE(141, RecordableNpcTextLine::new);
 
-	// Composite events (150+)
-	BATCH(150, RecordableBatch::new)
-	;
-
-	private static final Map<Integer, RecordableType> BY_ID = new HashMap<>();
+	private static final RecordableType[] BY_ID = new RecordableType[256];
 
 	static {
 		for (RecordableType type : values()) {
-			BY_ID.put(type.id, type);
+			if (BY_ID[type.id] != null) {
+				throw new IllegalStateException("Duplicate recordable type ID: " + type.id);
+			}
+			BY_ID[type.id] = type;
 		}
 	}
 
@@ -100,7 +97,7 @@ public enum RecordableType {
 	}
 
 	public static RecordableType byId(int id) {
-		return BY_ID.get(id);
+		return id >= 0 && id < BY_ID.length ? BY_ID[id] : null;
 	}
 
 }

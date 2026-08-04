@@ -84,6 +84,9 @@ public class ReplayDataReader implements AutoCloseable {
      */
     public String readString() throws IOException {
         int length = readVarInt();
+        if (length > available()) {
+            throw new IOException("Invalid string length: " + length);
+        }
         byte[] bytes = new byte[length];
         in.readFully(bytes);
         return new String(bytes, StandardCharsets.UTF_8);
@@ -106,6 +109,9 @@ public class ReplayDataReader implements AutoCloseable {
         int shift = 0;
         int b;
         do {
+            if (shift >= 35) {
+                throw new IOException("VarInt is too large");
+            }
             b = in.readUnsignedByte();
             result |= (b & 0x7F) << shift;
             shift += 7;
@@ -130,6 +136,9 @@ public class ReplayDataReader implements AutoCloseable {
         int shift = 0;
         int b;
         do {
+            if (shift >= 70) {
+                throw new IOException("VarLong is too large");
+            }
             b = in.readUnsignedByte();
             result |= (long) (b & 0x7F) << shift;
             shift += 7;
@@ -201,6 +210,9 @@ public class ReplayDataReader implements AutoCloseable {
      */
     public byte[] readBytes() throws IOException {
         int length = readVarInt();
+        if (length > available()) {
+            throw new IOException("Invalid byte array length: " + length);
+        }
         byte[] bytes = new byte[length];
         in.readFully(bytes);
         return bytes;
