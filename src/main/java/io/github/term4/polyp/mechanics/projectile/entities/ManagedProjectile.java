@@ -75,6 +75,7 @@ public class ManagedProjectile extends ProjectileEntity {
             case DESTROY -> { fireImpact(target); return true; }
         }
 
+        beforeEntityDamage(target);
         DamageSystem.DamageOutcome result = applyDamageAndKnockback(target, ev);
         // didn't land: the InvulnResponse picks by why - IMMUNE (creative/spectator) vs BLOCKED (invul window)
         if (!result.landed()) {
@@ -146,6 +147,9 @@ public class ManagedProjectile extends ProjectileEntity {
     }
 
     /** Impact effect once a hit lands, after damage/knockback and before removal. {@code hitEntity} {@code null} = block hit. */
+    /** Runs before the damage roll, so it fires even when the hit then i-frame-deflects (vanilla arrow flame order). */
+    protected void beforeEntityDamage(@NotNull Entity target) {}
+
     protected void onImpact(@Nullable Entity hitEntity) {}
 
     private void fireImpact(@Nullable Entity hit) {

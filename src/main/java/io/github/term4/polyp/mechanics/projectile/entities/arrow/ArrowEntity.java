@@ -5,6 +5,7 @@ import io.github.term4.polyp.world.WorldPolicy;
 import io.github.term4.polyp.fx.FxContext;
 import io.github.term4.polyp.fx.Fx;
 import io.github.term4.polyp.mechanics.attribute.catalog.enchant.Flame;
+import io.github.term4.polyp.mechanics.damage.types.burning.Ignite;
 import io.github.term4.polyp.mechanics.projectile.ProjectileConfigResolver.ResolvedHit;
 import io.github.term4.polyp.mechanics.attribute.catalog.VanillaPotions;
 import io.github.term4.polyp.mechanics.projectile.ProjectileSnapshot;
@@ -116,6 +117,25 @@ public class ArrowEntity extends ManagedProjectile {
 
     public void setShakeTicks(int ticks) { this.shakeTicks = ticks; }
 
+    /** Flame rides the ARROW's burning state, not the enchant: a doused arrow ignites nobody, and vanilla wires
+     *  the fire boolean to viewers ({@code setOnFire(100)} at shoot). */
+    private boolean burning;
+
+    @Override
+    public void setProjectileEnchants(int power, int punch, int flame) {
+        super.setProjectileEnchants(power, punch, flame);
+        if (flame > 0 && !burning) {
+            burning = true;
+            getEntityMeta().setOnFire(true);
+        }
+    }
+
+    // vanilla ignites BEFORE the damage roll, so an i-frame deflect still burns (EntityArrow sets fire, then damageEntity)
+    @Override
+    protected void beforeEntityDamage(@NotNull Entity target) {
+        if (burning && target instanceof LivingEntity le) Ignite.ignite(le, Flame.FIRE_TICKS, ProjectileSystem.KEY);
+    }
+
     @Override
     protected void onImpact(@Nullable Entity hitEntity) {
         if (hitEntity != null) Fx.play(services(), Fx.ARROW_HIT, FxContext.of(this)); // block hits go through onStuck
@@ -123,8 +143,6 @@ public class ArrowEntity extends ManagedProjectile {
         // hit-marker "ding" to the shooter, on a real target - not a self-hit
         if (shooter instanceof Player && shooter != le) Fx.play(services(), Fx.ARROW_HIT_PLAYER, FxContext.of(shooter, le));
         StuckArrows.add(le, 1);
-        // vanilla fixed 5s; fire ticks decrement at server TPS, so scale it
-        if (flameLevel() > 0) le.setFireTicks(TickScaler.duration(le, Flame.FIRE_TICKS, ProjectileSystem.KEY));
         applyOnHitEffects(le);
     }
 
@@ -158,6 +176,11 @@ public class ArrowEntity extends ManagedProjectile {
     @Override
     protected void updateProjectile(long time) {
         super.updateProjectile(time);
+        if (burning && inWater()) {
+            burning = false;
+            getEntityMeta().setOnFire(false);
+            Fx.play(services(), Fx.FIRE_EXTINGUISH, FxContext.of(this)); // 1.8 fizzes any doused entity, arrows included
+        }
         if (deflectVisible && !isStuck()) spawnDeflectTrail();
         if (!isStuck()) return;
         if (shake > 0) { shake--; return; } // vanilla pickup delay: no collecting while the arrow is still shaking

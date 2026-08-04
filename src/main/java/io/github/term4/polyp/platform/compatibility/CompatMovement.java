@@ -1,5 +1,6 @@
 package io.github.term4.polyp.platform.compatibility;
 
+import io.github.term4.polyp.MechanicsKeys;
 import io.github.term4.polyp.Polyp;
 import io.github.term4.polyp.mechanics.damage.DamageSystem;
 import io.github.term4.polyp.platform.player.OptimizedPlayer;
@@ -20,6 +21,7 @@ import net.minestom.server.event.trait.PlayerEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.play.EntityVelocityPacket;
 import net.minestom.server.network.packet.server.play.PlayerPositionAndLookPacket;
+import net.minestom.server.tag.Tag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,24 +30,46 @@ import org.jetbrains.annotations.Nullable;
  * always skip the knockback i-frame window so a hit still launches; {@code restrictMovement} rejects only a move that
  * NEWLY puts the hitbox into a solid block (a stuck player can still slide out), set back without an absolute-view snap
  * (camera kept). Installed once; inert unless a player's config enables a restriction.
+ *
+ * <p>Plain server API throughout, so foreign-provider players get these too (tag-carried {@link CompatState},
+ * policy re-resolved per move); the packet-level compat elsewhere still needs {@code OptimizedPlayer}.
  */
 public final class CompatMovement {
 
     private static final double MIN_MOVE_SQ = 1.0e-8;
+
+    /** Foreign-provider players' state; Animatium natives stay empty (undetectable without the provider). */
+    private static final Tag<CompatState> FALLBACK_COMPAT = Tag.Transient("polyp:compat-movement-fallback");
 
     private CompatMovement() {}
 
     public static void install(Polyp polyp) {
         EventNode<@NotNull PlayerEvent> node = EventNode.type("polyp:compat-movement", EventFilter.PLAYER);
         // resolve the trackers lazily - install runs before they're created in init()
-        node.addListener(PlayerMoveEvent.class, e -> onMove(e, polyp.clientInfo(), polyp.sprintTracker()));
+        node.addListener(PlayerMoveEvent.class, e -> onMove(polyp, e));
         polyp.install(node);
     }
 
-    private static void onMove(PlayerMoveEvent event, ClientInfoTracker clientInfo, @Nullable SprintTracker sprintTracker) {
+    private static @Nullable CompatState compatOf(Polyp polyp, Player player) {
+        if (player instanceof OptimizedPlayer op) return op.compat();
+        // PlayerConfigApplier is provider-gated, so nothing pushes policy changes here - re-resolve each move
+        CompatConfig cfg = polyp.profiles().resolve(player, MechanicsKeys.COMPAT);
+        CompatState c = player.getTag(FALLBACK_COMPAT);
+        if (c == null) {
+            if (cfg == null) return null; // no policy anywhere: keep the move path allocation-free
+            c = new CompatState();
+            player.setTag(FALLBACK_COMPAT, c);
+        }
+        c.apply(cfg);
+        return c;
+    }
+
+    private static void onMove(Polyp polyp, PlayerMoveEvent event) {
+        ClientInfoTracker clientInfo = polyp.clientInfo();
+        SprintTracker sprintTracker = polyp.sprintTracker();
         Player player = event.getPlayer();
-        if (!(player instanceof OptimizedPlayer op)) return;
-        CompatState c = op.compat();
+        CompatState c = compatOf(polyp, player);
+        if (c == null) return;
         // DISABLE_CRAWL_POSE clients block the squeeze-to-fit crawl natively; the revert would then only false-positive
         // on their fast 1.8 fluid descent (box briefly overshoots the floor) and bounce them off water
         boolean collision = c.restrictMovement() && !c.handlesNatively(AnimatiumFeature.DISABLE_CRAWL_POSE);

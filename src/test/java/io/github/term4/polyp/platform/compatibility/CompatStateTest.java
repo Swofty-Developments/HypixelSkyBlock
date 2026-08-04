@@ -8,12 +8,9 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.AttackRange;
-import net.minestom.server.item.component.EnchantmentList;
-import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
 import net.minestom.server.network.packet.server.play.SetSlotPacket;
-import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -55,10 +52,9 @@ class CompatStateTest extends HeadlessServerTest {
     }
 
     private static ItemStack fancySnowball() {
-        return ItemStack.of(Material.SNOWBALL, 16)
+        return enchant(ItemStack.of(Material.SNOWBALL, 16)
                 .withCustomName(Component.text("Feather"))
-                .withLore(Component.text("Kit projectile"))
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(Key.key("minecraft:power")), 2));
+                .withLore(Component.text("Kit projectile")), Key.key("minecraft:power"), 2);
     }
 
     @Test

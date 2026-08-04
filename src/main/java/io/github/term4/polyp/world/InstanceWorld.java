@@ -31,13 +31,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /** A {@link MechanicsWorld} over a plain Minestom {@link Instance}: every operation delegates 1:1, behavior identical. */
-public final class InstanceWorld implements MechanicsWorld {
+public class InstanceWorld implements MechanicsWorld {
 
     private final Instance instance;
     // world metadata, NOT the instance's tags: world scope stays distinct even on a plain instance
     private final TagHandler tags = TagHandler.newHandler();
 
-    InstanceWorld(Instance instance) {
+    protected InstanceWorld(Instance instance) {
         this.instance = instance;
     }
 

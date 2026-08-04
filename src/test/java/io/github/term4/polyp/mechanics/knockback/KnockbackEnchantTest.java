@@ -4,15 +4,11 @@ import io.github.term4.polyp.mechanics.attribute.catalog.enchant.Knockback;
 import io.github.term4.polyp.testsupport.HeadlessServerTest;
 import io.github.term4.polyp.item.Enchants;
 import io.github.term4.polyp.presets.vanilla18.Vanilla18;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.EnchantmentList;
-import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,8 +62,7 @@ class KnockbackEnchantTest extends HeadlessServerTest {
     @Test
     void enchantsReadsKnockbackLevelOffTheWeapon() {
         // the read the attack ruleset performs on event.item() to feed extraKnockback
-        ItemStack sword = ItemStack.of(Material.DIAMOND_SWORD)
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(Knockback.KEY), 2));
+        ItemStack sword = enchanted(Material.DIAMOND_SWORD, Knockback.KEY, 2);
         assertEquals(2, Enchants.level(sword, Knockback.KEY));
         assertEquals(0, Enchants.level(ItemStack.of(Material.DIAMOND_SWORD), Knockback.KEY));
     }

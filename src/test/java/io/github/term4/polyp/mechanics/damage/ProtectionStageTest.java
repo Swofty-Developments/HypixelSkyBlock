@@ -11,16 +11,12 @@ import io.github.term4.polyp.mechanics.damage.types.fall.FallDamage;
 import io.github.term4.polyp.mechanics.damage.types.melee.MeleeDamage;
 import io.github.term4.polyp.testsupport.HeadlessServerTest;
 import net.kyori.adventure.key.Key;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.EnchantmentList;
-import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -207,12 +203,6 @@ class ProtectionStageTest extends HeadlessServerTest {
     private float mitigate(LivingEntity victim, float damage, Bypass bypass) {
         return services.attributes().mitigate(victim, damage,
                 MitigationRequest.of(Set.of(), bypass, MAX_ROLL));
-    }
-
-    private static ItemStack enchanted(Material material, Key enchant, int level) {
-        ItemStack base = ItemStack.of(material);
-        if (level <= 0) return base;
-        return base.with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(enchant), level));
     }
 
     private static void wearAll(LivingEntity le, Key enchant, int level) {
