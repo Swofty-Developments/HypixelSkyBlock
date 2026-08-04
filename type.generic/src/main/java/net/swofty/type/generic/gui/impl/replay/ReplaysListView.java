@@ -102,7 +102,7 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
         lore.add(Component.text("§7" + DATE_FORMAT.format(new Date(item.startTime()))));
         lore.add(Component.text("§7Duration: " + item.formattedDuration()));
         lore.add(Component.empty());
-        lore.add(Component.text("§7Mode: §a" + StringUtility.capitalize(item.gameTypeName())));
+        lore.add(Component.text("§7Mode: §a" + formatMode(item.gameTypeName())));
         lore.add(Component.text("§7Map: §a" + item.mapName()));
         lore.add(Component.empty());
         lore.add(Component.text("§7Server: §a" + item.serverId()));
@@ -137,6 +137,13 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
     @Override
     protected boolean shouldFilterFromSearch(State state, ReplayEntry item) {
         return false;
+    }
+
+    private static String formatMode(String gameTypeName) {
+        if ("ONE_EIGHT".equalsIgnoreCase(gameTypeName)) {
+            return "Solo";
+        }
+        return StringUtility.capitalize(gameTypeName.replace('_', ' '));
     }
 
     public record State(
