@@ -6,8 +6,6 @@ default_game_mode = "survival"
 hardcore = true
 fetch_player_skins = false
 reduced_debug_info = false
-allow_unsupported_versions = false
-allow_flight = false
 accept_transfers = false
 
 [forwarding]

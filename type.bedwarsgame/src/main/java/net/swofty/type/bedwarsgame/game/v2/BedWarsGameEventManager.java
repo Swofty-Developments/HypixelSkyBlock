@@ -114,7 +114,7 @@ public class BedWarsGameEventManager {
 
             // Fire event
             HypixelEventHandler.callCustomEvent(new BedWarsGameEventAdvanceEvent(
-                game.getGameId(),
+                    game,
                 previous.getDisplayName(),
                 currentPhase.getDisplayName(),
                 secondsUntilNextPhase

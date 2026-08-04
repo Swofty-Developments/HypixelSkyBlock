@@ -1,13 +1,5 @@
 package net.swofty.type.generic.entity.ai.vanilla;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Set;
 import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -16,6 +8,8 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.pathfinding.PNode;
 import net.minestom.server.instance.Instance;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
 
 /**
  * A fully self-contained, vanilla-flavoured navigator that replaces Minestom's own
@@ -94,8 +88,7 @@ public class VanillaNavigator {
       }
 
       double straight = generator.heuristic(start, goal);
-      int iterationCap = (int) Math.min(HARD_ITERATION_CAP,
-         Math.max(MIN_ITERATIONS, ITERATIONS_PER_BLOCK * straight));
+      int iterationCap = (int) Math.clamp(ITERATIONS_PER_BLOCK * straight, MIN_ITERATIONS, HARD_ITERATION_CAP);
 
       PNode startNode = new PNode(start, 0.0, generator.heuristic(start, goal), PNode.Type.WALK, null);
 

@@ -67,7 +67,6 @@ public class HypixelPackServer {
     private static BuiltResourcePack buildPack(PackDefinition definition) {
         System.out.println("Building resource pack '" + definition.getPackName() + "'...");
         System.out.println("Pack directory: " + definition.getPackDirectory());
-        System.out.println("Textures directory: " + definition.getTexturesDirectory());
 
         BuiltResourcePack built = new HypixelPackBuilder(definition).build();
         System.out.println("Resource pack built. Hash: " + built.hash());
@@ -78,6 +77,7 @@ public class HypixelPackServer {
         return (request, exchange) -> {
             String path = exchange.getRequestURI().getPath();
             String fileName = path.substring(path.lastIndexOf('/') + 1);
+
             BuiltResourcePack pack = packs.get(fileName);
 
             if (pack == null) {

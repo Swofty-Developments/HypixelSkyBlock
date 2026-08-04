@@ -1,13 +1,15 @@
 package net.swofty.type.game.game.event;
 
+import net.swofty.type.game.game.Game;
+
 public record CountdownTickEvent(
-        String gameId,
+        Game<?> game,
         int remainingSeconds,
         boolean shouldAnnounce
 ) implements GameEvent {
     @Override
-    public String getGameId() {
-        return gameId;
+    public Game<?> getGame() {
+        return game;
     }
 
     public boolean isComplete() {

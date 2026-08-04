@@ -113,6 +113,15 @@ public enum GameType {
         "§cEverything in this lobby is currently",
         "§cin development, and may be removed",
         "§cat any time."),
+
+    RAVENGARD("Ravengard",
+        Material.IRON_AXE,
+        Category.PERSISTENT_GAME,
+        ServerType.RAVENGARD_LOBBY,
+        "§7Battle your way through dangerous",
+        "§7monsters and bosses. Collect",
+        "§7valuable loot and extract before the",
+        "§7dungeon is consumed by the curse!"),
     ;
 
     private final String displayName;

@@ -131,6 +131,8 @@ public abstract class RavengardNPC {
 
     private void spawn(Entity entity, Instance instance, Pos position) {
         entity.setNoGravity(true);
+        entity.setHasPhysics(false);
+        entity.updateViewableRule(net.swofty.type.generic.world.HypixelWorldLoader.LOADED_ONLY);
         entity.setInstance(instance, position);
         entities.add(entity);
     }

@@ -1,6 +1,6 @@
 package net.swofty.type.game.game;
 
-import net.minestom.server.instance.InstanceContainer;
+import net.minestom.server.instance.Instance;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -12,7 +12,7 @@ public interface Game<P extends GameParticipant> {
 
     GameState getState();
 
-    InstanceContainer getInstance();
+    Instance getInstance();
 
     Collection<P> getPlayers();
 

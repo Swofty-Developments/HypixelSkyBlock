@@ -1,15 +1,16 @@
 package net.swofty.type.game.game.event;
 
 import net.minestom.server.entity.Player;
+import net.swofty.type.game.game.Game;
 
 public record PlayerPostJoinGameEvent(
-        String gameId,
+        Game<?> game,
         Player player,
         int currentPlayerCount,
         int maxPlayerCount
 ) implements GameEvent {
     @Override
-    public String getGameId() {
-        return gameId;
+    public Game<?> getGame() {
+        return game;
     }
 }

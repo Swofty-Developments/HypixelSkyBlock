@@ -4,13 +4,14 @@ import lombok.Getter;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.trait.CancellableEvent;
 import net.minestom.server.event.trait.PlayerEvent;
+import net.swofty.type.game.game.Game;
 
 /**
  * Event fired when a player attempts to join a game.
  * Can be cancelled to prevent the join.
  */
 public class PlayerPreJoinGameEvent implements GameEvent, PlayerEvent, CancellableEvent {
-    private final String gameId;
+    private final Game<?> gameId;
     @Getter
     private final Player player;
 
@@ -18,13 +19,13 @@ public class PlayerPreJoinGameEvent implements GameEvent, PlayerEvent, Cancellab
     @Getter
     private String cancelReason = null;
 
-    public PlayerPreJoinGameEvent(String gameId, Player player) {
+    public PlayerPreJoinGameEvent(Game<?> gameId, Player player) {
         this.gameId = gameId;
         this.player = player;
     }
 
     @Override
-    public String getGameId() {
+    public Game<?> getGame() {
         return gameId;
     }
 

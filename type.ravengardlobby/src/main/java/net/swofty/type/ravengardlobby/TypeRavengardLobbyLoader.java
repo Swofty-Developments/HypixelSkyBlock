@@ -22,6 +22,7 @@ import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.ravengardgeneric.RavengardGenericLoader;
 import net.swofty.type.ravengardgeneric.entity.RavengardNPC;
+import net.swofty.type.ravengardgeneric.entity.animation.RavengardAnimationRegistry;
 import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
@@ -81,6 +82,8 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
             public void onClick(RavengardPlayer player) {
             }
         }.spawn(HypixelConst.getInstanceContainer());
+
+        RavengardAnimationRegistry.spawnAll(HypixelConst.getInstanceContainer());
     }
 
     @Override
@@ -113,7 +116,7 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
     @Override
     public LoaderValues getLoaderValues() {
         return new LoaderValues(
-                (_) -> new Pos(0.5, 65, 0.5, 0, 0),
+                (_) -> new Pos(52.5, 66, 13.5, -180, 0),
                 false
         );
     }
@@ -148,10 +151,15 @@ public class TypeRavengardLobbyLoader implements RavengardTypeLoader {
     }
 
     @Override
+    public boolean headerFooterPerPlayer() {
+        return true;
+    }
+
+    @Override
     public @NonNull Optional<Tuple<Component, Component>> headerFooter() {
         return Optional.of(
                 new Tuple<>(
-                        Component.text("§f\uE120\uE121\uE122\uE123\uE124\uE125"),
-                        Component.text("\uE102")));
+                        Component.text("§f\uE120\uE121\uE122\uE123\uE124\uE125\n\uE102\n"),
+                        Component.empty()));
     }
 }

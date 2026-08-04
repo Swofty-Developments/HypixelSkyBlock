@@ -17,5 +17,11 @@ public class ActionPlayerDataLoad implements HypixelEventClass {
     public void run(AsyncPlayerConfigurationEvent event) {
         HypixelPlayer player = (HypixelPlayer) event.getPlayer();
         PlayerFlow.run(player, "generic-data/load", () -> GenericPlayerDataFlow.load(player));
+
+        var packManager = net.swofty.type.generic.HypixelConst.getResourcePackManager();
+        if (packManager != null) {
+            PlayerFlow.run(player, "generic-data/resource-pack",
+                    () -> packManager.sendPackBlocking(player, 25));
+        }
     }
 }

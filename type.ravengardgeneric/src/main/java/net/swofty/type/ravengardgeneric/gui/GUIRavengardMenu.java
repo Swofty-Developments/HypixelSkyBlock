@@ -2,302 +2,139 @@ package net.swofty.type.ravengardgeneric.gui;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
-import net.minestom.server.inventory.InventoryType;
-import net.minestom.server.item.Material;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
 import net.swofty.type.generic.gui.v2.ViewLayout;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
+import net.swofty.commons.ServerType;
+import net.swofty.type.ravengardgeneric.classes.RavengardAbility;
+import net.swofty.type.ravengardgeneric.classes.RavengardClass;
+import net.swofty.type.ravengardgeneric.user.RavengardPlayer;
 
-public class GUIRavengardMenu extends StatelessView {
+import java.util.List;
+
+public class GUIRavengardMenu extends RavengardView {
+    // origins taken from the captured menu
+    private static final int SLOT_FIGHT = 3;
+    private static final int SLOT_STATUE = 18;
+    private static final int SLOT_LOCKBOX = 20;
+    private static final int SLOT_BAG = 22;
+    private static final int SLOT_TROPHY = 24;
+    private static final int SLOT_ABILITY_ONE = 26;
+    private static final int SLOT_QUILL = 38;
+    private static final int SLOT_BOOK = 39;
+    private static final int SLOT_CANDLE = 42;
+    private static final int SLOT_ABILITY_TWO = 44;
 
     @Override
-    public ViewConfiguration<DefaultState> configuration() {
-        return new ViewConfiguration<>("󏀈§f󏿳Main MenuMain Menu", InventoryType.CHEST_6_ROW);
+    protected String title() {
+        return "Main Menu";
     }
 
     @Override
-    public void layout(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
-        layout.slot(0, ItemStackCreator.getStack(
-                Component.translatable("item.minecraft.stick"),
-                Material.STICK,
-                1
-        ));
-        layout.slot(3, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x642100)).append(Component.text("Join the Fight!").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Jump into the action and fight"),
-                Component.text("§7against other players and monsters!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to join!")
-        ));
-        layout.slot(4, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x642100)).append(Component.text("Join the Fight!").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Jump into the action and fight"),
-                Component.text("§7against other players and monsters!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to join!")
-        ));
-        layout.slot(5, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x642100)).append(Component.text("Join the Fight!").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Jump into the action and fight"),
-                Component.text("§7against other players and monsters!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to join!")
-        ));
-        layout.slot(18, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x2A4900)).append(Component.text("Profiles - Assassin").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text(""),
-                Component.text("§7A stealth-focused class adept at"),
-                Component.text("§7sneaking."),
-                Component.text(""),
-                Component.text("§7Primary weapon: §fDaggers"),
-                Component.text(""),
-                Component.text("§7Stats:"),
-                Component.text("§7◦ Health §c160.0 ❤"),
-                Component.text("§7◦ Protection §b0.0 ⛊"),
-                Component.text("§7◦ Damage §420.0 ⚔"),
-                Component.text(""),
-                Component.text("§eClick to change profile!")
-        ));
-        layout.slot(20, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x504800)).append(Component.text("Lockbox").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Safely store your items here!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to open!")
-        ));
-        layout.slot(21, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x504800)).append(Component.text("Lockbox").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Safely store your items here!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to open!")
-        ));
-        layout.slot(22, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x7B4400)).append(Component.text("Abcdefgh").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Lorem ipsum dolor sit amet!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(23, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x7B4400)).append(Component.text("Abcdefgh").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Lorem ipsum dolor sit amet!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(24, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x964700)).append(Component.text("Ijklmno").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Consectetur adipiscing elit."),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(25, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x964700)).append(Component.text("Ijklmno").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Consectetur adipiscing elit."),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(26, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0xB73C00)).append(Component.text("Ability 1 - Shadows").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7§7Become invisible for §e25 seconds§7, but"),
-                Component.text("§7movement speed is reduced."),
-                Component.text("§7Attacking or being attacked cancels"),
-                Component.text("§7the invisibility."),
-                Component.text(""),
-                Component.text("§eClick to change!")
-        ));
-        layout.slot(27, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x2A4900)).append(Component.text("Profiles - Assassin").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text(""),
-                Component.text("§7A stealth-focused class adept at"),
-                Component.text("§7sneaking."),
-                Component.text(""),
-                Component.text("§7Primary weapon: §fDaggers"),
-                Component.text(""),
-                Component.text("§7Stats:"),
-                Component.text("§7◦ Health §c160.0 ❤"),
-                Component.text("§7◦ Protection §b0.0 ⛊"),
-                Component.text("§7◦ Damage §420.0 ⚔"),
-                Component.text(""),
-                Component.text("§eClick to change profile!")
-        ));
-        layout.slot(29, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x504800)).append(Component.text("Lockbox").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Safely store your items here!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to open!")
-        ));
-        layout.slot(30, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x504800)).append(Component.text("Lockbox").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Safely store your items here!"),
-                Component.text("§7"),
-                Component.text("§7§eClick to open!")
-        ));
-        layout.slot(31, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x7B4400)).append(Component.text("Abcdefgh").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Lorem ipsum dolor sit amet!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(32, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x7B4400)).append(Component.text("Abcdefgh").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Lorem ipsum dolor sit amet!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(33, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x964700)).append(Component.text("Ijklmno").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Consectetur adipiscing elit."),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(34, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x964700)).append(Component.text("Ijklmno").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Consectetur adipiscing elit."),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(36, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x2A4900)).append(Component.text("Profiles - Assassin").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text(""),
-                Component.text("§7A stealth-focused class adept at"),
-                Component.text("§7sneaking."),
-                Component.text(""),
-                Component.text("§7Primary weapon: §fDaggers"),
-                Component.text(""),
-                Component.text("§7Stats:"),
-                Component.text("§7◦ Health §c160.0 ❤"),
-                Component.text("§7◦ Protection §b0.0 ⛊"),
-                Component.text("§7◦ Damage §420.0 ⚔"),
-                Component.text(""),
-                Component.text("§eClick to change profile!")
-        ));
-        layout.slot(38, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x546C00)).append(Component.text("Pqrstuv").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(39, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x697500)).append(Component.text("Pqrstu").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(40, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x697500)).append(Component.text("Pqrstu").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(41, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x697500)).append(Component.text("Pqrstu").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(42, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x9E6F00)).append(Component.text("Vwxyz").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Ut labore et dolore magna aliqua!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(44, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0xB76000)).append(Component.text("Ability 2 - Heal Wounds").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7§7Heals §c+35 HP §7over §e10 seconds§7."),
-                Component.text(""),
-                Component.text("§eClick to change!")
-        ));
-        layout.slot(47, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x546C00)).append(Component.text("Pqrstuv").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(48, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x697500)).append(Component.text("Pqrstu").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(49, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x697500)).append(Component.text("Pqrstu").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(50, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x697500)).append(Component.text("Pqrstu").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Sed do eiusmod tempor incididunt!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
-        layout.slot(51, ItemStackCreator.getStack(
-                Component.text("󏿿").color(TextColor.color(0x9E6F00)).append(Component.text("Vwxyz").color(NamedTextColor.WHITE)),
-                Material.LEATHER_CHESTPLATE,
-                1,
-                Component.text("§7Ut labore et dolore magna aliqua!"),
-                Component.text("§7"),
-                Component.text("§7§cComing Soon!")
-        ));
+    protected void content(ViewLayout<DefaultState> layout, DefaultState state, ViewContext ctx) {
+        RavengardClass playerClass = ctx.player() instanceof RavengardPlayer player
+                ? player.getRavengardClass()
+                : null;
+
+        RavengardItems.Builder fight = RavengardItems.button(RavengardButton.TEXT_FIGHT)
+                .label("Join the Fight!")
+                .lore("§7Jump into the action and fight",
+                        "§7against other players and monsters!")
+                .blankLine()
+                .lore("§eClick to join!")
+                .origin(SLOT_FIGHT);
+        interactive(layout, SLOT_FIGHT, fight, (_, viewCtx) -> {
+            viewCtx.player().closeInventory();
+            viewCtx.player().sendTo(ServerType.RAVENGARD_DUNGEON);
+        });
+
+        RavengardButton statue = playerClass == null ? null : RavengardButton.statueFor(playerClass);
+        if (statue != null) {
+            RavengardItems.Builder profile = RavengardItems.button(statue)
+                    .label("Profiles - " + playerClass.getDisplayName())
+                    .blankLine();
+
+            String[] profileLore = playerClass.profileLore();
+            if (profileLore != null) {
+                profile.lore(profileLore).blankLine();
+            }
+
+            interactive(layout, SLOT_STATUE, profile.lore("§eClick to change profile!"),
+                    (click, viewCtx) -> net.swofty.type.generic.gui.v2.ViewNavigator
+                            .get(viewCtx.player()).push(new GUIProfiles()));
+        }
+
+        place(layout, SLOT_LOCKBOX, RavengardItems.button(RavengardButton.CHEST)
+                .label("Lockbox")
+                .lore("§7Safely store your items here!")
+                .blankLine()
+                .lore("§eClick to open!"));
+
+        // Unreleased features. Hypixel renders their whole tooltip in the Illager rune font so the
+        // placeholder text (alphabet runs, lorem ipsum) is unreadable in game; kept verbatim.
+        place(layout, SLOT_BAG, RavengardItems.button(RavengardButton.BAG)
+                .font(RavengardFont.ILLAGERALT)
+                .label("Abcdefgh")
+                .lore("§7Lorem ipsum dolor sit amet!")
+                .blankLine()
+                .lore("§cComing Soon!"));
+
+        place(layout, SLOT_TROPHY, RavengardItems.button(RavengardButton.TROPHY)
+                .font(RavengardFont.ILLAGERALT)
+                .label("Ijklmno")
+                .lore("§7Consectetur adipiscing elit.")
+                .blankLine()
+                .lore("§cComing Soon!"));
+
+        place(layout, SLOT_QUILL, RavengardItems.button(RavengardButton.QUILL)
+                .font(RavengardFont.ILLAGERALT)
+                .label("Pqrstuv")
+                .lore("§7Sed do eiusmod tempor incididunt!")
+                .blankLine()
+                .lore("§cComing Soon!"));
+
+        place(layout, SLOT_BOOK, RavengardItems.button(RavengardButton.BOOK)
+                .font(RavengardFont.ILLAGERALT)
+                .label("Pqrstu")
+                .lore("§7Sed do eiusmod tempor incididunt!")
+                .blankLine()
+                .lore("§cComing Soon!"));
+
+        place(layout, SLOT_CANDLE, RavengardItems.button(RavengardButton.CANDLE)
+                .font(RavengardFont.ILLAGERALT)
+                .label("Vwxyz")
+                .lore("§7Ut labore et dolore magna aliqua!")
+                .blankLine()
+                .lore("§cComing Soon!"));
+
+        if (playerClass == null) {
+            return;
+        }
+
+        List<RavengardAbility> abilities = playerClass.defaultAbilities();
+        int[] slots = {SLOT_ABILITY_ONE, SLOT_ABILITY_TWO};
+        for (int index = 0; index < slots.length && index < abilities.size(); index++) {
+            RavengardAbility ability = abilities.get(index);
+            final int page = index + 1;
+            RavengardItems.Builder button = RavengardItems.button(ability)
+                    .label("Ability " + page + " - " + ability.getDisplayName())
+                    .lore(ability.getWrappedDescription())
+                    .blankLine()
+                    .lore("§eClick to change!")
+                    .origin(slots[index]);
+            interactive(layout, slots[index], button, (click, viewCtx) ->
+                    net.swofty.type.generic.gui.v2.ViewNavigator.get(viewCtx.player())
+                            .push(new GUIAbilityPage(page)));
+        }
+    }
+
+    @Override
+    public void onOpen(DefaultState state, ViewContext ctx) {
+        if (((RavengardPlayer) ctx.player()).isTutorial()) {
+            ctx.player().sendMessage(Component.text("You must select a class to open this menu!", NamedTextColor.RED));
+            ctx.backOrClose();
+            return;
+        }
+        super.onOpen(state, ctx);
     }
 }

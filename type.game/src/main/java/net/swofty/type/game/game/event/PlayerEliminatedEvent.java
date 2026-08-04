@@ -1,5 +1,7 @@
 package net.swofty.type.game.game.event;
 
+import net.swofty.type.game.game.Game;
+
 import java.util.UUID;
 
 /**
@@ -7,7 +9,7 @@ import java.util.UUID;
  * This is different from leaving - the player may stay as spectator.
  */
 public record PlayerEliminatedEvent(
-        String gameId,
+        Game<?> gameId,
         UUID playerId,
         String playerName,
         UUID eliminatorId,
@@ -15,15 +17,15 @@ public record PlayerEliminatedEvent(
         EliminationCause cause
 ) implements GameEvent {
     @Override
-    public String getGameId() {
+    public Game<?> getGame() {
         return gameId;
     }
 
     /**
      * Creates an elimination event without a specific eliminator (e.g., void death).
      */
-    public static PlayerEliminatedEvent withoutEliminator(String gameId, UUID playerId, String playerName, EliminationCause cause) {
-        return new PlayerEliminatedEvent(gameId, playerId, playerName, null, null, cause);
+    public static PlayerEliminatedEvent withoutEliminator(Game<?> game, UUID playerId, String playerName, EliminationCause cause) {
+        return new PlayerEliminatedEvent(game, playerId, playerName, null, null, cause);
     }
 
     public boolean hasEliminator() {

@@ -1,0 +1,43 @@
+id: armorer
+title: Armorer
+banner: armorer
+shelf_slots: [4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26]
+pool:
+  - item: DOUBLET
+    price: 18
+  - item: KNIGHTS_HAUBERK
+    price: 30
+  - item: KNIGHTS_SABATONS
+    price: 30
+  - item: LEATHER_BOOTS
+    price: 6
+  - item: LEATHER_HARNESS
+    price: 20
+  - item: LEATHER_TUNIC
+    price: 6
+  - item: LIGHT_BOOTS
+    price: 16
+  - item: LIGHT_LEGGINGS
+    price: 20
+  - item: MARKSMAN_BOOTS
+    price: 25
+  - item: PADDED_LEGGINGS
+    price: 10
+  - item: PADDED_TUNIC
+    price: 11
+  - item: QUILTED_LEGGINGS
+    price: 19
+  - item: ROGUE_COAT
+    price: 20
+  - item: SOLDIERS_GREAVES
+    price: 28
+  - item: SOLDIERS_SABATONS
+    price: 10
+  - item: STUDDED_BOOTS
+    price: 18
+  - item: STUDDED_BREECHES
+    price: 12
+  - item: WAR_BOOTS
+    price: 28
+  - item: WAR_LEGGINGS
+    price: 15

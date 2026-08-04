@@ -1,0 +1,61 @@
+id: blacksmith
+title: Blacksmith
+banner: blacksmith
+shelf_slots: [4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 40]
+pool:
+  - item: BALLISTIC_WAR_HAMMER
+    price: 62
+  - item: BARBARIAN_GREAT_AXE
+    price: 130
+  - item: CAPTAINS_SWORD
+    price: 55
+  - item: ELM_BOW
+    price: 42
+  - item: GREAT_WAR_HAMMER
+    price: 45
+  - item: HUNTING_KNIFE
+    price: 35
+  - item: IRON_DAGGER
+    price: 19
+  - item: IRON_GREATSWORD
+    price: 54
+  - item: IRON_HALBERD
+    price: 55
+  - item: IRON_KNIFE
+    price: 15
+  - item: IRON_SWORD
+    price: 18
+  - item: IRON_WAR_HAMMER
+    price: 4
+  - item: POWER_BOW
+    price: 65
+  - item: RUSTY_GREATSWORD
+    price: 21
+  - item: RUSTY_HALBERD
+    price: 34
+  - item: RUSTY_MACE
+    price: 17
+  - item: SHORT_AXE
+    price: 10
+  - item: SHORT_SWORD
+    price: 24
+  - item: SPIKED_MACE
+    price: 28
+  - item: STEEL_DAGGER
+    price: 48
+  - item: STEEL_GREAT_AXE
+    price: 95
+  - item: STEEL_HALBERD
+    price: 82
+  - item: STEEL_MACE
+    price: 70
+  - item: STEEL_SWORD
+    price: 55
+  - item: STEEL_WAR_HAMMER
+    price: 68
+  - item: STILETTO_DAGGER
+    price: 33
+  - item: WAR_BOW
+    price: 30
+  - item: WAR_GREAT_AXE
+    price: 55

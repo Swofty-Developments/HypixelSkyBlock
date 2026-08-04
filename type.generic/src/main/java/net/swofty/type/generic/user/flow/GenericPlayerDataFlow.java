@@ -70,7 +70,6 @@ public final class GenericPlayerDataFlow {
 
         ResourcePackManager packManager = HypixelConst.getResourcePackManager();
         if (packManager != null) {
-            packManager.sendPack(player);
             packManager.getActivePack().onPlayerJoin(player);
         }
 
