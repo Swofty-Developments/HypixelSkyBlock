@@ -3,27 +3,14 @@ package net.swofty.type.bedwarsgame.user;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.ServerFlag;
-import net.minestom.server.collision.Aerodynamics;
-import net.minestom.server.collision.PhysicsResult;
-import net.minestom.server.collision.PhysicsUtils;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.*;
 import net.minestom.server.entity.attribute.Attribute;
-import net.minestom.server.event.EventDispatcher;
-import net.minestom.server.event.entity.EntityVelocityEvent;
-import net.minestom.server.instance.Chunk;
-import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.minestom.server.potion.PotionEffect;
-import net.minestom.server.potion.TimedPotion;
 import net.minestom.server.scoreboard.BelowNameTag;
 import net.minestom.server.tag.Tag;
-import net.minestom.server.utils.chunk.ChunkCache;
-import net.minestom.server.utils.chunk.ChunkUtils;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
@@ -42,17 +29,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.function.Function;
 
 /**
  * Represents a player in the BedWars game mode.
  * This class extends HypixelPlayer with BedWars-specific state and presentation.
  */
-@SuppressWarnings("UnstableApiUsage")
 public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 
-	private boolean velocityUpdate = false;
-	private PhysicsResult previousPhysicsResult = null;
 	@Getter
 	private long xpThisGame = 0;
 	@Getter
@@ -69,7 +52,7 @@ public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 
 	public BedWarsPlayer(@NotNull PlayerConnection playerConnection, @NotNull GameProfile gameProfile) {
 		super(playerConnection, gameProfile);
-		getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
+		//getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(1.0);
 		getAttribute(Attribute.ATTACK_SPEED).setBaseValue(1000); // basically removes the attack indicator
 		fakeUuid = UUID.randomUUID();
 	}
@@ -96,6 +79,10 @@ public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 	}
 
 	private void refreshIdentityFor(Player viewer) {
+		if (viewer == this) {
+			viewer.sendPackets(new PlayerInfoRemovePacket(fakeUuid), getAddPlayerToList());
+			return;
+		}
 		viewer.sendPackets(new DestroyEntitiesPacket(getEntityId()), new PlayerInfoRemovePacket(fakeUuid));
 		updateNewViewer(viewer);
 	}
@@ -145,19 +132,17 @@ public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 
 	private boolean canViewerSeeIdentity(Player viewer) {
 		if (viewer == this) return true;
-		if (!shouldShowTrueIdentity || !(viewer instanceof BedWarsPlayer bedWarsViewer)) return false;
-		BedWarsMapsConfig.TeamKey ownTeam = getTeamKey();
-		return ownTeam != null && ownTeam == bedWarsViewer.getTeamKey();
+		return shouldShowTrueIdentity;
 	}
 
 	@Override
 	protected @NonNull PlayerInfoUpdatePacket getAddPlayerToList() {
-		if (!shouldShowTrueIdentity) {
+		/*if (!shouldShowTrueIdentity) {
 			return new PlayerInfoUpdatePacket(EnumSet.of(
 				PlayerInfoUpdatePacket.Action.ADD_PLAYER),
 				List.of(new PlayerInfoUpdatePacket.Entry(fakeUuid, "§k" + fakeUuid.toString().substring(0, 14), List.of(),
 					false, getLatency(), getGameMode(), Component.text(fakeUuid.toString().substring(0, 12)), null, 0, false)));
-		}
+		}*/
 		final PlayerSkin skin = getSkin();
 		List<PlayerInfoUpdatePacket.Property> prop = skin != null ?
 			List.of(new PlayerInfoUpdatePacket.Property("textures", skin.textures(), skin.signature())) :
@@ -254,102 +239,5 @@ public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 
 	public long getCurrentBedWarsLevel() {
 		return BedwarsLevelUtil.calculateLevel(getCurrentBedWarsExperience());
-	}
-
-	@Override
-	public void setVelocity(@NotNull Vec velocity) {
-		EntityVelocityEvent entityVelocityEvent = new EntityVelocityEvent(this, velocity);
-		EventDispatcher.callCancellable(entityVelocityEvent, () -> {
-			this.velocity = entityVelocityEvent.getVelocity();
-			velocityUpdate = true;
-		});
-	}
-
-	public void setVelocityNoUpdate(Function<Vec, Vec> function) {
-		velocity = function.apply(velocity);
-	}
-
-	public void sendImmediateVelocityUpdate() {
-		if (velocityUpdate) {
-			velocityUpdate = false;
-			sendPacketToViewersAndSelf(getVelocityPacket());
-		}
-	}
-
-	public boolean isOnGroundAfterTicks(int ticks) {
-		if (vehicle != null) return false;
-
-		final double tps = ServerFlag.SERVER_TICKS_PER_SECOND;
-		Vec velocity = this.velocity.div(tps);
-		Pos position = this.position;
-
-		// Slow falling effect
-		Aerodynamics aerodynamics = getAerodynamics();
-		if (velocity.y() < 0 && hasEffect(PotionEffect.SLOW_FALLING))
-			aerodynamics = aerodynamics.withGravity(0.01);
-
-		// Do movementTick() calculations for the given amount of ticks
-		PhysicsResult prevPhysicsResult = previousPhysicsResult;
-		for (int i = 0; i < ticks; i++) {
-			final Block.Getter chunkCache = new ChunkCache(instance, currentChunk, Block.STONE);
-			PhysicsResult physicsResult = PhysicsUtils.simulateMovement(position, velocity, boundingBox,
-				instance.getWorldBorder(), chunkCache, aerodynamics, hasNoGravity(), hasPhysics, onGround, isFlying(), prevPhysicsResult);
-			prevPhysicsResult = physicsResult;
-
-			if (physicsResult.isOnGround()) return true;
-
-			velocity = physicsResult.newVelocity();
-			position = physicsResult.newPosition();
-
-			// Levitation effect
-			TimedPotion levitation = getEffect(PotionEffect.LEVITATION);
-			if (levitation != null) {
-				velocity = velocity.withY(
-						((0.05 * (double) (levitation.potion().amplifier() + 1) - (velocity.y())) * 0.2)
-				);
-			}
-		}
-
-		return false;
-	}
-
-	@Override
-	protected void movementTick() {
-		this.gravityTickCount = onGround ? 0 : gravityTickCount + 1;
-		if (vehicle != null) return;
-
-		final double tps = ServerFlag.SERVER_TICKS_PER_SECOND;
-
-		// Slow falling effect
-		Aerodynamics aerodynamics = getAerodynamics();
-		if (velocity.y() < 0 && hasEffect(PotionEffect.SLOW_FALLING))
-			aerodynamics = aerodynamics.withGravity(0.01);
-
-		final Block.Getter chunkCache = new ChunkCache(instance, currentChunk, Block.STONE);
-		PhysicsResult physicsResult = PhysicsUtils.simulateMovement(position, velocity.div(tps), boundingBox,
-			instance.getWorldBorder(), chunkCache, aerodynamics, hasNoGravity(), hasPhysics, onGround, isFlying(), previousPhysicsResult);
-		this.previousPhysicsResult = physicsResult;
-
-		Chunk finalChunk = ChunkUtils.retrieve(instance, currentChunk, physicsResult.newPosition());
-		if (!ChunkUtils.isLoaded(finalChunk)) return;
-
-		velocity = physicsResult.newVelocity().mul(tps);
-		//onGround = physicsResult.isOnGround();
-
-		// Levitation effect
-		TimedPotion levitation = getEffect(PotionEffect.LEVITATION);
-		if (levitation != null) {
-			velocity = velocity.withY(
-					((0.05 * (double)
-							(levitation.potion().amplifier() + 1)
-							- (velocity.y() / tps)) * 0.2) * tps
-			);
-		}
-
-		//TODO
-		//if (!PlayerUtils.isSocketClient(this)) {
-		//	refreshPosition(physicsResult.newPosition(), true, true);
-		//}
-		sendImmediateVelocityUpdate();
 	}
 }

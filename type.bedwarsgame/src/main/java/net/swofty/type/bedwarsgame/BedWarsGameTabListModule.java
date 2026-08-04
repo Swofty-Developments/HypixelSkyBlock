@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.PlayerSkin;
+import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.commons.party.FullParty;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
@@ -26,18 +27,21 @@ public class BedWarsGameTabListModule extends TablistModule {
             return List.of();
         }
 
-        Collection<BedWarsPlayer> players = game.getPlayers();
+        List<BedWarsPlayer> players = new ArrayList<>(game.getPlayers());
+        Comparator<BedWarsPlayer> playerOrder = Comparator
+                .comparing(BedWarsPlayer::getTeamKey, Comparator.nullsLast(Comparator.naturalOrder()))
+                .thenComparing(BedWarsPlayer::getUsername, String.CASE_INSENSITIVE_ORDER);
         if (game.getState().isWaiting()) {
-            TablistEntry[] entries = new TablistEntry[players.size()];
-            int index = 0;
+            List<TablistEntry> entries = new ArrayList<>(players.size());
             for (BedWarsPlayer bedWarsPlayer : players.stream()
-                    .sorted(Comparator.comparingInt((BedWarsPlayer value) -> value.getTeamKey().ordinal())
-                            .thenComparing(BedWarsPlayer::getUsername, String.CASE_INSENSITIVE_ORDER))
+                    .sorted(playerOrder)
                     .toList()) {
-                boolean shouldObfuscate = bedWarsPlayer.getUuid().compareTo(player.getUuid()) != 0;
+                BedWarsMapsConfig.TeamKey teamKey = bedWarsPlayer.getTeamKey();
+                boolean shouldObfuscate = bedWarsPlayer != player
+                        && (teamKey == null || teamKey != player.getTeamKey());
                 FullParty party = PartyManager.getPartyFromPlayer(player);
-                if (party != null && !shouldObfuscate) {
-                    shouldObfuscate = !party.getParticipants().contains(p.getUuid());
+                if (shouldObfuscate && party != null) {
+                    shouldObfuscate = !party.getParticipants().contains(bedWarsPlayer.getUuid());
                 }
 
                 TablistSkin skin;
@@ -52,17 +56,15 @@ public class BedWarsGameTabListModule extends TablistModule {
                 }
 
                 Component displayName = shouldObfuscate
-                        ? Component.text(UUID.randomUUID().toString().replaceAll("-", "").substring(0, new Random().nextInt(10) + 4), Style.style(TextDecoration.OBFUSCATED))
+                        ? Component.text(UUID.randomUUID().toString().replace("-", "").substring(0, new Random().nextInt(10) + 4), Style.style(TextDecoration.OBFUSCATED))
                         : bedWarsPlayer.getColouredName();
-                entries[index++] = new TablistEntry(displayName, skin);
+                entries.add(new TablistEntry(displayName, skin));
             }
-            return List.of(entries);
+            return entries;
         } else if (game.getState().isInProgress()) {
-            TablistEntry[] entries = new TablistEntry[players.size()];
-            int index = 0;
+            List<TablistEntry> entries = new ArrayList<>(players.size());
             for (BedWarsPlayer bedWarsPlayer : players.stream()
-                    .sorted(Comparator.comparingInt((BedWarsPlayer value) -> value.getTeamKey().ordinal())
-                            .thenComparing(BedWarsPlayer::getUsername, String.CASE_INSENSITIVE_ORDER))
+                    .sorted(playerOrder)
                     .toList()) {
                 Component displayName = bedWarsPlayer.getDisplayName();
                 if (displayName == null) {
@@ -75,9 +77,9 @@ public class BedWarsGameTabListModule extends TablistModule {
                 } else {
                     skin = new CustomTablistSkin(playerSkin);
                 }
-                entries[index++] = new TablistEntry(displayName, skin);
+                entries.add(new TablistEntry(displayName, skin));
             }
-            return List.of(entries);
+            return entries;
         }
 
         return List.of();

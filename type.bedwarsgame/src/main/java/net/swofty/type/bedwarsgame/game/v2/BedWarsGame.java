@@ -430,10 +430,10 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
                 MapTeam config = teamConfigs.get(team.getTeamKey());
                 if (config != null) {
                     setupPlayer(player);
-                    player.reveal();
                     player.setDisplayName(Component.text(
                         team.getColorCode() + "§l" + team.firstLetter() + " §r" + team.getColorCode() + player.getUsername()
                     ));
+                    player.reveal();
                 }
             });
         }

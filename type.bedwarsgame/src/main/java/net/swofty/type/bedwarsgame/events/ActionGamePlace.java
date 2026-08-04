@@ -16,8 +16,8 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.game.replay.dispatcher.BlockChangeDispatcher;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import org.tinylog.Logger;
 
@@ -62,7 +62,7 @@ public class ActionGamePlace implements HypixelEventClass {
 			}
 		}
 
-		if (event.getBlock().registry().material() == Material.TNT) {
+		if (event.getBlock().material() == Material.TNT) {
 			TntEntity entity = new TntEntity(event.getPlayer());
 			entity.setFuse(50);
 			entity.setInstance(event.getInstance(), blockPosition.add(0.5, 0, 0.5));
