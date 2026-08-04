@@ -43,13 +43,12 @@ import org.tinylog.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.CompletableFuture;
 
 public class BedWarsReplayManager {
     private final BedWarsGame game;
     private final ProxyService replayService;
-    private final ExecutorService replayExecutor;
+    private CompletableFuture<Void> deliveryChain = CompletableFuture.completedFuture(null);
 
     @Getter
     private final ReplayRecorder recorder;
@@ -67,11 +66,6 @@ public class BedWarsReplayManager {
     public BedWarsReplayManager(BedWarsGame game, ProxyService replayService) {
         this.game = game;
         this.replayService = replayService;
-        this.replayExecutor = Executors.newSingleThreadExecutor(r -> {
-            Thread thread = new Thread(r, "bedwars-replay-send");
-            thread.setDaemon(true);
-            return thread;
-        });
         this.recorder = new ReplayRecorder(game.getGameId(), ServerType.BEDWARS_GAME, this::sendToService);
         this.dispatchers = new DispatcherManager(recorder);
     }
@@ -79,22 +73,19 @@ public class BedWarsReplayManager {
     /**
      * Sends replay data to the replay service.
      */
-    private void sendToService(Object data) {
+    private synchronized void sendToService(Object data) {
         if (replayService == null) {
             Logger.debug("No replay service configured, skipping: {}", data.getClass().getSimpleName());
             return;
         }
 
-        replayExecutor.execute(() -> {
-            try {
-                replayService.handleRequest(data).exceptionally(e -> {
-                    Logger.error(e, "Failed to send replay data to service");
-                    return null;
-                });
-            } catch (Exception e) {
-                Logger.error(e, "Failed to send replay data to service");
-            }
-        });
+        deliveryChain = deliveryChain
+                .exceptionally(error -> null)
+                .thenCompose(ignored -> replayService.handleRequest(data)
+                        .handle((response, error) -> {
+                            if (error != null) Logger.error(error, "Failed to send replay data to service");
+                            return (Void) null;
+                        }));
     }
 
     public void startRecording() {
@@ -188,7 +179,7 @@ public class BedWarsReplayManager {
         }
 
         BedWarsTeam team = game.getTeam(player.getTeamKey().name()).orElse(null);
-        String prefix = team != null ? team.getColorCode() + "§l" + team.getTeamKey().name().charAt(0) + team.getColorCode() + " " : "";
+        String prefix = team != null ? team.getColorCode() + "§l" + team.firstLetter() + team.getColorCode() + " " : "";
         int nameColor = team != null ? team.getTeamKey().rgb() : -1;
 
         recorder.record(new RecordablePlayerDisplayName(
@@ -274,7 +265,6 @@ public class BedWarsReplayManager {
 
         dispatchers.cleanup();
         recorder.finish();
-        replayExecutor.shutdown();
 
         Logger.info("Stopped replay recording for game {}", game.getGameId());
     }

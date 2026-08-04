@@ -14,10 +14,7 @@ import net.swofty.type.generic.tab.TablistSkin;
 import net.swofty.type.generic.tab.TablistSkinRegistry;
 import net.swofty.type.generic.user.HypixelPlayer;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class BedWarsGameTabListModule extends TablistModule {
 
@@ -33,7 +30,10 @@ public class BedWarsGameTabListModule extends TablistModule {
         if (game.getState().isWaiting()) {
             TablistEntry[] entries = new TablistEntry[players.size()];
             int index = 0;
-            for (BedWarsPlayer bedWarsPlayer : players) {
+            for (BedWarsPlayer bedWarsPlayer : players.stream()
+                    .sorted(Comparator.comparingInt((BedWarsPlayer value) -> value.getTeamKey().ordinal())
+                            .thenComparing(BedWarsPlayer::getUsername, String.CASE_INSENSITIVE_ORDER))
+                    .toList()) {
                 boolean shouldObfuscate = bedWarsPlayer.getUuid().compareTo(player.getUuid()) != 0;
                 FullParty party = PartyManager.getPartyFromPlayer(player);
                 if (party != null && !shouldObfuscate) {
@@ -60,7 +60,10 @@ public class BedWarsGameTabListModule extends TablistModule {
         } else if (game.getState().isInProgress()) {
             TablistEntry[] entries = new TablistEntry[players.size()];
             int index = 0;
-            for (BedWarsPlayer bedWarsPlayer : players) {
+            for (BedWarsPlayer bedWarsPlayer : players.stream()
+                    .sorted(Comparator.comparingInt((BedWarsPlayer value) -> value.getTeamKey().ordinal())
+                            .thenComparing(BedWarsPlayer::getUsername, String.CASE_INSENSITIVE_ORDER))
+                    .toList()) {
                 Component displayName = bedWarsPlayer.getDisplayName();
                 if (displayName == null) {
                     displayName = Component.text(bedWarsPlayer.getUsername());

@@ -12,11 +12,7 @@ import net.swofty.type.game.replay.recordable.Recordable;
 import org.tinylog.Logger;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -142,7 +138,7 @@ public class ReplayRecorder {
 		return !buffer.isEmpty() && (currentTick - lastBatchTick >= BATCH_INTERVAL_TICKS);
 	}
 
-	private void sendBatch() {
+	private synchronized void sendBatch() {
 		if (buffer.isEmpty()) return;
 
 		List<Recordable> toSend = new ArrayList<>();
@@ -176,6 +172,7 @@ public class ReplayRecorder {
 				batchMessage.batchIndex(), toSend.size(), data.length, compressedData.length);
 
 		} catch (IOException e) {
+			toSend.forEach(buffer::offer);
 			Logger.error(e, "Failed to serialize recordables");
 		}
 	}

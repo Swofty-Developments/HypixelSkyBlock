@@ -22,10 +22,10 @@ import java.util.*;
 
 @Getter
 public enum BedWarsLeaderboardHologram {
-	LEVEL(BedwarsStatType.LEVEL, new Pos(-17, 69, -28)),
-	WINS(BedwarsStatType.WINS, new Pos(-11.5, 69, -28)),
-	FINAL_KILLS(BedwarsStatType.FINAL_KILLS, new Pos(-5.5, 69, -28)),
-	BEDS_BROKEN(BedwarsStatType.BEDS_BROKEN, new Pos(0.7, 69, -28));
+	LEVEL(BedwarsStatType.LEVEL, new Pos(-17, 69.5, -28)),
+	WINS(BedwarsStatType.WINS, new Pos(-11.5, 69.5, -28)),
+	FINAL_KILLS(BedwarsStatType.FINAL_KILLS, new Pos(-5.5, 69.5, -28)),
+	BEDS_BROKEN(BedwarsStatType.BEDS_BROKEN, new Pos(0.7, 69.5, -28));
 
 	private final BedwarsStatType statType;
 	private final Pos position;
