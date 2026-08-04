@@ -19,6 +19,7 @@ import io.github.term4.polyp.platform.compatibility.Compat18;
 import io.github.term4.polyp.platform.fixes.Fixes18;
 import io.github.term4.polyp.platform.fixes.FixesSystem;
 import io.github.term4.polyp.presets.Preset;
+import io.github.term4.polyp.presets.vanilla18.Explosion;
 import io.github.term4.polyp.vri.Vri;
 import io.github.term4.polyp.vri.VriConfig;
 import io.github.term4.polyp.world.MechanicsWorld;
@@ -29,7 +30,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.color.Color;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
@@ -117,6 +120,10 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     }
 
     private static ExplosionSystem explosions;
+
+    public static void explodeBedWars(Instance instance, Point center, float power, Entity source) {
+        explosions.explode(instance, center, power, source);
+    }
 
     @Getter
     private static BedWarsMapsConfig mapsConfig;
@@ -346,7 +353,12 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
         HungerSystem.install(polyp);
         FixesSystem.install(polyp);
         Vri.install(polyp, VriConfig.all());
-        explosions = ExplosionSystem.install(polyp);
+        var explosionConfig = polyp.profiles().resolve(null, MechanicsKeys.EXPLOSION).toBuilder()
+                .blockBreaking(Explosion.blockBreaking().toBuilder()
+                        .breakRule((block, position, ignored) -> Boolean.TRUE.equals(block.getTag(PLAYER_PLACED_TAG)))
+                        .build())
+                .build();
+        explosions = ExplosionSystem.install(polyp, explosionConfig);
     }
 
     @Override

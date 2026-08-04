@@ -1,6 +1,5 @@
 package net.swofty.type.bedwarsgame.entity;
 
-import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.collision.BoundingBox;
 import net.minestom.server.coordinate.Pos;
@@ -45,18 +44,8 @@ public class TntEntity extends Entity {
 			BoundingBox boundingBox = this.boundingBox;
 
 			remove();
-			if (instance.getExplosionSupplier() != null) {
-				instance.explode(
-						(float) position.x(),
-						(float) (position.y() + boundingBox.height() * 0.0625),
-						(float) position.z(),
-						4.0f,
-						causingEntity == null ? null
-								: CompoundBinaryTag.builder()
-								.putString("requiredTag", TypeBedWarsGameLoader.PLAYER_PLACED_TAG.getKey())
-								.putString("causingEntity", causingEntity.getUuid().toString())
-								.build());
-			}
+			TypeBedWarsGameLoader.explodeBedWars(instance,
+					position.add(0, boundingBox.height() * 0.0625, 0), 4.0f, causingEntity);
 		}
 	}
 
