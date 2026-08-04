@@ -13,12 +13,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class GenericReplayScoreboard implements ReplayScoreboard {
     private final ReplaySession session;
     private Sidebar sidebar;
-    private UUID viewerUuid;
 
     public GenericReplayScoreboard(ReplaySession session) {
         this.session = session;
@@ -26,7 +24,6 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
 
     @Override
     public void create(Player viewer) {
-        viewerUuid = viewer.getUuid();
         sidebar = new Sidebar(getTitle());
         sidebar.addViewer(viewer);
         update(session);
@@ -43,10 +40,10 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
 
         for (int i = 0; i < lines.size() && i < 15; i++) {
             sidebar.createLine(new Sidebar.ScoreboardLine(
-                "line_" + i,
+                    "line_" + i,
                     lines.get(i),
-                lines.size() - i,
-                Sidebar.NumberFormat.blank()
+                    lines.size() - i,
+                    Sidebar.NumberFormat.blank()
             ));
         }
     }
@@ -72,12 +69,14 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
 
         lines.add(Component.empty());
 
-        lines.add(Component.text(session.getFormattedTime(), NamedTextColor.GREEN)
-                .append(Component.text("  " + session.getMetadata().descriptor().serverId(), NamedTextColor.DARK_GRAY)));
+        lines.add(Component.text("Date: ", NamedTextColor.WHITE).append(Component.text(new SimpleDateFormat("MM/dd/yyyy").format(new Date(session.getMetadata().descriptor().startTime())), NamedTextColor.GREEN)));
+        lines.add(Component.text("Time: ", NamedTextColor.WHITE).append(Component.text(new SimpleDateFormat("HH:mm").format(new Date(session.getMetadata().descriptor().startTime())), NamedTextColor.GREEN)).appendSpace().append(
+                Component.text("(EST)", NamedTextColor.GREEN)
+        ));
 
         lines.add(Component.empty());
 
-        lines.add(Component.text("Game", NamedTextColor.WHITE).appendSpace().append(Component.text("BedWars", NamedTextColor.GREEN)));
+        lines.add(Component.text("Game: ", NamedTextColor.WHITE).append(Component.text("BedWars", NamedTextColor.GREEN)));
         lines.add(Component.text("Mode: ", NamedTextColor.WHITE)
                 .append(Component.text(formatMode(session.gameModeId()), NamedTextColor.GREEN)));
 

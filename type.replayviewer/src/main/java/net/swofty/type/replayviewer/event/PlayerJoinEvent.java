@@ -130,7 +130,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
             }
             ReplayGameMetadata gameMetadata;
             try (ReplayDataReader reader = new ReplayDataReader(protocolMetadata.gameMetadata().payload())) {
-                gameMetadata = (ReplayGameMetadata) adapter.readMetadata(reader);
+                gameMetadata = adapter.readMetadata(reader);
                 if (reader.available() != 0) throw new IllegalArgumentException("Trailing replay metadata payload");
             }
             ReplayDescriptor descriptor = new ReplayDescriptor(
@@ -185,6 +185,9 @@ public class PlayerJoinEvent implements HypixelEventClass {
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
             player.sendMessage("§cThis replay is corrupt, incomplete, or unsupported.");
+            if (player instanceof HypixelPlayer hp) {
+                hp.sendTo(ServerType.PROTOTYPE_LOBBY);
+            }
         }
     }
 
