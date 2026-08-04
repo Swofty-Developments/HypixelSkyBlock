@@ -36,11 +36,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @CommandParameters(labels = "setup mapsetup autosetup", description = "Automatic BedWars map configuration tool", usage = "/autosetup <subcommand>", permission = Rank.STAFF, allowsConsole = false)
 public class AutoSetupCommand extends HypixelCommand {
@@ -75,6 +71,7 @@ public class AutoSetupCommand extends HypixelCommand {
         sender.sendMessage(Component.text("§e/autosetup team <team> <spawn|bed|generator|itemshop|teamshop> [x y z] §7- Set team positions"));
         sender.sendMessage(Component.text("§e/autosetup global <diamond|emerald> <add|remove> [x y z] §7- Manage global generators"));
         sender.sendMessage(Component.text("§e/autosetup waiting [x y z] §7- Set waiting spawn"));
+        sender.sendMessage(Component.text("§e/autosetup waitinglobby <min|max> [x y z] §7- Select the removable waiting lobby"));
         sender.sendMessage(Component.text("§e/autosetup spectator [x y z] §7- Set spectator spawn"));
         sender.sendMessage(Component.text("§e/autosetup show §7- Show debug markers"));
         sender.sendMessage(Component.text("§e/autosetup hide §7- Hide debug markers"));
@@ -516,6 +513,16 @@ public class AutoSetupCommand extends HypixelCommand {
     }
 
     private void registerLocationCommand(MinestomCommand command) {
+        var waitingCornerArg = ArgumentType.String("waitingCorner");
+        waitingCornerArg.setSuggestionCallback((_, _, suggestion) -> {
+            suggestion.addEntry(new SuggestionEntry("min"));
+            suggestion.addEntry(new SuggestionEntry("max"));
+        });
+        command.addSyntax((sender, context) -> {
+            if (!(sender instanceof Player player) || !permissionCheck(sender)) return;
+            setWaitingLobbyCorner(player, context.get(waitingCornerArg), player.getPosition());
+        }, ArgumentType.Literal("waitinglobby"), waitingCornerArg);
+
         // /autosetup waiting [x y z]
         command.addSyntax((sender, context) -> {
             if (!(sender instanceof Player player)) return;
@@ -547,6 +554,12 @@ public class AutoSetupCommand extends HypixelCommand {
         ArgumentDouble zArg = ArgumentType.Double("z");
 
         command.addSyntax((sender, context) -> {
+            if (!(sender instanceof Player player) || !permissionCheck(sender)) return;
+            setWaitingLobbyCorner(player, context.get(waitingCornerArg),
+                    new Pos(context.get(xArg), context.get(yArg), context.get(zArg)));
+        }, ArgumentType.Literal("waitinglobby"), waitingCornerArg, xArg, yArg, zArg);
+
+        command.addSyntax((sender, context) -> {
             if (!(sender instanceof Player player)) return;
             if (!permissionCheck(sender)) return;
 
@@ -575,6 +588,19 @@ public class AutoSetupCommand extends HypixelCommand {
             DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
 
         }, ArgumentType.Literal("spectator"), xArg, yArg, zArg);
+    }
+
+    private void setWaitingLobbyCorner(Player player, String corner, Pos pos) {
+        AutoSetupSession session = AutoSetupSession.getOrCreate(player.getUuid(), player.getInstance());
+        Vec3i block = new Vec3i(pos.blockX(), pos.blockY(), pos.blockZ());
+        if (corner.equalsIgnoreCase("min")) session.setWaitingLobbyMin(block);
+        else if (corner.equalsIgnoreCase("max")) session.setWaitingLobbyMax(block);
+        else {
+            player.sendMessage(Component.text("§cUse min or max."));
+            return;
+        }
+        player.sendMessage(Component.text("§aSet waiting lobby " + corner.toLowerCase() + " to " + formatPosition(block)));
+        DebugMarkerManager.refreshMarkers(player.getUuid(), session, player.getInstance());
     }
 
     private void registerShowCommand(MinestomCommand command) {
@@ -801,4 +827,3 @@ public class AutoSetupCommand extends HypixelCommand {
         return String.format("%d, %d, %d", pos.x(), pos.y(), pos.z());
     }
 }
-

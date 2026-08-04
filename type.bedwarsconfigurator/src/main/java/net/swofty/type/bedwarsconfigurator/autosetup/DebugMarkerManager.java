@@ -6,18 +6,17 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
+import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig.TeamKey;
 import net.swofty.commons.mc.HypixelPosition;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class DebugMarkerManager {
 
@@ -44,7 +43,7 @@ public class DebugMarkerManager {
             // Spawn marker
             if (config.getSpawn() != null) {
                 HypixelPosition pos = new HypixelPosition(config.getSpawn().x(), config.getSpawn().y(), config.getSpawn().z());
-                markers.add(createMarker(instance, pos, teamColor + team.getName() + " Spawn", Material.PLAYER_HEAD));
+                markers.add(createMannequin(instance, pos, teamColor + team.getName() + " Spawn", team));
             }
 
             // Generator marker
@@ -106,7 +105,7 @@ public class DebugMarkerManager {
     }
 
     private static Entity createMarker(Instance instance, HypixelPosition pos, String label, Material headItem) {
-        Entity armorStand = new Entity(EntityType.ARMOR_STAND);
+        LivingEntity armorStand = new LivingEntity(EntityType.ARMOR_STAND);
 
         ArmorStandMeta meta = (ArmorStandMeta) armorStand.getEntityMeta();
         meta.setMarker(true);
@@ -116,6 +115,7 @@ public class DebugMarkerManager {
         meta.setCustomNameVisible(true);
 
         armorStand.set(DataComponents.CUSTOM_NAME, Component.text(label));
+        armorStand.setEquipment(EquipmentSlot.HELMET, ItemStack.of(headItem));
 
         armorStand.setInstance(instance, new Pos(pos.x(), pos.y() + 1.5, pos.z()));
 
@@ -134,6 +134,20 @@ public class DebugMarkerManager {
         return armorStand;
     }
 
+    private static Entity createMannequin(Instance instance, HypixelPosition pos, String label, TeamKey team) {
+        LivingEntity armorStand = new LivingEntity(EntityType.ARMOR_STAND);
+        ArmorStandMeta meta = (ArmorStandMeta) armorStand.getEntityMeta();
+        meta.setHasNoGravity(true);
+        meta.setCustomNameVisible(true);
+        armorStand.set(DataComponents.CUSTOM_NAME, Component.text(label));
+        armorStand.setEquipment(EquipmentSlot.HELMET, ItemStack.of(Material.PLAYER_HEAD));
+        armorStand.setEquipment(EquipmentSlot.CHESTPLATE, ItemStack.of(Material.LEATHER_CHESTPLATE));
+        armorStand.setEquipment(EquipmentSlot.LEGGINGS, ItemStack.of(Material.LEATHER_LEGGINGS));
+        armorStand.setEquipment(EquipmentSlot.BOOTS, ItemStack.of(Material.LEATHER_BOOTS));
+        armorStand.setInstance(instance, new Pos(pos.x(), pos.y(), pos.z(), pos.yaw(), pos.pitch()));
+        return armorStand;
+    }
+
     public static Entity createSingleMarker(Instance instance, double x, double y, double z, String label) {
         return createMarker(instance, new HypixelPosition(x, y, z), label, Material.ARMOR_STAND);
     }
@@ -148,4 +162,3 @@ public class DebugMarkerManager {
         return playerMarkers.containsKey(playerUuid) && !playerMarkers.get(playerUuid).isEmpty();
     }
 }
-

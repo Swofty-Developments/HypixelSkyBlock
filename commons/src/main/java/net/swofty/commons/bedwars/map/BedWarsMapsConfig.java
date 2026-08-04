@@ -33,12 +33,14 @@ public class BedWarsMapsConfig {
             private Map<TeamKey, MapTeam> teams;
             private MapLocations locations;
             private Map<GlobalGeneratorKey, GlobalGenerator> globalGenerator;
+            private List<SprayPosition> sprays;
 
             @Getter
             @Setter
             public static class MapLocations {
                 private HypixelPosition waiting;
                 private HypixelPosition spectator;
+                private CuboidPosition waitingLobby;
             }
 
             @Getter
@@ -59,6 +61,12 @@ public class BedWarsMapsConfig {
     }
 
     public record TwoBlockPosition(Vec3i feet, Vec3i head) {
+    }
+
+    public record CuboidPosition(Vec3i min, Vec3i max) {
+    }
+
+    public record SprayPosition(int x, int y, int z, String facing) {
     }
 
     public record MinMax(double min, double max) {
