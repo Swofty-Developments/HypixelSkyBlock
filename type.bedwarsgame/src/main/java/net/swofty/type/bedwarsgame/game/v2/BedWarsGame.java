@@ -217,7 +217,7 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         TeamKey teamKey = player.getTeamKey();
         MapTeam playerTeam = getMapEntry().getConfiguration().getTeams().get(teamKey);
         HypixelPosition spawnPos = playerTeam.getSpawn();
-        Pos spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.pitch(), spawnPos.yaw());
+        Pos spawnPoint = new Pos(spawnPos.x(), spawnPos.y(), spawnPos.z(), spawnPos.yaw(), spawnPos.pitch());
 
         player.getInventory().clear();
         player.clearTitle();
