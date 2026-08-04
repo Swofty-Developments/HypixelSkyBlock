@@ -17,11 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Hypixel BEDWARS plays the pearl landing game-wide at full volume - every player hears it however far off the
- * thrower is. Their other modes (SkyWars et al) keep the positional vanilla sound, so the quirk rides a
- * BedWars-only registry rather than the shared Hypixel one.
- */
+/** BedWars pearls are heard game-wide at full volume; every other Hypixel mode keeps the positional sound. */
 class HypixelPearlSoundTest extends HeadlessServerTest {
 
     private static SoundEffectPacket soundFor(FakePlayer p) {

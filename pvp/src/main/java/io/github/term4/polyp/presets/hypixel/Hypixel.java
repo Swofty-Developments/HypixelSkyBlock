@@ -37,11 +37,7 @@ public final class Hypixel {
                 .register(Fx.PEARL_TELEPORT, Fx.pearlTeleport());
     }
 
-    /**
-     * BedWars: {@link #profile()} with the pearl landing going out game-wide at full volume instead of positionally
-     * - the one mode where every player hears a pearl land no matter the distance. Also the mode the measured
-     * fireball and pearl-snap in this package came from.
-     */
+    /** {@link #profile()} with the BedWars-only game-wide pearl landing ({@link Fx#pearlTeleportGameWide}). */
     public static MechanicsProfile bedwars() {
         return profile().toBuilder()
                 .set(MechanicsKeys.FX, fx().register(Fx.PEARL_TELEPORT, Fx.pearlTeleportGameWide()))

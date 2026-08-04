@@ -104,6 +104,7 @@ public abstract class ProjectileEntity extends Entity implements ExternallyTicka
     private ProjectileTypeConfig.WaterModel waterModel = ProjectileTypeConfig.WaterModel.LEGACY;
     private boolean legacyBlockRay = false;
     private boolean inWater;
+    protected final boolean inWater() { return inWater; }
     /** Added before drag (vanilla fireball {@code mot += dir; mot *= drag}); ZERO for ballistic projectiles. */
     protected Vec acceleration = Vec.ZERO;
     /** Knockback origin: vanilla uses the shooter, not the projectile. */

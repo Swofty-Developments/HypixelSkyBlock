@@ -3,7 +3,6 @@ package io.github.term4.polyp.mechanics.attribute;
 import io.github.term4.polyp.mechanics.attribute.catalog.enchant.AquaAffinity;
 import io.github.term4.polyp.mechanics.attribute.catalog.enchant.Efficiency;
 import io.github.term4.polyp.testsupport.HeadlessServerTest;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
@@ -11,9 +10,6 @@ import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.entity.attribute.AttributeOperation;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.EnchantmentList;
-import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,8 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ArmorEnchantTest extends HeadlessServerTest {
 
     private static ItemStack aquaHelmet() {
-        return ItemStack.of(Material.DIAMOND_HELMET)
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(AquaAffinity.KEY), 1));
+        return enchanted(Material.DIAMOND_HELMET, AquaAffinity.KEY, 1);
     }
 
     private static boolean hasAquaModifier(LivingEntity e) {
@@ -58,8 +53,7 @@ class ArmorEnchantTest extends HeadlessServerTest {
     @Test
     void efficiencyPushesMiningEfficiencyWhileHeld() {
         LivingEntity e = zombie(new Pos(0, 64, 92));
-        ItemStack pick = ItemStack.of(Material.DIAMOND_PICKAXE)
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(Efficiency.KEY), 3));
+        ItemStack pick = enchanted(Material.DIAMOND_PICKAXE, Efficiency.KEY, 3);
         assertFalse(hasMiningEfficiency(e), "no tool yet");
         e.setEquipment(EquipmentSlot.MAIN_HAND, pick);
         assertTrue(hasMiningEfficiency(e), "Efficiency III pushes mining_efficiency (3²+1) while the tool is held");

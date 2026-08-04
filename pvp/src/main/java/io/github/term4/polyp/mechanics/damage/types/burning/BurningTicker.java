@@ -1,5 +1,7 @@
 package io.github.term4.polyp.mechanics.damage.types.burning;
 
+import io.github.term4.polyp.fx.Fx;
+import io.github.term4.polyp.fx.FxContext;
 import io.github.term4.polyp.mechanics.damage.DamageConfigResolver;
 import io.github.term4.polyp.mechanics.damage.DamageSnapshot;
 import io.github.term4.polyp.mechanics.damage.DamageSystem;
@@ -27,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 final class BurningTicker implements EnvironmentalTickProducer {
 
-    private static final BurningTicker INSTANCE = new BurningTicker();
+    static final BurningTicker INSTANCE = new BurningTicker();
     /** Consecutive ticks standing in the current fire/lava contact (reset on leave). */
     private static final Tag<Integer> CONTACT_TICKS = Tag.Transient("polyp:burn-contact-ticks");
     private static final int DEFAULT_BURN_INTERVAL = 20;
@@ -72,10 +74,14 @@ final class BurningTicker implements EnvironmentalTickProducer {
             else if (block.compare(Block.FIRE) || block.compare(Block.SOUL_FIRE)) contact[2] = true;
             return contact[0] && contact[1] && contact[2];
         });
-        boolean wet = contact[0];
+        boolean wet = contact[0]; // water contact only: vanilla's isWet also counts rain, which nothing here models
         boolean inHazard = contact[1] || contact[2];
 
-        if (wet && living.getFireTicks() > 0) living.setFireTicks(0);
+        if (wet && living.getFireTicks() > 0) {
+            living.setFireTicks(0);
+            // viewers only, like 1.8's makeSound: the doused player hears nothing (their client forces fireTicks 0)
+            Fx.play(sys.services(), Fx.FIRE_EXTINGUISH, FxContext.of(living));
+        }
 
         if (!inHazard) {
             living.removeTag(CONTACT_TICKS);
@@ -103,11 +109,10 @@ final class BurningTicker implements EnvironmentalTickProducer {
             Integer ignite = bc.igniteTicks(ctx);
             if (ignite != null && ignite > 0) {
                 int invul = resolvedInvul(sys, ctx, bc);
-                // fire duration + warmup are real-time windows; Minestom decrements fireTicks at server TPS, so scale them (identity at 20)
                 int warmup = TickScaler.duration(living, bc.resolveIgniteWarmup(ctx, invul), DamageSystem.KEY);
-                int scaledIgnite = TickScaler.duration(living, ignite, DamageSystem.KEY);
                 boolean pin = living.getFireTicks() > 0 || contactTicks >= warmup;
-                if (pin && living.getFireTicks() < scaledIgnite) living.setFireTicks(scaledIgnite);
+                // every vanilla ignition routes through setOnFire, so Fire Protection cuts this one too
+                if (pin) Ignite.ignite(living, ignite, DamageSystem.KEY);
             }
         }
 

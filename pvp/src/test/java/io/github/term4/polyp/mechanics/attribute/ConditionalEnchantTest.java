@@ -5,16 +5,12 @@ import io.github.term4.polyp.mechanics.attribute.catalog.enchant.Smite;
 import io.github.term4.polyp.mechanics.damage.types.melee.MeleeDamage;
 import io.github.term4.polyp.testsupport.HeadlessServerTest;
 import net.kyori.adventure.key.Key;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.EnchantmentList;
-import net.minestom.server.item.enchant.Enchantment;
-import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,8 +24,7 @@ class ConditionalEnchantTest extends HeadlessServerTest {
     private static final float EPS = 1e-3f;
 
     private static ItemStack swordWith(Key enchant, int level) {
-        return ItemStack.of(Material.DIAMOND_SWORD)
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(enchant), level));
+        return enchanted(Material.DIAMOND_SWORD, enchant, level);
     }
 
     private float melee(LivingEntity attacker, Entity victim, ItemStack item) {

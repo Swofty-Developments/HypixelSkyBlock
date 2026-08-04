@@ -14,12 +14,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Vanilla routes a hit's two packets differently: the ANIMATION goes to viewers and the victim, the SOUND to
- * viewers only. The victim covers their own audio by prediction - {@code EntityPlayerSP.playSound} (1.8) and
- * {@code LocalPlayer.playSound} (modern) both override the base call to play locally, while a remote entity's
- * hurt sound is never predicted (1.8 {@code RenderGlobal.playSound} is an empty stub, modern
- * {@code ClientLevel.playSeededSound} only fires for the local player). Minestom sends the sound to self as
- * well, which doubles it for the victim; dropping it instead leaves attackers hearing nothing.
+ * Vanilla splits a hit's packets: animation to viewers + victim, sound to viewers only (the victim's client
+ * predicts its own; a remote entity's hurt sound is a client no-op in both eras). Minestom sends the sound to
+ * self too - doubling the victim - and dropping it instead left attackers hearing nothing.
  */
 class HurtSoundRoutingTest extends HeadlessServerTest {
 

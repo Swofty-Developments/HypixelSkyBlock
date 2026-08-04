@@ -18,8 +18,15 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.instance.InstanceContainer;
+import net.kyori.adventure.key.Key;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.minestom.server.item.component.EnchantmentList;
+import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.network.NetworkBuffer;
+import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.BeforeAll;
 
 /**
@@ -72,6 +79,18 @@ public abstract class HeadlessServerTest {
         LivingEntity e = new LivingEntity(EntityType.ZOMBIE);
         e.setInstance(instance, pos).join();
         return e;
+    }
+
+    /** {@code stack} with {@code enchant} at {@code level} added. */
+    protected static ItemStack enchant(ItemStack stack, Key enchant, int level) {
+        return stack.with(DataComponents.ENCHANTMENTS,
+                new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(enchant), level));
+    }
+
+    /** Plain item at {@code level <= 0}. */
+    protected static ItemStack enchanted(Material material, Key enchant, int level) {
+        ItemStack base = ItemStack.of(material);
+        return level <= 0 ? base : enchant(base, enchant, level);
     }
 
     /** Unbound to any instance: {@link Entity#getPosition()} is the origin, tracked velocity zero. */

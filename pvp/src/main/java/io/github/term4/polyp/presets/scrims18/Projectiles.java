@@ -7,29 +7,12 @@ import io.github.term4.polyp.mechanics.projectile.types.ProjectileTypeConfig;
 import io.github.term4.polyp.presets.vanilla18.Vanilla18;
 
 /**
- * Scrims 1.8 projectiles: the {@link Vanilla18} 1.8 baseline with the tracker muted - a projectile is spawned,
- * handed its launch velocity, and never corrected again.
- *
- * <p>Capture-verified (scrims18snowballbow + scrims18moreprojectiles, 141 spawns over snowball/arrow/pearl/
- * bobber): not one {@code entity_teleport} or {@code entity_relative_move} on ANY projectile, and no velocity
- * after the launch one. That launch velocity rides {@code spawn_object} where 1.8 has room for it (arrow and
- * bobber carry objectData = shooter id, so those spawn alone) and needs a separate {@code entity_velocity}
- * where it does not (snowball and pearl carry objectData 0, whose spawn packet omits the velocity fields).
- * Either way the client predicts the whole arc, which is what {@code syncInterval(0)} +
- * {@code velocitySyncInterval(0)} produce here.
- *
- * <p>Launch spread is GONE, the usual competitive patch to 1.8's {@code shoot()}. Held-aim captures collapse
- * onto one velocity vector per aim with the off-axis component a hard zero - 128 snowballs onto 4
- * (scrims18staticsnowballtest), 40 rod casts onto 1 (scrims18staticrod) - where vanilla's gaussian would
- * scatter every single launch. Both ends of the launch path, so it sits on the shared baseline.
- *
- * <p>They also launch from the middle of the view, not off the shoulder: 1.8 steps the spawn 0.16 sideways
- * ({@code locX -= cos(yaw) * 0.16F}), and across 95 held-aim spawns that sideways component is a hard zero,
- * traded for a push straight out along the aim ({@link #SPAWN_FORWARD}).
- *
- * <p>Launch speed is short of 1.8's too - see {@link #THROW_SPEED} and {@link #ROD_SPEED}. Flight physics stay
- * vanilla: with no follow-up packets there is no second sample to difference, so these captures can neither
- * confirm nor move gravity/drag.
+ * Scrims 1.8 projectiles, capture-fitted (141 spawns + two held-aim sessions). Four deltas off {@link Vanilla18}:
+ * a silent wire (spawn + launch velocity, never a correction - 0 teleports across every type), zero launch
+ * spread (128 held-aim snowballs collapse onto 4 vectors, one per aim; the off-axis component is a hard 0),
+ * a centered spawn ({@link #SPAWN_FORWARD} down the aim instead of 1.8's 0.16 sideways step), and launch
+ * speeds a shade under 1.8's ({@link #THROW_SPEED}/{@link #ROD_SPEED}). Flight physics stay vanilla - with
+ * no follow-up packets the captures can neither confirm nor move gravity/drag.
  */
 public final class Projectiles {
 

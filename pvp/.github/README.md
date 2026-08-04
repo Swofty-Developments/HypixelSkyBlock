@@ -39,6 +39,28 @@ ProjectileSystem.install(polyp);
 
 Requires the published `net.minestom:minestom` artifact (see `minestomVersion` in the build) — no Minestom fork.
 
+## Custom player class
+
+Polyp installs an `OptimizedPlayer` provider (self-echo filtering, per-client compat state, the dispatcher opt-out
+that shard domain ticking needs). To use your own player class, extend it and swap the factory — every
+`instanceof OptimizedPlayer` gate in the library keeps matching:
+
+```java
+public class MyPlayer extends OptimizedPlayer {
+    public MyPlayer(PlayerConnection connection, GameProfile profile) { super(connection, profile); }
+}
+
+polyp.playerFactory = MyPlayer::new;   // read per-connect, so before or after init() both work
+```
+
+If you override `tick` or `refreshCurrentChunk`, call super — they carry the guards that keep a domain-ticked
+player from double-ticking in the global dispatcher.
+
+Running a different provider entirely (`installPlayerProvider = false`, or another plugin owns it): packet-level
+compat (meta fix, pose interception, item rewrites, `PlayerConfig`) is inert for those players, but the plain-API
+behaviors still apply — sprint strip on sneak/use, movement collision revert, swim dampening — through
+profile-resolved fallback state. Domain ticking skips uncovered players instead of double-ticking them.
+
 ## Status
 
 Pre-release. APIs move; presets are updated as captures refine the measured values.

@@ -5,7 +5,7 @@ import io.github.term4.polyp.mechanics.attribute.source.Source;
 import io.github.term4.polyp.mechanics.attribute.combat.HitContext;
 import io.github.term4.polyp.mechanics.attribute.combat.OnHit;
 import io.github.term4.polyp.mechanics.damage.DamageSystem;
-import io.github.term4.polyp.util.tick.TickScaler;
+import io.github.term4.polyp.mechanics.damage.types.burning.Ignite;
 import net.kyori.adventure.key.Key;
 
 import java.util.List;
@@ -30,8 +30,7 @@ public final class FireAspect {
 
         @Override public void onHit(HitContext ctx) {
             if (ctx.level() <= 0) return;
-            // real-time duration: Minestom decrements fireTicks at server TPS
-            ctx.victim().setFireTicks(TickScaler.duration(ctx.victim(), ctx.level() * TICKS_PER_LEVEL, DamageSystem.KEY));
+            Ignite.ignite(ctx.victim(), ctx.level() * TICKS_PER_LEVEL, DamageSystem.KEY);
         }
     }
 }

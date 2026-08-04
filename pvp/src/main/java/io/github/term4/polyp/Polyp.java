@@ -24,6 +24,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
 import net.minestom.server.event.EventNode;
+import net.minestom.server.network.player.GameProfile;
+import net.minestom.server.network.player.PlayerConnection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 /**
  * Main initialization class for the library: server-level options (trackers, metaFix), the node tree
@@ -51,11 +54,14 @@ public final class Polyp {
     /** Removes the pose-change stutter (sneak/sprint/...) 1.9+ clients show under high ping. Requires {@link #installPlayerProvider}. */
     public boolean metaFix = true;
     /**
-     * Installs the {@code OptimizedPlayer} provider and scoped {@code PlayerConfig} application. Independent of
-     * {@link #metaFix}. Disable only if you set your own player provider; extend {@code OptimizedPlayer} there to keep
-     * PlayerConfig support.
+     * Installs {@link #playerFactory} as the player provider + scoped {@code PlayerConfig} application. To customize
+     * the player class set {@link #playerFactory} instead of disabling this - the packet-level compat keys on it.
      */
     public boolean installPlayerProvider = true;
+
+    /** Builds each connecting player. Swap for an {@code OptimizedPlayer} subclass to keep the whole
+     *  {@code instanceof}-gated compat/fixes layer; read per-connect, so setting it after init works too. */
+    public BiFunction<PlayerConnection, GameProfile, ? extends OptimizedPlayer> playerFactory = OptimizedPlayer::new;
 
     private final EventNode<@NotNull Event> root = EventNode.all("polyp:root");
     private final EventNode<@NotNull Event> apiEvents = EventNode.all("polyp:api-events");
@@ -119,14 +125,14 @@ public final class Polyp {
 
         if (metaFix && !installPlayerProvider) {
             LOG.warn("metaFix is enabled but installPlayerProvider is not - the meta fix needs the OptimizedPlayer"
-                    + " provider and will be inert (set your own provider extending OptimizedPlayer).");
+                    + " provider and will be inert (keep the provider on and set playerFactory instead).");
         }
         if (metaFix) MetaFix.installListeners();
+        CompatMovement.install(this); // plain server API: covers foreign-provider players, so not provider-gated
         if (installPlayerProvider) {
-            MinecraftServer.getConnectionManager().setPlayerProvider((conn, profile) ->
-                    new OptimizedPlayer(conn, profile));
+            // reads the field per-connect, not bound at init: a factory set late still takes effect
+            MinecraftServer.getConnectionManager().setPlayerProvider((conn, profile) -> playerFactory.apply(conn, profile));
             PlayerConfigApplier.install(this);
-            CompatMovement.install(this);
             // inert unless CompatConfig.disableOffhand
             CompatOffhand.install(this);
             // inert unless CompatConfig.blockPlaceReach

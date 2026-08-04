@@ -83,11 +83,8 @@ public final class FxContext {
             p.sendPacket(new SoundEffectPacket(sound, src, source.getPosition(), volume, pitch, ThreadLocalRandom.current().nextLong()));
     }
 
-    /**
-     * The sound to EVERY player in the world at full volume, positioned at each listener so distance never
-     * attenuates it - a game-wide announcement rather than a thing that happened somewhere (Hypixel BedWars
-     * pearls). One shared seed, so variant-picking sounds still pick the same variant for everyone.
-     */
+    /** The sound to every player in the world, positioned at each LISTENER so distance never attenuates it.
+     *  One shared seed: variant-picking sounds pick the same variant for everyone. */
     public void globalSound(@NotNull SoundEvent sound, @NotNull Sound.Source src, float volume, float pitch) {
         long seed = ThreadLocalRandom.current().nextLong();
         for (Player p : world.players()) {

@@ -48,8 +48,7 @@ public final class Fx {
     public static final Key THROW_SNOWBALL = Key.key("polyp:throw_snowball");
     public static final Key THROW_EGG = Key.key("polyp:throw_egg");
     public static final Key THROW_PEARL = Key.key("polyp:throw_pearl");
-    /** Pearl landed and moved its thrower. 1.8 has none ({@code EntityEnderPearl} is silent; {@code mob.endermen.portal}
-     *  is the enderman's own), so this is a server addition there - unregistered in {@link #vanilla18()}. */
+    /** Pearl landed and moved its thrower. 1.8 has no pearl sound, so {@link #vanilla18()} leaves it unregistered. */
     public static final Key PEARL_TELEPORT = Key.key("polyp:pearl_teleport");
     /** Fire charge thrown from the hand. */
     public static final Key THROW_FIREBALL = Key.key("polyp:throw_fireball");
@@ -62,6 +61,8 @@ public final class Fx {
     public static final Key ARROW_HIT = Key.key("polyp:arrow_hit");
     /** Arrow struck a target - the hit-marker "ding" to the SHOOTER only. Unregistered by default; a PvP preset registers it. */
     public static final Key ARROW_HIT_PLAYER = Key.key("polyp:arrow_hit_player");
+    /** A burning entity doused by water (1.8 {@code random.fizz}); heard by viewers, never the doused player. */
+    public static final Key FIRE_EXTINGUISH = Key.key("polyp:fire_extinguish");
     /** TNT ignited (primed TNT spawned). */
     public static final Key TNT_PRIME = Key.key("polyp:tnt_prime");
     /** The big explosion flash; played for power &gt;= 2 (the 1.8 client's hugeexplosion-vs-explode gate). */
@@ -106,6 +107,9 @@ public final class Fx {
                 // 1.8 item pickup
                 .register(ITEM_PICKUP, ctx -> ctx.sound(SoundEvent.ENTITY_ITEM_PICKUP, Sound.Source.PLAYER, 0.2f,
                         jitterPitch(0.7f) * 2.0f))
+                // 1.8 random.fizz 0.7F / 1.6F +- 0.4 dual-rand
+                .register(FIRE_EXTINGUISH, ctx -> ctx.viewerSound(SoundEvent.ENTITY_GENERIC_EXTINGUISH_FIRE,
+                        Sound.Source.NEUTRAL, 0.7f, 0.6f + jitterPitch(0.4f)))
                 .register(THROW_SNOWBALL, throwSound(SoundEvent.ENTITY_SNOWBALL_THROW, Sound.Source.NEUTRAL))
                 .register(THROW_EGG, throwSound(SoundEvent.ENTITY_EGG_THROW, Sound.Source.PLAYER))
                 .register(THROW_PEARL, throwSound(SoundEvent.ENTITY_ENDER_PEARL_THROW, Sound.Source.NEUTRAL))
@@ -136,11 +140,8 @@ public final class Fx {
         return ctx -> ctx.sound(SoundEvent.ENTITY_PLAYER_TELEPORT, Sound.Source.PLAYER, 1.0f, 1.0f);
     }
 
-    /**
-     * Hypixel BEDWARS only: the pearl landing reaches the whole lobby at full volume, however far away the thrower
-     * is - an audible tell that someone pearled. SkyWars and their other modes keep the positional
-     * {@link #pearlTeleport()}, so this belongs on a per-mode registry, not the shared Hypixel one.
-     */
+    /** Hypixel BEDWARS only (their other modes stay positional): the landing reaches the whole game at full
+     *  volume regardless of distance, so it rides a per-mode registry, not the shared Hypixel one. */
     public static @NotNull FxHandler pearlTeleportGameWide() {
         return ctx -> ctx.globalSound(SoundEvent.ENTITY_PLAYER_TELEPORT, Sound.Source.PLAYER, 1.0f, 1.0f);
     }

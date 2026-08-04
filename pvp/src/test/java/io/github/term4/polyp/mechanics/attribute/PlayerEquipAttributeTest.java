@@ -5,7 +5,6 @@ import io.github.term4.polyp.MechanicsProfile;
 import io.github.term4.polyp.mechanics.attribute.catalog.enchant.AquaAffinity;
 import io.github.term4.polyp.mechanics.attribute.catalog.enchant.Efficiency;
 import io.github.term4.polyp.testsupport.HeadlessServerTest;
-import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.Player;
@@ -16,14 +15,11 @@ import net.minestom.server.event.entity.EntityTickEvent;
 import net.minestom.server.event.player.PlayerChangeHeldSlotEvent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.item.component.EnchantmentList;
-import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.network.ConnectionState;
 import net.minestom.server.network.packet.server.SendablePacket;
 import net.minestom.server.network.packet.server.play.EntityAttributesPacket;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.PlayerConnection;
-import net.minestom.server.registry.RegistryKey;
 import org.junit.jupiter.api.Test;
 
 import java.net.InetSocketAddress;
@@ -44,13 +40,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PlayerEquipAttributeTest extends HeadlessServerTest {
 
     private static ItemStack aquaHelmet() {
-        return ItemStack.of(Material.DIAMOND_HELMET)
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(AquaAffinity.KEY), 1));
+        return enchanted(Material.DIAMOND_HELMET, AquaAffinity.KEY, 1);
     }
 
     private static ItemStack efficiencyPick() {
-        return ItemStack.of(Material.DIAMOND_PICKAXE)
-                .with(DataComponents.ENCHANTMENTS, new EnchantmentList(RegistryKey.<Enchantment>unsafeOf(Efficiency.KEY), 1));
+        return enchanted(Material.DIAMOND_PICKAXE, Efficiency.KEY, 1);
     }
 
     private static boolean hasAqua(LivingEntity e) {
