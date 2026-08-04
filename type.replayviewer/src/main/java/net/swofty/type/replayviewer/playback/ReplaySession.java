@@ -14,6 +14,7 @@ import net.minestom.server.network.packet.server.play.EntityEquipmentPacket;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.network.packet.server.play.UpdateScorePacket;
 import net.minestom.server.scoreboard.BelowNameTag;
+import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.TeamColorUtil;
 import net.swofty.type.game.replay.api.ReplayGameMetadata;
@@ -67,6 +68,7 @@ public class ReplaySession implements ReplayPlaybackContext {
     private volatile boolean rebuildingState = false;
     private volatile int skipSeconds = 30;
     private final ReplayPlaybackSession playback;
+    private Task actionBarTask;
 
     public static final float[] SPEED_PRESETS = {0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
     public static final short[] SKIP_PRESETS = {1, 5, 10, 30, 60};
@@ -120,6 +122,7 @@ public class ReplaySession implements ReplayPlaybackContext {
         TypeReplayViewerLoader.registerSession(viewer.getUuid(), this);
         sendEquipmentSync(viewer);
         ScheduleUtility.delay(() -> sendEquipmentSync(viewer), 1);
+        startActionBarUpdates();
         updateActionBar();
 
         ScheduleUtility.delay(() -> autoFollowForViewer(viewer), 20);
@@ -186,10 +189,12 @@ public class ReplaySession implements ReplayPlaybackContext {
 
     public void play() {
         playback.play();
+        updateActionBar();
     }
 
     public void pause() {
         playback.pause();
+        updateActionBar();
     }
 
     public void togglePlayPause() {
@@ -202,6 +207,7 @@ public class ReplaySession implements ReplayPlaybackContext {
 
     public void stop() {
         pause();
+        stopActionBarUpdates();
         entityManager.cleanup();
 
         dynamicTextManager.cleanup();
@@ -314,9 +320,20 @@ public class ReplaySession implements ReplayPlaybackContext {
         npcManager.tick();
 
         if (tick % 5 == 0) {
-            updateActionBar();
             viewerProjection.updateScoreboards(this);
         }
+    }
+
+    private void startActionBarUpdates() {
+        if (actionBarTask != null) return;
+        actionBarTask = MinecraftServer.getSchedulerManager().buildTask(this::updateActionBar)
+                .repeat(TaskSchedule.tick(5)).schedule();
+    }
+
+    private void stopActionBarUpdates() {
+        if (actionBarTask == null) return;
+        actionBarTask.cancel();
+        actionBarTask = null;
     }
 
     private void updateActionBar() {

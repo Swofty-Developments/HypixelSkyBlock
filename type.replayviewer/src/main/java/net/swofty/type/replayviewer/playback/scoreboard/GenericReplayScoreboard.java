@@ -82,7 +82,7 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
 
         lines.add(Component.empty());
 
-        lines.add(Component.text("Map", NamedTextColor.WHITE).append(Component.text(session.getMetadata().descriptor().mapName(), NamedTextColor.GREEN)));
+        lines.add(Component.text("Map: ", NamedTextColor.WHITE).append(Component.text(session.getMetadata().descriptor().mapName(), NamedTextColor.GREEN)));
         lines.add(Component.text("www.hypixel.net", NamedTextColor.YELLOW));
 
         return lines;
