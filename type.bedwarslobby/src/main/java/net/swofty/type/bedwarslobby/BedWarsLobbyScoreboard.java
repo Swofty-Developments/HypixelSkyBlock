@@ -87,9 +87,9 @@ public class BedWarsLobbyScoreboard {
 				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.tokens_line", Argument.tagResolver(Formatter.number("tokens", tokens))));
 				if (tickets <= 75) {
-					lines.add(I18n.t("scoreboard.bedwars_lobby.slumber_tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets)), Argument.numeric("tickets_max", 75)));
-				} else {
 					lines.add(I18n.t("scoreboard.bedwars_lobby.tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets))));
+				} else {
+					lines.add(I18n.t("scoreboard.bedwars_lobby.slumber_tickets_line", Argument.tagResolver(Formatter.number("tickets", tickets)), Argument.numeric("ticket_max", 75)));
 				}
 				lines.add(Component.space());
 				lines.add(I18n.t("scoreboard.bedwars_lobby.total_kills_label", Argument.tagResolver(Formatter.number("total_kills", totalKills))));
