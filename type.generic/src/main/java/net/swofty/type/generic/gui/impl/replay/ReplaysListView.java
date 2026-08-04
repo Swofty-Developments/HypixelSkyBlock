@@ -66,6 +66,11 @@ public class ReplaysListView extends StatefulPaginatedView<ReplayEntry, ReplaysL
     }
 
     @Override
+    protected boolean shouldRenderNavBackground() {
+        return false;
+    }
+
+    @Override
     protected void layoutBackground(ViewLayout<State> layout, State state, ViewContext ctx) {
         Components.close(layout, 48);
 

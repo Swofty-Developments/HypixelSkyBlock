@@ -5,11 +5,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.swofty.type.generic.data.datapoints.DatapointReplaySettings;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
-import net.swofty.type.generic.gui.v2.DefaultState;
-import net.swofty.type.generic.gui.v2.StatelessView;
-import net.swofty.type.generic.gui.v2.ViewConfiguration;
-import net.swofty.type.generic.gui.v2.ViewLayout;
+import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.playback.ReplaySession;
@@ -108,7 +104,7 @@ public class GUIViewerSettings extends StatelessView {
             "§eClick to cycle!"
         ), (_, c) -> updateSetting(c, replaySettings -> replaySettings.setSkipIntervals(cycleSkip(replaySettings.getSkipIntervals())), true));
 
-        Components.back(layout, 49, ctx);
+        Components.back(layout, 31, ctx);
     }
 
     private static ItemStack.Builder createToggleItem(String title, boolean enabled, String... description) {

@@ -11,6 +11,7 @@ import net.swofty.type.generic.command.CommandParameters;
 import net.swofty.type.generic.command.HypixelCommand;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.util.UUID;
 
@@ -74,14 +75,16 @@ public class ReplayCommand extends HypixelCommand {
         ProxyService replayService = new ProxyService(ServiceType.REPLAY);
         var request = new ChooseReplayProtocolObject.ChooseReplayMessage(player.getUuid(), replayId.toString(), shareCode);
         replayService.<ChooseReplayProtocolObject.ChooseReplayMessage, ChooseReplayProtocolObject.ChooseReplayResponse>handleRequest(request).thenAccept(response -> {
-            if (!response.error()) {
-                player.sendMessage(Component.text("Sending you to the Replay Viewer...", NamedTextColor.GRAY));
-                player.sendTo(ServerType.REPLAY_VIEWER);
-            } else {
-                player.sendMessage(Component.text("Replay not found or failed to load.", NamedTextColor.RED));
-            }
+            ScheduleUtility.nextTick(() -> {
+                if (!response.error()) {
+                    player.sendMessage(Component.text("Sending you to the Replay Viewer...", NamedTextColor.GRAY));
+                    player.sendTo(ServerType.REPLAY_VIEWER);
+                } else {
+                    player.sendMessage(Component.text("Replay not found or failed to load.", NamedTextColor.RED));
+                }
+            });
         }).exceptionally(e -> {
-            player.sendMessage(Component.text("Failed to load replay: " + e.getMessage(), NamedTextColor.RED));
+            ScheduleUtility.nextTick(() -> player.sendMessage(Component.text("Failed to load replay: " + e.getMessage(), NamedTextColor.RED)));
             return null;
         });
     }

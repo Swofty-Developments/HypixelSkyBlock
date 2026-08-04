@@ -84,7 +84,7 @@ public class GUISelectLanguage extends PaginatedView<DatapointLocale.SupportedLo
     @Override
     protected void onItemClick(ClickContext<State> click, ViewContext ctx, DatapointLocale.SupportedLocale locale, int index) {
         ctx.player().updateLocale(locale);
-        ctx.session(State.class).refresh();
+        ctx.player().closeInventory();
     }
 
     @Override
@@ -120,6 +120,11 @@ public class GUISelectLanguage extends PaginatedView<DatapointLocale.SupportedLo
     @Override
     protected boolean shouldRenderNavBackground() {
         return false;
+    }
+
+    @Override
+    protected void layoutBackground(ViewLayout<State> layout, State state, ViewContext ctx) {
+        // i dont want a background :)
     }
 
     public record State(List<DatapointLocale.SupportedLocale> items,

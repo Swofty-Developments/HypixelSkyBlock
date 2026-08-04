@@ -13,6 +13,7 @@ import net.swofty.type.generic.gui.impl.replay.ReplayEntry;
 import net.swofty.type.generic.gui.impl.replay.ReplaysListView;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.user.categories.Rank;
+import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 	description = "View your game replays",
 	usage = "/replays",
 	permission = Rank.DEFAULT,
-	allowsConsole = false
+		allowsConsole = false,
+		labels = "replays"
 )
 public class ReplaysCommand extends HypixelCommand {
 
@@ -82,15 +84,17 @@ public class ReplaysCommand extends HypixelCommand {
 
 		ProxyService replayService = new ProxyService(ServiceType.REPLAY);
 		var request = new ChooseReplayProtocolObject.ChooseReplayMessage(player.getUuid(), replay.replayId().toString());
-		replayService.<ChooseReplayProtocolObject.ChooseReplayMessage, ChooseReplayProtocolObject.ChooseReplayResponse>handleRequest(request).thenAccept(response -> {;
-			if (!response.error()) {
-				player.sendMessage(Component.text("Sending you to the Replay Viewer...", NamedTextColor.GRAY));
-				player.sendTo(ServerType.REPLAY_VIEWER);
-			} else {
-				player.sendMessage(Component.text("Failed to send you to a replay viewer.", NamedTextColor.RED));
-			}
+		replayService.<ChooseReplayProtocolObject.ChooseReplayMessage, ChooseReplayProtocolObject.ChooseReplayResponse>handleRequest(request).thenAccept(response -> {
+			ScheduleUtility.nextTick(() -> {
+				if (!response.error()) {
+					player.sendMessage(Component.text("Sending you to the Replay Viewer...", NamedTextColor.GRAY));
+					player.sendTo(ServerType.REPLAY_VIEWER);
+				} else {
+					player.sendMessage(Component.text("Failed to send you to a replay viewer.", NamedTextColor.RED));
+				}
+			});
 		}).exceptionally(e -> {
-			player.sendMessage(Component.text("Failed to load replay: " + e.getMessage(), NamedTextColor.RED));
+			ScheduleUtility.nextTick(() -> player.sendMessage(Component.text("Failed to load replay: " + e.getMessage(), NamedTextColor.RED)));
 			return null;
 		});
 	}
