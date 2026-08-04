@@ -191,22 +191,4 @@ public class DynamicTextManager {
         lastUpdateTicks.clear();
     }
 
-    /**
-     * Seeks to a specific tick, updating all displays.
-     *
-     * @param targetTick the tick to seek to
-     */
-    public void seekTo(int targetTick) {
-        for (Map.Entry<Integer, DynamicTextSource> entry : textSources.entrySet()) {
-            int entityId = entry.getKey();
-            DynamicTextSource source = entry.getValue();
-            ReplayTextDisplayEntity entity = displayEntities.get(entityId);
-
-            if (entity != null && source.isActiveAt(targetTick)) {
-                entity.updateTextLines(source.getTextAt(targetTick));
-            }
-        }
-        // Reset all update tick tracking
-        lastUpdateTicks.replaceAll((k, v) -> targetTick);
-    }
 }

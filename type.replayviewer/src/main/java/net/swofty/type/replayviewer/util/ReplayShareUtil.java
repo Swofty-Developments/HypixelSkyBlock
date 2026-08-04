@@ -19,8 +19,8 @@ public final class ReplayShareUtil {
         String shareCode = ReplayShareCodec.encode(
             position,
             clampedTick,
-            session.getMetadata().getMapCenterX(),
-            session.getMetadata().getMapCenterZ()
+                session.getMetadata().descriptor().mapCenterX(),
+                session.getMetadata().descriptor().mapCenterZ()
         );
 
         return "/replay " + session.getReplayId() + " " + shareCode;

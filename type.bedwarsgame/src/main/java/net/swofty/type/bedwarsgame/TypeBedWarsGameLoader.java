@@ -54,12 +54,14 @@ import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItem;
 import net.swofty.type.bedwarsgame.item.SimpleInteractableItemHandler;
 import net.swofty.type.bedwarsgame.replay.BedWarsMechanicsWorld;
+import net.swofty.type.bedwarsgame.replay.BedWarsReplayAdapter;
 import net.swofty.type.bedwarsgame.shop.ShopManager;
 import net.swofty.type.bedwarsgame.shop.TeamShopManager;
 import net.swofty.type.bedwarsgame.shop.TrapManager;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameObject;
 import net.swofty.type.game.game.GameState;
+import net.swofty.type.game.replay.api.ReplayAdapterRegistry;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.HypixelTypeLoader;
@@ -83,6 +85,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static net.swofty.type.generic.HypixelGenericLoader.getLoadedPlayers;
@@ -102,6 +105,8 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
     public static final TrapManager trapManager = new TrapManager();
     @Getter
     public static final SimpleInteractableItemHandler itemHandler = new SimpleInteractableItemHandler();
+    @Getter
+    private static final ReplayAdapterRegistry<Function<BedWarsGame, BedWarsReplayAdapter>> replayAdapters = new ReplayAdapterRegistry<>();
 
     public static final Tag<@NotNull Boolean> PLAYER_PLACED_TAG = Tag.Boolean("player_placed");
     public static final Tag<@NotNull Integer> ARMOR_LEVEL_TAG = Tag.Integer("armor_level");
@@ -195,6 +200,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
 
     @Override
     public void onInitialize(MinecraftServer server) {
+        replayAdapters.register(BedWarsReplayAdapter.GAME_TYPE, BedWarsReplayAdapter::new);
         initializePolyp();
         BedWarsCollectibleCatalog.initialize();
         gson = new GsonBuilder()

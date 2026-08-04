@@ -11,7 +11,6 @@ import io.github.term4.polyp.platform.player.OptimizedPlayer;
 import io.github.term4.polyp.util.tick.TickScaler;
 import io.github.term4.polyp.world.ExternallyTickable;
 import io.github.term4.polyp.world.MechanicsWorld;
-import net.minestom.server.instance.Chunk;
 import net.kyori.adventure.nbt.BinaryTagTypes;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.nbt.DoubleBinaryTag;
@@ -23,10 +22,11 @@ import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.metadata.other.PrimedTntMeta;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.metadata.other.PrimedTntMeta;
+import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.network.packet.server.play.EntityPositionSyncPacket;
 import net.minestom.server.network.packet.server.play.SpawnEntityPacket;
@@ -149,6 +149,10 @@ public final class PrimedTnt extends Entity implements ExternallyTickable {
     /** A replay twin never detonates: the recording's REMOVE + FX carry the explosion (client fuse untouched). */
     public void sterilize() {
         fuse = Integer.MAX_VALUE;
+    }
+
+    public int remainingFuseTicks() {
+        return fuse;
     }
 
     /** Spawns at the block's {@code +0.5,+0.5,+0.5} (measured) with the vanilla kick. */

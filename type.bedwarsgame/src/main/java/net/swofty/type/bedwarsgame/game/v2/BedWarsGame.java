@@ -47,6 +47,7 @@ import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.party.PartyManager;
+import net.swofty.type.generic.utility.ScheduleUtility;
 import org.tinylog.Logger;
 
 import java.util.*;
@@ -226,11 +227,17 @@ public class BedWarsGame extends AbstractTeamGame<BedWarsPlayer, BedWarsTeam> {
         player.setRespawnPoint(spawnPoint);
         player.setGameMode(GameMode.SURVIVAL);
         player.setInvisible(false);
+        player.setInvulnerable(true);
         player.setFlying(false);
         BedWarsInventoryManipulator.addItemWithHotbarPriority(player, ItemStack.of(Material.WOODEN_SWORD), DatapointBedWarsHotbar.HotbarItemType.MELEE);
         player.setHealth(20f);
         player.setFood(20);
         equipTeamArmor(player, teamKey);
+
+        // hypixel seems to do something like this
+        ScheduleUtility.delay(() -> {
+            player.setInvulnerable(false);
+        }, TaskSchedule.seconds(1));
 
         // Give back the downgraded tools
         AxeShopItem axeShopItem = new AxeShopItem();

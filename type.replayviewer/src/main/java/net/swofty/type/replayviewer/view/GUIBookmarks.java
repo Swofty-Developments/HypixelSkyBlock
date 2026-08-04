@@ -1,12 +1,11 @@
 package net.swofty.type.replayviewer.view;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.swofty.type.game.replay.recordable.Recordable;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableBedDestruction;
-import net.swofty.type.game.replay.recordable.bedwars.RecordableKill;
+import net.swofty.type.game.replay.event.ReplayBookmarkEvent;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.StatefulView;
@@ -33,7 +32,7 @@ public class GUIBookmarks implements StatefulView<GUIBookmarks.State> {
     public record State(int page) {
     }
 
-    private record BookmarkEntry(int tick, String title, String playerDisplayName) {
+    private record BookmarkEntry(int tick, Component title, String playerDisplayName) {
     }
 
     @Override
@@ -83,12 +82,13 @@ public class GUIBookmarks implements StatefulView<GUIBookmarks.State> {
                 entry.title(),
                 Material.PAPER,
                 1,
-                "§7Time: §a" + formatBookmarkTime(entry.tick()),
-                "",
-                "§aPlayer: " + entry.playerDisplayName(),
-                "",
-                "§eLeft Click to go to this time!",
-                "§eRight Click to share!"
+                    List.of(
+                            Component.text("§7Time: §a" + formatBookmarkTime(entry.tick())),
+                            Component.empty(),
+                            Component.text("§aPlayer: " + entry.playerDisplayName()),
+                            Component.empty(),
+                            Component.text("§eLeft Click to go to this time!"),
+                            Component.text("§eRight Click to share!"))
             ), (click, c) -> {
                 if (click.click() instanceof Click.Right) {
                     ReplayShareUtil.sendShareCommandMessage(c.player(), replaySession, entry.tick());
@@ -132,31 +132,10 @@ public class GUIBookmarks implements StatefulView<GUIBookmarks.State> {
         List<BookmarkEntry> entries = new ArrayList<>();
 
         for (int tick : session.getReplayData().getAllTicks()) {
-            List<Recordable> tickRecordables = session.getReplayData().getRecordablesAt(tick);
-            for (Recordable recordable : tickRecordables) {
-                if (recordable instanceof RecordableBedDestruction bedDestruction) {
-                    String fallback = bedDestruction.getDestroyerEntityId() >= 0
-                        ? session.getEntityDisplayName(bedDestruction.getDestroyerEntityId())
-                        : "§7Unknown";
-                    String playerName = resolveDisplayName(bedDestruction.getDestroyerUuid(), fallback);
-
-                    entries.add(new BookmarkEntry(
-                        tick,
-                        "§a" + getTeamName(bedDestruction.getTeamId()) + " Bed Destroyed",
-                        playerName
-                    ));
-                    continue;
-                }
-
-                if (recordable instanceof RecordableKill kill && kill.getFinalKill() != 0) {
-                    String fallback = session.getEntityDisplayName(kill.getVictimEntityId());
-                    String playerName = resolveDisplayName(kill.getVictimUuid(), fallback);
-
-                    entries.add(new BookmarkEntry(
-                        tick,
-                        "§aFinal Death",
-                        playerName
-                    ));
+            for (var event : session.getReplayData().transientEventsAt(tick)) {
+                if (event instanceof ReplayBookmarkEvent bookmark) {
+                    entries.add(new BookmarkEntry(tick, bookmark.title(),
+                            resolveDisplayName(bookmark.participantUuid(), "§7Unknown")));
                 }
             }
         }
@@ -183,17 +162,4 @@ public class GUIBookmarks implements StatefulView<GUIBookmarks.State> {
         }
     }
 
-    private static String getTeamName(byte teamId) {
-        return switch (teamId) {
-            case 0 -> "Red";
-            case 1 -> "Blue";
-            case 2 -> "Green";
-            case 3 -> "Yellow";
-            case 4 -> "Aqua";
-            case 5 -> "White";
-            case 6 -> "Pink";
-            case 7 -> "Gray";
-            default -> "Team " + teamId;
-        };
-    }
 }

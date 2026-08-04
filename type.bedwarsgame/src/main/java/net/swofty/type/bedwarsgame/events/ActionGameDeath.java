@@ -45,7 +45,7 @@ public class ActionGameDeath implements HypixelEventClass {
         game.getReplayManager().recordPlayerDeath(
                 player,
                 deathResult.getKillCreditPlayer(),
-                net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText().serialize(deathMessage)
+                deathMessage
         );
         HypixelPosition position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setVelocity(Vec.ZERO); // Stop any momentum the player had before death
@@ -53,6 +53,7 @@ public class ActionGameDeath implements HypixelEventClass {
             player.teleport(new Pos(position.x(), position.y(), position.z()));
         }
         BedWarsGame.literalSetupSpectator(player);
+        game.getReplayManager().recordPlayerState(player);
 
         Integer pickaxeLevel = player.getTag(PickaxeShopItem.PICKAXE_UPGRADE_TAG);
         if (pickaxeLevel != null && pickaxeLevel > 1) {

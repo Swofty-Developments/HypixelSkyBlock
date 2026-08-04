@@ -2,6 +2,7 @@ package net.swofty.type.replayviewer.playback.scoreboard;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 import net.swofty.commons.bedwars.BedWarsGameType;
@@ -12,11 +13,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class GenericReplayScoreboard implements ReplayScoreboard {
-
     private final ReplaySession session;
     private Sidebar sidebar;
+    private UUID viewerUuid;
 
     public GenericReplayScoreboard(ReplaySession session) {
         this.session = session;
@@ -24,7 +26,8 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
 
     @Override
     public void create(Player viewer) {
-        sidebar = new Sidebar(Component.text(getTitle(), NamedTextColor.YELLOW));
+        viewerUuid = viewer.getUuid();
+        sidebar = new Sidebar(getTitle());
         sidebar.addViewer(viewer);
         update(session);
     }
@@ -33,7 +36,7 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
     public void update(ReplaySession session) {
         if (sidebar == null) return;
 
-        List<String> lines = getLines(session);
+        List<Component> lines = getLines(session);
         for (int i = 0; i < 15; i++) {
             sidebar.removeLine("line_" + i);
         }
@@ -41,7 +44,7 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
         for (int i = 0; i < lines.size() && i < 15; i++) {
             sidebar.createLine(new Sidebar.ScoreboardLine(
                 "line_" + i,
-                Component.text(lines.get(i)),
+                    lines.get(i),
                 lines.size() - i,
                 Sidebar.NumberFormat.blank()
             ));
@@ -56,42 +59,32 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
     }
 
     @Override
-    public String getTitle() {
-        String gameType = session.getMetadata().getGameTypeName();
-        if (gameType == null || gameType.isEmpty()) {
-            return "§e§lREPLAY";
-        }
-        return "§e§l" + gameType.toUpperCase();
+    public Component getTitle() {
+        return Component.text("REPLAY", NamedTextColor.YELLOW, TextDecoration.BOLD);
     }
 
     @Override
-    public List<String> getLines(ReplaySession session) {
-        List<String> lines = new ArrayList<>();
-        lines.add("§7" + new SimpleDateFormat("MM/dd/yyyy").format(new Date()) + "  §8" + HypixelConst.getServerName());
-        lines.add("§7Replay from " + session.getMetadata().getServerId());
-        lines.add("§7 ");
+    public List<Component> getLines(ReplaySession session) {
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.text(new SimpleDateFormat("MM/dd/yyyy").format(new Date()), NamedTextColor.GRAY)
+                .appendSpace().appendSpace().append(Component.text(HypixelConst.getServerName(), NamedTextColor.DARK_GRAY)));
+        lines.add(Component.text("Replay from " + session.getMetadata().descriptor().serverId(), NamedTextColor.GRAY));
 
-        lines.add("§fDate: §a" + new SimpleDateFormat("MM/dd/yyyy").format(new Date(session.getMetadata().getStartTime())));
-        lines.add("§fTime: §a" + new SimpleDateFormat("HH:mm").format(new Date(session.getMetadata().getStartTime())) + " (EST)");
-        lines.add("§7 ");
+        lines.add(Component.empty());
 
-        // capitalize gameType
-        String gameType = session.getMetadata().getGameTypeName();
-        if (gameType != null && !gameType.isEmpty()) {
-            gameType = gameType.substring(0, 1).toUpperCase() + gameType.substring(1).toLowerCase();
-        } else {
-            gameType = "Unknown";
-        }
+        lines.add(Component.text(session.getFormattedTime(), NamedTextColor.GREEN)
+                .append(Component.text("  " + session.getMetadata().descriptor().serverId(), NamedTextColor.DARK_GRAY)));
 
-        lines.add("§fGame: §aBedWars");
-        lines.add("§fMode: §a" + formatMode(gameType));
-        lines.add("§7 ");
+        lines.add(Component.empty());
 
-        String mapName = session.getMetadata().getMapName();
-        if (mapName != null && !mapName.isEmpty()) {
-            lines.add("§fMap: §a" + mapName);
-        }
-        lines.add("§ewww.hypixel.net");
+        lines.add(Component.text("Game", NamedTextColor.WHITE).appendSpace().append(Component.text("BedWars", NamedTextColor.GREEN)));
+        lines.add(Component.text("Mode: ", NamedTextColor.WHITE)
+                .append(Component.text(formatMode(session.gameModeId()), NamedTextColor.GREEN)));
+
+        lines.add(Component.empty());
+
+        lines.add(Component.text("Map", NamedTextColor.WHITE).append(Component.text(session.getMetadata().descriptor().mapName(), NamedTextColor.GREEN)));
+        lines.add(Component.text("www.hypixel.net", NamedTextColor.YELLOW));
 
         return lines;
     }

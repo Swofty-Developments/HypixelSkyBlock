@@ -8,7 +8,7 @@ import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
-import net.swofty.type.game.replay.recordable.RecordableEntityAnimation;
+import net.swofty.type.game.replay.event.ReplayEntityAnimationEvent;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.PhasedEvent;
@@ -29,7 +29,7 @@ public class ActionGameCombatTrack implements HypixelEventClass {
 
         if (event.getDamage().getAmount() > 0) {
             game.getReplayManager().getEntityLifecycleDispatcher().recordAnimation(
-                    victim.getEntityId(), RecordableEntityAnimation.AnimationType.TAKE_DAMAGE
+                    victim.getEntityId(), ReplayEntityAnimationEvent.Animation.TAKE_DAMAGE
             );
             ScheduleUtility.nextTick(() -> game.getReplayManager().recordPlayerHealth(victim));
         }

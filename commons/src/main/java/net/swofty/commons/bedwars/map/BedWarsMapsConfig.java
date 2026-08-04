@@ -78,7 +78,7 @@ public class BedWarsMapsConfig {
 
     public enum TeamKey {
         RED("Red", "§c", 0xFF5555, Material.RED_BED, Material.RED_WOOL),
-        BLUE("Blue", "§9", 0x5555FF, Material.BLUE_BED, Material.BLUE_BED),
+        BLUE("Blue", "§9", 0x5555FF, Material.BLUE_BED, Material.BLUE_WOOL),
         GREEN("Green", "§a", 0x55FF55, Material.LIME_BED, Material.LIME_WOOL),
         YELLOW("Yellow", "§e", 0xFFFF55, Material.YELLOW_BED, Material.YELLOW_WOOL),
         AQUA("Aqua", "§b", 0x00AAAA, Material.LIGHT_BLUE_BED, Material.LIGHT_BLUE_WOOL),

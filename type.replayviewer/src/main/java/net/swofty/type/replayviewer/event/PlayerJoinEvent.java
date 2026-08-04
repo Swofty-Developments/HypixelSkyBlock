@@ -11,9 +11,15 @@ import net.swofty.commons.ServerType;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.protocol.objects.replay.ReplayLoadProtocolObject;
 import net.swofty.commons.protocol.objects.replay.ReplayMapLoadProtocolObject;
+import net.swofty.commons.replay.protocol.ReplayDataReader;
 import net.swofty.proxyapi.ProxyService;
-import net.swofty.type.game.replay.ReplayError;
-import net.swofty.type.game.replay.ReplayMetadata;
+import net.swofty.type.game.replay.ReplayVersion;
+import net.swofty.type.game.replay.api.ReplayGameMetadata;
+import net.swofty.type.game.replay.api.ReplayViewerAdapter;
+import net.swofty.type.game.replay.model.ReplayDescriptor;
+import net.swofty.type.game.replay.model.ReplayGameMetadataEnvelope;
+import net.swofty.type.game.replay.model.ReplayMetadata;
+import net.swofty.type.game.replay.model.ReplayParticipant;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -23,14 +29,12 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
 import net.swofty.type.replayviewer.playback.MapDeserializer;
-import net.swofty.type.replayviewer.playback.ReplayData;
 import net.swofty.type.replayviewer.playback.ReplaySession;
+import net.swofty.type.replayviewer.playback.ReplayTimeline;
 import net.swofty.type.replayviewer.redis.service.TypedViewReplayHandler;
 import net.swofty.type.replayviewer.util.ReplayShareCodec;
 import org.tinylog.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -70,10 +74,11 @@ public class PlayerJoinEvent implements HypixelEventClass {
             ReplaySession session = existingSession.get();
             event.setSpawningInstance(session.getInstance());
 
-            Pos spawnPos = new Pos(session.getMetadata().getMapCenterX(), 100, session.getMetadata().getMapCenterZ());
+            Pos spawnPos = new Pos(session.getMetadata().descriptor().mapCenterX(), 100, session.getMetadata().descriptor().mapCenterZ());
             event.getPlayer().setRespawnPoint(spawnPos);
 
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
+            ScheduleUtility.delay(() -> session.addViewer(player), 1);
             player.setRespawnPoint(spawnPos);
             return;
         }
@@ -101,62 +106,48 @@ public class PlayerJoinEvent implements HypixelEventClass {
 
             if (!response.success()) {
                 Logger.error("Response failed: " + response.errorMessage());
+                player.sendMessage("§cThis replay could not be loaded safely.");
                 return;
             }
 
             if (response.metadata() == null) {
                 Logger.error("Response is missing metadata.");
+                player.sendMessage("§cThis replay is incomplete.");
                 return;
             }
 
-            ReplayLoadProtocolObject.ReplayMetadata protoMetadata = response.metadata();
-            Map<String, ReplayMetadata.TeamInfo> teamInfo = new HashMap<>();
-            protoMetadata.teamInfo().forEach((teamId, info) ->
-                teamInfo.put(teamId, new ReplayMetadata.TeamInfo(info.name(), info.colorCode(), info.color())));
-            Map<UUID, ReplayMetadata.PlayerInfo> playerInfo = new HashMap<>();
-            if (protoMetadata.playerInfo() != null) {
-                protoMetadata.playerInfo().forEach((uuid, info) -> playerInfo.put(uuid, new ReplayMetadata.PlayerInfo(
-                        info.entityId(), info.textureValue(), info.textureSignature(), info.displayName(),
-                        info.prefix(), info.suffix(), info.nameColor(), info.teamId()
-                )));
+            var protocolMetadata = response.metadata();
+            var protocolDescriptor = protocolMetadata.descriptor();
+            if (protocolDescriptor.formatVersion() != ReplayVersion.CURRENT_VERSION) {
+                player.sendMessage("§cThis replay uses an unsupported format.");
+                Logger.warn("Rejected replay {} with format version {}", replayId, protocolDescriptor.formatVersion());
+                return;
             }
-
-            ReplayMetadata metadata = ReplayMetadata.builder()
-                .replayId(protoMetadata.replayId())
-                .gameId(protoMetadata.gameId())
-                .serverType(protoMetadata.serverType())
-                .serverId(protoMetadata.serverId())
-                .gameTypeName(protoMetadata.gameTypeName())
-                .mapName(protoMetadata.mapName())
-                .mapHash(protoMetadata.mapHash())
-                .version(protoMetadata.version())
-                .startTime(protoMetadata.startTime())
-                .endTime(protoMetadata.endTime())
-                .durationTicks(protoMetadata.durationTicks())
-                .players(protoMetadata.players())
-                .teams(protoMetadata.teams())
-                .teamInfo(teamInfo)
-                    .playerInfo(playerInfo)
-                .winnerId(protoMetadata.winnerId())
-                .dataSize(protoMetadata.dataSize())
-                .mapCenterX(protoMetadata.mapCenterX())
-                .mapCenterZ(protoMetadata.mapCenterZ())
-                .build();
-
-            ReplayData replayData = new ReplayData();
-            if (response.dataChunks() != null && !response.dataChunks().isEmpty()) {
-                ReplayData.IntegrityReport integrityReport = replayData.loadFromProtocolChunks(
-                    response.dataChunks(),
-                    metadata.getDurationTicks()
-                );
-
-                if (integrityReport.hasIssues()) {
-                    player.sendMessage("§cSome moments may be missing. " + ReplayError.REPLAY_INCOMPLETE.format());
-                }
+            ReplayViewerAdapter<?, ?> adapter = TypeReplayViewerLoader.getReplayAdapters().require(protocolDescriptor.gameType());
+            if (adapter.metadataSchemaVersion() != protocolMetadata.gameMetadata().schemaVersion()) {
+                throw new IllegalArgumentException("Unsupported " + protocolDescriptor.gameType() + " replay metadata schema: "
+                        + protocolMetadata.gameMetadata().schemaVersion());
             }
+            ReplayGameMetadata gameMetadata;
+            try (ReplayDataReader reader = new ReplayDataReader(protocolMetadata.gameMetadata().payload())) {
+                gameMetadata = (ReplayGameMetadata) adapter.readMetadata(reader);
+                if (reader.available() != 0) throw new IllegalArgumentException("Trailing replay metadata payload");
+            }
+            ReplayDescriptor descriptor = new ReplayDescriptor(
+                    protocolDescriptor.replayId(), protocolDescriptor.gameId(), protocolDescriptor.gameType(), protocolDescriptor.serverType(),
+                    protocolDescriptor.serverId(), protocolDescriptor.mapName(), protocolDescriptor.mapHash(), protocolDescriptor.mapCenterX(),
+                    protocolDescriptor.mapCenterZ(), protocolDescriptor.formatVersion(), protocolDescriptor.startTime(), protocolDescriptor.endTime(),
+                    protocolDescriptor.durationTicks(), protocolDescriptor.dataSize());
+            var participants = protocolMetadata.participants().stream().map(value -> new ReplayParticipant(
+                    value.uuid(), value.entityId(), value.username(), value.textureValue(), value.textureSignature(),
+                    value.displayNameJson(), value.prefixJson(), value.suffixJson())).toList();
+            ReplayMetadata metadata = new ReplayMetadata(descriptor, participants,
+                    new ReplayGameMetadataEnvelope(protocolMetadata.gameMetadata().gameType(),
+                            protocolMetadata.gameMetadata().schemaVersion(), protocolMetadata.gameMetadata().payload()));
+            ReplayTimeline timeline = new ReplayTimeline();
+            timeline.load(response.chunks(), descriptor.durationTicks());
 
-            // Load map data
-            loadMapData(metadata.getMapHash(), instance, player);
+            loadMapData(descriptor.mapHash(), instance, player).join();
 
             // Determine spawn position - use share code if available
             Pos spawnPos;
@@ -165,24 +156,24 @@ public class PlayerJoinEvent implements HypixelEventClass {
             if (shareCode != null) {
                 ReplayShareCodec.ShareData shareData = ReplayShareCodec.decode(
                     shareCode,
-                    metadata.getMapCenterX(),
-                    metadata.getMapCenterZ()
+                        descriptor.mapCenterX(),
+                        descriptor.mapCenterZ()
                 );
                 if (shareData != null) {
                     spawnPos = shareData.position();
-                    startTick = Math.min(shareData.tick(), metadata.getDurationTicks() - 1);
+                    startTick = Math.min(shareData.tick(), Math.max(0, descriptor.durationTicks() - 1));
                     player.sendMessage("§aRestored shared replay position");
                 } else {
-                    spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
+                    spawnPos = new Pos(descriptor.mapCenterX(), 100, descriptor.mapCenterZ());
                     player.sendMessage("§eInvalid share code, using default position");
                 }
             } else {
-                spawnPos = new Pos(metadata.getMapCenterX(), 100, metadata.getMapCenterZ());
+                spawnPos = new Pos(descriptor.mapCenterX(), 100, descriptor.mapCenterZ());
             }
 
             player.teleport(spawnPos);
 
-            ReplaySession session = new ReplaySession(metadata, instance, replayData);
+            ReplaySession session = new ReplaySession(metadata, gameMetadata, adapter, instance, timeline);
             session.addViewer(player);
             TypeReplayViewerLoader.registerSession(player.getUuid(), session);
 
@@ -193,13 +184,14 @@ public class PlayerJoinEvent implements HypixelEventClass {
             session.play();
         } catch (Exception e) {
             Logger.error(e, "Failed to load replay {}", replayId);
+            player.sendMessage("§cThis replay is corrupt, incomplete, or unsupported.");
         }
     }
 
-    private void loadMapData(String mapHash, InstanceContainer instance, Player player) {
+    private CompletableFuture<Void> loadMapData(String mapHash, InstanceContainer instance, Player player) {
         if (mapHash == null || mapHash.isEmpty()) {
             Logger.warn("No map hash provided, skipping map load");
-            return;
+            return CompletableFuture.completedFuture(null);
         }
 
         try {
@@ -213,16 +205,16 @@ public class PlayerJoinEvent implements HypixelEventClass {
             if (!response.success() || !response.found()) {
                 Logger.warn("Map {} not found in replay service", mapHash);
                 player.sendMessage("§eMap data not available, using empty world.");
-                return;
+                return CompletableFuture.completedFuture(null);
             }
 
             if (response.compressedData() == null || response.compressedData().length == 0) {
                 Logger.warn("Map {} has no data", mapHash);
-                return;
+                return CompletableFuture.completedFuture(null);
             }
 
             // Deserialize and apply map
-            MapDeserializer.loadMap(instance, response.compressedData())
+            return MapDeserializer.loadMap(instance, response.compressedData())
                     .whenComplete((ignored, throwable) -> {
                         if (throwable != null) {
                             Logger.error(throwable, "Failed to load map");
@@ -234,6 +226,7 @@ public class PlayerJoinEvent implements HypixelEventClass {
         } catch (Exception e) {
             Logger.error(e, "Failed to load map {}", mapHash);
             player.sendMessage("§eFailed to load map: " + e.getMessage());
+            return CompletableFuture.failedFuture(e);
         }
     }
 }

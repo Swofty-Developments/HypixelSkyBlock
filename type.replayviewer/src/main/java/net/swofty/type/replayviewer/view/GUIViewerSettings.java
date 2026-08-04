@@ -130,6 +130,8 @@ public class GUIViewerSettings extends StatelessView {
         }
 
         ReplaySettingsUtil.applyVisualSettings(ctx.player());
+        TypeReplayViewerLoader.getSession(ctx.player().getUuid())
+                .ifPresent(session -> session.refreshViewerProjection(ctx.player()));
         if (refreshReplayHotbar) {
             TypeReplayViewerLoader.populateInventory(ctx.player());
         }
