@@ -1,6 +1,8 @@
 package net.swofty.type.bedwarsgame.events;
 
 import io.github.term4.polyp.api.event.damage.DamageAppliedEvent;
+import io.github.term4.polyp.mechanics.projectile.entities.ProjectileEntity;
+import net.minestom.server.entity.Entity;
 import net.swofty.commons.bedwars.map.BedWarsMapsConfig;
 import net.swofty.type.bedwarsgame.death.BedWarsCombatTracker;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -23,7 +25,12 @@ public class ActionGameCombatTrack implements HypixelEventClass {
             return;
         }
 
-        if (event.source() instanceof BedWarsPlayer attacker) {
+        Entity source = event.source();
+        if (source instanceof ProjectileEntity projectile) {
+            source = projectile.getShooter();
+        }
+
+        if (source instanceof BedWarsPlayer attacker && event.dealt() > 0) {
             if (!victim.equals(attacker) && !isSameTeam(victim, attacker)) {
                 BedWarsCombatTracker.recordAttack(victim, attacker);
             }

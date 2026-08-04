@@ -62,6 +62,8 @@ public class BedWarsPlayer extends HypixelPlayer implements GameParticipant {
 	@Getter
 	private long hypixelXpThisGame = 0;
 	@Getter
+	private int killsThisGame = 0;
+	@Getter
 	@Setter
 	private boolean shouldShowTrueIdentity = false;
 	@Getter

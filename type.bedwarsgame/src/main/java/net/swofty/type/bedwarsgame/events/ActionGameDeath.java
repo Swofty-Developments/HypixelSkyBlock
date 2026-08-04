@@ -19,8 +19,8 @@ import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.ScheduleUtility;
 
 import java.util.function.Consumer;
@@ -135,6 +135,7 @@ public class ActionGameDeath implements HypixelEventClass {
         BedWarsPlayer creditPlayer = result.getKillCreditPlayer();
 
         if (creditPlayer != null) {
+            creditPlayer.recordGameKill();
             BedWarsStatsRecorder.recordKill(creditPlayer, game.getGameType());
         }
 
