@@ -12,11 +12,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 import net.swofty.type.replayviewer.playback.bedwars.BedWarsViewerMetadata;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 class ReplayTablistModule extends TablistModule {
     @Override
@@ -30,7 +26,7 @@ class ReplayTablistModule extends TablistModule {
             session -> {
                 addReplayParticipants(entries, session);
             },
-            () -> entries.add(new TablistEntry(I18n.t("replays.loading"), TablistSkinRegistry.ORANGE))
+                () -> entries.add(new TablistEntry(I18n.t("replays.loading"), TablistSkinRegistry.ORANGE))
         );
 
         return entries;
