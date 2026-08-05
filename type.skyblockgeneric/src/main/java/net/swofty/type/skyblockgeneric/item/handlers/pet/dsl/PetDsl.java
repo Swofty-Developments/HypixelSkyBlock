@@ -8,8 +8,12 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -27,14 +31,7 @@ public final class PetDsl {
         private Function<SkyBlockItem, List<String>> description;
         private String unimplementedReason;
         private final List<StatisticsFragment> statistics = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.Kill>> kills = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.FallDamage>> fallDamages = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.DamagedByMob>> damagedByMobs = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.XpGain>> xpGains = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.Jump>> jumps = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.PetInteract>> petInteracts = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.FishCaught>> fishCaughts = new ArrayList<>();
-        private final List<ConditionalHandler<PetEvent.CropHarvested>> cropHarvests = new ArrayList<>();
+        private final Map<Class<?>, List<ConditionalHandler<?>>> eventHandlers = new HashMap<>();
 
         private Builder(String name) {
             this.name = Objects.requireNonNull(name, "name");
@@ -55,98 +52,48 @@ public final class PetDsl {
         }
 
         public Builder statistics(Predicate<PetStatisticsContext> condition, Function<PetStatisticsContext, ItemStatistics> action) {
-            statistics.add(new StatisticsFragment(
-                    Objects.requireNonNull(condition, "condition"),
-                    Objects.requireNonNull(action, "action")
-            ));
+            statistics.add(StatisticsFragment.plain(condition, action));
             return this;
         }
 
-        public Builder onKill(Consumer<PetEvent.Kill> action) {
-            return onKill(_ -> true, action);
+        public Builder statistics(BiFunction<AbilityRuntime, PetStatisticsContext, ItemStatistics> action) {
+            return statistics(_ -> true, action);
         }
 
-        public Builder onKill(Predicate<PetEvent.Kill> condition, Consumer<PetEvent.Kill> action) {
-            kills.add(ConditionalHandler.of(condition, action));
+        public Builder statistics(Predicate<PetStatisticsContext> condition, BiFunction<AbilityRuntime, PetStatisticsContext, ItemStatistics> action) {
+            statistics.add(StatisticsFragment.stateful(condition, action));
             return this;
         }
 
-        public Builder onFallDamage(Consumer<PetEvent.FallDamage> action) {
-            return onFallDamage(_ -> true, action);
+        public <E extends PetEvent> Builder on(Class<E> type, Consumer<E> action) {
+            return on(type, _ -> true, action);
         }
 
-        public Builder onFallDamage(Predicate<PetEvent.FallDamage> condition, Consumer<PetEvent.FallDamage> action) {
-            fallDamages.add(ConditionalHandler.of(condition, action));
+        public <E extends PetEvent> Builder on(Class<E> type, Predicate<E> condition, Consumer<E> action) {
+            eventHandlers.computeIfAbsent(type, _ -> new ArrayList<>())
+                    .add(ConditionalHandler.stateless(condition, action));
             return this;
         }
 
-        public Builder onDamagedByMob(Consumer<PetEvent.DamagedByMob> action) {
-            return onDamagedByMob(_ -> true, action);
+        public <E extends PetEvent> Builder on(Class<E> type, BiConsumer<AbilityRuntime, E> action) {
+            return on(type, _ -> true, action);
         }
 
-        public Builder onDamagedByMob(Predicate<PetEvent.DamagedByMob> condition, Consumer<PetEvent.DamagedByMob> action) {
-            damagedByMobs.add(ConditionalHandler.of(condition, action));
-            return this;
-        }
-
-        public Builder onXpGain(Consumer<PetEvent.XpGain> action) {
-            return onXpGain(_ -> true, action);
-        }
-
-        public Builder onXpGain(Predicate<PetEvent.XpGain> condition, Consumer<PetEvent.XpGain> action) {
-            xpGains.add(ConditionalHandler.of(condition, action));
-            return this;
-        }
-
-        public Builder onJump(Consumer<PetEvent.Jump> action) {
-            return onJump(_ -> true, action);
-        }
-
-        public Builder onJump(Predicate<PetEvent.Jump> condition, Consumer<PetEvent.Jump> action) {
-            jumps.add(ConditionalHandler.of(condition, action));
-            return this;
-        }
-
-        public Builder onPetInteract(Consumer<PetEvent.PetInteract> action) {
-            return onPetInteract(_ -> true, action);
-        }
-
-        public Builder onPetInteract(Predicate<PetEvent.PetInteract> condition, Consumer<PetEvent.PetInteract> action) {
-            petInteracts.add(ConditionalHandler.of(condition, action));
-            return this;
-        }
-
-        public Builder onFishCaught(Consumer<PetEvent.FishCaught> action) {
-            return onFishCaught(_ -> true, action);
-        }
-
-        public Builder onFishCaught(Predicate<PetEvent.FishCaught> condition, Consumer<PetEvent.FishCaught> action) {
-            fishCaughts.add(ConditionalHandler.of(condition, action));
-            return this;
-        }
-
-        public Builder onCropHarvested(Consumer<PetEvent.CropHarvested> action) {
-            return onCropHarvested(_ -> true, action);
-        }
-
-        public Builder onCropHarvested(Predicate<PetEvent.CropHarvested> condition, Consumer<PetEvent.CropHarvested> action) {
-            cropHarvests.add(ConditionalHandler.of(condition, action));
+        public <E extends PetEvent> Builder on(Class<E> type, Predicate<E> condition, BiConsumer<AbilityRuntime, E> action) {
+            eventHandlers.computeIfAbsent(type, _ -> new ArrayList<>())
+                    .add(ConditionalHandler.stateful(condition, action));
             return this;
         }
 
         public PetAbility build() {
+            Map<Class<?>, List<ConditionalHandler<?>>> handlers = new HashMap<>();
+            eventHandlers.forEach((type, list) -> handlers.put(type, List.copyOf(list)));
+
             return new BuiltAbility(
                     name,
                     Objects.requireNonNull(description, "description must be set"),
                     List.copyOf(statistics),
-                    List.copyOf(kills),
-                    List.copyOf(fallDamages),
-                    List.copyOf(damagedByMobs),
-                    List.copyOf(xpGains),
-                    List.copyOf(jumps),
-                    List.copyOf(petInteracts),
-                    List.copyOf(fishCaughts),
-                    List.copyOf(cropHarvests),
+                    handlers,
                     unimplementedReason
             );
         }
@@ -156,14 +103,7 @@ public final class PetDsl {
             String name,
             Function<SkyBlockItem, List<String>> description,
             List<StatisticsFragment> statistics,
-            List<ConditionalHandler<PetEvent.Kill>> kills,
-            List<ConditionalHandler<PetEvent.FallDamage>> fallDamages,
-            List<ConditionalHandler<PetEvent.DamagedByMob>> damagedByMobs,
-            List<ConditionalHandler<PetEvent.XpGain>> xpGains,
-            List<ConditionalHandler<PetEvent.Jump>> jumps,
-            List<ConditionalHandler<PetEvent.PetInteract>> petInteracts,
-            List<ConditionalHandler<PetEvent.FishCaught>> fishCaughts,
-            List<ConditionalHandler<PetEvent.CropHarvested>> cropHarvests,
+            Map<Class<?>, List<ConditionalHandler<?>>> eventHandlers,
             @Nullable String unimplementedReason
     ) implements PetAbility {
         @Override
@@ -184,50 +124,90 @@ public final class PetDsl {
 
         @Override
         public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
-            return statisticsFor(new PetStatisticsContext(player, pet), statistics);
+            return statisticsFor(this, new PetStatisticsContext(player, pet), statistics);
         }
 
         @Override
         public void onEvent(PetEvent event) {
-            switch (event) {
-                case PetEvent.Kill kill -> runConditional(kills, kill);
-                case PetEvent.FallDamage fallDamage -> runConditional(fallDamages, fallDamage);
-                case PetEvent.DamagedByMob damagedByMob -> runConditional(damagedByMobs, damagedByMob);
-                case PetEvent.XpGain xpGain -> runConditional(xpGains, xpGain);
-                case PetEvent.Jump jump -> runConditional(jumps, jump);
-                case PetEvent.PetInteract petInteract -> runConditional(petInteracts, petInteract);
-                case PetEvent.FishCaught fishCaught -> runConditional(fishCaughts, fishCaught);
-                case PetEvent.CropHarvested cropHarvested -> runConditional(cropHarvests, cropHarvested);
+            List<ConditionalHandler<?>> handlers = eventHandlers.get(event.getClass());
+            if (handlers == null) return;
+
+            for (ConditionalHandler<?> raw : handlers) {
+                ConditionalHandler<PetEvent> handler = cast(raw);
+                if (!handler.condition().test(event)) continue;
+
+                if (handler.runtimeAction() == null) {
+                    handler.action().accept(event);
+                } else {
+                    AbilityRuntime runtime = event.player().getPetData().getAbilityRuntime(this);
+                    handler.runtimeAction().accept(runtime, event);
+                }
             }
+        }
+
+        @SuppressWarnings("unchecked")
+        private static ConditionalHandler<PetEvent> cast(ConditionalHandler<?> handler) {
+            return (ConditionalHandler<PetEvent>) handler;
         }
     }
 
-    private static ItemStatistics statisticsFor(PetStatisticsContext context, List<StatisticsFragment> statistics) {
+    private static ItemStatistics statisticsFor(PetAbility ability, PetStatisticsContext context, List<StatisticsFragment> statistics) {
         ItemStatistics result = null;
         for (StatisticsFragment fragment : statistics) {
             if (!fragment.condition().test(context)) continue;
 
-            ItemStatistics fragmentStatistics = fragment.action().apply(context);
+            ItemStatistics fragmentStatistics;
+            if (fragment.runtimeAction() == null) {
+                fragmentStatistics = fragment.action().apply(context);
+            } else {
+                AbilityRuntime runtime = context.player().getPetData().getAbilityRuntime(ability);
+                fragmentStatistics = fragment.runtimeAction().apply(runtime, context);
+            }
             if (fragmentStatistics == null) continue;
             result = result == null ? fragmentStatistics : ItemStatistics.add(result, fragmentStatistics);
         }
         return result == null ? ItemStatistics.empty() : result;
     }
 
-    private static <E> void runConditional(List<ConditionalHandler<E>> handlers, E event) {
-        for (ConditionalHandler<E> handler : handlers) {
-            if (handler.condition().test(event)) handler.action().accept(event);
+    private record StatisticsFragment(
+            Predicate<PetStatisticsContext> condition,
+            @Nullable Function<PetStatisticsContext, ItemStatistics> action,
+            @Nullable BiFunction<AbilityRuntime, PetStatisticsContext, ItemStatistics> runtimeAction) {
+
+        private static StatisticsFragment plain(Predicate<PetStatisticsContext> condition, Function<PetStatisticsContext, ItemStatistics> action) {
+            return new StatisticsFragment(
+                    Objects.requireNonNull(condition, "condition"),
+                    Objects.requireNonNull(action, "action"),
+                    null
+            );
+        }
+
+        private static StatisticsFragment stateful(Predicate<PetStatisticsContext> condition, BiFunction<AbilityRuntime, PetStatisticsContext, ItemStatistics> action) {
+            return new StatisticsFragment(
+                    Objects.requireNonNull(condition, "condition"),
+                    null,
+                    Objects.requireNonNull(action, "action")
+            );
         }
     }
 
-    private record StatisticsFragment(Predicate<PetStatisticsContext> condition,
-            Function<PetStatisticsContext, ItemStatistics> action) {
-    }
+    private record ConditionalHandler<E extends PetEvent>(
+            Predicate<E> condition,
+            @Nullable Consumer<E> action,
+            @Nullable BiConsumer<AbilityRuntime, E> runtimeAction) {
 
-    private record ConditionalHandler<E>(Predicate<E> condition, Consumer<E> action) {
-        private static <E> ConditionalHandler<E> of(Predicate<E> condition, Consumer<E> action) {
+        private static <E extends PetEvent> ConditionalHandler<E> stateless(Predicate<E> condition, Consumer<E> action) {
             return new ConditionalHandler<>(
                     Objects.requireNonNull(condition, "condition"),
+                    Objects.requireNonNull(action, "action"),
+                    null
+            );
+        }
+
+        private static <E extends PetEvent> ConditionalHandler<E> stateful(Predicate<E> condition, BiConsumer<AbilityRuntime, E> action) {
+            return new ConditionalHandler<>(
+                    Objects.requireNonNull(condition, "condition"),
+                    null,
                     Objects.requireNonNull(action, "action")
             );
         }

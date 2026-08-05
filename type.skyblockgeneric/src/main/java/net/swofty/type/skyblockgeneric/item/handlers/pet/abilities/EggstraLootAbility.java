@@ -35,7 +35,7 @@ public final class EggstraLootAbility {
     public static PetAbility create() {
         return PetDsl.ability("Eggstra Loot")
                 .description(EggstraLootAbility::descriptionFor)
-                .onKill(
+                .on(PetEvent.Kill.class,
                         context -> context.mob().getEntityType() == EntityType.CHICKEN,
                         context -> dropItemForPlayer(
                                 context.player(),
@@ -44,7 +44,7 @@ public final class EggstraLootAbility {
                                 context.mob()
                         )
                 )
-                .onKill(
+                .on(PetEvent.Kill.class,
                         context -> ANIMALS.contains(context.mob().getEntityType()),
                         EggstraLootAbility::dropExtraLoot
                 )

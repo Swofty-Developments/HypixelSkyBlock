@@ -4,6 +4,7 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public final class LightFeetAbility {
     public static PetAbility create() {
         return PetDsl.ability("Light Feet")
                 .description(LightFeetAbility::descriptionFor)
-                .onFallDamage(context -> context.damage(
+                .on(PetEvent.FallDamage.class, context -> context.damage(
                         context.damage() * (1 - reductionFor(context.pet()) / 100)))
                 .build();
     }

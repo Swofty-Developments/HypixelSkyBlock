@@ -22,7 +22,7 @@ public final class HoneyHarvesterAbility {
     public static PetAbility create() {
         return PetDsl.ability("Honey Harvester")
                 .description(HoneyHarvesterAbility::descriptionFor)
-                .onCropHarvested(HoneyHarvesterAbility::onCropHarvested)
+                .on(PetEvent.CropHarvested.class, HoneyHarvesterAbility::onCropHarvested)
                 .unimplemented("no game hook for CropHarvested yet")
                 .build();
     }

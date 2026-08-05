@@ -11,6 +11,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import org.jetbrains.annotations.Nullable;
 
 public sealed interface PetEvent {
+    SkyBlockPlayer player();
+
     record Kill(SkyBlockPlayer player, SkyBlockItem pet, SkyBlockMob mob) implements PetEvent {
     }
 
