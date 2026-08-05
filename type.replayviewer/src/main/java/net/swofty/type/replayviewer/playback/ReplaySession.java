@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.title.Title;
 import net.minestom.server.MinecraftServer;
@@ -23,6 +24,7 @@ import net.swofty.type.game.replay.api.ReplayScoreboard;
 import net.swofty.type.game.replay.api.ReplayViewerAdapter;
 import net.swofty.type.game.replay.model.ReplayMetadata;
 import net.swofty.type.game.replay.model.ReplayParticipant;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.generic.utility.ScheduleUtility;
 import net.swofty.type.replayviewer.TypeReplayViewerLoader;
@@ -179,7 +181,8 @@ public class ReplaySession implements ReplayPlaybackContext {
             if (entity instanceof ReplayPlayerEntity playerEntity) {
                 if (viewerUuid.equals(playerEntity.getActualUuid())) {
                     viewer.teleport(playerEntity.getPosition());
-                    viewer.sendMessage("§aTeleporting you to " + playerEntity.getActualUuid());
+                    viewer.sendMessage(I18n.t("replays.teleported_to_player",
+                            Argument.string("player", playerEntity.getActualUuid().toString())));
                     applyTeamGlow(viewer, entity, entityId);
                     return;
                 }
@@ -259,7 +262,8 @@ public class ReplaySession implements ReplayPlaybackContext {
     public void setPlaybackSpeed(float speed) {
         playback.speed(speed);
         for (Player viewer : viewers) {
-            viewer.sendMessage(Component.text("Speed: " + getPlaybackSpeed() + "x", NamedTextColor.AQUA));
+            viewer.sendMessage(I18n.t("replays.playback_speed",
+                    Argument.string("speed", String.valueOf(getPlaybackSpeed()))));
         }
     }
 
@@ -337,13 +341,14 @@ public class ReplaySession implements ReplayPlaybackContext {
     }
 
     private void updateActionBar() {
-        Component actionBar = Component.text()
-                .append(Component.text(isPlaying() ? "§aPlaying" : "§cPaused"))
-                .append(Component.text("    "))
-                .append(Component.text(getFormattedTime() + " / " + getFormattedTotalTime(), NamedTextColor.YELLOW))
-                .append(Component.text("    "))
-                .append(Component.text(String.format("%.1fx", getPlaybackSpeed()), NamedTextColor.GOLD))
-                .build();
+        Component status = I18n.t(isPlaying() ? "replays.playing" : "replays.paused")
+                .color(isPlaying() ? NamedTextColor.GREEN : NamedTextColor.RED);
+        Component actionBar = I18n.t("replays.playback_status",
+                Argument.component("status", status),
+                Argument.component("time", Component.text(
+                        getFormattedTime() + " / " + getFormattedTotalTime(), NamedTextColor.YELLOW)),
+                Argument.component("speed", Component.text(
+                        String.format("%.1fx", getPlaybackSpeed()), NamedTextColor.GOLD)));
         for (Player viewer : viewers) {
             viewer.sendActionBar(actionBar);
         }
@@ -445,8 +450,8 @@ public class ReplaySession implements ReplayPlaybackContext {
     private void onReplayEnd() {
         pause();
         Title title = Title.title(
-                Component.text("Replay Ended", NamedTextColor.GOLD),
-                Component.text("Use /replay restart to watch again", NamedTextColor.GRAY),
+                I18n.t("replays.replay_ended"),
+                I18n.t("replays.replay_end_instruction"),
                 Title.Times.times(Duration.ofMillis(200), Duration.ofSeconds(3), Duration.ofMillis(500))
         );
         for (Player viewer : viewers) {
@@ -718,7 +723,7 @@ public class ReplaySession implements ReplayPlaybackContext {
         pause();
         Logger.error(exception, "Replay playback stopped: replay={}, gameType={}, version={}, tick={}",
                 replayId, metadata.descriptor().gameType(), metadata.descriptor().formatVersion(), tick);
-        viewers.forEach(viewer -> viewer.sendMessage(Component.text("Replay playback stopped because the recording is corrupt.", NamedTextColor.RED)));
+        viewers.forEach(viewer -> viewer.sendMessage(I18n.t("replays.playback_corrupt")));
     }
 
 }

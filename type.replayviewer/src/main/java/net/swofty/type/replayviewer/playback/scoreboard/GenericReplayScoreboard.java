@@ -2,11 +2,12 @@ package net.swofty.type.replayviewer.playback.scoreboard;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.translation.Argument;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 import net.swofty.commons.bedwars.BedWarsGameType;
 import net.swofty.type.generic.HypixelConst;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +58,7 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
 
     @Override
     public Component getTitle() {
-        return Component.text("REPLAY", NamedTextColor.YELLOW, TextDecoration.BOLD);
+        return I18n.t("replays.replay_scoreboard_title");
     }
 
     @Override
@@ -65,25 +66,29 @@ public class GenericReplayScoreboard implements ReplayScoreboard {
         List<Component> lines = new ArrayList<>();
         lines.add(Component.text(new SimpleDateFormat("MM/dd/yyyy").format(new Date()), NamedTextColor.GRAY)
                 .appendSpace().appendSpace().append(Component.text(HypixelConst.getServerName(), NamedTextColor.DARK_GRAY)));
-        lines.add(Component.text("Replay from " + session.getMetadata().descriptor().serverId(), NamedTextColor.GRAY));
+        lines.add(I18n.t("replays.replay_scoreboard_from",
+                Argument.component("server", Component.text(session.getMetadata().descriptor().serverId(), NamedTextColor.GRAY))));
 
         lines.add(Component.empty());
 
-        lines.add(Component.text("Date: ", NamedTextColor.WHITE).append(Component.text(new SimpleDateFormat("MM/dd/yyyy").format(new Date(session.getMetadata().descriptor().startTime())), NamedTextColor.GREEN)));
-        lines.add(Component.text("Time: ", NamedTextColor.WHITE).append(Component.text(new SimpleDateFormat("HH:mm").format(new Date(session.getMetadata().descriptor().startTime())), NamedTextColor.GREEN)).appendSpace().append(
-                Component.text("(EST)", NamedTextColor.GREEN)
-        ));
+        lines.add(I18n.t("replays.date").color(NamedTextColor.WHITE)
+                .append(Component.text(new SimpleDateFormat("MM/dd/yyyy").format(new Date(session.getMetadata().descriptor().startTime())), NamedTextColor.GREEN)));
+        lines.add(I18n.t("replays.time").color(NamedTextColor.WHITE)
+                .append(Component.text(new SimpleDateFormat("HH:mm").format(new Date(session.getMetadata().descriptor().startTime())), NamedTextColor.GREEN))
+                .appendSpace().append(I18n.t("replays.est").color(NamedTextColor.GREEN)));
 
         lines.add(Component.empty());
 
-        lines.add(Component.text("Game: ", NamedTextColor.WHITE).append(Component.text("BedWars", NamedTextColor.GREEN)));
-        lines.add(Component.text("Mode: ", NamedTextColor.WHITE)
+        lines.add(I18n.t("replays.game").color(NamedTextColor.WHITE)
+                .append(I18n.t("replays.bedwars").color(NamedTextColor.GREEN)));
+        lines.add(I18n.t("replays.mode").color(NamedTextColor.WHITE)
                 .append(Component.text(formatMode(session.gameModeId()), NamedTextColor.GREEN)));
 
         lines.add(Component.empty());
 
-        lines.add(Component.text("Map: ", NamedTextColor.WHITE).append(Component.text(session.getMetadata().descriptor().mapName(), NamedTextColor.GREEN)));
-        lines.add(Component.text("www.hypixel.net", NamedTextColor.YELLOW));
+        lines.add(I18n.t("replays.map").color(NamedTextColor.WHITE)
+                .append(Component.text(session.getMetadata().descriptor().mapName(), NamedTextColor.GREEN)));
+        lines.add(I18n.t("replays.website"));
 
         return lines;
     }

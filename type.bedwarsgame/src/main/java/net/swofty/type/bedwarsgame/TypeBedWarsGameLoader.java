@@ -361,6 +361,7 @@ public class TypeBedWarsGameLoader implements HypixelTypeLoader {
                         .breakRule((block, position, ignored) -> Boolean.TRUE.equals(block.getTag(PLAYER_PLACED_TAG)))
                         .build())
                 .build();
+        polyp.profiles().setGlobal(MechanicsKeys.EXPLOSION, explosionConfig);
         explosions = ExplosionSystem.install(polyp, explosionConfig);
     }
 
