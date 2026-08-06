@@ -23,6 +23,8 @@ import net.swofty.type.generic.event.HypixelEventClass;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.utility.ScheduleUtility;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class ActionGameDeath implements HypixelEventClass {
@@ -133,8 +135,21 @@ public class ActionGameDeath implements HypixelEventClass {
             game.getRespawnHandler().startRespawn(player);
         } else {
             // Final kill if the bed doesn't exist
+            Map<Integer, ItemStack> enderChest = game.getEnderChests().remove(player.getUuid());
+            List<ItemStack> enderChestItems = enderChest == null
+                ? List.of()
+                : enderChest.values().stream()
+                    .filter(item -> item != null && !item.isAir())
+                    .toList();
             player.getInventory().clear();
             game.onPlayerEliminated(player);
+            if (deathResult.isFinalKill() && !enderChestItems.isEmpty()) {
+                ScheduleUtility.nextTick(() -> {
+                    if (game.getState() == GameState.IN_PROGRESS) {
+                        game.getGeneratorManager().dropItemsAtTeamGenerator(teamKey, enderChestItems);
+                    }
+                });
+            }
         }
     }
 

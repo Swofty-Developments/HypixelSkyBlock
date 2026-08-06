@@ -365,6 +365,23 @@ public class BedWarsGeneratorManager {
         }
     }
 
+    public void dropItemsAtTeamGenerator(TeamKey teamKey, Collection<ItemStack> items) {
+        if (game.getState() != GameState.IN_PROGRESS || teamKey == null || items.isEmpty()) return;
+
+        MapTeam team = game.getMapEntry().getConfiguration().getTeams().get(teamKey);
+        if (team == null || team.getGenerator() == null) return;
+
+        HypixelPosition generator = team.getGenerator();
+        Pos position = new Pos(generator.x(), generator.y(), generator.z());
+        for (ItemStack item : items) {
+            if (item == null || item.isAir()) continue;
+
+            ItemEntity entity = new ItemEntity(item);
+            entity.setPickupDelay(Duration.ofMillis(500));
+            entity.setInstance(game.getInstance(), position);
+        }
+    }
+
     private void spawnItem(Material material, int amount, Pos position) {
         spawnItem(ItemStack.of(material), amount, position);
     }
