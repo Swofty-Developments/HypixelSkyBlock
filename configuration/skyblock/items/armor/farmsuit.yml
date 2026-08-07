@@ -1,6 +1,7 @@
 items:
   - id: FARM_SUIT_HELMET
     material: leather_helmet
+    name: "Farm Suit Helmet"
     rarity: COMMON
     default_statistics:
       defense: 15.0
@@ -36,6 +37,7 @@ items:
 
   - id: FARM_SUIT_CHESTPLATE
     material: leather_chestplate
+    name: "Farm Suit Chestplate"
     rarity: COMMON
     default_statistics:
       defense: 40.0
@@ -72,6 +74,7 @@ items:
 
   - id: FARM_SUIT_LEGGINGS
     material: leather_leggings
+    name: "Farm Suit Leggings"
     rarity: COMMON
     default_statistics:
       defense: 15.0
@@ -108,6 +111,7 @@ items:
 
   - id: FARM_SUIT_BOOTS
     material: leather_boots
+    name: "Farm Suit Boots"
     rarity: COMMON
     default_statistics:
       defense: 15.0

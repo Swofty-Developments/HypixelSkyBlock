@@ -172,7 +172,7 @@ public enum ItemType {
 
   AWKWARD_POTION(Material.POTION, Rarity.COMMON),
 
-  AXE_OF_THE_SHREDDED(Material.DIAMOND_AXE, Rarity.LEGENDARY),
+  AXE_OF_THE_SHREDDED(Material.DIAMOND_SWORD, Rarity.LEGENDARY),
 
   AZALEA(Material.AZALEA, Rarity.COMMON),
 
@@ -3737,6 +3737,8 @@ public enum ItemType {
   SILVERTWIST_KARAMBIT(Material.IRON_SWORD, Rarity.EPIC),
 
   SILVER_BLOBFISH(Material.PLAYER_HEAD, Rarity.COMMON),
+
+  SILVER_FANG(Material.IRON_SWORD, Rarity.RARE),
 
   SILVER_FLYFISH(Material.PLAYER_HEAD, Rarity.COMMON),
 

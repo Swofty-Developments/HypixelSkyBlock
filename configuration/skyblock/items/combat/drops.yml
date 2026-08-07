@@ -1,6 +1,7 @@
 items:
   - id: BEHEADED_HORROR
     material: player_head
+    name: "Beheaded Horror"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -12,6 +13,7 @@ items:
         recipe_item: REAPER_MASK
   - id: FOUL_FLESH
     material: charcoal
+    name: "Foul Flesh"
     rarity: RARE
     components:
       - id: SELLABLE
@@ -27,6 +29,7 @@ items:
         last_time_ms: 18000000
   - id: REVENANT_CATALYST
     material: player_head
+    name: "Revenant Catalyst"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -39,6 +42,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/zombie/catalysts/revenant_catalyst
   - id: REVENANT_FLESH
     material: rotten_flesh
+    name: "Revenant Flesh"
     rarity: UNCOMMON
     components:
       - id: SELLABLE
@@ -48,6 +52,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/zombie/revenant_flesh
   - id: REVENANT_VISCERA
     material: cooked_porkchop
+    name: "Revenant Viscera"
     rarity: RARE
     components:
       - id: SELLABLE
@@ -76,6 +81,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/zombie/revenant_viscera
   - id: SCYTHE_BLADE
     material: diamond
+    name: "Scythe Blade"
     rarity: LEGENDARY
     components:
       - id: ENCHANTED
@@ -83,6 +89,7 @@ items:
         recipe_item: REAPER_SCYTHE
   - id: SHARD_OF_THE_SHREDDED
     material: player_head
+    name: "Shard Of The Shredded"
     rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
@@ -92,6 +99,7 @@ items:
         recipe_item: AXE_OF_THE_SHREDDED
   - id: UNDEAD_CATALYST
     material: player_head
+    name: "Undead Catalyst"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -104,6 +112,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/zombie/catalysts/undead_catalyst
   - id: WARDEN_HEART
     material: player_head
+    name: "Warden Heart"
     rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
@@ -114,12 +123,14 @@ items:
   - id: ANCIENT_CLAW
     rarity: RARE
     material: FLINT
+    name: "Ancient Claw"
     components:
       - id: SELLABLE
         value: 200.0
   - id: WOLF_TOOTH
     rarity: UNCOMMON
     material: GHAST_TEAR
+    name: "Wolf Tooth"
     components:
       - id: SELLABLE
         value: 1.0
@@ -128,6 +139,7 @@ items:
   - id: SPIDER_CATALYST
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Spider Catalyst"
     components:
       - id: SELLABLE
         value: 2000.0
@@ -136,6 +148,7 @@ items:
   - id: TARANTULA_SILK
     rarity: RARE
     material: COBWEB
+    name: "Tarantula Silk"
     components:
       - id: SELLABLE
         value: 128.0
@@ -144,6 +157,7 @@ items:
   - id: TARANTULA_WEB
     rarity: UNCOMMON
     material: STRING
+    name: "Tarantula Web"
     components:
       - id: SELLABLE
         value: 1.0
@@ -152,27 +166,32 @@ items:
   - id: OVERFLUX_CAPACITOR
     rarity: EPIC
     material: QUARTZ
+    name: "Overflux Capacitor"
   - id: GRIFFIN_FEATHER
     rarity: RARE
     material: FEATHER
+    name: "Griffin Feather"
     components:
       - id: SELLABLE
         value: 5000.0
   - id: BRAIDED_GRIFFIN_FEATHER
     rarity: EPIC
     material: STRING
+    name: "Braided Griffin Feather"
     components:
       - id: SELLABLE
         value: 1000000.0
   - id: DAEDALUS_STICK
     rarity: LEGENDARY
     material: STICK
+    name: "Daedalus Stick"
     components:
       - id: SELLABLE
         value: 1000000.0
   - id: GOLDEN_TOOTH
     rarity: RARE
     material: GOLD_NUGGET
+    name: "Golden Tooth"
     components:
       - id: SELLABLE
         value: 128.0
@@ -181,9 +200,11 @@ items:
   - id: DIGESTED_MOSQUITO
     rarity: LEGENDARY
     material: ROTTEN_FLESH
+    name: "Digested Mosquito"
   - id: TOXIC_ARROW_POISON
     rarity: UNCOMMON
     material: LIME_DYE
+    name: "Toxic Arrow Poison"
     components:
       - id: SELLABLE
         value: 2000.0
@@ -192,6 +213,7 @@ items:
   - id: TWILIGHT_ARROW_POISON
     rarity: UNCOMMON
     material: PURPLE_DYE
+    name: "Twilight Arrow Poison"
     components:
       - id: SELLABLE
         value: 650.0
@@ -200,21 +222,25 @@ items:
   - id: BUNDLE_OF_MAGMA_ARROWS
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Bundle Of Magma Arrows"
   - id: BONZO_FRAGMENT
     rarity: RARE
     material: RED_MUSHROOM
+    name: "Bonzo Fragment"
     components:
       - id: SELLABLE
         value: 10000.0
   - id: FLEXBONE
     rarity: UNCOMMON
     material: BONE
+    name: "Flexbone"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/island_relevant/foraging_2/flexbone
   - id: STURDY_BONE
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Sturdy Bone"
     components:
       - id: SELLABLE
         value: 200.0
@@ -223,18 +249,21 @@ items:
   - id: DERELICT_ASHE
     rarity: UNCOMMON
     material: GUNPOWDER
+    name: "Derelict Ashe"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/blaze/tokens/derelict_ashe
   - id: SUMMONING_EYE
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Summoning Eye"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/uncategorized/summoning_eye
   - id: TESSELLATED_ENDER_PEARL
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    name: "Tessellated Ender Pearl"
     components:
       - id: SELLABLE
         value: 96000.0
@@ -243,6 +272,7 @@ items:
   - id: SCORCHED_POWER_CRYSTAL
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    name: "Scorched Power Crystal"
     components:
       - id: SELLABLE
         value: 350000.0

@@ -1,6 +1,7 @@
 items:
   - id: MINERAL_TALISMAN
     material: PLAYER_HEAD
+    name: "Mineral Talisman"
     rarity: RARE
     default_statistics:
       mining_fortune: 3
@@ -14,6 +15,7 @@ items:
 
   - id: GLOSSY_MINERAL_TALISMAN
     material: PLAYER_HEAD
+    name: "Glossy Mineral Talisman"
     rarity: EPIC
     default_statistics:
       mining_fortune: 6

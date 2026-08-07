@@ -1,6 +1,7 @@
 items:
   - id: SEAL_TALISMAN
     material: PLAYER_HEAD
+    name: "Seal Talisman"
     rarity: UNCOMMON
     default_statistics:
       sea_creature_chance: 0.5
@@ -16,6 +17,7 @@ items:
 
   - id: SEAL_RING
     material: PLAYER_HEAD
+    name: "Seal Ring"
     rarity: RARE
     default_statistics:
       sea_creature_chance: 1

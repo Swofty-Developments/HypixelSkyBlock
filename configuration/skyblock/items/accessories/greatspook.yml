@@ -1,6 +1,7 @@
 items:
   - id: GREAT_SPOOK_TALISMAN
     material: PLAYER_HEAD
+    name: "Great Spook Talisman"
     rarity: COMMON
     default_statistics:
       fear: 2
@@ -15,6 +16,7 @@ items:
         value: 0.0
   - id: GREAT_SPOOK_RING
     material: PLAYER_HEAD
+    name: "Great Spook Ring"
     rarity: UNCOMMON
     default_statistics:
       fear: 4
@@ -29,6 +31,7 @@ items:
         value: 0.0
   - id: GREAT_SPOOK_ARTIFACT
     material: PLAYER_HEAD
+    name: "Great Spook Artifact"
     rarity: RARE
     default_statistics:
       fear: 6

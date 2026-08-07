@@ -1,6 +1,7 @@
 items:
   - id: SOUL_CAMPFIRE_TALISMAN_1
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Soul Campfire Initiate Badge I
@@ -13,6 +14,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_2
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Soul Campfire Initiate Badge II
@@ -25,6 +27,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_3
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Soul Campfire Initiate Badge III
@@ -37,6 +40,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_4
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -50,6 +54,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_5
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -63,6 +68,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_6
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -76,6 +82,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_7
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -89,6 +96,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_8
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -102,6 +110,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_9
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -115,6 +124,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_10
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -128,6 +138,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_11
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -141,6 +152,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_12
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -154,6 +166,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_13
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -167,6 +180,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_14
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -180,6 +194,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_15
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -193,6 +208,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_16
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -206,6 +222,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_17
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -219,6 +236,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_18
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -232,6 +250,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_19
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -245,6 +264,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_20
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -258,6 +278,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_21
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 2
@@ -273,6 +294,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_22
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 3
@@ -288,6 +310,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_23
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 4
@@ -303,6 +326,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_24
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 5
@@ -318,6 +342,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_25
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 6
@@ -333,6 +358,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_26
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 7
@@ -348,6 +374,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_27
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 8
@@ -363,6 +390,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_28
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 9
@@ -378,6 +406,7 @@ items:
 
   - id: SOUL_CAMPFIRE_TALISMAN_29
     material: PLAYER_HEAD
+    name: "Soul Campfire Talisman"
     rarity: LEGENDARY
     default_statistics:
       mending: 10

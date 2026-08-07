@@ -1,6 +1,7 @@
 items:
   - id: GLACIAL_TALISMAN
     material: PLAYER_HEAD
+    name: "Glacial Talisman"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -12,6 +13,7 @@ items:
 
   - id: GLACIAL_RING
     material: PLAYER_HEAD
+    name: "Glacial Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -23,6 +25,7 @@ items:
 
   - id: GLACIAL_ARTIFACT
     material: PLAYER_HEAD
+    name: "Glacial Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

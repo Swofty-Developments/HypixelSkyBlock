@@ -1,6 +1,7 @@
 items:
   - id: ENCHANTED_ACACIA_LOG
     material: ACACIA_LOG
+    name: "Enchanted Acacia Log"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -11,6 +12,7 @@ items:
         value: 320
   - id: ENCHANTED_ANCIENT_CLAW
     material: FLINT
+    name: "Enchanted Ancient Claw"
     rarity: EPIC
     default_statistics: {}
     components:
@@ -21,6 +23,7 @@ items:
         value: 32000.0
   - id: ENCHANTED_BAKED_POTATO
     material: BAKED_POTATO
+    name: "Enchanted Baked Potato"
     rarity: RARE
     default_statistics: {}
     components:
@@ -31,6 +34,7 @@ items:
         value: 76800
   - id: ENCHANTED_BIRCH_LOG
     material: BIRCH_LOG
+    name: "Enchanted Birch Log"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -41,6 +45,7 @@ items:
         value: 320
   - id: ENCHANTED_BLAZE_POWDER
     material: BLAZE_POWDER
+    name: "Enchanted Blaze Powder"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -57,6 +62,7 @@ items:
         alchemy_xp: 500
   - id: ENCHANTED_BLAZE_ROD
     material: BLAZE_ROD
+    name: "Enchanted Blaze Rod"
     rarity: RARE
     default_statistics: {}
     components:
@@ -73,6 +79,7 @@ items:
         alchemy_xp: 23000
   - id: ENCHANTED_BONE
     material: BONE
+    name: "Enchanted Bone"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -83,6 +90,7 @@ items:
         value: 320
   - id: ENCHANTED_BONE_BLOCK
     material: BONE_BLOCK
+    name: "Enchanted Bone Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -93,6 +101,7 @@ items:
         value: 51200.0
   - id: ENCHANTED_BONE_MEAL
     material: BONE_MEAL
+    name: "Enchanted Bone Meal"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -103,6 +112,7 @@ items:
         value: 1
   - id: ENCHANTED_BOOKSHELF
     material: BOOKSHELF
+    name: "Enchanted Bookshelf"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -113,6 +123,7 @@ items:
         value: 2700
   - id: ENCHANTED_BREAD
     material: BREAD
+    name: "Enchanted Bread"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -126,6 +137,7 @@ items:
         value: 60
   - id: ENCHANTED_BROWN_MUSHROOM
     material: BROWN_MUSHROOM
+    name: "Enchanted Brown Mushroom"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -136,6 +148,7 @@ items:
         value: 1600
   - id: ENCHANTED_BROWN_MUSHROOM_BLOCK
     material: BROWN_MUSHROOM_BLOCK
+    name: "Enchanted Brown Mushroom Block"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -146,6 +159,7 @@ items:
         value: 51200
   - id: ENCHANTED_CACTUS
     material: CACTUS
+    name: "Enchanted Cactus"
     rarity: RARE
     default_statistics: {}
     components:
@@ -162,6 +176,7 @@ items:
         alchemy_xp: 500
   - id: ENCHANTED_CACTUS_GREEN
     material: GREEN_DYE
+    name: "Enchanted Cactus Green"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -178,6 +193,7 @@ items:
         alchemy_xp: 250
   - id: ENCHANTED_CARROT
     material: CARROT
+    name: "Enchanted Carrot"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -188,6 +204,7 @@ items:
         value: 480
   - id: ENCHANTED_CAKE
     material: CAKE
+    name: "Enchanted Cake"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -225,6 +242,7 @@ items:
         alchemy_xp: 400
   - id: ENCHANTED_CHARCOAL
     material: CHARCOAL
+    name: "Enchanted Charcoal"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -256,6 +274,7 @@ items:
         value: 192.0
   - id: ENCHANTED_CLAY_BALL
     material: CLAY_BALL
+    name: "Enchanted Clay Ball"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -266,6 +285,7 @@ items:
         value: 480
   - id: ENCHANTED_CLAY_BLOCK
     material: CLAY
+    name: "Enchanted Clay Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -276,6 +296,7 @@ items:
         value: 76800
   - id: ENCHANTED_TROPICAL_FISH
     material: TROPICAL_FISH
+    name: "Enchanted Tropical Fish"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -286,6 +307,7 @@ items:
         value: 3200
   - id: ENCHANTED_COAL
     material: COAL
+    name: "Enchanted Coal"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -299,6 +321,7 @@ items:
         value: 160.0
   - id: ENCHANTED_COAL_BLOCK
     material: COAL_BLOCK
+    name: "Enchanted Coal Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -309,6 +332,7 @@ items:
         value: 25600.0
   - id: ENCHANTED_COBBLESTONE
     material: COBBLESTONE
+    name: "Enchanted Cobblestone"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -319,6 +343,7 @@ items:
         value: 160
   - id: ENCHANTED_COCOA_BEANS
     material: COCOA_BEANS
+    name: "Enchanted Cocoa Beans"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -335,6 +360,7 @@ items:
         alchemy_xp: 300
   - id: ENCHANTED_COOKED_FISH
     material: COOKED_COD
+    name: "Enchanted Cooked Fish"
     rarity: RARE
     default_statistics: {}
     components:
@@ -345,6 +371,7 @@ items:
         value: 150000
   - id: ENCHANTED_COOKED_MUTTON
     material: COOKED_MUTTON
+    name: "Enchanted Cooked Mutton"
     rarity: RARE
     default_statistics: {}
     components:
@@ -361,6 +388,7 @@ items:
         alchemy_xp: 15000
   - id: ENCHANTED_COOKED_SALMON
     material: COOKED_SALMON
+    name: "Enchanted Cooked Salmon"
     rarity: RARE
     default_statistics: {}
     components:
@@ -371,6 +399,7 @@ items:
         value: 256000
   - id: ENCHANTED_COOKIE
     material: COOKIE
+    name: "Enchanted Cookie"
     rarity: RARE
     default_statistics: {}
     components:
@@ -405,6 +434,7 @@ items:
         alchemy_xp: 12000
   - id: ENCHANTED_DANDELION
     material: DANDELION
+    name: "Enchanted Dandelion"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -415,6 +445,7 @@ items:
         value: 160
   - id: ENCHANTED_DARK_OAK_LOG
     material: DARK_OAK_LOG
+    name: "Enchanted Dark Oak Log"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -425,6 +456,7 @@ items:
         value: 320
   - id: ENCHANTED_DIAMOND
     material: DIAMOND
+    name: "Enchanted Diamond"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -435,6 +467,7 @@ items:
         value: 1280
   - id: ENCHANTED_DIAMOND_BLOCK
     material: DIAMOND_BLOCK
+    name: "Enchanted Diamond Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -445,6 +478,7 @@ items:
         value: 204800
   - id: ENCHANTED_EGG
     material: EGG
+    name: "Enchanted Egg"
     rarity: RARE
     default_statistics: {}
     components:
@@ -455,6 +489,7 @@ items:
         value: 432
   - id: ENCHANTED_EMERALD
     material: EMERALD
+    name: "Enchanted Emerald"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -465,6 +500,7 @@ items:
         value: 640.0
   - id: ENCHANTED_EMERALD_BLOCK
     material: EMERALD_BLOCK
+    name: "Enchanted Emerald Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -475,6 +511,7 @@ items:
         value: 102400.0
   - id: ENCHANTED_ENDER_PEARL
     material: ENDER_PEARL
+    name: "Enchanted Ender Pearl"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -485,6 +522,7 @@ items:
         value: 140
   - id: ENCHANTED_END_STONE
     material: END_STONE
+    name: "Enchanted End Stone"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -495,6 +533,7 @@ items:
         value: 320
   - id: ENCHANTED_EYE_OF_ENDER
     material: ENDER_EYE
+    name: "Enchanted Eye Of Ender"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -505,6 +544,7 @@ items:
         value: 3520
   - id: ENCHANTED_FEATHER
     material: FEATHER
+    name: "Enchanted Feather"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -515,6 +555,7 @@ items:
         value: 480
   - id: ENCHANTED_FERMENTED_SPIDER_EYE
     material: FERMENTED_SPIDER_EYE
+    name: "Enchanted Fermented Spider Eye"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -531,6 +572,7 @@ items:
         alchemy_xp: 15000
   - id: ENCHANTED_FIREWORK_ROCKET
     material: FIREWORK_ROCKET
+    name: "Enchanted Firework Rocket"
     rarity: RARE
     default_statistics: {}
     components:
@@ -559,6 +601,7 @@ items:
         value: 41000
   - id: ENCHANTED_FLINT
     material: FLINT
+    name: "Enchanted Flint"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -569,6 +612,7 @@ items:
         value: 640
   - id: ENCHANTED_GHAST_TEAR
     material: GHAST_TEAR
+    name: "Enchanted Ghast Tear"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -585,6 +629,7 @@ items:
         alchemy_xp: 100
   - id: ENCHANTED_GLISTERING_MELON
     material: GLISTERING_MELON_SLICE
+    name: "Enchanted Glistering Melon"
     rarity: RARE
     default_statistics: {}
     components:
@@ -601,6 +646,7 @@ items:
         alchemy_xp: 500
   - id: ENCHANTED_GLOWSTONE
     material: GLOWSTONE
+    name: "Enchanted Glowstone"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -617,6 +663,7 @@ items:
         alchemy_xp: 20
   - id: ENCHANTED_GLOWSTONE_DUST
     material: GLOWSTONE_DUST
+    name: "Enchanted Glowstone Dust"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -633,6 +680,7 @@ items:
         alchemy_xp: 10
   - id: ENCHANTED_GOLD_INGOT
     material: GOLD_INGOT
+    name: "Enchanted Gold Ingot"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -649,6 +697,7 @@ items:
         alchemy_xp: 300
   - id: ENCHANTED_GOLD_BLOCK
     material: GOLD_BLOCK
+    name: "Enchanted Gold Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -665,6 +714,7 @@ items:
         alchemy_xp: 15000
   - id: ENCHANTED_GOLDEN_CARROT
     material: GOLDEN_CARROT
+    name: "Enchanted Golden Carrot"
     rarity: RARE
     default_statistics: {}
     components:
@@ -675,6 +725,7 @@ items:
         value: 76800.0
   - id: ENCHANTED_GRILLED_PORK
     material: COOKED_PORKCHOP
+    name: "Enchanted Grilled Pork"
     rarity: RARE
     default_statistics: {}
     components:
@@ -685,6 +736,7 @@ items:
         value: 128000
   - id: ENCHANTED_GUNPOWDER
     material: GUNPOWDER
+    name: "Enchanted Gunpowder"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -701,6 +753,7 @@ items:
         alchemy_xp: 10
   - id: ENCHANTED_HARD_STONE
     material: STONE
+    name: "Enchanted Hard Stone"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -711,6 +764,7 @@ items:
         value: 576
   - id: ENCHANTED_HAY_BALE
     material: HAY_BLOCK
+    name: "Enchanted Hay Bale"
     rarity: RARE
     default_statistics: {}
     components:
@@ -721,6 +775,7 @@ items:
         value: 153600
   - id: ENCHANTED_WHEAT
     material: WHEAT
+    name: "Enchanted Wheat"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -731,6 +786,7 @@ items:
         value: 960
   - id: ENCHANTED_ICE
     material: ICE
+    name: "Enchanted Ice"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -741,6 +797,7 @@ items:
         value: 80
   - id: ENCHANTED_INK_SAC
     material: INK_SAC
+    name: "Enchanted Ink Sac"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -751,6 +808,7 @@ items:
         value: 160
   - id: ENCHANTED_IRON_INGOT
     material: IRON_INGOT
+    name: "Enchanted Iron Ingot"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -761,6 +819,7 @@ items:
         value: 480
   - id: ENCHANTED_IRON_BLOCK
     material: IRON_BLOCK
+    name: "Enchanted Iron Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -771,6 +830,7 @@ items:
         value: 51200.0
   - id: ENCHANTED_JUNGLE_LOG
     material: JUNGLE_LOG
+    name: "Enchanted Jungle Log"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -781,6 +841,7 @@ items:
         value: 320
   - id: ENCHANTED_LAPIS_LAZULI
     material: LAPIS_LAZULI
+    name: "Enchanted Lapis Lazuli"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -791,6 +852,7 @@ items:
         value: 160
   - id: ENCHANTED_LAPIS_LAZULI_BLOCK
     material: LAPIS_BLOCK
+    name: "Enchanted Lapis Lazuli Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -801,6 +863,7 @@ items:
         value: 25600
   - id: ENCHANTED_LEATHER
     material: LEATHER
+    name: "Enchanted Leather"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -811,6 +874,7 @@ items:
         value: 480.0
   - id: ENCHANTED_LILY_PAD
     material: LILY_PAD
+    name: "Enchanted Lily Pad"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -821,6 +885,7 @@ items:
         value: 1600
   - id: ENCHANTED_MAGMA_CREAM
     material: MAGMA_CREAM
+    name: "Enchanted Magma Cream"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -831,6 +896,7 @@ items:
         value: 1280
   - id: ENCHANTED_MELON
     material: MELON_SLICE
+    name: "Enchanted Melon"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -847,6 +913,7 @@ items:
         alchemy_xp: 250
   - id: ENCHANTED_MELON_BLOCK
     material: MELON
+    name: "Enchanted Melon Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -857,6 +924,7 @@ items:
         value: 51200
   - id: ENCHANTED_MITHRIL
     material: PRISMARINE_CRYSTALS
+    name: "Enchanted Mithril"
     rarity: RARE
     default_statistics: {}
     components:
@@ -869,6 +937,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/mithril
   - id: ENCHANTED_MUTTON
     material: MUTTON
+    name: "Enchanted Mutton"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -885,6 +954,7 @@ items:
         alchemy_xp: 300
   - id: ENCHANTED_MYCELIUM
     material: MYCELIUM
+    name: "Enchanted Mycelium"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -895,6 +965,7 @@ items:
         value: 800
   - id: ENCHANTED_NETHERRACK
     material: NETHERRACK
+    name: "Enchanted Netherrack"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -905,6 +976,7 @@ items:
         value: 160
   - id: ENCHANTED_NETHER_WART
     material: NETHER_WART
+    name: "Enchanted Nether Wart"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -915,6 +987,7 @@ items:
         value: 640
   - id: ENCHANTED_OAK_LOG
     material: OAK_LOG
+    name: "Enchanted Oak Log"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -925,6 +998,7 @@ items:
         value: 320
   - id: ENCHANTED_OBSIDIAN
     material: OBSIDIAN
+    name: "Enchanted Obsidian"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -935,6 +1009,7 @@ items:
         value: 1440
   - id: ENCHANTED_PACKED_ICE
     material: PACKED_ICE
+    name: "Enchanted Packed Ice"
     rarity: RARE
     default_statistics: {}
     components:
@@ -945,6 +1020,7 @@ items:
         value: 12800
   - id: ENCHANTED_PAPER
     material: PAPER
+    name: "Enchanted Paper"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -955,6 +1031,7 @@ items:
         value: 384
   - id: ENCHANTED_POISONOUS_POTATO
     material: POISONOUS_POTATO
+    name: "Enchanted Poisonous Potato"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -965,6 +1042,7 @@ items:
         value: 1600
   - id: ENCHANTED_POPPY
     material: POPPY
+    name: "Enchanted Poppy"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -975,6 +1053,7 @@ items:
         value: 576
   - id: ENCHANTED_PORK
     material: PORKCHOP
+    name: "Enchanted Pork"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -985,6 +1064,7 @@ items:
         value: 800
   - id: ENCHANTED_POTATO
     material: POTATO
+    name: "Enchanted Potato"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -995,6 +1075,7 @@ items:
         value: 480
   - id: ENCHANTED_PRISMARINE_CRYSTALS
     material: PRISMARINE_CRYSTALS
+    name: "Enchanted Prismarine Crystals"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1005,6 +1086,7 @@ items:
         value: 400
   - id: ENCHANTED_PRISMARINE_SHARD
     material: PRISMARINE_SHARD
+    name: "Enchanted Prismarine Shard"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1015,6 +1097,7 @@ items:
         value: 400
   - id: ENCHANTED_PUFFERFISH
     material: PUFFERFISH
+    name: "Enchanted Pufferfish"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1031,6 +1114,7 @@ items:
         alchemy_xp: 600
   - id: ENCHANTED_PUMPKIN
     material: PUMPKIN
+    name: "Enchanted Pumpkin"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1041,6 +1125,7 @@ items:
         value: 1600
   - id: ENCHANTED_QUARTZ
     material: QUARTZ
+    name: "Enchanted Quartz"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1051,6 +1136,7 @@ items:
         value: 640
   - id: ENCHANTED_QUARTZ_BLOCK
     material: QUARTZ_BLOCK
+    name: "Enchanted Quartz Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1061,6 +1147,7 @@ items:
         value: 102400
   - id: ENCHANTED_RABBIT_FOOT
     material: RABBIT_FOOT
+    name: "Enchanted Rabbit Foot"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1077,6 +1164,7 @@ items:
         alchemy_xp: 600
   - id: ENCHANTED_RABBIT_HIDE
     material: RABBIT_HIDE
+    name: "Enchanted Rabbit Hide"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1087,6 +1175,7 @@ items:
         value: 800.0
   - id: ENCHANTED_RAW_BEEF
     material: BEEF
+    name: "Enchanted Raw Beef"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1097,6 +1186,7 @@ items:
         value: 640
   - id: ENCHANTED_RAW_CHICKEN
     material: CHICKEN
+    name: "Enchanted Raw Chicken"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1107,6 +1197,7 @@ items:
         value: 640
   - id: ENCHANTED_RAW_FISH
     material: COD
+    name: "Enchanted Raw Fish"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1117,6 +1208,7 @@ items:
         value: 960
   - id: ENCHANTED_RAW_RABBIT
     material: RABBIT
+    name: "Enchanted Raw Rabbit"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1127,6 +1219,7 @@ items:
         value: 640
   - id: ENCHANTED_RAW_SALMON
     material: SALMON
+    name: "Enchanted Raw Salmon"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1137,6 +1230,7 @@ items:
         value: 1600
   - id: ENCHANTED_RED_MUSHROOM
     material: RED_MUSHROOM
+    name: "Enchanted Red Mushroom"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1147,6 +1241,7 @@ items:
         value: 1600
   - id: ENCHANTED_RED_MUSHROOM_BLOCK
     material: RED_MUSHROOM_BLOCK
+    name: "Enchanted Red Mushroom Block"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1157,6 +1252,7 @@ items:
         value: 51200
   - id: ENCHANTED_RED_SAND
     material: RED_SAND
+    name: "Enchanted Red Sand"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1167,6 +1263,7 @@ items:
         value: 800
   - id: ENCHANTED_REDSTONE
     material: REDSTONE
+    name: "Enchanted Redstone"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1183,6 +1280,7 @@ items:
         alchemy_xp: 10
   - id: ENCHANTED_REDSTONE_BLOCK
     material: REDSTONE_BLOCK
+    name: "Enchanted Redstone Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1199,6 +1297,7 @@ items:
         alchemy_xp: 20
   - id: ENCHANTED_REDSTONE_LAMP
     material: REDSTONE_LAMP
+    name: "Enchanted Redstone Lamp"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1215,6 +1314,7 @@ items:
         alchemy_xp: 30
   - id: ENCHANTED_ROTTEN_FLESH
     material: ROTTEN_FLESH
+    name: "Enchanted Rotten Flesh"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1225,6 +1325,7 @@ items:
         value: 320
   - id: ENCHANTED_SAND
     material: SAND
+    name: "Enchanted Sand"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1235,6 +1336,7 @@ items:
         value: 320
   - id: ENCHANTED_SEEDS
     material: WHEAT_SEEDS
+    name: "Enchanted Seeds"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1245,6 +1347,7 @@ items:
         value: 480
   - id: ENCHANTED_SHARK_FIN
     material: PRISMARINE_SHARD
+    name: "Enchanted Shark Fin"
     rarity: EPIC
     default_statistics: {}
     components:
@@ -1257,6 +1360,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/mayor/marina/shark_fin
   - id: ENCHANTED_SLIME_BALL
     material: SLIME_BALL
+    name: "Enchanted Slime Ball"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1267,6 +1371,7 @@ items:
         value: 800
   - id: ENCHANTED_SLIME_BLOCK
     material: SLIME_BLOCK
+    name: "Enchanted Slime Block"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1277,6 +1382,7 @@ items:
         value: 128000
   - id: ENCHANTED_SNOW_BLOCK
     material: SNOW_BLOCK
+    name: "Enchanted Snow Block"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1287,6 +1393,7 @@ items:
         value: 600
   - id: ENCHANTED_SPIDER_EYE
     material: SPIDER_EYE
+    name: "Enchanted Spider Eye"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1303,6 +1410,7 @@ items:
         alchemy_xp: 500
   - id: ENCHANTED_SPONGE
     material: SPONGE
+    name: "Enchanted Sponge"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1313,6 +1421,7 @@ items:
         value: 2000
   - id: ENCHANTED_SPRUCE_LOG
     material: SPRUCE_LOG
+    name: "Enchanted Spruce Log"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1323,6 +1432,7 @@ items:
         value: 320
   - id: ENCHANTED_STRING
     material: STRING
+    name: "Enchanted String"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1333,6 +1443,7 @@ items:
         value: 576
   - id: ENCHANTED_SUGAR
     material: SUGAR
+    name: "Enchanted Sugar"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1349,6 +1460,7 @@ items:
         alchemy_xp: 300
   - id: ENCHANTED_SUGAR_CANE
     material: SUGAR_CANE
+    name: "Enchanted Sugar Cane"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1365,6 +1477,7 @@ items:
         alchemy_xp: 15000
   - id: ENCHANTED_SULPHUR
     material: GLOWSTONE_DUST
+    name: "Enchanted Sulphur"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1377,6 +1490,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/sulphur
   - id: ENCHANTED_TITANIUM
     material: PLAYER_HEAD
+    name: "Enchanted Titanium"
     rarity: EPIC
     default_statistics: {}
     components:
@@ -1391,6 +1505,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/titanium
   - id: ENCHANTED_WET_SPONGE
     material: WET_SPONGE
+    name: "Enchanted Wet Sponge"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1401,6 +1516,7 @@ items:
         value: 80000
   - id: ENCHANTED_WOOL
     material: WHITE_WOOL
+    name: "Enchanted Wool"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1411,6 +1527,7 @@ items:
         value: 320
   - id: OMEGA_ENCHANTED_EGG
     material: ENDERMITE_SPAWN_EGG
+    name: "Omega Enchanted Egg"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1421,6 +1538,7 @@ items:
         value: 432
   - id: SUPER_ENCHANTED_EGG
     material: POLAR_BEAR_SPAWN_EGG
+    name: "Super Enchanted Egg"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1429,6 +1547,7 @@ items:
         item_id: ENCHANTED_EGG
   - id: STUFFED_CHILI_PEPPER
     material: player_head
+    name: "Stuffed Chili Pepper"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1440,6 +1559,7 @@ items:
         texture: f599f959f0ebcb1eb0f2e5852d122ca55bf5258fd4613ab50d72ad8cf5e12603
   - id: WHIPPED_MAGMA_CREAM
     material: player_head
+    name: "Whipped Magma Cream"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1454,6 +1574,7 @@ items:
   - id: ABSOLUTE_ENDER_PEARL
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Absolute Ender Pearl"
     components:
       - id: ENCHANTED
         recipe_type: COMBAT
@@ -1466,6 +1587,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/absolute_ender_pearl
   - id: ENCHANTED_MYCELIUM_CUBE
     material: player_head
+    name: "Enchanted Mycelium Cube"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1479,6 +1601,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/enchanted_mycelium_cube
   - id: ENCHANTED_RED_SAND_CUBE
     material: player_head
+    name: "Enchanted Red Sand Cube"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1492,6 +1615,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/enchanted_red_sand_cube
   - id: ENCHANTED_SULPHUR_CUBE
     material: player_head
+    name: "Enchanted Sulphur Cube"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1505,6 +1629,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/enchanted_sulphur_cube
   - id: BOX_OF_SEEDS
     material: player_head
+    name: "Box Of Seeds"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1518,6 +1643,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/box_of_seeds
   - id: MUTANT_NETHER_WART
     material: player_head
+    name: "Mutant Nether Wart"
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -1529,6 +1655,7 @@ items:
         texture: 111a3cec7aaf904212ccf93bb67a3caf3d649783ba90b8b60bb63c7687eb39f
   - id: POLISHED_PUMPKIN
     material: player_head
+    name: "Polished Pumpkin"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1542,6 +1669,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/polished_pumpkin
   - id: ENCHANTED_MOONFLOWER
     material: BLUE_ORCHID
+    name: "Enchanted Moonflower"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1552,6 +1680,7 @@ items:
         value: 640
   - id: ENCHANTED_SUNFLOWER
     material: SUNFLOWER
+    name: "Enchanted Sunflower"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1562,6 +1691,7 @@ items:
         value: 640
   - id: ENCHANTED_WILD_ROSE
     material: ROSE_BUSH
+    name: "Enchanted Wild Rose"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1572,6 +1702,7 @@ items:
         value: 640
   - id: COMPACTED_MOONFLOWER
     material: blue_orchid
+    name: "Compacted Moonflower"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1585,6 +1716,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/greenhouse/moonflower/compacted_moonflower
   - id: COMPACTED_SUNFLOWER
     material: sunflower
+    name: "Compacted Sunflower"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1598,6 +1730,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/greenhouse/sunflower/compacted_sunflower
   - id: COMPACTED_WILD_ROSE
     material: rose_bush
+    name: "Compacted Wild Rose"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -1611,6 +1744,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/greenhouse/wild_rose/compacted_wild_rose
   - id: ENCHANTED_FIG_LOG
     material: STRIPPED_SPRUCE_LOG
+    name: "Enchanted Fig Log"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1625,6 +1759,7 @@ items:
         item_model: minecraft:stripped_spruce_log
   - id: ENCHANTED_MANGROVE_LOG
     material: MANGROVE_LOG
+    name: "Enchanted Mangrove Log"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1639,6 +1774,7 @@ items:
         item_model: minecraft:mangrove_log
   - id: ENCHANTED_SEA_LUMIES
     material: SEA_PICKLE
+    name: "Enchanted Sea Lumies"
     rarity: UNCOMMON
     default_statistics: {}
     components:
@@ -1651,6 +1787,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/foraging_2/resources/sea_lumies
   - id: ENCHANTED_TENDER_WOOD
     material: player_head
+    name: "Enchanted Tender Wood"
     rarity: RARE
     default_statistics: {}
     components:
@@ -1665,6 +1802,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/foraging_2/tender_wood
   - id: ENCHANTED_VINESAP
     material: player_head
+    name: "Enchanted Vinesap"
     rarity: RARE
     default_statistics: {}
     components:

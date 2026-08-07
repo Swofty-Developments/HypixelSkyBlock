@@ -21,6 +21,7 @@ items:
 
   - id: QUARTZ_BLOCK
     material: QUARTZ_BLOCK
+    name: "Quartz Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -108,3 +109,4 @@ items:
   - id: SMOOTH_QUARTZ
     rarity: COMMON
     material: SMOOTH_QUARTZ
+    name: "Smooth Quartz"

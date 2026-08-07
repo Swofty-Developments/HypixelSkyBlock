@@ -1,6 +1,7 @@
 items:
   - id: BLUE_SHARK_TOOTH
     material: ghast_tear
+    name: "Blue Shark Tooth"
     rarity: RARE
     components:
       - id: SELLABLE
@@ -9,6 +10,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/mayor/marina/blue_shark_tooth
   - id: GREAT_WHITE_SHARK_TOOTH
     material: ghast_tear
+    name: "Great White Shark Tooth"
     rarity: LEGENDARY
     components:
       - id: TRACKED_UNIQUE
@@ -18,6 +20,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/mayor/marina/great_white_shark_tooth
   - id: NURSE_SHARK_TOOTH
     material: ghast_tear
+    name: "Nurse Shark Tooth"
     rarity: UNCOMMON
     components:
       - id: SELLABLE
@@ -26,6 +29,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/mayor/marina/nurse_shark_tooth
   - id: SHARK_FIN
     material: prismarine_shard
+    name: "Shark Fin"
     rarity: RARE
     components:
       - id: SELLABLE
@@ -34,6 +38,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/mayor/marina/shark_fin
   - id: TIGER_SHARK_TOOTH
     material: ghast_tear
+    name: "Tiger Shark Tooth"
     rarity: EPIC
     components:
       - id: SELLABLE

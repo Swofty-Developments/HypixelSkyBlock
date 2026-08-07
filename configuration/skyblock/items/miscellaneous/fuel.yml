@@ -1,6 +1,7 @@
 items:
   - id: ENCHANTED_LAVA_BUCKET
     material: lava_bucket
+    name: "Enchanted Lava Bucket"
     rarity: EPIC
     components:
       - id: SELLABLE
@@ -32,6 +33,7 @@ items:
               amount: 1
   - id: EVERBURNING_FLAME
     material: player_head
+    name: "Everburning Flame"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -71,6 +73,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/everburning_flame
   - id: MAGMA_BUCKET
     material: lava_bucket
+    name: "Magma Bucket"
     rarity: LEGENDARY
     components:
       - id: SELLABLE
@@ -100,6 +103,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/magma_bucket
   - id: PLASMA_BUCKET
     material: lava_bucket
+    name: "Plasma Bucket"
     rarity: MYTHIC
     components:
       - id: SELLABLE
@@ -129,6 +133,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/plasma_bucket
   - id: SOLAR_PANEL
     material: daylight_detector
+    name: "Solar Panel"
     rarity: UNCOMMON
     components:
       - id: MINION_FUEL
@@ -159,6 +164,7 @@ items:
               amount: 1
   - id: TASTY_CHEESE
     material: sponge
+    name: "Tasty Cheese"
     rarity: RARE
     components:
       - id: MINION_FUEL
@@ -167,6 +173,7 @@ items:
         last_time_ms: 3600000
   - id: CATALYST
     material: end_stone
+    name: "Catalyst"
     rarity: RARE
     components:
       - id: MINION_FUEL
@@ -176,6 +183,7 @@ items:
       - id: ENCHANTED
   - id: HYPER_CATALYST
     material: end_stone
+    name: "Hyper Catalyst"
     rarity: EPIC
     components:
       - id: MINION_FUEL
@@ -203,6 +211,7 @@ items:
               amount: 1
   - id: THORNY_VINES
     material: vine
+    name: "Thorny Vines"
     rarity: EPIC
     components:
       - id: MINION_FUEL
@@ -211,6 +220,7 @@ items:
       - id: ENCHANTED
   - id: DAYSWITCH
     material: sunflower
+    name: "Dayswitch"
     rarity: EPIC
     components:
       - id: MINION_FUEL
@@ -219,6 +229,7 @@ items:
       - id: ENCHANTED
   - id: NIGHTSWITCH
     material: wither_rose
+    name: "Nightswitch"
     rarity: EPIC
     components:
       - id: MINION_FUEL

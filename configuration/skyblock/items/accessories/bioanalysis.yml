@@ -1,6 +1,7 @@
 items:
   - id: BIOANALYSIS_TALISMAN
     material: PLAYER_HEAD
+    name: "Bioanalysis Talisman"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: BIOANALYSIS_RING
     material: PLAYER_HEAD
+    name: "Bioanalysis Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -27,6 +29,7 @@ items:
 
   - id: BIOANALYSIS_ARTIFACT
     material: PLAYER_HEAD
+    name: "Bioanalysis Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

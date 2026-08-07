@@ -256,6 +256,7 @@ items:
 
   - id: CHERRY_CHEST_BOAT
     material: CHERRY_CHEST_BOAT
+    name: "Cherry Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

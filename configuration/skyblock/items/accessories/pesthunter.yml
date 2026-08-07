@@ -1,6 +1,7 @@
 items:
   - id: PESTHUNTER_BADGE
     material: PLAYER_HEAD
+    name: "Pesthunter Badge"
     rarity: UNCOMMON
     default_statistics:
       bonus_pest_chance: 20
@@ -14,6 +15,7 @@ items:
 
   - id: PESTHUNTER_RING
     material: PLAYER_HEAD
+    name: "Pesthunter Ring"
     rarity: RARE
     default_statistics:
       bonus_pest_chance: 40
@@ -27,6 +29,7 @@ items:
 
   - id: PESTHUNTER_ARTIFACT
     material: PLAYER_HEAD
+    name: "Pesthunter Artifact"
     rarity: EPIC
     default_statistics:
       bonus_pest_chance: 60
@@ -40,6 +43,7 @@ items:
 
   - id: PESTHUNTER_RELIC
     material: PLAYER_HEAD
+    name: "Pesthunter Relic"
     rarity: LEGENDARY
     default_statistics:
       bonus_pest_chance: 80

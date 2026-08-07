@@ -1,6 +1,7 @@
 items:
   - id: PRESSURE_TALISMAN
     material: PLAYER_HEAD
+    name: "Pressure Talisman"
     rarity: COMMON
     default_statistics:
       pressure_resistance: 10
@@ -16,6 +17,7 @@ items:
 
   - id: PRESSURE_RING
     material: PLAYER_HEAD
+    name: "Pressure Ring"
     rarity: UNCOMMON
     default_statistics:
       pressure_resistance: 20
@@ -31,6 +33,7 @@ items:
 
   - id: PRESSURE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Pressure Artifact"
     rarity: RARE
     default_statistics:
       pressure_resistance: 30

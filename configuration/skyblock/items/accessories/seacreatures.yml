@@ -1,6 +1,7 @@
 items:
   - id: SEA_CREATURE_TALISMAN
     material: PLAYER_HEAD
+    name: "Sea Creature Talisman"
     default_statistics:
       sea_creature_chance: 0.1
     components:
@@ -31,6 +32,7 @@ items:
 
   - id: SEA_CREATURE_RING
     material: PLAYER_HEAD
+    name: "Sea Creature Ring"
     rarity: UNCOMMON
     default_statistics:
       sea_creature_chance: 0.2
@@ -68,6 +70,7 @@ items:
 
   - id: SEA_CREATURE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Sea Creature Artifact"
     rarity: RARE
     default_statistics:
       sea_creature_chance: 0.3

@@ -1,6 +1,7 @@
 items:
   - id: DARK_PURPLE_DYE
     material: player_head
+    name: "Dark Purple Dye"
     rarity: LEGENDARY
     lore:
       - "\xA77Can be applied to any vanilla Armor"
@@ -16,6 +17,7 @@ items:
         handler_id: DARK_PURPLE_DYE
   - id: MIDAS_SWORD
     material: GOLDEN_SWORD
+    name: "Midas Sword"
     rarity: LEGENDARY
     lore:
       - "\xA76Ability: Greed \xA7e\xA7lPASSIVE"
@@ -57,15 +59,18 @@ items:
   - id: BIGFOOT_LASSO
     rarity: EPIC
     material: LEAD
+    name: "Bigfoot Lasso"
   - id: WEIRD_TUBA
     rarity: RARE
     material: HOPPER
+    name: "Weird Tuba"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/wolf/weird_tuba
   - id: HAMSTER_WHEEL
     rarity: RARE
     material: OAK_TRAPDOOR
+    name: "Hamster Wheel"
     components:
       - id: MINION_FUEL
         fuel_percentage: 50.0

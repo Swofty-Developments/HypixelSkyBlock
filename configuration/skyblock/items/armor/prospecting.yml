@@ -1,6 +1,7 @@
 items:
   - id: MINER_OUTFIT_HELMET
     material: LEATHER_HELMET
+    name: "Miner Outfit Helmet"
     rarity: UNCOMMON
     default_statistics:
       defense: 15
@@ -42,6 +43,7 @@ items:
 
   - id: MINER_OUTFIT_CHESTPLATE
     material: LEATHER_CHESTPLATE
+    name: "Miner Outfit Chestplate"
     rarity: UNCOMMON
     default_statistics:
       defense: 40
@@ -84,6 +86,7 @@ items:
 
   - id: MINER_OUTFIT_LEGGINGS
     material: LEATHER_LEGGINGS
+    name: "Miner Outfit Leggings"
     rarity: UNCOMMON
     default_statistics:
       defense: 30
@@ -126,6 +129,7 @@ items:
 
   - id: MINER_OUTFIT_BOOTS
     material: LEATHER_BOOTS
+    name: "Miner Outfit Boots"
     rarity: UNCOMMON
     default_statistics:
       defense: 15

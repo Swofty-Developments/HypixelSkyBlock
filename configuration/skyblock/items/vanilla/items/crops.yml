@@ -90,6 +90,7 @@ items:
         alchemy_xp: 20
   - id: MELON_BLOCK
     material: melon
+    name: "Melon Block"
     rarity: COMMON
     components:
       - id: CUSTOM_DROP
@@ -136,6 +137,7 @@ items:
         display_name: Melon
   - id: SEEDS
     material: wheat_seeds
+    name: "Seeds"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -181,6 +183,7 @@ items:
         value: 10.0
   - id: MUSHROOM
     material: BROWN_MUSHROOM
+    name: "Mushroom"
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE

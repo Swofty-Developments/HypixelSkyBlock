@@ -1,6 +1,7 @@
 items:
   - id: SMALL_COMBAT_SACK
     material: player_head
+    name: "Small Combat Sack"
     rarity: UNCOMMON
     lore:
       - "\xA77Item pickups go directly into your"
@@ -52,6 +53,7 @@ items:
               amount: 1
   - id: MEDIUM_COMBAT_SACK
     material: player_head
+    name: "Medium Combat Sack"
     rarity: RARE
     lore:
       - "\xA77Item pickups go directly into your"
@@ -103,6 +105,7 @@ items:
               amount: 1
   - id: LARGE_COMBAT_SACK
     material: player_head
+    name: "Large Combat Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"
@@ -154,6 +157,7 @@ items:
               amount: 1
   - id: LARGE_ENCHANTED_COMBAT_SACK
     material: player_head
+    name: "Large Enchanted Combat Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"

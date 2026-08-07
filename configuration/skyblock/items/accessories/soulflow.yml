@@ -1,6 +1,7 @@
 items:
   - id: SOULFLOW_PILE
     material: PLAYER_HEAD
+    name: "Soulflow Pile"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: SOULFLOW_BATTERY
     material: PLAYER_HEAD
+    name: "Soulflow Battery"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -25,6 +27,7 @@ items:
 
   - id: SOULFLOW_SUPERCELL
     material: PLAYER_HEAD
+    name: "Soulflow Supercell"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,6 +1,7 @@
 items:
   - id: CHAIN
     material: IRON_CHAIN
+    name: "Chain"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -56,6 +57,7 @@ items:
         value: 3.0
   - id: CACTUS_GREEN
     material: green_dye
+    name: "Cactus Green"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -278,6 +280,7 @@ items:
               amount: 1
   - id: REPEATER
     material: REPEATER
+    name: "Repeater"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -305,6 +308,7 @@ items:
               amount: 1
   - id: COMPARATOR
     material: COMPARATOR
+    name: "Comparator"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -768,6 +772,7 @@ items:
               amount: 1
   - id: CHEST_MINECART
     material: CHEST_MINECART
+    name: "Chest Minecart"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -791,6 +796,7 @@ items:
               amount: 1
   - id: HOPPER_MINECART
     material: HOPPER_MINECART
+    name: "Hopper Minecart"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -814,6 +820,7 @@ items:
               amount: 1
   - id: TNT_MINECART
     material: TNT_MINECART
+    name: "Tnt Minecart"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -837,6 +844,7 @@ items:
               amount: 1
   - id: FURNACE_MINECART
     material: FURNACE_MINECART
+    name: "Furnace Minecart"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -860,6 +868,7 @@ items:
               amount: 1
   - id: TNT
     material: TNT
+    name: "Tnt"
     rarity: COMMON
     components:
       - id: SELLABLE

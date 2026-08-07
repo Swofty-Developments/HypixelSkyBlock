@@ -1,6 +1,7 @@
 items:
   - id: BURNING_KUUDRA_CORE
     material: PLAYER_HEAD
+    name: "Burning Kuudra Core"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: FIERY_KUUDRA_CORE
     material: PLAYER_HEAD
+    name: "Fiery Kuudra Core"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -27,6 +29,7 @@ items:
 
   - id: INFERNAL_KUUDRA_CORE
     material: PLAYER_HEAD
+    name: "Infernal Kuudra Core"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,12 +1,15 @@
 items:
   - id: ANCIENT_ROSE
     material: poppy
+    name: "Ancient Rose"
     rarity: COMMON
   - id: ARCHITECTS_FIRST_DRAFT
     material: paper
+    name: "Architects First Draft"
     rarity: COMMON
   - id: KISMET_FEATHER
     material: feather
+    name: "Kismet Feather"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -14,6 +17,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/bits_shop/kismet_feather
   - id: NECRONS_HANDLE
     material: stick
+    name: "Necrons Handle"
     rarity: COMMON
     components:
       - id: ENCHANTED
@@ -21,6 +25,7 @@ items:
         recipe_item: NECRONS_HANDLE
   - id: SUPERBOOM_TNT
     material: tnt
+    name: "Superboom Tnt"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -33,18 +38,21 @@ items:
   - id: JUDGEMENT_CORE
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    name: "Judgement Core"
     components:
       - id: SKULL_HEAD
         texture: 95f3726f6bfbc81f07025f1d6cbec7f8f7fa7abdf3a0a86b8197e092214860ba
   - id: ETHERWARP_CONDUIT
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Etherwarp Conduit"
     components:
       - id: SKULL_HEAD
         texture: ca70e0206f6166048441dfe08e053a6017d914f35c6b1fb0f558c50574f970d0
   - id: ETHERWARP_MERGER
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Etherwarp Merger"
     components:
       - id: SELLABLE
         value: 100000.0
@@ -53,15 +61,18 @@ items:
   - id: GLOOMLOCK_GRIMOIRE
     rarity: EPIC
     material: WRITTEN_BOOK
+    name: "Gloomlock Grimoire"
   - id: GYROKINETIC_WAND
     rarity: EPIC
     material: BLAZE_ROD
+    name: "Gyrokinetic Wand"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/support_items/gyrokinetic_wand
   - id: TRANSMISSION_TUNER
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Transmission Tuner"
     components:
       - id: SELLABLE
         value: 45000.0
@@ -70,6 +81,7 @@ items:
   - id: EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    name: "Exceedingly Rare Ender Artifact Upgrader"
     components:
       - id: SKULL_HEAD
         texture: 1259231a946987ea53141789a09496f098d6ecac412a01e0a24c906a99fdbd9a

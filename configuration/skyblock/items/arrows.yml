@@ -1,6 +1,7 @@
 items:
   - id: FLINT_ARROW
     material: ARROW
+    name: "Flint Arrow"
     rarity: COMMON
     default_statistics:
       damage: 1

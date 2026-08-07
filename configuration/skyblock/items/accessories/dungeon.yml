@@ -1,6 +1,7 @@
 items:
   - id: AUTO_RECOMBOBULATOR
     material: PLAYER_HEAD
+    name: "Auto Recombobulator"
     rarity: LEGENDARY
     components:
       - id: ACCESSORY
@@ -10,6 +11,7 @@ items:
         value: 1000.0
   - id: CATACOMBS_EXPERT_RING
     material: PLAYER_HEAD
+    name: "Catacombs Expert Ring"
     rarity: EPIC
     components:
       - id: ACCESSORY

@@ -1,6 +1,7 @@
 items:
   - id: TREASURE_TALISMAN
     material: PLAYER_HEAD
+    name: "Treasure Talisman"
     rarity: RARE
     components:
       - id: TALISMAN
@@ -10,6 +11,7 @@ items:
         value: 10000.0
   - id: TREASURE_RING
     material: PLAYER_HEAD
+    name: "Treasure Ring"
     rarity: EPIC
     components:
       - id: TALISMAN
@@ -19,6 +21,7 @@ items:
         value: 1000.0
   - id: TREASURE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Treasure Artifact"
     rarity: LEGENDARY
     components:
       - id: TALISMAN

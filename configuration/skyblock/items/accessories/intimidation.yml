@@ -1,6 +1,7 @@
 items:
   - id: INTIMIDATION_TALISMAN
     material: PLAYER_HEAD
+    name: "Intimidation Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Intimidation Talisman
@@ -13,6 +14,7 @@ items:
 
   - id: INTIMIDATION_RING
     material: PLAYER_HEAD
+    name: "Intimidation Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -24,6 +26,7 @@ items:
 
   - id: INTIMIDATION_ARTIFACT
     material: PLAYER_HEAD
+    name: "Intimidation Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -35,6 +38,7 @@ items:
 
   - id: INTIMIDATION_RELIC
     material: PLAYER_HEAD
+    name: "Intimidation Relic"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

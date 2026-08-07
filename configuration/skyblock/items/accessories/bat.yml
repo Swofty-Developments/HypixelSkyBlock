@@ -1,6 +1,7 @@
 items:
   - id: BAT_TALISMAN
     material: PLAYER_HEAD
+    name: "Bat Talisman"
     rarity: RARE
     default_statistics:
       health: 1
@@ -16,6 +17,7 @@ items:
 
   - id: BAT_RING
     material: PLAYER_HEAD
+    name: "Bat Ring"
     rarity: EPIC
     default_statistics:
       health: 3
@@ -31,6 +33,7 @@ items:
 
   - id: BAT_ARTIFACT
     material: PLAYER_HEAD
+    name: "Bat Artifact"
     rarity: LEGENDARY
     default_statistics:
       health: 5

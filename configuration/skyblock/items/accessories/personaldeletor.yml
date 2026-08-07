@@ -1,6 +1,7 @@
 items:
   - id: PERSONAL_DELETOR_4000
     material: DISPENSER
+    name: "Personal Deletor 4000"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -32,6 +33,7 @@ items:
 
   - id: PERSONAL_DELETOR_5000
     material: DISPENSER
+    name: "Personal Deletor 5000"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -63,6 +65,7 @@ items:
 
   - id: PERSONAL_DELETOR_6000
     material: DISPENSER
+    name: "Personal Deletor 6000"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -94,6 +97,7 @@ items:
 
   - id: PERSONAL_DELETOR_7000
     material: DISPENSER
+    name: "Personal Deletor 7000"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

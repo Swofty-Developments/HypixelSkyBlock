@@ -1,6 +1,7 @@
 items:
   - id: FANCY_TUXEDO_BOOTS
     material: leather_boots
+    name: "Fancy Tuxedo Boots"
     rarity: LEGENDARY
     default_statistics:
       CRITICAL_DAMAGE: 35.0
@@ -17,6 +18,7 @@ items:
         display_name: Fancy Tuxedo Oxfords
   - id: FANCY_TUXEDO_CHESTPLATE
     material: leather_chestplate
+    name: "Fancy Tuxedo Chestplate"
     rarity: LEGENDARY
     default_statistics:
       CRITICAL_DAMAGE: 80.0
@@ -32,6 +34,7 @@ items:
         display_name: Fancy Tuxedo Jacket
   - id: FANCY_TUXEDO_LEGGINGS
     material: leather_leggings
+    name: "Fancy Tuxedo Leggings"
     rarity: LEGENDARY
     default_statistics:
       CRITICAL_DAMAGE: 35.0

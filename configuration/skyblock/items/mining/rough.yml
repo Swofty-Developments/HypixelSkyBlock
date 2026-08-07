@@ -1,6 +1,7 @@
 items:
   - id: ROUGH_AMBER_GEM
     material: player_head
+    name: "Rough Amber Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -15,6 +16,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amber/rough_amber_gem
   - id: ROUGH_AMETHYST_GEM
     material: player_head
+    name: "Rough Amethyst Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -29,6 +31,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amethyst/rough_amethyst_gem
   - id: ROUGH_JADE_GEM
     material: player_head
+    name: "Rough Jade Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -43,6 +46,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jade/rough_jade_gem
   - id: ROUGH_JASPER_GEM
     material: player_head
+    name: "Rough Jasper Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -57,6 +61,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jasper/rough_jasper_gem
   - id: ROUGH_RUBY_GEM
     material: player_head
+    name: "Rough Ruby Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -71,6 +76,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/ruby/rough_ruby_gem
   - id: ROUGH_SAPPHIRE_GEM
     material: player_head
+    name: "Rough Sapphire Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -85,6 +91,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/sapphire/rough_sapphire_gem
   - id: ROUGH_TOPAZ_GEM
     material: player_head
+    name: "Rough Topaz Gem"
     rarity: COMMON
     components:
       - id: GEMSTONE_IMPL
@@ -99,6 +106,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/topaz/rough_topaz_gem
   - id: ROUGH_OPAL_GEM
     material: player_head
+    name: "Rough Opal Gem"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -113,6 +121,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/blaze/gemstones/rough_opal_gem
   - id: ROUGH_AQUAMARINE_GEM
     material: player_head
+    name: "Rough Aquamarine Gem"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -127,6 +136,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/aquamarine/rough_aquamarine_gem
   - id: ROUGH_CITRINE_GEM
     material: player_head
+    name: "Rough Citrine Gem"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -141,6 +151,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/citrine/rough_citrine_gem
   - id: ROUGH_ONYX_GEM
     material: player_head
+    name: "Rough Onyx Gem"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -155,6 +166,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/onyx/rough_onyx_gem
   - id: ROUGH_PERIDOT_GEM
     material: player_head
+    name: "Rough Peridot Gem"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME

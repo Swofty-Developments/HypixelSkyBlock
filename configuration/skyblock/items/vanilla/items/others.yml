@@ -26,15 +26,18 @@ items:
   - id: DRAGON_BREATH
     rarity: COMMON
     material: DRAGON_BREATH
+    name: "Dragon Breath"
   - id: ELDER_GUARDIAN_SPAWN_EGG
     rarity: COMMON
     material: ELDER_GUARDIAN_SPAWN_EGG
   - id: ENDER_EYE
     rarity: COMMON
     material: ENDER_EYE
+    name: "Ender Eye"
   - id: EXPERIENCE_BOTTLE
     rarity: COMMON
     material: EXPERIENCE_BOTTLE
+    name: "Experience Bottle"
   - id: FIREWORK_ROCKET
     rarity: COMMON
     material: FIREWORK_ROCKET
@@ -74,6 +77,7 @@ items:
   - id: WATER_BOTTLE
     rarity: COMMON
     material: POTION
+    name: "Water Bottle"
   - id: WATER_BUCKET
     rarity: COMMON
     material: WATER_BUCKET

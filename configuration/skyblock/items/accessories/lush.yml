@@ -1,6 +1,7 @@
 items:
   - id: LUSH_TALISMAN
     material: PLAYER_HEAD
+    name: "Lush Talisman"
     rarity: UNCOMMON
     default_statistics:
       health: 1
@@ -14,6 +15,7 @@ items:
 
   - id: LUSH_RING
     material: PLAYER_HEAD
+    name: "Lush Ring"
     rarity: RARE
     default_statistics:
       health: 3
@@ -27,6 +29,7 @@ items:
 
   - id: LUSH_ARTIFACT
     material: PLAYER_HEAD
+    name: "Lush Artifact"
     rarity: EPIC
     default_statistics:
       health: 5

@@ -246,6 +246,7 @@ items:
               amount: 1
   - id: MANGROVE_CHEST_BOAT
     material: MANGROVE_CHEST_BOAT
+    name: "Mangrove Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

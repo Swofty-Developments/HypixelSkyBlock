@@ -1,6 +1,7 @@
 items:
   - id: PERSONAL_COMPACTOR_4000
     material: DROPPER
+    name: "Personal Compactor 4000"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -33,6 +34,7 @@ items:
 
   - id: PERSONAL_COMPACTOR_5000
     material: DROPPER
+    name: "Personal Compactor 5000"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -65,6 +67,7 @@ items:
 
   - id: PERSONAL_COMPACTOR_6000
     material: DROPPER
+    name: "Personal Compactor 6000"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -97,6 +100,7 @@ items:
 
   - id: PERSONAL_COMPACTOR_7000
     material: DROPPER
+    name: "Personal Compactor 7000"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,6 +1,7 @@
 items:
   - id: CROPIE_TALISMAN
     material: PLAYER_HEAD
+    name: "Cropie Talisman"
     rarity: COMMON
     default_statistics:
       wheat_fortune: 10
@@ -16,6 +17,7 @@ items:
 
   - id: SQUASH_RING
     material: PLAYER_HEAD
+    name: "Squash Ring"
     rarity: UNCOMMON
     default_statistics:
       wheat_fortune: 20
@@ -34,6 +36,7 @@ items:
 
   - id: FERMENTO_ARTIFACT
     material: PLAYER_HEAD
+    name: "Fermento Artifact"
     rarity: RARE
     default_statistics:
       wheat_fortune: 30
@@ -55,6 +58,7 @@ items:
 
   - id: HELIANTHUS_RELIC
     material: PLAYER_HEAD
+    name: "Helianthus Relic"
     rarity: EPIC
     default_statistics:
       farming_fortune: 40

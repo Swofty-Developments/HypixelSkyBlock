@@ -35,6 +35,7 @@ items:
         value: 7.0
   - id: EYE_OF_ENDER
     material: ender_eye
+    name: "Eye Of Ender"
     rarity: COMMON
     components:
       - id: DEFAULT_CRAFTABLE
@@ -97,6 +98,7 @@ items:
         value: 2.0
   - id: SLIME_BALL
     material: slime_ball
+    name: "Slime Ball"
     rarity: COMMON
     components:
       - id: SELLABLE

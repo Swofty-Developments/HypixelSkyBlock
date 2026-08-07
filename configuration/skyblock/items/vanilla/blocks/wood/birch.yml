@@ -262,6 +262,7 @@ items:
 
   - id: BIRCH_CHEST_BOAT
     material: BIRCH_CHEST_BOAT
+    name: "Birch Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

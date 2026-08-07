@@ -1,6 +1,7 @@
 items:
   - id: BAT_PERSON_TALISMAN
     material: PLAYER_HEAD
+    name: "Bat Person Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Bat Person Talisman
@@ -11,6 +12,7 @@ items:
 
   - id: BAT_PERSON_RING
     material: PLAYER_HEAD
+    name: "Bat Person Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -22,6 +24,7 @@ items:
 
   - id: BAT_PERSON_ARTIFACT
     material: PLAYER_HEAD
+    name: "Bat Person Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,6 +1,7 @@
 items:
   - id: BLOOD_DONOR_TALISMAN
     material: PLAYER_HEAD
+    name: "Blood Donor Talisman"
     rarity: COMMON
     lore:
       - Do your part bro.
@@ -18,6 +19,7 @@ items:
 
   - id: BLOOD_DONOR_RING
     material: PLAYER_HEAD
+    name: "Blood Donor Ring"
     rarity: UNCOMMON
     lore:
       - There's like 5 liters in you.
@@ -35,6 +37,7 @@ items:
 
   - id: BLOOD_DONOR_ARTIFACT
     material: PLAYER_HEAD
+    name: "Blood Donor Artifact"
     rarity: RARE
     lore:
       - The human body produces 2-3 million red blood cells per SECOND.

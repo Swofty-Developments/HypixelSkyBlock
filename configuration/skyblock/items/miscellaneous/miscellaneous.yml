@@ -1,12 +1,14 @@
 items:
   - id: MOVE_JERRY
     material: villager_spawn_egg
+    name: "Move Jerry"
     rarity: COMMON
     components:
       - id: INTERACTABLE
         handler_id: MOVE_JERRY_INTERACT
   - id: SKYBLOCK_MENU
     material: nether_star
+    name: "Skyblock Menu"
     rarity: COMMON
     components:
       - id: INTERACTABLE
@@ -17,12 +19,14 @@ items:
   - id: AGARIMOO_TONGUE
     rarity: RARE
     material: MUTTON
+    name: "Agarimoo Tongue"
     components:
       - id: SELLABLE
         value: 5000.0
   - id: ALLIGATOR_SKIN
     rarity: EPIC
     material: GREEN_DYE
+    name: "Alligator Skin"
     components:
       - id: SELLABLE
         value: 5000.0
@@ -31,12 +35,14 @@ items:
   - id: RED_CLAW_EGG
     rarity: EPIC
     material: MOOSHROOM_SPAWN_EGG
+    name: "Red Claw Egg"
     components:
       - id: ITEM_MODEL
         item_model: minecraft:mooshroom_spawn_egg
   - id: CROCHET_TIGER_PLUSHIE
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Crochet Tiger Plushie"
     components:
       - id: SELLABLE
         value: 250000.0
@@ -45,6 +51,7 @@ items:
   - id: NULL_ATOM
     rarity: RARE
     material: OAK_BUTTON
+    name: "Null Atom"
     components:
       - id: SELLABLE
         value: 33333.0
@@ -53,18 +60,21 @@ items:
   - id: NULL_OVOID
     rarity: RARE
     material: ENDERMAN_SPAWN_EGG
+    name: "Null Ovoid"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/null_ovoid
   - id: NULL_SPHERE
     rarity: UNCOMMON
     material: FIREWORK_STAR
+    name: "Null Sphere"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/null_sphere
   - id: MINOS_RELIC
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Minos Relic"
     components:
       - id: SELLABLE
         value: 5000000.0
@@ -73,15 +83,18 @@ items:
   - id: EMPERORS_SKULL
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Emperors Skull"
   - id: ANTIQUE_REMEDIES
     rarity: EPIC
     material: AZURE_BLUET
+    name: "Antique Remedies"
     components:
       - id: SELLABLE
         value: 250000.0
   - id: RUSTY_COIN
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Rusty Coin"
     components:
       - id: SELLABLE
         value: 1000.0
@@ -90,6 +103,7 @@ items:
   - id: BRONZE_BOWL
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Bronze Bowl"
     components:
       - id: SELLABLE
         value: 5000.0
@@ -98,6 +112,7 @@ items:
   - id: GLOSSY_GEMSTONE
     rarity: EPIC
     material: PURPLE_DYE
+    name: "Glossy Gemstone"
     components:
       - id: SELLABLE
         value: 200000.0
@@ -106,6 +121,7 @@ items:
   - id: LUXURIOUS_SPOOL
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Luxurious Spool"
     components:
       - id: SELLABLE
         value: 1.0
@@ -114,6 +130,7 @@ items:
   - id: TORN_CLOTH
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Torn Cloth"
     components:
       - id: SELLABLE
         value: 5000.0
@@ -122,6 +139,7 @@ items:
   - id: BROKEN_RADAR
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Broken Radar"
     components:
       - id: SELLABLE
         value: 25000.0
@@ -130,6 +148,7 @@ items:
   - id: BUSTED_BELT_BUCKLE
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Busted Belt Buckle"
     components:
       - id: SELLABLE
         value: 10000.0
@@ -138,6 +157,7 @@ items:
   - id: STARLYN_PRIZE
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Starlyn Prize"
     components:
       - id: SELLABLE
         value: 20000.0
@@ -146,9 +166,11 @@ items:
   - id: WILSON_ENGINEERING_PLANS
     rarity: LEGENDARY
     material: PAPER
+    name: "Wilson Engineering Plans"
   - id: ASCENSION_ROPE
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Ascension Rope"
     components:
       - id: SELLABLE
         value: 1.0
