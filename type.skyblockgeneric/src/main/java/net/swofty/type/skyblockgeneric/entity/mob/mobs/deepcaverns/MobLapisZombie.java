@@ -40,7 +40,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public Integer getLevel() {
-		return 7;
+		return 8;
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 						1.6,
 						20,
 						TimeUnit.SERVER_TICK,
-						RegionType.SLIMEHILL), // Attack the target
-				new RandomRegionStrollGoal(this, 15, RegionType.SLIMEHILL)  // Walk around
+						RegionType.LAPIS_QUARRY), // Attack the target
+				new RandomRegionStrollGoal(this, 15, RegionType.LAPIS_QUARRY)  // Walk around
 		);
 	}
 
@@ -70,7 +70,7 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 				new ClosestEntityRegionTarget(this,
 						6,
 						entity -> entity instanceof SkyBlockPlayer,
-						RegionType.SLIMEHILL) // If there is none, target the nearest player
+						RegionType.LAPIS_QUARRY) // If there is none, target the nearest player
 		);
 	}
 
@@ -148,6 +148,6 @@ public class MobLapisZombie extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public List<Populator> getPopulators() {
-		return List.of(new Populator(RegionType.SLIMEHILL, 20));
+		return List.of(new Populator(RegionType.LAPIS_QUARRY, 20));
 	}
 }

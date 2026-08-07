@@ -9,13 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.EntityCreature;
-import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.GameMode;
-import net.minestom.server.entity.Metadata;
-import net.minestom.server.entity.MetadataDef;
-import net.minestom.server.entity.Player;
+import net.minestom.server.entity.*;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
 import net.minestom.server.entity.attribute.Attribute;
@@ -31,6 +25,7 @@ import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
+import net.swofty.type.generic.entity.ai.vanilla.VanillaNavigator;
 import net.swofty.type.generic.event.HypixelEventHandler;
 import net.swofty.type.generic.utility.MathUtility;
 import net.swofty.type.skyblockgeneric.SkyBlockGenericLoader;
@@ -48,7 +43,6 @@ import net.swofty.type.skyblockgeneric.region.RegionType;
 import net.swofty.type.skyblockgeneric.region.SkyBlockRegion;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.generic.entity.ai.vanilla.VanillaNavigator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -78,7 +72,17 @@ public abstract class SkyBlockMob extends EntityCreature {
     }
 
     public SkyBlockMob(EntityType entityType) {
+        this(entityType, true);
+    }
+
+    protected SkyBlockMob(EntityType entityType, boolean initialize) {
         super(entityType);
+        if (initialize) {
+            init();
+        }
+    }
+
+    protected final void initializeMob() {
         init();
     }
 
@@ -91,14 +95,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                 .setBaseValue((float) ((getBaseStatistics().getOverall(ItemStatistic.SPEED).floatValue() / 1000) * 2.5));
         this.setHealth(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
 
-        this.customName = Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c"
-                        + getMobTypes().getFirst().getColor() + getMobTypes().getFirst().getSymbol() + "§c "
-                        + getDisplayName()
-                        + " §a" + Math.round(getHealth())
-                        + "§f/§a"
-                        + Math.round(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue())
-        );
+        this.customName = createCustomName(getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue());
         this.set(DataComponents.CUSTOM_NAME, customName);
         nameDisplayEntity = new TextDisplayEntity(customName, meta -> meta.setTranslation(new Pos(0, getNameDisplayHeightOffset(), 0)));
 
@@ -205,12 +202,7 @@ public abstract class SkyBlockMob extends EntityCreature {
                     -Math.cos(sourcePoint.getPosition().yaw() * Math.PI / 180));
         }
 
-        updateCustomName(Component.text(
-                "§8[§7Lv" + getLevel() + "§8] §c" + getDisplayName()
-                        + " §a" + Math.round(getHealth())
-                        + "§f/§a"
-                        + Math.round(this.getAttributeValue(Attribute.MAX_HEALTH))
-        ));
+        updateCustomName(createCustomName(this.getAttributeValue(Attribute.MAX_HEALTH)));
 
         return toReturn;
     }
@@ -286,6 +278,14 @@ public abstract class SkyBlockMob extends EntityCreature {
                 meta.setText(newName);
             });
         }
+    }
+
+    private Component createCustomName(double maxHealth) {
+        return Component.text("§8[§7Lv" + getLevel() + "§8] §c")
+                .append(getMobTypes().getFirst().getDisplaySymbolComponent())
+                .append(Component.text("§c " + getDisplayName()
+                        + " §a" + Math.round(getHealth())
+                        + "§f/§a" + Math.round(maxHealth)));
     }
 
     public static void runRegionPopulators(Scheduler scheduler) {

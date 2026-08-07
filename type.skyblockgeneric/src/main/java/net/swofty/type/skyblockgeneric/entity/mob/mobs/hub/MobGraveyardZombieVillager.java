@@ -80,7 +80,10 @@ public class MobGraveyardZombieVillager extends BestiaryMob implements RegionPop
 			@Override
 			public @NonNull List<LootRecord> getLootTable() {
 				return List.of(
-						new LootRecord(ItemType.ROTTEN_FLESH, makeAmountBetween(1, 3), 20)
+                        new LootRecord(ItemType.ROTTEN_FLESH, 1, 100),
+                        new LootRecord(ItemType.POISONOUS_POTATO, 1, 2),
+                        new LootRecord(ItemType.CARROT, 1, 1),
+                        new LootRecord(ItemType.POTATO, 1, 1)
 				);
 			}
 
