@@ -149,8 +149,8 @@ func copyFile(src, dst string, mode os.FileMode) error {
 func writeConfigYAML(cfg Config) error {
 	body := `host-name: 0.0.0.0
 transfer-timeout: 800
-mongodb: mongodb://hypixel_mongo
-redis-uri: redis://hypixel_redis:6379
+mongodb: mongodb://mongodb
+redis-uri: redis://redis:6379
 velocity-secret: placeholder
 require-auth: false
 sandbox: false
@@ -160,12 +160,16 @@ integrations:
     via-version: false
     sentry-dsn: ''
 limbo:
-    host-name: picolimbo
+    host-name: pico_limbo
     port: 65535
 resource-pack:
     public-url: ''
     pack-hash: ''
-resource-packs: {}
+resource-packs:
+    skyblockpack:
+        server-url: http://127.0.0.1:7270
+    ravengard:
+        server-url: http://127.0.0.1:7270
 `
 	configPath := filepath.Join(cfg.InstallDir, "configuration", "config.yml")
 	if err := os.WriteFile(configPath, []byte(body), 0o644); err != nil {

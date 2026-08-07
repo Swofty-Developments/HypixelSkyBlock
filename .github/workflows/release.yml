@@ -79,4 +79,9 @@ jobs:
             service.orchestrator/build/libs/*.jar
             service.friend/build/libs/*.jar
             service.darkauction/build/libs/*.jar
+            service.store/build/libs/*.jar
+            service.elections/build/libs/*.jar
+            service.guild/build/libs/*.jar
+            service.punishment/build/libs/*.jar
+            service.replay/build/libs/*.jar
             setup/dist/*.tar.gz
