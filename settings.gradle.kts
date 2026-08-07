@@ -60,7 +60,17 @@ include(":service.elections")
 include(":service.guild")
 include(":service.store")
 include(":anticheat")
-include(":clientmod")
+
+val clientModRequested = gradle.startParameter.taskNames.any { taskName ->
+    taskName == "clientmod" ||
+        taskName == ":clientmod" ||
+        taskName.startsWith("clientmod:") ||
+        taskName.startsWith(":clientmod:")
+}
+
+if (clientModRequested || gradle.startParameter.projectProperties.containsKey("includeClientmod")) {
+    include(":clientmod")
+}
 
 pluginManagement {
     repositories {
