@@ -4,9 +4,12 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.item.MaterialTags;
+import net.swofty.commons.RegistryUtil;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.generic.data.datapoints.DatapointBedWarsHotbar;
 import net.swofty.type.generic.data.handlers.BedWarsDataHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -67,12 +70,12 @@ public class BedWarsInventoryManipulator {
 
     private static int[] getPreferredHotbarSlots(BedWarsPlayer player, DatapointBedWarsHotbar.HotbarItemType hotbarItemType) {
         Map<Byte, DatapointBedWarsHotbar.HotbarItemType> layout = player.getBedWarsDataHandler()
-            .get(BedWarsDataHandler.Data.HOTBAR_LAYOUT, DatapointBedWarsHotbar.class)
-            .getValue();
+                .get(BedWarsDataHandler.Data.HOTBAR_LAYOUT, DatapointBedWarsHotbar.class)
+                .getValue();
 
         return IntStream.range(0, 9)
-            .filter(slot -> layout.get((byte) slot) == hotbarItemType)
-            .toArray();
+                .filter(slot -> layout.get((byte) slot) == hotbarItemType)
+                .toArray();
     }
 
     private static boolean moveToUpperInventory(BedWarsPlayer player, ItemStack stack) {
@@ -118,7 +121,7 @@ public class BedWarsInventoryManipulator {
                 int remove = Math.min(stack.amount(), remaining);
                 int updated = stack.amount() - remove;
                 inventory.setItemStack(i,
-                    updated > 0 ? stack.withAmount(updated) : ItemStack.AIR);
+                        updated > 0 ? stack.withAmount(updated) : ItemStack.AIR);
                 remaining -= remove;
             }
         }
@@ -126,21 +129,21 @@ public class BedWarsInventoryManipulator {
 
     public static boolean hasEnoughMaterial(Player player, Material material, int amount) {
         return Arrays.stream(player.getInventory().getItemStacks())
-            .filter(stack -> stack.material() == material)
-            .mapToInt(ItemStack::amount)
-            .sum() >= amount;
+                .filter(stack -> stack.material() == material)
+                .mapToInt(ItemStack::amount)
+                .sum() >= amount;
     }
 
-    public static boolean canBeChested(Material m) {
-        if (m.name().endsWith("_axe") ||
-            m.name().endsWith("_sword") ||
-            m.name().endsWith("_pickaxe") ||
-            m.name().endsWith("_shovel") ||
-            m.name().endsWith("_hoe")) {
+    public static boolean canBeChested(final @NotNull Material material) {
+        if (RegistryUtil.inMaterial(MaterialTags.AXES, material) ||
+                RegistryUtil.inMaterial(MaterialTags.SWORDS, material) ||
+                RegistryUtil.inMaterial(MaterialTags.PICKAXES, material) ||
+                RegistryUtil.inMaterial(MaterialTags.SHOVELS, material) ||
+                RegistryUtil.inMaterial(MaterialTags.HOES, material)) {
             return false;
         }
 
-        return !m.isArmor();
+        return !material.armor();
     }
 
 }

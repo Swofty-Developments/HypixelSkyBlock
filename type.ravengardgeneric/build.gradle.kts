@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":packer"))
     implementation(project(":proxy.api"))
     implementation(libs.mongodb.bson)
+    implementation(libs.mongodb.driver.sync)
     compileOnly(libs.minestom) {
         exclude(group = "org.jboss.shrinkwrap.resolver", module = "shrinkwrap-resolver-depchain")
     }

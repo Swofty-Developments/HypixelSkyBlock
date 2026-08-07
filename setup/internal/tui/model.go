@@ -32,6 +32,7 @@ const (
 	screenLogSelect
 	screenLogs
 	screenConfirm
+	screenDeps
 )
 
 type inputField int
@@ -72,6 +73,9 @@ type Model struct {
 	runDone    bool
 	confirmMsg string
 	onConfirm  func(Model) (tea.Model, tea.Cmd)
+
+	depsReport installer.DependencyReport
+	depsBack   screen
 }
 
 type item string
@@ -102,6 +106,13 @@ type statusMsg struct {
 type eventMsg installer.Event
 type depsMsg error
 type logsMsg string
+
+type depsReportMsg struct {
+	report installer.DependencyReport
+	back   screen
+}
+
+type depsInstallMsg struct{ err error }
 
 var (
 	titleStyle = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
@@ -177,6 +188,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m.updateRestart(msg)
 		case screenLogSelect:
 			return m.updateLogSelect(msg)
+		case screenDeps:
+			return m.updateDeps(msg)
 		case screenLogs:
 			if msg.String() == "esc" || msg.String() == "q" {
 				if activeLogs != nil {
@@ -209,6 +222,26 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if msg != nil {
 			m.err = msg
 		}
+	case depsReportMsg:
+		if msg.report.OK() {
+			m.err = nil
+			m.depsReport = msg.report
+			m.screen = msg.back
+			m.logs.SetContent(msg.report.Instructions())
+			return m, nil
+		}
+		return m.enterDeps(msg.report, msg.back)
+	case depsInstallMsg:
+		if msg.err != nil {
+			m.err = fmt.Errorf("dependency install failed: %w", msg.err)
+			return m, nil
+		}
+		m.err = nil
+		if m.depsReport.Relogin {
+			m.logs.SetContent(reloginMessage)
+			return m, nil
+		}
+		return m, checkDepsReport(m.depsBack)
 	case statusMsg:
 		if msg.err != nil {
 			m.err = msg.err
@@ -315,6 +348,11 @@ func (m Model) View() tea.View {
 		fmt.Fprintln(&b, "Logs")
 		fmt.Fprintln(&b, mutedStyle.Render("Esc/q returns to dashboard"))
 		fmt.Fprintln(&b, m.logs.View())
+	case screenDeps:
+		fmt.Fprintln(&b, warnStyle.Render("Missing dependencies"))
+		fmt.Fprintln(&b, mutedStyle.Render("i installs them for you (uses sudo), r re-checks, Esc goes back"))
+		fmt.Fprintln(&b)
+		fmt.Fprintln(&b, m.logs.View())
 	case screenConfirm:
 		fmt.Fprintln(&b, warnStyle.Render(m.confirmMsg))
 		fmt.Fprintln(&b, "Press y to confirm or n to cancel.")
@@ -342,6 +380,8 @@ func (m Model) updateHome(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		m.cfg.Reinstall = true
 		m.cfg.OnlineMode = true
 		m.startBasics()
+	case "Check dependencies":
+		return m.enterDeps(installer.CheckDependenciesReport(context.Background()), screenHome)
 	case "Quit":
 		return m, tea.Quit
 	}
@@ -615,10 +655,46 @@ func (m *Model) configureMulti(title string, values []string, checked []string, 
 	m.sizeList(&m.multi)
 }
 
-func (m Model) startInstall() (tea.Model, tea.Cmd) {
-	if err := installer.CheckDependencies(context.Background()); err != nil {
-		m.err = err
+const reloginMessage = "Dependencies installed.\n\n" +
+	"Your user was added to the 'docker' group, which Linux only applies at\n" +
+	"login. Close this shell, open a new one, and run the installer again."
+
+func (m Model) enterDeps(report installer.DependencyReport, back screen) (tea.Model, tea.Cmd) {
+	m.depsReport = report
+	m.depsBack = back
+	m.screen = screenDeps
+	m.err = nil
+	m.logs.SetContent(report.Instructions())
+	m.logs.GotoTop()
+	return m, nil
+}
+
+func (m Model) updateDeps(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+	switch msg.String() {
+	case "esc", "q":
+		m.screen = m.depsBack
+		m.err = nil
 		return m, nil
+	case "r":
+		return m, checkDepsReport(m.depsBack)
+	case "i":
+		cmd := installer.BootstrapCommand(m.depsReport)
+		if cmd == nil {
+			m.err = fmt.Errorf("no automatic install is available for %s; follow the steps above", m.depsReport.Platform.Label())
+			return m, nil
+		}
+		return m, tea.ExecProcess(cmd, func(err error) tea.Msg {
+			return depsInstallMsg{err: err}
+		})
+	}
+	var cmd tea.Cmd
+	m.logs, cmd = m.logs.Update(msg)
+	return m, cmd
+}
+
+func (m Model) startInstall() (tea.Model, tea.Cmd) {
+	if report := installer.CheckDependenciesReport(context.Background()); !report.OK() {
+		return m.enterDeps(report, m.screen)
 	}
 	m.screen = screenRun
 	m.runTitle = "Installing"
@@ -631,9 +707,8 @@ func (m Model) startInstall() (tea.Model, tea.Cmd) {
 }
 
 func (m Model) startReconfigure() (tea.Model, tea.Cmd) {
-	if err := installer.CheckDependencies(context.Background()); err != nil {
-		m.err = err
-		return m, nil
+	if report := installer.CheckDependenciesReport(context.Background()); !report.OK() {
+		return m.enterDeps(report, m.screen)
 	}
 	return m.startRun("Applying configuration", func(r *installer.Runner) error {
 		return r.Reconfigure(context.Background(), m.cfg)
@@ -791,9 +866,9 @@ func (m *Model) resizeActiveList() {
 
 func homeItems(hasInstall bool) []list.Item {
 	if hasInstall {
-		return []list.Item{item("Manage existing installation"), item("Fresh reinstall"), item("Quit")}
+		return []list.Item{item("Manage existing installation"), item("Fresh reinstall"), item("Check dependencies"), item("Quit")}
 	}
-	return []list.Item{item("Install"), item("Quit")}
+	return []list.Item{item("Install"), item("Check dependencies"), item("Quit")}
 }
 
 func dashboardItems() []list.Item {
@@ -837,6 +912,15 @@ func refreshStatus() tea.Cmd {
 func checkDeps() tea.Cmd {
 	return func() tea.Msg {
 		return depsMsg(installer.CheckDependencies(context.Background()))
+	}
+}
+
+func checkDepsReport(back screen) tea.Cmd {
+	return func() tea.Msg {
+		return depsReportMsg{
+			report: installer.CheckDependenciesReport(context.Background()),
+			back:   back,
+		}
 	}
 }
 

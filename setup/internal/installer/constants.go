@@ -4,7 +4,7 @@ const (
 	Version           = "2.1.0"
 	GitHubRepo        = "Swofty-Developments/HypixelSkyBlock"
 	GitHubAPI         = "https://api.github.com/repos/" + GitHubRepo
-	LimboAssetsURL    = "https://files.catbox.moe/oybade.zip"
+	LimboAssetsURL    = "https://files.catbox.moe/flri48.zip"
 	StateFileName     = ".state.json"
 	DefaultInstallSub = ".hypixel-skyblock"
 )
@@ -29,6 +29,7 @@ var SkyBlockServers = []string{
 var RequiredServers = []string{"PROTOTYPE_LOBBY"}
 
 var MinigameServers = []string{
+	"MAIN_LOBBY",
 	"BEDWARS_LOBBY",
 	"BEDWARS_GAME",
 	"BEDWARS_CONFIGURATOR",
@@ -39,6 +40,8 @@ var MinigameServers = []string{
 	"SKYWARS_GAME",
 	"SKYWARS_CONFIGURATOR",
 	"RAVENGARD_LOBBY",
+	"RAVENGARD_DUNGEON",
+	"REPLAY_VIEWER",
 }
 
 var AllServices = []string{
@@ -51,6 +54,11 @@ var AllServices = []string{
 	"ServiceDarkAuction",
 	"ServiceOrchestrator",
 	"ServiceFriend",
+	"ServiceStore",
+	"ServiceElection",
+	"ServiceGuild",
+	"ServicePunishment",
+	"ServiceReplay",
 }
 
 var RequiredServices = []string{"ServiceDataMutex", "ServiceParty"}

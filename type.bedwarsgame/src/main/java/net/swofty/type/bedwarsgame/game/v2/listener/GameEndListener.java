@@ -1,6 +1,5 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -8,19 +7,19 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.GameMode;
+import net.minestom.server.sound.SoundEventKeys;
 import net.minestom.server.timer.TaskSchedule;
 import net.swofty.commons.ChatUtility;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.bedwars.BedwarsLevelUtil;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsTeam;
 import net.swofty.type.bedwarsgame.stats.BedWarsStatsRecorder;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.GameTeamWinConditionEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.guild.GuildManager;
 import org.tinylog.Logger;
 
@@ -32,12 +31,12 @@ public class GameEndListener implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameEnd(GameTeamWinConditionEvent<BedWarsTeam> event) {
-        String gameId = event.gameId();
-        BedWarsGame game = TypeBedWarsGameLoader.getGameById(gameId);
+        BedWarsGame game = (BedWarsGame) event.game();
+        String gameId = game.getGameId();
 
         // Show results to all players
         for (BedWarsPlayer player : game.getPlayers()) {
-            player.playSound(Sound.sound(Key.key("minecraft:ui.toast.challenge_complete"),
+            player.playSound(Sound.sound(SoundEventKeys.UI_TOAST_CHALLENGE_COMPLETE.key(),
                 Sound.Source.MASTER, 1f, 1f), Sound.Emitter.self());
 
             // Record win

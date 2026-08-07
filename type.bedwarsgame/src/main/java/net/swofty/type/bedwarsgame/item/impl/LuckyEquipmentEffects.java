@@ -87,7 +87,7 @@ public final class LuckyEquipmentEffects {
             return;
         }
         var point = player.getPosition().sub(0, 1, 0);
-        if (player.getInstance().getBlock(point).isAir()) {
+        if (player.getInstance().getBlock(point).air()) {
             player.getInstance().setBlock(point, Block.WATER.withTag(TypeBedWarsGameLoader.PLAYER_PLACED_TAG, true));
             SQUID_BOOTS_COOLDOWN.put(player.getUuid(), now);
         }

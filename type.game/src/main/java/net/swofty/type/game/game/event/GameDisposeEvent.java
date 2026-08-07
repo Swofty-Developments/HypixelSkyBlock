@@ -1,8 +1,10 @@
 package net.swofty.type.game.game.event;
 
-public record GameDisposeEvent(String gameId) implements GameEvent {
+import net.swofty.type.game.game.Game;
+
+public record GameDisposeEvent(Game<?> game) implements GameEvent {
     @Override
-    public String getGameId() {
-        return gameId;
+    public Game<?> getGame() {
+        return game;
     }
 }

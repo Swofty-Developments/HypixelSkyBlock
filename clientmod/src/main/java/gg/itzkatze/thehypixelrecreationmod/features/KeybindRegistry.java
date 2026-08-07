@@ -1,5 +1,6 @@
 package gg.itzkatze.thehypixelrecreationmod.features;
 
+import gg.itzkatze.thehypixelrecreationmod.features.guicapture.GuiCaptureRecorder;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenKeyboardEvents;
@@ -58,7 +59,7 @@ public final class KeybindRegistry {
                     return false;
                 }
                 if (copyGuiKey.matches(key)) {
-                    CopyCurrentGui.copyCurrentGui(client);
+                    GuiCaptureRecorder.toggle(client);
                     return false;
                 }
                 return true;

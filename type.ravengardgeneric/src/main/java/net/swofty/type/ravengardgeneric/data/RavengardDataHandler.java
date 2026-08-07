@@ -6,6 +6,8 @@ import net.swofty.type.generic.data.Datapoint;
 import net.swofty.type.generic.data.mongodb.UserDatabase;
 import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.ravengardgeneric.data.datapoints.DatapointRavengardInteger;
+import net.swofty.type.ravengardgeneric.data.datapoints.DatapointRavengardBoolean;
+import net.swofty.type.ravengardgeneric.data.datapoints.DatapointRavengardString;
 import org.bson.Document;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
@@ -171,6 +173,31 @@ public class RavengardDataHandler extends DataHandler {
                 "ravengard_data_version",
                 DatapointRavengardInteger.class,
                 new DatapointRavengardInteger("ravengard_data_version", 1)
+        ),
+        CLASS(
+                "ravengard_class",
+                DatapointRavengardString.class,
+                new DatapointRavengardString("ravengard_class", "")
+        ),
+        LEVEL(
+                "ravengard_level",
+                DatapointRavengardInteger.class,
+                new DatapointRavengardInteger("ravengard_level", 1)
+        ),
+        IS_TUTORIAL(
+                "ravengard_is_tutorial",
+                DatapointRavengardBoolean.class,
+                new DatapointRavengardBoolean("ravengard_is_tutorial", true)
+        ),
+        CROWNS(
+                "ravengard_crowns",
+                DatapointRavengardInteger.class,
+                new DatapointRavengardInteger("ravengard_crowns", 0)
+        ),
+        SELECTED_PROFILE(
+                "ravengard_selected_profile",
+                DatapointRavengardString.class,
+                new DatapointRavengardString("ravengard_selected_profile", "")
         );
 
         @Getter

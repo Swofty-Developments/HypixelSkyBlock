@@ -1,13 +1,18 @@
 host-name: 0.0.0.0
 transfer-timeout: 800
-mongodb: mongodb://localhost
-redis-url: redis://localhost:6379
+mongodb: mongodb://mongodb
+redis-url: redis://redis:6379
 velocity-secret: ixmSUgWOgvs7
 require-auth: false
 sandbox: false
 spark: false
 anticheat: false
-redis-uri: redis://localhost:6379
+redis-uri: redis://redis:6379
 limbo:
-    host-name: 127.0.0.1
+    host-name: pico_limbo
     port: 65535
+resource-packs:
+    skyblockpack:
+        server-url: http://127.0.0.1:7270
+    ravengard:
+        server-url: http://127.0.0.1:7270

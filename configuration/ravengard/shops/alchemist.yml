@@ -1,0 +1,11 @@
+id: alchemist
+title: Alchemist
+banner: alchemist
+shelf_slots: [4, 5, 6, 7, 8]
+pool:
+  - item: APPLE
+    price: 6
+  - item: BANDAGE
+    price: 24
+  - item: HEALTH
+    price: 30

@@ -2,14 +2,15 @@ package net.swofty.type.game.game.event;
 
 import net.minestom.server.entity.Player;
 import net.swofty.type.game.game.AbstractGame;
+import net.swofty.type.game.game.Game;
 
 public record PlayerRejoinGameEvent(
-        String gameId,
+        Game<?> gameId,
         Player player,
         AbstractGame.DisconnectedPlayerData disconnectedPlayerData
 ) implements GameEvent {
     @Override
-    public String getGameId() {
+    public Game<?> getGame() {
         return gameId;
     }
 }

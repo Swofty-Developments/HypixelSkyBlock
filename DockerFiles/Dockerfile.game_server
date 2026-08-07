@@ -4,18 +4,31 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y jq curl && apt-get clean
 
+ARG JAR_BASE_URL=https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest
+
 # Download all JARs in a single layer
-RUN curl -fSL -o HypixelCore.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/HypixelCore.jar" && \
-    curl -fSL -o ServiceAPI.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAPI.jar" && \
-    curl -fSL -o ServiceAuctionHouse.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceAuctionHouse.jar" && \
-    curl -fSL -o ServiceBazaar.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceBazaar.jar" && \
-    curl -fSL -o ServiceItemTracker.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceItemTracker.jar" && \
-    curl -fSL -o ServiceDataMutex.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDataMutex.jar" && \
-    curl -fSL -o ServiceParty.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceParty.jar" && \
-    curl -fSL -o ServiceDarkAuction.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceDarkAuction.jar" && \
-    curl -fSL -o ServiceOrchestrator.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceOrchestrator.jar" && \
-    curl -fSL -o ServiceFriend.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceFriend.jar" && \
-    curl -fSL -o ServiceStore.jar "https://github.com/Swofty-Developments/HypixelSkyBlock/releases/download/latest/ServiceStore.jar"
+RUN set -eu; \
+    for jar in \
+        HypixelCore.jar \
+        ServiceAPI.jar \
+        ServiceAuctionHouse.jar \
+        ServiceBazaar.jar \
+        ServiceItemTracker.jar \
+        ServiceDataMutex.jar \
+        ServiceParty.jar \
+        ServiceDarkAuction.jar \
+        ServiceOrchestrator.jar \
+        ServiceFriend.jar \
+        ServiceStore.jar \
+        ServiceElection.jar \
+        ServiceGuild.jar \
+        ServicePunishment.jar \
+        ServiceReplay.jar \
+        net.swofty.packer.HypixelPackServer.jar \
+    ; do \
+        echo "Downloading $jar"; \
+        curl -fSL -o "$jar" "${JAR_BASE_URL}/$jar"; \
+    done
 
 # Copy configuration data
 COPY ./configuration /app/configuration_files

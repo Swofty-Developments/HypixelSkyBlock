@@ -11,7 +11,7 @@ import net.swofty.type.generic.user.flow.PlayerFlow;
 
 public class ActionPlayerDataSpawn implements HypixelEventClass {
 
-    @PhasedEvent(node = EventNodes.PLAYER_DATA, requireDataLoaded = false, isAsync = true, phase = EventPhase.POST_SPAWN)
+    @PhasedEvent(node = EventNodes.PLAYER_DATA, isAsync = true, phase = EventPhase.POST_SPAWN)
     public void run(PlayerSpawnEvent event) {
         if (!event.isFirstSpawn()) return;
 

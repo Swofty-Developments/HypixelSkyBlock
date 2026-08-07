@@ -3,6 +3,8 @@ package gg.itzkatze.thehypixelrecreationmod;
 import gg.itzkatze.thehypixelrecreationmod.commands.*;
 import gg.itzkatze.thehypixelrecreationmod.features.KeybindRegistry;
 import gg.itzkatze.thehypixelrecreationmod.features.SpraySchemaRecorder;
+import gg.itzkatze.thehypixelrecreationmod.features.guicapture.GuiCaptureRecorder;
+import gg.itzkatze.thehypixelrecreationmod.features.packetlog.EntityPacketLogger;
 import gg.itzkatze.thehypixelrecreationmod.features.worldexport.ChunkExportRecorder;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -42,12 +44,18 @@ public final class TheHypixelRecreationMod implements ClientModInitializer {
 		NearbyEntitiesCommand.register();
         CopyTabBossbarCommand.register();
         CopyAdvancementsCommand.register();
+		LogPacketsCommand.register();
+		RavengardSessionCommand.register();
+		HudCaptureCommand.register();
 	}
 
 	private static void registerTickHandlers() {
 		ClientTickEvents.END_CLIENT_TICK.register(_ -> {
 			ChunkExportRecorder.tick();
 			SpraySchemaRecorder.tick();
+			EntityPacketLogger.tick();
+			gg.itzkatze.thehypixelrecreationmod.features.packetlog.RavengardSessionLogger.tick();
+			GuiCaptureRecorder.tick(net.minecraft.client.Minecraft.getInstance());
 		});
 	}
 

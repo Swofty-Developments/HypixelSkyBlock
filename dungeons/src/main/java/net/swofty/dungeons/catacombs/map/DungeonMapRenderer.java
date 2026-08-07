@@ -1,6 +1,6 @@
 package net.swofty.dungeons.catacombs.map;
 
-import net.swofty.dungeons.SkyBlockDungeon;
+import net.swofty.dungeons.CatacombsDungeon;
 
 import javax.imageio.ImageIO;
 import java.awt.BasicStroke;
@@ -18,7 +18,7 @@ public final class DungeonMapRenderer {
     private static final int GAP = 14;
     private static final int PADDING = 24;
 
-    public DungeonMapRenderResult renderPng(SkyBlockDungeon dungeon, Path outputPath) throws IOException {
+    public DungeonMapRenderResult renderPng(CatacombsDungeon dungeon, Path outputPath) throws IOException {
         int maxX = dungeon.getRooms().keySet().stream().mapToInt(Map.Entry::getKey).max().orElse(0);
         int maxY = dungeon.getRooms().keySet().stream().mapToInt(Map.Entry::getValue).max().orElse(0);
         int width = PADDING * 2 + (maxX + 1) * TILE + maxX * GAP;
@@ -30,7 +30,7 @@ public final class DungeonMapRenderer {
         graphics.fillRect(0, 0, width, height);
         graphics.setStroke(new BasicStroke(6, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         graphics.setColor(new Color(0xD9C7A7));
-        for (SkyBlockDungeon.DungeonDoor door : dungeon.getDoorConnections()) {
+        for (CatacombsDungeon.DungeonDoor door : dungeon.getDoorConnections()) {
             int x1 = center(door.x1());
             int y1 = center(door.y1());
             int x2 = center(door.x2());

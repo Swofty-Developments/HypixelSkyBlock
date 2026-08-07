@@ -73,6 +73,10 @@ public interface HypixelTypeLoader {
     }
 
     @NotNull
+    default boolean headerFooterPerPlayer() {
+        return false;
+    }
+
     default Optional<Tuple<Component, Component>> headerFooter() {
         return Optional.empty();
     }

@@ -1,6 +1,6 @@
 package net.swofty.dungeons.catacombs.instance;
 
-import net.swofty.dungeons.SkyBlockDungeon;
+import net.swofty.dungeons.CatacombsDungeon;
 import net.swofty.dungeons.catacombs.CatacombsFloorDefinition;
 import net.swofty.dungeons.catacombs.boss.state.BossFightController;
 import net.swofty.dungeons.catacombs.kit.DungeonClassKit;
@@ -13,7 +13,7 @@ import java.util.UUID;
 public record CatacombsInstance(
         UUID id,
         CatacombsFloorDefinition floor,
-        SkyBlockDungeon dungeon,
+        CatacombsDungeon dungeon,
         CatacombsRunState runState,
         BossFightController bossFight,
         Map<UUID, DungeonClassKit> kits,

@@ -18,7 +18,11 @@ public final class ChunkExporterCommand {
                         .then(ClientCommands.literal("start")
                                 .executes(context -> start(context, ChunkExportRecorder.CaptureMode.CHUNKS))
                                 .then(ClientCommands.literal("block_displays")
-                                        .executes(context -> start(context, ChunkExportRecorder.CaptureMode.BLOCK_DISPLAYS))))
+                                        .executes(context -> start(context, ChunkExportRecorder.CaptureMode.BLOCK_DISPLAYS)))
+                                .then(ClientCommands.literal("ravengard")
+                                        .then(ClientCommands.argument("name", StringArgumentType.string())
+                                                .executes(context -> startStitchedRavengard(context,
+                                                        StringArgumentType.getString(context, "name"))))))
                         .then(ClientCommands.literal("stop")
                                 .then(ClientCommands.argument("name", StringArgumentType.string())
                                         .executes(context -> {
@@ -36,7 +40,9 @@ public final class ChunkExporterCommand {
                                                                 + result.blockEntityCount()
                                                                 + " block entities, and "
                                                                 + result.blockDisplayCount()
-                                                                + " stationary block displays to "
+                                                                + " stationary block displays, and "
+                                                                + result.ravengardObjectCount()
+                                                                + " Ravengard dungeon objects to "
                                                                 + result.path().getFileName()
                                                                 + " and "
                                                                 + result.polarPath().getFileName()
@@ -65,7 +71,9 @@ public final class ChunkExporterCommand {
                                                     + status.chunkCount()
                                                     + " captured chunks, "
                                                     + status.blockDisplayCount()
-                                                    + " stationary block displays, and "
+                                                    + " stationary block displays, "
+                                                    + status.ravengardObjectCount()
+                                                    + " Ravengard dungeon objects, and "
                                                     + status.movingEntityCount()
                                                     + " moving displays excluded (mode: "
                                                     + status.mode().name().toLowerCase()
@@ -95,6 +103,20 @@ public final class ChunkExporterCommand {
             return 1;
         } catch (Exception exception) {
             context.getSource().sendFeedback(Component.literal("§cFailed to start chunk export session: " + exception.getMessage()));
+            return 0;
+        }
+    }
+
+    private static int startStitchedRavengard(CommandContext<FabricClientCommandSource> context, String name) {
+        try {
+            ChunkExportRecorder.StartResult result = ChunkExportRecorder.start(ChunkExportRecorder.CaptureMode.RAVENGARD, name);
+            context.getSource().sendFeedback(Component.literal(
+                    "§aRavengard stitched session '" + name + "' is active with "
+                            + result.initialChunkCount() + " chunks and "
+                            + result.initialBlockDisplayCount() + " static displays. Stop it with the same name."));
+            return 1;
+        } catch (Exception exception) {
+            context.getSource().sendFeedback(Component.literal("§cFailed to start stitched Ravengard session: " + exception.getMessage()));
             return 0;
         }
     }

@@ -31,6 +31,10 @@ public final class ViewLayout<S> {
     @Accessors(fluent = true)
     private boolean allowHotkey = false;
 
+    public java.util.Set<Integer> occupiedSlots() {
+        return java.util.Collections.unmodifiableSet(components.keySet());
+    }
+
     public ViewLayout(InventoryType inventoryType) {
         this.inventoryType = inventoryType;
     }

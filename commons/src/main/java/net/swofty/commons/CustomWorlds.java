@@ -21,16 +21,17 @@ public enum CustomWorlds {
 	MURDER_MYSTERY_LOBBY("hypixel_murder_mystery_lobby"),
 	SKYWARS_LOBBY("hypixel_skywars_lobby"),
     RAVENGARD_LOBBY("hypixel_ravengard_lobby"),
+    RAVENGARD_TUTORIAL("hypixel_ravengard_tutorial"),
 	MAIN_LOBBY("hypixel_main_lobby"),
 	;
 
-	private final String folderName;
+    private final String fileName;
 
-	CustomWorlds(String folderName) {
-		this.folderName = folderName;
+    CustomWorlds(String fileName) {
+        this.fileName = fileName;
 	}
 
 	public Path getPath() {
-		return Path.of("./configuration/world/" + folderName + ".polar");
+        return Path.of("./configuration/world/" + fileName + ".polar");
 	}
 }

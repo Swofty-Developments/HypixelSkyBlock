@@ -13,4 +13,5 @@ java {
 dependencies {
     testImplementation(libs.junit)
     compileOnly(libs.lombok)
+    implementation(libs.gson)
 }
