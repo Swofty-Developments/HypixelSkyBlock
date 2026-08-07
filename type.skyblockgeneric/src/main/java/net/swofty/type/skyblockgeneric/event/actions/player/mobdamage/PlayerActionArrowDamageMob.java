@@ -1,7 +1,5 @@
 package net.swofty.type.skyblockgeneric.event.actions.player.mobdamage;
 
-import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.projectile.ProjectileCollideWithEntityEvent;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
@@ -15,7 +13,7 @@ import net.swofty.type.skyblockgeneric.hunting.AttributeEffectService;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
-import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
+import net.swofty.type.skyblockgeneric.utility.AttackService;
 
 import java.util.Map;
 
@@ -43,33 +41,16 @@ public class PlayerActionArrowDamageMob implements HypixelEventClass {
         ItemStatistics playerStats = shooter.getStatistics().allStatistics();
 
         // Add the arrow's statistics to the player's statistics
-        ItemStatistics.add(playerStats, arrowItem.getAttributeHandler().getStatistics());
+        playerStats = ItemStatistics.add(playerStats, arrowItem.getAttributeHandler().getStatistics());
 
         Map.Entry<Double, Boolean> hit = PlayerStatistics.runPrimaryDamageFormula(playerStats, entityStats);
         double damage = hit.getKey() * AttributeEffectService.outgoingDamageMultiplier(shooter.getHuntingData(), collidedWith, true);
         boolean critical = hit.getValue();
 
-        new DamageIndicator()
-                .damage((float) damage)
-                .pos(collidedWith.getPosition())
-                .critical(critical)
-                .display(collidedWith.getInstance());
+        float damageAmount = (float) damage;
+        if (!AttackService.applyHit(shooter, collidedWith, damageAmount, critical)) return;
 
-        collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
-
-        double ferocity = shooter.getStatistics().allStatistics().getOverall(ItemStatistic.FEROCITY);
-
-        int extraAttacks = (int) (ferocity / 100);
-        double extraAttackChance = (ferocity % 100) / 100.0;
-
-        // Extra attacks that are guaranteed because ferocity overflowed 100
-        for (int i = 0; i < extraAttacks; i++) {
-            collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
-        }
-
-        // Extra attacks that have a chance to occur based on the remaining ferocity
-        if (Math.random() < extraAttackChance) {
-            collidedWith.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) damage));
-        }
+        double ferocity = playerStats.getOverall(ItemStatistic.FEROCITY);
+        AttackService.scheduleExtraHits(shooter, collidedWith, damageAmount, critical, ferocity);
     }
 }
