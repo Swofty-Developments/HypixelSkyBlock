@@ -44,7 +44,7 @@ The installer walks you through:
 | Dependencies      | Checks for Docker, Compose v2, git and curl, and offers to install them   |
 | System Check      | Validates RAM, CPU, disk space, Docker version                            |
 | Configuration     | Pick install directory, bind IP, online mode                              |
-| Server Selection  | Choose from 14 SkyBlock servers and 10 minigame servers                   |
+| Server Selection  | Choose from 14 SkyBlock servers and 13 lobby/minigame servers             |
 | Service Selection | Pick which microservices to run (DataMutex and Party are required)        |
 | Build & Launch    | Builds Docker images, starts containers in order, waits for health checks |
 
