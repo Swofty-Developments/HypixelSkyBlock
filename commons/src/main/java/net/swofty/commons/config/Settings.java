@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -38,8 +37,11 @@ public class Settings {
     @Comment("Settings related to configuration of Limbo server connections")
     private LimboSettings limbo = new LimboSettings();
 
-    @Comment("Resource pack settings keyed by pack name (e.g. testingpack, bedwarspack)")
-    private Map<String, ResourcePackSettings> resourcePacks = new HashMap<>();
+    @Comment("Resource pack settings keyed by pack name (e.g. testingpack, skyblockpack)")
+    private Map<String, ResourcePackSettings> resourcePacks = Map.of(
+        "testingpack", new ResourcePackSettings(),
+        "skyblockpack", new ResourcePackSettings()
+    );
 
     @Getter
     @Configuration

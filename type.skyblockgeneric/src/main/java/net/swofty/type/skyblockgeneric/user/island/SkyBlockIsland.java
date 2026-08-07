@@ -27,16 +27,18 @@ import net.swofty.type.skyblockgeneric.utility.JerryInformation;
 import org.jetbrains.annotations.Nullable;
 import org.tinylog.Logger;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 public class SkyBlockIsland implements SkyBlockEditableWorldHandle {
     private static final WorldBuildLimits BUILD_LIMITS = new WorldBuildLimits(-80, 80, -80, 80);
-    private static final Map<UUID, SkyBlockIsland> loadedIslands = new HashMap<>();
+    private static final Map<UUID, SkyBlockIsland> loadedIslands = new ConcurrentHashMap<>();
+    private static final AtomicBoolean shutdownHookRegistered = new AtomicBoolean();
 
     private final IslandDatabase database;
     private final CoopDatabase.Coop coop;
@@ -110,7 +112,7 @@ public class SkyBlockIsland implements SkyBlockEditableWorldHandle {
         return future;
     }
 
-    public void runVacantCheck() {
+    public synchronized void runVacantCheck() {
         if (islandInstance == null) return;
 
         if (islandInstance.getPlayers().isEmpty()) {
@@ -124,6 +126,13 @@ public class SkyBlockIsland implements SkyBlockEditableWorldHandle {
             this.islandInstance = null;
             this.world = null;
         }
+    }
+
+    private synchronized void flush() {
+        if (!created || islandInstance == null || world == null) return;
+
+        IslandLifecycle.run(IslandLifecyclePhase.SAVE, lifecycleContext());
+        save();
     }
 
     private void save() {
@@ -172,12 +181,26 @@ public class SkyBlockIsland implements SkyBlockEditableWorldHandle {
     }
 
     public static void runVacantLoop(Scheduler scheduler) {
+        registerShutdownHook();
+
         scheduler.submitTask(() -> {
-            SkyBlockGenericLoader.getLoadedPlayers().forEach(player -> {
-                if (player.isOnIsland())
-                    player.getSkyBlockIsland().runVacantCheck();
-            });
+            loadedIslands.values().forEach(SkyBlockIsland::runVacantCheck);
             return TaskSchedule.tick(4);
         }, ExecutionType.TICK_END);
+    }
+
+    private static void registerShutdownHook() {
+        if (!shutdownHookRegistered.compareAndSet(false, true)) return;
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Logger.info("Saving {} loaded SkyBlock island(s) before shutdown", loadedIslands.size());
+            loadedIslands.values().forEach(island -> {
+                try {
+                    island.flush();
+                } catch (Throwable throwable) {
+                    Logger.error(throwable, "[{}] Failed to save island during shutdown", island.islandID);
+                }
+            });
+        }, "skyblock-island-shutdown-save"));
     }
 }

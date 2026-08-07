@@ -1,5 +1,8 @@
 package net.swofty.type.hub.gui;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
@@ -11,10 +14,11 @@ import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.item.attribute.attributes.ItemAttributeRuneInfusedWith;
-import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.HypixelInventoryGUI;
+import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.item.GUIClickableItem;
 import net.swofty.type.generic.gui.inventory.item.GUIItem;
+import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.RuneComponent;
 import net.swofty.type.skyblockgeneric.item.components.RuneableComponent;
@@ -24,13 +28,8 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import net.swofty.type.generic.user.HypixelPlayer;
 
 public class GUIRunicPedestal extends HypixelInventoryGUI {
     private static final int MAX_RUNE_LEVEL = 3;
@@ -364,7 +363,7 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
 
             player.getSkills().increase(player, SkillCategories.RUNECRAFTING, 15D);
 
-            sendSuccessMessage(player, "Combining Runes to Level " + level);
+            sendSuccessMessage(player, Component.text("Combining Runes to Level " + level));
         }
     }
 
@@ -406,13 +405,12 @@ public class GUIRunicPedestal extends HypixelInventoryGUI {
             ItemType appliedRune = outputItem.getAttributeHandler().getRuneData().getRuneType();
             Rarity rarity = appliedRune.rarity;
 
-            sendSuccessMessage(player, "Applying " + StringUtility.toNormalCase(appliedRune.name()) +
-                    " (" + rarity.getDisplay() + "§d)");
+            sendSuccessMessage(player, Component.text("Applying " + StringUtility.toNormalCase(appliedRune.name()) + " (").append(rarity.getDisplay()).append(Component.text(")", NamedTextColor.LIGHT_PURPLE)));
         }
     }
 
-    private static void sendSuccessMessage(SkyBlockPlayer player, String action) {
-        player.sendMessage("§d-§515 §dRunecrafting XP §7- §d" + action);
+    private static void sendSuccessMessage(SkyBlockPlayer player, Component action) {
+        player.sendMessage(MiniMessage.miniMessage().deserialize("<light_purple>-<purple>15 <pink>Runecrafting XP <gray>- <light_purple>").append(action));
     }
 
     @Override

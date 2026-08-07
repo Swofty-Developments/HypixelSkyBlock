@@ -1,11 +1,19 @@
 package net.swofty.packer;
 
-import net.swofty.packer.packs.TestingPackDefinition;
+import net.swofty.packer.packs.ravengard.RavengardPackDefinition;
+import net.swofty.packer.packs.skyblock.SkyblockPackDefinition;
 import team.unnamed.creative.BuiltResourcePack;
 import team.unnamed.creative.server.ResourcePackServer;
+import team.unnamed.creative.server.handler.ResourcePackRequestHandler;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HypixelPackServer {
     private static final String DEFAULT_HOST = "0.0.0.0";
@@ -22,25 +30,28 @@ public class HypixelPackServer {
             }
         }
 
-        PackDefinition definition = TestingPackDefinition.INSTANCE;
-        System.out.println("Building resource pack '" + definition.getPackName() + "'...");
-        System.out.println("Pack directory: " + definition.getPackDirectory());
-        System.out.println("Textures directory: " + definition.getTexturesDirectory());
-
-        HypixelPackBuilder builder = new HypixelPackBuilder(definition);
-        BuiltResourcePack built = builder.build();
-
-        System.out.println("Resource pack built. Hash: " + built.hash());
+        Map<String, BuiltResourcePack> packs = List.of(
+                        RavengardPackDefinition.INSTANCE,
+                        SkyblockPackDefinition.INSTANCE
+                ).stream()
+                .map(HypixelPackServer::buildPack)
+                .collect(Collectors.toMap(
+                        pack -> pack.hash() + ".zip",
+                        Function.identity(),
+                        (first, second) -> first
+                ));
 
         ResourcePackServer server = ResourcePackServer.server()
                 .address(host, port)
-                .pack(built)
+                .handler(createRequestHandler(packs))
                 .executor(Executors.newFixedThreadPool(4))
                 .build();
         server.start();
 
         System.out.println("Resource pack server started on " + host + ":" + port);
-        System.out.println("Pack URL: http://" + host + ":" + port + "/" + built.hash() + ".zip");
+        for (String fileName : packs.keySet()) {
+            System.out.println("Pack URL: http://" + host + ":" + port + "/" + fileName);
+        }
         System.out.println("Press Ctrl+C to stop.");
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -51,5 +62,40 @@ public class HypixelPackServer {
         try {
             Thread.currentThread().join();
         } catch (InterruptedException ignored) {}
+    }
+
+    private static BuiltResourcePack buildPack(PackDefinition definition) {
+        System.out.println("Building resource pack '" + definition.getPackName() + "'...");
+        System.out.println("Pack directory: " + definition.getPackDirectory());
+
+        BuiltResourcePack built = new HypixelPackBuilder(definition).build();
+        System.out.println("Resource pack built. Hash: " + built.hash());
+        return built;
+    }
+
+    private static ResourcePackRequestHandler createRequestHandler(Map<String, BuiltResourcePack> packs) {
+        return (request, exchange) -> {
+            String path = exchange.getRequestURI().getPath();
+            String fileName = path.substring(path.lastIndexOf('/') + 1);
+
+            BuiltResourcePack pack = packs.get(fileName);
+
+            if (pack == null) {
+                byte[] response = "Resource pack not found\n".getBytes(StandardCharsets.UTF_8);
+                exchange.getResponseHeaders().set("Content-Type", "text/plain");
+                exchange.sendResponseHeaders(404, response.length);
+                try (OutputStream output = exchange.getResponseBody()) {
+                    output.write(response);
+                }
+                return;
+            }
+
+            byte[] response = pack.data().toByteArray();
+            exchange.getResponseHeaders().set("Content-Type", "application/zip");
+            exchange.sendResponseHeaders(200, response.length);
+            try (OutputStream output = exchange.getResponseBody()) {
+                output.write(response);
+            }
+        };
     }
 }

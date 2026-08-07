@@ -1,19 +1,19 @@
 items:
   - id: SMALL_COMBAT_SACK
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7, §aGhast'
-      - '§aTear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten Flesh§7, §aSlimeball§7,'
-      - '§aSpider Eye§7, §aString'
+      - "\xA77Items: \xA7aBlaze Rod\xA77, \xA7aBone\xA77, \xA7aChili Pepper\xA77, \xA7aEnder Pearl\xA77, \xA7aGhast"
+      - "\xA7aTear\xA77, \xA7aGunpowder\xA77, \xA7aMagma Cream\xA77, \xA7aRotten Flesh\xA77, \xA7aSlimeball\xA77,"
+      - "\xA7aSpider Eye\xA77, \xA7aString"
       - ''
-      - '§7Capacity: §e2,240 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e2,240 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 9b8f452c9d6b6254b5478569a60b0b6fb031c7ad2f06ea3dacf2ce874ca7083
@@ -50,22 +50,21 @@ items:
             result:
               type: SMALL_COMBAT_SACK
               amount: 1
-
   - id: MEDIUM_COMBAT_SACK
     material: player_head
     rarity: RARE
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7, §aGhast'
-      - '§aTear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten Flesh§7, §aSlimeball§7,'
-      - '§aSpider Eye§7, §aString'
+      - "\xA77Items: \xA7aBlaze Rod\xA77, \xA7aBone\xA77, \xA7aChili Pepper\xA77, \xA7aEnder Pearl\xA77, \xA7aGhast"
+      - "\xA7aTear\xA77, \xA7aGunpowder\xA77, \xA7aMagma Cream\xA77, \xA7aRotten Flesh\xA77, \xA7aSlimeball\xA77,"
+      - "\xA7aSpider Eye\xA77, \xA7aString"
       - ''
-      - '§7Capacity: §e6,720 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e6,720 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: e4b2b79a4e060abb00aa88e7c4cd5c0039f5e5cad2d45c1cff5676cb83a1815e
@@ -102,22 +101,21 @@ items:
             result:
               type: MEDIUM_COMBAT_SACK
               amount: 1
-
   - id: LARGE_COMBAT_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7Items: §aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7, §aGhast'
-      - '§aTear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten Flesh§7, §aSlimeball§7,'
-      - '§aSpider Eye§7, §aString'
+      - "\xA77Items: \xA7aBlaze Rod\xA77, \xA7aBone\xA77, \xA7aChili Pepper\xA77, \xA7aEnder Pearl\xA77, \xA7aGhast"
+      - "\xA7aTear\xA77, \xA7aGunpowder\xA77, \xA7aMagma Cream\xA77, \xA7aRotten Flesh\xA77, \xA7aSlimeball\xA77,"
+      - "\xA7aSpider Eye\xA77, \xA7aString"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 1c13c4774c82c07071e6d1408717b1e3eac56186042a5803fc174452e32a254a
@@ -154,24 +152,23 @@ items:
             result:
               type: LARGE_COMBAT_SACK
               amount: 1
-
   - id: LARGE_ENCHANTED_COMBAT_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7This sack can contain all enchanted versions'
-      - '§7of these materials:'
-      - '§aBlaze Rod§7, §aBone§7, §aChili Pepper§7, §aEnder Pearl§7,'
-      - '§aGhast Tear§7, §aGunpowder§7, §aMagma Cream§7, §aRotten'
-      - '§aFlesh§7, §aSlimeball§7, §aSpider Eye§7, §aString'
+      - "\xA77This sack can contain all enchanted versions"
+      - "\xA77of these materials:"
+      - "\xA7aBlaze Rod\xA77, \xA7aBone\xA77, \xA7aChili Pepper\xA77, \xA7aEnder Pearl\xA77,"
+      - "\xA7aGhast Tear\xA77, \xA7aGunpowder\xA77, \xA7aMagma Cream\xA77, \xA7aRotten"
+      - "\xA7aFlesh\xA77, \xA7aSlimeball\xA77, \xA7aSpider Eye\xA77, \xA7aString"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: c2a3420697256517d5361b3463019647c0689725b3489f9dd24a22ddd40bd41f

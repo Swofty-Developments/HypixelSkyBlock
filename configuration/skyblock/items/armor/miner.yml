@@ -1,16 +1,28 @@
 items:
   - id: CHAINMAIL_HELMET
-    rarity: COMMON
+    rarity: UNCOMMON
     material: CHAINMAIL_HELMET
+    components:
+      - id: SELLABLE
+        value: 7.0
   - id: CHAINMAIL_CHESTPLATE
-    rarity: COMMON
+    rarity: UNCOMMON
     material: CHAINMAIL_CHESTPLATE
+    components:
+      - id: SELLABLE
+        value: 12.0
   - id: CHAINMAIL_LEGGINGS
-    rarity: COMMON
+    rarity: UNCOMMON
     material: CHAINMAIL_LEGGINGS
+    components:
+      - id: SELLABLE
+        value: 10.0
   - id: CHAINMAIL_BOOTS
-    rarity: COMMON
+    rarity: UNCOMMON
     material: CHAINMAIL_BOOTS
+    components:
+      - id: SELLABLE
+        value: 6.0
   - id: MINER_ARMOR_HELMET
     rarity: RARE
     material: IRON_HELMET
@@ -36,5 +48,10 @@ items:
     rarity: UNCOMMON
     material: LEATHER_BOOTS
   - id: DWARF_TURTLE_SHELMET
-    rarity: RARE
+    rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 250000.0
+      - id: SKULL_HEAD
+        texture: bac1510610d50443fd97f34a6e94e21d0b93d5c7529f3d95c1816ce24a13dc84

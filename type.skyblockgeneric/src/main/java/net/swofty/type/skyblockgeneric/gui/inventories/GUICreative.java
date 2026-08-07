@@ -11,7 +11,6 @@ import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.gui.HypixelSignGUI;
 import net.swofty.type.generic.gui.inventory.ItemStackCreator;
 import net.swofty.type.generic.gui.inventory.TranslatableItemStackCreator;
-import net.swofty.type.generic.gui.v2.Components;
 import net.swofty.type.generic.gui.v2.Layouts;
 import net.swofty.type.generic.gui.v2.PaginatedView;
 import net.swofty.type.generic.gui.v2.ViewConfiguration;
@@ -74,7 +73,7 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
     @Override
     protected void layoutBackground(ViewLayout<CreativeState> layout, CreativeState state, ViewContext ctx) {
-        layout.filler(Layouts.border(0, 53), Components.FILLER);
+        layout.filler(Layouts.border(0, 53));
     }
 
     @Override
@@ -107,12 +106,12 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
         boolean stackable = !(displayItem.hasComponent(TrackedUniqueComponent.class));
 
         Locale l = player.getLocale();
-        ArrayList<String> lore = new ArrayList<>(displayItem.getLore());
-        lore.add(" ");
-        lore.add(I18n.string("gui_misc.creative.click_to_retrieve", l));
-        if (stackable) lore.add(I18n.string("gui_misc.creative.right_click_stack", l));
+        ArrayList<Component> lore = new ArrayList<>(displayItem.getLoreComponent());
+        lore.add(Component.space());
+        lore.add(I18n.t("gui_misc.creative.click_to_retrieve"));
+        if (stackable) lore.add(I18n.t("gui_misc.creative.right_click_stack"));
 
-        return ItemStackCreator.updateLore(itemStack, lore);
+        return ItemStackCreator.updateComponentLore(itemStack, lore);
     }
 
     @Override
@@ -127,7 +126,6 @@ public class GUICreative extends PaginatedView<SkyBlockItem, GUICreative.Creativ
 
         player.playSound(Sound.sound(Key.key("block.note_block.pling"), Sound.Source.PLAYER, 1.0f, 2.0f));
 
-        Locale l = player.getLocale();
         if (click.click() instanceof Click.Right && stackable) {
             toGive.setAmount(64);
             player.addAndUpdateItem(toGive);

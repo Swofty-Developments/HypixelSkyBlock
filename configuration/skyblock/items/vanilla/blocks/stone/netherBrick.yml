@@ -20,7 +20,6 @@ items:
             result:
               type: NETHER_BRICKS
               amount: 1
-
   - id: NETHER_BRICK_FENCE
     material: NETHER_BRICK_FENCE
     rarity: COMMON
@@ -42,7 +41,6 @@ items:
             result:
               type: NETHER_BRICK_FENCE
               amount: 3
-
   - id: NETHER_BRICK_SLAB
     material: NETHER_BRICK_SLAB
     rarity: COMMON
@@ -63,7 +61,6 @@ items:
             result:
               type: NETHER_BRICK_SLAB
               amount: 6
-
   - id: NETHER_BRICK_STAIRS
     material: NETHER_BRICK_STAIRS
     rarity: COMMON
@@ -86,7 +83,6 @@ items:
             result:
               type: NETHER_BRICK_STAIRS
               amount: 4
-
   - id: NETHER_BRICK_WALL
     material: NETHER_BRICK_WALL
     rarity: COMMON
@@ -108,7 +104,9 @@ items:
             result:
               type: NETHER_BRICK_WALL
               amount: 6
-
   - id: NETHER_BRICK
     rarity: COMMON
     material: NETHER_BRICK
+    components:
+      - id: SELLABLE
+        value: 2.0

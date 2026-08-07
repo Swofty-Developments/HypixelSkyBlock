@@ -1,24 +1,24 @@
 items:
   - id: SPIDER_TALISMAN
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: UNCOMMON
     components:
       - id: TALISMAN
       - id: SKULL_HEAD
-        texture: 9d7e3b19ac4f3dee9c5677c135333b9d35a7f568b63d1ef4ada4b068b5a25
-
+        texture: 9d83d0494939dba5f27a1dcba7031d5feff44d6efe8d8623e12052470d0a6674
+      - id: SELLABLE
+        value: 50.0
   - id: SPIDER_RING
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: TALISMAN
       - id: SKULL_HEAD
-        texture: 7652bd7617e56c756514f83c28dd1d96a7e5e167bf7fb593693fc65046f799
-
+        texture: 604ada2212a38e67b6dbad2d156ee110c546dbfd7165b7f50b8ec17ff224dba5
   - id: SPIDER_ARTIFACT
     material: PLAYER_HEAD
-    rarity: COMMON
+    rarity: EPIC
     components:
       - id: TALISMAN
       - id: SKULL_HEAD
-        texture: 8300986ed0a04ea79904f6ae53f49ed3a0ff5b1df62bba622ecbd3777f156df8
+        texture: b81b5cf3a65bf9cab4bca55781721a86d567d9e106551647f35b715edf00a13f

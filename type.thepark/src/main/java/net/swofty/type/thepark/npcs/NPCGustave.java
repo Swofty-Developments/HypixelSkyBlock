@@ -45,7 +45,7 @@ public class NPCGustave extends HypixelNPC {
 			}
 
 			@Override
-			public @NonNull String chatName() {
+            public @NonNull String chatName(HypixelPlayer player) {
 				return "§aGustave";
 			}
 		});

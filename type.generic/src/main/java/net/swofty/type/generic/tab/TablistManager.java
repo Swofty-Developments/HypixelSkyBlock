@@ -1,6 +1,7 @@
 package net.swofty.type.generic.tab;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.color.TeamColor;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
@@ -13,15 +14,7 @@ import net.swofty.type.generic.HypixelGenericLoader;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -77,15 +70,15 @@ public abstract class TablistManager {
 
                             if (cache.createdTeams.add(teamName)) {
                                 TeamsPacket teamPacket = new TeamsPacket(teamName, new TeamsPacket.CreateTeamAction(
-                                    new TeamsPacket.Settings(
-                                        Component.text(teamName),
-                                        Component.text(teamName),
-                                        Component.empty(),
-                                        TeamsPacket.NameTagVisibility.ALWAYS,
-                                        TeamsPacket.CollisionRule.ALWAYS,
-                                        TeamColor.RED,
-                                        (byte) 0x01
-                                    ),
+                                        new TeamsPacket.Settings(
+                                                Component.text(teamName),
+                                                Component.text(teamName),
+                                                Component.empty(),
+                                                TeamsPacket.NameTagVisibility.ALWAYS,
+                                                TeamsPacket.CollisionRule.ALWAYS,
+                                                TeamColor.RED,
+                                                (byte) 0x01
+                                        ),
                                     new ArrayList<>(Collections.singletonList(fakeProfileName))
                                 ));
 
@@ -108,7 +101,7 @@ public abstract class TablistManager {
                                     true,
                                     0,
                                     GameMode.CREATIVE,
-                                    Component.text(entry.content()),
+                                        entry.content(),
                                     null,
                                     1, true)))
                             );

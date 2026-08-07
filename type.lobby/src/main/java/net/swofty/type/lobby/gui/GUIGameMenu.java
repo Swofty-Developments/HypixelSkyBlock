@@ -44,9 +44,12 @@ public class GUIGameMenu extends StatelessView {
             "§8Persistent Game", "", "§7Create your own SMP server on", "§7Hypixel and play with your friends.",
             "", "§a► Click to Connect"), (_, c) -> c.player().notImplemented());
 
+        layout.slot(22, createGameItem(GameType.RAVENGARD), (_, c) -> connect(c, GameType.RAVENGARD));
+
         int index = 0;
         for (GameType game : GameType.values()) {
             if (index >= GAME_SLOTS.length) break;
+            if (game == GameType.RAVENGARD) continue;
             layout.slot(GAME_SLOTS[index++], createGameItem(game), (_, c) -> connect(c, game));
         }
         layout.slot(49, createRandomGameItem(), (_, c) -> connectRandom(c));

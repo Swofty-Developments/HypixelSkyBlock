@@ -37,7 +37,7 @@ public class ActionCollectionDisplay implements HypixelEventClass {
         CollectionCategory.ItemCollectionReward oldReward = null;
 
         for (CollectionCategory.ItemCollectionReward reward : collection.rewards()) {
-            if (event.getOldValue() <= reward.requirement()) {
+            if (event.getOldValue() < reward.requirement()) {
                 oldReward = reward;
                 break;
             }
@@ -45,22 +45,23 @@ public class ActionCollectionDisplay implements HypixelEventClass {
 
         if (oldReward == newReward) return;
 
-        if (oldReward != null && newReward != null) {
+        if (oldReward != null) {
             SkyBlockPlayer player = event.getPlayer();
 
             player.sendMessage("§e§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             int placement = collection.getPlacementOf(oldReward);
 
+            int unlockedLevel = placement + 1;
             if (placement == 0) {
                 player.sendMessage(Component.text("  §6§lCOLLECTION LEVEL UP §e" + event.getItemType().getDisplayName() + " " +
-                                StringUtility.getAsRomanNumeral(collection.getPlacementOf(newReward)))
+                                StringUtility.getAsRomanNumeral(unlockedLevel))
                         .hoverEvent(Component.text("§eClick to view your " + event.getItemType().getDisplayName() + " Collection!"))
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewcollection " + event.getItemType().name()))
                 );
             } else {
                 player.sendMessage(Component.text("  §6§lCOLLECTION LEVEL UP §e" + event.getItemType().getDisplayName() + " §8" +
                                 StringUtility.getAsRomanNumeral(collection.getPlacementOf(oldReward)) + "➜§e" +
-                                StringUtility.getAsRomanNumeral(collection.getPlacementOf(newReward)))
+                                StringUtility.getAsRomanNumeral(unlockedLevel))
                         .hoverEvent(Component.text("§eClick to view your " + event.getItemType().getDisplayName() + " Collection!"))
                         .clickEvent(net.kyori.adventure.text.event.ClickEvent.runCommand("/viewcollection " + event.getItemType().name()))
                 );

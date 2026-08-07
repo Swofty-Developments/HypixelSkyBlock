@@ -7,9 +7,11 @@ items:
     rarity: COMMON
   - id: KISMET_FEATHER
     material: feather
-    rarity: COMMON
+    rarity: RARE
     components:
       - id: ENCHANTED
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/community_center/bits_shop/kismet_feather
   - id: NECRONS_HANDLE
     material: stick
     rarity: COMMON
@@ -24,24 +26,50 @@ items:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Superboom TNT
       - id: ENCHANTED
+      - id: SELLABLE
+        value: 2.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/uncategorized/superboom_tnt
   - id: JUDGEMENT_CORE
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: 95f3726f6bfbc81f07025f1d6cbec7f8f7fa7abdf3a0a86b8197e092214860ba
   - id: ETHERWARP_CONDUIT
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: ca70e0206f6166048441dfe08e053a6017d914f35c6b1fb0f558c50574f970d0
   - id: ETHERWARP_MERGER
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 100000.0
+      - id: SKULL_HEAD
+        texture: 3e5314f4919691ccbf807743dae47ae45ac2e3ff08f79eecdd452fe602eff7f6
   - id: GLOOMLOCK_GRIMOIRE
     rarity: EPIC
     material: WRITTEN_BOOK
   - id: GYROKINETIC_WAND
     rarity: EPIC
     material: BLAZE_ROD
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/slayer/enderman/support_items/gyrokinetic_wand
   - id: TRANSMISSION_TUNER
     rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 45000.0
+      - id: SKULL_HEAD
+        texture: 52626178b84dbd394cf2409467210282e521032176db21b281fdc8ae9cbe2b2f
   - id: EXCEEDINGLY_RARE_ENDER_ARTIFACT_UPGRADER
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    components:
+      - id: SKULL_HEAD
+        texture: 1259231a946987ea53141789a09496f098d6ecac412a01e0a24c906a99fdbd9a

@@ -6,6 +6,7 @@ import net.minestom.server.item.Material;
 import net.swofty.commons.ServiceType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.protocol.objects.darkauction.TriggerDarkAuctionProtocol;
+import net.swofty.commons.redis.RedisClient;
 import net.swofty.proxyapi.ProxyService;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import org.tinylog.Logger;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -63,11 +66,18 @@ public record CalendarEvent(
         calculateDarkAuctionTimes(),
         Duration.ofMinutes(5),
         false,
-        (time, year) -> {
-            ProxyService darkAuctionService = new ProxyService(ServiceType.DARK_AUCTION);
-            darkAuctionService.handleRequest(
+            (time, year) -> triggerDarkAuctionUntil(time, System.nanoTime() + Duration.ofMinutes(5).toNanos())
+    );
+
+    private static void triggerDarkAuctionUntil(long eventTime, long deadlineNanos) {
+        RedisClient.isServiceOnline(ServiceType.DARK_AUCTION).thenAccept(online -> {
+            if (!online) {
+                retryDarkAuction(eventTime, deadlineNanos);
+                return;
+            }
+            new ProxyService(ServiceType.DARK_AUCTION).handleRequest(
                     new TriggerDarkAuctionProtocol(),
-                    new TriggerDarkAuctionProtocol.TriggerMessage(time))
+                            new TriggerDarkAuctionProtocol.TriggerMessage(eventTime))
                 .thenAccept(response -> {
                     if (response.success()) {
                         Logger.info("Dark Auction started successfully");
@@ -76,11 +86,18 @@ public record CalendarEvent(
                     }
                 })
                 .exceptionally(throwable -> {
-                    Logger.error(throwable, "Failed to trigger Dark Auction");
+                    Logger.debug("Dark Auction service became unavailable while triggering: {}", throwable.getMessage());
+                    retryDarkAuction(eventTime, deadlineNanos);
                     return null;
                 });
-        }
-    );
+        });
+    }
+
+    private static void retryDarkAuction(long eventTime, long deadlineNanos) {
+        if (System.nanoTime() >= deadlineNanos) return;
+        CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS)
+                .execute(() -> triggerDarkAuctionUntil(eventTime, deadlineNanos));
+    }
 
     private static List<Long> calculateDarkAuctionTimes() {
         List<Long> times = new ArrayList<>();

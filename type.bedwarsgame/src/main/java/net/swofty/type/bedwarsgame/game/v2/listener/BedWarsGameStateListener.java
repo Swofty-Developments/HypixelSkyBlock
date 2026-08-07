@@ -1,11 +1,10 @@
 package net.swofty.type.bedwarsgame.game.v2.listener;
 
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.game.game.event.GameStateChangeEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import org.tinylog.Logger;
 
 // todo: move functionality here
@@ -13,11 +12,11 @@ public class BedWarsGameStateListener implements HypixelEventClass {
 
     @PhasedEvent(node = EventNodes.CUSTOM, requireDataLoaded = false)
     public void onGameStateChange(GameStateChangeEvent event) {
-        BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
+        BedWarsGame game = (BedWarsGame) event.game();
         if (game == null) return;
 
         Logger.info("BedWars game {} state changed: {} -> {}",
-            event.gameId(), event.previousState(), event.newState());
+                event.game().getGameId(), event.previousState(), event.newState());
 
         if (event.isCountdownStart()) {
             onCountdownStarted(game);

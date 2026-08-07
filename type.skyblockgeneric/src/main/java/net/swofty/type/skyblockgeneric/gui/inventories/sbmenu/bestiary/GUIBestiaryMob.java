@@ -138,28 +138,28 @@ public class GUIBestiaryMob extends StatelessView {
                 lore.add("");
 
                 if (!commonLoot.isEmpty()) {
-                    lore.add(Rarity.COMMON.getColor() + "Common Loot");
+                    lore.add(Rarity.COMMON.getLegacyColor() + "Common Loot");
                     for (SkyBlockLootTable.LootRecord lootRecord : commonLoot) {
                         lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName());
                     }
                     lore.add("");
                 }
                 if (!uncommonLoot.isEmpty()) {
-                    lore.add(Rarity.UNCOMMON.getColor() + "Uncommon Loot");
+                    lore.add(Rarity.UNCOMMON.getLegacyColor() + "Uncommon Loot");
                     for (SkyBlockLootTable.LootRecord lootRecord : uncommonLoot) {
                         lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
                     }
                     lore.add("");
                 }
                 if (!rareLoot.isEmpty()) {
-                    lore.add(Rarity.RARE.getColor() + "Rare Loot");
+                    lore.add(Rarity.RARE.getLegacyColor() + "Rare Loot");
                     for (SkyBlockLootTable.LootRecord lootRecord : rareLoot) {
                         lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
                     }
                     lore.add("");
                 }
                 if (!legendaryLoot.isEmpty()) {
-                    lore.add(Rarity.LEGENDARY.getColor() + "Legendary Loot");
+                    lore.add(Rarity.LEGENDARY.getLegacyColor() + "Legendary Loot");
                     for (SkyBlockLootTable.LootRecord lootRecord : legendaryLoot) {
                         lore.add(" §8■ §f" + lootRecord.getItemType().getDisplayName() + " §8(§a" + lootRecord.getChancePercent() + "%§8)");
                     }

@@ -1,0 +1,144 @@
+items:
+  - id: ATTRIBUTE_SHARD
+    material: PRISMARINE_SHARD
+    rarity: COMMON
+    components:
+      - id: ATTRIBUTE_SHARD
+  - id: RETIA_BASICA
+    material: PAPER
+    rarity: COMMON
+    lore:
+      - "<dark_gray><italic>Fundamentum artis vinandi."
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Small Huntrap
+      - id: PLACE_EVENT
+        handler_id: HUNTRAP
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern: [ ABA, B_B, ABA ]
+            ingredients:
+              A: { type: ENCHANTED_FIG_LOG, amount: 1 }
+              B: { type: TENDER_WOOD, amount: 1 }
+            result: { type: RETIA_BASICA, amount: 1 }
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/traps/small_huntrap
+  - id: RETIA_MELIORA
+    material: PAPER
+    rarity: UNCOMMON
+    lore:
+      - "<dark_gray><italic>Ubi ars natura superat."
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Medium Huntrap
+      - id: PLACE_EVENT
+        handler_id: HUNTRAP
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern: [ ABA, BCB, ABA ]
+            ingredients:
+              A: { type: ENCHANTED_FIG_LOG, amount: 4 }
+              B: { type: TENDER_WOOD, amount: 8 }
+              C: { type: RETIA_BASICA, amount: 1 }
+            result: { type: RETIA_MELIORA, amount: 1 }
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/traps/medium_huntrap
+  - id: RETIA_ROBUSTA
+    material: PAPER
+    rarity: RARE
+    lore:
+      - "<gray><italic>In robore, fiducia."
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Large Huntrap
+      - id: PLACE_EVENT
+        handler_id: HUNTRAP
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern: [ ABA, BCB, ABA ]
+            ingredients:
+              A: { type: ENCHANTED_FIG_LOG, amount: 8 }
+              B: { type: TENDER_WOOD, amount: 32 }
+              C: { type: RETIA_MELIORA, amount: 1 }
+            result: { type: RETIA_ROBUSTA, amount: 1 }
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/traps/large_huntrap
+  - id: RETIA_FORTA
+    material: PAPER
+    rarity: EPIC
+    lore:
+      - "<gray><italic>Sagacitas et fortitudo coniuncta."
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Greater Huntrap
+      - id: PLACE_EVENT
+        handler_id: HUNTRAP
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern: [ ABA, BCB, ABA ]
+            ingredients:
+              A: { type: ENCHANTED_FIG_LOG, amount: 16 }
+              B: { type: TENDER_WOOD, amount: 64 }
+              C: { type: RETIA_ROBUSTA, amount: 1 }
+            result: { type: RETIA_FORTA, amount: 1 }
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/traps/greater_huntrap
+  - id: RETIA_SUPREMA
+    material: PAPER
+    rarity: LEGENDARY
+    lore:
+      - "<gray><italic>Suprema inter retia, nulla praeda elabitur."
+    components:
+      - id: CUSTOM_DISPLAY_NAME
+        display_name: Astral Huntrap
+      - id: PLACE_EVENT
+        handler_id: HUNTRAP
+      - id: DEFAULT_CRAFTABLE
+        default-craftable: false
+        recipes:
+          - type: SHAPED
+            recipe-type: FORAGING
+            pattern: [ ABA, BCB, ABA ]
+            ingredients:
+              A: { type: ENCHANTED_FIG_LOG, amount: 32 }
+              B: { type: ENCHANTED_TENDER_WOOD, amount: 1 }
+              C: { type: RETIA_FORTA, amount: 1 }
+            result: { type: RETIA_SUPREMA, amount: 1 }
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/traps/astral_huntrap
+  - id: SWEEP_BOOSTER
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: bd6a0624b440449a5719518392fa182a91cb890db35ad4410aae47f85c2d619b
+  - id: FORAGING_WISDOM_BOOSTER
+    material: PLAYER_HEAD
+    rarity: COMMON
+    components:
+      - id: SKULL_HEAD
+        texture: 81f4910eeb6670df13d9a12338324190e62ee3db483ab3e7f2b4ca93b53b0e79
+  - id: TREE_THE_FISH
+    material: PAPER
+    rarity: SPECIAL
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/fish_family/tree_the_fish
+  - id: SIGNAL_ENHANCER
+    material: PAPER
+    rarity: LEGENDARY
+    components:
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/signal_enhancer

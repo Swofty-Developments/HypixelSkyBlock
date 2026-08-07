@@ -36,6 +36,8 @@ This project requires substantial resources to run properly. Make sure your syst
 | Docker | Containerized deployment | [Docker Desktop](https://www.docker.com/products/docker-desktop) |
 | MongoDB Compass | Database GUI | [MongoDB Compass](https://www.mongodb.com/products/compass) |
 
+If you use the Docker deployment, Java, MongoDB and Redis all run in containers, so Docker with Compose v2 is the only thing you need on the host. The [installer](/docs/docker/setup) checks for it and offers to install it for you if it is missing.
+
 ## Network Requirements
 
 The following ports are used by default:
@@ -45,6 +47,7 @@ The following ports are used by default:
 | 25565 | Velocity Proxy (player connections) |
 | 27017 | MongoDB                             |
 | 6379  | Redis                               |
+| 7270  | Resource Pack Server                |
 | 8080  | API Service                         |
 
 :::alert warning

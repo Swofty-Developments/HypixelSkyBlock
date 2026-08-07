@@ -1,7 +1,6 @@
 package net.swofty.type.ravengardgeneric.event.actions.player;
 
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.minestom.server.instance.Instance;
 import net.swofty.type.generic.HypixelConst;
 import net.swofty.type.generic.event.EventNodes;
 import net.swofty.type.generic.event.HypixelEventClass;
@@ -12,16 +11,11 @@ import org.tinylog.Logger;
 
 public class ActionPlayerJoin implements HypixelEventClass {
 
-    @PhasedEvent(node = EventNodes.PLAYER, requireDataLoaded = false, phase = EventPhase.CONNECT)
+    @PhasedEvent(node = EventNodes.PLAYER, phase = EventPhase.GAMEPLAY)
     public void run(AsyncPlayerConfigurationEvent event) {
         RavengardPlayer player = (RavengardPlayer) event.getPlayer();
 
-        Instance mainInstance = HypixelConst.getInstanceContainer();
-        if (mainInstance == null) {
-            mainInstance = HypixelConst.getEmptyInstance();
-        }
-
-        event.setSpawningInstance(mainInstance);
+        event.setSpawningInstance(HypixelConst.getEmptyInstance());
         player.setRespawnPoint(HypixelConst.getTypeLoader()
                 .getLoaderValues()
                 .spawnPosition()

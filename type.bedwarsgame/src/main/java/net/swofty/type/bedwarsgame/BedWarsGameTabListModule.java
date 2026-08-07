@@ -1,7 +1,8 @@
 package net.swofty.type.bedwarsgame;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.PlayerSkin;
 import net.swofty.commons.party.FullParty;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
@@ -50,9 +51,9 @@ public class BedWarsGameTabListModule extends TablistModule {
                     skin = new CustomTablistSkin(playerSkin);
                 }
 
-                String displayName = shouldObfuscate
-                    ? "§k" + UUID.randomUUID().toString().replaceAll("-", "").substring(0, new Random().nextInt(10) + 4)
-                    : LegacyComponentSerializer.legacySection().serialize(bedWarsPlayer.getColouredName());
+                Component displayName = shouldObfuscate
+                        ? Component.text(UUID.randomUUID().toString().replaceAll("-", "").substring(0, new Random().nextInt(10) + 4), Style.style(TextDecoration.OBFUSCATED))
+                        : bedWarsPlayer.getColouredName();
                 entries[index++] = new TablistEntry(displayName, skin);
             }
             return List.of(entries);
@@ -64,7 +65,6 @@ public class BedWarsGameTabListModule extends TablistModule {
                 if (displayName == null) {
                     displayName = Component.text(bedWarsPlayer.getUsername());
                 }
-                String name = LegacyComponentSerializer.legacySection().serialize(displayName);
                 TablistSkin skin;
                 PlayerSkin playerSkin = bedWarsPlayer.getSkin();
                 if (playerSkin == null) {
@@ -72,7 +72,7 @@ public class BedWarsGameTabListModule extends TablistModule {
                 } else {
                     skin = new CustomTablistSkin(playerSkin);
                 }
-                entries[index++] = new TablistEntry(name, skin);
+                entries[index++] = new TablistEntry(displayName, skin);
             }
             return List.of(entries);
         }

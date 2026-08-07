@@ -1,29 +1,16 @@
 package net.swofty.type.game.game;
 
 import lombok.Getter;
-import net.minestom.server.instance.InstanceContainer;
-import net.swofty.type.game.game.event.GameDisposeEvent;
-import net.swofty.type.game.game.event.GameStartEvent;
-import net.swofty.type.game.game.event.GameStateChangeEvent;
-import net.swofty.type.game.game.event.GameWinConditionEvent;
-import net.swofty.type.game.game.event.PlayerDisconnectGameEvent;
-import net.swofty.type.game.game.event.PlayerLeaveGameEvent;
-import net.swofty.type.game.game.event.PlayerPostJoinGameEvent;
-import net.swofty.type.game.game.event.PlayerPreJoinGameEvent;
-import net.swofty.type.game.game.event.PlayerRejoinGameEvent;
+import net.minestom.server.instance.Instance;
+import net.swofty.type.game.game.event.*;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public abstract class AbstractGame<P extends GameParticipant> implements Game<P> {
     protected final String gameId;
-    protected final InstanceContainer instance;
+    protected final Instance instance;
     protected final Map<UUID, P> players = new ConcurrentHashMap<>();
     protected final Map<UUID, DisconnectedPlayerData> disconnectedPlayers = new ConcurrentHashMap<>();
 
@@ -44,7 +31,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     ) {
     }
 
-    protected AbstractGame(InstanceContainer instance, Consumer<Object> eventDispatcher) {
+    protected AbstractGame(Instance instance, Consumer<Object> eventDispatcher) {
         this.gameId = UUID.randomUUID().toString();
         this.instance = instance;
         this.eventDispatcher = eventDispatcher;
@@ -57,7 +44,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
      */
     protected DefaultGameCountdown createCountdown() {
         return new DefaultGameCountdown(
-            gameId,
+                this,
             getCountdownConfig(),
             eventDispatcher,
             this::onCountdownComplete,
@@ -97,7 +84,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
     }
 
     @Override
-    public InstanceContainer getInstance() {
+    public Instance getInstance() {
         return instance;
     }
 
@@ -122,7 +109,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
             return new JoinResult.Denied("Player is already in this game");
         }
 
-        PlayerPreJoinGameEvent event = new PlayerPreJoinGameEvent(gameId, player.getServerPlayer());
+        PlayerPreJoinGameEvent event = new PlayerPreJoinGameEvent(this, player.getServerPlayer());
         eventDispatcher.accept(event);
 
         if (event.isCancelled()) {
@@ -141,7 +128,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         player.setGameId(gameId);
 
         eventDispatcher.accept(new PlayerPostJoinGameEvent(
-            gameId,
+                this,
             player.getServerPlayer(),
             players.size(),
             getMaxPlayers()
@@ -167,7 +154,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         }
 
         eventDispatcher.accept(new PlayerLeaveGameEvent(
-            gameId,
+                this,
             player.getServerPlayer(),
             PlayerLeaveGameEvent.LeaveReason.VOLUNTARY
         ));
@@ -201,7 +188,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         players.remove(uuid);
 
         eventDispatcher.accept(new PlayerDisconnectGameEvent(
-            gameId,
+                this,
             player.getServerPlayer(),
             canRejoin
         ));
@@ -219,7 +206,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         player.setGameId(gameId);
 
         eventDispatcher.accept(new PlayerRejoinGameEvent(
-            gameId,
+                this,
             player.getServerPlayer(),
             data
         ));
@@ -243,7 +230,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
 
         setState(GameState.IN_PROGRESS);
 
-        eventDispatcher.accept(new GameStartEvent(gameId));
+        eventDispatcher.accept(new GameStartEvent(this));
     }
 
     @Override
@@ -260,7 +247,7 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         players.clear();
         disconnectedPlayers.clear();
         eventDispatcher.accept(new GameDisposeEvent(
-            gameId
+                this
         ));
     }
 
@@ -273,13 +260,13 @@ public abstract class AbstractGame<P extends GameParticipant> implements Game<P>
         GameState oldState = this.state;
         this.state = newState;
 
-        eventDispatcher.accept(new GameStateChangeEvent(gameId, oldState, newState));
+        eventDispatcher.accept(new GameStateChangeEvent(this, oldState, newState));
     }
 
     protected void checkWinConditions() {
         eventDispatcher.accept(
             new GameWinConditionEvent(
-                gameId
+                    this
             )
         );
     }

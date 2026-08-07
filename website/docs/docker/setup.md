@@ -10,15 +10,29 @@ curl -fsSL skyblock-installer.swofty.net | bash
 
 This fetches the prebuilt `skyblock-installer` binary for your platform from the [latest release](https://github.com/Swofty-Developments/HypixelSkyBlock/releases/latest), caches it under `~/.cache/skyblock-installer`, and runs it. The installer will:
 
-1. Verify its dependencies are present (`docker`, `git`, `curl`)
+1. Check its dependencies (`docker`, `docker compose` v2, a reachable daemon, `git`, `curl`) and offer to install anything missing
 2. Run a system requirements check
 3. Let you pick which server types and services to run
 4. Generate all configuration and Docker Compose files
 5. Build and start everything in the correct order
 6. Drop you into a management dashboard
 
-:::alert note
-Requires **Docker** with **Compose v2** and a running Docker daemon your user can access. The installer itself is a self-contained Go binary — there are no other runtime dependencies to install.
+The installer itself is a self-contained Go binary with no runtime dependencies of its own.
+
+### Dependencies
+
+You do not need Docker installed beforehand. If anything is missing, the installer shows a **Missing dependencies** screen listing what is absent and the exact official commands for your distribution, and offers to run them for you:
+
+- `i` runs the commands (they use `sudo`, so you will be prompted for your password)
+- `r` re-checks once you have finished
+- `Esc` goes back if you would rather run them yourself
+
+You can reach the same screen any time from **Check dependencies** on the home menu.
+
+The commands come straight from the [official Docker install docs](https://docs.docker.com/engine/install/) and are picked per distribution — the apt repository steps on Debian and Ubuntu, the `dnf` repository steps on Fedora and RHEL, `pacman` on Arch, `zypper` on openSUSE. On macOS, Docker Desktop cannot be installed unattended, so the installer prints the `brew install --cask docker` steps instead of running them.
+
+:::alert warning
+Installing Docker adds your user to the `docker` group, and Linux only applies group membership at login. The installer will tell you to close your shell, open a new one, and run it again — this is expected and not a failure.
 :::
 
 ### What You'll See
@@ -27,9 +41,10 @@ The installer walks you through:
 
 | Step              | What It Does                                                              |
 |-------------------|---------------------------------------------------------------------------|
+| Dependencies      | Checks for Docker, Compose v2, git and curl, and offers to install them   |
 | System Check      | Validates RAM, CPU, disk space, Docker version                            |
 | Configuration     | Pick install directory, bind IP, online mode                              |
-| Server Selection  | Choose from 14 SkyBlock servers and 10 minigame servers                   |
+| Server Selection  | Choose from 14 SkyBlock servers and 13 lobby/minigame servers             |
 | Service Selection | Pick which microservices to run (DataMutex and Party are required)        |
 | Build & Launch    | Builds Docker images, starts containers in order, waits for health checks |
 
@@ -70,10 +85,7 @@ cd HypixelSkyBlock
 
 ### 2. Configure
 
-In your `configuration` folder:
-
-1. Remove the default `config.yml`
-2. Rename `config.docker.yml` to `config.yml`
+The containers pick up `configuration/config.docker.yml` on their own, so there is nothing to rename. Only set your forwarding secret.
 
 In the top of `docker-compose.yml` change the `change-me` to other.
 
@@ -111,14 +123,15 @@ docker compose down
 
 The Docker Compose setup starts:
 
-| Container      | Purpose                                     |
-|----------------|---------------------------------------------|
-| MongoDB        | Database                                    |
-| Redis          | Caching & messaging                         |
-| Velocity Proxy | Player connections                          |
-| PicoLimbo      | Connection queue                            |
-| Game Servers   | Gameplay instances                          |
-| Services       | Microservices (API, Auctions, Bazaar, etc.) |
+| Container            | Purpose                                     |
+|----------------------|---------------------------------------------|
+| MongoDB              | Database                                    |
+| Redis                | Caching & messaging                         |
+| Velocity Proxy       | Player connections                          |
+| PicoLimbo            | Connection queue                            |
+| Resource Pack Server | Serves the resource packs on port 7270      |
+| Game Servers         | Gameplay instances                          |
+| Services             | Microservices (API, Auctions, Bazaar, etc.) |
 
 ## Connecting
 
@@ -126,6 +139,18 @@ Once everything is running, connect with your Minecraft client to:
 
 ```
 localhost:25565
+```
+
+Set **Server Resource Packs** to *Enabled* on the server entry, or the HUD, minimap and custom models will not load.
+
+The pack URL is handed to your client rather than resolved inside the container, so it stays a host address. If players connect from another machine, set `resource-packs` in `configuration/config.docker.yml` to your LAN or public IP and make sure port `7270` is reachable:
+
+```yml
+resource-packs:
+    skyblockpack:
+        server-url: http://192.0.2.10:7270
+    ravengard:
+        server-url: http://192.0.2.10:7270
 ```
 
 ## Logs and Debugging

@@ -1,7 +1,7 @@
 items:
   - id: ROSETTA_BOOTS
     material: diamond_boots
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 15.0
       defense: 20.0
@@ -14,7 +14,7 @@ items:
         value: 480.0
   - id: ROSETTA_CHESTPLATE
     material: diamond_chestplate
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 15.0
       defense: 40.0
@@ -27,7 +27,7 @@ items:
         value: 660.0
   - id: ROSETTA_HELMET
     material: diamond_helmet
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 15.0
       defense: 20.0
@@ -40,7 +40,7 @@ items:
         value: 525.0
   - id: ROSETTA_LEGGINGS
     material: diamond_leggings
-    rarity: COMMON
+    rarity: UNCOMMON
     default_statistics:
       health: 15.0
       defense: 30.0

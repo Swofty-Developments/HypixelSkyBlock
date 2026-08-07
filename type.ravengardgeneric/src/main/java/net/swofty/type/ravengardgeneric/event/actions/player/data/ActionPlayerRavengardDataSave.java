@@ -26,6 +26,7 @@ public class ActionPlayerRavengardDataSave implements HypixelEventClass {
             return;
         }
 
+        net.swofty.type.ravengardgeneric.profile.RavengardProfiles.endSessionAndSave(player);
         Logger.info("Saving Ravengard data for: {}", player.getUsername());
 
         handler.runOnSave(player);

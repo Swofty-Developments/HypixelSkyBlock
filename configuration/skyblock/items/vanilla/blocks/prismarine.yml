@@ -6,11 +6,13 @@ items:
       - id: CUSTOM_DROP
         rules:
           - conditions:
-              serverType: "SKYBLOCK_DWARVEN_MINES"
+              serverType: SKYBLOCK_DWARVEN_MINES
             drops:
               - item: MITHRIL
                 chance: 1
                 amount: 1
+      - id: SELLABLE
+        value: 5.0
   - id: DARK_PRISMARINE
     material: DARK_PRISMARINE
     rarity: COMMON
@@ -18,7 +20,7 @@ items:
       - id: CUSTOM_DROP
         rules:
           - conditions:
-              serverType: "SKYBLOCK_DWARVEN_MINES"
+              serverType: SKYBLOCK_DWARVEN_MINES
             drops:
               - item: MITHRIL
                 chance: 1
@@ -30,7 +32,7 @@ items:
       - id: CUSTOM_DROP
         rules:
           - conditions:
-              serverType: "SKYBLOCK_DWARVEN_MINES"
+              serverType: SKYBLOCK_DWARVEN_MINES
             drops:
               - item: MITHRIL
                 chance: 1

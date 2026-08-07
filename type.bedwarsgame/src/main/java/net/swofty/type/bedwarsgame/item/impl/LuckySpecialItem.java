@@ -346,7 +346,7 @@ public class LuckySpecialItem extends SimpleInteractableItem {
         Vec direction = player.getPosition().direction().normalize();
         for (int i = 1; i <= range; i++) {
             Point point = player.getPosition().add(0, player.getEyeHeight(), 0).add(direction.mul(i));
-            if (player.getInstance().getBlock(point).isAir()) {
+            if (player.getInstance().getBlock(point).air()) {
                 return new Pos(point.blockX(), point.blockY(), point.blockZ());
             }
         }
@@ -357,7 +357,7 @@ public class LuckySpecialItem extends SimpleInteractableItem {
         Vec direction = player.getPosition().direction().normalize();
         for (int i = 1; i <= range; i++) {
             Point point = player.getPosition().add(0, player.getEyeHeight(), 0).add(direction.mul(i));
-            if (!player.getInstance().getBlock(point).isAir()) {
+            if (!player.getInstance().getBlock(point).air()) {
                 return new Pos(point.blockX(), point.blockY(), point.blockZ());
             }
         }

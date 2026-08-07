@@ -1,7 +1,19 @@
+buildscript {
+    configurations.classpath {
+        resolutionStrategy.force(
+            "org.ow2.asm:asm:9.10.1",
+            "org.ow2.asm:asm-analysis:9.10.1",
+            "org.ow2.asm:asm-commons:9.10.1",
+            "org.ow2.asm:asm-tree:9.10.1",
+            "org.ow2.asm:asm-util:9.10.1",
+        )
+    }
+}
+
 plugins {
     base
     java
-    id("io.freefair.lombok") version "9.1.0" apply false
+    id("io.freefair.lombok") version "9.5.0" apply false
     id("io.sentry.jvm.gradle") version "6.12.0" apply false
 }
 

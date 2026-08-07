@@ -2,13 +2,12 @@ package net.swofty.type.bedwarsgame.game.v2.listener;
 
 import net.kyori.adventure.text.Component;
 import net.swofty.commons.ServerType;
-import net.swofty.type.bedwarsgame.TypeBedWarsGameLoader;
 import net.swofty.type.bedwarsgame.game.v2.BedWarsGame;
 import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.game.game.event.PlayerLeaveGameEvent;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 
 import java.util.Random;
 
@@ -18,7 +17,7 @@ public class PlayerLeaveListener implements HypixelEventClass {
     public void onPlayerLeave(PlayerLeaveGameEvent event) {
         BedWarsPlayer player = (BedWarsPlayer) event.player();
         player.sendTo(ServerType.BEDWARS_LOBBY);
-        BedWarsGame game = TypeBedWarsGameLoader.getGameById(event.gameId());
+        BedWarsGame game = (BedWarsGame) event.game();
         if (game == null) return;
         if (!game.getState().isWaiting()) return;
 

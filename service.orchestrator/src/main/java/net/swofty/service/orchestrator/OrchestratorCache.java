@@ -227,6 +227,34 @@ public class OrchestratorCache {
         return topServers.get(ThreadLocalRandom.current().nextInt(topServers.size()));
     }
 
+    /**
+     * Picks the server to host a new game: prefer servers advertising free game
+     * slots (most free first); when every server is full, fall back to the least
+     * filled one so the game still lands somewhere.
+     */
+    public static GameServerState pickServerForNewGame(ServerType serverType) {
+        cleanup();
+        List<GameServerState> all = new ArrayList<>();
+        for (GameServerState server : serversByShortName.values()) {
+            if (server.type() == serverType) all.add(server);
+        }
+        if (all.isEmpty()) return null;
+
+        List<GameServerState> free = all.stream()
+                .filter(server -> server.remainingGameSlots() == null || server.remainingGameSlots() > 0)
+                .toList();
+        if (!free.isEmpty()) {
+            return free.stream()
+                    .max(Comparator.comparingInt(server ->
+                            server.remainingGameSlots() == null ? Integer.MAX_VALUE : server.remainingGameSlots()))
+                    .orElse(null);
+        }
+        return all.stream()
+                .min(Comparator.comparingLong(server -> gamesByGameId.values().stream()
+                        .filter(game -> game.serverUuid().equals(server.uuid())).count()))
+                .orElse(null);
+    }
+
     public static Set<String> getMaps(ServerType type, String gameTypeName) {
         cleanup();
 

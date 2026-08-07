@@ -31,11 +31,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AuctionCategoryComponent;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 public class AuctionViewThirdNormal implements AuctionView {
     @Override
@@ -274,10 +270,10 @@ public class AuctionViewThirdNormal implements AuctionView {
                     List<UUID> alertsSentOutTo = new ArrayList<>();
                     new ProxyPlayerSet(item.getBids().stream().map(AuctionItem.Bid::uuid).toList()).asProxyPlayers().forEach(proxyPlayer -> {
                         if (proxyPlayer.isOnline().join()) {
-                            long playersBid = item.getBids().stream().filter(bid -> bid.uuid().equals(proxyPlayer.getUuid())).mapToLong(AuctionItem.Bid::value).max().orElse(0);
+                            long playersBid = item.getBids().stream().filter(bid -> bid.uuid().equals(proxyPlayer.uuid())).mapToLong(AuctionItem.Bid::value).max().orElse(0);
 
-                            if (playersBid < gui.bidAmount && !alertsSentOutTo.contains(proxyPlayer.getUuid())) {
-                                alertsSentOutTo.add(proxyPlayer.getUuid());
+                            if (playersBid < gui.bidAmount && !alertsSentOutTo.contains(proxyPlayer.uuid())) {
+                                alertsSentOutTo.add(proxyPlayer.uuid());
                                 proxyPlayer.sendMessage(I18n.t("gui_auction.view_third_normal.outbid_notification",
                                     LegacyComponentSerializer.legacySection().deserialize(player.getFullDisplayName()),
                                     Component.text(String.valueOf(gui.bidAmount - playersBid)),

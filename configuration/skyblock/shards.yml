@@ -1,0 +1,4898 @@
+{
+  "shards": [
+    {
+      "id": "C1",
+      "shard": "Grove",
+      "name": "Nature Elemental",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants <sbstat:health:+2>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HEALTH",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "shard": "Mist",
+      "name": "Fog Elemental",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants <sbstat:intelligence:+1>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "INTELLIGENCE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "shard": "Flash",
+      "name": "Light Elemental",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants <sbstat:strength:+1>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "shard": "Phanpyre",
+      "name": "Nocturnal Animal",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "PHANTOM",
+      "skill": "FORAGING",
+      "description": "Grants <sbstat:sweep:+1> during the night",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SWEEP",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "NIGHT"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "TREE_GIFT"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "shard": "Cod",
+      "name": "Cheapstake",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "TROPICAL_FISH",
+      "skill": "FISHING",
+      "description": "Gain +1% more Coins from fishing treasures",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "C5"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "shard": "Phanflare",
+      "name": "Moonglade Mastery",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "PHANTOM",
+      "skill": "FORAGING",
+      "description": "Grants +10 Fig Fortune and +10 Mangrove Fortune",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "C7"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "TREE_GIFT"
+        }
+      ]
+    },
+    {
+      "id": "C9",
+      "shard": "Lapis Zombie",
+      "name": "Experience",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "LAPIS",
+      "skill": "ENCHANTING",
+      "description": "Grants +10% more experience orbs from killing mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "C9"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "lapis_zombie"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "shard": "Hideonleaf",
+      "name": "Mossy Box",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "MINING",
+      "description": "Grants +5 Block Fortune",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "C10"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "C11",
+      "shard": "Verdant",
+      "name": "Forest Fishing",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "TROPICAL_FISH",
+      "skill": "FISHING",
+      "description": "Grants <sbstat:fishing_speed:+3> while on Foraging Islands",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "FISHING_SPEED",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "C12",
+      "shard": "Chill",
+      "name": "Skeletal Ruler",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Increase damage to Skeletal mobs by +3%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "C12"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "chillshot"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C14",
+      "shard": "Bogged",
+      "name": "Creature Fisher",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Grants <sbstat:sea_creature_chance:+0.5>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SEA_CREATURE_CHANCE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "bogged"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C15",
+      "shard": "Voracious Spider",
+      "name": "Arthropod Resistance",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants <sbstat:defense:+4> against Arthropod mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "DEFENSE",
+          "minimum": 4,
+          "maximum": 40,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "voracious_spider"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C16",
+      "shard": "Hideongift",
+      "name": "Happy Box",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Grants a +2% chance to obtain an extra Winter Gift when finding one",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "C16"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "C17",
+      "shard": "Birries",
+      "name": "Yummy",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FORAGING",
+      "description": "Grants a +10% chance to drop double Berries and Sea Lumies",
+      "huntInfo": [
+        "Catch with <aqua>Lasso<gray>."
+      ],
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "C17"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "C18",
+      "shard": "Tank Zombie",
+      "name": "Undead Resistance",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants <sbstat:defense:+4> against Undead mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "DEFENSE",
+          "minimum": 4,
+          "maximum": 40,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "super_tank_zombie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C19",
+      "shard": "Crow",
+      "name": "Fig Sharpening",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants <sbstat:sweep:+5> towards Fig Trees",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SWEEP",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "C20",
+      "shard": "Tadgang",
+      "name": "Unity is Strength",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants <sbstat:sweep:+0.02> for each unique Common Attribute you own",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SWEEP",
+          "minimum": 0.02,
+          "maximum": 0.2,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "tadgang"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C21",
+      "shard": "Zealot",
+      "name": "Ender Resistance",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants <sbstat:defense:+4> against Ender mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "DEFENSE",
+          "minimum": 4,
+          "maximum": 40,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "zealot"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C23",
+      "shard": "Coralot",
+      "name": "Bucket Lover",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "You have a +5% chance to gain extra Chums",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "C23"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "C24",
+      "shard": "Harpy",
+      "name": "Tree Lurker",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Increases the odds of finding monsters from Tree Gifts by +5%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "C24"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "FUSION"
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C25",
+      "shard": "Mudworm",
+      "name": "Visitor Bait",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "NONE",
+      "skill": "FARMING",
+      "description": "<green>Garden Visitors <gray>arrive <green>+1% <gray>faster.",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "C25"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "C26",
+      "shard": "Lotusfish",
+      "name": "Lotus Trophy",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "TROPICAL_FISH",
+      "skill": "FISHING",
+      "description": "Grants +1 Trophy Chance while in the Lotus Atoll",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "C26"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "C27",
+      "shard": "Golden Ghoul",
+      "name": "Midas Touch",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +1 Coin per kill",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "C27"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "golden_ghoul"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C29",
+      "shard": "Azure",
+      "name": "Forest Strength",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "TROPICAL_FISH",
+      "skill": "COMBAT",
+      "description": "Grants <sbstat:strength:+5> while on Foraging Islands",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "C30",
+      "shard": "Bezal",
+      "name": "Blazing Resistance",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants <sbstat:defense:+4> against Infernal mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "DEFENSE",
+          "minimum": 4,
+          "maximum": 40,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C32",
+      "shard": "Inkling",
+      "name": "Fisherman",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "Has a +1% chance not to consume any bait",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "C32"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "inkling"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C33",
+      "shard": "Yog",
+      "name": "Yog Membrane",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +1 Heat Resistance",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "C33"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "yog"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C34",
+      "shard": "Boreal Owl",
+      "name": "Owl Friend",
+      "rarity": "COMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Your pets gain +2% more Pet EXP from Fann",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "C34"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "C35",
+      "shard": "Newt",
+      "name": "Decent Karma",
+      "rarity": "COMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants +2 Hunter Fortune towards Common Attributes",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HUNTER_FORTUNE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "C36",
+      "shard": "Miner Zombie",
+      "name": "Rotten Pickaxe",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "MINING",
+      "description": "Grants +3 <sbstat:mining_speed>",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "C36"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "miner_zombie"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "C39",
+      "shard": "Cretan Bull",
+      "name": "Mythological Resistance",
+      "rarity": "COMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +4 <sbstat:defense> against Mythological mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "DEFENSE",
+          "minimum": 4,
+          "maximum": 40,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U1",
+      "shard": "Bramble",
+      "name": "Wood Elemental",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +2 <sbstat:health>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HEALTH",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U2",
+      "shard": "Tide",
+      "name": "Water Elemental",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:intelligence>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "INTELLIGENCE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U3",
+      "shard": "Quake",
+      "name": "Stone Elemental",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:strength>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U4",
+      "shard": "Sparrow",
+      "name": "Fig Collector",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants +1 Fig Fortune for every digit in your Fig Log collection. Max 10M collection",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U4"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "U5",
+      "shard": "Goldfin",
+      "name": "Gold Bait",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "The cooldown of Golden Fish is reduced by +30s–300s",
+      "effects": [ ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U6",
+      "shard": "Troglobyte",
+      "name": "Mountain Climber",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "MINING",
+      "description": "Commissions grant +1% more HOTM Exp",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U6"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U7",
+      "shard": "Hideoncave",
+      "name": "Bigger Box",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Grants a +5% chance to find an extra item in Treasure Chests and the Crystal Nucleus",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "U7"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U8",
+      "shard": "Salamander",
+      "name": "Good Karma",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants +2 Hunter Fortune towards Uncommon Attributes",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HUNTER_FORTUNE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U9",
+      "shard": "Cuboa",
+      "name": "Echo of Boxes",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Box Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "U9"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U10",
+      "shard": "Pest",
+      "name": "Pest Luck",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants +2 Overbloom towards Pests",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "U10"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        }
+      ]
+    },
+    {
+      "id": "U11",
+      "shard": "Mossybit",
+      "name": "Forest Trap",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Forest Shards get caught by Traps +1% faster",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U11"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U12",
+      "shard": "Rain Slime",
+      "name": "Mana Steal",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Regain +0.5 Mana every time you hit a monster. Cooldown 0.5s",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "U12"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "rain_slime"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U15",
+      "shard": "Seer",
+      "name": "Dragon Shortbow Improvement",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Your Dragon Shortbow gains +2% more undefined Damage while in The End",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "U15"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "seer"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U16",
+      "shard": "Heron",
+      "name": "Mangrove Sharpening",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants +10 <sbstat:sweep> towards Mangrove Trees",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SWEEP",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "U18",
+      "shard": "Obsidian Defender",
+      "name": "Speed",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +1 Speed",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SPEED",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "obsidian_defender"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U20",
+      "shard": "Salmon",
+      "name": "Lost and Found",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Grants a +0.1% chance to find a Wet Book when fishing a Treasure",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "U20"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "U21",
+      "shard": "Viper",
+      "name": "Hunter's Fang",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Hunting Axes gain +1% more stats from the weapon they hold",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U21"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U22",
+      "shard": "Praying Mantis",
+      "name": "Insect Power",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Your Vacuum deals +10% extra undefined Damage",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "U22"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U23",
+      "shard": "Lotum",
+      "name": "Lily Tracker",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "Grants +1 Tracking on Exploding Lily Pads",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U23"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "U24",
+      "shard": "Zombie Soldier",
+      "name": "Undead Ruler",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Undead mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "U24"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "zombie_knight"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "U25",
+      "shard": "Bambuleaf",
+      "name": "Strong Arms",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Your Axe gains +3 <sbstat:sweep> on throws",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SWEEP",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "U27",
+      "shard": "Sycophant",
+      "name": "Life Recovery",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Heals for +0.1% of your max health each time you kill a mob. Cooldown 0.5s",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "U27"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "revenant_sycophant"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U28",
+      "shard": "Seagull",
+      "name": "Mangrove Collector",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants +1 Mangrove Fortune for every digit in your Mangrove Log collection. Max 10M collection",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U28"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "U29",
+      "shard": "Ent",
+      "name": "Woodland Ruler",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Woodland mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "U29"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "ent"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U30",
+      "shard": "Soul of the Alpha",
+      "name": "Combo",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Deal +0.1% more undefined Damage per Grandma Wolf Pet combo. Max 50 combo",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "U30"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "soul_of_the_alpha"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U31",
+      "shard": "Mochibear",
+      "name": "Strong Legs",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Your Axe gains +3 <sbstat:sweep> on melee",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "SWEEP",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "U32",
+      "shard": "Magma Slug",
+      "name": "Infection",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Increases the chance of catching corrupted Sea Creatures by +0.2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.2,
+          "maximum": 2,
+          "condition": "ALWAYS",
+          "key": "U32"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "magma_slug"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U33",
+      "shard": "Flaming Spider",
+      "name": "Arthropod Ruler",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Arthropod mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "U33"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "flaming_spider"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U34",
+      "shard": "Kiwi",
+      "name": "Kat's Favorite",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Kat takes +1% less time to upgrade a Pet",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "U34"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U36",
+      "shard": "Bruiser",
+      "name": "Ender Ruler",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Ender mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "U36"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "zealot_bruiser"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U38",
+      "shard": "Stridersurfer",
+      "name": "Magmatic Ruler",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Magmatic mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "U38"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "U39",
+      "shard": "Rana",
+      "name": "Battle Frog",
+      "rarity": "UNCOMMON",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Your Frog Pet gains +3 <sbstat:strength>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U40",
+      "shard": "Termite",
+      "name": "Infiltration",
+      "rarity": "UNCOMMON",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants +3 <sbstat:farming_fortune> if your Garden Plot currently has a Pest in it",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "FARMING_FORTUNE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "U41",
+      "shard": "Flipflopper",
+      "name": "Golden Frog",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Trophy Frogs are +0.5% more likely to be GOLD",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "U41"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "U59",
+      "shard": "Tewtil",
+      "name": "Lily Puncher",
+      "rarity": "UNCOMMON",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "Punching Exploding Lily Pads applies +5% more force",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "U59"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "R1",
+      "shard": "Sylvan",
+      "name": "Forest Elemental",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +2 <sbstat:health>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HEALTH",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "shard": "Cascade",
+      "name": "Torrent Elemental",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:intelligence>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "INTELLIGENCE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "shard": "Bolt",
+      "name": "Lightning Elemental",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:strength>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R4",
+      "shard": "Bambloom",
+      "name": "Animal Expertise",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants +10 <sbstat:foraging_fortune>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "FORAGING_FORTUNE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R5",
+      "shard": "Toad",
+      "name": "Frog Legs",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Frogs have a +10% chance to jump 1 less time",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R5"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R6",
+      "shard": "Glacite Walker",
+      "name": "Essence of Ice",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Gain +1% more Ice Essence",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R6"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "glacite_walker"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R7",
+      "shard": "Beaconmite",
+      "name": "Beacon Zealot",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "The effects of Galatea s beacons are +10% stronger on you. Gain a +0.1% chance to find Signal Enhancers in Tree Gifts",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R7"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R8",
+      "shard": "Lizard King",
+      "name": "Great Karma",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants +1 Hunter Fortune towards Rare Attributes",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HUNTER_FORTUNE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R9",
+      "shard": "Python",
+      "name": "Hunter's Pressure",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Black Holes capture creatures +5% faster",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "R9"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R10",
+      "shard": "Invisibug",
+      "name": "Fancy Visit",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "RARE and above Garden Visitors have a +1% higher chance to arrive",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R10"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "R11",
+      "shard": "Piranha",
+      "name": "Moonglade Serendipity",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Increases the odds of finding rare items in Tree Gifts at Moonglade Marsh by +2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R11"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "R13",
+      "shard": "Hideongeon",
+      "name": "Catacombs Box",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Increases the quality of boss rewards in The Catacombs by +1",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R13"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R15",
+      "shard": "Lapis Skeleton",
+      "name": "Bone Font",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "LAPIS",
+      "skill": "ENCHANTING",
+      "description": "Grants a +2% extra chance of finding Level 6+ books or higher in Superpairs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R15"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R16",
+      "shard": "Cropeetle",
+      "name": "Crop Bug",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants +1 Overbloom which increases your chances of dropping Rare Crops",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R16"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R18",
+      "shard": "Drowned",
+      "name": "Humanoid Ruler",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Humanoid mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "R18"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "seacurse"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R21",
+      "shard": "Star Sentry",
+      "name": "Atomized Mithril",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Gain +1% extra Mithril Powder",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R21"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "star_sentry"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R22",
+      "shard": "Hideondra",
+      "name": "Kuudra's Box",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Gives +5% chance to have an extra Kuudra Teeth in the Paid Reward Chest",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "R22"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R23",
+      "shard": "Abyssal Lanternfish",
+      "name": "Dwarven Serendipity",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Increases the chance to find Golden and Diamond Goblins by +10%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R23"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "R24",
+      "shard": "Arachne",
+      "name": "Essence of Arthropods",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Gain +1% more Spider Essence",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R24"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "arachne"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R25",
+      "shard": "Bitbug",
+      "name": "Cookie Eater",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "5%–50% of your Booster Cookie Bits are gained up front",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "R25"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R27",
+      "shard": "Revenant",
+      "name": "Essence of Unliving",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Gain +1% more Undead Essence",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R27"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R29",
+      "shard": "Silentdepth",
+      "name": "Crystal Serendipity",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Treasure Chests you find in the Crystal Hollows have a +1% chance to double their loot",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R29"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "R30",
+      "shard": "Skeletor",
+      "name": "Deadeye",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Increases damage from ranged weapons by +2.5%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2.5,
+          "maximum": 25,
+          "condition": "ALWAYS",
+          "key": "R30"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "skeletor"
+          ]
+        },
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R31",
+      "shard": "Thyst",
+      "name": "Atomized Crystals",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Gain +1% extra Gemstone Powder",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R31"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "thyst"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R32",
+      "shard": "Seashine",
+      "name": "Diamond Frog",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "Trophy Frogs are +0.5% more likely to be DIAMOND",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "R32"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "R33",
+      "shard": "Quartzfang",
+      "name": "Quartz Speed",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "MINING",
+      "description": "undefined <sbstat:mining_speed> from events is increased by +10%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R33"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R34",
+      "shard": "Hideonring",
+      "name": "Accessory Size",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Grants +1 extra Accessory Bag slots",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R34"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R35",
+      "shard": "Snowfin",
+      "name": "Winter's Serendipity",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Increases the odds of finding rare items in Winter Gifts by +2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R35"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        }
+      ]
+    },
+    {
+      "id": "R36",
+      "shard": "Kada Knight",
+      "name": "Lifeline",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "When under 20% maximum HP, your undefined Damage and undefined <sbstat:defense> increase by +2.5%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2.5,
+          "maximum": 25,
+          "condition": "ALWAYS",
+          "key": "R36"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "kada_knight"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R38",
+      "shard": "Carrot King",
+      "name": "Rabbit Crew",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Your Chocolate Factory gains +2 more Chocolate per second",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R38"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "carrot_king"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R39",
+      "shard": "Wither Specter",
+      "name": "Breeze",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "When you haven t been damaged in the last 5s or more, your mana costs are decreased by +1%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R39"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "wither_spectre"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R42",
+      "shard": "Matcho",
+      "name": "Ignition",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Increases the duration of fire damage that you inflict on enemies by +30%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 30,
+          "maximum": 300,
+          "condition": "ALWAYS",
+          "key": "R42"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "matcho"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R43",
+      "shard": "Ladybug",
+      "name": "Pretty Clothes",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Gain +1% more Copper from Garden Visitors",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R43"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R44",
+      "shard": "Lumisquid",
+      "name": "Extreme Pressure",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Grants +5 Pressure Resistance",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "R44"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "R45",
+      "shard": "Crocodile",
+      "name": "Pure Reptile",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants a +2% chance to double shards from a Reptile Fusion",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R45"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R46",
+      "shard": "Bullfrog",
+      "name": "Berry Enjoyer",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Berries have a +10% chance to grant you double points in Starlyn Contests",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R46"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R49",
+      "shard": "Dreadwing",
+      "name": "Essence of the Forest",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "PHANTOM",
+      "skill": "GLOBAL",
+      "description": "Gain +1% more Forest Essence",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R49"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "dreadwing"
+          ]
+        },
+        {
+          "type": "FUSION"
+        },
+        {
+          "type": "BLACK_HOLE"
+        },
+        {
+          "type": "TREE_GIFT"
+        }
+      ]
+    },
+    {
+      "id": "R50",
+      "shard": "Joydive",
+      "name": "Deep Diving",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +5 Respiration",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "R50"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "R51",
+      "shard": "Stalagmight",
+      "name": "Atomized Glacite",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Gain +1% extra Glacite Powder",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R51"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R52",
+      "shard": "Fungloom",
+      "name": "Fungy Luck",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Gain a +10% chance to gain an additional Chisel charge upon starting the Fossil Excavator",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R52"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R53",
+      "shard": "Eel",
+      "name": "Eelastic",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Increase Pull by +1 when using your Fishing Nets",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R53"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "R54",
+      "shard": "King Cobra",
+      "name": "Hunter's Grasp",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Black Holes gain +1% Hunter Fortune",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R54"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R56",
+      "shard": "Lava Flame",
+      "name": "Blazing Fortune",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Grants +1 <sbstat:magic_find> on Magmatic mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "MAGIC_FIND",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "lava_flame"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R57",
+      "shard": "Draconic",
+      "name": "Essence of Dragons",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Gain +1% more Dragon Essence",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R57"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R58",
+      "shard": "Falcon",
+      "name": "Battle Experience",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Pets gain +1% more EXP from Combat",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R58"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "R59",
+      "shard": "Inferno Koi",
+      "name": "Crimson Serendipity",
+      "rarity": "RARE",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Increase the odds of finding a Vanquisher by +2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R59"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING"
+        }
+      ]
+    },
+    {
+      "id": "R60",
+      "shard": "Wither",
+      "name": "Essence of Wither",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Gain +1% more Wither Essence",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "R60"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R61",
+      "shard": "Gecko",
+      "name": "Echo of Sharpening",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Sharpening Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "R61"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "R63",
+      "shard": "Minotaur",
+      "name": "Mythological Fortune",
+      "rarity": "RARE",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +0.5 <sbstat:magic_find> against Mythological mobs",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "MAGIC_FIND",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "R64",
+      "shard": "Hummingbird",
+      "name": "Chop",
+      "rarity": "RARE",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants a +10% chance to Chop an extra log, on top of the ones you swept",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "R64"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TREE_GIFT"
+        }
+      ]
+    },
+    {
+      "id": "E1",
+      "shard": "Terra",
+      "name": "Earth Elemental",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +2 <sbstat:health>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HEALTH",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "shard": "Cryo",
+      "name": "Frost Elemental",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:intelligence>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "INTELLIGENCE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "shard": "Aero",
+      "name": "Wind Elemental",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:strength>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "shard": "Pandarai",
+      "name": "Foraging Wisdom",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FORAGING",
+      "description": "Grants +0.5 Foraging Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "E4"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "shard": "Leviathan",
+      "name": "Excellent Karma",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants +1 Hunter Fortune towards Epic Attributes",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HUNTER_FORTUNE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E6",
+      "shard": "Alligator",
+      "name": "Echo of Resistance",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Resistance Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E6"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "alligator"
+          ]
+        },
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E7",
+      "shard": "Fenlord",
+      "name": "Berry Mogul",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Salts last +1% longer",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E7"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E9",
+      "shard": "Basilisk",
+      "name": "Hunter's Suppress",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Lassos deplete Stamina +2% faster",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E9"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "shard": "Iguana",
+      "name": "Echo of Atomized",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Atomized Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E10"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "shard": "Moray Eel",
+      "name": "Lucky Rod",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Fish Treasure Shards are +1% easier to find",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E11"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "shard": "Lunar Moth",
+      "name": "Lunar Power",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants +5 <sbstat:farming_fortune> during the Night",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "FARMING_FORTUNE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "NIGHT"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "shard": "Fire Eel",
+      "name": "Trophy Hunter",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "Grants +2 Trophy Chance",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E14"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "fire_eel"
+          ]
+        },
+        {
+          "type": "FUSION"
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "shard": "Bal",
+      "name": "Deep Technique",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "MINING",
+      "description": "Each block you mine has a +1% chance to grant 1 extra undefined <sbstat:pristine> for that block",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E15"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "bal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "shard": "Hideonsack",
+      "name": "Sack Size",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Your sacks can hold +1% more items",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E16"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E17",
+      "shard": "Water Hydra",
+      "name": "Fishing Speed",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Grants +3 <sbstat:fishing_speed>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "FISHING_SPEED",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "water_hydra"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E18",
+      "shard": "Flare",
+      "name": "Infernal Ruler",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against Infernal mobs",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "E18"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "flare"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E20",
+      "shard": "Loch Emperor",
+      "name": "Sea Wisdom",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Grants +0.5 Fishing Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "E20"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "the_loch_emperor"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E21",
+      "shard": "Prince",
+      "name": "Reborn",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Killing a Prince has a +10% chance to add 1 Bonus Score to your Dungeon Run. Limit of +1 Score per run",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "E21"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "crypt_undead_princes"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E22",
+      "shard": "Komodo Dragon",
+      "name": "Echo of Essence",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Essence Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E22"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E24",
+      "shard": "Mimic",
+      "name": "Faker",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Dungeon Blessings are +1% stronger on you",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E24"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "mimic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E26",
+      "shard": "Shellwise",
+      "name": "Shell",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Gain a +10% chance to negate knockback",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 10,
+          "maximum": 100,
+          "condition": "ALWAYS",
+          "key": "E26"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "E27",
+      "shard": "Barbarian Duke X",
+      "name": "Warrior",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Increases melee damage dealt by +2.5%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2.5,
+          "maximum": 25,
+          "condition": "ALWAYS",
+          "key": "E27"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "barbarian_duke_x"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E28",
+      "shard": "Toucan",
+      "name": "Why Not More",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Your pet s EXP Share grants +1% more EXP",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E28"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E29",
+      "shard": "Inferno Demonlord",
+      "name": "Attack Speed",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Grants +1 Attack Speed",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "BONUS_ATTACK_SPEED",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "E30",
+      "shard": "Caiman",
+      "name": "Echo of Ruler",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Ruler Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E30"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E31",
+      "shard": "Firefly",
+      "name": "Solar Power",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants +5 <sbstat:farming_fortune> during the day",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "FARMING_FORTUNE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "DAY"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E32",
+      "shard": "Sea Serpent",
+      "name": "Echo of Hunter",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Hunter Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E32"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E33",
+      "shard": "Ghost",
+      "name": "Veil",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Grants +1 True <sbstat:defense>",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E33"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "ghosts"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E34",
+      "shard": "XYZ",
+      "name": "Mana Regeneration",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Increases your Mana regeneration by +1%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E34"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        }
+      ]
+    },
+    {
+      "id": "E35",
+      "shard": "Leatherback",
+      "name": "Hunt Wisdom",
+      "rarity": "EPIC",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants +0.5 Hunting Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "E35"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E36",
+      "shard": "Cavernshade",
+      "name": "Cavern Wisdom",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "MINING",
+      "description": "Grants +0.5 Mining Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "E36"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E37",
+      "shard": "Dragonfly",
+      "name": "Garden Wisdom",
+      "rarity": "EPIC",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants +0.5 Farming Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "E37"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "E39",
+      "shard": "Sphinx",
+      "name": "Mythological Tracker",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +0.5 Tracking on Griffin Burrows",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "E39"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E42",
+      "shard": "King Minos",
+      "name": "King of Greed",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Increases Coin gain from Griffin Burrows by +1%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "E42"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "E45",
+      "shard": "Littlefoot",
+      "name": "Freezing Spread",
+      "rarity": "EPIC",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "MINING",
+      "description": "Grants +0.5 Gemstone Spread for every 29–20 Cold Resistance",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 29,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "E45"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "littlefoot"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "L1",
+      "shard": "Tenebris",
+      "name": "Shadow Elemental",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +2 <sbstat:health>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HEALTH",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "shard": "Blizzard",
+      "name": "Snow Elemental",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:intelligence>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "INTELLIGENCE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "shard": "Tempest",
+      "name": "Storm Elemental",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Grants +1 <sbstat:strength>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "STRENGTH",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L4",
+      "shard": "Chameleon",
+      "name": "Reptiloid",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "REPTILE",
+      "skill": "HUNTING",
+      "description": "Fusions with Chameleons grant the next 3 IDs as results",
+      "effects": [ ],
+      "sources": [
+        {
+          "type": "TREE_GIFT"
+        }
+      ]
+    },
+    {
+      "id": "L5",
+      "shard": "Nessie",
+      "name": "Loch Hook",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "REPTILE",
+      "skill": "FISHING",
+      "description": "Grants +0.5 Double Hook Chance while on Foraging Islands",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "L5"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "nessie"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L6",
+      "shard": "Tiamat",
+      "name": "Echo of Echoes",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Echo Attributes are +5% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "L6"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L7",
+      "shard": "Wyvern",
+      "name": "Echo of Wisdom",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your Wisdom Attributes are +2% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L7"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L8",
+      "shard": "Tortoise",
+      "name": "Cloak Improvement",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Your David s Cloak gains +1 True <sbstat:defense>",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "L8"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L9",
+      "shard": "End Stone Protector",
+      "name": "Unlimited Fortitude",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Your undefined <sbstat:defense> is increased by +0.2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.2,
+          "maximum": 2,
+          "condition": "ALWAYS",
+          "key": "L9"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "L11",
+      "shard": "Naga",
+      "name": "Charmed",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "AMPHIBIAN", # TODO: and also EEL
+      "skill": "HUNTING",
+      "description": "Grants +0.05 Charm Chance",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.05,
+          "maximum": 0.5,
+          "condition": "ALWAYS",
+          "key": "L11"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L12",
+      "shard": "Lapis Creeper",
+      "name": "Book Wisdom",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +0.5 Enchanting Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "L12"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L13",
+      "shard": "Wartybug",
+      "name": "Wart Eater",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "FARMING",
+      "description": "Grants a +0.01% chance to obtain a Warty when breaking Nether Warts",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.01,
+          "maximum": 0.1,
+          "condition": "ALWAYS",
+          "key": "L13"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L14",
+      "shard": "Spike",
+      "name": "Payback",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FORAGING",
+      "description": "When hit, your next hit deals +2% damage",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L14"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "FISHING_NET"
+        }
+      ]
+    },
+    {
+      "id": "L15",
+      "shard": "Kraken",
+      "name": "Vitality",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "DEMON",
+      "skill": "GLOBAL",
+      "description": "Grants +2 <sbstat:vitality>",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L15"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "L17",
+      "shard": "Taurus",
+      "name": "Unlimited Torment",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Your undefined <sbstat:intelligence> is increased by +0.1%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "L17"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "taurus"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "L18",
+      "shard": "Daemon",
+      "name": "Pity",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "DEMON",
+      "skill": "GLOBAL",
+      "description": "Your RNG Meter fills +1% faster",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "L18"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L20",
+      "shard": "Moltenfish",
+      "name": "Star Bait",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Grants a +0.1% chance to fish a Shinyfish",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "L20"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L23",
+      "shard": "Shinyfish",
+      "name": "Help From Above",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Grants +1.25 <sbstat:health> Regen",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1.25,
+          "maximum": 12.5,
+          "condition": "ALWAYS",
+          "key": "L23"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "L24",
+      "shard": "Ananke",
+      "name": "Wings of Destiny",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Increases the odds of finding Ananke Feathers by +2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L24"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L25",
+      "shard": "Hideonbox",
+      "name": "Tuning Box",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "SHULKER",
+      "skill": "GLOBAL",
+      "description": "Grants +1 Tuning Points",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "L25"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L26",
+      "shard": "Lord Jawbus",
+      "name": "Crimson Hook",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "FISHING",
+      "description": "Grants +0.5 Double Hook Chance while on Combat Islands",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "L26"
+        }
+      ],
+      "sources": [
+        {
+          "type": "SALT",
+          "mobs": [
+            "lord_jawbus"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "L27",
+      "shard": "Hellwisp",
+      "name": "Matriarch Cubs",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Grants a +2% chance to get a second Heavy Pearl",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L27"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "hellwisp"
+          ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "L28",
+      "shard": "Cinderbat",
+      "name": "Magic Find",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +0.5 <sbstat:magic_find>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "MAGIC_FIND",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "LASSO"
+        },
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [ ]
+        },
+        {
+          "type": "BLACK_HOLE"
+        }
+      ]
+    },
+    {
+      "id": "L29",
+      "shard": "Megalith",
+      "name": "Hunter's Karma",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Grants +1 Hunter Fortune",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "HUNTER_FORTUNE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L30",
+      "shard": "Power Dragon",
+      "name": "Elite",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Grants +3% more undefined Damage against bosses and mini-bosses",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 3,
+          "maximum": 30,
+          "condition": "ALWAYS",
+          "key": "L30"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "L31",
+      "shard": "Condor",
+      "name": "Pet Wisdom",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Grants +0.5 Taming Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "L31"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L32",
+      "shard": "Sun Fish",
+      "name": "Starborn",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "The effect of Starborn Temples is +1% stronger on you",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "L32"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L33",
+      "shard": "Apex Dragon",
+      "name": "Veteran",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "COMBAT",
+      "description": "Grants +1 Combat Wisdom",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS",
+          "key": "L33"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L34",
+      "shard": "Dodo",
+      "name": "Rare Bird",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "TAMING",
+      "description": "Grants +1 <sbstat:pet_luck>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "PET_LUCK",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L36",
+      "shard": "Jormung",
+      "name": "Unlimited Power",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Your undefined <sbstat:strength> is increased by +0.1%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "L36"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L39",
+      "shard": "Etherdrake",
+      "name": "Unlimited Energy",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Your undefined Crit Damage is increased by +0.1%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.1,
+          "maximum": 1,
+          "condition": "ALWAYS",
+          "key": "L39"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L41",
+      "shard": "Galaxy Fish",
+      "name": "Ultimate DNA",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "NONE",
+      "skill": "GLOBAL",
+      "description": "Grants +1 Mining Fortune, undefined <sbstat:farming_fortune>, and undefined <sbstat:foraging_fortune>",
+      "effects": [
+        {
+          "type": "STATISTIC_PER_LEVEL",
+          "statistic": "MINING_FORTUNE",
+          "minimum": 1,
+          "maximum": 10,
+          "condition": "ALWAYS"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L42",
+      "shard": "Molthorn",
+      "name": "Almighty",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "OTHER",
+      "skill": "GLOBAL",
+      "description": "Your Unlimited Attributes are +5% stronger",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 5,
+          "maximum": 50,
+          "condition": "ALWAYS",
+          "key": "L42"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L44",
+      "shard": "Starborn",
+      "name": "Echo of Elemental",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "ELEMENTAL",
+      "skill": "GLOBAL",
+      "description": "Buffs all other shards in the Elemental Family by +2%",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L44"
+        }
+      ],
+      "sources": [
+        {
+          "type": "FUSION"
+        }
+      ]
+    },
+    {
+      "id": "L46",
+      "shard": "Cocoaleech",
+      "name": "Groovy Radar",
+      "rarity": "LEGENDARY",
+      "category": "FOREST",
+      "family": "OTHER",
+      "skill": "HUNTING",
+      "description": "Pests have a +2.5% chance to drop a second Vinyl",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2.5,
+          "maximum": 25,
+          "condition": "ALWAYS",
+          "key": "L46"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "L47",
+      "shard": "Titanoboa",
+      "name": "Bayou Hook",
+      "rarity": "LEGENDARY",
+      "category": "WATER",
+      "family": "OTHER",
+      "skill": "FISHING",
+      "description": "Grants +0.5 Double Hook Chance while on Fishing Islands",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 0.5,
+          "maximum": 5,
+          "condition": "ALWAYS",
+          "key": "L47"
+        }
+      ],
+      "sources": [
+        {
+          "type": "TRAP"
+        },
+        {
+          "type": "SALT",
+          "mobs": [
+            "titanoboa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L48",
+      "shard": "Thorn",
+      "name": "Dominance",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Gain +1.5% more undefined Damage when at full health",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 1.5,
+          "maximum": 15,
+          "condition": "ALWAYS",
+          "key": "L48"
+        }
+      ],
+      "sources": [ ]
+    },
+    {
+      "id": "L51",
+      "shard": "Scarf",
+      "name": "Catacombs Graduate",
+      "rarity": "LEGENDARY",
+      "category": "COMBAT",
+      "family": "NONE",
+      "skill": "COMBAT",
+      "description": "Gain +2% more Dungeons class experience",
+      "effects": [
+        {
+          "type": "ABILITY_VALUE",
+          "minimum": 2,
+          "maximum": 20,
+          "condition": "ALWAYS",
+          "key": "L51"
+        }
+      ],
+      "sources": [ ]
+    }
+  ]
+}

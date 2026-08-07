@@ -297,7 +297,7 @@ public class GUIGemstoneGrinder extends HypixelInventoryGUI {
                                 for (GemstoneComponent.ItemRequirement requirement : gemstoneSlot.itemRequirements()) {
                                     Gemstone.Slots slots = Gemstone.Slots.getFromGemstone(Gemstone.getFromItemType(requirement.itemId()));
                                     SkyBlockItem skyBlockItem = new SkyBlockItem(requirement.itemId());
-                                    lore.add(skyBlockItem.getComponent(GemstoneImplComponent.class).getGemRarity().getRarity().getColor() +
+                                    lore.add(skyBlockItem.getComponent(GemstoneImplComponent.class).getGemRarity().getRarity().getLegacyColor() +
                                             slots.getSymbol() + " " + skyBlockItem.getDisplayName() + " §8x" + requirement.amount());
                                 }
                             }

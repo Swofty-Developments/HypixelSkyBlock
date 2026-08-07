@@ -9,11 +9,7 @@ import net.minestom.server.collision.PhysicsResult;
 import net.minestom.server.collision.PhysicsUtils;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
-import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.GameMode;
-import net.minestom.server.entity.MetadataDef;
-import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.entity.*;
 import net.minestom.server.entity.attribute.Attribute;
 import net.minestom.server.event.EventDispatcher;
 import net.minestom.server.event.entity.EntityVelocityEvent;
@@ -81,12 +77,12 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	}
 
 	@Override
-	public String getGameId() {
+	public @Nullable String getGameId() {
 		return getTag(Tag.String("gameId"));
 	}
 
 	@Override
-	public void setGameId(String gameId) {
+	public void setGameId(final @NotNull String gameId) {
 		if (gameId == null) {
 			removeTag(Tag.String("gameId"));
 			resetTrackable();
@@ -189,7 +185,7 @@ public class BedWarsPlayer extends HypixelPlayer implements CombatPlayer, GamePa
 	}
 
 	public BedWarsGame getGame() {
-		String gameId = getTag(Tag.String("gameId"));
+		final String gameId = getTag(Tag.String("gameId"));
 		return TypeBedWarsGameLoader.getGameById(gameId);
 	}
 

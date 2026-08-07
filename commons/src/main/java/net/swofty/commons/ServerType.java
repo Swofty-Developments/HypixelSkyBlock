@@ -31,6 +31,7 @@ public enum ServerType {
 	SKYWARS_GAME(false),
 	SKYWARS_CONFIGURATOR(false),
 	RAVENGARD_LOBBY(false),
+	RAVENGARD_DUNGEON(false),
 	REPLAY_VIEWER(false)
 	;
 

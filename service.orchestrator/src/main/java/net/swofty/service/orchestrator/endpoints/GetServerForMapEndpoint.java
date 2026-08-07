@@ -32,6 +32,7 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 			case BEDWARS_GAME -> handleBedwars(body);
 			case MURDER_MYSTERY_GAME -> handleMurderMystery(body);
 			case SKYWARS_GAME -> handleSkywars(body);
+			case RAVENGARD_DUNGEON -> handleRavengardDungeon(body);
 			default -> new GetServerForMapProtocol.GetServerForMapResponse(null, null, true, null);
 		};
 	}
@@ -107,6 +108,60 @@ public class GetServerForMapEndpoint implements RedisMessageHandler
 		} catch (Exception e) {
 			return new GetServerForMapProtocol.GetServerForMapResponse(null, null, true, null);
 		}
+	}
+
+	private GetServerForMapProtocol.GetServerForMapResponse handleRavengardDungeon(
+			GetServerForMapProtocol.GetServerForMapMessage body) {
+		try {
+			String mode = body.mode() == null || body.mode().isEmpty() ? "STANDARD" : body.mode();
+			int neededSlots = body.neededSlots() > 0 ? body.neededSlots() : 1;
+
+			// standard queue joins share an open instance when one exists
+			if (mode.equals("STANDARD")) {
+				OrchestratorCache.GameWithServer existing = OrchestratorCache.findExisting(
+						ServerType.RAVENGARD_DUNGEON, 20, null, neededSlots, "STANDARD");
+				if (existing != null) {
+					OrchestratorCache.GameServerState hosting = OrchestratorCache.getServerByUuid(existing.serverUuid());
+					if (hosting != null) {
+						return new GetServerForMapProtocol.GetServerForMapResponse(
+								toProxyServer(hosting), existing.game().getGameId().toString(), true, null);
+					}
+				}
+			}
+
+			OrchestratorCache.GameServerState server = OrchestratorCache.pickServerForNewGame(ServerType.RAVENGARD_DUNGEON);
+			Logger.info("[matchmaking] RAVENGARD_DUNGEON mode='{}' -> server={}",
+					mode, server == null ? "NONE" : server.shortName());
+			if (server == null) {
+				return new GetServerForMapProtocol.GetServerForMapResponse(null, null, true, "No dungeon servers online");
+			}
+
+			CompletableFuture<InstantiateGamePushProtocol.Response> responseFuture = RedisClient.requestServerFromService(
+					server.uuid(),
+					new InstantiateGamePushProtocol(),
+					new InstantiateGamePushProtocol.Request(mode, body.map()));
+			InstantiateGamePushProtocol.Response response = responseFuture.get(15, java.util.concurrent.TimeUnit.SECONDS);
+			if (response != null && response.success()) {
+				return new GetServerForMapProtocol.GetServerForMapResponse(
+						toProxyServer(server), response.gameId(), true, null);
+			}
+			return new GetServerForMapProtocol.GetServerForMapResponse(null, null, true,
+					response == null ? "No response from dungeon server" : response.error());
+		} catch (Exception e) {
+			Logger.error(e, "Failed to allocate Ravengard dungeon");
+			return new GetServerForMapProtocol.GetServerForMapResponse(null, null, true, e.getMessage());
+		}
+	}
+
+	private static UnderstandableProxyServer toProxyServer(OrchestratorCache.GameServerState server) {
+		return new UnderstandableProxyServer(
+				server.shortName(),
+				server.uuid(),
+				server.type(),
+				-1,
+				new ArrayList<>(),
+				server.maxPlayers(),
+				server.shortName());
 	}
 
 	private GetServerForMapProtocol.GetServerForMapResponse handleMurderMystery(

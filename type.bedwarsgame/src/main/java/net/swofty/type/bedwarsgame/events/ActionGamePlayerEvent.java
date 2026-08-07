@@ -22,8 +22,8 @@ import net.swofty.type.bedwarsgame.user.BedWarsPlayer;
 import net.swofty.type.bedwarsgame.util.BedWarsInventoryManipulator;
 import net.swofty.type.game.game.GameState;
 import net.swofty.type.generic.event.EventNodes;
-import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.generic.event.HypixelEventClass;
+import net.swofty.type.generic.event.phase.PhasedEvent;
 import org.tinylog.Logger;
 
 import java.time.Duration;
@@ -39,7 +39,7 @@ public class ActionGamePlayerEvent implements HypixelEventClass {
         }
 
         BedWarsPlayer player = (BedWarsPlayer) event.getPlayer();
-        if (event.getClickedItem().material().isArmor()) {
+        if (event.getClickedItem().material().armor()) {
             event.setCancelled(true);
             return;
         }

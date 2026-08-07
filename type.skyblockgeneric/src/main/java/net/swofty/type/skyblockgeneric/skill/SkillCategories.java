@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.skill;
 
+import lombok.Getter;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 
@@ -14,9 +15,11 @@ public enum SkillCategories {
     CARPENTRY("carpentry", ItemStatistic.CARPENTRY_WISDOM),
     ALCHEMY("alchemy", ItemStatistic.ALCHEMY_WISDOM),
     TAMING("taming", ItemStatistic.TAMING_WISDOM),
+    HUNTING("hunting", ItemStatistic.HUNTING_WISDOM),
     ;
 
     private final String file;
+    @Getter
     private final ItemStatistic wisdomStatistic;
     private SkillCategory category;
 
@@ -37,7 +40,4 @@ public enum SkillCategories {
         return category;
     }
 
-    public ItemStatistic getWisdomStatistic() {
-        return wisdomStatistic;
-    }
 }

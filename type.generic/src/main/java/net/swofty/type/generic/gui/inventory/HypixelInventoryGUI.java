@@ -16,15 +16,15 @@ import net.swofty.type.generic.gui.inventory.item.GUIItem;
 import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Do not use this class anymore, prefer the View System.
+ *
+ * @see net.swofty.type.generic.gui.v2.View View System
+ * @deprecated do not use this anymore.
+ */
 @Getter
 @Deprecated
 public abstract class HypixelInventoryGUI {
@@ -403,9 +403,11 @@ public abstract class HypixelInventoryGUI {
      *
      * @param e the event of the gui closing
      */
-    public void onClose(InventoryCloseEvent e, CloseReason reason) {}
+    public void onClose(InventoryCloseEvent e, CloseReason reason) {
+    }
 
-    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {}
+    public void suddenlyQuit(Inventory inventory, HypixelPlayer player) {
+    }
 
     /**
      * Runs when the player clicks on their own inventory whole this GUI is open
@@ -446,7 +448,7 @@ public abstract class HypixelInventoryGUI {
         }
     }
 
-	public record InventoryGUIOpenEvent(HypixelPlayer player, HypixelInventoryGUI opened, Inventory inventory) {
+    public record InventoryGUIOpenEvent(HypixelPlayer player, HypixelInventoryGUI opened, Inventory inventory) {
     }
 
     public enum CloseReason {

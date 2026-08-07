@@ -3,7 +3,6 @@ package installer
 import (
 	"bufio"
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -213,16 +212,13 @@ func runStream(ctx context.Context, dir string, events chan<- Event, name string
 }
 
 func CheckDependencies(ctx context.Context) error {
-	for _, name := range []string{"curl", "git", "docker"} {
-		if _, err := exec.LookPath(name); err != nil {
-			return fmt.Errorf("%s is required but was not found in PATH", name)
-		}
+	report := CheckDependenciesReport(ctx)
+	if report.OK() {
+		return nil
 	}
-	if err := exec.CommandContext(ctx, "docker", "compose", "version").Run(); err != nil {
-		return errors.New("docker compose v2 is required: docker compose version failed")
+	names := make([]string, 0, len(report.Missing))
+	for _, dep := range report.Missing {
+		names = append(names, dep.Name)
 	}
-	if err := exec.CommandContext(ctx, "docker", "info").Run(); err != nil {
-		return errors.New("cannot connect to the Docker daemon; check that Docker is running and your user can access it")
-	}
-	return nil
+	return fmt.Errorf("missing dependencies: %s", strings.Join(names, ", "))
 }

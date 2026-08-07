@@ -82,21 +82,51 @@ items:
   - id: CHUM
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 5.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/farming_1/chum
   - id: CAN_OF_WORMS
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 500.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/misc/can_of_worms
   - id: GILL_MEMBRANE
-    rarity: COMMON
+    rarity: UNCOMMON
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 70.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/resources/gill_membrane
   - id: SEA_LUMIES
     rarity: COMMON
     material: SEA_PICKLE
+    components:
+      - id: SELLABLE
+        value: 3.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/island_relevant/foraging_2/resources/sea_lumies
   - id: OLD_LEATHER_BOOT
-    rarity: UNCOMMON
+    rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 100000.0
+      - id: ITEM_MODEL
+        item_model: hypixel_skyblock:item/fishing/junk/old_leather_boot
   - id: GRIZZLY_SALMON
     rarity: RARE
     material: COOKED_SALMON
   - id: WASHED_UP_SOUVENIR
-    rarity: LEGENDARY
+    rarity: EPIC
     material: PLAYER_HEAD
+    components:
+      - id: SELLABLE
+        value: 250000.0
+      - id: SKULL_HEAD
+        texture: 3777f04644dec5f80bfeaa7401acfbbc150eb25d3ff8be4220e7c34426cd727c

@@ -42,6 +42,7 @@ include(":type.skywarsgame")
 include(":type.skywarsconfigurator")
 include(":type.ravengardgeneric")
 include(":type.ravengardlobby")
+include(":type.ravengarddungeon")
 include(":type.mainlobby")
 
 include(":type.replayviewer")
@@ -59,4 +60,13 @@ include(":service.replay")
 include(":service.punishment")
 include(":service.elections")
 include(":service.guild")
+include(":service.store")
 include(":anticheat")
+include(":clientmod")
+
+pluginManagement {
+    repositories {
+        maven("https://maven.fabricmc.net/")
+        gradlePluginPortal()
+    }
+}

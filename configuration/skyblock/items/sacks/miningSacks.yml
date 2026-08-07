@@ -1,23 +1,26 @@
 items:
   - id: SMALL_MINING_SACK
     material: player_head
-    rarity: COMMON
+    rarity: UNCOMMON
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7§7Items: §aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
-      - '§7§aFlint§7, §aGlacite§7, §aGlossy Gemstone§7, §aGlowstone Dust§7, §aGold'
-      - '§aIngot§7, §aGravel§7, §aHard Stone§7, §aIce§7, §aIron Ingot§7, §aLapis Lazuli§7,'
-      - '§7§aMithril§7, §aMycelium§7, §aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aOil'
-      - '§aBarrel§7, §aPlasma§7, §aRed Sand§7, §aRedstone Dust§7, §aRefined'
-      - '§aMineral§7, §aSand§7, §aSnow Block§7, §aStarfall§7, §aStone§7, §aSulphur§7,'
-      - '§7§aTitanium§7, §aTreasurite§7, §aTungsten§7, §aUmber§7, §aVolta'
+      - "\xA77\xA77Items: \xA7aCoal\xA77, \xA7aCobblestone\xA77, \xA7aDiamond\xA77, \xA7aEmerald\xA77, \xA7aEnd Stone\xA7\
+        7,"
+      - "\xA77\xA7aFlint\xA77, \xA7aGlacite\xA77, \xA7aGlossy Gemstone\xA77, \xA7aGlowstone Dust\xA77, \xA7aGold"
+      - "\xA7aIngot\xA77, \xA7aGravel\xA77, \xA7aHard Stone\xA77, \xA7aIce\xA77, \xA7aIron Ingot\xA77, \xA7aLapis Lazuli\xA7\
+        7,"
+      - "\xA77\xA7aMithril\xA77, \xA7aMycelium\xA77, \xA7aNether Quartz\xA77, \xA7aNetherrack\xA77, \xA7aObsidian\xA77, \xA7\
+        aOil"
+      - "\xA7aBarrel\xA77, \xA7aPlasma\xA77, \xA7aRed Sand\xA77, \xA7aRedstone Dust\xA77, \xA7aRefined"
+      - "\xA7aMineral\xA77, \xA7aSand\xA77, \xA7aSnow Block\xA77, \xA7aStarfall\xA77, \xA7aStone\xA77, \xA7aSulphur\xA77,"
+      - "\xA77\xA7aTitanium\xA77, \xA7aTreasurite\xA77, \xA7aTungsten\xA77, \xA7aUmber\xA77, \xA7aVolta"
       - ''
-      - '§7Capacity: §e2,240 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e2,240 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: f07dff657d61f302c7d2e725265d17b64aa73642391964fb48fc15be950831d8
@@ -79,26 +82,28 @@ items:
             result:
               type: SMALL_MINING_SACK
               amount: 1
-
   - id: MEDIUM_MINING_SACK
     material: player_head
-    rarity: COMMON
+    rarity: RARE
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7§7Items: §aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
-      - '§7§aFlint§7, §aGlacite§7, §aGlossy Gemstone§7, §aGlowstone Dust§7, §aGold'
-      - '§aIngot§7, §aGravel§7, §aHard Stone§7, §aIce§7, §aIron Ingot§7, §aLapis Lazuli§7,'
-      - '§7§aMithril§7, §aMycelium§7, §aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aOil'
-      - '§aBarrel§7, §aPlasma§7, §aRed Sand§7, §aRedstone Dust§7, §aRefined'
-      - '§aMineral§7, §aSand§7, §aSnow Block§7, §aStarfall§7, §aStone§7, §aSulphur§7,'
-      - '§7§aTitanium§7, §aTreasurite§7, §aTungsten§7, §aUmber§7, §aVolta'
+      - "\xA77\xA77Items: \xA7aCoal\xA77, \xA7aCobblestone\xA77, \xA7aDiamond\xA77, \xA7aEmerald\xA77, \xA7aEnd Stone\xA7\
+        7,"
+      - "\xA77\xA7aFlint\xA77, \xA7aGlacite\xA77, \xA7aGlossy Gemstone\xA77, \xA7aGlowstone Dust\xA77, \xA7aGold"
+      - "\xA7aIngot\xA77, \xA7aGravel\xA77, \xA7aHard Stone\xA77, \xA7aIce\xA77, \xA7aIron Ingot\xA77, \xA7aLapis Lazuli\xA7\
+        7,"
+      - "\xA77\xA7aMithril\xA77, \xA7aMycelium\xA77, \xA7aNether Quartz\xA77, \xA7aNetherrack\xA77, \xA7aObsidian\xA77, \xA7\
+        aOil"
+      - "\xA7aBarrel\xA77, \xA7aPlasma\xA77, \xA7aRed Sand\xA77, \xA7aRedstone Dust\xA77, \xA7aRefined"
+      - "\xA7aMineral\xA77, \xA7aSand\xA77, \xA7aSnow Block\xA77, \xA7aStarfall\xA77, \xA7aStone\xA77, \xA7aSulphur\xA77,"
+      - "\xA77\xA7aTitanium\xA77, \xA7aTreasurite\xA77, \xA7aTungsten\xA77, \xA7aUmber\xA77, \xA7aVolta"
       - ''
-      - '§7Capacity: §e6,720 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e6,720 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 100b1bf8554985f3decf54886922ad20d144438564ef7a5b52ced71bc9dd04bb
@@ -160,26 +165,28 @@ items:
             result:
               type: MEDIUM_MINING_SACK
               amount: 1
-
   - id: LARGE_MINING_SACK
     material: player_head
-    rarity: COMMON
+    rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7§7Items: §aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
-      - '§7§aFlint§7, §aGlacite§7, §aGlossy Gemstone§7, §aGlowstone Dust§7, §aGold'
-      - '§aIngot§7, §aGravel§7, §aHard Stone§7, §aIce§7, §aIron Ingot§7, §aLapis Lazuli§7,'
-      - '§7§aMithril§7, §aMycelium§7, §aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aOil'
-      - '§aBarrel§7, §aPlasma§7, §aRed Sand§7, §aRedstone Dust§7, §aRefined'
-      - '§aMineral§7, §aSand§7, §aSnow Block§7, §aStarfall§7, §aStone§7, §aSulphur§7,'
-      - '§7§aTitanium§7, §aTreasurite§7, §aTungsten§7, §aUmber§7, §aVolta'
+      - "\xA77\xA77Items: \xA7aCoal\xA77, \xA7aCobblestone\xA77, \xA7aDiamond\xA77, \xA7aEmerald\xA77, \xA7aEnd Stone\xA7\
+        7,"
+      - "\xA77\xA7aFlint\xA77, \xA7aGlacite\xA77, \xA7aGlossy Gemstone\xA77, \xA7aGlowstone Dust\xA77, \xA7aGold"
+      - "\xA7aIngot\xA77, \xA7aGravel\xA77, \xA7aHard Stone\xA77, \xA7aIce\xA77, \xA7aIron Ingot\xA77, \xA7aLapis Lazuli\xA7\
+        7,"
+      - "\xA77\xA7aMithril\xA77, \xA7aMycelium\xA77, \xA7aNether Quartz\xA77, \xA7aNetherrack\xA77, \xA7aObsidian\xA77, \xA7\
+        aOil"
+      - "\xA7aBarrel\xA77, \xA7aPlasma\xA77, \xA7aRed Sand\xA77, \xA7aRedstone Dust\xA77, \xA7aRefined"
+      - "\xA7aMineral\xA77, \xA7aSand\xA77, \xA7aSnow Block\xA77, \xA7aStarfall\xA77, \xA7aStone\xA77, \xA7aSulphur\xA77,"
+      - "\xA77\xA7aTitanium\xA77, \xA7aTreasurite\xA77, \xA7aTungsten\xA77, \xA7aUmber\xA77, \xA7aVolta"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: 915fcebbbe02fdb72acd2095d9edfcea095e604b3682db88963b5b83b2939b67
@@ -241,27 +248,26 @@ items:
             result:
               type: LARGE_MINING_SACK
               amount: 1
-
   - id: LARGE_ENCHANTED_MINING_SACK
     material: player_head
     rarity: EPIC
     lore:
-      - '§7Item pickups go directly into your'
-      - '§7sacks.'
+      - "\xA77Item pickups go directly into your"
+      - "\xA77sacks."
       - ''
-      - '§7This sack can contain all enchanted versions'
-      - '§7of these materials:'
-      - '§7§aCoal§7, §aCobblestone§7, §aDiamond§7, §aEmerald§7, §aEnd Stone§7,'
-      - '§7§aFlint§7, §aGlacite§7, §aGlowstone Dust§7, §aGold Ingot§7, §aHard'
-      - '§aStone§7, §aIron Ingot§7, §aLapis Lazuli§7, §aMithril§7, §aMycelium§7,'
-      - '§7§aNether Quartz§7, §aNetherrack§7, §aObsidian§7, §aRed Sand§7,'
-      - '§7§aRedstone Dust§7, §aSand§7, §aSulphur§7, §aTitanium§7,'
-      - '§7§aTungsten§7, §aUmber'
+      - "\xA77This sack can contain all enchanted versions"
+      - "\xA77of these materials:"
+      - "\xA77\xA7aCoal\xA77, \xA7aCobblestone\xA77, \xA7aDiamond\xA77, \xA7aEmerald\xA77, \xA7aEnd Stone\xA77,"
+      - "\xA77\xA7aFlint\xA77, \xA7aGlacite\xA77, \xA7aGlowstone Dust\xA77, \xA7aGold Ingot\xA77, \xA7aHard"
+      - "\xA7aStone\xA77, \xA7aIron Ingot\xA77, \xA7aLapis Lazuli\xA77, \xA7aMithril\xA77, \xA7aMycelium\xA77,"
+      - "\xA77\xA7aNether Quartz\xA77, \xA7aNetherrack\xA77, \xA7aObsidian\xA77, \xA7aRed Sand\xA77,"
+      - "\xA77\xA7aRedstone Dust\xA77, \xA7aSand\xA77, \xA7aSulphur\xA77, \xA7aTitanium\xA77,"
+      - "\xA77\xA7aTungsten\xA77, \xA7aUmber"
       - ''
-      - '§7Capacity: §e20,160 per item'
-      - '§8Sacks sum their capacity.'
+      - "\xA77Capacity: \xA7e20,160 per item"
+      - "\xA78Sacks sum their capacity."
       - ''
-      - '§eRight Click to open sack!'
+      - "\xA7eRight Click to open sack!"
     components:
       - id: SKULL_HEAD
         texture: eedc69fefad184ee8c9186928da982addfd783bed98d95083408bf419e0cccd0

@@ -10,6 +10,7 @@ import net.swofty.type.generic.event.phase.EventPhase;
 import net.swofty.type.generic.event.phase.PhasedEvent;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.AbilityComponent;
+import net.swofty.type.skyblockgeneric.item.components.ItemRequirementsComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.ability.RegisteredAbility;
 import net.swofty.type.skyblockgeneric.user.PlayerAbilityHandler;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
@@ -22,6 +23,8 @@ public class ActionItemAbilityRightUse implements HypixelEventClass {
         ItemStack itemStack = event.getItemStack();
         SkyBlockItem item = new SkyBlockItem(itemStack);
         SkyBlockPlayer player = (SkyBlockPlayer) event.getPlayer();
+        if (item.hasComponent(ItemRequirementsComponent.class)
+                && !item.getComponent(ItemRequirementsComponent.class).ensureCanUse(player)) return;
 
         UnderstandableSkyBlockItem understandable = item.toUnderstandable();
         String string = understandable.serialize();

@@ -5,11 +5,14 @@ items:
     components:
       - id: SKILLABLE_MINE
         category: FORAGING
-        mining_value: 6.0
+        mining_value: 20.0
       - id: SELLABLE
-        value: 2.0
+        value: 8.0
       - id: PLACEABLE
-
+      - id: SKULL_HEAD
+        texture: b180fb87098f8c319348649d18a02a3a773a059a60a2cbe61380bab191ec0d7d
+      - id: ITEM_MODEL
+        item_model: minecraft:mangrove_log
   - id: STRIPPED_MANGROVE_LOG
     material: stripped_mangrove_log
     rarity: COMMON
@@ -17,7 +20,6 @@ items:
       - id: SELLABLE
         value: 2.0
       - id: PLACEABLE
-
   - id: MANGROVE_WOOD
     material: mangrove_wood
     rarity: COMMON
@@ -25,7 +27,6 @@ items:
       - id: SELLABLE
         value: 2.0
       - id: PLACEABLE
-
   - id: STRIPPED_MANGROVE_WOOD
     material: stripped_mangrove_wood
     rarity: COMMON
@@ -33,7 +34,6 @@ items:
       - id: SELLABLE
         value: 2.0
       - id: PLACEABLE
-
   - id: MANGROVE_PLANKS
     material: MANGROVE_PLANKS
     rarity: COMMON
@@ -51,7 +51,6 @@ items:
             result:
               type: MANGROVE_PLANKS
               amount: 4
-
   - id: MANGROVE_DOOR
     material: MANGROVE_DOOR
     rarity: COMMON
@@ -74,7 +73,6 @@ items:
             result:
               type: MANGROVE_DOOR
               amount: 1
-
   - id: MANGROVE_FENCE
     material: MANGROVE_FENCE
     rarity: COMMON
@@ -99,7 +97,6 @@ items:
             result:
               type: MANGROVE_FENCE
               amount: 3
-
   - id: MANGROVE_FENCE_GATE
     material: MANGROVE_FENCE_GATE
     rarity: COMMON
@@ -124,7 +121,6 @@ items:
             result:
               type: MANGROVE_FENCE_GATE
               amount: 1
-
   - id: MANGROVE_PRESSURE_PLATE
     material: MANGROVE_PRESSURE_PLATE
     rarity: COMMON
@@ -145,7 +141,6 @@ items:
             result:
               type: MANGROVE_PRESSURE_PLATE
               amount: 1
-
   - id: MANGROVE_SLAB
     material: MANGROVE_SLAB
     rarity: COMMON
@@ -166,7 +161,6 @@ items:
             result:
               type: MANGROVE_SLAB
               amount: 6
-
   - id: MANGROVE_STAIRS
     material: MANGROVE_STAIRS
     rarity: COMMON
@@ -189,7 +183,6 @@ items:
             result:
               type: MANGROVE_STAIRS
               amount: 4
-
   - id: MANGROVE_TRAPDOOR
     material: MANGROVE_TRAPDOOR
     rarity: COMMON
@@ -211,7 +204,6 @@ items:
             result:
               type: MANGROVE_TRAPDOOR
               amount: 2
-
   - id: MANGROVE_BUTTON
     material: MANGROVE_BUTTON
     rarity: COMMON
@@ -229,7 +221,6 @@ items:
             result:
               type: MANGROVE_BUTTON
               amount: 1
-
   - id: MANGROVE_BOAT
     material: MANGROVE_BOAT
     rarity: COMMON
@@ -253,7 +244,6 @@ items:
             result:
               type: MANGROVE_BOAT
               amount: 1
-
   - id: MANGROVE_CHEST_BOAT
     material: MANGROVE_CHEST_BOAT
     rarity: COMMON
@@ -277,7 +267,6 @@ items:
             result:
               type: MANGROVE_CHEST_BOAT
               amount: 1
-
   - id: MANGROVE_SIGN
     material: MANGROVE_SIGN
     rarity: COMMON
@@ -306,7 +295,6 @@ items:
             result:
               type: MANGROVE_SIGN
               amount: 3
-
   - id: MANGROVE_HANGING_SIGN
     material: MANGROVE_HANGING_SIGN
     rarity: COMMON

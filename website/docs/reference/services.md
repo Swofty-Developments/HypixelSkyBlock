@@ -208,6 +208,38 @@ java -jar ServiceOrchestrator.jar
 - `RejoinGameEndpoint` - Rejoin requests
 - `GameChooseEndpoint` - Game selection
 
+---
+
+### ServiceStore
+
+**JAR**: `ServiceStore.jar`
+**Type**: `STORE`
+
+Fulfills paid web-store purchases.
+
+```bash
+java -jar ServiceStore.jar
+```
+
+**Features**:
+
+- Durable Stripe purchase recovery
+- MongoDB fulfillment leases
+- Idempotent proxy entitlement application
+- Rank, Gold, Gems, booster, cosmetic, and feature-flag awards
+
+**MongoDB Collections**:
+
+- `store_purchases` - Checkout and fulfillment state
+- `stripe_events` - Webhook idempotency records
+- `store-player-entitlements` - Award projection by player
+
+**Proxy Protocols**:
+
+- `StorePurchaseFulfillmentProtocol` - Applies one paid purchase to a player entitlement projection
+
+See [Store Payments](/docs/setup/store-payments) for Stripe dashboard and webhook setup.
+
 ## Communication Protocol
 
 Services communicate via Redis pub/sub with a specific protocol:
@@ -247,6 +279,7 @@ ServiceInitializer.register(
 | Data Mutex    | 128 MB      | 256 MB          |
 | Dark Auction  | 128 MB      | 256 MB          |
 | Orchestrator  | 128 MB      | 256 MB          |
+| Store         | 128 MB      | 256 MB          |
 
 ## Docker Reference
 
