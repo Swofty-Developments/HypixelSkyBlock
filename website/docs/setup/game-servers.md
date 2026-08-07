@@ -119,10 +119,9 @@ After starting your first server, import the required data into MongoDB:
 2. Import to the `regions` collection in MongoDB
 3. Restart the server
 
-### Fairy Souls (Optional)
+### Fairy Souls
 
-1. Download [`Minestom.fairysouls.csv`](https://github.com/Swofty-Developments/HypixelSkyBlock/tree/master/configuration/skyblock)
-2. Import to the `fairysouls` collection
+Fairy soul locations are bundled in `configuration/skyblock/Minestom.fairysouls.yml` and loaded as static game data. The catalog is synchronized from the [NotEnoughUpdates repository](https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/refs/heads/master/constants/fairy_souls.json); no MongoDB import is required.
 
 ### Hub Crystals (Optional)
 

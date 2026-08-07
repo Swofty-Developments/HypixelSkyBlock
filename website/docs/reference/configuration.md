@@ -160,5 +160,4 @@ MongoDB collections created automatically:
 | `orders`           | Bazaar orders            |
 | `tracked_items`    | Item tracking            |
 | `regions`          | World regions            |
-| `fairysouls`       | Fairy soul locations     |
 | `crystals`         | Hub crystal locations    |

@@ -103,12 +103,12 @@ Common issues and their solutions.
 
 ### Missing Hub Features
 
-**Cause**: Data not imported
+**Cause**: Required world data is missing or the static fairy-soul catalog is unavailable
 
-**Solution**: Import these CSV files to MongoDB:
+**Solution**:
 
 - `Minestom.regions.csv` → `regions`
-- `Minestom.fairysouls.csv` → `fairysouls`
+- Ensure `configuration/skyblock/Minestom.fairysouls.yml` exists
 - `Minestom.crystals.csv` → `crystals`
 
 ## Docker Issues

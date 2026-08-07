@@ -89,7 +89,6 @@ import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.user.SkyBlockScoreboard;
 import net.swofty.type.skyblockgeneric.user.StashReminder;
 import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoul;
-import net.swofty.type.skyblockgeneric.user.fairysouls.FairySoulZone;
 import net.swofty.type.skyblockgeneric.user.flow.SkyBlockPlayerDataFlow;
 import net.swofty.type.skyblockgeneric.user.island.SkyBlockIsland;
 import net.swofty.type.skyblockgeneric.user.statistics.PlayerStatistics;
@@ -139,7 +138,6 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
 
         RegionDatabase.connect(mongoClient);
         IslandDatabase.connect(mongoClient);
-        FairySoulDatabase.connect(mongoClient);
         CoopDatabase.connect(mongoClient);
         CrystalDatabase.connect(mongoClient);
 
@@ -379,8 +377,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         if (mainInstance != null) {
             ServerHolograms.spawnAll(HypixelConst.getInstanceContainer());
-            String zone = typeLoader.getType().skyblockName();
-            FairySoul.spawnEntities(HypixelConst.getInstanceContainer(), FairySoulZone.valueOf(zone.toUpperCase()));
+            FairySoul.spawnEntities(HypixelConst.getInstanceContainer(), typeLoader.getType());
         }
 
         /**

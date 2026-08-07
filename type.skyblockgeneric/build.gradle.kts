@@ -36,3 +36,7 @@ dependencies {
     implementation(libs.snakeyaml)
     implementation(libs.kotlin.stdlib)
 }
+
+tasks.processResources {
+    from(rootProject.file("configuration/skyblock/Minestom.fairysouls.yml"))
+}
