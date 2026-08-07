@@ -54,6 +54,11 @@ var AllServices = []string{
 	"ServiceDarkAuction",
 	"ServiceOrchestrator",
 	"ServiceFriend",
+	"ServiceStore",
+	"ServiceElections",
+	"ServiceGuild",
+	"ServicePunishment",
+	"ServiceReplay",
 }
 
 var RequiredServices = []string{"ServiceDataMutex", "ServiceParty"}
