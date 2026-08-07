@@ -51,6 +51,7 @@ import net.swofty.type.skyblockgeneric.collection.CollectionCategories;
 import net.swofty.type.skyblockgeneric.collection.CollectionCategory;
 import net.swofty.type.skyblockgeneric.collection.CustomCollectionAward;
 import net.swofty.type.skyblockgeneric.data.SkyBlockDataHandler;
+import net.swofty.type.skyblockgeneric.data.crystals.CrystalCatalog;
 import net.swofty.type.skyblockgeneric.data.monogdb.*;
 import net.swofty.type.skyblockgeneric.elections.ElectionManager;
 import net.swofty.type.skyblockgeneric.entity.ServerCrystalImpl;
@@ -136,10 +137,8 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
         MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(cs).build();
         MongoClient mongoClient = MongoClients.create(settings);
 
-        RegionDatabase.connect(mongoClient);
         IslandDatabase.connect(mongoClient);
         CoopDatabase.connect(mongoClient);
-        CrystalDatabase.connect(mongoClient);
 
         /**
          * Register items
@@ -385,7 +384,7 @@ public record SkyBlockGenericLoader(HypixelTypeLoader typeLoader) {
          */
         if (HypixelConst.getInstanceContainer() != null) {
             Thread.startVirtualThread(() -> {
-                CrystalDatabase.getAllCrystals().forEach(crystal -> {
+                CrystalCatalog.getAllCrystals().forEach(crystal -> {
                     if (crystal.serverType != HypixelConst.getTypeLoader().getType()) return;
 
                     ItemType type = crystal.itemType;

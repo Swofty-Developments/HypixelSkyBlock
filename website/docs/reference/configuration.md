@@ -159,5 +159,3 @@ MongoDB collections created automatically:
 | `auction_inactive` | Completed auctions       |
 | `orders`           | Bazaar orders            |
 | `tracked_items`    | Item tracking            |
-| `regions`          | World regions            |
-| `crystals`         | Hub crystal locations    |
