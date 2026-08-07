@@ -25,7 +25,7 @@ func DownloadLimboAssets(ctx context.Context, installDir string, events chan<- E
 		return importLocalLimboAssets(localPath, configDir)
 	}
 
-	reqCtx, cancel := context.WithTimeout(ctx, 3*time.Minute)
+	reqCtx, cancel := context.WithTimeout(ctx, 15*time.Minute)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(reqCtx, http.MethodGet, LimboAssetsURL, nil)
@@ -69,7 +69,7 @@ func DownloadLimboAssets(ctx context.Context, installDir string, events chan<- E
 		return err
 	}
 	if !LimboAssetsPresent(configDir) {
-		return fmt.Errorf("downloaded zip did not contain limbo.schem and world/")
+		return fmt.Errorf("downloaded zip did not contain limbo.schem, world/ and resourcepacks/")
 	}
 	return nil
 }
@@ -78,14 +78,20 @@ func LimboAssetsPresent(configDir string) bool {
 	if _, err := os.Stat(filepath.Join(configDir, "limbo.schem")); err != nil {
 		return false
 	}
-	if info, err := os.Stat(filepath.Join(configDir, "world")); err != nil || !info.IsDir() {
-		return false
+	for _, dir := range []string{
+		"world",
+		filepath.Join("resourcepacks", "ravengard"),
+		filepath.Join("resourcepacks", "skyblockpack"),
+	} {
+		if info, err := os.Stat(filepath.Join(configDir, dir)); err != nil || !info.IsDir() {
+			return false
+		}
 	}
 	return true
 }
 
 func LimboAssetsManualHint() string {
-	return fmt.Sprintf("set %s to a local oybade.zip or an extracted folder containing limbo.schem and world/", limboAssetsEnv)
+	return fmt.Sprintf("set %s to a local assets zip or an extracted folder containing limbo.schem, world/ and resourcepacks/", limboAssetsEnv)
 }
 
 func importLocalLimboAssets(path, configDir string) error {
@@ -101,7 +107,7 @@ func importLocalLimboAssets(path, configDir string) error {
 		return err
 	}
 	if !LimboAssetsPresent(configDir) {
-		return fmt.Errorf("local assets did not contain limbo.schem and world/")
+		return fmt.Errorf("local assets did not contain limbo.schem, world/ and resourcepacks/")
 	}
 	return nil
 }

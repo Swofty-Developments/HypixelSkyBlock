@@ -45,6 +45,7 @@ The following ports are used by default:
 | 25565 | Velocity Proxy (player connections) |
 | 27017 | MongoDB                             |
 | 6379  | Redis                               |
+| 7270  | Resource Pack Server                |
 | 8080  | API Service                         |
 
 :::alert warning

@@ -70,10 +70,7 @@ cd HypixelSkyBlock
 
 ### 2. Configure
 
-In your `configuration` folder:
-
-1. Remove the default `config.yml`
-2. Rename `config.docker.yml` to `config.yml`
+The containers pick up `configuration/config.docker.yml` on their own, so there is nothing to rename. Only set your forwarding secret.
 
 In the top of `docker-compose.yml` change the `change-me` to other.
 
@@ -111,14 +108,15 @@ docker compose down
 
 The Docker Compose setup starts:
 
-| Container      | Purpose                                     |
-|----------------|---------------------------------------------|
-| MongoDB        | Database                                    |
-| Redis          | Caching & messaging                         |
-| Velocity Proxy | Player connections                          |
-| PicoLimbo      | Connection queue                            |
-| Game Servers   | Gameplay instances                          |
-| Services       | Microservices (API, Auctions, Bazaar, etc.) |
+| Container            | Purpose                                     |
+|----------------------|---------------------------------------------|
+| MongoDB              | Database                                    |
+| Redis                | Caching & messaging                         |
+| Velocity Proxy       | Player connections                          |
+| PicoLimbo            | Connection queue                            |
+| Resource Pack Server | Serves the resource packs on port 7270      |
+| Game Servers         | Gameplay instances                          |
+| Services             | Microservices (API, Auctions, Bazaar, etc.) |
 
 ## Connecting
 
@@ -126,6 +124,18 @@ Once everything is running, connect with your Minecraft client to:
 
 ```
 localhost:25565
+```
+
+Set **Server Resource Packs** to *Enabled* on the server entry, or the HUD, minimap and custom models will not load.
+
+The pack URL is handed to your client rather than resolved inside the container, so it stays a host address. If players connect from another machine, set `resource-packs` in `configuration/config.docker.yml` to your LAN or public IP and make sure port `7270` is reachable:
+
+```yml
+resource-packs:
+    skyblockpack:
+        server-url: http://192.0.2.10:7270
+    ravengard:
+        server-url: http://192.0.2.10:7270
 ```
 
 ## Logs and Debugging
