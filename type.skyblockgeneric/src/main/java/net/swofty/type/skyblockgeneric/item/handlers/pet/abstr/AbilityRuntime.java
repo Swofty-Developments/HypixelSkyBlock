@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.item.handlers.pet.dsl;
+package net.swofty.type.skyblockgeneric.item.handlers.pet.abstr;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +7,9 @@ import lombok.Setter;
  * Per-player runtime state for a single pet ability, keyed by the ability instance
  * in {@link net.swofty.type.skyblockgeneric.data.datapoints.DatapointPetData}.
  *
- * <p>The DSL passes the runtime to the {@code BiConsumer<AbilityRuntime, E>} overloads
- * of {@code on(...)} and {@code statistics(...)}. State lives per player, so the shared
- * ability instance never leaks state across players.
+ * <p>Stateful abilities resolve it via
+ * {@code player.getPetData().getAbilityRuntime(this)} in {@code onEvent} / {@code getStatistics}.
+ * State lives per player, so the shared ability instance never leaks state across players.
  */
 @Getter
 @Setter

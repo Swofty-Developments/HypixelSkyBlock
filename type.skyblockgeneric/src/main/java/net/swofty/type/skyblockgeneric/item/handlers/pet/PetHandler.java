@@ -9,18 +9,18 @@ import java.util.List;
 
 public enum PetHandler {
     BEE(List.of(
-            at(HiveAbility.create(), Rarity.COMMON),
-            at(BusyBuzzBuzzAbility.create(), Rarity.RARE),
-            at(HoneyHarvesterAbility.create(), Rarity.LEGENDARY),
-            at(PoweredByPollenAbility.create(), Rarity.MYTHIC)
+            at(new HiveAbility(), Rarity.COMMON),
+            at(new BusyBuzzBuzzAbility(), Rarity.RARE),
+            at(new HoneyHarvesterAbility(), Rarity.LEGENDARY),
+            at(new PoweredByPollenAbility(), Rarity.MYTHIC)
     )),
     GRANDMA_WOLF(List.of(
-            at(KillComboAbility.create(), Rarity.COMMON)
+            at(new KillComboAbility(), Rarity.COMMON)
     )),
     CHICKEN(List.of(
-            at(FreeRangeAbility.create(), Rarity.COMMON),
-            at(EggstraLootAbility.create(), Rarity.RARE),
-            at(LightFeetAbility.create(), Rarity.LEGENDARY)
+            at(new FreeRangeAbility(), Rarity.COMMON),
+            at(new EggstraLootAbility(), Rarity.RARE),
+            at(new LightFeetAbility(), Rarity.LEGENDARY)
     ));
 
     private final List<AbilityEntry> abilities;

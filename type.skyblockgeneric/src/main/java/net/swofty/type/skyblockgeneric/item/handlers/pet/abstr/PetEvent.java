@@ -1,4 +1,4 @@
-package net.swofty.type.skyblockgeneric.item.handlers.pet.dsl;
+package net.swofty.type.skyblockgeneric.item.handlers.pet.abstr;
 
 import lombok.Getter;
 import lombok.Setter;

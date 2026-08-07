@@ -8,7 +8,7 @@ import net.swofty.type.skyblockgeneric.enchantment.abstr.KillEventEnchant;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetEvent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 

@@ -4,11 +4,10 @@ import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.AbilityRuntime;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.AbilityRuntime;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetStatisticsContext;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetEvent;
+import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
 
 import java.util.Arrays;
@@ -16,7 +15,7 @@ import java.util.List;
 
 import static net.swofty.commons.StringUtility.commaify;
 
-public final class KillComboAbility {
+public final class KillComboAbility implements PetAbility {
     private static final RarityValue<Integer> MAGIC_FIND_5 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
     private static final RarityValue<Integer> MAGIC_FIND_15 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
     private static final RarityValue<Integer> MAGIC_FIND_25 = new RarityValue<>(1, 1, 2, 2, 3, 3, 0);
@@ -30,18 +29,13 @@ public final class KillComboAbility {
     private static final double[] DURATION_PER_LEVEL = {0.02, 0.02, 0.02, 0.02, 0.01, 0.01};
     private static final int[] THRESHOLDS = {5, 10, 15, 20, 25, 30};
 
-    private KillComboAbility() {
+    @Override
+    public String getName() {
+        return "Kill Combo";
     }
 
-    public static PetAbility create() {
-        return PetDsl.ability("Kill Combo")
-                .description(KillComboAbility::descriptionFor)
-                .on(PetEvent.Kill.class, KillComboAbility::onKill)
-                .statistics(KillComboAbility::statisticsFor)
-                .build();
-    }
-
-    private static List<String> descriptionFor(SkyBlockItem instance) {
+    @Override
+    public List<String> getDescription(SkyBlockItem instance) {
         Rarity rarity = instance.getAttributeHandler().getRarity();
         int level = instance.getAttributeHandler().getPetData().getAsLevel(rarity);
 
@@ -78,12 +72,24 @@ public final class KillComboAbility {
         );
     }
 
-    private static ItemStatistics statisticsFor(AbilityRuntime rt, PetStatisticsContext context) {
+    @Override
+    public ItemStatistics getStatistics(SkyBlockPlayer player, SkyBlockItem pet) {
+        return statisticsFor(player.getPetData().getAbilityRuntime(this), pet);
+    }
+
+    @Override
+    public void onEvent(PetEvent event) {
+        if (event instanceof PetEvent.Kill kill) {
+            onKill(kill.player().getPetData().getAbilityRuntime(this), kill);
+        }
+    }
+
+    private ItemStatistics statisticsFor(AbilityRuntime rt, SkyBlockItem pet) {
         int combo = rt.getStacks();
         if (combo <= 0) return ItemStatistics.empty();
 
-        Rarity rarity = context.pet().getAttributeHandler().getRarity();
-        int level = context.pet().getAttributeHandler().getPetData().getAsLevel(rarity);
+        Rarity rarity = pet.getAttributeHandler().getRarity();
+        int level = pet.getAttributeHandler().getPetData().getAsLevel(rarity);
 
         double activeDuration = 0;
         for (int i = 0; i < THRESHOLDS.length; i++) {
@@ -112,7 +118,7 @@ public final class KillComboAbility {
                 .build();
     }
 
-    private static void onKill(AbilityRuntime rt, PetEvent.Kill kill) {
+    private void onKill(AbilityRuntime rt, PetEvent.Kill kill) {
         rt.setStacks(rt.getStacks() + 1);
         rt.setLastProc(System.currentTimeMillis());
 

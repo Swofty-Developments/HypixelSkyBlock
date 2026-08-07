@@ -1,33 +1,32 @@
 package net.swofty.type.skyblockgeneric.item.handlers.pet.abilities;
 
-import net.swofty.commons.skyblock.item.Rarity;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetDsl;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.dsl.PetEvent;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetEvent;
 
 import java.util.List;
 
 import static net.swofty.commons.StringUtility.commaify;
 
-public final class LightFeetAbility {
-    private LightFeetAbility() {
+public final class LightFeetAbility implements PetAbility {
+    @Override
+    public String getName() {
+        return "Light Feet";
     }
 
-    public static PetAbility create() {
-        return PetDsl.ability("Light Feet")
-                .description(LightFeetAbility::descriptionFor)
-                .on(PetEvent.FallDamage.class, context -> context.damage(
-                        context.damage() * (1 - reductionFor(context.pet()) / 100)))
-                .build();
+    @Override
+    public List<String> getDescription(SkyBlockItem instance) {
+        double reduction = instance.getAttributeHandler().getPetData()
+                .getAsLevel(instance.getAttributeHandler().getRarity());
+        return List.of("§7Reduces fall damage by §a" + commaify(reduction) + "%§7.");
     }
 
-    private static List<String> descriptionFor(SkyBlockItem instance) {
-        return List.of("§7Reduces fall damage by §a" + commaify(reductionFor(instance)) + "%§7.");
-    }
-
-    private static double reductionFor(SkyBlockItem pet) {
-        Rarity rarity = pet.getAttributeHandler().getRarity();
-        return pet.getAttributeHandler().getPetData().getAsLevel(rarity);
+    @Override
+    public void onEvent(PetEvent event) {
+        if (event instanceof PetEvent.FallDamage fall) {
+            double reduction = fall.pet().getAttributeHandler().getPetData()
+                    .getAsLevel(fall.pet().getAttributeHandler().getRarity());
+            fall.damage(fall.damage() * (1 - reduction / 100));
+        }
     }
 }
