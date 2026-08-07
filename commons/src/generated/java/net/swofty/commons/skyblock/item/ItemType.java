@@ -2636,6 +2636,8 @@ public enum ItemType {
 
   MOVE_JERRY(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON),
 
+  MOVE_SAM(Material.VILLAGER_SPAWN_EGG, Rarity.COMMON),
+
   MUSHROOM(Material.BROWN_MUSHROOM, Rarity.COMMON),
 
   MUSHROOM_BOOTS(Material.LEATHER_BOOTS, Rarity.COMMON),

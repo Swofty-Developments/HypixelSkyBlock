@@ -6,6 +6,7 @@ import net.hollowcube.polar.PolarLoader;
 import net.hollowcube.polar.PolarWorld;
 import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.SharedInstance;
 import net.minestom.server.registry.RegistryKey;
@@ -49,6 +50,8 @@ public class SkyBlockIsland implements SkyBlockEditableWorldHandle {
 
     @Setter
     private JerryInformation jerryInformation = null;
+    @Setter
+    private Pos samPosition;
     @Setter
     private IslandMinionData minionData = null;
     @Setter
