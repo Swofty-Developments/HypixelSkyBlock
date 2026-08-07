@@ -9,7 +9,7 @@ import net.swofty.type.generic.gui.v2.*;
 import net.swofty.type.generic.gui.v2.context.ViewContext;
 import net.swofty.type.skyblockgeneric.data.datapoints.DatapointLoadouts;
 import net.swofty.type.skyblockgeneric.loadout.LoadoutManager;
-import net.swofty.type.skyblockgeneric.loadout.LoadoutManager.TreeType;
+import net.swofty.type.skyblockgeneric.skilltree.SkillTreeType;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 
 import java.util.ArrayList;
@@ -39,14 +39,14 @@ public class GUITreeSlots extends StatelessView {
             "§l §0 §f█§f§l §0 §f█§f§l §0 §f█§f§l §0 ", "§l §0 §f█§f█§f█§f█§f█§f§l §0 ",
             "§l §0 §0§l §0 §0§l §0 §f█§f§l §0 §0§l §0 §0§l §0 ");
 
-    private final TreeType tree;
+    private final SkillTreeType tree;
     private final Integer loadout;
 
-    public GUITreeSlots(TreeType tree) {
+    public GUITreeSlots(SkillTreeType tree) {
         this(tree, null);
     }
 
-    public GUITreeSlots(TreeType tree, Integer loadout) {
+    public GUITreeSlots(SkillTreeType tree, Integer loadout) {
         this.tree = tree;
         this.loadout = loadout;
     }
@@ -63,9 +63,9 @@ public class GUITreeSlots extends StatelessView {
         SkyBlockPlayer player = (SkyBlockPlayer) ctx.player();
         DatapointLoadouts.LoadoutsData data = LoadoutManager.data(player);
         int selected = loadout == null
-                ? (tree == TreeType.HOTM ? data.getActiveHotmSlot() : data.getActiveHotfSlot())
+                ? (tree == SkillTreeType.HOTM ? data.getActiveHotmSlot() : data.getActiveHotfSlot())
                 : selected(data.getLoadouts()[loadout]);
-        String[] names = tree == TreeType.HOTM ? data.getHotmNames() : data.getHotfNames();
+        String[] names = tree == SkillTreeType.HOTM ? data.getHotmNames() : data.getHotfNames();
 
         for (int slot = 0; slot < DatapointLoadouts.TREE_SLOT_COUNT; slot++) {
             int treeSlot = slot;
@@ -106,7 +106,7 @@ public class GUITreeSlots extends StatelessView {
         if (!unlocked) return;
         if (loadout != null) {
             DatapointLoadouts.Loadout selected = LoadoutManager.data(player).getLoadouts()[loadout];
-            if (tree == TreeType.HOTM) selected.setHotmSlot(slot);
+            if (tree == SkillTreeType.HOTM) selected.setHotmSlot(slot);
             else selected.setHotfSlot(slot);
             LoadoutManager.save(player);
             player.openView(new GUILoadoutEdit(loadout));
@@ -123,7 +123,7 @@ public class GUITreeSlots extends StatelessView {
 
     private void clear(SkyBlockPlayer player) {
         DatapointLoadouts.Loadout selected = LoadoutManager.data(player).getLoadouts()[loadout];
-        if (tree == TreeType.HOTM) selected.setHotmSlot(-1);
+        if (tree == SkillTreeType.HOTM) selected.setHotmSlot(-1);
         else selected.setHotfSlot(-1);
         LoadoutManager.save(player);
         player.openView(new GUILoadoutEdit(loadout));
@@ -131,7 +131,7 @@ public class GUITreeSlots extends StatelessView {
 
     private void rename(SkyBlockPlayer player, int slot) {
         DatapointLoadouts.LoadoutsData data = LoadoutManager.data(player);
-        String[] names = tree == TreeType.HOTM ? data.getHotmNames() : data.getHotfNames();
+        String[] names = tree == SkillTreeType.HOTM ? data.getHotmNames() : data.getHotfNames();
         new HypixelSignGUI(player).open(new String[]{names[slot], ""}).thenAccept(name -> {
             if (name != null && !name.isBlank()) {
                 names[slot] = name.trim();
@@ -142,15 +142,15 @@ public class GUITreeSlots extends StatelessView {
     }
 
     private int selected(DatapointLoadouts.Loadout loadout) {
-        return tree == TreeType.HOTM ? loadout.getHotmSlot() : loadout.getHotfSlot();
+        return tree == SkillTreeType.HOTM ? loadout.getHotmSlot() : loadout.getHotfSlot();
     }
 
     private List<String> diagram(int slot) {
-        if (tree == TreeType.HOTM) return slot == 0 ? HOTM_TREE_ONE : HOTM_EMPTY;
+        if (tree == SkillTreeType.HOTM) return slot == 0 ? HOTM_TREE_ONE : HOTM_EMPTY;
         return slot == 0 ? HOTF_TREE_ONE : HOTF_EMPTY;
     }
 
     private String title() {
-        return tree == TreeType.HOTM ? "Heart of the Mountain" : "Heart of the Forest";
+        return tree == SkillTreeType.HOTM ? "Heart of the Mountain" : "Heart of the Forest";
     }
 }
