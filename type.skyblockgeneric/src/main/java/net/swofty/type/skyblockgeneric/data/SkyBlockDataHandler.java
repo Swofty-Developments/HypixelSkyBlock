@@ -301,6 +301,9 @@ public class SkyBlockDataHandler extends DataHandler {
         SKILLS("skills", false, false, false,
                 DatapointSkills.class, new DatapointSkills("skills")),
 
+        EXPERIMENTATION("experimentation", false, false, false,
+                DatapointExperimentation.class, new DatapointExperimentation("experimentation")),
+
         EXPERIENCE("experience", false, false, false,
                 DatapointLong.class, new DatapointLong("experience", 0L),
                 (player, datapoint) -> {

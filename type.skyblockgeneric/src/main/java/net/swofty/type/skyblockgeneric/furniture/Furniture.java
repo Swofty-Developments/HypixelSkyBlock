@@ -4,10 +4,12 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.EquipmentSlot;
 import net.minestom.server.entity.LivingEntity;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.display.BlockDisplayMeta;
 import net.minestom.server.entity.metadata.display.ItemDisplayMeta;
+import net.minestom.server.entity.metadata.other.ArmorStandMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
@@ -36,8 +38,12 @@ public class Furniture {
 	}
 
 	public static List<LivingEntity> load(String furnitureName, Pos offset) {
+        return load(furnitureName, HypixelConst.getInstanceContainer(), offset);
+    }
+
+    public static List<LivingEntity> load(String furnitureName, Instance instance, Pos offset) {
+        final List<LivingEntity> spawned = new ArrayList<>();
 		try {
-			final Instance instance = HypixelConst.getInstanceContainer();
 			if (instance == null) {
 				throw new IllegalStateException("SkyBlock instance is not initialized");
 			}
@@ -50,31 +56,41 @@ public class Furniture {
 			final String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
 			final JSONArray entries = new JSONArray(content);
 
-			final List<LivingEntity> spawned = new ArrayList<>();
-
 			for (int i = 0; i < entries.length(); i++) {
 				JSONObject entry = entries.getJSONObject(i);
 				String type = entry.getString("type");
 
 				if ("minecraft:item_display".equals(type)) {
 					LivingEntity entity = createItemDisplay(entry);
+                    spawned.add(entity);
 					spawnEntity(entity, entry, offset, instance);
-					spawned.add(entity);
 					continue;
 				}
 
 				if ("minecraft:block_display".equals(type)) {
 					LivingEntity entity = createBlockDisplay(entry);
+                    spawned.add(entity);
 					spawnEntity(entity, entry, offset, instance);
+                    continue;
+                }
+
+                if ("minecraft:armor_stand".equals(type)) {
+                    LivingEntity entity = createArmorStand(entry);
 					spawned.add(entity);
+                    spawnEntity(entity, entry, offset, instance);
 				}
 			}
 
 			return spawned;
 		} catch (Exception exception) {
+            remove(spawned);
 			throw new IllegalStateException("Failed to load furniture '" + furnitureName + "'", exception);
 		}
 	}
+
+    public static void remove(List<? extends LivingEntity> entities) {
+        entities.forEach(LivingEntity::remove);
+    }
 
 	private static void spawnEntity(LivingEntity entity, JSONObject entry, Pos offset, Instance instance) {
 		final JSONObject position = entry.getJSONObject("position");
@@ -175,6 +191,57 @@ public class Furniture {
 		return entity;
 	}
 
+    private static LivingEntity createArmorStand(final JSONObject entry) {
+        final LivingEntity entity = new LivingEntity(EntityType.ARMOR_STAND);
+        entity.editEntityMeta(ArmorStandMeta.class, meta -> {
+            meta.setInvisible(entry.optBoolean("invisible", false));
+            meta.setSmall(entry.optBoolean("small", false));
+            meta.setMarker(entry.optBoolean("marker", false));
+            meta.setHasArms(entry.optBoolean("showArms", false));
+            meta.setHasNoBasePlate(!entry.optBoolean("showBasePlate", true));
+            meta.setHasNoGravity(true);
+
+            JSONObject pose = entry.optJSONObject("pose");
+            if (pose != null) {
+                setPose(pose, "head", meta::setHeadRotation);
+                setPose(pose, "body", meta::setBodyRotation);
+                setPose(pose, "leftArm", meta::setLeftArmRotation);
+                setPose(pose, "rightArm", meta::setRightArmRotation);
+                setPose(pose, "leftLeg", meta::setLeftLegRotation);
+                setPose(pose, "rightLeg", meta::setRightLegRotation);
+            }
+        });
+
+        JSONObject equipment = entry.optJSONObject("equipment");
+        if (equipment != null) {
+            setEquipment(entity, equipment, "head", EquipmentSlot.HELMET);
+            setEquipment(entity, equipment, "chest", EquipmentSlot.CHESTPLATE);
+            setEquipment(entity, equipment, "legs", EquipmentSlot.LEGGINGS);
+            setEquipment(entity, equipment, "feet", EquipmentSlot.BOOTS);
+            setEquipment(entity, equipment, "mainhand", EquipmentSlot.MAIN_HAND);
+            setEquipment(entity, equipment, "offhand", EquipmentSlot.OFF_HAND);
+        }
+
+        return entity;
+    }
+
+    private static void setPose(JSONObject pose, String key, java.util.function.Consumer<Vec> setter) {
+        JSONObject rotation = pose.optJSONObject(key);
+        if (rotation == null) return;
+        setter.accept(new Vec(
+                rotation.optDouble("x", 0d),
+                rotation.optDouble("y", 0d),
+                rotation.optDouble("z", 0d)
+        ));
+    }
+
+    private static void setEquipment(LivingEntity entity, JSONObject equipment, String key, EquipmentSlot slot) {
+        JSONObject item = equipment.optJSONObject(key);
+        if (item != null) {
+            entity.setEquipment(slot, buildItemStack(item));
+        }
+    }
+
 	private static ItemStack buildItemStack(final JSONObject item) {
 		final String itemId = item.getString("id");
 		Material material = Material.fromKey(itemId);
@@ -186,12 +253,14 @@ public class Furniture {
 
 		ItemStack.Builder builder = ItemStack.builder(material).amount(count);
 
-		// snbt is only used for getting player heads currently
 		final String snbt = item.optString("snbt", "");
 		final String texture = extractTextureFromSnbt(snbt);
 		if (texture != null && material == Material.PLAYER_HEAD) {
 			builder.set(DataComponents.PROFILE, new ResolvableProfile(new PlayerSkin(texture, null)));
 		}
+        if (snbt.contains("minecraft:enchantments")) {
+            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+        }
 
 		return builder.build();
 	}
