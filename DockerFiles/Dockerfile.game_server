@@ -20,6 +20,10 @@ RUN set -eu; \
         ServiceOrchestrator.jar \
         ServiceFriend.jar \
         ServiceStore.jar \
+        ServiceElection.jar \
+        ServiceGuild.jar \
+        ServicePunishment.jar \
+        ServiceReplay.jar \
         net.swofty.packer.HypixelPackServer.jar \
     ; do \
         echo "Downloading $jar"; \

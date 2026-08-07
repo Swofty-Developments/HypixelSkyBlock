@@ -55,7 +55,7 @@ var AllServices = []string{
 	"ServiceOrchestrator",
 	"ServiceFriend",
 	"ServiceStore",
-	"ServiceElections",
+	"ServiceElection",
 	"ServiceGuild",
 	"ServicePunishment",
 	"ServiceReplay",
