@@ -1,6 +1,7 @@
 items:
   - id: CENTURY_TALISMAN
     material: PLAYER_HEAD
+    name: "Century Talisman"
     rarity: COMMON
     lore:
       - What's better than a party? A party with free goodies!
@@ -14,6 +15,7 @@ items:
 
   - id: CENTURY_RING
     material: PLAYER_HEAD
+    name: "Century Ring"
     rarity: UNCOMMON
     lore:
       - What's better than a party? A party with free goodies and an accessory upgrade!

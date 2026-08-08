@@ -1,6 +1,7 @@
 items:
   - id: CANDY_TALISMAN
     material: PLAYER_HEAD
+    name: "Candy Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -12,6 +13,7 @@ items:
 
   - id: CANDY_RING
     material: PLAYER_HEAD
+    name: "Candy Ring"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -23,6 +25,7 @@ items:
 
   - id: CANDY_ARTIFACT
     material: PLAYER_HEAD
+    name: "Candy Artifact"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,6 +1,7 @@
 items:
   - id: TITANIUM_TALISMAN
     material: PLAYER_HEAD
+    name: "Titanium Talisman"
     rarity: UNCOMMON
     default_statistics:
       mining_speed: 15
@@ -16,6 +17,7 @@ items:
 
   - id: TITANIUM_RING
     material: PLAYER_HEAD
+    name: "Titanium Ring"
     rarity: RARE
     default_statistics:
       mining_speed: 30
@@ -31,6 +33,7 @@ items:
 
   - id: TITANIUM_ARTIFACT
     material: PLAYER_HEAD
+    name: "Titanium Artifact"
     rarity: EPIC
     default_statistics:
       mining_speed: 45
@@ -46,6 +49,7 @@ items:
 
   - id: TITANIUM_RELIC
     material: PLAYER_HEAD
+    name: "Titanium Relic"
     rarity: LEGENDARY
     default_statistics:
       mining_speed: 60

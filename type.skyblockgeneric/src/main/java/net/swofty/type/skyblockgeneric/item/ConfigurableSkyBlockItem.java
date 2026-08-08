@@ -24,6 +24,9 @@ public class ConfigurableSkyBlockItem {
     @Getter
     private final Material material;
     @Getter
+    @Nullable
+    private final String name;
+    @Getter
     private final List<String> lore;
     @Getter
     private final ItemStatistics defaultStatistics;
@@ -33,8 +36,14 @@ public class ConfigurableSkyBlockItem {
 
     public ConfigurableSkyBlockItem(String id, Material material, List<String> lore,
                               Map<String, Double> statistics) {
+        this(id, material, lore, null, statistics);
+    }
+
+    public ConfigurableSkyBlockItem(String id, Material material, List<String> lore,
+                              @Nullable String name, Map<String, Double> statistics) {
         this.id = id;
         this.material = material;
+        this.name = name;
         this.lore = lore;
 
         ItemStatistics.Builder builder = ItemStatistics.builder();
@@ -46,10 +55,11 @@ public class ConfigurableSkyBlockItem {
         this.defaultStatistics = builder.build();
     }
 
-    public ConfigurableSkyBlockItem(String id, Material material, List<String> lore, ItemStatistics defaultStatistics,
+    public ConfigurableSkyBlockItem(String id, Material material, List<String> lore, @Nullable String name, ItemStatistics defaultStatistics,
                                     Map<Class<? extends SkyBlockItemComponent>, ComponentEntry> components, Set<Class<? extends SkyBlockItemComponent>> explicitComponents) {
         this.id = id;
         this.material = material;
+        this.name = name;
         this.lore = lore;
         this.defaultStatistics = defaultStatistics;
 
@@ -187,6 +197,7 @@ public class ConfigurableSkyBlockItem {
                 this.id,
                 this.material,
                 this.lore,
+                this.name,
                 this.defaultStatistics,
                 this.components,
                 this.explicitComponents

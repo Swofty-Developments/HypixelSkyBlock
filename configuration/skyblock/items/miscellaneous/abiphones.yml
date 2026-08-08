@@ -1,6 +1,7 @@
 items:
   - id: ABIPHONE_BASIC
     material: PLAYER_HEAD
+    name: "Abiphone Basic"
     rarity: COMMON
     components:
       - id: ABIPHONE
@@ -16,6 +17,7 @@ items:
         item_model: hypixel_skyblock:item/abiphones/abiphone_basic
   - id: ABIPHONE_X_RED
     material: PLAYER_HEAD
+    name: "Abiphone X Red"
     rarity: UNCOMMON
     components:
       - id: ABIPHONE
@@ -29,6 +31,7 @@ items:
         texture: d256584eea6825150a415fc18daa532b9139cca454f969f2210355de10a15a4
   - id: ABIPHONE_X_BLUE
     material: PLAYER_HEAD
+    name: "Abiphone X Blue"
     rarity: COMMON
     components:
       - id: ABIPHONE
@@ -42,6 +45,7 @@ items:
         texture: 76116a4cb5d1c9c2e9c3912f118206b2a8b0c48e6daa4a1f489821eb58264224
   - id: ABIPHONE_XI_YELLOW
     material: PLAYER_HEAD
+    name: "Abiphone Xi Yellow"
     rarity: UNCOMMON
     components:
       - id: ABIPHONE
@@ -55,6 +59,7 @@ items:
         texture: 5e065a2b61a89e96e302737a7c928e24bfd3b7ae498210324ccd0e84332046f6
   - id: ABIPHONE_XI_GREEN
     material: PLAYER_HEAD
+    name: "Abiphone Xi Green"
     rarity: UNCOMMON
     components:
       - id: ABIPHONE
@@ -68,6 +73,7 @@ items:
         texture: 5e065a2b61a89e96e302737a7c928e24bfd3b7ae498210324ccd0e84332046f6
   - id: ABIPHONE_XII_AMBER
     material: PLAYER_HEAD
+    name: "Abiphone Xii Amber"
     rarity: RARE
     components:
       - id: ABIPHONE
@@ -82,6 +88,7 @@ items:
         texture: c386262dba9acafb004a2525e02789e6f9448ce89541441c7fbce401fd66588a
   - id: ABIPHONE_XII_AMETHYST
     material: PLAYER_HEAD
+    name: "Abiphone Xii Amethyst"
     rarity: RARE
     components:
       - id: ABIPHONE

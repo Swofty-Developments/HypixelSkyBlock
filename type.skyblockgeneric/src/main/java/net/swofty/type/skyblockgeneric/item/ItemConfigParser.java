@@ -40,6 +40,7 @@ public class ItemConfigParser {
 		try {
 			String id = safeConfig.getString("id", "");
 			id = id.replaceAll("[^a-zA-Z0-9_]", "");
+			String name = safeConfig.getString("name");
 
 			String materialName = safeConfig.getString("material", "AIR");
 			Material material = Material.values().stream()
@@ -58,7 +59,7 @@ public class ItemConfigParser {
 				}
 			}
 
-			ConfigurableSkyBlockItem item = new ConfigurableSkyBlockItem(id, material, lore, statistics);
+			ConfigurableSkyBlockItem item = new ConfigurableSkyBlockItem(id, material, lore, name, statistics);
 
 			List<Map<String, Object>> components = safeConfig.getMapList("components");
 			for (Map<String, Object> componentConfig : components) {

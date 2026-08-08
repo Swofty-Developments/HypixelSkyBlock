@@ -1,6 +1,7 @@
 items:
   - id: HASTE_RING
     material: PLAYER_HEAD
+    name: "Haste Ring"
     rarity: RARE
     default_statistics:
       mining_speed: 10
@@ -35,6 +36,7 @@ items:
 
   - id: HASTE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Haste Artifact"
     rarity: EPIC
     default_statistics:
       mining_speed: 25

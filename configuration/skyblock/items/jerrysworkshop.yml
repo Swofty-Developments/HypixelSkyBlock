@@ -1,6 +1,7 @@
 items:
   - id: GLACIAL_FRAGMENT
     material: player_head
+    name: "Glacial Fragment"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -11,6 +12,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/winter/glacial_fragment
   - id: GREEN_GIFT
     material: player_head
+    name: "Green Gift"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -18,6 +20,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: RED_GIFT
     material: player_head
+    name: "Red Gift"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -25,6 +28,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: WHITE_GIFT
     material: player_head
+    name: "White Gift"
     rarity: COMMON
     components:
       - id: SKULL_HEAD

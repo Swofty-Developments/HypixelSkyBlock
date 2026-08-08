@@ -1,6 +1,7 @@
 items:
   - id: CRYSTAL_HOLLOWS_SACK
     material: player_head
+    name: "Crystal Hollows Sack"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -25,6 +26,7 @@ items:
         handler_id: CRYSTAL_HOLLOWS_SACK_SACK
   - id: DUNGEON_SACK
     material: player_head
+    name: "Dungeon Sack"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -38,6 +40,7 @@ items:
         handler_id: DUNGEON_SACK_SACK
   - id: DWARVEN_SACK
     material: player_head
+    name: "Dwarven Sack"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -60,6 +63,7 @@ items:
         handler_id: DWARVEN_SACK_SACK
   - id: FLOWER_SACK
     material: player_head
+    name: "Flower Sack"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -88,6 +92,7 @@ items:
         handler_id: FLOWER_SACK_SACK
   - id: POCKET_SACK_IN_A_SACK
     material: player_head
+    name: "Pocket Sack In A Sack"
     rarity: SPECIAL
     components:
       - id: SKULL_HEAD
@@ -97,6 +102,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: RUNE_SACK
     material: player_head
+    name: "Rune Sack"
     rarity: EPIC
     components:
       - id: SKULL_HEAD

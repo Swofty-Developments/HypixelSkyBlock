@@ -1,6 +1,7 @@
 items:
   - id: WOLF_TALISMAN
     material: PLAYER_HEAD
+    name: "Wolf Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Wolf Talisman
@@ -13,6 +14,7 @@ items:
     rarity: UNCOMMON
   - id: WOLF_RING
     material: PLAYER_HEAD
+    name: "Wolf Ring"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

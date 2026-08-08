@@ -1,6 +1,7 @@
 items:
   - id: CHILI_PEPPER
     material: player_head
+    name: "Chili Pepper"
     rarity: UNCOMMON
     components:
       - id: SELLABLE
@@ -9,6 +10,7 @@ items:
         texture: f859c8df1109c08a756275f1d2887c2748049fe33877769a7b415d56eda469d8
   - id: SOUL_STRING
     material: string
+    name: "Soul String"
     rarity: RARE
     components:
       - id: SELLABLE
@@ -17,6 +19,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/soul_string
   - id: ZOMBIE_HEART
     material: player_head
+    name: "Zombie Heart"
     rarity: RARE
     default_statistics:
       health: 50.0

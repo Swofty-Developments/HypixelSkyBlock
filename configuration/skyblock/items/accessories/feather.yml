@@ -1,6 +1,7 @@
 items:
   - id: FEATHER_TALISMAN
     material: PLAYER_HEAD
+    name: "Feather Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Feather Talisman
@@ -29,6 +30,7 @@ items:
 
   - id: FEATHER_RING
     material: PLAYER_HEAD
+    name: "Feather Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -64,6 +66,7 @@ items:
 
   - id: FEATHER_ARTIFACT
     material: PLAYER_HEAD
+    name: "Feather Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

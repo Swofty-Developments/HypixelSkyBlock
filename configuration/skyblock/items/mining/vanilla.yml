@@ -39,6 +39,7 @@ items:
         value: 2.0
   - id: COAL_BLOCK
     material: coal_block
+    name: "Coal Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -93,6 +94,7 @@ items:
         value: 10.0
   - id: DIAMOND_BLOCK
     material: diamond_block
+    name: "Diamond Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -144,6 +146,7 @@ items:
         value: 8.0
   - id: EMERALD_BLOCK
     material: emerald_block
+    name: "Emerald Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -237,6 +240,7 @@ items:
         alchemy_xp: 5
   - id: GOLD_BLOCK
     material: gold_block
+    name: "Gold Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -330,6 +334,7 @@ items:
         value: 0.5
   - id: IRON_BLOCK
     material: iron_block
+    name: "Iron Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -432,6 +437,7 @@ items:
         value: 1.0
   - id: LAPIS_LAZULI_BLOCK
     material: lapis_block
+    name: "Lapis Lazuli Block"
     rarity: COMMON
     components:
       - id: PLACEABLE
@@ -518,6 +524,7 @@ items:
               amount: 1
   - id: QUARTZ
     material: quartz
+    name: "Quartz"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -557,6 +564,7 @@ items:
         mining_value: 3.0
   - id: REDSTONE
     material: redstone
+    name: "Redstone"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -593,6 +601,7 @@ items:
         value: 6.0
   - id: REDSTONE_BLOCK
     material: redstone_block
+    name: "Redstone Block"
     rarity: COMMON
     components:
       - id: PLACEABLE

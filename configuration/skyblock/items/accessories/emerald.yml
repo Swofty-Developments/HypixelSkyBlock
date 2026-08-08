@@ -1,6 +1,7 @@
 items:
   - id: EMERALD_RING
     material: PLAYER_HEAD
+    name: "Emerald Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -33,6 +34,7 @@ items:
 
   - id: EMERALD_ARTIFACT
     material: PLAYER_HEAD
+    name: "Emerald Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

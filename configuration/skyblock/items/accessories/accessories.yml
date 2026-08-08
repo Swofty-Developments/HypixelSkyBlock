@@ -1,6 +1,7 @@
 items:
   - id: BITS_TALISMAN
     material: PLAYER_HEAD
+    name: "Bits Talisman"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -8,6 +9,7 @@ items:
       - id: TALISMAN
   - id: FARMING_TALISMAN
     material: PLAYER_HEAD
+    name: "Farming Talisman"
     rarity: COMMON
     default_statistics:
       speed: 10.0
@@ -38,6 +40,7 @@ items:
         value: 25.0
   - id: FIRE_TALISMAN
     material: PLAYER_HEAD
+    name: "Fire Talisman"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -47,6 +50,7 @@ items:
         value: 6480.0
   - id: LAVA_TALISMAN
     material: PLAYER_HEAD
+    name: "Lava Talisman"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -56,6 +60,7 @@ items:
         value: 5800.0
   - id: MINE_AFFINITY_TALISMAN
     material: PLAYER_HEAD
+    name: "Mine Affinity Talisman"
     rarity: COMMON
     default_statistics:
       speed: 10.0
@@ -65,6 +70,7 @@ items:
       - id: TALISMAN
   - id: POTATO_TALISMAN
     material: PLAYER_HEAD
+    name: "Potato Talisman"
     rarity: COMMON
     default_statistics:
       speed: 1.0
@@ -74,6 +80,7 @@ items:
       - id: TALISMAN
   - id: VILLAGE_AFFINITY_TALISMAN
     material: PLAYER_HEAD
+    name: "Village Affinity Talisman"
     rarity: COMMON
     default_statistics:
       speed: 10.0
@@ -84,12 +91,14 @@ items:
   - id: SKELETON_TALISMAN
     rarity: COMMON
     material: SKELETON_SKULL
+    name: "Skeleton Talisman"
     components:
       - id: SELLABLE
         value: 50.0
   - id: BLUE_RING
     rarity: RARE
     material: PLAYER_HEAD
+    name: "Blue Ring"
     components:
       - id: SELLABLE
         value: 25000.0
@@ -98,18 +107,21 @@ items:
   - id: ARCHFIEND_DICE
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Archfiend Dice"
     components:
       - id: SKULL_HEAD
         texture: 8ff7c410a4a8b4b518b94d21402d2892fcc8fa68c3028417dd4eaa8b7e35c568
   - id: HIGH_CLASS_ARCHFIEND_DICE
     rarity: LEGENDARY
     material: PLAYER_HEAD
+    name: "High Class Archfiend Dice"
     components:
       - id: SKULL_HEAD
         texture: 8ff7c410a4a8b4b518b94d21402d2892fcc8fa68c3028417dd4eaa8b7e35c568
   - id: SINFUL_DICE
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Sinful Dice"
     components:
       - id: SKULL_HEAD
         texture: c32ded1b5bd7e0a52050aa6eca4658fd8bb9d48c3bc50a00994643b128a23de3

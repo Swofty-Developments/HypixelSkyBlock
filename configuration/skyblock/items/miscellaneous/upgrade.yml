@@ -1,6 +1,7 @@
 items:
   - id: AUTO_SMELTER
     material: furnace
+    name: "Auto Smelter"
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
@@ -30,6 +31,7 @@ items:
         value: 32.0
   - id: COMPACTOR
     material: dispenser
+    name: "Compactor"
     rarity: UNCOMMON
     components:
       - id: MINION_UPGRADE
@@ -63,6 +65,7 @@ items:
         value: 640.0
   - id: HYPER_FURNACE
     material: furnace
+    name: "Hyper Furnace"
     rarity: UNCOMMON
     components:
       - id: MINION_UPGRADE
@@ -91,6 +94,7 @@ items:
               amount: 1
   - id: DIAMOND_SPREADING
     material: diamond
+    name: "Diamond Spreading"
     rarity: RARE
     components:
       - id: MINION_UPGRADE
@@ -120,6 +124,7 @@ items:
               amount: 1
   - id: FLY_CATCHER
     material: cobweb
+    name: "Fly Catcher"
     rarity: COMMON
     components:
       - id: MINION_UPGRADE
@@ -128,6 +133,7 @@ items:
       - id: TRACKED_UNIQUE
   - id: MINION_EXPANDER
     material: command_block
+    name: "Minion Expander"
     rarity: RARE
     components:
       - id: MINION_UPGRADE
@@ -138,6 +144,7 @@ items:
         value: 4000.0
   - id: SUPER_COMPACTOR_3000
     material: dispenser
+    name: "Super Compactor 3000"
     rarity: RARE
     components:
       - id: MINION_UPGRADE
@@ -171,6 +178,7 @@ items:
         value: 50000.0
   - id: MITHRIL_INFUSION
     material: player_head
+    name: "Mithril Infusion"
     rarity: UNCOMMON
     components:
       - id: DEFAULT_CRAFTABLE

@@ -1,6 +1,7 @@
 items:
   - id: MELODY_SHOES
     material: LEATHER_BOOTS
+    name: "Melody Shoes"
     rarity: COMMON
     default_statistics:
       defense: 20
@@ -24,6 +25,7 @@ items:
 
   - id: CHARLIE_TROUSERS
     material: LEATHER_LEGGINGS
+    name: "Charlie Trousers"
     rarity: COMMON
     default_statistics:
       defense: 15
@@ -47,6 +49,7 @@ items:
 
   - id: KELLY_TSHIRT
     material: LEATHER_CHESTPLATE
+    name: "Kelly Tshirt"
     rarity: COMMON
     default_statistics:
       defense: 30
@@ -70,6 +73,7 @@ items:
 
   - id: MOLE_HAT
     material: PLAYER_HEAD
+    name: "Mole Hat"
     rarity: COMMON
     default_statistics:
       defense: 10

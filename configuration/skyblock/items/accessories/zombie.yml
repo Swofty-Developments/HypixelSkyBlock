@@ -1,6 +1,7 @@
 items:
   - id: ZOMBIE_TALISMAN
     material: ZOMBIE_HEAD
+    name: "Zombie Talisman"
     rarity: COMMON
     components:
       - id: TALISMAN
@@ -8,6 +9,7 @@ items:
         value: 50.0
   - id: ZOMBIE_RING
     material: PLAYER_HEAD
+    name: "Zombie Ring"
     rarity: UNCOMMON
     components:
       - id: TALISMAN
@@ -15,6 +17,7 @@ items:
         texture: 55d996cb5a8e5a71a274275f46944b944eeeacd2e1cadef918b05b879a03336f
   - id: ZOMBIE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Zombie Artifact"
     rarity: RARE
     components:
       - id: TALISMAN

@@ -1,6 +1,7 @@
 items:
   - id: EMPEROR_TALISMAN
     material: PLAYER_HEAD
+    name: "Emperor Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: EMPEROR_RING
     material: PLAYER_HEAD
+    name: "Emperor Ring"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -27,6 +29,7 @@ items:
 
   - id: EMPEROR_ARTIFACT
     material: PLAYER_HEAD
+    name: "Emperor Artifact"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

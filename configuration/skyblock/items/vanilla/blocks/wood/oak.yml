@@ -256,6 +256,7 @@ items:
 
   - id: OAK_CHEST_BOAT
     material: OAK_CHEST_BOAT
+    name: "Oak Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

@@ -2,6 +2,7 @@ items:
   - id: ARTISANAL_SHORTBOW
     rarity: RARE
     material: BOW
+    name: "Artisanal Shortbow"
     components:
       - id: SELLABLE
         value: 200.0
@@ -10,30 +11,35 @@ items:
   - id: JUJU_SHORTBOW
     rarity: EPIC
     material: BOW
+    name: "Juju Shortbow"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/weapons/juju_shortbow
   - id: MOSQUITO_BOW
     rarity: LEGENDARY
     material: BOW
+    name: "Mosquito Bow"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/spider/weapons/mosquito_shortbow
   - id: SCORPION_BOW
     rarity: EPIC
     material: BOW
+    name: "Scorpion Bow"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/spider/weapons/spider_shortbow
   - id: TERMINATOR
     rarity: LEGENDARY
     material: BOW
+    name: "Terminator"
     components:
       - id: ITEM_MODEL
         item_model: hypixel_skyblock:item/slayer/enderman/weapons/terminator
   - id: WITHER_BOW
     rarity: UNCOMMON
     material: BOW
+    name: "Wither Bow"
     components:
       - id: SELLABLE
         value: 1.0

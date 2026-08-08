@@ -1,6 +1,7 @@
 items:
   - id: PIGGY_BANK
     material: PLAYER_HEAD
+    name: "Piggy Bank"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: CRACKED_PIGGY_BANK
     material: PLAYER_HEAD
+    name: "Cracked Piggy Bank"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -27,6 +29,7 @@ items:
 
   - id: BROKEN_PIGGY_BANK
     material: PLAYER_HEAD
+    name: "Broken Piggy Bank"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME

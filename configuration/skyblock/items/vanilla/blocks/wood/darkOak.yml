@@ -256,6 +256,7 @@ items:
 
   - id: DARK_OAK_CHEST_BOAT
     material: DARK_OAK_CHEST_BOAT
+    name: "Dark Oak Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

@@ -1,6 +1,7 @@
 items:
   - id: POTION_AFFINITY_TALISMAN
     material: PLAYER_HEAD
+    name: "Potion Affinity Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Potion Affinity Talisman
@@ -29,6 +30,7 @@ items:
 
   - id: RING_POTION_AFFINITY
     material: PLAYER_HEAD
+    name: "Ring Potion Affinity"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -61,6 +63,7 @@ items:
 
   - id: ARTIFACT_POTION_AFFINITY
     material: PLAYER_HEAD
+    name: "Artifact Potion Affinity"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -1,6 +1,7 @@
 items:
   - id: BEE_PET
     material: player_head
+    name: "Bee Pet"
     rarity: MYTHIC
     components:
       - id: PET
@@ -80,6 +81,7 @@ items:
       - id: TRACKED_UNIQUE
   - id: CHICKEN_PET
     material: player_head
+    name: "Chicken Pet"
     rarity: LEGENDARY
     components:
       - id: PET
@@ -108,6 +110,7 @@ items:
       - id: TRACKED_UNIQUE
   - id: GRANDMA_WOLF_PET
     material: player_head
+    name: "Grandma Wolf Pet"
     rarity: LEGENDARY
     components:
       - id: PET

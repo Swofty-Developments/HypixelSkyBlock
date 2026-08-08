@@ -1,6 +1,7 @@
 items:
   - id: PIONEERS_PICKAXE
     material: wooden_pickaxe
+    name: "Pioneers Pickaxe"
     rarity: COMMON
     default_statistics:
       mining_speed: 1.0
@@ -9,6 +10,7 @@ items:
       - id: PICKAXE
   - id: ROOKIE_PICKAXE
     material: stone_pickaxe
+    name: "Rookie Pickaxe"
     rarity: COMMON
     default_statistics:
       mining_speed: 150.0
@@ -22,6 +24,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/rookie_pickaxe
   - id: LANTERN
     material: PLAYER_HEAD
+    name: "Lantern"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -31,6 +34,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: INFINI_TORCH
     material: TORCH
+    name: "Infini Torch"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

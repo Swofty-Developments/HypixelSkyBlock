@@ -3,6 +3,7 @@ items:
   - id: AWKWARD_POTION
     rarity: COMMON
     material: potion
+    name: "Awkward Potion"
     components:
       - id: POTION_DATA
         effect: AWKWARD
@@ -14,6 +15,7 @@ items:
   - id: SPEED_POTION_1
     rarity: COMMON
     material: potion
+    name: "Speed Potion 1"
     components:
       - id: POTION_DATA
         effect: SPEED
@@ -24,6 +26,7 @@ items:
   - id: SPEED_POTION_5
     rarity: RARE
     material: potion
+    name: "Speed Potion 5"
     components:
       - id: POTION_DATA
         effect: SPEED
@@ -35,6 +38,7 @@ items:
   - id: STRENGTH_POTION_1
     rarity: COMMON
     material: potion
+    name: "Strength Potion 1"
     components:
       - id: POTION_DATA
         effect: STRENGTH
@@ -45,6 +49,7 @@ items:
   - id: STRENGTH_POTION_5
     rarity: RARE
     material: potion
+    name: "Strength Potion 5"
     components:
       - id: POTION_DATA
         effect: STRENGTH
@@ -56,6 +61,7 @@ items:
   - id: CRITICAL_POTION_1
     rarity: COMMON
     material: potion
+    name: "Critical Potion 1"
     components:
       - id: POTION_DATA
         effect: CRITICAL
@@ -66,6 +72,7 @@ items:
   - id: CRITICAL_POTION_4
     rarity: EPIC
     material: potion
+    name: "Critical Potion 4"
     components:
       - id: POTION_DATA
         effect: CRITICAL
@@ -77,6 +84,7 @@ items:
   - id: HEALING_POTION_1
     rarity: COMMON
     material: potion
+    name: "Healing Potion 1"
     components:
       - id: POTION_DATA
         effect: HEALING
@@ -87,6 +95,7 @@ items:
   - id: HEALING_POTION_8
     rarity: EPIC
     material: potion
+    name: "Healing Potion 8"
     components:
       - id: POTION_DATA
         effect: HEALING
@@ -98,6 +107,7 @@ items:
   - id: REGENERATION_POTION_1
     rarity: COMMON
     material: potion
+    name: "Regeneration Potion 1"
     components:
       - id: POTION_DATA
         effect: REGENERATION
@@ -109,6 +119,7 @@ items:
   - id: RESISTANCE_POTION_1
     rarity: COMMON
     material: potion
+    name: "Resistance Potion 1"
     components:
       - id: POTION_DATA
         effect: RESISTANCE
@@ -120,6 +131,7 @@ items:
   - id: HASTE_POTION_1
     rarity: COMMON
     material: potion
+    name: "Haste Potion 1"
     components:
       - id: POTION_DATA
         effect: HASTE
@@ -130,6 +142,7 @@ items:
   - id: HASTE_POTION_3
     rarity: RARE
     material: potion
+    name: "Haste Potion 3"
     components:
       - id: POTION_DATA
         effect: HASTE
@@ -141,6 +154,7 @@ items:
   - id: MAGIC_FIND_POTION_1
     rarity: COMMON
     material: potion
+    name: "Magic Find Potion 1"
     components:
       - id: POTION_DATA
         effect: MAGIC_FIND
@@ -152,6 +166,7 @@ items:
   - id: PET_LUCK_POTION_1
     rarity: COMMON
     material: potion
+    name: "Pet Luck Potion 1"
     components:
       - id: POTION_DATA
         effect: PET_LUCK
@@ -163,6 +178,7 @@ items:
   - id: SPELUNKER_POTION_1
     rarity: COMMON
     material: potion
+    name: "Spelunker Potion 1"
     components:
       - id: POTION_DATA
         effect: SPELUNKER
@@ -174,6 +190,7 @@ items:
   - id: NIGHT_VISION_POTION
     rarity: COMMON
     material: potion
+    name: "Night Vision Potion"
     components:
       - id: POTION_DATA
         effect: NIGHT_VISION
@@ -184,6 +201,7 @@ items:
   - id: FIRE_RESISTANCE_POTION
     rarity: COMMON
     material: potion
+    name: "Fire Resistance Potion"
     components:
       - id: POTION_DATA
         effect: FIRE_RESISTANCE
@@ -194,6 +212,7 @@ items:
   - id: WATER_BREATHING_POTION
     rarity: COMMON
     material: potion
+    name: "Water Breathing Potion"
     components:
       - id: POTION_DATA
         effect: WATER_BREATHING
@@ -204,6 +223,7 @@ items:
   - id: INVISIBILITY_POTION
     rarity: COMMON
     material: potion
+    name: "Invisibility Potion"
     components:
       - id: POTION_DATA
         effect: INVISIBILITY
@@ -215,6 +235,7 @@ items:
   - id: POISON_SPLASH_POTION
     rarity: COMMON
     material: splash_potion
+    name: "Poison Splash Potion"
     components:
       - id: POTION_DATA
         effect: POISON
@@ -225,6 +246,7 @@ items:
   - id: WEAKNESS_SPLASH_POTION
     rarity: COMMON
     material: splash_potion
+    name: "Weakness Splash Potion"
     components:
       - id: POTION_DATA
         effect: WEAKNESS
@@ -235,6 +257,7 @@ items:
   - id: SLOWNESS_SPLASH_POTION
     rarity: COMMON
     material: splash_potion
+    name: "Slowness Splash Potion"
     components:
       - id: POTION_DATA
         effect: SLOWNESS
@@ -245,6 +268,7 @@ items:
   - id: DAMAGE_SPLASH_POTION
     rarity: COMMON
     material: splash_potion
+    name: "Damage Splash Potion"
     components:
       - id: POTION_DATA
         effect: DAMAGE

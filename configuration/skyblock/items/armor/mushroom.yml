@@ -1,6 +1,7 @@
 items:
   - id: MUSHROOM_HELMET
     material: leather_helmet
+    name: "Mushroom Helmet"
     rarity: COMMON
     default_statistics:
       health: 20.0
@@ -35,6 +36,7 @@ items:
 
   - id: MUSHROOM_CHESTPLATE
     material: leather_chestplate
+    name: "Mushroom Chestplate"
     rarity: COMMON
     default_statistics:
       health: 10.0
@@ -71,6 +73,7 @@ items:
 
   - id: MUSHROOM_LEGGINGS
     material: leather_leggings
+    name: "Mushroom Leggings"
     rarity: COMMON
     default_statistics:
       health: 10.0
@@ -107,6 +110,7 @@ items:
 
   - id: MUSHROOM_BOOTS
     material: leather_boots
+    name: "Mushroom Boots"
     rarity: COMMON
     default_statistics:
       health: 15.0

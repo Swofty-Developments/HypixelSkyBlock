@@ -1,6 +1,7 @@
 items:
   - id: MITHRIL_NECKLACE
     material: PLAYER_HEAD
+    name: "Mithril Necklace"
     rarity: UNCOMMON
     default_statistics:
       mining_speed: 20
@@ -15,6 +16,7 @@ items:
 
   - id: MITHRIL_BELT
     material: PLAYER_HEAD
+    name: "Mithril Belt"
     rarity: UNCOMMON
     default_statistics:
       mining_speed: 20
@@ -29,6 +31,7 @@ items:
 
   - id: MITHRIL_GAUNTLET
     material: PLAYER_HEAD
+    name: "Mithril Gauntlet"
     rarity: UNCOMMON
     default_statistics:
       mining_speed: 20

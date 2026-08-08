@@ -1,6 +1,7 @@
 items:
   - id: ANITA_TALISMAN
     material: PLAYER_HEAD
+    name: "Anita Talisman"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -12,6 +13,7 @@ items:
 
   - id: ANITA_RING
     material: PLAYER_HEAD
+    name: "Anita Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -23,6 +25,7 @@ items:
 
   - id: ANITA_ARTIFACT
     material: PLAYER_HEAD
+    name: "Anita Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

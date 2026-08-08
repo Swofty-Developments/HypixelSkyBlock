@@ -1,6 +1,7 @@
 items:
   - id: RESPIRATION_TALISMAN
     material: PLAYER_HEAD
+    name: "Respiration Talisman"
     rarity: COMMON
     default_statistics:
       respiration: 10
@@ -16,6 +17,7 @@ items:
 
   - id: RESPIRATION_RING
     material: PLAYER_HEAD
+    name: "Respiration Ring"
     rarity: UNCOMMON
     default_statistics:
       respiration: 20
@@ -31,6 +33,7 @@ items:
 
   - id: RESPIRATION_ARTIFACT
     material: PLAYER_HEAD
+    name: "Respiration Artifact"
     rarity: RARE
     default_statistics:
       respiration: 30

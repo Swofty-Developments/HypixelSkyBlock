@@ -256,6 +256,7 @@ items:
 
   - id: ACACIA_CHEST_BOAT
     material: ACACIA_CHEST_BOAT
+    name: "Acacia Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

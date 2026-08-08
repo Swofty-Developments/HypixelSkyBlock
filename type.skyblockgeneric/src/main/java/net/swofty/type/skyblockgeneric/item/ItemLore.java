@@ -56,10 +56,10 @@ public class ItemLore {
 
 		if (recombobulated) rarity = rarity.upgrade();
 
-		String displayName;
+		Component displayName;
 		if (item.hasComponent(CustomDisplayNameComponent.class)) {
 			CustomDisplayNameComponent customDisplayName = item.getComponent(CustomDisplayNameComponent.class);
-			displayName = customDisplayName.getDisplayName(item);
+			displayName = Component.text(customDisplayName.getDisplayName(item));
 		} else {
 			// Check for potion data FIRST to generate proper potion display name
 			// This must be checked before getPotentialType() since POTION is a valid ItemType
@@ -71,21 +71,19 @@ public class ItemLore {
 				if (effectForName != null) {
 					String effectDisplay = effectForName.getLevelDisplay(potionDataForName.getLevel());
 					if (potionDataForName.isSplash()) {
-						displayName = effectDisplay + " " + I18n.string("items.lore.splash_potion_suffix", l);
+						displayName = Component.text(effectDisplay + " " + I18n.string("items.lore.splash_potion_suffix", l));
 					} else {
-						displayName = effectDisplay + " " + I18n.string("items.lore.potion_suffix", l);
+						displayName = Component.text(effectDisplay + " " + I18n.string("items.lore.potion_suffix", l));
 					}
 				} else if (handler.getPotentialType() != null) {
-					displayName = I18n.string("items." + handler.getPotentialType().name(), l);
+					displayName = getConfiguredOrMaterialName(item, stack.material());
 				} else {
-					Material material = stack.material();
-					displayName = StringUtility.toNormalCase(material.key().value());
+					displayName = getConfiguredOrMaterialName(item, stack.material());
 				}
 			} else if (handler.getPotentialType() != null) {
-				displayName = I18n.string("items." + handler.getPotentialType().name(), l);
+				displayName = getConfiguredOrMaterialName(item, stack.material());
 			} else {
-				Material material = stack.material();
-				displayName = StringUtility.toNormalCase(material.key().value());
+				displayName = getConfiguredOrMaterialName(item, stack.material());
 			}
 		}
 
@@ -360,7 +358,7 @@ public class ItemLore {
 
 		if (item.hasComponent(ReforgableComponent.class)) {
 			addLoreLine(I18n.string("items.lore.reforgeable", l));
-			if (handler.getReforge() != null) displayName = handler.getReforge().getPrefix() + " " + displayName;
+			if (handler.getReforge() != null) displayName = Component.text(handler.getReforge().getPrefix() + " ").append(displayName);
 		}
 
 		ItemAttributeSoulbound.SoulBoundData bound = handler.getSoulBoundData();
@@ -389,7 +387,12 @@ public class ItemLore {
 		addLoreComponent(displayRarity);
 		this.stack = stack.with(DataComponents.LORE, loreLines)
 				.withAmount(item.getAmount())
-				.with(DataComponents.CUSTOM_NAME, Component.text(displayName, rarity.getColor()).decoration(TextDecoration.ITALIC, false));
+				.with(DataComponents.CUSTOM_NAME, displayName.color(rarity.getColor()).decoration(TextDecoration.ITALIC, false));
+	}
+
+	private static Component getConfiguredOrMaterialName(SkyBlockItem item, Material material) {
+		String name = item.getConfig() == null ? null : item.getConfig().getName();
+		return name == null ? Component.translatable(material) : Component.text(name);
 	}
 
 	private boolean addPossiblePropertyInt(ItemStatistic statistic, double overallValue,

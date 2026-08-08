@@ -1,6 +1,7 @@
 items:
   - id: FLAWED_AMBER_GEM
     material: player_head
+    name: "Flawed Amber Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -26,6 +27,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amber/flawed_amber_gem
   - id: FLAWED_AMETHYST_GEM
     material: player_head
+    name: "Flawed Amethyst Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -51,6 +53,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amethyst/flawed_amethyst_gem
   - id: FLAWED_JADE_GEM
     material: player_head
+    name: "Flawed Jade Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -76,6 +79,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jade/flawed_jade_gem
   - id: FLAWED_JASPER_GEM
     material: player_head
+    name: "Flawed Jasper Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -101,6 +105,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jasper/flawed_jasper_gem
   - id: FLAWED_RUBY_GEM
     material: player_head
+    name: "Flawed Ruby Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -126,6 +131,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/ruby/flawed_ruby_gem
   - id: FLAWED_SAPPHIRE_GEM
     material: player_head
+    name: "Flawed Sapphire Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -151,6 +157,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/sapphire/flawed_sapphire_gem
   - id: FLAWED_TOPAZ_GEM
     material: player_head
+    name: "Flawed Topaz Gem"
     rarity: UNCOMMON
     components:
       - id: GEMSTONE_IMPL
@@ -176,6 +183,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/topaz/flawed_topaz_gem
   - id: FLAWED_OPAL_GEM
     material: player_head
+    name: "Flawed Opal Gem"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -201,6 +209,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/blaze/gemstones/flawed_opal_gem
   - id: FLAWED_AQUAMARINE_GEM
     material: player_head
+    name: "Flawed Aquamarine Gem"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -226,6 +235,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/aquamarine/flawed_aquamarine_gem
   - id: FLAWED_CITRINE_GEM
     material: player_head
+    name: "Flawed Citrine Gem"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -251,6 +261,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/citrine/flawed_citrine_gem
   - id: FLAWED_ONYX_GEM
     material: player_head
+    name: "Flawed Onyx Gem"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -276,6 +287,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/onyx/flawed_onyx_gem
   - id: FLAWED_PERIDOT_GEM
     material: player_head
+    name: "Flawed Peridot Gem"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME

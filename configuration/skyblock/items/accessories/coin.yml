@@ -1,6 +1,7 @@
 items:
   - id: COIN_TALISMAN
     material: PLAYER_HEAD
+    name: "Coin Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Talisman of Coins
@@ -13,6 +14,7 @@ items:
 
   - id: RING_OF_COINS
     material: PLAYER_HEAD
+    name: "Ring Of Coins"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -24,6 +26,7 @@ items:
 
   - id: ARTIFACT_OF_COINS
     material: PLAYER_HEAD
+    name: "Artifact Of Coins"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -35,6 +38,7 @@ items:
 
   - id: RELIC_OF_COINS
     material: PLAYER_HEAD
+    name: "Relic Of Coins"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

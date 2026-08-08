@@ -1,6 +1,7 @@
 items:
   - id: SMALL_FORAGING_SACK
     material: player_head
+    name: "Small Foraging Sack"
     rarity: UNCOMMON
     lore:
       - "\xA77Item pickups go directly into your"
@@ -73,6 +74,7 @@ items:
               amount: 1
   - id: MEDIUM_FORAGING_SACK
     material: player_head
+    name: "Medium Foraging Sack"
     rarity: RARE
     lore:
       - "\xA77Item pickups go directly into your"
@@ -145,6 +147,7 @@ items:
               amount: 1
   - id: LARGE_FORAGING_SACK
     material: player_head
+    name: "Large Foraging Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"
@@ -217,6 +220,7 @@ items:
               amount: 1
   - id: LARGE_ENCHANTED_FORAGING_SACK
     material: player_head
+    name: "Large Enchanted Foraging Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"

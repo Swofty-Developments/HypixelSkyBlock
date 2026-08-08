@@ -1,6 +1,7 @@
 items:
   - id: KAT_BOUQUET
     material: rose_bush
+    name: "Kat Bouquet"
     rarity: SPECIAL
     components:
       - id: KAT
@@ -10,6 +11,7 @@ items:
         value: 1.0
   - id: KAT_FLOWER
     material: poppy
+    name: "Kat Flower"
     rarity: SPECIAL
     components:
       - id: KAT

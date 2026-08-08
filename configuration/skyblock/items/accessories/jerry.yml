@@ -1,6 +1,7 @@
 items:
   - id: JERRY_TALISMAN_GREEN
     material: PLAYER_HEAD
+    name: "Jerry Talisman Green"
     rarity: UNCOMMON
     default_statistics:
       intelligence: -1
@@ -14,6 +15,7 @@ items:
 
   - id: JERRY_TALISMAN_BLUE
     material: PLAYER_HEAD
+    name: "Jerry Talisman Blue"
     rarity: RARE
     default_statistics:
       intelligence: -2
@@ -27,6 +29,7 @@ items:
 
   - id: JERRY_TALISMAN_PURPLE
     material: PLAYER_HEAD
+    name: "Jerry Talisman Purple"
     rarity: EPIC
     default_statistics:
       intelligence: -3
@@ -40,6 +43,7 @@ items:
 
   - id: JERRY_TALISMAN_GOLDEN
     material: PLAYER_HEAD
+    name: "Jerry Talisman Golden"
     rarity: LEGENDARY
     default_statistics:
       intelligence: -4

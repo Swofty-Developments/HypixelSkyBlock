@@ -1,6 +1,7 @@
 items:
   - id: SPEED_TALISMAN
     material: PLAYER_HEAD
+    name: "Speed Talisman"
     rarity: COMMON
     default_statistics:
       speed: 1.0
@@ -28,6 +29,7 @@ items:
         value: 110.0
   - id: SPEED_RING
     material: PLAYER_HEAD
+    name: "Speed Ring"
     rarity: UNCOMMON
     default_statistics:
       speed: 3.0
@@ -58,6 +60,7 @@ items:
         value: 18000.0
   - id: SPEED_ARTIFACT
     material: PLAYER_HEAD
+    name: "Speed Artifact"
     rarity: RARE
     default_statistics:
       speed: 5.0

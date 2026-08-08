@@ -1,6 +1,7 @@
 items:
   - id: WITHER_ARTIFACT
     material: PLAYER_HEAD
+    name: "Wither Artifact"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: WITHER_RELIC
     material: PLAYER_HEAD
+    name: "Wither Relic"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

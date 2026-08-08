@@ -1,6 +1,7 @@
 items:
   - id: RED_CLAW_TALISMAN
     material: PLAYER_HEAD
+    name: "Red Claw Talisman"
     rarity: UNCOMMON
     default_statistics:
       critical_damage: 1
@@ -14,6 +15,7 @@ items:
 
   - id: RED_CLAW_RING
     material: PLAYER_HEAD
+    name: "Red Claw Ring"
     rarity: RARE
     default_statistics:
       critical_damage: 3
@@ -27,6 +29,7 @@ items:
 
   - id: RED_CLAW_ARTIFACT
     material: PLAYER_HEAD
+    name: "Red Claw Artifact"
     rarity: EPIC
     default_statistics:
       critical_damage: 5

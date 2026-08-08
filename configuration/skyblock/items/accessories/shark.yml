@@ -1,6 +1,7 @@
 items:
   - id: RAGGEDY_SHARK_TOOTH_NECKLACE
     material: PLAYER_HEAD
+    name: "Raggedy Shark Tooth Necklace"
     default_statistics:
       strength: 2
     components:
@@ -13,6 +14,7 @@ items:
 
   - id: DULL_SHARK_TOOTH_NECKLACE
     material: PLAYER_HEAD
+    name: "Dull Shark Tooth Necklace"
     rarity: UNCOMMON
     default_statistics:
       strength: 4
@@ -26,6 +28,7 @@ items:
 
   - id: HONED_SHARK_TOOTH_NECKLACE
     material: PLAYER_HEAD
+    name: "Honed Shark Tooth Necklace"
     rarity: RARE
     default_statistics:
       strength: 6
@@ -39,6 +42,7 @@ items:
 
   - id: SHARP_SHARK_TOOTH_NECKLACE
     material: PLAYER_HEAD
+    name: "Sharp Shark Tooth Necklace"
     rarity: EPIC
     default_statistics:
       strength: 8
@@ -52,6 +56,7 @@ items:
 
   - id: RAZOR_SHARP_SHARK_TOOTH_NECKLACE
     material: PLAYER_HEAD
+    name: "Razor Sharp Shark Tooth Necklace"
     rarity: LEGENDARY
     default_statistics:
       strength: 10

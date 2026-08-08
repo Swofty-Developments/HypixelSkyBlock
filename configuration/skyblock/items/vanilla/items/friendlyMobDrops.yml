@@ -25,6 +25,7 @@ items:
         value: 3.0
   - id: MUTTON
     material: mutton
+    name: "Mutton"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -74,18 +75,22 @@ items:
   - id: BEEF
     rarity: COMMON
     material: BEEF
+    name: "Beef"
   - id: CHICKEN
     rarity: COMMON
     material: CHICKEN
+    name: "Chicken"
   - id: HONEYCOMB
     rarity: COMMON
     material: HONEYCOMB
   - id: PORKCHOP
     rarity: COMMON
     material: PORKCHOP
+    name: "Porkchop"
   - id: RABBIT
     rarity: COMMON
     material: RABBIT
+    name: "Rabbit"
     components:
       - id: SELLABLE
         value: 4.0

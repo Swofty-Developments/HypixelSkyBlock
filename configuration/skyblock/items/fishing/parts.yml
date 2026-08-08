@@ -1,6 +1,7 @@
 items:
   - id: COMMON_HOOK
     material: PLAYER_HEAD
+    name: "Common Hook"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -13,6 +14,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/hook/common_hook
   - id: HOTSPOT_HOOK
     material: PLAYER_HEAD
+    name: "Hotspot Hook"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -25,6 +27,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/hook/hotspot_hook
   - id: PHANTOM_HOOK
     material: PLAYER_HEAD
+    name: "Phantom Hook"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -39,6 +42,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/hook/phantom_hook
   - id: TREASURE_HOOK
     material: PLAYER_HEAD
+    name: "Treasure Hook"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -50,6 +54,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/hook/treasure_hook
   - id: SPEEDY_LINE
     material: PLAYER_HEAD
+    name: "Speedy Line"
     rarity: RARE
     default_statistics:
       FISHING_SPEED: 10
@@ -62,6 +67,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/line/speedy_line
   - id: SHREDDED_LINE
     material: PLAYER_HEAD
+    name: "Shredded Line"
     rarity: RARE
     default_statistics:
       DAMAGE: 250
@@ -77,6 +83,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/line/shredded_line
   - id: TITAN_LINE
     material: PLAYER_HEAD
+    name: "Titan Line"
     rarity: RARE
     default_statistics:
       DOUBLE_HOOK_CHANCE: 2
@@ -89,6 +96,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/line/titan_line
   - id: JUNK_SINKER
     material: PLAYER_HEAD
+    name: "Junk Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -100,6 +108,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/junk_sinker
   - id: PRISMARINE_SINKER
     material: PLAYER_HEAD
+    name: "Prismarine Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -111,6 +120,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/prismarine_sinker
   - id: SPONGE_SINKER
     material: PLAYER_HEAD
+    name: "Sponge Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -124,6 +134,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/sponge_sinker
   - id: CHUM_SINKER
     material: PLAYER_HEAD
+    name: "Chum Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -137,6 +148,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/chum_sinker
   - id: FESTIVE_SINKER
     material: PLAYER_HEAD
+    name: "Festive Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -148,6 +160,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/festive_sinker
   - id: ICY_SINKER
     material: PLAYER_HEAD
+    name: "Icy Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -163,6 +176,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/icy_sinker
   - id: STINGY_SINKER
     material: PLAYER_HEAD
+    name: "Stingy Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -174,6 +188,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/stingy_sinker
   - id: HOTSPOT_SINKER
     material: PLAYER_HEAD
+    name: "Hotspot Sinker"
     rarity: RARE
     components:
       - id: FISHING_ROD_PART
@@ -185,6 +200,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/rod_part/sinker/hotspot_sinker
   - id: RUSTY_SHIP_ENGINE
     material: PLAYER_HEAD
+    name: "Rusty Ship Engine"
     rarity: SPECIAL
     components:
       - id: FISHING_SHIP_PART
@@ -194,6 +210,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/ship/rusty_ship_engine
   - id: BRONZE_SHIP_ENGINE
     material: PLAYER_HEAD
+    name: "Bronze Ship Engine"
     rarity: UNCOMMON
     components:
       - id: FISHING_SHIP_PART
@@ -203,6 +220,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/ship/bronze_ship_engine
   - id: BRONZE_SHIP_HELM
     material: PLAYER_HEAD
+    name: "Bronze Ship Helm"
     rarity: UNCOMMON
     components:
       - id: FISHING_SHIP_PART
@@ -212,6 +230,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/ship/bronze_ship_helm
   - id: BRONZE_SHIP_HULL
     material: PLAYER_HEAD
+    name: "Bronze Ship Hull"
     rarity: UNCOMMON
     components:
       - id: FISHING_SHIP_PART

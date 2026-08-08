@@ -1,6 +1,7 @@
 items:
   - id: LEAFLET_HELMET
     material: oak_leaves
+    name: "Leaflet Helmet"
     rarity: COMMON
     default_statistics:
       health: 20.0
@@ -32,6 +33,7 @@ items:
 
   - id: LEAFLET_CHESTPLATE
     material: leather_chestplate
+    name: "Leaflet Chestplate"
     rarity: COMMON
     default_statistics:
       health: 35.0
@@ -68,6 +70,7 @@ items:
 
   - id: LEAFLET_LEGGINGS
     material: leather_leggings
+    name: "Leaflet Leggings"
     rarity: COMMON
     default_statistics:
       health: 20.0
@@ -104,6 +107,7 @@ items:
 
   - id: LEAFLET_BOOTS
     material: leather_boots
+    name: "Leaflet Boots"
     rarity: COMMON
     default_statistics:
       health: 15.0

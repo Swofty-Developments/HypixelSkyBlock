@@ -1,6 +1,7 @@
 items:
   - id: FLAWLESS_AMBER_GEM
     material: player_head
+    name: "Flawless Amber Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -25,6 +26,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amber/flawless_amber_gem
   - id: FLAWLESS_AMETHYST_GEM
     material: player_head
+    name: "Flawless Amethyst Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -49,6 +51,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amethyst/flawless_amethyst_gem
   - id: FLAWLESS_JADE_GEM
     material: player_head
+    name: "Flawless Jade Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -73,6 +76,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jade/flawless_jade_gem
   - id: FLAWLESS_JASPER_GEM
     material: player_head
+    name: "Flawless Jasper Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -97,6 +101,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jasper/flawless_jasper_gem
   - id: FLAWLESS_RUBY_GEM
     material: player_head
+    name: "Flawless Ruby Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -121,6 +126,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/ruby/flawless_ruby_gem
   - id: FLAWLESS_SAPPHIRE_GEM
     material: player_head
+    name: "Flawless Sapphire Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -145,6 +151,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/sapphire/flawless_sapphire_gem
   - id: FLAWLESS_TOPAZ_GEM
     material: player_head
+    name: "Flawless Topaz Gem"
     rarity: EPIC
     components:
       - id: GEMSTONE_IMPL
@@ -169,6 +176,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/topaz/flawless_topaz_gem
   - id: FLAWLESS_OPAL_GEM
     material: player_head
+    name: "Flawless Opal Gem"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -193,6 +201,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/blaze/gemstones/flawless_opal_gem
   - id: FLAWLESS_AQUAMARINE_GEM
     material: player_head
+    name: "Flawless Aquamarine Gem"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -217,6 +226,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/aquamarine/flawless_aquamarine_gem
   - id: FLAWLESS_CITRINE_GEM
     material: player_head
+    name: "Flawless Citrine Gem"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -241,6 +251,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/citrine/flawless_citrine_gem
   - id: FLAWLESS_ONYX_GEM
     material: player_head
+    name: "Flawless Onyx Gem"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -265,6 +276,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/onyx/flawless_onyx_gem
   - id: FLAWLESS_PERIDOT_GEM
     material: player_head
+    name: "Flawless Peridot Gem"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME

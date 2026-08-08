@@ -1,6 +1,7 @@
 items:
   - id: FINE_AMBER_GEM
     material: player_head
+    name: "Fine Amber Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -26,6 +27,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amber/fine_amber_gem
   - id: FINE_AMETHYST_GEM
     material: player_head
+    name: "Fine Amethyst Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -51,6 +53,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/amethyst/fine_amethyst_gem
   - id: FINE_JADE_GEM
     material: player_head
+    name: "Fine Jade Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -76,6 +79,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jade/fine_jade_gem
   - id: FINE_JASPER_GEM
     material: player_head
+    name: "Fine Jasper Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -101,6 +105,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/jasper/fine_jasper_gem
   - id: FINE_RUBY_GEM
     material: player_head
+    name: "Fine Ruby Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -126,6 +131,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/ruby/fine_ruby_gem
   - id: FINE_SAPPHIRE_GEM
     material: player_head
+    name: "Fine Sapphire Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -151,6 +157,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/sapphire/fine_sapphire_gem
   - id: FINE_TOPAZ_GEM
     material: player_head
+    name: "Fine Topaz Gem"
     rarity: RARE
     components:
       - id: GEMSTONE_IMPL
@@ -176,6 +183,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/topaz/fine_topaz_gem
   - id: FINE_OPAL_GEM
     material: player_head
+    name: "Fine Opal Gem"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -201,6 +209,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/blaze/gemstones/fine_opal_gem
   - id: FINE_AQUAMARINE_GEM
     material: player_head
+    name: "Fine Aquamarine Gem"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -226,6 +235,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/aquamarine/fine_aquamarine_gem
   - id: FINE_CITRINE_GEM
     material: player_head
+    name: "Fine Citrine Gem"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -251,6 +261,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/citrine/fine_citrine_gem
   - id: FINE_ONYX_GEM
     material: player_head
+    name: "Fine Onyx Gem"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -276,6 +287,7 @@ items:
         item_model: hypixel_skyblock:item/collections/gemstone/onyx/fine_onyx_gem
   - id: FINE_PERIDOT_GEM
     material: player_head
+    name: "Fine Peridot Gem"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

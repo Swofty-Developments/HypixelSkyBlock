@@ -256,6 +256,7 @@ items:
 
   - id: JUNGLE_CHEST_BOAT
     material: JUNGLE_CHEST_BOAT
+    name: "Jungle Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

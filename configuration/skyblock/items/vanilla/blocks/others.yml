@@ -88,6 +88,7 @@ items:
   - id: JACK_O_LANTERN
     rarity: COMMON
     material: JACK_O_LANTERN
+    name: "Jack O Lantern"
     components:
       - id: SELLABLE
         value: 4.0

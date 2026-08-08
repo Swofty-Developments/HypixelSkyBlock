@@ -1,6 +1,7 @@
 items:
   - id: BEASTMASTER_CREST_COMMON
     material: PLAYER_HEAD
+    name: "Beastmaster Crest Common"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Beastmaster Crest
@@ -11,6 +12,7 @@ items:
 
   - id: BEASTMASTER_CREST_UNCOMMON
     material: PLAYER_HEAD
+    name: "Beastmaster Crest Uncommon"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -22,6 +24,7 @@ items:
 
   - id: BEASTMASTER_CREST_RARE
     material: PLAYER_HEAD
+    name: "Beastmaster Crest Rare"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -33,6 +36,7 @@ items:
 
   - id: BEASTMASTER_CREST_EPIC
     material: PLAYER_HEAD
+    name: "Beastmaster Crest Epic"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -44,6 +48,7 @@ items:
 
   - id: BEASTMASTER_CREST_LEGENDARY
     material: PLAYER_HEAD
+    name: "Beastmaster Crest Legendary"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

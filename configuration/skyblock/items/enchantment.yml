@@ -11,6 +11,7 @@ items:
       - id: ENCHANTED
   - id: HOT_POTATO_BOOK
     material: book
+    name: "Hot Potato Book"
     rarity: EPIC
     lore:
       - "\xA77This item can be applied to an item up to"
@@ -45,6 +46,7 @@ items:
               amount: 1
   - id: FUMING_POTATO_BOOK
     material: book
+    name: "Fuming Potato Book"
     rarity: EPIC
     lore:
       - "\xA77This book bypasses the \xA75 Hot Potato"

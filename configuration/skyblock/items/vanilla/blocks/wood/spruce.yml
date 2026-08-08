@@ -262,6 +262,7 @@ items:
 
   - id: SPRUCE_CHEST_BOAT
     material: SPRUCE_CHEST_BOAT
+    name: "Spruce Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

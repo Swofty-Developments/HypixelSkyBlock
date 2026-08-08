@@ -1,9 +1,11 @@
 items:
   - id: BLUE_GOBLIN_EGG
     material: egg
+    name: "Blue Goblin Egg"
     rarity: COMMON
   - id: BOB_OMB
     material: player_head
+    name: "Bob Omb"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -17,6 +19,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/bob_omb
   - id: CONCENTRATED_STONE
     material: player_head
+    name: "Concentrated Stone"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -44,6 +47,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/concentrated_stone
   - id: CONTROL_SWITCH
     material: player_head
+    name: "Control Switch"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -54,6 +58,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/control_switch
   - id: DIVAN_ALLOY
     material: player_head
+    name: "Divan Alloy"
     rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
@@ -63,6 +68,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/divans_alloy
   - id: DIVAN_FRAGMENT
     material: player_head
+    name: "Divan Fragment"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -73,6 +79,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/divan_fragment
   - id: ELECTRON_TRANSMITTER
     material: player_head
+    name: "Electron Transmitter"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -83,6 +90,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/electron_transmitter
   - id: ETERNAL_FLAME_RING
     material: player_head
+    name: "Eternal Flame Ring"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -91,6 +99,7 @@ items:
         value: 10000.0
   - id: FTX_3070
     material: player_head
+    name: "Ftx 3070"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -101,6 +110,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/ftx_3070
   - id: GEMSTONE_MIXTURE
     material: player_head
+    name: "Gemstone Mixture"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -109,15 +119,18 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/gemstone_mixture
   - id: GREEN_GOBLIN_EGG
     material: egg
+    name: "Green Goblin Egg"
     rarity: COMMON
   - id: HARD_STONE
     material: stone
+    name: "Hard Stone"
     rarity: COMMON
     components:
       - id: SELLABLE
         value: 1.0
   - id: HELIX
     material: player_head
+    name: "Helix"
     rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
@@ -128,6 +141,7 @@ items:
         item_model: hypixel_skyblock:item/glacite/fossils/helix_fossil
   - id: JUNGLE_KEY
     material: tripwire_hook
+    name: "Jungle Key"
     rarity: EPIC
     components:
       - id: ENCHANTED
@@ -135,6 +149,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/jungle_key
   - id: MAGMA_CORE
     material: magma_cream
+    name: "Magma Core"
     rarity: RARE
     components:
       - id: SELLABLE
@@ -143,6 +158,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/magma_core
   - id: OIL_BARREL
     material: player_head
+    name: "Oil Barrel"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -155,6 +171,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/oil_barrel
   - id: PICKONIMBUS_2000
     material: diamond_pickaxe
+    name: "Pickonimbus 2000"
     rarity: COMMON
     default_statistics:
       damage: 30.0
@@ -167,6 +184,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: PREHISTORIC_EGG
     material: player_head
+    name: "Prehistoric Egg"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -178,6 +196,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/prehistoric_egg
   - id: RECALL_POTION
     material: player_head
+    name: "Recall Potion"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
@@ -185,9 +204,11 @@ items:
       - id: NOT_FINISHED_YET
   - id: RED_GOBLIN_EGG
     material: egg
+    name: "Red Goblin Egg"
     rarity: COMMON
   - id: ROBOTRON_REFLECTOR
     material: player_head
+    name: "Robotron Reflector"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -198,6 +219,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/robotron_reflector
   - id: SLUDGE_JUICE
     material: player_head
+    name: "Sludge Juice"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -208,6 +230,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/sludge_juice
   - id: SUPERLITE_MOTOR
     material: player_head
+    name: "Superlite Motor"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -218,6 +241,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/superlite_motor
   - id: SYNTHETIC_HEART
     material: player_head
+    name: "Synthetic Heart"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -228,6 +252,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/synthetic_heart
   - id: WISHING_COMPASS
     material: player_head
+    name: "Wishing Compass"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -239,6 +264,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/wishing_compass
   - id: WORM_MEMBRANE
     material: rotten_flesh
+    name: "Worm Membrane"
     rarity: UNCOMMON
     components:
       - id: SELLABLE
@@ -247,9 +273,11 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/worm_membrane
   - id: YELLOW_GOBLIN_EGG
     material: egg
+    name: "Yellow Goblin Egg"
     rarity: COMMON
   - id: CORLEONITE
     material: player_head
+    name: "Corleonite"
     rarity: EPIC
     components:
       - id: SKULL_HEAD
