@@ -2,34 +2,22 @@ package net.swofty.type.skyblockgeneric.data.crystals;
 
 import net.minestom.server.coordinate.Pos;
 import net.swofty.commons.ServerType;
+import net.swofty.commons.config.YamlConfigLoader;
 import net.swofty.commons.skyblock.item.ItemType;
 import net.swofty.type.generic.HypixelConst;
 import org.tinylog.Logger;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.AtomicMoveNotSupportedException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public final class CrystalCatalog {
     private static final String RESOURCE = "/Minestom.crystals.yml";
     private static final Path LOCATION_FILE = Path.of("configuration/skyblock/Minestom.crystals.yml");
     private static final List<CrystalEntry> CRYSTALS = new ArrayList<>();
 
-    private static Map<String, Object> document;
+    private static CrystalConfiguration configuration;
     private static boolean loaded;
 
     private CrystalCatalog() {
@@ -77,19 +65,20 @@ public final class CrystalCatalog {
             return;
         }
 
-        document = readDocument();
-        Object rawCrystals = document.get("crystals");
-        if (!(rawCrystals instanceof List<?> entries)) {
+        configuration = YamlConfigLoader.load(
+            LOCATION_FILE,
+            CrystalCatalog.class,
+            RESOURCE,
+            CrystalConfiguration.class
+        );
+        if (configuration.crystals() == null) {
             throw new IllegalStateException("Crystal catalog has no crystals list in " + LOCATION_FILE);
         }
 
-        for (int index = 0; index < entries.size(); index++) {
-            Object rawCrystal = entries.get(index);
-            if (!(rawCrystal instanceof Map<?, ?> fields)) {
-                throw invalidEntry(index, rawCrystal);
-            }
+        for (int index = 0; index < configuration.crystals().size(); index++) {
+            CrystalDefinition definition = configuration.crystals().get(index);
             try {
-                CRYSTALS.add(parseCrystal(fields));
+                CRYSTALS.add(parseCrystal(definition));
             } catch (RuntimeException exception) {
                 Logger.error(exception, "Error parsing crystal catalog entry {} - skipping.", index + 1);
             }
@@ -97,121 +86,49 @@ public final class CrystalCatalog {
         loaded = true;
     }
 
-    private static CrystalEntry parseCrystal(Map<?, ?> fields) {
-        int id = intField(fields, fields.containsKey("id") ? "id" : "_id");
-        String url = stringField(fields, "url");
-        Pos position = new Pos(
-            doubleField(fields, "x"),
-            doubleField(fields, "y"),
-            doubleField(fields, "z"));
+    private static CrystalEntry parseCrystal(CrystalDefinition definition) {
+        String url = requireText(definition.url(), "url");
+        Pos position = new Pos(definition.x(), definition.y(), definition.z());
         ServerType serverType = ServerType.getSkyblockServer(
-            stringField(fields, "serverType").toUpperCase(Locale.ROOT));
-        ItemType itemType = ItemType.valueOf(stringField(fields, "itemType").toUpperCase(Locale.ROOT));
-        return new CrystalEntry(id, url, position, itemType, serverType);
-    }
-
-    private static Map<String, Object> readDocument() {
-        try (InputStream source = openSource(); InputStreamReader reader = new InputStreamReader(source, StandardCharsets.UTF_8)) {
-            Object rawDocument = new Yaml().load(reader);
-            if (!(rawDocument instanceof Map<?, ?> fields)) {
-                throw new IllegalStateException("Invalid crystal catalog in " + LOCATION_FILE);
-            }
-
-            Map<String, Object> result = new LinkedHashMap<>();
-            for (Map.Entry<?, ?> entry : fields.entrySet()) {
-                if (!(entry.getKey() instanceof String key)) {
-                    throw new IllegalStateException("Crystal catalog contains a non-text key in " + LOCATION_FILE);
-                }
-                result.put(key, entry.getValue());
-            }
-            return result;
-        } catch (IOException exception) {
-            throw new IllegalStateException("Unable to read crystal catalog", exception);
-        }
-    }
-
-    private static InputStream openSource() throws IOException {
-        if (Files.isRegularFile(LOCATION_FILE)) {
-            return Files.newInputStream(LOCATION_FILE);
-        }
-
-        InputStream resource = CrystalCatalog.class.getResourceAsStream(RESOURCE);
-        if (resource == null) {
-            throw new FileNotFoundException(LOCATION_FILE.toString());
-        }
-        return resource;
+            requireText(definition.serverType(), "serverType").toUpperCase(Locale.ROOT));
+        ItemType itemType = ItemType.valueOf(
+            requireText(definition.itemType(), "itemType").toUpperCase(Locale.ROOT));
+        return new CrystalEntry(definition.id(), url, position, itemType, serverType);
     }
 
     private static void write() {
-        List<Map<String, Object>> entries = new ArrayList<>();
-        for (CrystalEntry crystal : CRYSTALS) {
-            Map<String, Object> entry = new LinkedHashMap<>();
-            entry.put("id", crystal.id);
-            entry.put("url", crystal.url);
-            entry.put("x", crystal.position.x());
-            entry.put("y", crystal.position.y());
-            entry.put("z", crystal.position.z());
-            entry.put("serverType", crystal.serverType.name());
-            entry.put("itemType", crystal.itemType.name());
-            entries.add(entry);
-        }
-        document.put("crystals", entries);
-
-        Path temporaryFile = null;
-        try {
-            Files.createDirectories(LOCATION_FILE.getParent());
-            temporaryFile = Files.createTempFile(LOCATION_FILE.getParent(), "Minestom.crystals", ".yml.tmp");
-            DumperOptions options = new DumperOptions();
-            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            options.setPrettyFlow(true);
-            try (Writer writer = Files.newBufferedWriter(temporaryFile, StandardCharsets.UTF_8)) {
-                new Yaml(options).dump(document, writer);
-            }
-
-            try {
-                Files.move(temporaryFile, LOCATION_FILE, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
-            } catch (AtomicMoveNotSupportedException exception) {
-                Files.move(temporaryFile, LOCATION_FILE, StandardCopyOption.REPLACE_EXISTING);
-            }
-            temporaryFile = null;
-        } catch (IOException exception) {
-            throw new IllegalStateException("Unable to write crystal catalog", exception);
-        } finally {
-            if (temporaryFile != null) {
-                try {
-                    Files.deleteIfExists(temporaryFile);
-                } catch (IOException ignored) {
-                }
-            }
-        }
+        configuration = new CrystalConfiguration(CRYSTALS.stream()
+            .map(crystal -> new CrystalDefinition(
+                crystal.id,
+                crystal.url,
+                crystal.position.x(),
+                crystal.position.y(),
+                crystal.position.z(),
+                crystal.serverType.name(),
+                crystal.itemType.name()))
+            .toList());
+        YamlConfigLoader.save(LOCATION_FILE, CrystalConfiguration.class, configuration);
     }
 
-    private static int intField(Map<?, ?> fields, String name) {
-        Object value = fields.get(name);
-        if (!(value instanceof Number number)) {
-            throw new IllegalArgumentException("Missing numeric field " + name);
-        }
-        return number.intValue();
-    }
-
-    private static double doubleField(Map<?, ?> fields, String name) {
-        Object value = fields.get(name);
-        if (!(value instanceof Number number)) {
-            throw new IllegalArgumentException("Missing numeric field " + name);
-        }
-        return number.doubleValue();
-    }
-
-    private static String stringField(Map<?, ?> fields, String name) {
-        Object value = fields.get(name);
-        if (!(value instanceof String string)) {
+    private static String requireText(String value, String name) {
+        if (value == null) {
             throw new IllegalArgumentException("Missing text field " + name);
         }
-        return string;
+        return value;
     }
 
-    private static IllegalStateException invalidEntry(int index, Object entry) {
-        return new IllegalStateException("Invalid crystal catalog entry " + (index + 1) + ": " + entry);
+    private record CrystalConfiguration(List<CrystalDefinition> crystals) {
+    }
+
+    private record CrystalDefinition(
+        int id,
+        String url,
+        double x,
+        double y,
+        double z,
+        String serverType,
+        String itemType
+    ) {
     }
 
     private record CrystalEntry(int id, String url, Pos position, ItemType itemType, ServerType serverType) {
