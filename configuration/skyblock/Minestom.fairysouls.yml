@@ -1,4 +1,4 @@
-source: "https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/refs/heads/master/constants/fairy_souls.json"
+# thanks to https://raw.githubusercontent.com/NotEnoughUpdates/NotEnoughUpdates-REPO/refs/heads/master/constants/fairy_souls.json
 max_souls: 289
 souls:
   - id: 1
