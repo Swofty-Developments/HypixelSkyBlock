@@ -157,14 +157,6 @@ func (r *Runner) Reconfigure(ctx context.Context, cfg Config) error {
 	if err != nil {
 		return err
 	}
-	r.emit("Refreshing catalog YAML files")
-	if err := ensureSkyBlockCatalogs(
-		filepath.Join(repoDir, "configuration", "skyblock"),
-		filepath.Join(cfg.InstallDir, "configuration", "skyblock"),
-	); err != nil {
-		return err
-	}
-
 	r.emit("Refreshing Dockerfiles")
 	if err := CopyDir(filepath.Join(repoDir, "DockerFiles"), filepath.Join(cfg.InstallDir, "DockerFiles")); err != nil {
 		return err

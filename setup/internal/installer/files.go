@@ -116,39 +116,6 @@ func CopyDir(src, dst string) error {
 	})
 }
 
-var skyBlockCatalogFiles = []string{
-	"Minestom.crystals.yml",
-	"Minestom.fairysouls.yml",
-	"Minestom.regions.yml",
-}
-
-func ensureSkyBlockCatalogs(src, dst string) error {
-	if err := os.MkdirAll(dst, 0o755); err != nil {
-		return err
-	}
-	for _, name := range skyBlockCatalogFiles {
-		target := filepath.Join(dst, name)
-		if _, err := os.Stat(target); err == nil {
-			continue
-		} else if !os.IsNotExist(err) {
-			return err
-		}
-
-		source := filepath.Join(src, name)
-		info, err := os.Stat(source)
-		if err != nil {
-			return err
-		}
-		if info.IsDir() {
-			return fmt.Errorf("catalog path is a directory: %s", source)
-		}
-		if err := copyFile(source, target, info.Mode()); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 func copyFile(src, dst string, mode os.FileMode) error {
 	if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
 		return err
