@@ -1,6 +1,7 @@
 package net.swofty.type.skyblockgeneric.entity.mob.mobs.deepcaverns;
 
 import lombok.NonNull;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.GoalSelector;
 import net.minestom.server.entity.ai.TargetSelector;
@@ -26,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class MobSneakyCreeper extends BestiaryMob implements RegionPopulator {
+    private long fuseStarted = -1;
 
 	public MobSneakyCreeper() {
 		super(EntityType.CREEPER);
@@ -64,6 +66,39 @@ public class MobSneakyCreeper extends BestiaryMob implements RegionPopulator {
 						RegionType.GUNPOWDER_MINES) // If there is none, target the nearest player
 		);
 	}
+
+    @Override
+    public void tick(long time) {
+        super.tick(time);
+
+        if (getInstance() == null) return;
+
+        Entity target = getInstance().getNearbyEntities(getPosition(), 3).stream()
+                .filter(entity -> entity instanceof SkyBlockPlayer)
+                .findFirst()
+                .orElse(null);
+
+        if (target == null) {
+            fuseStarted = -1;
+            return;
+        }
+
+        if (fuseStarted < 0) {
+            fuseStarted = time;
+            setInvisible(false);
+        }
+
+        if (time - fuseStarted >= 30) {
+            getInstance().explode((float) getPosition().x(), (float) getPosition().y(), (float) getPosition().z(), 3);
+            remove();
+        }
+    }
+
+    @Override
+    public boolean damage(net.minestom.server.entity.damage.Damage damage) {
+        setInvisible(false);
+        return super.damage(damage);
+    }
 
 	@Override
 	public ItemStatistics getBaseStatistics() {
@@ -104,7 +139,7 @@ public class MobSneakyCreeper extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public OtherLoot getOtherLoot() {
-		return new OtherLoot(0, 3, 2);
+        return new OtherLoot(80, 3, 2);
 	}
 
 	@Override
@@ -124,7 +159,7 @@ public class MobSneakyCreeper extends BestiaryMob implements RegionPopulator {
 
 	@Override
 	public String getMobID() {
-		return "INVISIBLE_CREEPER";
+        return "SNEAKY_CREEPER";
 	}
 
 	@Override

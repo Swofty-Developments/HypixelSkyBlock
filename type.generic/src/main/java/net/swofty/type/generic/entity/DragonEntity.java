@@ -98,7 +98,7 @@ public class DragonEntity extends LivingEntity {
         if (idleAngle > Math.PI * 2) idleAngle -= Math.PI * 2;
 
         idleHeight += ThreadLocalRandom.current().nextDouble(-3, 3);
-        idleHeight = Math.max(-5, Math.min(15, idleHeight));
+        idleHeight = Math.clamp(idleHeight, -5, 15);
 
         double radius = idleDistance * (0.5 + ThreadLocalRandom.current().nextDouble(0.5));
         double x = idleCenter.x() + Math.cos(idleAngle) * radius;

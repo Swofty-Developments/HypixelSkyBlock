@@ -88,8 +88,8 @@ public class MobTreasureHoarder extends BestiaryMob implements RegionPopulator {
 	@Override
 	public ItemStatistics getBaseStatistics() {
 		return ItemStatistics.builder()
-				.withBase(ItemStatistic.HEALTH, 15000D)
-				.withBase(ItemStatistic.DAMAGE, 500D)
+                .withBase(ItemStatistic.HEALTH, 22000D)
+                .withBase(ItemStatistic.DAMAGE, 750D)
 				.withBase(ItemStatistic.SPEED, 100D)
 				.build();
 	}
