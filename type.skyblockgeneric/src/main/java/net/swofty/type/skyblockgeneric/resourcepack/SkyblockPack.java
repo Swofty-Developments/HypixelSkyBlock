@@ -80,7 +80,7 @@ public class SkyblockPack implements HypixelResourcePack {
         }
 
         try {
-            int protocolVersion = player.asProxyPlayer().getVersion().get(3, TimeUnit.SECONDS);
+            int protocolVersion = player.asProxyPlayer().getProtocolVersion().get(3, TimeUnit.SECONDS);
             HypixelSkyblockPackApi.Version version = officialPacks.forProtocol(protocolVersion);
             if (version == null) {
                 Logger.warn("No official Hypixel SkyBlock resource pack is available for protocol version {}", protocolVersion);

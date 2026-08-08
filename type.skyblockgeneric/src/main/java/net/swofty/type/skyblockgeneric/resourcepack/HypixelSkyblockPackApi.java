@@ -1,5 +1,6 @@
 package net.swofty.type.skyblockgeneric.resourcepack;
 
+import net.swofty.commons.MinecraftVersion;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -110,14 +111,22 @@ final class HypixelSkyblockPackApi {
         }
 
         Version forProtocol(int protocolVersion) {
-            int packFormat = HypixelPackFormatResolver.packFormatForProtocol(protocolVersion);
-            if (packFormat == Integer.MAX_VALUE) {
-                return latest();
-            }
-            if (packFormat <= 0) {
+            MinecraftVersion minecraftVersion = MinecraftVersion.byProtocol(protocolVersion);
+            if (minecraftVersion == null) {
+                if (protocolVersion > MinecraftVersion.latest().getProtocolVersion()) {
+                    return latest();
+                }
                 return null;
             }
-            return versions.get(packFormat);
+
+            Version version = versions.get(minecraftVersion.getPackVersion());
+            if (version != null) {
+                return version;
+            }
+            if (minecraftVersion.getPackVersion() > versions.lastKey()) {
+                return latest();
+            }
+            return null;
         }
 
     }

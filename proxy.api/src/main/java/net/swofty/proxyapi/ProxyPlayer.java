@@ -73,7 +73,7 @@ public record ProxyPlayer(UUID uuid) {
         return future;
     }
 
-    public CompletableFuture<Integer> getVersion() {
+    public CompletableFuture<Integer> getProtocolVersion() {
         CompletableFuture<Integer> future = new CompletableFuture<>();
         RedisClient.requestProxy(PLAYER_HANDLER,
                         new PlayerHandlerProtocol.Request(uuid.toString(), PlayerHandlerProtocol.Action.VERSION, Map.of()))
@@ -83,7 +83,7 @@ public record ProxyPlayer(UUID uuid) {
                         return;
                     }
 
-                    Object version = response.data().get("version");
+                    Object version = response.data().get("protocolVersion");
                     if (version instanceof Number number) {
                         future.complete(number.intValue());
                     } else {
@@ -95,6 +95,10 @@ public record ProxyPlayer(UUID uuid) {
                     return null;
                 });
         return future;
+    }
+
+    public CompletableFuture<Integer> getVersion() {
+        return getProtocolVersion();
     }
 
     public void runEvent(ProxyUnderstandableEvent event) {

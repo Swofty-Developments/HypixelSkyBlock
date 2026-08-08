@@ -62,11 +62,13 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
 
         switch (action) {
             case VERSION -> {
-                int version = player.getProtocolVersion().getProtocol();
+                int protocolVersion = player.getProtocolVersion().getProtocol();
                 if (ConfigProvider.settings().getIntegrations().isViaVersion()) {
-                    version = Via.getAPI().getPlayerVersion(uuid);
+                    protocolVersion = Via.getAPI().getPlayerVersion(uuid);
                 }
-                return new PlayerHandlerProtocol.Response(Map.of("version", version), true, null);
+                return new PlayerHandlerProtocol.Response(Map.of(
+                        "protocolVersion", protocolVersion,
+                        "version", protocolVersion), true, null);
             }
             case RESOLVE_TRANSFER -> {
                 ServerType type = ServerType.valueOf((String) data.get("type"));
