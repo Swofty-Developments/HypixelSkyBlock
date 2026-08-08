@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.swofty.type.game.replay.model.ReplayParticipant;
+import net.swofty.type.generic.i18n.I18n;
 import net.swofty.type.generic.tab.CustomTablistSkin;
 import net.swofty.type.generic.tab.TablistModule;
 import net.swofty.type.generic.tab.TablistSkin;
@@ -12,7 +13,7 @@ import net.swofty.type.generic.user.HypixelPlayer;
 import net.swofty.type.replayviewer.playback.ReplaySession;
 import net.swofty.type.replayviewer.playback.bedwars.BedWarsViewerMetadata;
 
-import java.util.*;
+import java.util.List;
 
 class ReplayTablistModule extends TablistModule {
     @Override
