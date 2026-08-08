@@ -51,7 +51,7 @@ On startup, the server logs:
 
 ## Configure the Game Server
 
-Set the pack server URL in `configuration/config.yml`:
+For locally built packs, set the pack server URL in `configuration/config.yml`:
 
 ```yaml
 resource-packs:
@@ -59,10 +59,21 @@ resource-packs:
     server-url: "http://127.0.0.1:7270"
 ```
 
+SkyBlock can use Hypixel's official pack metadata API instead. The selected pack URL is sent directly to each player, using the pack format matching their client version:
+
+```yaml
+resource-packs:
+  skyblockpack:
+    use-hypixel-api: true
+    hypixel-api-url: "https://api.hypixel.net/v2/resources/packs"
+```
+
 Notes:
 
-- Hash is generated automatically at runtime by the pack builder.
+- Local pack hashes are generated automatically at runtime by the pack builder; official-pack hashes come from the API.
 - You do not manually set a `resource-pack-hash` field.
+- `use-hypixel-api` uses the original client protocol reported by ViaVersion when it is enabled.
+- The client does not download `skyblockpack` from the local pack server when `use-hypixel-api` is enabled.
 
 ## Verify In-Game
 

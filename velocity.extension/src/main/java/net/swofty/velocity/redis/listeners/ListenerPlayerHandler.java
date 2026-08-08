@@ -2,11 +2,13 @@ package net.swofty.velocity.redis.listeners;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
+import com.viaversion.viaversion.api.Via;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import net.swofty.commons.ServerType;
 import net.swofty.commons.StringUtility;
 import net.swofty.commons.UnderstandableProxyServer;
+import net.swofty.commons.config.ConfigProvider;
 import net.swofty.commons.protocol.RedisProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RefreshCoopDataProtocol;
 import net.swofty.commons.protocol.objects.proxy.from.RunEventProtocol;
@@ -59,6 +61,13 @@ public class ListenerPlayerHandler implements RedisMessageHandler<
         Optional<ServerConnection> potentialServer = player.getCurrentServer();
 
         switch (action) {
+            case VERSION -> {
+                int version = player.getProtocolVersion().getProtocol();
+                if (ConfigProvider.settings().getIntegrations().isViaVersion()) {
+                    version = Via.getAPI().getPlayerVersion(uuid);
+                }
+                return new PlayerHandlerProtocol.Response(Map.of("version", version), true, null);
+            }
             case RESOLVE_TRANSFER -> {
                 ServerType type = ServerType.valueOf((String) data.get("type"));
                 if (!GameManager.hasType(type) || !GameManager.isAnyEmpty(type)) {

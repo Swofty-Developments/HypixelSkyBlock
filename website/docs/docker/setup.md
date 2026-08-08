@@ -149,6 +149,8 @@ The pack URL is handed to your client rather than resolved inside the container,
 resource-packs:
     skyblockpack:
         server-url: http://192.0.2.10:7270
+        use-hypixel-api: false
+        hypixel-api-url: https://api.hypixel.net/v2/resources/packs
     ravengard:
         server-url: http://192.0.2.10:7270
 ```

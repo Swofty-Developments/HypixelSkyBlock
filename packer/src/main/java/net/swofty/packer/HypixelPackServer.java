@@ -1,80 +1,101 @@
 package net.swofty.packer;
 
+import net.swofty.packer.packs.ravengard.RavengardPackDefinition;
+import net.swofty.packer.packs.skyblock.SkyblockPackDefinition;
 import team.unnamed.creative.BuiltResourcePack;
-import team.unnamed.creative.base.Writable;
-import team.unnamed.creative.metadata.pack.FormatVersion;
+import team.unnamed.creative.server.ResourcePackServer;
+import team.unnamed.creative.server.handler.ResourcePackRequestHandler;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
-import java.util.stream.Stream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class HypixelPackBuilder {
-    private static final FormatVersion FORMAT_VERSION = FormatVersion.of(FormatVersion.FORMAT_26_1);
+public class HypixelPackServer {
+    private static final String DEFAULT_HOST = "0.0.0.0";
+    private static final int DEFAULT_PORT = 7270;
 
-    private final PackDefinition definition;
+    static void main(String[] args) throws IOException {
+        String host = DEFAULT_HOST;
+        int port = DEFAULT_PORT;
 
-    public HypixelPackBuilder(PackDefinition definition) {
-        this.definition = definition;
-    }
-
-    public BuiltResourcePack build() {
-        Path packDirectory = Path.of(definition.getPackDirectory()).toAbsolutePath();
-
-        if (!Files.isDirectory(packDirectory)) {
-            throw new IllegalStateException(
-                    "Pack directory does not exist: " + packDirectory
-            );
+        for (int i = 0; i < args.length - 1; i++) {
+            switch (args[i]) {
+                case "-h", "--host" -> host = args[++i];
+                case "-p", "--port" -> port = Integer.parseInt(args[++i]);
+            }
         }
+
+        Map<String, BuiltResourcePack> packs = List.of(
+                        RavengardPackDefinition.INSTANCE,
+                        SkyblockPackDefinition.INSTANCE
+                ).stream()
+                .map(HypixelPackServer::buildPack)
+                .collect(Collectors.toMap(
+                        pack -> pack.hash() + ".zip",
+                        Function.identity(),
+                        (first, second) -> first
+                ));
+
+        ResourcePackServer server = ResourcePackServer.server()
+                .address(host, port)
+                .handler(createRequestHandler(packs))
+                .executor(Executors.newFixedThreadPool(4))
+                .build();
+        server.start();
+
+        System.out.println("Resource pack server started on " + host + ":" + port);
+        for (String fileName : packs.keySet()) {
+            System.out.println("Pack URL: http://" + host + ":" + port + "/" + fileName);
+        }
+        System.out.println("Press Ctrl+C to stop.");
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutting down pack server...");
+            server.stop(5);
+        }));
 
         try {
-            byte[] bytes = zipDirectory(packDirectory);
-
-            MessageDigest digest = MessageDigest.getInstance("SHA-1");
-            String hash = HexFormat.of().formatHex(digest.digest(bytes));
-
-            return BuiltResourcePack.of(
-                    Writable.bytes(bytes),
-                    hash
-            );
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to build resource pack", e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-1 is unavailable", e);
-        }
+            Thread.currentThread().join();
+        } catch (InterruptedException ignored) {}
     }
 
-    private byte[] zipDirectory(Path directory) throws IOException {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
+    private static BuiltResourcePack buildPack(PackDefinition definition) {
+        System.out.println("Building resource pack '" + definition.getPackName() + "'...");
+        System.out.println("Pack directory: " + definition.getPackDirectory());
 
-        try (ZipOutputStream zip = new ZipOutputStream(output);
-             Stream<Path> paths = Files.walk(directory)) {
+        BuiltResourcePack built = new HypixelPackBuilder(definition).build();
+        System.out.println("Resource pack built. Hash: " + built.hash());
+        return built;
+    }
 
-            paths.filter(Files::isRegularFile).forEach(path -> {
-                String entryName = directory.relativize(path)
-                        .toString()
-                        .replace('\\', '/');
+    private static ResourcePackRequestHandler createRequestHandler(Map<String, BuiltResourcePack> packs) {
+        return (request, exchange) -> {
+            String path = exchange.getRequestURI().getPath();
+            String fileName = path.substring(path.lastIndexOf('/') + 1);
 
-                try {
-                    zip.putNextEntry(new ZipEntry(entryName));
-                    Files.copy(path, zip);
-                    zip.closeEntry();
-                } catch (IOException e) {
-                    throw new UncheckedIOException(e);
+            BuiltResourcePack pack = packs.get(fileName);
+
+            if (pack == null) {
+                byte[] response = "Resource pack not found\n".getBytes(StandardCharsets.UTF_8);
+                exchange.getResponseHeaders().set("Content-Type", "text/plain");
+                exchange.sendResponseHeaders(404, response.length);
+                try (OutputStream output = exchange.getResponseBody()) {
+                    output.write(response);
                 }
-            });
-        } catch (UncheckedIOException e) {
-            throw e.getCause();
-        }
+                return;
+            }
 
-        return output.toByteArray();
+            byte[] response = pack.data().toByteArray();
+            exchange.getResponseHeaders().set("Content-Type", "application/zip");
+            exchange.sendResponseHeaders(200, response.length);
+            try (OutputStream output = exchange.getResponseBody()) {
+                output.write(response);
+            }
+        };
     }
-
 }
