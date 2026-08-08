@@ -34,7 +34,7 @@ public class PetComponent extends SkyBlockItemComponent {
     private final RarityValue<Integer> georgePrice;
     private final RarityValue<KatUpgrade> katUpgrades;
     private final ItemStatistics baseStatistics;
-    private final Map<Rarity, ItemStatistics> perLevelStatistics;
+    private final RarityValue<ItemStatistics> perLevelStatistics;
     private final Particle particleId;
     private final SkillCategories skillCategory;
     private final String skullTexture;
@@ -42,7 +42,7 @@ public class PetComponent extends SkyBlockItemComponent {
 
     public PetComponent(String petName, RarityValue<Integer> georgePrice,
                         @Nullable RarityValue<KatUpgrade> katUpgrades,
-                        ItemStatistics baseStatistics, Map<Rarity, ItemStatistics> perLevelStatistics,
+                        ItemStatistics baseStatistics, RarityValue<ItemStatistics> perLevelStatistics,
                         Particle particleId, String skillCategory, String skullTexture,
                         String handlerId) {
         this.petName = petName;
@@ -62,7 +62,7 @@ public class PetComponent extends SkyBlockItemComponent {
                 new LoreConfig((item, player) -> getAbsoluteLore(player, item), (item, player) -> {
                     Rarity rarity = item.getAttributeHandler().getRarity();
                     int level = item.getAttributeHandler().getPetData().getAsLevel(rarity);
-                    return "§7[Lvl " + level + "] " + rarity.getColor() + petName;
+                    return "§7[Lvl " + level + "] " + rarity.getLegacyColor() + petName;
                 }), true)
         );
     }
@@ -136,7 +136,7 @@ public class PetComponent extends SkyBlockItemComponent {
     }
 
     public ItemStatistics getPerLevelStatistics(Rarity rarity) {
-        return perLevelStatistics.get(rarity);
+        return perLevelStatistics.getForRarity(rarity);
     }
 
     private static void addPropertyInt(String name, double value, List<String> lore) {

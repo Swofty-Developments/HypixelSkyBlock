@@ -169,6 +169,11 @@ public enum ItemStatistic {
         return LegacyComponentSerializer.legacySection().serialize(getCompleteDisplayName());
     }
 
+    public String getLegacyDisplayColor() {
+        return LegacyComponentSerializer.legacySection()
+                .serialize(Component.text("|", displayColor)).replace("|", "");
+    }
+
     public Component getCompleteDisplayName() {
         return symbol.getSprite().appendSpace().append(Component.text(displayName)).color(displayColor);
     }
