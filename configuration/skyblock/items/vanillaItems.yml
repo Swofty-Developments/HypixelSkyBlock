@@ -229,6 +229,7 @@ items:
     material: enchanting_table
     components:
       - id: PLACEABLE
+        block_type: EXPERIMENTATION_TABLE
   - id: FURNACE
     material: FURNACE
     rarity: COMMON
