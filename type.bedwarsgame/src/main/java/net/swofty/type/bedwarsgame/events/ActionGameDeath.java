@@ -51,9 +51,7 @@ public class ActionGameDeath implements HypixelEventClass {
         );
         HypixelPosition position = game.getMapEntry().getConfiguration().getLocations().getSpectator();
         player.setVelocity(Vec.ZERO); // Stop any momentum the player had before death
-        if (!deathResult.isFinalKill()) {
-            player.teleport(new Pos(position.x(), position.y(), position.z()));
-        }
+        player.teleport(new Pos(position.x(), position.y(), position.z()));
         BedWarsGame.literalSetupSpectator(player);
         game.getReplayManager().recordPlayerState(player);
 
