@@ -1,6 +1,7 @@
 items:
   - id: NEW_YEAR_CAKE
     material: PLAYER_HEAD
+    name: "New Year Cake"
     rarity: SPECIAL
     components:
       - id: ENCHANTED
@@ -9,6 +10,7 @@ items:
         value: 100
   - id: NEW_YEAR_CAKE_BAG
     material: PLAYER_HEAD
+    name: "New Year Cake Bag"
     rarity: UNCOMMON
     lore:
       - "§7Holds §dNew Year Cake§7. Each"

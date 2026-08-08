@@ -21,7 +21,7 @@ public final class StatisticArrow {
     );
 
     public static ItemStack.Builder create(ItemStatistic statistic) {
-        return ItemStackCreator.getUsingGUIMaterial(statistic.getDisplayColor() + "➭",
+        return ItemStackCreator.getUsingGUIMaterial(statistic.getLegacyDisplayColor() + "➭",
             new GUIMaterial(TEXTURES.getOrDefault(statistic.getDisplayColor(), RED)), 1, List.of());
     }
 }

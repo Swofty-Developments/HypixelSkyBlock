@@ -1,12 +1,14 @@
 items:
   - id: ACCESSORY_ENRICHMENT_SWAPPER
     material: comparator
+    name: "Accessory Enrichment Swapper"
     rarity: COMMON
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
   - id: ATTACK_SPEED_ENRICHMENT
     material: player_head
+    name: "Attack Speed Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -14,6 +16,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: CRITICAL_CHANCE_ENRICHMENT
     material: player_head
+    name: "Critical Chance Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -21,6 +24,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: CRITICAL_DAMAGE_ENRICHMENT
     material: player_head
+    name: "Critical Damage Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -28,6 +32,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: DEFENSE_ENRICHMENT
     material: player_head
+    name: "Defense Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -35,6 +40,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: FEROCITY_ENRICHMENT
     material: player_head
+    name: "Ferocity Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -42,6 +48,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: HEALTH_ENRICHMENT
     material: player_head
+    name: "Health Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -49,6 +56,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: INTELLIGENCE_ENRICHMENT
     material: player_head
+    name: "Intelligence Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -56,6 +64,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: MAGIC_FIND_ENRICHMENT
     material: player_head
+    name: "Magic Find Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -63,6 +72,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: SEA_CREATURE_CHANCE_ENRICHMENT
     material: player_head
+    name: "Sea Creature Chance Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -70,6 +80,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: SPEED_ENRICHMENT
     material: player_head
+    name: "Speed Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -77,6 +88,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: STRENGTH_ENRICHMENT
     material: player_head
+    name: "Strength Enrichment"
     rarity: COMMON
     components:
       - id: SKULL_HEAD

@@ -8,8 +8,10 @@ import net.swofty.type.skyblockgeneric.enchantment.abstr.KillEventEnchant;
 import net.swofty.type.skyblockgeneric.entity.mob.BestiaryMob;
 import net.swofty.type.skyblockgeneric.entity.mob.SkyBlockMob;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetEvent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
+
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerKilledSkyBlockMobEvent implements PlayerInstanceEvent {
@@ -33,6 +35,10 @@ public class PlayerKilledSkyBlockMobEvent implements PlayerInstanceEvent {
                 killEventEnchant.onMobKilled(player, killedMob, enchantment.level());
             }
         }
+
+        // Handle kill event pets
+        SkyBlockItem pet = player.getPetData().getEnabledPet();
+        player.getPetData().dispatch(new PetEvent.Kill(player, pet, killedMob));
     }
 
     @Override

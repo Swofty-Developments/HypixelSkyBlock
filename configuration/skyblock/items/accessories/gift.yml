@@ -1,6 +1,7 @@
 items:
   - id: WHITE_GIFT_TALISMAN
     material: PLAYER_HEAD
+    name: "White Gift Talisman"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -12,6 +13,7 @@ items:
 
   - id: GREEN_GIFT_TALISMAN
     material: PLAYER_HEAD
+    name: "Green Gift Talisman"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -23,6 +25,7 @@ items:
 
   - id: BLUE_GIFT_TALISMAN
     material: PLAYER_HEAD
+    name: "Blue Gift Talisman"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -34,6 +37,7 @@ items:
 
   - id: PURPLE_GIFT_TALISMAN
     material: PLAYER_HEAD
+    name: "Purple Gift Talisman"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -45,6 +49,7 @@ items:
 
   - id: GOLD_GIFT_TALISMAN
     material: PLAYER_HEAD
+    name: "Gold Gift Talisman"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

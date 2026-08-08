@@ -25,7 +25,7 @@ public enum ItemStatistic {
     BONUS_ATTACK_SPEED("Bonus Attack Speed", NamedTextColor.RED, NamedTextColor.YELLOW, true, PackSprite.STAT_ATTACK_SPEED, 100D),
     ABILITY_DAMAGE("Ability Damage", NamedTextColor.RED, NamedTextColor.RED, true, PackSprite.STAT_ABILITY_DAMAGE, 0D, 1D, null, false),
     TRUE_DEFENSE("True Defense", NamedTextColor.GREEN, NamedTextColor.WHITE, false, PackSprite.STAT_TRUE_DEFENSE),
-    FEROCITY("Ferocity", NamedTextColor.GREEN, NamedTextColor.RED, false, PackSprite.STAT_FEROCITY),
+    FEROCITY("Ferocity", NamedTextColor.GREEN, NamedTextColor.RED, false, PackSprite.STAT_FEROCITY, 500D),
     HEALTH_REGENERATION("Health Regen", NamedTextColor.GREEN, NamedTextColor.RED,
             false, PackSprite.STAT_HEALTH_REGEN, 100D, 1D),
     VITALITY("Vitality", NamedTextColor.GREEN, NamedTextColor.DARK_RED,
@@ -167,6 +167,11 @@ public enum ItemStatistic {
 
     public String getFullDisplayName() {
         return LegacyComponentSerializer.legacySection().serialize(getCompleteDisplayName());
+    }
+
+    public String getLegacyDisplayColor() {
+        return LegacyComponentSerializer.legacySection()
+                .serialize(Component.text("|", displayColor)).replace("|", "");
     }
 
     public Component getCompleteDisplayName() {

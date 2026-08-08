@@ -1,6 +1,7 @@
 items:
   - id: BLAZE_MINION
     material: PLAYER_HEAD
+    name: "Blaze Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -21,6 +22,7 @@ items:
           - ENCHANTED_BLAZE_ROD:1
   - id: CAVE_SPIDER_MINION
     material: PLAYER_HEAD
+    name: "Cave Spider Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -41,6 +43,7 @@ items:
           - ENCHANTED_FERMENTED_SPIDER_EYE:2
   - id: CREEPER_MINION
     material: PLAYER_HEAD
+    name: "Creeper Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -61,6 +64,7 @@ items:
           - ENCHANTED_FIREWORK_ROCKET:2
   - id: ENDERMAN_MINION
     material: PLAYER_HEAD
+    name: "Enderman Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -81,6 +85,7 @@ items:
           - ENCHANTED_EYE_OF_ENDER:24
   - id: GHAST_MINION
     material: PLAYER_HEAD
+    name: "Ghast Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -101,6 +106,7 @@ items:
           - SILVER_FANG:64
   - id: MAGMA_CUBE_MINION
     material: PLAYER_HEAD
+    name: "Magma Cube Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -121,6 +127,7 @@ items:
           - ENCHANTED_MAGMA_CREAM:64
   - id: SKELETON_MINION
     material: PLAYER_HEAD
+    name: "Skeleton Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -141,6 +148,7 @@ items:
           - ENCHANTED_BONE:64
   - id: SLIME_MINION
     material: PLAYER_HEAD
+    name: "Slime Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -161,6 +169,7 @@ items:
           - ENCHANTED_SLIME_BLOCK:1
   - id: SPIDER_MINION
     material: PLAYER_HEAD
+    name: "Spider Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -181,6 +190,7 @@ items:
           - ENCHANTED_STRING:64
   - id: ZOMBIE_MINION
     material: PLAYER_HEAD
+    name: "Zombie Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -201,6 +211,7 @@ items:
           - ENCHANTED_ROTTEN_FLESH:64
   - id: CACTUS_MINION
     material: PLAYER_HEAD
+    name: "Cactus Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -221,6 +232,7 @@ items:
           - ENCHANTED_CACTUS:2
   - id: CARROT_MINION
     material: PLAYER_HEAD
+    name: "Carrot Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -241,6 +253,7 @@ items:
           - ENCHANTED_GOLDEN_CARROT:2
   - id: CHICKEN_MINION
     material: PLAYER_HEAD
+    name: "Chicken Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -261,6 +274,7 @@ items:
           - ENCHANTED_RAW_CHICKEN:64
   - id: COCOA_BEANS_MINION
     material: PLAYER_HEAD
+    name: "Cocoa Beans Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -281,6 +295,7 @@ items:
           - ENCHANTED_COOKIE:1
   - id: COW_MINION
     material: PLAYER_HEAD
+    name: "Cow Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -301,6 +316,7 @@ items:
           - ENCHANTED_LEATHER:32
   - id: MELON_MINION
     material: PLAYER_HEAD
+    name: "Melon Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -321,6 +337,7 @@ items:
           - ENCHANTED_MELON_BLOCK:2
   - id: MUSHROOM_MINION
     material: PLAYER_HEAD
+    name: "Mushroom Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -341,6 +358,7 @@ items:
           - ENCHANTED_RED_MUSHROOM:64
   - id: NETHER_WART_MINION
     material: PLAYER_HEAD
+    name: "Nether Wart Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -361,6 +379,7 @@ items:
           - ENCHANTED_NETHER_WART:64
   - id: PIG_MINION
     material: PLAYER_HEAD
+    name: "Pig Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -381,6 +400,7 @@ items:
           - ENCHANTED_GRILLED_PORK:1
   - id: POTATO_MINION
     material: PLAYER_HEAD
+    name: "Potato Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -401,6 +421,7 @@ items:
           - ENCHANTED_BAKED_POTATO:2
   - id: PUMPKIN_MINION
     material: PLAYER_HEAD
+    name: "Pumpkin Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -421,6 +442,7 @@ items:
           - ENCHANTED_PUMPKIN:64
   - id: RABBIT_MINION
     material: PLAYER_HEAD
+    name: "Rabbit Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -441,6 +463,7 @@ items:
           - ENCHANTED_RABBIT_HIDE:64
   - id: SHEEP_MINION
     material: PLAYER_HEAD
+    name: "Sheep Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -461,6 +484,7 @@ items:
           - ENCHANTED_COOKED_MUTTON:1
   - id: SUGAR_CANE_MINION
     material: PLAYER_HEAD
+    name: "Sugar Cane Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -481,6 +505,7 @@ items:
           - ENCHANTED_SUGAR_CANE:2
   - id: WHEAT_MINION
     material: PLAYER_HEAD
+    name: "Wheat Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -501,6 +526,7 @@ items:
           - ENCHANTED_HAY_BALE:4
   - id: CLAY_MINION
     material: PLAYER_HEAD
+    name: "Clay Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -521,6 +547,7 @@ items:
           - ENCHANTED_CLAY_BALL:64
   - id: FISHING_MINION
     material: PLAYER_HEAD
+    name: "Fishing Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -541,6 +568,7 @@ items:
           - ENCHANTED_COOKED_FISH:1
   - id: ACACIA_MINION
     material: PLAYER_HEAD
+    name: "Acacia Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -561,6 +589,7 @@ items:
           - ENCHANTED_ACACIA_LOG:64
   - id: BIRCH_MINION
     material: PLAYER_HEAD
+    name: "Birch Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -581,6 +610,7 @@ items:
           - ENCHANTED_BIRCH_LOG:64
   - id: DARK_OAK_MINION
     material: PLAYER_HEAD
+    name: "Dark Oak Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -601,6 +631,7 @@ items:
           - ENCHANTED_DARK_OAK_LOG:64
   - id: FLOWER_MINION
     material: PLAYER_HEAD
+    name: "Flower Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -622,6 +653,7 @@ items:
           - ENCHANTED_POPPY:4
   - id: JUNGLE_MINION
     material: PLAYER_HEAD
+    name: "Jungle Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -642,6 +674,7 @@ items:
           - ENCHANTED_JUNGLE_LOG:64
   - id: OAK_MINION
     material: PLAYER_HEAD
+    name: "Oak Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -662,6 +695,7 @@ items:
           - ENCHANTED_OAK_LOG:64
   - id: SPRUCE_MINION
     material: PLAYER_HEAD
+    name: "Spruce Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -682,6 +716,7 @@ items:
           - ENCHANTED_SPRUCE_LOG:64
   - id: COAL_MINION
     material: PLAYER_HEAD
+    name: "Coal Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -702,6 +737,7 @@ items:
           - ENCHANTED_COAL_BLOCK:1
   - id: COBBLESTONE_MINION
     material: PLAYER_HEAD
+    name: "Cobblestone Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -722,6 +758,7 @@ items:
           - ENCHANTED_COBBLESTONE:64
   - id: DIAMOND_MINION
     material: PLAYER_HEAD
+    name: "Diamond Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -742,6 +779,7 @@ items:
           - ENCHANTED_DIAMOND_BLOCK:1
   - id: EMERALD_MINION
     material: PLAYER_HEAD
+    name: "Emerald Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -762,6 +800,7 @@ items:
           - ENCHANTED_EMERALD_BLOCK:1
   - id: END_STONE_MINION
     material: PLAYER_HEAD
+    name: "End Stone Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -782,6 +821,7 @@ items:
           - ENCHANTED_END_STONE:64
   - id: GLOWSTONE_MINION
     material: PLAYER_HEAD
+    name: "Glowstone Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -802,6 +842,7 @@ items:
           - ENCHANTED_GLOWSTONE:2
   - id: GOLD_MINION
     material: PLAYER_HEAD
+    name: "Gold Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -822,6 +863,7 @@ items:
           - ENCHANTED_GOLD_BLOCK:1
   - id: GRAVEL_MINION
     material: PLAYER_HEAD
+    name: "Gravel Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -842,6 +884,7 @@ items:
           - ENCHANTED_FLINT:64
   - id: HARD_STONE_MINION
     material: PLAYER_HEAD
+    name: "Hard Stone Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -862,6 +905,7 @@ items:
           - CONCENTRATED_STONE:2
   - id: ICE_MINION
     material: PLAYER_HEAD
+    name: "Ice Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -882,6 +926,7 @@ items:
           - ENCHANTED_ICE:64
   - id: IRON_MINION
     material: PLAYER_HEAD
+    name: "Iron Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -902,6 +947,7 @@ items:
           - ENCHANTED_IRON_BLOCK:1
   - id: LAPIS_MINION
     material: PLAYER_HEAD
+    name: "Lapis Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -922,6 +968,7 @@ items:
           - ENCHANTED_LAPIS_LAZULI_BLOCK:4
   - id: MITHRIL_MINION
     material: PLAYER_HEAD
+    name: "Mithril Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -942,6 +989,7 @@ items:
           - REFINED_MITHRIL:1
   - id: OBSIDIAN_MINION
     material: PLAYER_HEAD
+    name: "Obsidian Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -962,6 +1010,7 @@ items:
           - ENCHANTED_OBSIDIAN:64
   - id: QUARTZ_MINION
     material: PLAYER_HEAD
+    name: "Quartz Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -982,6 +1031,7 @@ items:
           - ENCHANTED_QUARTZ_BLOCK:1
   - id: REDSTONE_MINION
     material: PLAYER_HEAD
+    name: "Redstone Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -1002,6 +1052,7 @@ items:
           - ENCHANTED_REDSTONE_BLOCK:2
   - id: SAND_MINION
     material: PLAYER_HEAD
+    name: "Sand Minion"
     rarity: COMMON
     components:
       - id: MINION
@@ -1022,6 +1073,7 @@ items:
           - ENCHANTED_SAND:64
   - id: SNOW_MINION
     material: PLAYER_HEAD
+    name: "Snow Minion"
     rarity: COMMON
     components:
       - id: MINION

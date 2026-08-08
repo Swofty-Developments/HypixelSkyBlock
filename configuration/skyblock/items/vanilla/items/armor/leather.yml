@@ -1,6 +1,7 @@
 items:
   - id: LEATHER_HELMET
     material: LEATHER_HELMET
+    name: "Leather Helmet"
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
@@ -25,6 +26,7 @@ items:
       defense: 5.0
   - id: LEATHER_CHESTPLATE
     material: LEATHER_CHESTPLATE
+    name: "Leather Chestplate"
     rarity: COMMON
     components:
       - id: STANDARD_ITEM
@@ -50,6 +52,7 @@ items:
       defense: 15.0
   - id: LEATHER_LEGGINGS
     material: LEATHER_LEGGINGS
+    name: "Leather Leggings"
     rarity: COMMON
     components:
       - id: STANDARD_ITEM

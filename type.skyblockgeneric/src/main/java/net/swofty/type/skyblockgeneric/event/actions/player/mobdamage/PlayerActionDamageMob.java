@@ -1,12 +1,8 @@
 package net.swofty.type.skyblockgeneric.event.actions.player.mobdamage;
 
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
-import net.minestom.server.entity.damage.Damage;
-import net.minestom.server.entity.damage.DamageType;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.swofty.commons.skyblock.statistics.ItemStatistic;
 import net.swofty.commons.skyblock.statistics.ItemStatistics;
@@ -25,15 +21,13 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ItemRequirementsComponent;
 import net.swofty.type.skyblockgeneric.item.updater.PlayerItemOrigin;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
-import net.swofty.type.skyblockgeneric.utility.DamageIndicator;
+import net.swofty.type.skyblockgeneric.utility.AttackService;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 public class PlayerActionDamageMob implements HypixelEventClass {
-    private static final Random random = new Random();
     private static final Map<UUID, Long> COOLDOWN = new HashMap<>();
 
     @PhasedEvent(node = EventNodes.ALL, requireDataLoaded = false, phase = EventPhase.GAMEPLAY)
@@ -52,8 +46,6 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         else return;
         LivingEntity targetLivingEntity = (LivingEntity) targetEntity;
 
-        player.playSound(Sound.sound(Key.key("entity." + mob.getEntityType().name().toLowerCase().replace("minecraft:", "") + ".hurt"), Sound.Source.PLAYER, 1f, 1f), Sound.Emitter.self());
-
         ItemStatistics entityStats = mob.getStatistics();
         Map.Entry<Double, Boolean> hit = player.getStatistics().runPrimaryDamageFormula(entityStats, player, targetLivingEntity);
 
@@ -69,31 +61,16 @@ public class PlayerActionDamageMob implements HypixelEventClass {
         COOLDOWN.put(player.getUuid(), System.currentTimeMillis() +
                 MathUtility.ticksToMilliseconds(player.getStatistics().getInvulnerabilityTime()));
 
-        new DamageIndicator()
-                .damage((float) valueEvent.getValue())
-                .pos(targetEntity.getPosition())
-                .critical(critical)
-                .display(targetEntity.getInstance());
-
-        targetLivingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) valueEvent.getValue()));
+        float damageAmount = ((Number) valueEvent.getValue()).floatValue();
+        if (!AttackService.applyHit(player, mob, damageAmount, critical)) return;
 
         double ferocity = player.getStatistics().allStatistics().getOverall(ItemStatistic.FEROCITY);
-        int extraAttacks = (int) (ferocity / 100);
-        double extraAttackChance = (ferocity % 100) / 100.0;
-
-        // Extra attacks that are guaranteed because ferocity overflowed 100
-        for (int i = 0; i < extraAttacks; i++) {
-            targetLivingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) valueEvent.getValue()));
-        }
-
-        // Extra attacks that have a chance to occur based on the remaining ferocity
-        if (random.nextDouble() < extraAttackChance) {
-            targetLivingEntity.damage(new Damage(DamageType.PLAYER_ATTACK, player, player, player.getPosition(), (float) valueEvent.getValue()));
-        }
+        if (player.getPosition().distance(mob.getPosition()) <= AttackService.MAX_MELEE_FEROCITY_DISTANCE)
+            AttackService.scheduleExtraHits(player, mob, damageAmount, critical, ferocity);
 
         // Handle damage event enchantments
         SkyBlockItem mainHandItem = PlayerItemOrigin.getFromCache(player.getUuid()).get(PlayerItemOrigin.MAIN_HAND);
-        double damageValue = ((Number) valueEvent.getValue()).doubleValue();
+        double damageValue = damageAmount;
 
         for (SkyBlockEnchantment enchantment : mainHandItem.getAttributeHandler().getEnchantments().toList()) {
             if (enchantment.type().getEnch() instanceof DamageEventEnchant damageEventEnchant) {

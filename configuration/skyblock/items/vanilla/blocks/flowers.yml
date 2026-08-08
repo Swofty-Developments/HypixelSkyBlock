@@ -106,6 +106,7 @@ items:
       - id: PLACEABLE
   - id: LILY_OF_THE_VALLEY
     material: lily_of_the_valley
+    name: "Lily Of The Valley"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -120,6 +121,7 @@ items:
   - id: MOONFLOWER
     rarity: COMMON
     material: BLUE_ORCHID
+    name: "Moonflower"
     components:
       - id: SELLABLE
         value: 4.0
@@ -135,6 +137,7 @@ items:
   - id: WILD_ROSE
     rarity: COMMON
     material: ROSE_BUSH
+    name: "Wild Rose"
     components:
       - id: SELLABLE
         value: 4.0

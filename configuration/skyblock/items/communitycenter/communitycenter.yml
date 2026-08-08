@@ -2,6 +2,7 @@ items:
   - id: ABIPHONE_CONTACTS_TRIO
     rarity: COMMON
     material: COMPARATOR
+    name: "Abiphone Contacts Trio"
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
@@ -9,6 +10,7 @@ items:
         display_name: "\xA7cAbiphone Contacts Trio"
   - id: AUTOPET_RULES_2_PACK
     material: player_head
+    name: "Autopet Rules 2 Pack"
     rarity: SPECIAL
     components:
       - id: SKULL_HEAD
@@ -18,12 +20,14 @@ items:
       - id: NOT_FINISHED_YET
   - id: BLOCK_ZAPPER
     material: flint
+    name: "Block Zapper"
     rarity: EPIC
     components:
       - id: ENCHANTED
       - id: NOT_FINISHED_YET
   - id: BOOSTER_COOKIE
     material: cookie
+    name: "Booster Cookie"
     rarity: LEGENDARY
     components:
       - id: INTERACTABLE
@@ -36,6 +40,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: BUILDERS_WAND
     material: blaze_rod
+    name: "Builders Wand"
     rarity: LEGENDARY
     components:
       - id: ABILITY
@@ -47,6 +52,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/bits_shop/builders_wand
   - id: DITTO_BLOB
     material: player_head
+    name: "Ditto Blob"
     rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
@@ -54,6 +60,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: GOD_POTION
     material: player_head
+    name: "God Potion"
     rarity: SPECIAL
     components:
       - id: SKULL_HEAD
@@ -63,6 +70,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: HEAT_CORE
     material: player_head
+    name: "Heat Core"
     rarity: SPECIAL
     components:
       - id: SKULL_HEAD
@@ -70,6 +78,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: HOLOGRAM
     material: player_head
+    name: "Hologram"
     rarity: LEGENDARY
     components:
       - id: SKULL_HEAD
@@ -77,6 +86,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: INFERNO_FUEL_BLOCK
     material: player_head
+    name: "Inferno Fuel Block"
     rarity: RARE
     components:
       - id: SKULL_HEAD
@@ -84,6 +94,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: MATRIARCHS_PERFUME
     material: rabbit_stew
+    name: "Matriarchs Perfume"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -92,6 +103,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: PORTALIZER
     material: player_head
+    name: "Portalizer"
     rarity: SPECIAL
     components:
       - id: SKULL_HEAD
@@ -99,11 +111,13 @@ items:
       - id: NOT_FINISHED_YET
   - id: PURE_BLACK_DYE
     material: ink_sac
+    name: "Pure Black Dye"
     rarity: COMMON
     components:
       - id: NOT_FINISHED_YET
   - id: PURE_WHITE_DYE
     material: bone_meal
+    name: "Pure White Dye"
     rarity: COMMON
     components:
       - id: NOT_FINISHED_YET

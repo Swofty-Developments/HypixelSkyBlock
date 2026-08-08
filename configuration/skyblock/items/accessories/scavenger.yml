@@ -1,6 +1,7 @@
 items:
   - id: SCAVENGER_TALISMAN
     material: PLAYER_HEAD
+    name: "Scavenger Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Scavenger Talisman
@@ -12,6 +13,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: SCAVENGER_RING
     material: PLAYER_HEAD
+    name: "Scavenger Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -24,6 +26,7 @@ items:
         value: 0.0
   - id: SCAVENGER_ARTIFACT
     material: PLAYER_HEAD
+    name: "Scavenger Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

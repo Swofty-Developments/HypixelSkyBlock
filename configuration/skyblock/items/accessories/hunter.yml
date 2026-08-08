@@ -1,6 +1,7 @@
 items:
   - id: HUNTER_TALISMAN
     material: PLAYER_HEAD
+    name: "Hunter Talisman"
     rarity: UNCOMMON
     default_statistics:
       combat_wisdom: 2
@@ -14,6 +15,7 @@ items:
 
   - id: HUNTER_RING
     material: PLAYER_HEAD
+    name: "Hunter Ring"
     rarity: RARE
     default_statistics:
       combat_wisdom: 5

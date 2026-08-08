@@ -1,6 +1,7 @@
 items:
   - id: AXE_OF_THE_SHREDDED
     material: diamond_axe
+    name: "Axe Of The Shredded"
     rarity: LEGENDARY
     default_statistics:
       damage: 140.0
@@ -47,6 +48,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/zombie/weapons/halberd_of_the_shredded
   - id: CRYSTALLIZED_HEART
     material: player_head
+    name: "Crystallized Heart"
     rarity: RARE
     default_statistics:
       health: 50.0
@@ -79,6 +81,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: REAPER_FALCHION
     material: diamond_sword
+    name: "Reaper Falchion"
     rarity: COMMON
     default_statistics:
       damage: 120.0
@@ -117,6 +120,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: REAPER_MASK
     material: player_head
+    name: "Reaper Mask"
     rarity: LEGENDARY
     default_statistics:
       health: 150.0
@@ -166,6 +170,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: REAPER_SCYTHE
     material: diamond_hoe
+    name: "Reaper Scythe"
     rarity: LEGENDARY
     default_statistics:
       damage: 333.0
@@ -202,6 +207,7 @@ items:
         item_model: hypixel_skyblock:item/slayer/zombie/weapons/reaper_scythe
   - id: REVENANT_FALCHION
     material: diamond_sword
+    name: "Revenant Falchion"
     rarity: COMMON
     default_statistics:
       damage: 90.0
@@ -234,6 +240,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: REVIVED_HEART
     material: player_head
+    name: "Revived Heart"
     rarity: EPIC
     default_statistics:
       health: 100.0
@@ -270,6 +277,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: WARDEN_HELMET
     material: player_head
+    name: "Warden Helmet"
     rarity: LEGENDARY
     default_statistics:
       health: 300.0

@@ -1,7 +1,8 @@
 items:
   - id: BEE_PET
     material: player_head
-    rarity: EPIC
+    name: "Bee Pet"
+    rarity: MYTHIC
     components:
       - id: PET
         pet_name: Bee
@@ -35,31 +36,104 @@ items:
             item: ENCHANTED_GOLD_BLOCK
             amount: 9
           rest: null
-        base_statistics:
-          strength: 5.0
+        base_statistics: {}
         per_level_statistics:
           common:
-            speed: 1.0
-            strength: 3.0
-            intelligence: 5.0
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
           uncommon:
-            speed: 1.5
-            strength: 4.0
-            intelligence: 7.0
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
           rare:
-            speed: 2.0
-            strength: 5.0
-            intelligence: 10.0
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
+            mining_fortune: 0.2
+            foraging_fortune: 0.2
+            farming_fortune: 0.2
           epic:
-            speed: 2.5
-            strength: 6.0
-            intelligence: 15.0
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
+            mining_fortune: 0.25
+            foraging_fortune: 0.25
+            farming_fortune: 0.25
           legendary:
-            speed: 3.0
-            strength: 7.0
-            intelligence: 20.0
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
+            mining_fortune: 0.3
+            foraging_fortune: 0.3
+            farming_fortune: 0.3
+          mythic:
+            speed: 0.1
+            strength: 0.25
+            intelligence: 0.5
+            mining_fortune: 0.4
+            foraging_fortune: 0.4
+            farming_fortune: 0.4
         particle: 3
         skill_category: FARMING
         skull_texture: 12724a9a4cdd68ba49415560e5be40b4a1c47cb5be1d66aedb52a30e62ef2d47
         handler_id: BEE
+      - id: TRACKED_UNIQUE
+  - id: CHICKEN_PET
+    material: player_head
+    name: "Chicken Pet"
+    rarity: LEGENDARY
+    components:
+      - id: PET
+        pet_name: Chicken
+        base_statistics: {}
+        per_level_statistics:
+          common:
+            speed: 0.5
+            farming_fortune: 0.5
+          uncommon:
+            speed: 0.5
+            farming_fortune: 0.5
+          rare:
+            speed: 0.5
+            farming_fortune: 0.5
+          epic:
+            speed: 0.5
+            farming_fortune: 0.5
+          legendary:
+            speed: 0.5
+            farming_fortune: 0.5
+        particle: 3
+        skill_category: FARMING
+        skull_texture: 7f37d524c3eed171ce149887ea1dee4ed399904727d521865688ece3bac75e
+        handler_id: CHICKEN
+      - id: TRACKED_UNIQUE
+  - id: GRANDMA_WOLF_PET
+    material: player_head
+    name: "Grandma Wolf Pet"
+    rarity: LEGENDARY
+    components:
+      - id: PET
+        pet_name: Grandma Wolf
+        base_statistics: {}
+        per_level_statistics:
+          common:
+            strength: 0.25
+            health: 1
+          uncommon:
+            strength: 0.25
+            health: 1
+          rare:
+            strength: 0.25
+            health: 1
+          epic:
+            strength: 0.25
+            health: 1
+          legendary:
+            strength: 0.25
+            health: 1
+        particle: 3
+        skill_category: COMBAT
+        skull_texture: e897c5640ccfc68ffb65e331b7070ce5d14439ad2cd7d9612a6feb023eedac18
+        handler_id: GRANDMA_WOLF
       - id: TRACKED_UNIQUE

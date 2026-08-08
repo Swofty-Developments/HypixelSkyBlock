@@ -67,6 +67,7 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
                 case RARE -> getLevel(experience, RARE_XP_GOALS);
                 case EPIC -> getLevel(experience, EPIC_XP_GOALS);
                 case LEGENDARY -> getLevel(experience, LEGENDARY_XP_GOALS);
+                case MYTHIC -> getLevel(experience, MYTHIC_XP_GOALS);
                 default -> 0;
             };
         }
@@ -78,6 +79,7 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
                 case RARE -> experience - RARE_XP_GOALS.get(getAsLevel(Rarity.RARE));
                 case EPIC -> experience - EPIC_XP_GOALS.get(getAsLevel(Rarity.EPIC));
                 case LEGENDARY -> experience - LEGENDARY_XP_GOALS.get(getAsLevel(Rarity.LEGENDARY));
+                case MYTHIC -> experience - MYTHIC_XP_GOALS.get(getAsLevel(Rarity.MYTHIC));
                 default -> 0;
             };
         }
@@ -89,6 +91,7 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
                 case RARE -> RARE_XP_GOALS.get(level - 1);
                 case EPIC -> EPIC_XP_GOALS.get(level - 1);
                 case LEGENDARY -> LEGENDARY_XP_GOALS.get(level - 1);
+                case MYTHIC -> MYTHIC_XP_GOALS.get(level - 1);
                 default -> 0;
             };
         }
@@ -136,4 +139,6 @@ public class ItemAttributePetData extends ItemAttribute<ItemAttributePetData.Pet
             1205530, 1302730, 1406930, 1518630, 1638330, 1766530, 1903730, 2050430, 2207130, 2374830, 2554530, 2747230, 2953930, 3175630, 3413330, 3668030, 3940730, 4232430,
             4544130, 4877830, 5235530, 5619230, 6030930, 6472630, 6949330, 7466030, 8027730, 8639430, 9306130, 10032830, 10824530, 11686230, 12622930, 13639630, 14741330,
             15933030, 17219730, 18606430, 20103130, 21719830, 23466530, 25353230);
+
+    protected static final List<Integer> MYTHIC_XP_GOALS = LEGENDARY_XP_GOALS;
 }

@@ -1,6 +1,7 @@
 items:
   - id: CARROT_CRYSTAL
     material: player_head
+    name: "Carrot Crystal"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -13,6 +14,7 @@ items:
         handler_id: CARROT_CRYSTAL_PLACE
   - id: COMPOST
     material: player_head
+    name: "Compost"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -23,6 +25,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/compost
   - id: COMPOST_BUNDLE
     material: player_head
+    name: "Compost Bundle"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -32,6 +35,7 @@ items:
       - id: TRACKED_UNIQUE
   - id: DUNG
     material: brown_wool
+    name: "Dung"
     rarity: UNCOMMON
     components:
       - id: SELLABLE
@@ -40,6 +44,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/pests/dung
   - id: FLOWER_CRYSTAL
     material: player_head
+    name: "Flower Crystal"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -52,6 +57,7 @@ items:
         handler_id: FLOWER_CRYSTAL_PLACE
   - id: HONEY_JAR
     material: player_head
+    name: "Honey Jar"
     rarity: UNCOMMON
     components:
       - id: SKULL_HEAD
@@ -62,6 +68,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/pests/honey_jar
   - id: PLANT_MATTER
     material: oak_leaves
+    name: "Plant Matter"
     rarity: UNCOMMON
     components:
       - id: SELLABLE
@@ -70,6 +77,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/garden/pests/plant_matter
   - id: POTATO_CRYSTAL
     material: player_head
+    name: "Potato Crystal"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -82,6 +90,7 @@ items:
         handler_id: POTATO_CRYSTAL_PLACE
   - id: PUMPKIN_AND_MELON_CRYSTAL
     material: player_head
+    name: "Pumpkin And Melon Crystal"
     rarity: COMMON
     components:
       - id: SKULL_HEAD
@@ -95,6 +104,7 @@ items:
         handler_id: PUMPKIN_AND_MELON_CRYSTAL_PLACE
   - id: ROOKIE_HOE
     material: stone_hoe
+    name: "Rookie Hoe"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -103,6 +113,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/rookie_hoe
   - id: TIGHTLY_TIED_HAY_BALE
     material: player_head
+    name: "Tightly Tied Hay Bale"
     rarity: RARE
     components:
       - id: ENCHANTED
@@ -112,6 +123,7 @@ items:
         texture: 6d25c5a48cdaefec8dedd53f643bc30a210f51a9e2ff405975d0f8b43218837a
   - id: WHEAT_CRYSTAL
     material: player_head
+    name: "Wheat Crystal"
     rarity: COMMON
     components:
       - id: SKULL_HEAD

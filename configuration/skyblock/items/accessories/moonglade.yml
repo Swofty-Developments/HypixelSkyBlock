@@ -1,6 +1,7 @@
 items:
   - id: MOONGLADE_TALISMAN
     material: PLAYER_HEAD
+    name: "Moonglade Talisman"
     rarity: COMMON
     default_statistics:
       fig_fortune: 5
@@ -17,6 +18,7 @@ items:
 
   - id: MOONGLADE_RING
     material: PLAYER_HEAD
+    name: "Moonglade Ring"
     rarity: UNCOMMON
     default_statistics:
       fig_fortune: 10
@@ -33,6 +35,7 @@ items:
 
   - id: MOONGLADE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Moonglade Artifact"
     rarity: RARE
     default_statistics:
       fig_fortune: 15

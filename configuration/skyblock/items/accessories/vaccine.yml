@@ -1,6 +1,7 @@
 items:
   - id: VACCINE_TALISMAN
     material: PLAYER_HEAD
+    name: "Vaccine Talisman"
     components:
       - id: CUSTOM_DISPLAY_NAME
         display_name: Vaccine Talisman
@@ -13,6 +14,7 @@ items:
 
   - id: VACCINE_RING
     material: PLAYER_HEAD
+    name: "Vaccine Ring"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -26,6 +28,7 @@ items:
 
   - id: VACCINE_ARTIFACT
     material: PLAYER_HEAD
+    name: "Vaccine Artifact"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME

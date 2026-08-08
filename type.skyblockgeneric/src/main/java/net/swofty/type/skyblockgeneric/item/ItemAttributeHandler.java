@@ -196,7 +196,7 @@ public class ItemAttributeHandler {
     }
 
     public void setPetData(ItemAttributePetData.PetData data) {
-        if (item.hasComponent(PetItemComponent.class)) {
+        if (item.hasComponent(PetComponent.class)) {
             ((ItemAttributePetData) item.getAttribute("pet_data")).setValue(data);
         } else {
             throw new RuntimeException("Item is not a pet");

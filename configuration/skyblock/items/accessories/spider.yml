@@ -1,6 +1,7 @@
 items:
   - id: SPIDER_TALISMAN
     material: PLAYER_HEAD
+    name: "Spider Talisman"
     rarity: UNCOMMON
     components:
       - id: TALISMAN
@@ -10,6 +11,7 @@ items:
         value: 50.0
   - id: SPIDER_RING
     material: PLAYER_HEAD
+    name: "Spider Ring"
     rarity: RARE
     components:
       - id: TALISMAN
@@ -17,6 +19,7 @@ items:
         texture: 604ada2212a38e67b6dbad2d156ee110c546dbfd7165b7f50b8ec17ff224dba5
   - id: SPIDER_ARTIFACT
     material: PLAYER_HEAD
+    name: "Spider Artifact"
     rarity: EPIC
     components:
       - id: TALISMAN

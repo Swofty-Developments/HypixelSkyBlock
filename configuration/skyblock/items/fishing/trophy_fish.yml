@@ -1,223 +1,295 @@
 items:
   - id: BRONZE_SULPHUR_SKITTER
     material: PLAYER_HEAD
+    name: "Bronze Sulphur Skitter"
     rarity: COMMON
   - id: SILVER_SULPHUR_SKITTER
     material: PLAYER_HEAD
+    name: "Silver Sulphur Skitter"
     rarity: COMMON
   - id: GOLD_SULPHUR_SKITTER
     material: PLAYER_HEAD
+    name: "Gold Sulphur Skitter"
     rarity: COMMON
   - id: DIAMOND_SULPHUR_SKITTER
     material: PLAYER_HEAD
+    name: "Diamond Sulphur Skitter"
     rarity: COMMON
   - id: BRONZE_BLOBFISH
     material: PLAYER_HEAD
+    name: "Bronze Blobfish"
     rarity: COMMON
   - id: SILVER_BLOBFISH
     material: PLAYER_HEAD
+    name: "Silver Blobfish"
     rarity: COMMON
   - id: GOLD_BLOBFISH
     material: PLAYER_HEAD
+    name: "Gold Blobfish"
     rarity: COMMON
   - id: DIAMOND_BLOBFISH
     material: PLAYER_HEAD
+    name: "Diamond Blobfish"
     rarity: COMMON
   - id: BRONZE_OBFUSCATED_1
     material: PLAYER_HEAD
+    name: "Bronze Obfuscated 1"
     rarity: COMMON
     components:
       - id: FISHING_BAIT
         mediums: [LAVA]
   - id: SILVER_OBFUSCATED_1
     material: PLAYER_HEAD
+    name: "Silver Obfuscated 1"
     rarity: COMMON
   - id: GOLD_OBFUSCATED_1
     material: PLAYER_HEAD
+    name: "Gold Obfuscated 1"
     rarity: COMMON
   - id: DIAMOND_OBFUSCATED_1
     material: PLAYER_HEAD
+    name: "Diamond Obfuscated 1"
     rarity: COMMON
   - id: BRONZE_STEAMING_HOT_FLOUNDER
     material: PLAYER_HEAD
+    name: "Bronze Steaming Hot Flounder"
     rarity: COMMON
   - id: SILVER_STEAMING_HOT_FLOUNDER
     material: PLAYER_HEAD
+    name: "Silver Steaming Hot Flounder"
     rarity: COMMON
   - id: GOLD_STEAMING_HOT_FLOUNDER
     material: PLAYER_HEAD
+    name: "Gold Steaming Hot Flounder"
     rarity: COMMON
   - id: DIAMOND_STEAMING_HOT_FLOUNDER
     material: PLAYER_HEAD
+    name: "Diamond Steaming Hot Flounder"
     rarity: COMMON
   - id: BRONZE_GUSHER
     material: PLAYER_HEAD
+    name: "Bronze Gusher"
     rarity: COMMON
   - id: SILVER_GUSHER
     material: PLAYER_HEAD
+    name: "Silver Gusher"
     rarity: COMMON
   - id: GOLD_GUSHER
     material: PLAYER_HEAD
+    name: "Gold Gusher"
     rarity: COMMON
   - id: DIAMOND_GUSHER
     material: PLAYER_HEAD
+    name: "Diamond Gusher"
     rarity: COMMON
   - id: BRONZE_OBFUSCATED_2
     material: PLAYER_HEAD
+    name: "Bronze Obfuscated 2"
     rarity: COMMON
     components:
       - id: FISHING_BAIT
         mediums: [LAVA]
   - id: SILVER_OBFUSCATED_2
     material: PLAYER_HEAD
+    name: "Silver Obfuscated 2"
     rarity: COMMON
   - id: GOLD_OBFUSCATED_2
     material: PLAYER_HEAD
+    name: "Gold Obfuscated 2"
     rarity: COMMON
   - id: DIAMOND_OBFUSCATED_2
     material: PLAYER_HEAD
+    name: "Diamond Obfuscated 2"
     rarity: COMMON
   - id: BRONZE_SLUGFISH
     material: PLAYER_HEAD
+    name: "Bronze Slugfish"
     rarity: COMMON
   - id: SILVER_SLUGFISH
     material: PLAYER_HEAD
+    name: "Silver Slugfish"
     rarity: COMMON
   - id: GOLD_SLUGFISH
     material: PLAYER_HEAD
+    name: "Gold Slugfish"
     rarity: COMMON
   - id: DIAMOND_SLUGFISH
     material: PLAYER_HEAD
+    name: "Diamond Slugfish"
     rarity: COMMON
   - id: BRONZE_OBFUSCATED_3
     material: PLAYER_HEAD
+    name: "Bronze Obfuscated 3"
     rarity: COMMON
   - id: SILVER_OBFUSCATED_3
     material: PLAYER_HEAD
+    name: "Silver Obfuscated 3"
     rarity: COMMON
   - id: GOLD_OBFUSCATED_3
     material: PLAYER_HEAD
+    name: "Gold Obfuscated 3"
     rarity: COMMON
   - id: DIAMOND_OBFUSCATED_3
     material: PLAYER_HEAD
+    name: "Diamond Obfuscated 3"
     rarity: COMMON
   - id: BRONZE_FLYFISH
     material: PLAYER_HEAD
+    name: "Bronze Flyfish"
     rarity: COMMON
   - id: SILVER_FLYFISH
     material: PLAYER_HEAD
+    name: "Silver Flyfish"
     rarity: COMMON
   - id: GOLD_FLYFISH
     material: PLAYER_HEAD
+    name: "Gold Flyfish"
     rarity: COMMON
   - id: DIAMOND_FLYFISH
     material: PLAYER_HEAD
+    name: "Diamond Flyfish"
     rarity: COMMON
   - id: BRONZE_VANILLE
     material: PLAYER_HEAD
+    name: "Bronze Vanille"
     rarity: COMMON
   - id: SILVER_VANILLE
     material: PLAYER_HEAD
+    name: "Silver Vanille"
     rarity: COMMON
   - id: GOLD_VANILLE
     material: PLAYER_HEAD
+    name: "Gold Vanille"
     rarity: COMMON
   - id: DIAMOND_VANILLE
     material: PLAYER_HEAD
+    name: "Diamond Vanille"
     rarity: COMMON
   - id: BRONZE_LAVAHORSE
     material: PLAYER_HEAD
+    name: "Bronze Lavahorse"
     rarity: COMMON
   - id: SILVER_LAVAHORSE
     material: PLAYER_HEAD
+    name: "Silver Lavahorse"
     rarity: COMMON
   - id: GOLD_LAVAHORSE
     material: PLAYER_HEAD
+    name: "Gold Lavahorse"
     rarity: COMMON
   - id: DIAMOND_LAVAHORSE
     material: PLAYER_HEAD
+    name: "Diamond Lavahorse"
     rarity: COMMON
   - id: BRONZE_MANA_RAY
     material: PLAYER_HEAD
+    name: "Bronze Mana Ray"
     rarity: COMMON
   - id: SILVER_MANA_RAY
     material: PLAYER_HEAD
+    name: "Silver Mana Ray"
     rarity: COMMON
   - id: GOLD_MANA_RAY
     material: PLAYER_HEAD
+    name: "Gold Mana Ray"
     rarity: COMMON
   - id: DIAMOND_MANA_RAY
     material: PLAYER_HEAD
+    name: "Diamond Mana Ray"
     rarity: COMMON
   - id: BRONZE_VOLCANIC_STONEFISH
     material: PLAYER_HEAD
+    name: "Bronze Volcanic Stonefish"
     rarity: COMMON
   - id: SILVER_VOLCANIC_STONEFISH
     material: PLAYER_HEAD
+    name: "Silver Volcanic Stonefish"
     rarity: COMMON
   - id: GOLD_VOLCANIC_STONEFISH
     material: PLAYER_HEAD
+    name: "Gold Volcanic Stonefish"
     rarity: COMMON
   - id: DIAMOND_VOLCANIC_STONEFISH
     material: PLAYER_HEAD
+    name: "Diamond Volcanic Stonefish"
     rarity: COMMON
   - id: BRONZE_SKELETON_FISH
     material: PLAYER_HEAD
+    name: "Bronze Skeleton Fish"
     rarity: COMMON
   - id: SILVER_SKELETON_FISH
     material: PLAYER_HEAD
+    name: "Silver Skeleton Fish"
     rarity: COMMON
   - id: GOLD_SKELETON_FISH
     material: PLAYER_HEAD
+    name: "Gold Skeleton Fish"
     rarity: COMMON
   - id: DIAMOND_SKELETON_FISH
     material: PLAYER_HEAD
+    name: "Diamond Skeleton Fish"
     rarity: COMMON
   - id: BRONZE_MOLDFIN
     material: PLAYER_HEAD
+    name: "Bronze Moldfin"
     rarity: COMMON
   - id: SILVER_MOLDFIN
     material: PLAYER_HEAD
+    name: "Silver Moldfin"
     rarity: COMMON
   - id: GOLD_MOLDFIN
     material: PLAYER_HEAD
+    name: "Gold Moldfin"
     rarity: COMMON
   - id: DIAMOND_MOLDFIN
     material: PLAYER_HEAD
+    name: "Diamond Moldfin"
     rarity: COMMON
   - id: BRONZE_SOUL_FISH
     material: PLAYER_HEAD
+    name: "Bronze Soul Fish"
     rarity: COMMON
   - id: SILVER_SOUL_FISH
     material: PLAYER_HEAD
+    name: "Silver Soul Fish"
     rarity: COMMON
   - id: GOLD_SOUL_FISH
     material: PLAYER_HEAD
+    name: "Gold Soul Fish"
     rarity: COMMON
   - id: DIAMOND_SOUL_FISH
     material: PLAYER_HEAD
+    name: "Diamond Soul Fish"
     rarity: COMMON
   - id: BRONZE_KARATE_FISH
     material: PLAYER_HEAD
+    name: "Bronze Karate Fish"
     rarity: COMMON
   - id: SILVER_KARATE_FISH
     material: PLAYER_HEAD
+    name: "Silver Karate Fish"
     rarity: COMMON
   - id: GOLD_KARATE_FISH
     material: PLAYER_HEAD
+    name: "Gold Karate Fish"
     rarity: COMMON
   - id: DIAMOND_KARATE_FISH
     material: PLAYER_HEAD
+    name: "Diamond Karate Fish"
     rarity: COMMON
   - id: BRONZE_GOLDEN_FISH
     material: PLAYER_HEAD
+    name: "Bronze Golden Fish"
     rarity: COMMON
   - id: SILVER_GOLDEN_FISH
     material: PLAYER_HEAD
+    name: "Silver Golden Fish"
     rarity: COMMON
   - id: GOLD_GOLDEN_FISH
     material: PLAYER_HEAD
+    name: "Gold Golden Fish"
     rarity: COMMON
   - id: DIAMOND_GOLDEN_FISH
     material: PLAYER_HEAD
+    name: "Diamond Golden Fish"
     rarity: COMMON

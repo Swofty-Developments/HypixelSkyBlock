@@ -1,6 +1,7 @@
 items:
   - id: RAW_SOULFLOW
     material: PLAYER_HEAD
+    name: "Raw Soulflow"
     rarity: UNCOMMON
     components:
       - id: SOULFLOW
@@ -11,6 +12,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/raw_soulflow
   - id: SOULFLOW
     material: PLAYER_HEAD
+    name: "Soulflow"
     rarity: RARE
     components:
       - id: SOULFLOW

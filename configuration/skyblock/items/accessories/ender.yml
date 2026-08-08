@@ -1,6 +1,7 @@
 items:
   - id: ENDER_ARTIFACT
     material: PLAYER_HEAD
+    name: "Ender Artifact"
     rarity: EPIC
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -12,6 +13,7 @@ items:
 
   - id: ENDER_RELIC
     material: PLAYER_HEAD
+    name: "Ender Relic"
     rarity: LEGENDARY
     components:
       - id: CUSTOM_DISPLAY_NAME

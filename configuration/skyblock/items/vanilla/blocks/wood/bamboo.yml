@@ -1,6 +1,7 @@
 items:
   - id: BAMBOO_BLOCK
     material: BAMBOO_BLOCK
+    name: "Bamboo Block"
     rarity: COMMON
     components:
       - id: SKILLABLE_MINE
@@ -12,6 +13,7 @@ items:
 
   - id: STRIPPED_BAMBOO_BLOCK
     material: STRIPPED_BAMBOO_BLOCK
+    name: "Stripped Bamboo Block"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -306,6 +308,7 @@ items:
 
   - id: BAMBOO_CHEST_RAFT
     material: BAMBOO_CHEST_RAFT
+    name: "Bamboo Chest Raft"
     rarity: COMMON
     components:
       - id: SELLABLE

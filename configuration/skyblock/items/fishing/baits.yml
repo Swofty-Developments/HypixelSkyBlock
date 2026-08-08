@@ -1,6 +1,7 @@
 items:
   - id: MINNOW_BAIT
     material: PLAYER_HEAD
+    name: "Minnow Bait"
     rarity: COMMON
     default_statistics:
       FISHING_SPEED: 25
@@ -13,6 +14,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/minnow_bait
   - id: FISH_BAIT
     material: PLAYER_HEAD
+    name: "Fish Bait"
     rarity: COMMON
     default_statistics:
       FISHING_SPEED: 45
@@ -25,6 +27,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/fish_bait
   - id: LIGHT_BAIT
     material: PLAYER_HEAD
+    name: "Light Bait"
     rarity: COMMON
     components:
       - id: FISHING_BAIT
@@ -35,6 +38,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/light_bait
   - id: DARK_BAIT
     material: PLAYER_HEAD
+    name: "Dark Bait"
     rarity: COMMON
     components:
       - id: FISHING_BAIT
@@ -45,6 +49,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/dark_bait
   - id: SPIKED_BAIT
     material: PLAYER_HEAD
+    name: "Spiked Bait"
     rarity: COMMON
     default_statistics:
       SEA_CREATURE_CHANCE: 6
@@ -57,6 +62,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/spiked_bait
   - id: SPOOKY_BAIT
     material: PLAYER_HEAD
+    name: "Spooky Bait"
     rarity: COMMON
     default_statistics:
       FISHING_SPEED: 25
@@ -71,6 +77,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/spooky_bait
   - id: CARROT_BAIT
     material: PLAYER_HEAD
+    name: "Carrot Bait"
     rarity: COMMON
     components:
       - id: FISHING_BAIT
@@ -81,6 +88,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/carrot_bait
   - id: CORRUPTED_BAIT
     material: PLAYER_HEAD
+    name: "Corrupted Bait"
     rarity: COMMON
     components:
       - id: FISHING_BAIT
@@ -91,6 +99,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/corrupted_bait
   - id: BLESSED_BAIT
     material: PLAYER_HEAD
+    name: "Blessed Bait"
     rarity: UNCOMMON
     components:
       - id: FISHING_BAIT
@@ -102,6 +111,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/blessed_bait
   - id: ICE_BAIT
     material: PLAYER_HEAD
+    name: "Ice Bait"
     rarity: UNCOMMON
     components:
       - id: FISHING_BAIT
@@ -114,6 +124,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/ice_bait
   - id: SHARK_BAIT
     material: PLAYER_HEAD
+    name: "Shark Bait"
     rarity: UNCOMMON
     components:
       - id: FISHING_BAIT
@@ -126,6 +137,7 @@ items:
         item_model: hypixel_skyblock:item/community_center/mayor/marina/shark_bait
   - id: GLOWY_CHUM_BAIT
     material: PLAYER_HEAD
+    name: "Glowy Chum Bait"
     rarity: UNCOMMON
     default_statistics:
       FISHING_SPEED: 25
@@ -139,6 +151,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/farming_1/glowy_chum_bait
   - id: HOT_BAIT
     material: PLAYER_HEAD
+    name: "Hot Bait"
     rarity: UNCOMMON
     components:
       - id: FISHING_BAIT
@@ -150,6 +163,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/hot_bait
   - id: WORM_BAIT
     material: PLAYER_HEAD
+    name: "Worm Bait"
     rarity: UNCOMMON
     default_statistics:
       FISHING_SPEED: 60
@@ -162,6 +176,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/worm_bait
   - id: FROZEN_BAIT
     material: PLAYER_HEAD
+    name: "Frozen Bait"
     rarity: RARE
     components:
       - id: FISHING_BAIT
@@ -174,6 +189,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/frozen_bait
   - id: GOLDEN_BAIT
     material: PLAYER_HEAD
+    name: "Golden Bait"
     rarity: UNCOMMON
     components:
       - id: FISHING_BAIT
@@ -185,6 +201,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/golden_bait
   - id: TREASURE_BAIT
     material: PLAYER_HEAD
+    name: "Treasure Bait"
     rarity: RARE
     default_statistics:
       FISHING_SPEED: 10
@@ -198,6 +215,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/treasure_bait
   - id: WOODEN_BAIT
     material: PLAYER_HEAD
+    name: "Wooden Bait"
     rarity: UNCOMMON
     components:
       - id: FISHING_BAIT
@@ -208,6 +226,7 @@ items:
         item_model: hypixel_skyblock:item/island_relevant/foraging_2/wooden_bait
   - id: HOTSPOT_BAIT
     material: PLAYER_HEAD
+    name: "Hotspot Bait"
     rarity: RARE
     components:
       - id: FISHING_BAIT
@@ -220,6 +239,7 @@ items:
         item_model: hypixel_skyblock:item/fishing/bait/hotspot_bait
   - id: WHALE_BAIT
     material: PLAYER_HEAD
+    name: "Whale Bait"
     rarity: RARE
     default_statistics:
       FISHING_SPEED: 30

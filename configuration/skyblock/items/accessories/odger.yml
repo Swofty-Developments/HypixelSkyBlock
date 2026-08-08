@@ -1,6 +1,7 @@
 items:
   - id: ODGERS_BRONZE_TOOTH
     material: PLAYER_HEAD
+    name: "Odgers Bronze Tooth"
     rarity: COMMON
     lore:
       - '%%dark_gray%%%%italic%%A perfectly fine tooth, besides some wear and tear...'
@@ -18,6 +19,7 @@ items:
 
   - id: ODGERS_SILVER_TOOTH
     material: PLAYER_HEAD
+    name: "Odgers Silver Tooth"
     rarity: UNCOMMON
     lore:
       - '%%dark_gray%%%%italic%%A perfectly fine tooth, besides a broken chunk...'
@@ -35,6 +37,7 @@ items:
 
   - id: ODGERS_GOLD_TOOTH
     material: PLAYER_HEAD
+    name: "Odgers Gold Tooth"
     rarity: RARE
     lore:
       - '%%dark_gray%%%%italic%%A perfectly fine tooth, besides its weight...'
@@ -52,6 +55,7 @@ items:
 
   - id: ODGERS_DIAMOND_TOOTH
     material: PLAYER_HEAD
+    name: "Odgers Diamond Tooth"
     rarity: EPIC
     lore:
       - '%%dark_gray%%%%italic%%A perfectly fine tooth, besides its radiant brightness...'

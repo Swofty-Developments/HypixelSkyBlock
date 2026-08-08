@@ -7,6 +7,7 @@ items:
         value: 3.0
   - id: RAW_FISH
     material: cod
+    name: "Raw Fish"
     rarity: COMMON
     components:
       - id: SELLABLE
@@ -82,6 +83,7 @@ items:
   - id: CHUM
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Chum"
     components:
       - id: SELLABLE
         value: 5.0
@@ -90,6 +92,7 @@ items:
   - id: CAN_OF_WORMS
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Can Of Worms"
     components:
       - id: SELLABLE
         value: 500.0
@@ -98,6 +101,7 @@ items:
   - id: GILL_MEMBRANE
     rarity: UNCOMMON
     material: PLAYER_HEAD
+    name: "Gill Membrane"
     components:
       - id: SELLABLE
         value: 70.0
@@ -106,6 +110,7 @@ items:
   - id: SEA_LUMIES
     rarity: COMMON
     material: SEA_PICKLE
+    name: "Sea Lumies"
     components:
       - id: SELLABLE
         value: 3.0
@@ -114,6 +119,7 @@ items:
   - id: OLD_LEATHER_BOOT
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Old Leather Boot"
     components:
       - id: SELLABLE
         value: 100000.0
@@ -122,9 +128,11 @@ items:
   - id: GRIZZLY_SALMON
     rarity: RARE
     material: COOKED_SALMON
+    name: "Grizzly Salmon"
   - id: WASHED_UP_SOUVENIR
     rarity: EPIC
     material: PLAYER_HEAD
+    name: "Washed Up Souvenir"
     components:
       - id: SELLABLE
         value: 250000.0

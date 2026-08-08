@@ -1,6 +1,7 @@
 items:
   - id: SCARFS_STUDIES
     material: PLAYER_HEAD
+    name: "Scarfs Studies"
     rarity: COMMON
     lore:
       - "§7Gain §a2% §7more Dungeons class"
@@ -15,6 +16,7 @@ items:
 
   - id: SCARFS_THESIS
     material: PLAYER_HEAD
+    name: "Scarfs Thesis"
     rarity: COMMON
     lore:
       - "§7Gain §a4% §7more Dungeons class"
@@ -44,6 +46,7 @@ items:
 
   - id: SCARFS_GRIMOIRE
     material: PLAYER_HEAD
+    name: "Scarfs Grimoire"
     rarity: COMMON
     lore:
       - "§7Gain §a6% §7more Dungeons class"

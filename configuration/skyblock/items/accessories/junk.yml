@@ -1,6 +1,7 @@
 items:
   - id: JUNK_TALISMAN
     material: PLAYER_HEAD
+    name: "Junk Talisman"
     rarity: COMMON
     lore:
       - '%%dark_gray%%%%italic%%One man''s trash is another man''s treasure.'
@@ -14,6 +15,7 @@ items:
 
   - id: JUNK_RING
     material: PLAYER_HEAD
+    name: "Junk Ring"
     rarity: UNCOMMON
     lore:
       - '%%dark_gray%%%%italic%%One man''s trash is another man''s treasure.'
@@ -27,6 +29,7 @@ items:
 
   - id: JUNK_ARTIFACT
     material: PLAYER_HEAD
+    name: "Junk Artifact"
     rarity: RARE
     lore:
       - '%%dark_gray%%%%italic%%One man''s trash is another man''s treasure.'

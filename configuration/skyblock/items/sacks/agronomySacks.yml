@@ -1,6 +1,7 @@
 items:
   - id: SMALL_AGRONOMY_SACK
     material: player_head
+    name: "Small Agronomy Sack"
     rarity: UNCOMMON
     lore:
       - '§7Item pickups go directly into your'
@@ -64,6 +65,7 @@ items:
 
   - id: MEDIUM_AGRONOMY_SACK
     material: player_head
+    name: "Medium Agronomy Sack"
     rarity: RARE
     lore:
       - '§7Item pickups go directly into your'
@@ -127,6 +129,7 @@ items:
 
   - id: LARGE_AGRONOMY_SACK
     material: player_head
+    name: "Large Agronomy Sack"
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'
@@ -190,6 +193,7 @@ items:
 
   - id: LARGE_ENCHANTED_AGRONOMY_SACK
     material: player_head
+    name: "Large Enchanted Agronomy Sack"
     rarity: EPIC
     lore:
       - '§7Item pickups go directly into your'

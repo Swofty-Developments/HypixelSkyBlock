@@ -1,6 +1,7 @@
 items:
   - id: SMALL_FISHING_SACK
     material: player_head
+    name: "Small Fishing Sack"
     rarity: UNCOMMON
     lore:
       - "\xA77Item pickups go directly into your"
@@ -75,6 +76,7 @@ items:
               amount: 1
   - id: MEDIUM_FISHING_SACK
     material: player_head
+    name: "Medium Fishing Sack"
     rarity: RARE
     lore:
       - "\xA77Item pickups go directly into your"
@@ -149,6 +151,7 @@ items:
               amount: 1
   - id: LARGE_FISHING_SACK
     material: player_head
+    name: "Large Fishing Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"
@@ -223,6 +226,7 @@ items:
               amount: 1
   - id: LARGE_ENCHANTED_FISHING_SACK
     material: player_head
+    name: "Large Enchanted Fishing Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"

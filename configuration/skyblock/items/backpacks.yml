@@ -1,6 +1,7 @@
 items:
   - id: SMALL_BACKPACK
     material: player_head
+    name: "Small Backpack"
     rarity: UNCOMMON
     components:
       - id: BACKPACK
@@ -29,6 +30,7 @@ items:
         texture: 21d837ca222cbc0bc12426f5da018c3a931b406008800960a9df112a596e7d62
   - id: MEDIUM_BACKPACK
     material: player_head
+    name: "Medium Backpack"
     rarity: RARE
     components:
       - id: BACKPACK
@@ -57,6 +59,7 @@ items:
         texture: 62f3b3a05481cde77240005c0ddcee1c069e5504a62ce0977879f55a39396146
   - id: LARGE_BACKPACK
     material: player_head
+    name: "Large Backpack"
     rarity: EPIC
     components:
       - id: BACKPACK
@@ -85,6 +88,7 @@ items:
         texture: 4d05baa5ddaa70bf452f53544711ca5116b8abbd6218b9e1aed94b1e6b094022
   - id: GREATER_BACKPACK
     material: player_head
+    name: "Greater Backpack"
     rarity: EPIC
     components:
       - id: BACKPACK
@@ -113,6 +117,7 @@ items:
         texture: 8ae187145ee732e7c00905a9c16ed1e43ba88d5624a6f4af829f10453fcc9165
   - id: JUMBO_BACKPACK
     material: player_head
+    name: "Jumbo Backpack"
     rarity: LEGENDARY
     components:
       - id: BACKPACK

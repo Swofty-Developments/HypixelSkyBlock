@@ -127,8 +127,8 @@ public class GUIBestiaryMob extends StatelessView {
                 }
 
                 lore.add("§7Mob Stats:");
-                lore.add("§7Health: " + ItemStatistic.HEALTH.getDisplayColor() + Math.round(mob.getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue()) + ItemStatistic.HEALTH.getSymbol());
-                lore.add("§7Damage: " + ItemStatistic.DAMAGE.getDisplayColor() + Math.round(mob.getBaseStatistics().getOverall(ItemStatistic.DAMAGE).floatValue()) + ItemStatistic.DAMAGE.getSymbol());
+                lore.add("§7Health: " + ItemStatistic.HEALTH.getLegacyDisplayColor() + Math.round(mob.getBaseStatistics().getOverall(ItemStatistic.HEALTH).floatValue()) + ItemStatistic.HEALTH.getSymbol());
+                lore.add("§7Damage: " + ItemStatistic.DAMAGE.getLegacyDisplayColor() + Math.round(mob.getBaseStatistics().getOverall(ItemStatistic.DAMAGE).floatValue()) + ItemStatistic.DAMAGE.getSymbol());
                 lore.add("§7Coins per Kill: §6" + otherLoot.getCoinAmount());
                 lore.add("§7" + mob.getSkillCategory().asCategory().getName() + " Exp: §3" + otherLoot.getSkillXPAmount());
                 lore.add("§7XP Orbs: §3" + otherLoot.getXpOrbAmount());

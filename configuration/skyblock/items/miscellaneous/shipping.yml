@@ -1,6 +1,7 @@
 items:
   - id: BUDGET_HOPPER
     material: hopper
+    name: "Budget Hopper"
     rarity: UNCOMMON
     components:
       - id: MINION_SHIPPING
@@ -31,6 +32,7 @@ items:
               amount: 1
   - id: ENCHANTED_HOPPER
     material: hopper
+    name: "Enchanted Hopper"
     rarity: RARE
     components:
       - id: ENCHANTED

@@ -1,6 +1,7 @@
 items:
   - id: ACTUALLY_BLUE_ABICASE
     material: PLAYER_HEAD
+    name: "Actually Blue Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -11,6 +12,7 @@ items:
 
   - id: BLUE_BUT_GREEN_ABICASE
     material: PLAYER_HEAD
+    name: "Blue But Green Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -21,6 +23,7 @@ items:
 
   - id: BLUE_BUT_RED_ABICASE
     material: PLAYER_HEAD
+    name: "Blue But Red Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -31,6 +34,7 @@ items:
 
   - id: BLUE_BUT_YELLOW_ABICASE
     material: PLAYER_HEAD
+    name: "Blue But Yellow Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -41,6 +45,7 @@ items:
 
   - id: LIGHTER_BLUE_ABICASE
     material: PLAYER_HEAD
+    name: "Lighter Blue Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -51,6 +56,7 @@ items:
 
   - id: REZAR_ABICASE
     material: PLAYER_HEAD
+    name: "Rezar Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -61,6 +67,7 @@ items:
 
   - id: SUMSUNG_G3_ABICASE
     material: PLAYER_HEAD
+    name: "Sumsung G3 Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -71,6 +78,7 @@ items:
 
   - id: SUMSUNG_GG_ABICASE
     material: PLAYER_HEAD
+    name: "Sumsung Gg Abicase"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME

@@ -43,6 +43,7 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.components.ConstantStatisticsComponent;
 import net.swofty.type.skyblockgeneric.item.components.PetComponent;
 import net.swofty.type.skyblockgeneric.item.components.SkullHeadComponent;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.item.components.StandardItemComponent;
 import net.swofty.type.skyblockgeneric.item.set.ArmorSetRegistry;
 import net.swofty.type.skyblockgeneric.item.set.impl.ArmorSet;
@@ -193,12 +194,19 @@ public class PlayerStatistics {
     public ItemStatistics petStatistics() {
         SkyBlockItem pet = player.getPetData().getEnabledPet();
         if (pet == null) return ItemStatistics.empty();
-        ItemStatistics baseStatistics = pet.getComponent(PetComponent.class).getBaseStatistics();
-        ItemStatistics perLevelStatistics = pet.getComponent(PetComponent.class).getPerLevelStatistics(
+        PetComponent component = pet.getComponent(PetComponent.class);
+        ItemStatistics baseStatistics = component.getBaseStatistics();
+        ItemStatistics perLevelStatistics = component.getPerLevelStatistics(
                 pet.getAttributeHandler().getRarity()
         );
         int level = pet.getAttributeHandler().getPetData().getAsLevel(pet.getAttributeHandler().getRarity());
-        return ItemStatistics.add(baseStatistics, ItemStatistics.multiply(perLevelStatistics, level));
+        ItemStatistics stats = ItemStatistics.add(baseStatistics, ItemStatistics.multiply(perLevelStatistics, level));
+
+        for (PetAbility ability : player.getPetData().getCachedAbilities(pet)) {
+            stats = ItemStatistics.add(stats, ability.getStatistics(player, pet));
+        }
+
+        return stats;
     }
 
     public ItemStatistics spareStatistics() {

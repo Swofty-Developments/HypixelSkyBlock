@@ -1,6 +1,7 @@
 items:
   - id: SMALL_MINING_SACK
     material: player_head
+    name: "Small Mining Sack"
     rarity: UNCOMMON
     lore:
       - "\xA77Item pickups go directly into your"
@@ -84,6 +85,7 @@ items:
               amount: 1
   - id: MEDIUM_MINING_SACK
     material: player_head
+    name: "Medium Mining Sack"
     rarity: RARE
     lore:
       - "\xA77Item pickups go directly into your"
@@ -167,6 +169,7 @@ items:
               amount: 1
   - id: LARGE_MINING_SACK
     material: player_head
+    name: "Large Mining Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"
@@ -250,6 +253,7 @@ items:
               amount: 1
   - id: LARGE_ENCHANTED_MINING_SACK
     material: player_head
+    name: "Large Enchanted Mining Sack"
     rarity: EPIC
     lore:
       - "\xA77Item pickups go directly into your"

@@ -1,6 +1,7 @@
 items:
   - id: BAT_FIREWORK
     material: firework_rocket
+    name: "Bat Firework"
     rarity: RARE
     lore:
       - "\xA77Launches a firework that"
@@ -19,6 +20,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: BLAST_O_LANTERN
     material: player_head
+    name: "Blast O Lantern"
     rarity: UNCOMMON
     lore:
       - "\xA77Throwable explosive. Deals \xA7a2"
@@ -49,6 +51,7 @@ items:
               amount: 32
   - id: ECTOPLASM
     material: ghast_tear
+    name: "Ectoplasm"
     rarity: RARE
     lore:
       - "\xA77Spooky, yet practical."
@@ -58,6 +61,7 @@ items:
         value: 10000.0
   - id: GREEN_CANDY
     material: player_head
+    name: "Green Candy"
     rarity: UNCOMMON
     lore:
       - "\xA77Candy can be used to trade with"
@@ -71,6 +75,7 @@ items:
         value: 500.0
   - id: HORSEMAN_CANDLE
     material: player_head
+    name: "Horseman Candle"
     rarity: EPIC
     lore:
       - "\xA77Used to summon the Headless"
@@ -87,6 +92,7 @@ items:
       - id: NOT_FINISHED_YET
   - id: PUMPKIN_GUTS
     material: pumpkin_seeds
+    name: "Pumpkin Guts"
     rarity: UNCOMMON
     lore:
       - "\xA77Why does Halloween have to be so"
@@ -97,6 +103,7 @@ items:
         value: 10000.0
   - id: PURPLE_CANDY
     material: player_head
+    name: "Purple Candy"
     rarity: EPIC
     lore:
       - "\xA77Candy can be used to trade with"
@@ -110,6 +117,7 @@ items:
         value: 5000.0
   - id: SOUL_FRAGMENT
     material: player_head
+    name: "Soul Fragment"
     rarity: EPIC
     lore:
       - "\xA77Dropped by Grim Reaper sea"
@@ -125,6 +133,7 @@ items:
         item_model: hypixel_skyblock:item/uncategorized/soul_fragment
   - id: SPOOKY_SHARD
     material: player_head
+    name: "Spooky Shard"
     rarity: EPIC
     default_statistics: { }
     components:
@@ -134,6 +143,7 @@ items:
         value: 10000.0
   - id: WEREWOLF_SKIN
     material: leather
+    name: "Werewolf Skin"
     rarity: RARE
     lore:
       - "\xA77Dropped by Werewolf sea"

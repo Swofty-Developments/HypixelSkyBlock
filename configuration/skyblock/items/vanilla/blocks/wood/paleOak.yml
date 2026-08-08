@@ -256,6 +256,7 @@ items:
 
   - id: PALE_OAK_CHEST_BOAT
     material: PALE_OAK_CHEST_BOAT
+    name: "Pale Oak Chest Boat"
     rarity: COMMON
     components:
       - id: SELLABLE

@@ -1,6 +1,7 @@
 items:
   - id: SMALL_FISH_BOWL
     material: PLAYER_HEAD
+    name: "Small Fish Bowl"
     rarity: COMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -14,6 +15,7 @@ items:
 
   - id: MEDIUM_FISH_BOWL
     material: PLAYER_HEAD
+    name: "Medium Fish Bowl"
     rarity: UNCOMMON
     components:
       - id: CUSTOM_DISPLAY_NAME
@@ -27,6 +29,7 @@ items:
 
   - id: LARGE_FISH_BOWL
     material: PLAYER_HEAD
+    name: "Large Fish Bowl"
     rarity: RARE
     components:
       - id: CUSTOM_DISPLAY_NAME
