@@ -89,7 +89,7 @@ public class DatapointPetData extends SkyBlockDatapoint<DatapointPetData.UserPet
 
         public void setEnabled(ItemType type, boolean enabled) {
             // Set all previous true pets to false
-            petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialType() == type).forEach(pet -> petsMap.put(pet, false));
+            petsMap.keySet().forEach(pet -> petsMap.put(pet, false));
 
             // Set the new pet to the new state
             petsMap.keySet().stream().filter(pet -> pet.getAttributeHandler().getPotentialType() == type).findFirst().ifPresent(pet -> petsMap.put(pet, enabled));
