@@ -168,6 +168,8 @@ resource-pack:
 resource-packs:
     skyblockpack:
         server-url: http://127.0.0.1:7270
+        use-hypixel-api: false
+        hypixel-api-url: https://api.hypixel.net/v2/resources/packs
     ravengard:
         server-url: http://127.0.0.1:7270
 `

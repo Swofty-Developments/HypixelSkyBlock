@@ -24,5 +24,10 @@ integrations:
 limbo:
     host-name: 127.0.0.1
     port: 65535
-# Resource pack settings keyed by pack name (e.g. testingpack, bedwarspack)
-resource-packs: { }
+# Resource pack settings keyed by pack name (e.g. testingpack, skyblockpack)
+resource-packs:
+    skyblockpack:
+        server-url: http://127.0.0.1:7270
+        # Use Hypixel's official pack and select its format for each player's version
+        use-hypixel-api: false
+        hypixel-api-url: https://api.hypixel.net/v2/resources/packs

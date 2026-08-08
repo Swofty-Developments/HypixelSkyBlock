@@ -5,6 +5,7 @@ import net.kyori.adventure.resource.ResourcePackInfo;
 import net.kyori.adventure.resource.ResourcePackRequest;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
+import net.swofty.type.generic.user.HypixelPlayer;
 import org.tinylog.Logger;
 
 import java.net.URI;
@@ -37,8 +38,17 @@ public class ResourcePackManager {
      * already-received chunk sections permanently unrendered on the client.
      */
     public void sendPackBlocking(Player player, int timeoutSeconds) {
-        String packUrl = activePack.getPackUrl();
-        String packHash = activePack.getPackHash();
+        HypixelResourcePack.PackInfo pack = player instanceof HypixelPlayer hypixelPlayer
+                ? activePack.getPackFor(hypixelPlayer)
+                : new HypixelResourcePack.PackInfo(activePack.getPackUrl(), activePack.getPackHash());
+
+        if (pack == null) {
+            Logger.warn("Resource pack could not be resolved for " + player.getUsername() + ", skipping pack send");
+            return;
+        }
+
+        String packUrl = pack.url();
+        String packHash = pack.hash();
 
         if (packUrl == null || packUrl.isEmpty() || packHash == null || packHash.isEmpty()) {
             Logger.warn("Resource pack URL or hash not configured, skipping pack send for " + player.getUsername());

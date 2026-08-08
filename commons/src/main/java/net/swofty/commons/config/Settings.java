@@ -57,6 +57,12 @@ public class Settings {
     public static class ResourcePackSettings {
         @Comment("Base URL of the pack server (e.g. http://0.0.0.0:7270)")
         private String serverUrl = "http://127.0.0.1:7270";
+
+        @Comment("Whether to use Hypixel's official resource pack API instead of building a local pack")
+        private boolean useHypixelApi = false;
+
+        @Comment("URL of Hypixel's resource pack metadata API")
+        private String hypixelApiUrl = "https://api.hypixel.net/v2/resources/packs";
     }
 
     @Getter

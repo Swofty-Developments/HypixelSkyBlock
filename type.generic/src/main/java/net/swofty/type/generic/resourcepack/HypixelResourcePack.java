@@ -5,9 +5,16 @@ import net.swofty.commons.config.Settings;
 import net.swofty.type.generic.user.HypixelPlayer;
 
 public interface HypixelResourcePack {
+    record PackInfo(String url, String hash) {
+    }
+
     String getPackName();
     String getPackUrl();
     String getPackHash();
+
+    default PackInfo getPackFor(HypixelPlayer player) {
+        return new PackInfo(getPackUrl(), getPackHash());
+    }
 
     boolean isRequired();
 
