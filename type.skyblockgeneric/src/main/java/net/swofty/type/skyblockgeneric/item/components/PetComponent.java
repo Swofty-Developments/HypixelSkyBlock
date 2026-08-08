@@ -17,9 +17,8 @@ import net.swofty.type.skyblockgeneric.item.SkyBlockItem;
 import net.swofty.type.skyblockgeneric.item.SkyBlockItemComponent;
 import net.swofty.type.skyblockgeneric.item.handlers.lore.LoreConfig;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.KatUpgrade;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetAbility;
+import net.swofty.type.skyblockgeneric.item.handlers.pet.abstr.PetAbility;
 import net.swofty.type.skyblockgeneric.item.handlers.pet.PetHandler;
-import net.swofty.type.skyblockgeneric.item.handlers.pet.PetRegistry;
 import net.swofty.type.skyblockgeneric.skill.SkillCategories;
 import net.swofty.type.skyblockgeneric.user.SkyBlockPlayer;
 import net.swofty.type.skyblockgeneric.utility.RarityValue;
@@ -35,7 +34,7 @@ public class PetComponent extends SkyBlockItemComponent {
     private final RarityValue<Integer> georgePrice;
     private final RarityValue<KatUpgrade> katUpgrades;
     private final ItemStatistics baseStatistics;
-    private final Map<Rarity, ItemStatistics> perLevelStatistics;
+    private final RarityValue<ItemStatistics> perLevelStatistics;
     private final Particle particleId;
     private final SkillCategories skillCategory;
     private final String skullTexture;
@@ -43,7 +42,7 @@ public class PetComponent extends SkyBlockItemComponent {
 
     public PetComponent(String petName, RarityValue<Integer> georgePrice,
                         @Nullable RarityValue<KatUpgrade> katUpgrades,
-                        ItemStatistics baseStatistics, Map<Rarity, ItemStatistics> perLevelStatistics,
+                        ItemStatistics baseStatistics, RarityValue<ItemStatistics> perLevelStatistics,
                         Particle particleId, String skillCategory, String skullTexture,
                         String handlerId) {
         this.petName = petName;
@@ -60,7 +59,11 @@ public class PetComponent extends SkyBlockItemComponent {
         addInheritedComponent(new TrackedUniqueComponent());
         addInheritedComponent(new InteractableComponent(this::interact, this::interact, null));
         addInheritedComponent(new LoreUpdateComponent(
-                new LoreConfig((item, player) -> getAbsoluteLore(player, item), null), true)
+                new LoreConfig((item, player) -> getAbsoluteLore(player, item), (item, player) -> {
+                    Rarity rarity = item.getAttributeHandler().getRarity();
+                    int level = item.getAttributeHandler().getPetData().getAsLevel(rarity);
+                    return "§7[Lvl " + level + "] " + rarity.getLegacyColor() + petName;
+                }), true)
         );
     }
 
@@ -90,28 +93,22 @@ public class PetComponent extends SkyBlockItemComponent {
         Rarity rarity = item.getAttributeHandler().getRarity();
         int level = petData.getAsLevel(rarity);
 
-        PetHandler handler = PetRegistry.getHandler(handlerId);
-        List<PetAbility> abilities = handler.getAbilities(item);
+        List<PetAbility> abilities = PetHandler.valueOf(handlerId.toUpperCase()).getAbilities(item);
 
         lore.add("§8" + skillCategory.asCategory().getName() + " Pet");
         lore.add(" ");
 
-        addPropertyInt("Magic Find", (baseStatistics.getOverall(ItemStatistic.MAGIC_FIND) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.MAGIC_FIND) * 100.0 * level), lore);
-        addPropertyPercent("Crit Damage", (baseStatistics.getOverall(ItemStatistic.CRITICAL_DAMAGE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRITICAL_DAMAGE) * level), lore);
-        addPropertyPercent("Crit Chance", (baseStatistics.getOverall(ItemStatistic.CRITICAL_CHANCE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.CRITICAL_CHANCE) * level), lore);
-        addPropertyPercent("Health", (baseStatistics.getOverall(ItemStatistic.HEALTH) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.HEALTH) * level), lore);
-        addPropertyInt("Strength", baseStatistics.getOverall(ItemStatistic.STRENGTH) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.STRENGTH) * level, lore);
-        addPropertyInt("Defense", baseStatistics.getOverall(ItemStatistic.DEFENSE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.DEFENSE) * level, lore);
-        addPropertyInt("Speed", baseStatistics.getOverall(ItemStatistic.SPEED) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.SPEED) * level, lore);
-        addPropertyInt("Intelligence", baseStatistics.getOverall(ItemStatistic.INTELLIGENCE) +
-                getPerLevelStatistics(rarity).getOverall(ItemStatistic.INTELLIGENCE) * level, lore);
+        for (ItemStatistic stat : ItemStatistic.values()) {
+            double value = baseStatistics.getOverall(stat)
+                    + getPerLevelStatistics(rarity).getOverall(stat) * level;
+            if (value == 0) continue;
+
+            if (stat.getIsPercentage()) {
+                addPropertyPercent(stat.getDisplayName(), value, lore);
+            } else {
+                addPropertyInt(stat.getDisplayName(), value, lore);
+            }
+        }
 
 
         for (PetAbility ability : abilities) {
@@ -139,7 +136,7 @@ public class PetComponent extends SkyBlockItemComponent {
     }
 
     public ItemStatistics getPerLevelStatistics(Rarity rarity) {
-        return perLevelStatistics.get(rarity);
+        return perLevelStatistics.getForRarity(rarity);
     }
 
     private static void addPropertyInt(String name, double value, List<String> lore) {

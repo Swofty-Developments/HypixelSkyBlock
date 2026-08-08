@@ -237,10 +237,10 @@ public class GUIGatheringCategoryStats extends StatelessView {
         lore.add("");
         addSourcePreview(player, lore, summaryMode);
         lore.add("");
-        lore.add("§7Adds up to: " + statistic.getDisplayColor() + "+" + format(value)
+        lore.add("§7Adds up to: " + statistic.getLegacyDisplayColor() + "+" + format(value)
             + (summaryMode == Mode.FLAT ? statistic.getSymbol() + " " + statistic.getDisplayName() : "%"));
         if (summaryMode == Mode.ADDITIVE) {
-            lore.add("§7As multiplier: " + statistic.getDisplayColor() + format(1D + value / 100D) + "x");
+            lore.add("§7As multiplier: " + statistic.getLegacyDisplayColor() + format(1D + value / 100D) + "x");
             lore.add("§8Multiplied with flat!");
         }
         lore.add("");
@@ -260,7 +260,7 @@ public class GUIGatheringCategoryStats extends StatelessView {
                 lore.add("  §8And more...");
                 break;
             }
-            lore.add(" " + statistic.getDisplayColor() + "+" + format(value)
+            lore.add(" " + statistic.getLegacyDisplayColor() + "+" + format(value)
                 + (summaryMode == Mode.FLAT ? statistic.getSymbol() : "%") + " §f" + source.name());
         }
     }
@@ -270,7 +270,7 @@ public class GUIGatheringCategoryStats extends StatelessView {
         List<String> lore = new ArrayList<>();
         lore.add(source.grouped() ? "§8Grouped" : "§8" + source.categoryName());
         lore.add("");
-        lore.add("§7Value: " + statistic.getDisplayColor() + "+" + format(value)
+        lore.add("§7Value: " + statistic.getLegacyDisplayColor() + "+" + format(value)
             + (mode == Mode.FLAT ? statistic.getSymbol() : "%"));
         lore.add("");
         int shown = 0;
@@ -282,7 +282,7 @@ public class GUIGatheringCategoryStats extends StatelessView {
                     lore.add("  §8And more...");
                     break;
                 }
-                lore.add(" " + statistic.getDisplayColor() + "+" + format(childValue)
+                lore.add(" " + statistic.getLegacyDisplayColor() + "+" + format(childValue)
                     + (mode == Mode.FLAT ? statistic.getSymbol() : "%") + " §f" + child.name());
             }
             lore.add("");
@@ -309,7 +309,7 @@ public class GUIGatheringCategoryStats extends StatelessView {
             Material.LEATHER_HELMET, 1, "§8" + statistic.getDisplayName() + " Stat",
             "§7There is a " + statistic.getDisplayName().toLowerCase() + " limit in SkyBlock!",
             "§7Some magic may let you change it!", "",
-            "§7Value: " + statistic.getDisplayColor() + format(statistic.getCap())
+            "§7Value: " + statistic.getLegacyDisplayColor() + format(statistic.getCap())
                 + statistic.getSymbol());
     }
 
@@ -376,14 +376,14 @@ public class GUIGatheringCategoryStats extends StatelessView {
         lore.add("");
         double base = values.getBase(stat);
         double additive = values.getAdditive(stat) - 1D;
-        if (base != 0D) lore.add("§7Flat: " + stat.getDisplayColor() + "+" + format(base) + stat.getSymbol());
-        if (additive != 0D) lore.add("§7Additive: " + stat.getDisplayColor() + "+" + format(additive * 100D) + "%");
-        if (stat.getCap() != null) lore.add("§7Stat Cap: " + stat.getDisplayColor()
+        if (base != 0D) lore.add("§7Flat: " + stat.getLegacyDisplayColor() + "+" + format(base) + stat.getSymbol());
+        if (additive != 0D) lore.add("§7Additive: " + stat.getLegacyDisplayColor() + "+" + format(additive * 100D) + "%");
+        if (stat.getCap() != null) lore.add("§7Stat Cap: " + stat.getLegacyDisplayColor()
             + format(stat.getCap()) + stat.getSymbol() + " " + stat.getDisplayName());
         if (base != 0D || additive != 0D) lore.add("");
         if (stat.name().endsWith("_FORTUNE")) {
-            lore.add("§7Bonus drops: " + stat.getDisplayColor() + "+" + (int) (value / 100D) + "!");
-            lore.add("§7Chance for 1 more: " + stat.getDisplayColor() + format(value % 100D) + "%");
+            lore.add("§7Bonus drops: " + stat.getLegacyDisplayColor() + "+" + (int) (value / 100D) + "!");
+            lore.add("§7Chance for 1 more: " + stat.getLegacyDisplayColor() + format(value % 100D) + "%");
             lore.add("");
         }
         if (value == 0D) lore.add("§8You have none of this stat!");

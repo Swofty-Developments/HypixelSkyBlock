@@ -88,7 +88,9 @@ public class PlayerItemUpdater {
         // Update Rarity
         ItemType type = handler.getPotentialType();
         if (type != null) {
-            handler.setRarity(type.rarity);
+            if(!handler.isPet()) {
+                handler.setRarity(type.rarity);
+            }
         } else {
             handler.setRarity(Rarity.COMMON);
         }
